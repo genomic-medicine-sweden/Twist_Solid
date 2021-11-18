@@ -1,0 +1,167 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake configuration file
+type: object
+properties:
+
+  mutect2:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'mutect2' rule
+      time:
+        type: string
+        description: max execution time for the 'mutect2' rule
+
+  mutect2_gvcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'mutect2_gvcf' rule
+      time:
+        type: string
+        description: max execution time for the 'mutect2_gvcf' rule
+
+  merge_vcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'merge_vcf' rule
+      time:
+        type: string
+        description: max execution time for the 'merge_vcf' rule
+
+  merge_gvcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'merge_gvcf' rule
+      time:
+        type: string
+        description: max execution time for the 'merge_gvcf' rule
+
+  merge_vcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'merge_vcf' rule
+      time:
+        type: string
+        description: max execution time for the 'merge_vcf' rule
+
+  tabix_vcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'tabix_vcf' rule
+      time:
+        type: string
+        description: max execution time for the 'tabix_vcf' rule
+
+  vardict:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'vardict' rule
+      time:
+        type: string
+        description: max execution time for the 'vardict' rule
+
+  bgzip_vcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'bgzip' rule
+      time:
+        type: string
+        description: max execution time for the 'bgzip' rule
+
+  vardict:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'vardict' rule
+      time:
+        type: string
+        description: max execution time for the 'vardict' rule
+
+  decompose:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'decompose' rule
+      time:
+        type: string
+        description: max execution time for the 'decompose' rule
+
+  normalize:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'normalize' rule
+      time:
+        type: string
+        description: max execution time for the 'normalize' rule
+
+  sort_vcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'sort_vcf' rule
+      time:
+        type: string
+        description: max execution time for the 'sort_vcf' rule
+
+  ensemble_vcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'ensemble_vcf' rule
+      time:
+        type: string
+        description: max execution time for the 'ensemble_vcf' rule
+
+  fix_af:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'fix_af' rule
+      time:
+        type: string
+        description: max execution time for the 'fix_af' rule
+
+  freebayes:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'freebayes' rule
+      time:
+        type: string
+        description: max execution time for the 'freebayes' rule
+
+  default_resources:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by a rule
+      time:
+        type: string
+        description: default max execution time for a rule
+
+  required:
+    - default_resources

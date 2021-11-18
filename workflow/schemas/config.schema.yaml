@@ -1,0 +1,208 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake configuration file
+type: object
+properties:
+  samples:
+    type: string
+  units:
+    type: string
+  resources:
+    type: string
+    description: Path to resources.yaml file
+  default_container:
+    type: string
+    description: name or path to a default docker/singularity container
+  reference:
+    type: object
+    properties:
+      fasta:
+        type: string
+        description: fasta reference file
+      skip_chrs:
+        type: array
+        items:
+            type: string
+        description: list of chromosomes that should be skipped
+    required:
+      - fasta
+
+  mutect2:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for mutect2
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to mutect2
+
+  mutect2_gvcf:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for mutect2_gvcf
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to mutect2_gvcf
+
+  ensemble_vcf:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for ensemble_vcf
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      callers:
+        type: array
+        items:
+            type: string
+        description: list of callers that are included in the vcf ensemble
+      support:
+        type: integer
+        description: how many callers must support variant to be included in ensembled vcf
+      sort_order:
+        type: string
+        description: order which information about a variant should be kept ("vardict,mutect2")
+      required:
+        - sort_order
+        - callers
+
+  freebayes:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for freebayes
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      params:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: parameters that should be forwarded to freebayes
+
+  tabix_vcf:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for tabix_vcf
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to tabix_vcf
+
+  bgzip_vcf:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for bgzip
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  merge_vcf:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for merge_vcf
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to merge_vcf
+
+  merge_gvcf:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for merge_gvcf
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to merge_gvcf
+
+  vardict:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for vardict
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to vardict
+      bed_columns:
+        type: string
+        description: columns to use in bed file
+      allele_frequency_threshold:
+        type: string
+        description: allele frequency threshold
+
+  decompose:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for decompose
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  normalize:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for normalize
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  sort_vcf:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for sort_vcf
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  fix_af:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for fix_af
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  required:
+    - samples
+    - units
+    - reference
+    - resources
+    - default_container
