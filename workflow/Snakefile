@@ -10,6 +10,9 @@ __license__ = "GPL-3"
 include: "rules/common.smk"
 include: "rules/result_files.smk"
 
+rule all:
+    input:
+        unpack(compile_output_list),
 
 report: "report/workflow.rst"
 
@@ -24,7 +27,3 @@ module alignment:
    config: config
 
 use rule * from alignment as alignment_*
-
-rule all:
-    input:
-        unpack(compile_output_list),
