@@ -3,156 +3,6 @@ description: snakemake configuration file
 type: object
 properties:
 
-  mutect2:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'mutect2' rule
-      time:
-        type: string
-        description: max execution time for the 'mutect2' rule
-
-  mutect2_gvcf:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'mutect2_gvcf' rule
-      time:
-        type: string
-        description: max execution time for the 'mutect2_gvcf' rule
-
-  merge_vcf:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'merge_vcf' rule
-      time:
-        type: string
-        description: max execution time for the 'merge_vcf' rule
-
-  merge_gvcf:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'merge_gvcf' rule
-      time:
-        type: string
-        description: max execution time for the 'merge_gvcf' rule
-
-  merge_vcf:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'merge_vcf' rule
-      time:
-        type: string
-        description: max execution time for the 'merge_vcf' rule
-
-  tabix_vcf:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'tabix_vcf' rule
-      time:
-        type: string
-        description: max execution time for the 'tabix_vcf' rule
-
-  vardict:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'vardict' rule
-      time:
-        type: string
-        description: max execution time for the 'vardict' rule
-
-  bgzip_vcf:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'bgzip' rule
-      time:
-        type: string
-        description: max execution time for the 'bgzip' rule
-
-  vardict:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'vardict' rule
-      time:
-        type: string
-        description: max execution time for the 'vardict' rule
-
-  decompose:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'decompose' rule
-      time:
-        type: string
-        description: max execution time for the 'decompose' rule
-
-  normalize:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'normalize' rule
-      time:
-        type: string
-        description: max execution time for the 'normalize' rule
-
-  sort_vcf:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'sort_vcf' rule
-      time:
-        type: string
-        description: max execution time for the 'sort_vcf' rule
-
-  ensemble_vcf:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'ensemble_vcf' rule
-      time:
-        type: string
-        description: max execution time for the 'ensemble_vcf' rule
-
-  fix_af:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'fix_af' rule
-      time:
-        type: string
-        description: max execution time for the 'fix_af' rule
-
-  freebayes:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'freebayes' rule
-      time:
-        type: string
-        description: max execution time for the 'freebayes' rule
-
   default_resources:
     type: object
     properties:
@@ -162,6 +12,154 @@ properties:
       time:
         type: string
         description: default max execution time for a rule
+      mem_mb:
+        type: integer
+        description: default memory used for a rule
+      mem_per_cpu:
+        type: integer
+        description: default memory used per cpu for a rule
+      partition:
+        type: string
+        description: default partition to use on the cluser for a rule
+    required:
+      - threads
+      - time
+      - mem_mb
+      - mem_per_cpu
+      - partition
 
-  required:
-    - default_resources
+  fastp_pe:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'fastp_pe' rule
+      time:
+        type: string
+        description: max execution time for the 'fastp_pe' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'fastp_pe'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'fastp_pe'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'fastp_pe'
+
+  merged:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'merged' rule
+      time:
+        type: string
+        description: max execution time for the 'merged' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'merged'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'merged'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'merged'
+
+bwa_mem:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'bwa_mem' rule
+      time:
+        type: string
+        description: max execution time for the 'bwa_mem' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'bwa_mem'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'bwa_mem'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'bwa_mem'
+
+  extract_reads:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'extract_reads' rule
+      time:
+        type: string
+        description: max execution time for the 'extract_reads' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'extract_reads'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'extract_reads'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'extract_reads'
+
+  mark_duplicates:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'mark_duplicates' rule
+      time:
+        type: string
+        description: max execution time for the 'mark_duplicates' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'mark_duplicates'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'mark_duplicates'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'mark_duplicates'
+
+  samtools_index:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'samtools_index' rule
+      time:
+        type: string
+        description: max execution time for the 'samtools_index' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'samtools_index'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'samtools_index'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'samtools_index'
+
+  merge_bam:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'merge_bam' rule
+      time:
+        type: string
+        description: max execution time for the 'merge_bam' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'merge_bam'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'merge_bam'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'merge_bam'
+
+required:
+  - default_resources

@@ -14,12 +14,12 @@ from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
 
-min_version("6.8.0")
+min_version("6.10.0")
 
 ### Set and validate config file
 
 
-configfile: "config.yaml"
+configfile: "config/config.yaml"
 
 
 validate(config, schema="../schemas/config.schema.yaml")
@@ -34,46 +34,10 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
 
-units = pandas.read_table(config["units"], dtype=str).set_index(["sample", "type"], drop=False)
+units = pd.read_table(config["units"], dtype=str).set_index(["sample", "type"], drop=False)
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
-
-
-def get_bams(units: pandas.DataFrame) -> typing.List[str]:
-    """
-    function used to extract all bam files found in units.tsv
-    Args:
-        units: DataFrame generate by importing a file following schema defintion
-               found in pre-alignment/workflow/schemas/units.schema.tsv
-    Returns:
-        List of strings with all bam file names and path
-    """
-    return list(set([unit.bam for unit in units.itertuples()]))
-
-
-def get_gvcfs(units: pandas.DataFrame) -> typing.List[str]:
-    """
-    function used to extract all gvcf files found in units.tsv
-    Args:
-        units: DataFrame generate by importing a file following schema defintion
-               found in pre-alignment/workflow/schemas/units.schema.tsv
-    Returns:
-        List of strings with all gvcf file names and path
-    """
-    return list(set([unit.gvcf for unit in units.itertuples()]))
-
-
-def get_vcfs(units: pandas.DataFrame) -> typing.List[str]:
-    """
-    function used to extract all vcf files found in units.tsv
-    Args:
-        units: DataFrame generate by importing a file following schema defintion
-               found in pre-alignment/workflow/schemas/units.schema.tsv
-    Returns:
-        List of strings with all vcf file names and path
-    """
-    return list(set([unit.vcf for unit in units.itertuples()]))
 
 
 wildcard_constraints:

@@ -4,11 +4,17 @@ type: object
 properties:
   samples:
     type: string
+    description: Path to samples.tsv file
   units:
     type: string
+    description: Path to units.tsv file
   resources:
     type: string
     description: Path to resources.yaml file
+  trimmer_software:
+    type: string
+  alignment_software:
+    type: string
   default_container:
     type: string
     description: name or path to a default docker/singularity container
@@ -18,6 +24,27 @@ properties:
       fasta:
         type: string
         description: fasta reference file
+      dict:
+        type: string
+        description: fasta reference dict file
+      amb:
+        type: string
+        description: fasta reference amb file
+      ann:
+        type: string
+        description: fasta reference ann file
+      bwt:
+        type: string
+        description: fasta reference bwt file
+      fai:
+        type: string
+        description: fasta reference fai file
+      pac:
+        type: string
+        description: fasta reference pac file
+      sa:
+        type: string
+        description: fasta reference sa file
       skip_chrs:
         type: array
         items:
@@ -25,177 +52,98 @@ properties:
         description: list of chromosomes that should be skipped
     required:
       - fasta
+      - dict
+      - amb
+      - ann
+      - bwt
+      - fai
+      - pac
+      - sa
 
-  mutect2:
+  fastp_pe:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for mutect2
+        description: set number of times benchmark should be repeated for fastp_pe
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to mutect2
+        description: parameters that should be forwarded to fastp
 
-  mutect2_gvcf:
+  merged:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for mutect2_gvcf
+        description: set number of times benchmark should be repeated for fastp_pe
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  bwa_mem:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for bwa_mem
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to mutect2_gvcf
-
-  ensemble_vcf:
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for ensemble_vcf
-      container:
+        description: parameters that should be forwarded to bwa_mem
+      read_group:
         type: string
-        description: name or path to docker/singularity container
-      callers:
-        type: array
-        items:
-            type: string
-        description: list of callers that are included in the vcf ensemble
-      support:
-        type: integer
-        description: how many callers must support variant to be included in ensembled vcf
+        description: RG string will be added to bam file
+      sorting:
+        type: string
+        description: program hangling the bam sorting (default samtools)
       sort_order:
         type: string
-        description: order which information about a variant should be kept ("vardict,mutect2")
-      required:
-        - sort_order
-        - callers
+        description: how the bam file should be sorted (default coordinate)
+      sort_extra:
+        type: string
+        description: parameters that should be forwarded to sorting (ie, number of threads)
 
-  freebayes:
+  extract_reads:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for freebayes
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      params:
-        type: object
-        properties:
-          extra:
-            type: string
-            description: parameters that should be forwarded to freebayes
-
-  tabix_vcf:
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for tabix_vcf
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded to tabix_vcf
-
-  bgzip_vcf:
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for bgzip
+        description: set number of times benchmark should be repeated for extract_reads
       container:
         type: string
         description: name or path to docker/singularity container
 
-  merge_vcf:
+  mark_duplicates:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for merge_vcf
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded to merge_vcf
-
-  merge_gvcf:
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for merge_gvcf
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded to merge_gvcf
-
-  vardict:
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for vardict
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded to vardict
-      bed_columns:
-        type: string
-        description: columns to use in bed file
-      allele_frequency_threshold:
-        type: string
-        description: allele frequency threshold
-
-  decompose:
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for decompose
+        description: set number of times benchmark should be repeated for mark_duplicates
       container:
         type: string
         description: name or path to docker/singularity container
 
-  normalize:
+  samtools_index:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for normalize
+        description: set number of times benchmark should be repeated for samtools_index
       container:
         type: string
         description: name or path to docker/singularity container
 
-  sort_vcf:
+  merge_bam:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for sort_vcf
-      container:
-        type: string
-        description: name or path to docker/singularity container
-
-  fix_af:
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for fix_af
+        description: set number of times benchmark should be repeated for merge_bam
       container:
         type: string
         description: name or path to docker/singularity container
@@ -203,6 +151,5 @@ properties:
   required:
     - samples
     - units
-    - reference
     - resources
     - default_container
