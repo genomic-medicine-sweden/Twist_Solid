@@ -1,0 +1,3 @@
+sample	type	run	lane	fastq1	fastq2	adapter
+VAL-04	T	1	1	/projects/wp1/nobackup/ngs/utveckling/analys/2021/20210921_GL_Run-01/fastq/DNA/VAL-04_R1.fastq.gz	/projects/wp1/nobackup/ngs/utveckling/analys/2021/20210921_GL_Run-01/fastq/DNA/VAL-04_R1.fastq.gz	AGATCGGAAGAGCACACGTCTGAACTCCAGTCA,AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
+VAL-05	T	1	1	/projects/wp1/nobackup/ngs/utveckling/analys/2021/20210921_GL_Run-01/fastq/DNA/VAL-05_R1.fastq.gz	/projects/wp1/nobackup/ngs/utveckling/analys/2021/20210921_GL_Run-01/fastq/DNA/VAL-05_R1.fastq.gz	AGATCGGAAGAGCACACGTCTGAACTCCAGTCA,AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
