@@ -13,3 +13,30 @@ rule copy_bam:
         "results/dna/bam/{sample}_{type}.bam",
     shell:
         "cp {input} {output}"
+
+
+rule copy_caller_vcf:
+    input:
+        "snv_indels/{caller}/{sample}_{type}.merged.vcf.gz",
+    output:
+        "results/dna/vcf/{caller}_{sample}_{type}.vcf.gz",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_ensembled_vcf:
+    input:
+        "snv_indels/ensembled/{sample}_{type}.ensembled.vcf.gz",
+    output:
+        "results/dna/vcf/{sample}_{type}.ensembled.vcf.gz",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_gvcf:
+    input:
+        "snv_indels/mutect2_gvcf/{sample}_{type}.ensembled.vcf.gz",
+    output:
+        "results/dna/gvcf/{sample}_{type}.gvcf.gz",
+    shell:
+        "cp {input} {output}"

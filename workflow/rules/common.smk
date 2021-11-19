@@ -46,8 +46,30 @@ wildcard_constraints:
 
 
 def compile_output_list(wildcards: snakemake.io.Wildcards):
-    return [
+    output_files = [
         "results/dna/bam/%s_%s.bam" % (sample, type)
         for sample in get_samples(samples)
         for type in get_unit_types(units, sample)
     ]
+    output_files.append(
+        [
+            "results/dna/vcf/%s_%s_%s.vcf.gz" % (caller, sample, t)
+            for caller in ["mutect2", "vardict"]
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    output_files.append(
+        [
+            "results/dna/vcf/%s_%s.ensembled.vcf.gz" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
+    output_files.append(
+        [
+            "results/dna/gvcf/%s_%s.gvcf.gz" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
+    return output_files

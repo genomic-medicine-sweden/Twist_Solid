@@ -4,6 +4,8 @@ units: "units.tsv"
 
 default_container: "docker://hydragenetics/common:0.0.1"
 
+trimmer_software: "fastp"
+
 reference:
   background: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/hydra_test/background_panel.tsv"
   vardict_artifacts: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/hydra_test/artifact_panel.txt"
@@ -22,13 +24,13 @@ bwa_mem:
   extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
 
 mark_duplicates:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/picard:2.25.0"
 
 samtools_index:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
 
 merge_bam:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
 
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"
