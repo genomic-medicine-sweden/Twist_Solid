@@ -33,3 +33,9 @@ module snv_indels:
    config: config
 
 use rule * from snv_indels as snv_indels_*
+
+module annotation:
+   snakefile: github("hydra-genetics/annotation", path="workflow/Snakefile", tag="develop")
+   config: config
+
+use rule * from annotation as annotation_*

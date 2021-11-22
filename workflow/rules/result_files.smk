@@ -40,3 +40,12 @@ rule copy_gvcf:
         "results/dna/gvcf/{sample}_{type}.gvcf.gz",
     shell:
         "cp {input} {output}"
+
+
+rule copy_vep_vcf:
+    input:
+        "annotation/ensemble_vcf/{sample}_{type}.ensembled.vep_annotated.vcf",
+    output:
+        "results/dna/vcf/{sample}_{type}.ensembled.vep_annotated.vcf",
+    shell:
+        "cp {input} {output}"

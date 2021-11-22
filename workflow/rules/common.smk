@@ -74,3 +74,10 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
         ]
     )
     return output_files
+    output_files.append(
+        [
+            "results/dna/vcf/%s_%s.ensembled.vep_annotated.vcf" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )

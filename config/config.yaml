@@ -82,3 +82,12 @@ fix_af:
 
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
+
+vep:
+  container: "docker://ensemblorg/ensembl-vep:release_99.0"
+  vep_cache:  VEP/homo_sapiens
+  mode: "--database"
+  extra: " --af  "
+
+calculate_seqrun_background:
+  container: "docker://python:3.9.7-slim"
