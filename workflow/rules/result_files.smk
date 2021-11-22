@@ -26,7 +26,7 @@ rule copy_caller_vcf:
 
 rule copy_ensembled_vcf:
     input:
-        "snv_indels/ensembled/{sample}_{type}.ensembled.vcf.gz",
+        "snv_indels/ensemble_vcf/{sample}_{type}.ensembled.vcf.gz",
     output:
         "results/dna/vcf/{sample}_{type}.ensembled.vcf.gz",
     shell:
@@ -35,7 +35,7 @@ rule copy_ensembled_vcf:
 
 rule copy_gvcf:
     input:
-        "snv_indels/mutect2_gvcf/{sample}_{type}.ensembled.vcf.gz",
+        "snv_indels/mutect2_gvcf/{sample}_{type}.merged.gvcf.gz",
     output:
         "results/dna/gvcf/{sample}_{type}.gvcf.gz",
     shell:
