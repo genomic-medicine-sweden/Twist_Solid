@@ -34,3 +34,48 @@ merge_bam:
 
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"
+
+vardict:
+  container: "docker://gmsuppsala/somatic:develop"
+  bed_columns: "-c 1 -S 2 -E 3 -g 4"
+  allele_frequency_threshold: "0.01"
+
+mutect2:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+mutect2_gvcf:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+merge_vcf:
+  container: "docker://gmsuppsala/somatic:develop"
+
+merge_gvcf:
+  container: "docker://gmsuppsala/somatic:develop"
+
+bgzip_vcf:
+  container: "docker://gmsuppsala/somatic:develop"
+
+tabix_vcf:
+  container: "docker://gmsuppsala/somatic:develop"
+
+decompose:
+  container: "docker://gmsuppsala/somatic:develop"
+
+normalize:
+  container: "docker://gmsuppsala/somatic:develop"
+
+sort_vcf:
+  container: "docker://gmsuppsala/somatic:develop"
+
+ensemble_vcf:
+  container: "docker://gmsuppsala/somatic:develop"
+  callers:
+    - vardict
+    - mutect2
+  sort_order: "vardict,mutect2"
+
+fix_af:
+  container: "docker://gmsuppsala/somatic:develop"
+
+freebayes:
+  container: "docker://gmsuppsala/somatic:develop"

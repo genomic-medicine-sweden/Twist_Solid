@@ -29,7 +29,7 @@ module alignment:
 use rule * from alignment as alignment_*
 
 module snv_indels:
-   snakefile: github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="develop")
+   snakefile: github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="bed_split")
    config: config
 
 use rule * from snv_indels as snv_indels_*

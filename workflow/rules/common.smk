@@ -58,6 +58,7 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
         ]
+    )
     output_files.append(
         [
             "results/dna/vcf/%s_%s.ensembled.vcf.gz" % (sample, t)
