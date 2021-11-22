@@ -81,3 +81,10 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
             for t in get_unit_types(units, sample)
         ]
     )
+    output_files.append(
+        [
+            "results/dna/vcf/%s_%s.ensembled.vep_annotated.filtered.codon_snvs.vcf.gz" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )

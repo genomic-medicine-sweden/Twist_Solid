@@ -39,3 +39,9 @@ module annotation:
    config: config
 
 use rule * from annotation as annotation_*
+
+module filtering:
+   snakefile: github("hydra-genetics/filtering", path="workflow/Snakefile", tag="develop")
+   config: config
+
+use rule * from filtering as filtering_*

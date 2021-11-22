@@ -44,8 +44,17 @@ rule copy_gvcf:
 
 rule copy_vep_vcf:
     input:
-        "annotation/ensemble_vcf/{sample}_{type}.ensembled.vep_annotated.vcf",
+        "snv_indels/ensemble_vcf/{sample}_{type}.ensembled.vep_annotated.vcf",
     output:
         "results/dna/vcf/{sample}_{type}.ensembled.vep_annotated.vcf",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_filtered_vcf:
+    input:
+        "snv_indels/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vcf.gz",
+    output:
+        "results/dna/vcf/{sample}_{type}.ensembled.vep_annotated.filtered.codon_snvs.vcf.gz",
     shell:
         "cp {input} {output}"
