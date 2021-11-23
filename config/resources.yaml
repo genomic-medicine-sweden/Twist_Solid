@@ -8,3 +8,9 @@ default_resources:
 bwa_mem:
   threads: 10
   time: "8:00:00"
+
+fastp:
+  threads: 5
+
+vep:
+  threads: 10

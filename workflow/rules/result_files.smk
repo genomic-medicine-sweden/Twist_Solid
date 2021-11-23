@@ -53,7 +53,7 @@ rule copy_vep_vcf:
 
 rule copy_filtered_vcf:
     input:
-        "snv_indels/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vcf.gz",
+        "filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vcf.gz",
     output:
         "results/dna/vcf/{sample}_{type}.ensembled.vep_annotated.filtered.codon_snvs.vcf.gz",
     shell:

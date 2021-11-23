@@ -8,7 +8,7 @@ trimmer_software: "fastp"
 
 reference:
   background: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/hydra_test/background_panel.tsv"
-  artifacts: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/hydra_test/artifact_panel.txt"
+  artifacts: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/hydra_test/artifact_panel.tsv"
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
   dict: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
   fna: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fna"
@@ -86,7 +86,7 @@ freebayes:
 
 vep:
   container: "docker://ensemblorg/ensembl-vep:release_99.0"
-  vep_cache:  VEP/homo_sapiens
+  vep_cache:  "/data/ref_genomes/VEP/"
   mode: "--database"
   extra: " --af  "
 
