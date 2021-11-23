@@ -60,7 +60,7 @@ use rule * from biomarker as biomarker_*
 
 
 module fusions:
-   snakefile: github("hydra-genetics/fusions", path="workflow/Snakefile", tag="develop")
+   snakefile: github("hydra-genetics/fusions", path="workflow/Snakefile", tag="genefuse_fix")
    config: config
 
 use rule * from fusions as fusions_*
