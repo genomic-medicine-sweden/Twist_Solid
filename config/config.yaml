@@ -124,7 +124,7 @@ hotspot_info:
 
 msisensor_pro:
   container: "docker://hydragenetics/msisensor_pro:1.1.a"
-  PoN: "references/Msisensor_pro_reference.list_baseline"
+  PoN: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/hydra_test/Msisensor_pro_reference.list_baseline"
 
 tmb:
   container: "docker://gmsuppsala/somatic:develop"
