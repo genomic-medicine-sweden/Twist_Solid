@@ -19,6 +19,7 @@ reference:
   pac: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.pac"
   sa: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.sa"
   design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.bed"
+  design_intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.interval_list"
   skip_chrs:
     - "chrM"
 
@@ -98,3 +99,24 @@ bgzip_vcf:
 
 tabix_vcf:
   container: "docker://gmsuppsala/somatic:develop"
+
+fastqc:
+  container: "docker://hydragenetics/fastqc:0.11.9"
+
+samtools_stats:
+  container: "docker://hydragenetics/common:0.0.1"
+
+picard_alignment_summary_metrics:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+picard_duplication_metrics:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+picard_hs_metrics:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+picard_insert_size:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+hotspot_info:
+  container: "docker://hydragenetics/common:0.0.1"

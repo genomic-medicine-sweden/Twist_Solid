@@ -45,3 +45,9 @@ module filtering:
    config: config
 
 use rule * from filtering as filtering_*
+
+module qc:
+   snakefile: github("hydra-genetics/qc", path="workflow/Snakefile", tag="develop")
+   config: config
+
+use rule * from qc as qc_*

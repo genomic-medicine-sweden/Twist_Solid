@@ -58,3 +58,66 @@ rule copy_filtered_vcf:
         "results/dna/vcf/{sample}_{type}.ensembled.vep_annotated.filtered.codon_snvs.vcf.gz",
     shell:
         "cp {input} {output}"
+
+
+rule copy_fastqc:
+    input:
+        "qc/fastqc/{sample}_{type}_{read}_fastqc.html",
+    output:
+        "results/dna/qc/{sample}_{type}_{read}_fastqc.html",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_picard_duplication_metrics:
+    input:
+        "qc/picard_duplication_metrics/{sample}_{type}.duplication_metrics.txt",
+    output:
+        "results/dna/qc/{sample}_{type}.duplication_metrics.txt",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_picard_alignment_summary_metrics:
+    input:
+        "qc/picard_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt",
+    output:
+        "results/dna/qc/{sample}_{type}.alignment_summary_metrics.txt",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_picard_hs_metrics:
+    input:
+        "qc/picard_hs_metrics/{sample}_{type}.HsMetrics.txt",
+    output:
+        "results/dna/qc/{sample}_{type}.HsMetrics.txt",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_picard_insert_size:
+    input:
+        "qc/picard_insert_size/{sample}_{type}.insert_size_metrics.txt",
+    output:
+        "results/dna/qc/{sample}_{type}.insert_size_metrics.txt",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_samtools_stats:
+    input:
+        "qc/samtools_stats/{sample}_{type}.samtools-stats.txt",
+    output:
+        "results/dna/qc/{sample}_{type}.samtools-stats.txt",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_hotspot_info:
+    input:
+        "qc/hotspot_info/{sample}_{type}.hotspot_info.tsv",
+    output:
+        "results/dna/hotspot_info/{sample}_{type}.hotspot_info.tsv",
+    shell:
+        "cp {input} {output}"
