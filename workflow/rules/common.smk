@@ -94,42 +94,43 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
         ]
-    output.append(
+    )
+    output_files.append(
         [
             "results/dna/qc/%s_%s.duplication_metrics.txt" % (sample, t)
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
         ]
     )
-    output.append(
+    output_files.append(
         [
             "results/dna/qc/%s_%s.alignment_summary_metrics.txt" % (sample, t)
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
         ]
     )
-    output.append(
+    output_files.append(
         [
             "results/dna/qc/%s_%s.HsMetrics.txt" % (sample, t)
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
         ]
     )
-    output.append(
+    output_files.append(
         [
             "results/dna/qc/%s_%s.insert_size_metrics.txt" % (sample, t)
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
         ]
     )
-    output.append(
+    output_files.append(
         [
             "results/dna/qc/%s_%s.samtools-stats.txt" % (sample, t)
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
         ]
     )
-    output.append(
+    output_files.append(
         [
             "results/dna/hotspot_info/%s_%s.hotspot_info.tsv" % (sample, t)
             for sample in get_samples(samples)
