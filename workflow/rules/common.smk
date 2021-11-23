@@ -137,4 +137,18 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
             for t in get_unit_types(units, sample)
         ]
     )
+    output_files.append(
+        [
+            "results/dna/msi/%s_%s.msisensor_pro.tsv" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
+    output_files.append(
+        [
+            "results/dna/tmb/%s_%s.TMB.txt" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
     return output_files

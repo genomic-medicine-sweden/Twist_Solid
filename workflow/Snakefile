@@ -51,3 +51,9 @@ module qc:
    config: config
 
 use rule * from qc as qc_*
+
+module biomarker:
+   snakefile: github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="tmb_fix")
+   config: config
+
+use rule * from biomarker as biomarker_*

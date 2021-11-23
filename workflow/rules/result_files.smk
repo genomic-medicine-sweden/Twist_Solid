@@ -121,3 +121,21 @@ rule copy_hotspot_info:
         "results/dna/hotspot_info/{sample}_{type}.hotspot_info.tsv",
     shell:
         "cp {input} {output}"
+
+
+rule copy_msisensor_pro:
+    input:
+        "biomarker/msisensor_pro/{sample}_{type}",
+    output:
+        "results/dna/msi/{sample}_{type}.msisensor_pro.tsv",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_tmb:
+    input:
+        "biomarker/tmb/{sample}_{type}.TMB.txt",
+    output:
+        "results/dna/tmb/{sample}_{type}.TMB.txt",
+    shell:
+        "cp {input} {output}"
