@@ -17,3 +17,12 @@ vep:
 
 fastqc:
   threads: 10
+
+mutect2_gvcf:
+  time: "8:00:00"
+
+mutect2:
+  time: "8:00:00"
+
+gene_fuse:
+  threads: 10

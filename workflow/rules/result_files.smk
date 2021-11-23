@@ -139,3 +139,12 @@ rule copy_tmb:
         "results/dna/tmb/{sample}_{type}.TMB.txt",
     shell:
         "cp {input} {output}"
+
+
+rule copy_gene_fuse:
+    input:
+        "fusions/gene_fuse/{sample}_{type}_gene_fuse_fusions.txt",
+    output:
+        "results/dna/fusions/{sample}_{type}_gene_fuse_fusions.txt",
+    shell:
+        "cp {input} {output}"

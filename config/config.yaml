@@ -128,3 +128,7 @@ msisensor_pro:
 
 tmb:
   container: "docker://gmsuppsala/somatic:develop"
+
+gene_fuse:
+  container: "docker://hydragenetics/genefuse:0.6.1"
+  genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/druggable.hg19.csv"
