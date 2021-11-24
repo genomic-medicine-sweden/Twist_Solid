@@ -161,7 +161,7 @@ rule copy_cnvkit_call_loh:
 
 rule copy_gatk_cnv:
     input:
-        "cnv_sv/gatk_cnv_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg,
+        "cnv_sv/gatk_cnv_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg",
     output:
         "results/dna/cnv/{sample}_{type}.gatk_cnv.seg",
     shell:
