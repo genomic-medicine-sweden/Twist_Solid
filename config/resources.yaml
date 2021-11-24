@@ -25,4 +25,7 @@ mutect2:
   time: "8:00:00"
 
 gene_fuse:
-  threads: 10
+  threads: 4
+
+cnvkit_call:
+  threads: 8

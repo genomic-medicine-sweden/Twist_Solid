@@ -11,7 +11,6 @@ reference:
   artifacts: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/hydra_test/artifact_panel.tsv"
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
   dict: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
-  fna: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fna"
   amb: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.amb"
   ann: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.ann"
   bwt: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.bwt"
@@ -132,3 +131,30 @@ tmb:
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
   genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/druggable.hg19.csv"
+
+cnvkit_call:
+  container: "docker://gmsuppsala/somatic:develop"
+  normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/hydra_test/cnvkit.PoN.cnn"
+
+cnvkit_call_loh:
+  container: "docker://gmsuppsala/somatic:develop"
+
+germline_vcf:
+  container: "docker://ensemblorg/ensembl-vep:release_99.0"
+
+gatk_cnv_collect_read_counts:
+  container: "docker://gmsuppsala/somatic:develop"
+
+gatk_cnv_denoise_read_counts:
+  container: "docker://gmsuppsala/somatic:develop"
+  normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/hydra_test/gatk_cnv_panel_of_normal.hdf5"
+
+gatk_cnv_collect_allelic_counts:
+  container: "docker://gmsuppsala/somatic:develop"
+  SNP_interval: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/gnomad_SNP_0.001_target.annotated.interval_list"
+
+gatk_cnv_model_segments:
+  container: "docker://gmsuppsala/somatic:develop"
+
+gatk_cnv_call_copy_ratio_segments:
+  container: "docker://gmsuppsala/somatic:develop"

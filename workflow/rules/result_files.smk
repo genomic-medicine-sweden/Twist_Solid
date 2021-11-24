@@ -148,3 +148,21 @@ rule copy_gene_fuse:
         "results/dna/fusions/{sample}_{type}_gene_fuse_fusions.txt",
     shell:
         "cp {input} {output}"
+
+
+rule copy_cnvkit_call_loh:
+    input:
+        "cnv_sv/cnvkit_call_loh/{sample}_{type}.loh.cns",
+    output:
+        "results/dna/cnv/{sample}_{type}.cnvkit_loh.cns",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_gatk_cnv:
+    input:
+        "cnv_sv/gatk_cnv_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg,
+    output:
+        "results/dna/cnv/{sample}_{type}.gatk_cnv.seg",
+    shell:
+        "cp {input} {output}"

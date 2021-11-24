@@ -158,4 +158,18 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
             for t in get_unit_types(units, sample)
         ]
     )
+    output_files.append(
+        [
+            "results/dna/cnv/%s_%s.cnvkit_loh.cns" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
+    output_files.append(
+        [
+            "results/dna/cnv/%s_%s.gatk_cnv.seg" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
     return output_files
