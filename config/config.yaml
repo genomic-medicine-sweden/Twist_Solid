@@ -53,16 +53,16 @@ mutect2_gvcf:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
 merge_vcf:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
 
 merge_gvcf:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
 
 bgzip_vcf:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
 
 tabix_vcf:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
 
 decompose:
   container: "docker://gmsuppsala/somatic:develop"
@@ -71,7 +71,7 @@ normalize:
   container: "docker://gmsuppsala/somatic:develop"
 
 sort_vcf:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
 
 ensemble_vcf:
   container: "docker://gmsuppsala/somatic:develop"
@@ -81,10 +81,13 @@ ensemble_vcf:
   sort_order: "vardict,mutect2"
 
 fix_af:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
 
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
+
+bed_split:
+  container: "docker://hydragenetics/common:0.0.1"
 
 vep:
   container: "docker://ensemblorg/ensembl-vep:release_99.0"
@@ -96,10 +99,10 @@ calculate_seqrun_background:
   container: "docker://python:3.9.7-slim"
 
 bgzip_vcf:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
 
 tabix_vcf:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
 
 fastqc:
   container: "docker://hydragenetics/fastqc:0.11.9"
@@ -127,7 +130,10 @@ msisensor_pro:
   PoN: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/hydra_test/Msisensor_pro_reference.list_baseline"
 
 tmb:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
+
+hrd:
+  container: "docker://hydragenetics/common:0.0.1"
 
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
@@ -139,6 +145,9 @@ cnvkit_call:
 
 cnvkit_call_loh:
   container: "docker://gmsuppsala/somatic:develop"
+
+cnvkit_vcf:
+  container: "docker://hydragenetics/common:0.0.1"
 
 germline_vcf:
   container: "docker://ensemblorg/ensembl-vep:release_99.0"
@@ -159,3 +168,12 @@ gatk_cnv_model_segments:
 
 gatk_cnv_call_copy_ratio_segments:
   container: "docker://gmsuppsala/somatic:develop"
+
+gatk_cnv_vcf:
+  container: "docker://hydragenetics/common:0.0.1"
+
+svdb_merge:
+  container: "docker://hydragenetics/svdb:2.5.0"
+  cnv_callers:
+    - "cnvkit"
+    - "gatk_cnv"

@@ -141,6 +141,15 @@ rule copy_tmb:
         "cp {input} {output}"
 
 
+rule copy_hrd:
+    input:
+        "biomarker/hrd/{sample}_{type}.hrd_score.txt",
+    output:
+        "results/dna/hrd/{sample}_{type}.hrd_score.txt",
+    shell:
+        "cp {input} {output}"
+
+
 rule copy_gene_fuse:
     input:
         "fusions/gene_fuse/{sample}_{type}_gene_fuse_fusions.txt",
@@ -164,5 +173,32 @@ rule copy_gatk_cnv:
         "cnv_sv/gatk_cnv_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg",
     output:
         "results/dna/cnv/{sample}_{type}.gatk_cnv.seg",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_gatk_cnv_vcf:
+    input:
+        "cnv_sv/gatk_cnv_vcf/{sample}_{type}.vcf",
+    output:
+        "results/dna/cnv/{sample}_{type}.gatk_cnv.vcf",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_cnvkit_vcf:
+    input:
+        "cnv_sv/cnvkit_vcf/{sample}_{type}.vcf",
+    output:
+        "results/dna/cnv/{sample}_{type}.cnvkit.vcf",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_svdb_merge:
+    input:
+        "cnv_sv/svdb_merge/{sample}_{type}.merged.vcf",
+    output:
+        "results/dna/cnv/{sample}_{type}.merged.vcf",
     shell:
         "cp {input} {output}"

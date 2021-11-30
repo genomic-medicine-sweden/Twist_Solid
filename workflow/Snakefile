@@ -58,16 +58,14 @@ module biomarker:
 
 use rule * from biomarker as biomarker_*
 
-
 module fusions:
    snakefile: github("hydra-genetics/fusions", path="workflow/Snakefile", tag="develop")
    config: config
 
 use rule * from fusions as fusions_*
 
-
 module cnv_sv:
-   snakefile: github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="gatk_cnv_fix")
+   snakefile: github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="develop")
    config: config
 
 use rule * from cnv_sv as cnv_sv_*

@@ -153,6 +153,13 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
     )
     output_files.append(
         [
+            "results/dna/hrd/%s_%s.hrd_score.txt" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
+    output_files.append(
+        [
             "results/dna/fusions/%s_%s_gene_fuse_fusions.txt" % (sample, t)
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
@@ -168,6 +175,19 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
     output_files.append(
         [
             "results/dna/cnv/%s_%s.gatk_cnv.seg" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
+    output_files.append(
+        ["results/dna/cnv/%s_%s.gatk_cnv.vcf" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]
+    )
+    output_files.append(
+        ["results/dna/cnv/%s_%s.cnvkit.vcf" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]
+    )
+    output_files.append(
+        [
+            "results/dna/cnv/%s_%s.merged.vcf" % (sample, t)
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
         ]
