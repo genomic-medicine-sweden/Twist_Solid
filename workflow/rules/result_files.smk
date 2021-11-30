@@ -202,3 +202,12 @@ rule copy_svdb_merge:
         "results/dna/cnv/{sample}_{type}.merged.vcf",
     shell:
         "cp {input} {output}"
+
+
+rule multiqc:
+    input:
+        "qc/multiqc/MultiQC.html",
+    output:
+        "results/dna/qc/MultiQC.html",
+    shell:
+        "cp {input} {output}"
