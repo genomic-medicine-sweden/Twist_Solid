@@ -192,5 +192,5 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
             for t in get_unit_types(units, sample)
         ]
     )
-    output_files.append("results/qc/MultiQC.html")
+    output_files.append("results/dna/qc/MultiQC.html")
     return output_files

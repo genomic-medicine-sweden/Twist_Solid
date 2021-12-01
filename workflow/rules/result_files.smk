@@ -204,7 +204,7 @@ rule copy_svdb_merge:
         "cp {input} {output}"
 
 
-rule multiqc:
+rule copy_multiqc:
     input:
         "qc/multiqc/MultiQC.html",
     output:
