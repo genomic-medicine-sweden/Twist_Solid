@@ -29,3 +29,6 @@ gene_fuse:
 
 cnvkit_call:
   threads: 8
+  
+vardict:
+  time: "8:00:00"
