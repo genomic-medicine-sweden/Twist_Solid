@@ -13,6 +13,15 @@ rule copy_bam:
         "results/dna/bam/{sample}_{type}.bam",
     shell:
         "cp {input} {output}"
+        
+
+rule copy_bai:
+    input:
+        "alignment/merge_bam/{sample}_{type}.bam.bai",
+    output:
+        "results/dna/bam/{sample}_{type}.bam.bai",
+    shell:
+        "cp {input} {output}"
 
 
 rule copy_caller_vcf:
