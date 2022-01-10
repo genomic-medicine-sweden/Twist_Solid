@@ -192,5 +192,11 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
             for t in get_unit_types(units, sample)
         ]
     )
-    output_files.append("results/dna/qc/MultiQC.html")
+    output_files.append(
+        [
+            "results/dna/hotspot_report/s%_s%.output.tsv" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
     return output_files

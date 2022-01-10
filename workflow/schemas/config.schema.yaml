@@ -19,8 +19,50 @@ properties:
     type: string
     description: name or path to a default docker/singularity container
 
+  hotspot_report:
+    type: object
+    properties:
+      hotspot_mutations:
+        type: string
+        description: path for file with hotspot definitions
+      report_config:
+        type: string
+        description: path for file with defining which field should be extracted from annotation
+      chr_translation_file:
+        type: string
+        description: file used to translate chr to NC id. Format, a tab seperate file with column chr and NC
+      levels:
+        type: array
+        items:
+          type: array
+          items:
+            - type: number
+              description: depth above this value
+            - type: "string"
+              description: depth level status, ex ok or low
+            - type: "string"
+              description: depth status ok, not analyzable
+          additionalItems: false
+          minItems: 3
+          maxItems: 3
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for msisensor_pro
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to msisensor_pro
+    required:
+      - hotspot_mutations
+      - report_config
+      - chr_translation_file
+      - levels
+
   required:
     - samples
     - units
     - resources
     - default_container
+    - levels

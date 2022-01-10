@@ -188,3 +188,12 @@ multiqc:
     - "qc/fastqc/{sample}_{type}_fastq2_fastqc.zip"
     - "qc/picard_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
     - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
+
+hotspot_report:
+  hotspot_mutations: "path"
+  report_config: "path"
+  chr_translation_file: "path"
+  levels:
+    - [300, "ok", "yes"]
+    - [30, "low", "yes"]
+    - [0, "low", "not analyzable"]
