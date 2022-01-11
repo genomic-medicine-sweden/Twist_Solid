@@ -1,0 +1,36 @@
+columns:
+  Analyzable:
+    from: 'function'
+    name: "get_read_level"
+    variables:
+      - levels
+      - depth
+    column: 1
+  Min_read_depth300:
+    from: 'function'
+    name: "get_read_level"
+    variables:
+      - levels
+      - depth
+    column: 0
+  Consequence:
+    from: 'vep'
+    field: 'Consequence'
+  db1000G:
+    from: 'vep'
+    field: 'AF'
+  GnomAD:
+    from: 'vep'
+    field: 'MAX_AF'
+  rs:
+    from: 'vep'
+    field: 'Existing_variation'
+  clinvar:
+    from: 'vep'
+    field: 'CLIN_SIG'
+  CDS_change:
+    from: 'vep'
+    field: 'HGVSc'
+  AA_change:
+    from: 'vep'
+    field: 'HGVSp'
