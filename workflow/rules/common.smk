@@ -194,7 +194,7 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
     )
     output_files.append(
         [
-            "results/dna/hotspot_report/s%_s%.output.tsv" % (sample, t)
+            "results/dna/hotspot_report/%s_%s.output.tsv" % (sample, t)
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
         ]

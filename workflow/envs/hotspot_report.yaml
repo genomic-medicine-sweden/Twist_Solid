@@ -3,3 +3,5 @@ channels:
   - bioconda
   - defaults
 dependencies:
+  - pip:
+      - hydra-gentics==0.2.1

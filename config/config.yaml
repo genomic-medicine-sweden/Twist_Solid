@@ -190,9 +190,10 @@ multiqc:
     - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
 
 hotspot_report:
+  container: "docker://hydragenetics/common:0.0.1"
   hotspot_mutations: "path"
-  report_config: "path"
-  chr_translation_file: "path"
+  report_config: "config/config_report.yaml"
+  chr_translation_file: "reference.hg19.Info"
   levels:
     - [300, "ok", "yes"]
     - [30, "low", "yes"]

@@ -9,14 +9,16 @@ __license__ = "GPL-3"
 
 rule hotspot_report:
     input:
-        hotspot=config['hotspot_report']['hotspot_mutations'],
-        vcf_file="filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vcf.gz",
-        gvcf_file="snv_indels/mutect2/{sample}_{type}.merged.gvcf.gz",
+        hotspots=config['hotspot_report']['hotspot_mutations'],
+        vcf="filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vcf.gz",
+        vcf_index="filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vcf.gz.tbi",
+        gvcf="snv_indels/mutect2_gvcf/{sample}_{type}.merged.gvcf.gz",
+        gvcf_index="snv_indels/mutect2_gvcf/{sample}_{type}.merged.gvcf.gz.tbi",
     output:
-        "results/dna/hotspot_report/{sample}_{type}.output.tsv",
+        report="results/dna/hotspot_report/{sample}_{type}.output.tsv",
     params:
         levels=config.get("hotspot_report", {}).get("levels", []),
-        sample_name=lambda wildcards: wildcards.sample,
+        sample_name=lambda wildcards: "%s_%s" % (wildcards.sample, wildcards.type),
         report_config=config.get("hotspot_report", {})["report_config"],
         chr_translation_file=config.get("hotspot_report", {})["chr_translation_file"],
         extra=config.get("hotspot_report", {}).get("extra", ""),
