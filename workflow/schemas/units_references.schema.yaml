@@ -1,0 +1,24 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: row represents one dataset
+properties:
+  sample:
+    type: string
+    description: sample id
+  type:
+    type: string
+    description: type of sample (N|T|R)
+  bam:
+    type: string
+    description: absolute path to bam file
+  vcf:
+    type: string
+    description: absolute path to vcf file
+  gvcf:
+    type: string
+    description: absolute path to gvcf file
+  cnv_vcf:
+    type: string
+    description: absolute path to cnv vcf file
+required:
+  - sample
+  - type
