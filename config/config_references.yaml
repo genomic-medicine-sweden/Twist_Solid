@@ -1,0 +1,50 @@
+resources: "config/resources_references.yaml"
+samples: "samples_references.tsv"
+units: "units_references.tsv"
+
+default_container: "docker://hydragenetics/common:0.0.1"
+
+reference:
+  fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
+  dict: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
+  design_bedfile: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.bed"
+  mappability: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/access-5k-mappable.hg19.bed"
+
+cnvkit_create_targets:
+  container: "docker://gmsuppsala/somatic:develop"
+
+cnvkit_create_anti_targets:
+  container: "docker://gmsuppsala/somatic:develop"
+
+cnvkit_build_normal_reference:
+  container: "docker://gmsuppsala/somatic:develop"
+
+bed_to_interval_list:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+preprocess_intervals:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+collect_read_counts:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+create_read_count_panel_of_normals:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+msisensor_pro_scan:
+  container: "docker://hydragenetics/msisensor_pro:1.2.0"
+
+msisensor_pro_baseline:
+  container: "docker://hydragenetics/msisensor_pro:1.2.0"
+
+svdb_build:
+  container: "docker://hydragenetics/svdb:2.5.0"
+
+svdb_export:
+  container: "docker://hydragenetics/svdb:2.5.0"
+
+create_artifact_file:
+  container: "docker://hydragenetics/common:0.0.1"
+
+create_background_file:
+  container: "docker://hydragenetics/common:0.0.1"
