@@ -1,4 +1,20 @@
 columns:
+  chr:
+    order: 1
+  start:
+    order: 2
+  stop:
+    order: 3
+  sample:
+    visible: 0
+  report:
+    order: 10
+  gvcf_depth:
+    order: 12
+  ref_depth:
+    order: 13
+  alt_depth: 
+    order: 14
   Analyzable:
     from: 'function'
     name: "get_read_level"
@@ -13,24 +29,56 @@ columns:
       - levels
       - depth
     column: 0
+  Gene:
+    from: 'vep'
+    field: 'SYMBOL'
+    order: 4
   Consequence:
     from: 'vep'
     field: 'Consequence'
+    order: 5
+  Exon:
+    from: 'vep'
+    field: 'EXON'
+    order: 6
   db1000G:
     from: 'vep'
     field: 'AF'
+    order: 17
   GnomAD:
     from: 'vep'
     field: 'MAX_AF'
+    order: 18
+  Accession_number:
+    from: 'vep'
+    field: 'Feature'
+    order: 9
   rs:
     from: 'vep'
     field: 'Existing_variation'
+    order: 16
   clinvar:
     from: 'vep'
     field: 'CLIN_SIG'
+    order: 19
   CDS_change:
     from: 'vep'
     field: 'HGVSc'
+    order: 8
   AA_change:
     from: 'vep'
     field: 'HGVSp'
+    order: 7
+  Comment:
+    from: 'hotspot'
+    field: 'COMMENT'
+    order: 11
+  AF:
+    from: 'function'
+    name: 'get_info_field'
+    variables:
+      - var
+      - 'AF'
+    order: 15
+
+

@@ -1,4 +1,4 @@
-from hydra_genetics.utils.io.filtered_mutations import generate_filtered_mutations
+from hydra_genetics.utils.io.hotspot_report import generate_hotspot_report
 
 hotspot_file = snakemake.input.hotspots
 vcf_file = snakemake.input.vcf
@@ -12,11 +12,11 @@ sample_name = snakemake.params.sample_name
 chr_translation_file = snakemake.params.chr_translation_file
 
 
-generate_filtered_mutations(sample_name,
-                            report,
-                            levels,
-                            hotspot_file,
-                            vcf_file,
-                            gvcf_file,
-                            chr_translation_file,
-                            config)
+generate_hotspot_report(sample_name,
+                        report,
+                        levels,
+                        hotspot_file,
+                        vcf_file,
+                        gvcf_file,
+                        chr_translation_file,
+                        config)
