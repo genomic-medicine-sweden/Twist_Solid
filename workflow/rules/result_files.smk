@@ -13,7 +13,7 @@ rule copy_bam:
         "results/dna/bam/{sample}_{type}.bam",
     shell:
         "cp {input} {output}"
-        
+
 
 rule copy_bai:
     input:
@@ -177,6 +177,15 @@ rule copy_cnvkit_call_loh:
         "cp {input} {output}"
 
 
+rule copy_cnvkit_scatter:
+    input:
+        "cnv_sv/cnvkit_scatter/{sample}_{type}.png",
+    output:
+        "results/dna/cnv/{sample}_{type}.png",
+    shell:
+        "cp {input} {output}"
+
+
 rule copy_gatk_cnv:
     input:
         "cnv_sv/gatk_cnv_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg",
@@ -209,6 +218,15 @@ rule copy_svdb_merge:
         "cnv_sv/svdb_merge/{sample}_{type}.merged.vcf",
     output:
         "results/dna/cnv/{sample}_{type}.merged.vcf",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_svdb_query:
+    input:
+        "cnv_sv/svdb_query/{sample}_{type}.svdb_query.vcf"
+    output:
+        "results/dna/cnv/{sample}_{type}.svdb_query.vcf",
     shell:
         "cp {input} {output}"
 

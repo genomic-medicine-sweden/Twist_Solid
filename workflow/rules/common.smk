@@ -186,8 +186,18 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
         ["results/dna/cnv/%s_%s.cnvkit.vcf" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]
     )
     output_files.append(
+        ["results/dna/cnv/%s_%s.png" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]
+    )
+    output_files.append(
         [
             "results/dna/cnv/%s_%s.merged.vcf" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
+    output_files.append(
+        [
+            "results/dna/cnv/%s_%s.svdb_query.vcf" % (sample, t)
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
         ]
