@@ -139,11 +139,11 @@ gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
   genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/druggable.hg19.csv"
 
-cnvkit_call:
+cnvkit_batch:
   container: "docker://gmsuppsala/somatic:develop"
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_26_normal.PoN.cnn"
 
-cnvkit_call_loh:
+cnvkit_call:
   container: "docker://gmsuppsala/somatic:develop"
 
 cnvkit_vcf:
