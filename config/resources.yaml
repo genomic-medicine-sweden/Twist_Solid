@@ -27,8 +27,5 @@ mutect2:
 gene_fuse:
   threads: 4
 
-cnvkit_call:
-  threads: 8
-  
 vardict:
   time: "8:00:00"

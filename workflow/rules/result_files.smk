@@ -96,9 +96,9 @@ rule copy_picard_alignment_summary_metrics:
         "cp {input} {output}"
 
 
-rule copy_picard_hs_metrics:
+rule copy_picard_collect_hs_metrics:
     input:
-        "qc/picard_hs_metrics/{sample}_{type}.HsMetrics.txt",
+        "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt",
     output:
         "results/dna/qc/{sample}_{type}.HsMetrics.txt",
     shell:
@@ -168,9 +168,9 @@ rule copy_gene_fuse:
         "cp {input} {output}"
 
 
-rule copy_cnvkit_call_loh:
+rule copy_cnvkit_call:
     input:
-        "cnv_sv/cnvkit_call_loh/{sample}_{type}.loh.cns",
+        "cnv_sv/cnvkit_call/{sample}_{type}.loh.cns",
     output:
         "results/dna/cnv/{sample}_{type}.cnvkit_loh.cns",
     shell:
