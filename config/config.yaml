@@ -116,7 +116,7 @@ picard_alignment_summary_metrics:
 picard_duplication_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
 
-picard_hs_metrics:
+picard_collect_hs_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
 
 picard_insert_size:
