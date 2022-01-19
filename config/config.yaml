@@ -142,6 +142,7 @@ gene_fuse:
 cnvkit_batch:
   container: "docker://gmsuppsala/somatic:develop"
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_26_normal.PoN.cnn"
+  method: "hybrid"
 
 cnvkit_call:
   container: "docker://gmsuppsala/somatic:develop"
