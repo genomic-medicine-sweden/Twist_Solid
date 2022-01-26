@@ -43,7 +43,7 @@ fastp_pe:
 
 vardict:
   container: "docker://gmsuppsala/somatic:develop"
-  bed_columns: "-c 1 -S 3 -E 3 -g 4"
+  bed_columns: "-c 1 -S 2 -E 3 -g 4"
   allele_frequency_threshold: "0.01"
 
 mutect2:
