@@ -183,7 +183,7 @@ multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
   config: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/multiqc_config.yaml"
   qc_files:
-    - "qc/picard_hs_metrics/{sample}_{type}.HsMetrics.txt"
+    - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
     - "qc/picard_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
     - "qc/fastqc/{sample}_{type}_fastq1_fastqc.zip"
     - "qc/fastqc/{sample}_{type}_fastq2_fastqc.zip"
