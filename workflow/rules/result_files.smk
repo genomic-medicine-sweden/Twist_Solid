@@ -13,7 +13,7 @@ rule copy_bam:
         "results/dna/bam/{sample}_{type}.bam",
     shell:
         "cp {input} {output}"
-        
+
 
 rule copy_bai:
     input:
@@ -65,6 +65,24 @@ rule copy_filtered_vcf:
         "filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vcf.gz",
     output:
         "results/dna/vcf/{sample}_{type}.ensembled.vep_annotated.filtered.codon_snvs.vcf.gz",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_bcftools_regionfilter1:
+    input:
+        "filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.included.nocnv.vcf.gz",
+    output:
+        "results/dna/vcf/{sample}_{type}.ensembled.vep_annotated.filtered.codon_snvs.nocnv.vcf.gz",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_bcftools_regionfilter2:
+    input:
+        "filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.included.exon.vcf.gz",
+    output:
+        "results/dna/vcf/{sample}_{type}.ensembled.vep_annotated.filtered.codon_snvs.exon_only.vcf.gz",
     shell:
         "cp {input} {output}"
 
