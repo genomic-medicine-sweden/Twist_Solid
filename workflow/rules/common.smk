@@ -45,11 +45,42 @@ wildcard_constraints:
     unit="N|T|R",
 
 
-def compile_output_list(wildcards: snakemake.io.Wildcards):
+def compile_output_list(wildcards):
+    files = {
+        "results/dna/vcf/": [
+            ".ensembled.vcf.gz",
+            ".ensembled.vep_annotated.vcf",
+            ".ensembled.vep_annotated.filtered.codon_snvs.vcf.gz",
+            ".ensembled.vep_annotated.filtered.codon_snvs.nocnv.vcf.gz",
+            ".ensembled.vep_annotated.filtered.codon_snvs.exon_only.vcf.gz",
+        ],
+        "results/dna/gvcf/": [".gvcf.gz"],
+        "results/dna/qc/": [
+            ".duplication_metrics.txt",
+            ".alignment_summary_metrics.txt",
+            ".HsMetrics.txt",
+            ".insert_size_metrics.txt",
+            ".samtools-stats.txt",
+        ],
+        "results/dna/hotspot_info/": [".hotspot_info.tsv"],
+        "results/dna/msi/": [".msisensor_pro.tsv"],
+        "results/dna/tmb/": [".TMB.txt"],
+        "results/dna/hrd/": [".hrd_score.txt"],
+        "results/dna/fusions/": ["_gene_fuse_fusions.txt"],
+        "results/dna/cnv/": [
+            ".cnvkit_loh.cns",
+            ".gatk_cnv.seg",
+            ".gatk_cnv.vcf",
+            ".cnvkit.vcf",
+            ".merged.vcf",
+        ],
+    }
     output_files = [
-        "results/dna/bam/%s_%s.bam" % (sample, type)
+        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
         for sample in get_samples(samples)
-        for type in get_unit_types(units, sample)
+        for unit_type in get_unit_types(units, sample)
+        for suffix in files[prefix]
     ]
     output_files.append(
         [
@@ -61,133 +92,8 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
     )
     output_files.append(
         [
-            "results/dna/vcf/%s_%s.ensembled.vcf.gz" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/gvcf/%s_%s.gvcf.gz" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/vcf/%s_%s.ensembled.vep_annotated.vcf" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/vcf/%s_%s.ensembled.vep_annotated.filtered.codon_snvs.vcf.gz" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
             "results/dna/qc/%s_%s_%s_fastqc.html" % (sample, t, read)
             for read in ["fastq1", "fastq2"]
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/qc/%s_%s.duplication_metrics.txt" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/qc/%s_%s.alignment_summary_metrics.txt" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/qc/%s_%s.HsMetrics.txt" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/qc/%s_%s.insert_size_metrics.txt" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/qc/%s_%s.samtools-stats.txt" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/hotspot_info/%s_%s.hotspot_info.tsv" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/msi/%s_%s.msisensor_pro.tsv" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/tmb/%s_%s.TMB.txt" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/hrd/%s_%s.hrd_score.txt" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/fusions/%s_%s_gene_fuse_fusions.txt" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/cnv/%s_%s.cnvkit_loh.cns" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "results/dna/cnv/%s_%s.gatk_cnv.seg" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        ["results/dna/cnv/%s_%s.gatk_cnv.vcf" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]
-    )
-    output_files.append(
-        ["results/dna/cnv/%s_%s.cnvkit.vcf" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]
-    )
-    output_files.append(
-        [
-            "results/dna/cnv/%s_%s.merged.vcf" % (sample, t)
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
         ]
