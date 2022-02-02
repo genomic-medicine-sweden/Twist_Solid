@@ -47,27 +47,27 @@ wildcard_constraints:
 
 def compile_output_list(wildcards):
     files = {
-        "results/dna/vcf/": [
+        "results/dna/vcf": [
             ".ensembled.vcf.gz",
             ".ensembled.vep_annotated.vcf",
             ".ensembled.vep_annotated.filtered.codon_snvs.vcf.gz",
             ".ensembled.vep_annotated.filtered.codon_snvs.nocnv.vcf.gz",
             ".ensembled.vep_annotated.filtered.codon_snvs.exon_only.vcf.gz",
         ],
-        "results/dna/gvcf/": [".gvcf.gz"],
-        "results/dna/qc/": [
+        "results/dna/gvcf": [".gvcf.gz"],
+        "results/dna/qc": [
             ".duplication_metrics.txt",
             ".alignment_summary_metrics.txt",
             ".HsMetrics.txt",
             ".insert_size_metrics.txt",
             ".samtools-stats.txt",
         ],
-        "results/dna/hotspot_info/": [".hotspot_info.tsv"],
-        "results/dna/msi/": [".msisensor_pro.tsv"],
-        "results/dna/tmb/": [".TMB.txt"],
-        "results/dna/hrd/": [".hrd_score.txt"],
-        "results/dna/fusions/": ["_gene_fuse_fusions.txt"],
-        "results/dna/cnv/": [
+        "results/dna/hotspot_info": [".hotspot_info.tsv"],
+        "results/dna/msi": [".msisensor_pro.tsv"],
+        "results/dna/tmb": [".TMB.txt"],
+        "results/dna/hrd": [".hrd_score.txt"],
+        "results/dna/fusions": ["_gene_fuse_fusions.txt"],
+        "results/dna/cnv": [
             ".cnvkit_loh.cns",
             ".gatk_cnv.seg",
             ".gatk_cnv.vcf",
