@@ -25,7 +25,8 @@ mutect2:
   time: "8:00:00"
 
 gene_fuse:
-  threads: 4
+  threads: 6
+  time: "8:00:00"
 
 vardict:
   time: "8:00:00"
