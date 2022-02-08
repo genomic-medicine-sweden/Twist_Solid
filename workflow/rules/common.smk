@@ -62,7 +62,6 @@ def compile_output_list(wildcards):
             ".insert_size_metrics.txt",
             ".samtools-stats.txt",
         ],
-        "results/dna/hotspot_info": [".hotspot_info.tsv"],
         "results/dna/msi": [".msisensor_pro.tsv"],
         "results/dna/tmb": [".TMB.txt"],
         "results/dna/hrd": [".hrd_score.txt"],
