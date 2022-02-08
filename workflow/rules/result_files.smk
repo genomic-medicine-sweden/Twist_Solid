@@ -141,15 +141,6 @@ rule copy_samtools_stats:
         "cp {input} {output}"
 
 
-rule copy_hotspot_info:
-    input:
-        "qc/hotspot_info/{sample}_{type}.hotspot_info.tsv",
-    output:
-        "results/dna/hotspot_info/{sample}_{type}.hotspot_info.tsv",
-    shell:
-        "cp {input} {output}"
-
-
 rule copy_msisensor_pro:
     input:
         "biomarker/msisensor_pro/{sample}_{type}",
