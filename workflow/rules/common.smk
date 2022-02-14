@@ -47,6 +47,10 @@ wildcard_constraints:
 
 def compile_output_list(wildcards):
     files = {
+        "results/dna/bam/": [
+            ".bam",
+            ".bam.bai",
+        ],
         "results/dna/vcf": [
             ".ensembled.vcf.gz",
             ".ensembled.vep_annotated.vcf",
