@@ -4,7 +4,7 @@ units: "units.tsv"
 
 default_container: "docker://hydragenetics/common:0.0.1"
 
-trimmer_software: "fastp"
+trimmer_software: "fastp_pe"
 
 reference:
   background: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/Background/background_panel_26_normal.tsv"
