@@ -10,8 +10,6 @@ __license__ = "GPL-3"
 include: "rules/common.smk"
 include: "rules/result_files.smk"
 
-ruleorder: copy_results_files > alignment_samtools_sort
-
 rule all:
     input:
         unpack(compile_output_list),
