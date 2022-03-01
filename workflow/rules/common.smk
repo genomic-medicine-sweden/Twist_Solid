@@ -93,17 +93,15 @@ def compile_result_file_list():
         {"in": ["cnv_sv/svdb_merge", ".merged.vcf"], "out": ["results/dna/cnv", ".merged.vcf"]},
     ]
     output_files = [
-        "%s/%s_%s%s" % (pre_suff[0], sample, unit_type, pre_suff[1])
-        for prefix in files.keys()
+        "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
+        for file_info in files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
-        for pre_suff in [f_dict["out"] for p_out in files.keys() for f_dict in files[p_out]]
     ]
     input_files = [
-        "%s/%s_%s%s" % (pre_suff[0], sample, unit_type, pre_suff[1])
+        "%s/%s_%s%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
-        for pre_suff in [f_dict["in"] for p_out in files.keys() for f_dict in files[p_out]]
     ]
     output_files += [
         "results/dna/vcf/%s_%s_%s.vcf.gz" % (caller, sample, t)
