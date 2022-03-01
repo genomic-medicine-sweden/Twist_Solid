@@ -89,6 +89,9 @@ germline_vcf:
 mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
+mosdepth_bed:
+  container: "docker://hydragenetics/mosdepth:0.3.2"
+
 msisensor_pro:
   container: "docker://hydragenetics/msisensor_pro:1.1.a"
   PoN: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/Msisensor_pro_reference_26_normal.list_baseline"
