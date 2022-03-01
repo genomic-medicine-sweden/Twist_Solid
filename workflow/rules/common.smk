@@ -45,76 +45,63 @@ wildcard_constraints:
     unit="N|T|R",
 
 
+
 def compile_result_file_list():
-    files = {
-        "results/dna/bam": [
-            {"in": ["alignment/merge_bam", ".bam"], "out": ".bam"},
-            {"in": ["alignment/merge_bam", ".bam.bai"], "out": ".bam.bai"},
-        ],
-        "results/dna/vcf": [
-            {"in": ["snv_indels/ensemble_vcf", ".ensembled.vcf.gz"], "out": ".ensembled.vcf.gz"},
-            {"in": ["snv_indels/ensemble_vcf", ".ensembled.vep_annotated.vcf"], "out": ".ensembled.vep_annotated.vcf"},
-            {
-                "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.vcf.gz"],
-                "out": ".ensembled.vep_annotated.filtered.codon_snvs.vcf.gz"
-            },
-            {
-                "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.include.nocnv.vcf.gz"],
-                "out": ".ensembled.vep_annotated.filtered.codon_snvs.nocnv.vcf.gz"
-            },
-            {
-                "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.include.exon.vcf.gz"],
-                "out": ".ensembled.vep_annotated.filtered.codon_snvs.exon_only.vcf.gz"
-            },
-        ],
-        "results/dna/gvcf": [
-            {"in": ["snv_indels/mutect2_gvcf", ".gvcf.gz"], "out": ".gvcf.gz"},
-        ],
-        "results/dna/qc": [
-            {"in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"], "out": ".duplication_metrics.txt"},
-            {
-                "in": ["qc/picard_collect_duplication_metrics", ".alignment_summary_metrics.txt"],
-                "out": ".alignment_summary_metrics.txt"
-            },
-            {"in": ["qc/picard_collect_hs_metrics", ".HsMetrics.txt"], "out": ".HsMetrics.txt"},
-            {"in": ["qc/picard_collect_insert_size_metrics", ".insert_size_metrics.txt"], "out": ".insert_size_metrics.txt"},
-            {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ".samtools-stats.txt"},
-        ],
-        "results/dna/msi": [
-            {"in": ["biomarker/msisensor_pro", ".msisensor_pro.tsv"], "out": ".msisensor_pro.tsv"},
-        ],
-        "results/dna/tmb": [
-            {"in": ["biomarker/tmb", ".TMB.txt"], "out": ".TMB.txt"},
-        ],
-        "results/dna/hrd": [
-            {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ".hrd_score.txt"},
-        ],
-        "results/dna/fusions": [
-            {"in": ["fusions/gene_fuse", "_gene_fuse_fusions.txt"], "out": "_gene_fuse_fusions.txt"},
-        ],
-        "results/dna/cnv": [
-            {"in": ["cnv_sv/cnvkit_call", ".cnvkit_loh.cns"], "out": ".cnvkit_loh.cns"},
-            {"in": ["cnv_sv/gatk_cnv_call_copy_ratio_segments", ".gatk_cnv.seg"], "out": ".gatk_cnv.seg"},
-            {"in": ["cnv_sv/gatk_cnv_vcf", ".gatk_cnv.vcf"], "out": ".gatk_cnv.vcf"},
-            {"in": ["cnv_sv/cnvkit_vcf", ".cnvkit.vcf"], "out": ".cnvkit.vcf"},
-            {"in": ["cnv_sv/svdb_merge", ".merged.vcf"], "out": ".merged.vcf"},
-        ],
-    }
+    files = [
+        {"in": ["alignment/merge_bam", ".bam"], "out": ["results/dna/bam", ".bam"]},
+        {"in": ["alignment/merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"},
+        {"in": ["snv_indels/ensemble_vcf", ".ensembled.vcf.gz"], "out": ["results/dna/vcf", ".ensembled.vcf.gz"]},
+        {"in": ["snv_indels/ensemble_vcf", ".ensembled.vep_annotated.vcf"], "out": ["results/dna/vcf", ".ensembled.vep_annotated.vcf"]},
+        {
+            "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.vcf.gz"],
+            "out": ["results/dna/vcf", ".ensembled.vep_annotated.filtered.codon_snvs.vcf.gz"]
+        },
+        #{
+        #    "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.include.nocnv.vcf.gz"],
+        #    "out": ["results/dna/vcf", ".ensembled.vep_annotated.filtered.codon_snvs.nocnv.vcf.gz"]
+        #},
+        #{
+        #    "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.include.exon.vcf.gz"],
+        #    "out": ["results/dna/vcf", ".ensembled.vep_annotated.filtered.codon_snvs.exon_only.vcf.gz"]
+        #},
+        {"in": ["snv_indels/mutect2_gvcf", ".gvcf.gz"], "out": ["results/dna/gvcf", ".gvcf.gz"]},
+        {
+            "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
+            "out": ["results/dna/qc", ".duplication_metrics.txt"]},
+        {
+            "in": ["qc/picard_collect_duplication_metrics", ".alignment_summary_metrics.txt"],
+            "out": ["results/dna/qc", ".alignment_summary_metrics.txt"]
+        },
+        {"in": ["qc/picard_collect_hs_metrics", ".HsMetrics.txt"], "out": ["results/dna/qc", ".HsMetrics.txt"]},
+        {
+            "in": ["qc/picard_collect_insert_size_metrics", ".insert_size_metrics.txt"],
+            "out": ["results/dna/qc", ".insert_size_metrics.txt"]
+        },
+        {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
+        {"in": ["biomarker/msisensor_pro", ".msisensor_pro.tsv"], "out": ["results/dna/msi", ".msisensor_pro.tsv"]},
+        {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
+        {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ["results/dna/hrd", ".hrd_score.txt"]},
+        {"in": ["fusions/gene_fuse", "_gene_fuse_fusions.txt"], "out": ["results/dna/fusions", "_gene_fuse_fusions.txt"]},
+        {"in": ["cnv_sv/cnvkit_call", ".cnvkit_loh.cns"], "out": ["results/dna/cnv", ".cnvkit_loh.cns"]},
+        {"in": ["cnv_sv/gatk_cnv_call_copy_ratio_segments", ".gatk_cnv.seg"], "out": ["results/dna/cnv", ".gatk_cnv.seg"]},
+        {"in": ["cnv_sv/gatk_cnv_vcf", ".gatk_cnv.vcf"], "out": ["results/dna/cnv", ".gatk_cnv.vcf"]},
+        {"in": ["cnv_sv/cnvkit_vcf", ".cnvkit.vcf"], "out": ["results/dna/cnv", ".cnvkit.vcf"]},
+        {"in": ["cnv_sv/svdb_merge", ".merged.vcf"], "out": ["results/dna/cnv", ".merged.vcf"]},
+    ]
     output_files = [
-        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+        "%s/%s_%s%s" % (pre_suff[0], sample, unit_type, pre_suff[1])
         for prefix in files.keys()
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
-        for suffix in [f_dict["out"] for p_out in files.keys() for f_dict in files[p_out]]
+        for pre_suff in [f_dict["out"] for p_out in files.keys() for f_dict in files[p_out]]
     ]
     input_files = [
-        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
-        for prefix in [f_dict["in"][0] for p_out in files.keys() for f_dict in files[p_out]]
+        "%s/%s_%s%s" % (pre_suff[0], sample, unit_type, pre_suff[1])
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
-        for suffix in [f_dict["in"][1] for p_out in files.keys() for f_dict in files[p_out]]
+        for pre_suff in [f_dict["in"] for p_out in files.keys() for f_dict in files[p_out]]
     ]
-    output_files.append(
+    output_files +=
         [
             "results/dna/vcf/%s_%s_%s.vcf.gz" % (caller, sample, t)
             for caller in ["mutect2", "vardict"]
@@ -122,7 +109,7 @@ def compile_result_file_list():
             for t in get_unit_types(units, sample)
         ]
     )
-    input_files.append(
+    input_files +=
         [
             "snv_indels/%s/%s_%s.merged.vcf.gz" % (caller, sample, t)
             for caller in ["mutect2", "vardict"]
@@ -130,7 +117,7 @@ def compile_result_file_list():
             for t in get_unit_types(units, sample)
         ]
     )
-    output_files.append(
+    output_files +=
         [
             "results/dna/qc/%s_%s_%s_fastqc.html" % (sample, t, read)
             for read in ["fastq1", "fastq2"]
@@ -138,7 +125,7 @@ def compile_result_file_list():
             for t in get_unit_types(units, sample)
         ]
     )
-    input_files.append(
+    input_files +=
         [
             "qc/fastqc/%s_%s_%s_fastqc.html" % (sample, t, read)
             for read in ["fastq1", "fastq2"]
@@ -149,6 +136,7 @@ def compile_result_file_list():
     output_files.append("results/dna/qc/MultiQC.html")
     input_files.append("qc/multiqc/MultiQC.html")
     print(input_files)
+    print()
     print(output_files)
     return input_files, output_files
 
