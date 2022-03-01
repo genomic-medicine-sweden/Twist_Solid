@@ -106,37 +106,33 @@ def compile_result_file_list():
         for pre_suff in [f_dict["in"] for p_out in files.keys() for f_dict in files[p_out]]
     ]
     output_files +=
-        [
-            "results/dna/vcf/%s_%s_%s.vcf.gz" % (caller, sample, t)
-            for caller in ["mutect2", "vardict"]
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
+    [
+        "results/dna/vcf/%s_%s_%s.vcf.gz" % (caller, sample, t)
+        for caller in ["mutect2", "vardict"]
+        for sample in get_samples(samples)
+        for t in get_unit_types(units, sample)
+    ]
     input_files +=
-        [
-            "snv_indels/%s/%s_%s.merged.vcf.gz" % (caller, sample, t)
-            for caller in ["mutect2", "vardict"]
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
+    [
+        "snv_indels/%s/%s_%s.merged.vcf.gz" % (caller, sample, t)
+        for caller in ["mutect2", "vardict"]
+        for sample in get_samples(samples)
+        for t in get_unit_types(units, sample)
+    ]
     output_files +=
-        [
-            "results/dna/qc/%s_%s_%s_fastqc.html" % (sample, t, read)
-            for read in ["fastq1", "fastq2"]
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
+    [
+        "results/dna/qc/%s_%s_%s_fastqc.html" % (sample, t, read)
+        for read in ["fastq1", "fastq2"]
+        for sample in get_samples(samples)
+        for t in get_unit_types(units, sample)
+    ]
     input_files +=
-        [
-            "qc/fastqc/%s_%s_%s_fastqc.html" % (sample, t, read)
-            for read in ["fastq1", "fastq2"]
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
+    [
+        "qc/fastqc/%s_%s_%s_fastqc.html" % (sample, t, read)
+        for read in ["fastq1", "fastq2"]
+        for sample in get_samples(samples)
+        for t in get_unit_types(units, sample)
+    ]
     output_files.append("results/dna/qc/MultiQC.html")
     input_files.append("qc/multiqc/MultiQC.html")
     print(input_files)
