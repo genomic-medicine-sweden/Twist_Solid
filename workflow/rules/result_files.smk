@@ -7,7 +7,6 @@ __email__ = "jonas.almlof@igp.uu.se"
 __license__ = "GPL-3"
 
 
-
 rule copy_results_files:
     input:
         input_files,

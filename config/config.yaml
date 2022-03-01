@@ -113,16 +113,16 @@ mutect2_gvcf:
 normalize:
   container: "docker://gmsuppsala/somatic:develop"
 
-picard_alignment_summary_metrics:
+picard_collect_alignment_summary_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
 
 picard_collect_hs_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
 
-picard_duplication_metrics:
+picard_collect_duplication_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
 
-picard_insert_size:
+picard_collect_insert_size_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
 
 svdb_merge:
