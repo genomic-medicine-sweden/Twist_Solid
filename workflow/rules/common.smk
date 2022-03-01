@@ -73,7 +73,7 @@ def compile_result_file_list():
             "out": ["results/dna/qc", ".duplication_metrics.txt"]
         },
         {
-            "in": ["qc/picard_collect_duplication_metrics", ".alignment_summary_metrics.txt"],
+            "in": ["qc/picard_collect_alignment_summary_metrics", ".alignment_summary_metrics.txt"],
             "out": ["results/dna/qc", ".alignment_summary_metrics.txt"]
         },
         {"in": ["qc/picard_collect_hs_metrics", ".HsMetrics.txt"], "out": ["results/dna/qc", ".HsMetrics.txt"]},
@@ -100,6 +100,7 @@ def compile_result_file_list():
     ]
     input_files = [
         "%s/%s_%s%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
+        for file_info in files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
     ]
