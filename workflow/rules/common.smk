@@ -49,9 +49,12 @@ wildcard_constraints:
 def compile_result_file_list():
     files = [
         {"in": ["alignment/merge_bam", ".bam"], "out": ["results/dna/bam", ".bam"]},
-        {"in": ["alignment/merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"},
+        {"in": ["alignment/merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"]},
         {"in": ["snv_indels/ensemble_vcf", ".ensembled.vcf.gz"], "out": ["results/dna/vcf", ".ensembled.vcf.gz"]},
-        {"in": ["snv_indels/ensemble_vcf", ".ensembled.vep_annotated.vcf"], "out": ["results/dna/vcf", ".ensembled.vep_annotated.vcf"]},
+        {
+            "in": ["snv_indels/ensemble_vcf", ".ensembled.vep_annotated.vcf"],
+            "out": ["results/dna/vcf", ".ensembled.vep_annotated.vcf"]
+        },
         {
             "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.vcf.gz"],
             "out": ["results/dna/vcf", ".ensembled.vep_annotated.filtered.codon_snvs.vcf.gz"]
@@ -67,7 +70,8 @@ def compile_result_file_list():
         {"in": ["snv_indels/mutect2_gvcf", ".gvcf.gz"], "out": ["results/dna/gvcf", ".gvcf.gz"]},
         {
             "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
-            "out": ["results/dna/qc", ".duplication_metrics.txt"]},
+            "out": ["results/dna/qc", ".duplication_metrics.txt"]
+        },
         {
             "in": ["qc/picard_collect_duplication_metrics", ".alignment_summary_metrics.txt"],
             "out": ["results/dna/qc", ".alignment_summary_metrics.txt"]
