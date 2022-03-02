@@ -82,7 +82,7 @@ def compile_result_file_list():
             "out": ["results/dna/qc", ".insert_size_metrics.txt"]
         },
         {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
-        {"in": ["qc/gvcf_modify_coverage", ".modified.gvcf.gz"], "out": ["results/dna/qc", ".modified.gvcf.gz"]},
+        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.gvcf.gz"], "out": ["results/dna/qc", ".mosdepth.gvcf.gz"]},
         {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
         {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
         {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ["results/dna/hrd", ".hrd_score.txt"]},
