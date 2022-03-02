@@ -8,7 +8,6 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
-include: "rules/add_mosdepth_coverage_to_gvcf.smk"
 include: "rules/result_files.smk"
 
 rule all:
