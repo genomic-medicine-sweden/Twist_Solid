@@ -86,6 +86,9 @@ gene_fuse:
 germline_vcf:
   container: "docker://hydragenetics/vep:105"
 
+hard_filter_vcf:
+  filter_config: "config_hard_filter.yaml"
+
 mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
@@ -127,6 +130,9 @@ picard_collect_duplication_metrics:
 
 picard_collect_insert_size_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
+
+soft_filter_vcf:
+  filter_config: "config_soft_filter.yaml"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.5.0"
