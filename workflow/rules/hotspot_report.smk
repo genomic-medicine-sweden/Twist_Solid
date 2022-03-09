@@ -15,7 +15,7 @@ rule hotspot_report:
         gvcf="snv_indels/mutect2_gvcf/{sample}_{type}.merged.gvcf.gz",
         gvcf_index="snv_indels/mutect2_gvcf/{sample}_{type}.merged.gvcf.gz.tbi",
     output:
-        report="results/dna/hotspot_report/{sample}_{type}.output.tsv",
+        report=temp("qc/hotspot_report/{sample}_{type}.output.tsv"),
     params:
         levels=config.get("hotspot_report", {}).get("levels", []),
         sample_name=lambda wildcards: "%s_%s" % (wildcards.sample, wildcards.type),
