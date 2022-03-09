@@ -89,6 +89,16 @@ germline_vcf:
 hard_filter_vcf:
   filter_config: "config_hard_filter.yaml"
 
+hotspot_report:
+  container: "docker://hydragenetics/common:0.0.1"
+  hotspot_mutations: "path"
+  report_config: "config/config_report.yaml"
+  chr_translation_file: "reference.hg19.Info"
+  levels:
+    - [300, "ok", "yes"]
+    - [30, "low", "yes"]
+    - [0, "low", "not analyzable"]
+
 mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
