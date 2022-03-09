@@ -2,7 +2,7 @@ resources: "config/resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://hydragenetics/common:0.0.1"
+default_container: "docker://hydragenetics/common:0.1.0"
 
 trimmer_software: "fastp_pe"
 
@@ -25,8 +25,8 @@ reference:
     - "chrM"
 
 bcftools_filter_include_region:
-  nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.noCNV.bed"
-  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.Exon_only.bed"
+  nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.noCNV.MYD88.bed"
+  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.Exon_only.MYD88.bed"
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
@@ -86,6 +86,9 @@ gene_fuse:
 germline_vcf:
   container: "docker://hydragenetics/vep:105"
 
+hard_filter_vcf:
+  filter_config: "config_hard_filter.yaml"
+
 hotspot_report:
   container: "docker://hydragenetics/common:0.0.1"
   hotspot_mutations: "path"
@@ -137,6 +140,9 @@ picard_collect_duplication_metrics:
 
 picard_collect_insert_size_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
+
+soft_filter_vcf:
+  filter_config: "config_soft_filter.yaml"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.5.0"

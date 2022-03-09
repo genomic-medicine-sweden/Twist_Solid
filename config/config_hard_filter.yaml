@@ -1,0 +1,25 @@
+filters:
+  dp:
+    description: "Hard filter variants with low coverage (DP lower than 50)"
+    expression: "FORMAT:DP < 50"
+    soft_filter: "False"
+  vaf:
+    description: "Hard filter variants with low vaf (AF lower than 0.02)"
+    expression: "FORMAT:AF < 0.02"
+    soft_filter: "False"
+  ad:
+    description: "Hard filter variants with few observations (AD lower than 10)"
+    expression: "FORMAT:AD:1 < 10"
+    soft_filter: "False"
+  germline:
+    description: "Hard filter germline"
+    expression: "(VEP:AF > 0.01 and !exist[COSV_[0-9]+, VEP:Existing_variation])"
+    soft_filter: "False"
+  artifacts:
+    description: "Hard filter variants found in more than 3 normal samples"
+    expression: "(INFO:Artifacts:0 > 3 or INFO:Artifacts:1 > 3)"
+    soft_filter: "False"
+  background:
+    description: "Hard filter position with where backgound distribution overlaps variant (lower than 5 SD from median)"
+    expression: "INFO:PositionNrSD < 5"
+    soft_filter: "False"
