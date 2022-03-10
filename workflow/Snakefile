@@ -18,6 +18,7 @@ rule all:
 ruleorder: snv_indels_tabix_vcf > misc_tabix
 ruleorder: filtering_tabix_vcf > misc_tabix
 ruleorder: snv_indels_mutect2 > misc_tabix
+ruleorder: snv_indels_mutect2_gvcf > misc_tabix
 
 report: "report/workflow.rst"
 
