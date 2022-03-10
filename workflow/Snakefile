@@ -10,6 +10,7 @@ __license__ = "GPL-3"
 include: "rules/common.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/result_files.smk"
+include: "rules/vep.smk"
 
 rule all:
     input:
