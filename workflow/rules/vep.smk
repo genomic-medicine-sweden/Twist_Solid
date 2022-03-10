@@ -37,6 +37,6 @@ rule vep:
     conda:
         "../envs/vep.yaml"
     message:
-        "{rule}: Annotate with VEP: filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vep_annotated.vcf.gz"
+        "{rule}: Annotate with VEP: filtering/add_multi_snv_in_codon/{wildcards.sample}_{wildcards.type}.codon_snvs.sorted.vep_annotated.vcf.gz"
     shell:
         "(vep --vcf --no_stats -o {output.vcf} -i {input.vcf} --dir_cache {input.cache} --fork {threads} --refseq {params.mode} --fasta {input.fasta} {params.extra} ) &> {log}"
