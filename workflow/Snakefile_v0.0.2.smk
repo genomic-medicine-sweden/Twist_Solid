@@ -15,6 +15,8 @@ rule all:
     input:
         unpack(compile_output_list),
 
+ruleorder: snv_indels_tabix_vcf > misc_tabix
+
 report: "report/workflow.rst"
 
 module prealignment:
@@ -70,3 +72,9 @@ module cnv_sv:
    config: config
 
 use rule * from cnv_sv as cnv_sv_*
+
+module misc:
+   snakefile: github("hydra-genetics/misc", path="workflow/Snakefile", tag="e39651b")
+   config: config
+
+use rule tabix from misc as misc_tabix
