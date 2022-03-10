@@ -91,7 +91,7 @@ hard_filter_vcf:
 hotspot_report:
   hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined.csv"
   report_config: "config/config_report.yaml"
-  chr_translation_file: "reference.hg19.Info"
+  chr_translation_file: "config/reference.hg19.Info"
   levels:
     - [300, "ok", "yes"]
     - [30, "low", "yes"]
