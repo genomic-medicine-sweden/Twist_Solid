@@ -44,7 +44,7 @@ module annotation:
 use rule * from annotation as annotation_*
 
 module filtering:
-   snakefile: github("hydra-genetics/filtering", path="workflow/Snakefile", tag="411851e")
+   snakefile: github("hydra-genetics/filtering", path="workflow/Snakefile", tag="42ecd83")
    config: config
 
 use rule * from filtering as filtering_*
