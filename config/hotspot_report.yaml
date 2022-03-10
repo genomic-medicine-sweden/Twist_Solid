@@ -11,6 +11,7 @@ columns:
     order: 10
   gvcf_depth:
     order: 14
+    field: 'DP_mosdepth'
   ref_depth:
     order: 15
   alt_depth: 
