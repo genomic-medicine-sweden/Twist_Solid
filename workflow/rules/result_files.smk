@@ -15,6 +15,6 @@ rule copy_results_files:
     run:
         import subprocess
         i = 0
-        for file in input[0]:
-            subprocess.run(["cp", file, output[0][i]])
+        for file in input:
+            subprocess.run(["cp", file, output[i]])
             i += 1

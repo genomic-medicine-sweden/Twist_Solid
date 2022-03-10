@@ -23,10 +23,10 @@ rule hotspot_report:
         chr_translation_file=config.get("hotspot_report", {})["chr_translation_file"],
         extra=config.get("hotspot_report", {}).get("extra", ""),
     log:
-        "results/dna/hotspot_report/{sample}_{type}.output.tsv.log",
+        "qc/hotspot_report/{sample}_{type}.output.tsv.log",
     benchmark:
         repeat(
-            "results/dna/hotspot_report/{sample}_{type}.output.benchmark.tsv", config.get("hotspot_report", {}).get("benchmark_repeats", 1)
+            "qc/hotspot_report/{sample}_{type}.output.benchmark.tsv", config.get("hotspot_report", {}).get("benchmark_repeats", 1)
         )
     threads: config.get("hotspot_report", {}).get("threads", config["default_resources"]["threads"])
     resources:
