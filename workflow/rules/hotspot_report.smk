@@ -12,8 +12,8 @@ rule hotspot_report:
         hotspots=config['hotspot_report']['hotspot_mutations'],
         vcf="filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vep_annotated.vcf.gz",
         vcf_index="filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vep_annotated.vcf.gz.tbi",
-        gvcf="snv_indels/mutect2_gvcf/{sample}_{type}.merged.gvcf.gz",
-        gvcf_index="snv_indels/mutect2_gvcf/{sample}_{type}.merged.gvcf.gz.tbi",
+        gvcf="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.gvcf.gz",
+        gvcf_index="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.gvcf.gz.tbi",
     output:
         report=temp("qc/hotspot_report/{sample}_{type}.output.tsv"),
     params:
