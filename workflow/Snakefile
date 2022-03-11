@@ -82,3 +82,5 @@ module misc:
    config: config
 
 use rule tabix from misc as misc_tabix
+
+use rule bgzip from misc as misc_bgzip
