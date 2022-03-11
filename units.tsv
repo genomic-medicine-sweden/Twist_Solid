@@ -1,3 +1,0 @@
-sample	type	platform	machine	flowcell	lane	fastq1	fastq2	adapter
-VAL-04	T	NextSeq	NDX550220	HKTG2BGXG	L001	/projects/wp1/nobackup/ngs/utveckling/analys/2021/20210921_GL_Run-01/fastq_temp/DNA/VAL-04_S4_R1_001.fastq.gz	/projects/wp1/nobackup/ngs/utveckling/analys/2021/20210921_GL_Run-01/fastq_temp/DNA/VAL-04_S4_R2_001.fastq.gz	AGATCGGAAGAGCACACGTCTGAACTCCAGTCA,AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
-VAL-05	T	NextSeq	NDX550220	HKTG2BGXG	L001	/projects/wp1/nobackup/ngs/utveckling/analys/2021/20210921_GL_Run-01/fastq_temp/DNA/VAL-05_S5_R1_001.fastq.gz	/projects/wp1/nobackup/ngs/utveckling/analys/2021/20210921_GL_Run-01/fastq_temp/DNA/VAL-05_S5_R2_001.fastq.gz	AGATCGGAAGAGCACACGTCTGAACTCCAGTCA,AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
