@@ -10,8 +10,8 @@ __license__ = "GPL-3"
 rule hotspot_report:
     input:
         hotspots=config['hotspot_report']['hotspot_mutations'],
-        vcf="filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vcf.gz",
-        vcf_index="filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vcf.gz.tbi",
+        vcf="filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vep_annotated.vcf.gz",
+        vcf_index="filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vep_annotated.vcf.gz.tbi",
         gvcf="snv_indels/mutect2_gvcf/{sample}_{type}.merged.gvcf.gz",
         gvcf_index="snv_indels/mutect2_gvcf/{sample}_{type}.merged.gvcf.gz.tbi",
     output:
@@ -23,10 +23,10 @@ rule hotspot_report:
         chr_translation_file=config.get("hotspot_report", {})["chr_translation_file"],
         extra=config.get("hotspot_report", {}).get("extra", ""),
     log:
-        "results/dna/hotspot_report/{sample}_{type}.output.tsv.log",
+        "qc/hotspot_report/{sample}_{type}.output.tsv.log",
     benchmark:
         repeat(
-            "results/dna/hotspot_report/{sample}_{type}.output.benchmark.tsv", config.get("hotspot_report", {}).get("benchmark_repeats", 1)
+            "qc/hotspot_report/{sample}_{type}.output.benchmark.tsv", config.get("hotspot_report", {}).get("benchmark_repeats", 1)
         )
     threads: config.get("hotspot_report", {}).get("threads", config["default_resources"]["threads"])
     resources:

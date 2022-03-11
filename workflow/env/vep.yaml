@@ -3,5 +3,5 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - pip:
-    - hydra-genetics==0.9.0
+  - ensembl-vep=105
+  - bcftools=1.10
