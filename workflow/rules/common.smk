@@ -56,8 +56,16 @@ def compile_result_file_list():
             "out": ["results/dna/vcf", ".ensembled.vep_annotated.vcf"]
         },
         {
-            "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.vcf.gz"],
-            "out": ["results/dna/vcf", ".ensembled.vep_annotated.filtered.codon_snvs.vcf.gz"]
+            "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.soft_filter.vcf"],
+            "out": ["results/dna/vcf", ".ensembled.vep_annotated.codon_snvs.soft_filter.vcf"]
+        },
+        {
+            "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.hard_filter.vcf"],
+            "out": ["results/dna/vcf", ".ensembled.vep_annotated.codon_snvs.hard_filter.vcf"]
+        },
+        {
+            "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.vep_annotated.vcf"],
+            "out": ["results/dna/vcf", ".ensembled.vep_annotated.codon_snvs.vcf"]
         },
         {
             "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.include.nocnv.vcf.gz"],
