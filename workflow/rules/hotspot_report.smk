@@ -10,8 +10,8 @@ __license__ = "GPL-3"
 rule hotspot_report:
     input:
         hotspots=config['hotspot_report']['hotspot_mutations'],
-        vcf="filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vep_annotated.vcf.gz",
-        vcf_index="filtering/add_multi_snv_in_codon/{sample}_{type}.codon_snvs.sorted.vep_annotated.vcf.gz.tbi",
+        vcf="annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz",
+        vcf_index="annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz.tbi",
         gvcf="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.gvcf.gz",
         gvcf_index="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.gvcf.gz.tbi",
     output:

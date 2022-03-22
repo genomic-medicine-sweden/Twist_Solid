@@ -15,12 +15,10 @@ rule all:
     input:
         unpack(compile_output_list),
 
-ruleorder: filtering_tabix_vcf > misc_tabix
 ruleorder: snv_indels_tabix_vcf > misc_tabix
 ruleorder: snv_indels_mutect2 > misc_tabix
 ruleorder: snv_indels_mutect2_gvcf > misc_tabix
 ruleorder: snv_indels_bgzip_vcf > misc_bgzip
-ruleorder: filtering_bgzip_vcf > misc_bgzip
 
 report: "report/workflow.rst"
 
