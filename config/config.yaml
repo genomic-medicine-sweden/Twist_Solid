@@ -152,3 +152,9 @@ vardict:
   container: "docker://gmsuppsala/somatic:develop"
   bed_columns: "-c 1 -S 2 -E 3 -g 4"
   allele_frequency_threshold: "0.01"
+
+vep:
+  container: "docker://hydragenetics/vep:105"
+  vep_cache:  "/data/ref_genomes/VEP/"
+  mode: --offline --cache
+  extra: " --check_existing --pick --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
