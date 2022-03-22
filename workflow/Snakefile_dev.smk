@@ -19,6 +19,9 @@ ruleorder: snv_indels_tabix_vcf > misc_tabix
 ruleorder: snv_indels_mutect2 > misc_tabix
 ruleorder: snv_indels_mutect2_gvcf > misc_tabix
 ruleorder: snv_indels_bgzip_vcf > misc_bgzip
+ruleorder: annotation_bgzip_vcf > misc_bgzip
+ruleorder: annotation_tabix_vcf > misc_tabix
+ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
 
 report: "report/workflow.rst"
 
