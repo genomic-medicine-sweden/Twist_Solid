@@ -6,7 +6,7 @@ filters:
     soft_filter: "True"
   vaf:
     description: "Filter variants with low vaf (AF lower than 0.05)"
-    expression: "FORMAT:AF < 0.05"
+    expression: "FORMAT:AF:0 < 0.05"
     soft_filter_flag: "AF<0.05"
     soft_filter: "True"
   ad:

@@ -5,7 +5,7 @@ filters:
     soft_filter: "False"
   vaf:
     description: "Hard filter variants with low vaf (AF lower than 0.02)"
-    expression: "FORMAT:AF < 0.02"
+    expression: "FORMAT:AF:0 < 0.02"
     soft_filter: "False"
   ad:
     description: "Hard filter variants with few observations (AD lower than 10)"
