@@ -10,18 +10,18 @@ __license__ = "GPL-3"
 include: "rules/common.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/result_files.smk"
-include: "rules/vep.smk"
 
 rule all:
     input:
         unpack(compile_output_list),
 
-ruleorder: filtering_tabix_vcf > misc_tabix
 ruleorder: snv_indels_tabix_vcf > misc_tabix
 ruleorder: snv_indels_mutect2 > misc_tabix
 ruleorder: snv_indels_mutect2_gvcf > misc_tabix
 ruleorder: snv_indels_bgzip_vcf > misc_bgzip
-ruleorder: filtering_bgzip_vcf > misc_bgzip
+ruleorder: annotation_bgzip_vcf > misc_bgzip
+ruleorder: annotation_tabix_vcf > misc_tabix
+ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
 
 report: "report/workflow.rst"
 
@@ -44,19 +44,19 @@ module snv_indels:
 use rule * from snv_indels as snv_indels_*
 
 module annotation:
-   snakefile: github("hydra-genetics/annotation", path="workflow/Snakefile", tag="e58432c")
+   snakefile: github("hydra-genetics/annotation", path="workflow/Snakefile", tag="8e4fe35")
    config: config
 
 use rule * from annotation as annotation_*
 
 module filtering:
-   snakefile: github("hydra-genetics/filtering", path="workflow/Snakefile", tag="42ecd83")
+   snakefile: github("hydra-genetics/filtering", path="workflow/Snakefile", tag="066ac23")
    config: config
 
 use rule * from filtering as filtering_*
 
 module qc:
-   snakefile: github("hydra-genetics/qc", path="workflow/Snakefile", tag="55008df")
+   snakefile: github("hydra-genetics/qc", path="workflow/Snakefile", tag="919739f")
    config: config
 
 use rule * from qc as qc_*
