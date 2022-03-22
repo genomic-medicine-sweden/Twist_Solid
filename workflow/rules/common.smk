@@ -135,7 +135,7 @@ def compile_result_file_list():
         for t in get_unit_types(units, sample)
     ]
     output_files.append("results/dna/qc/MultiQC.html")
-    input_files.append("qc/multiqc/multiqc.html")
+    input_files.append("qc/multiqc/MultiQC.html")
     return input_files, output_files
 
 
