@@ -10,18 +10,18 @@ __license__ = "GPL-3"
 include: "rules/common.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/result_files.smk"
-include: "rules/vep.smk"
 
 rule all:
     input:
         unpack(compile_output_list),
 
-ruleorder: filtering_tabix_vcf > misc_tabix
 ruleorder: snv_indels_tabix_vcf > misc_tabix
 ruleorder: snv_indels_mutect2 > misc_tabix
 ruleorder: snv_indels_mutect2_gvcf > misc_tabix
 ruleorder: snv_indels_bgzip_vcf > misc_bgzip
-ruleorder: filtering_bgzip_vcf > misc_bgzip
+ruleorder: annotation_bgzip_vcf > misc_bgzip
+ruleorder: annotation_tabix_vcf > misc_tabix
+ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
 
 report: "report/workflow.rst"
 

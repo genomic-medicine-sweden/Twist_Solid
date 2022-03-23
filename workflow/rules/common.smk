@@ -52,20 +52,24 @@ def compile_result_file_list():
         {"in": ["alignment/merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"]},
         {"in": ["snv_indels/ensemble_vcf", ".ensembled.vcf.gz"], "out": ["results/dna/vcf", ".ensembled.vcf.gz"]},
         {
-            "in": ["snv_indels/ensemble_vcf", ".ensembled.vep_annotated.vcf"],
-            "out": ["results/dna/vcf", ".ensembled.vep_annotated.vcf"]
+            "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
+            "out": ["results/dna/vcf", ".annotated.vcf.gz"]
         },
         {
-            "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.vcf.gz"],
-            "out": ["results/dna/vcf", ".ensembled.vep_annotated.filtered.codon_snvs.vcf.gz"]
+            "in": ["annotation/background_annotation", ".background_annotation.include.nocnv.vcf.gz"],
+            "out": ["results/dna/vcf", ".annotated.nocnv.vcf.gz"]
         },
         {
-            "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.include.nocnv.vcf.gz"],
-            "out": ["results/dna/vcf", ".ensembled.vep_annotated.filtered.codon_snvs.nocnv.vcf.gz"]
+            "in": ["annotation/background_annotation", ".background_annotation.include.exon.vcf.gz"],
+            "out": ["results/dna/vcf", ".annotated.exon_only.vcf.gz"]
         },
         {
-            "in": ["filtering/add_multi_snv_in_codon", ".codon_snvs.sorted.include.exon.vcf.gz"],
-            "out": ["results/dna/vcf", ".ensembled.vep_annotated.filtered.codon_snvs.exon_only.vcf.gz"]
+            "in": ["annotation/background_annotation", ".background_annotation.soft_filter.vcf"],
+            "out": ["results/dna/vcf", ".annotated.soft_filter.vcf"]
+        },
+        {
+            "in": ["annotation/background_annotation", ".background_annotation.hard_filter.vcf"],
+            "out": ["results/dna/vcf", ".annotated.hard_filter.vcf"]
         },
         {"in": ["snv_indels/mutect2_gvcf", ".merged.gvcf.gz"], "out": ["results/dna/gvcf", ".gvcf.gz"]},
         {
@@ -131,7 +135,7 @@ def compile_result_file_list():
         for t in get_unit_types(units, sample)
     ]
     output_files.append("results/dna/qc/MultiQC.html")
-    input_files.append("qc/multiqc/MultiQC.html")
+    input_files.append("qc/multiqc/multiqc.html")
     return input_files, output_files
 
 

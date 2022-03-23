@@ -5,7 +5,7 @@ filters:
     soft_filter: "False"
   vaf:
     description: "Hard filter variants with low vaf (AF lower than 0.02)"
-    expression: "FORMAT:AF < 0.02"
+    expression: "FORMAT:AF:0 < 0.02"
     soft_filter: "False"
   ad:
     description: "Hard filter variants with few observations (AD lower than 10)"
@@ -17,7 +17,7 @@ filters:
     soft_filter: "False"
   artifacts:
     description: "Hard filter variants found in more than 3 normal samples"
-    expression: "(INFO:Artifacts:0 > 3 or INFO:Artifacts:1 > 3)"
+    expression: "(INFO:Artifact:0 > 3 or INFO:Artifact:1 > 3)"
     soft_filter: "False"
   background:
     description: "Hard filter position with where backgound distribution overlaps variant (lower than 5 SD from median)"
