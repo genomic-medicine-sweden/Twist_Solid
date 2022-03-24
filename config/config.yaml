@@ -88,6 +88,9 @@ germline_vcf:
 hard_filter_vcf:
   filter_config: "config/config_hard_filter.yaml"
 
+hotspot_info:
+  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined.csv"
+
 hotspot_report:
   hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined.csv"
   report_config: "config/hotspot_report.yaml"

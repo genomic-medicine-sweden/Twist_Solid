@@ -19,7 +19,7 @@ rule hotspot_info:
         bam="alignment/merge_bam/{sample}_{type}.bam",
         bai="alignment/merge_bam/{sample}_{type}.bam.bai",
         vcf="snv_indels/ensemble_vcf/{sample}_{type}.ensembled.vep_annotated.vcf",
-        hotspots=config.get("reference", {}).get("hotspots", ""),
+        hotspots=config.get("hotspot_info", {}).get("hotspot_mutations", ""),
         background_panel=config.get("reference", {}).get("background", ""),
         background_run=lambda wildcards: "annotation/calculate_seqrun_background/%s_seqrun_background.tsv"
         % get_flowcell(units, wildcards),
