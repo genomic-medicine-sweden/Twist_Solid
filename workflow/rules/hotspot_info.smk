@@ -7,6 +7,13 @@ __email__ = "patrik.smeds@scilifelab.uu.se"
 __license__ = "GPL3"
 
 
+def get_flowcell(units, wildcards):
+    flowcells = set([u.flowcell for u in get_units(units, wildcards)])
+    if len(flowcells) > 1:
+        raise ValueError("Sample type combination from different sequence flowcells")
+    return flowcells.pop()
+
+
 rule hotspot_info:
     input:
         bam="alignment/merge_bam/{sample}_{type}.bam",
