@@ -209,7 +209,7 @@ for region in gene_regions:
         if key in inv_pos:
             coverage = 0
             if key in gvcf_sample_dict:
-                coverage = gvcf_sample_dict[key][2]
+                coverage = int(gvcf_sample_dict[key][2])
             if coverage < min_coverage:
                 for info in inv_pos[key]:
                     outfile.write(info + "\t")
