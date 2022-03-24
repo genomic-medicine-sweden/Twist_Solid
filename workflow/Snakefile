@@ -56,13 +56,13 @@ module filtering:
 use rule * from filtering as filtering_*
 
 module qc:
-   snakefile: github("hydra-genetics/qc", path="workflow/Snakefile", tag="7db92b0")
+   snakefile: github("hydra-genetics/qc", path="workflow/Snakefile", tag="55008df")
    config: config
 
 use rule * from qc as qc_*
 
 module biomarker:
-   snakefile: github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="288369d")
+   snakefile: github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="ed3121a")
    config: config
 
 use rule * from biomarker as biomarker_*
