@@ -12,6 +12,12 @@ rule copy_results_files:
         input_files,
     output:
         output_files,
+    resources:
+        threads=config.get("copy_results_files", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("copy_results_files", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("copy_results_files", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("copy_results_files", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("copy_results_files", {}).get("partition", config["default_resources"]["partition"]),
     run:
         import subprocess
         i = 0

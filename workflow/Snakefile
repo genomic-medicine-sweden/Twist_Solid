@@ -8,6 +8,7 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
+include: "rules/hotspot_info.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/result_files.smk"
 
@@ -62,7 +63,7 @@ module qc:
 use rule * from qc as qc_*
 
 module biomarker:
-   snakefile: github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="ed3121a")
+   snakefile: github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="38dc4f5")
    config: config
 
 use rule * from biomarker as biomarker_*
