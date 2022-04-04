@@ -2,20 +2,30 @@ filters:
   dp:
     description: "Filter variants with low coverage (DP lower than 100)"
     expression: "FORMAT:DP < 100"
-    soft_filter_flag: "DP<100"
+    soft_filter_flag: "DP_lt_100"
     soft_filter: "True"
   vaf:
     description: "Filter variants with low vaf (AF lower than 0.05)"
     expression: "FORMAT:AF:0 < 0.05"
-    soft_filter_flag: "AF<0.05"
+    soft_filter_flag: "AF_lt_0.05"
     soft_filter: "True"
   ad:
     description: "Filter variants with few observations (AD lower than 20)"
     expression: "FORMAT:AD:1 < 20"
-    soft_filter_flag: "AD<20"
+    soft_filter_flag: "AD_lt_20"
     soft_filter: "True"
   germline:
     description: "Germline"
     expression: "(VEP:AF > 0.01 and !exist[COSV_[0-9]+, VEP:Existing_variation])"
     soft_filter_flag: "Germline"
+    soft_filter: "True"
+  artifacts:
+    description: "Filter variants found in more than 2 normal samples"
+    expression: "(INFO:Artifact:0 > 2 or INFO:Artifact:1 > 2)"
+    soft_filter_flag: "Artifact_gt_2"
+    soft_filter: "True"
+  background:
+    description: "Filter position with where backgound distribution overlaps variant (lower than 5 SD from median)"
+    expression: "INFO:PositionNrSD < 5"
+    soft_filter_flag: "Background_lt_5"
     soft_filter: "True"
