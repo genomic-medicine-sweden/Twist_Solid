@@ -151,6 +151,18 @@ svdb_merge:
     - "cnvkit"
     - "gatk_cnv"
 
+tmb:
+  filter_nr_observations: 1
+  dp_limit: 200
+  vd_limit: 10
+  af_lower_limit: 0.05
+  af_upper_limit: 0.45
+  gnomad_limit: 0.0001
+  db1000g_limit: 0.0001
+  background_sd_limit: 5
+  nsanv_tmb_correction: 0.78
+  nssnv_ssnv_tmb_correction: 0.57
+
 vardict:
   container: "docker://gmsuppsala/somatic:develop"
   bed_columns: "-c 1 -S 2 -E 3 -g 4"
