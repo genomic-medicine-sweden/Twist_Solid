@@ -34,7 +34,11 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
 
-units = pd.read_table(config["units"], dtype=str).set_index(["sample", "type"], drop=False)
+units = (
+    pandas.read_table(config["units"], dtype=str)
+    .set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False)
+    .sort_index()
+)
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
@@ -127,20 +131,8 @@ def compile_result_file_list():
         for sample in get_samples(samples)
         for t in get_unit_types(units, sample)
     ]
-    output_files += [
-        "results/dna/qc/%s_%s_%s_fastqc.html" % (sample, t, read)
-        for read in ["fastq1", "fastq2"]
-        for sample in get_samples(samples)
-        for t in get_unit_types(units, sample)
-    ]
-    input_files += [
-        "qc/fastqc/%s_%s_%s_fastqc.html" % (sample, t, read)
-        for read in ["fastq1", "fastq2"]
-        for sample in get_samples(samples)
-        for t in get_unit_types(units, sample)
-    ]
     output_files.append("results/dna/qc/MultiQC.html")
-    input_files.append("qc/multiqc/MultiQC.html")
+    input_files.append("qc/multiqc/multiqc.html")
     return input_files, output_files
 
 
