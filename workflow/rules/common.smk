@@ -54,7 +54,7 @@ def compile_result_file_list():
     files = [
         {"in": ["alignment/merge_bam", ".bam"], "out": ["results/dna/bam", ".bam"]},
         {"in": ["alignment/merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"]},
-    #     {"in": ["snv_indels/ensemble_vcf", ".ensembled.vcf.gz"], "out": ["results/dna/vcf", ".ensembled.vcf.gz"]},
+        {"in": ["snv_indels/ensemble_vcf", ".ensembled.vcf.gz"], "out": ["results/dna/vcf", ".ensembled.vcf.gz"]},
     #     {
     #         "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
     #         "out": ["results/dna/vcf", ".annotated.vcf.gz"]

@@ -46,6 +46,10 @@ module snv_indels:
 
 use rule * from snv_indels as snv_indels_*
 
+use rule bcbio_variation_recall_ensemble from snv_indels as snv_indels_bcbio_variation_recall_ensemble with:
+    output:
+        vcf=temp("snv_indels/ensemble_vcf/{sample}_{type}.ensembled.vcf.gz"),
+
 module annotation:
    snakefile: github("hydra-genetics/annotation", path="workflow/Snakefile", tag="4690399")
    config: config
