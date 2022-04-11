@@ -23,6 +23,9 @@ ruleorder: snv_indels_bgzip > misc_bgzip
 ruleorder: annotation_bgzip_vcf > misc_bgzip
 ruleorder: annotation_tabix_vcf > misc_tabix
 ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
+ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
+ruleorder: annotation_tabix_vcf > snv_indels_tabix
+ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
 
 module prealignment:
    snakefile: github("hydra-genetics/prealignment", path="workflow/Snakefile", tag="v0.2.0")
