@@ -7,8 +7,8 @@ default_container: "docker://hydragenetics/common:0.1.0"
 trimmer_software: "fastp_pe"
 
 reference:
-  background: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/Background/background_panel_26_normal.tsv"
-  artifacts: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/Artifact/artifact_panel_26_normal.tsv"
+  background: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/Background/background_panel_nextseq_36.tsv"
+  artifacts: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/Artifact/artifact_panel_nextseq_36.tsv"
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
   dict: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
   amb: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.amb"
@@ -25,7 +25,7 @@ reference:
 
 bcftools_filter_include_region:
   nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.noCNV.MYD88.bed"
-  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.Exon_only.MYD88.bed"
+  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.Exon_only_extended.bed"
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
@@ -35,12 +35,18 @@ calculate_seqrun_background:
   container: "docker://python:3.9.7-slim"
 
 cnvkit_batch:
-  container: "docker://gmsuppsala/somatic:develop"
-  normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_26_normal.PoN.cnn"
+  container: "docker://marrip/cnvkit:0.9.9"
+  normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_nextseq_36.cnn"
   method: "hybrid"
 
 cnvkit_call:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://marrip/cnvkit:0.9.9"
+
+cnvkit_diagram:
+  container: "docker://marrip/cnvkit:0.9.9"
+
+cnvkit_scatter:
+  container: "docker://marrip/cnvkit:0.9.9"
 
 decompose:
   container: "docker://gmsuppsala/somatic:develop"
@@ -73,7 +79,7 @@ gatk_cnv_collect_read_counts:
 
 gatk_cnv_denoise_read_counts:
   container: "docker://gmsuppsala/somatic:develop"
-  normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/gatk_cnv_26_normal.hdf5"
+  normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/gatk_cnv_nextseq_36.hdf5"
 
 gatk_cnv_model_segments:
   container: "docker://gmsuppsala/somatic:develop"
@@ -108,7 +114,7 @@ mosdepth_bed:
 
 msisensor_pro:
   container: "docker://hydragenetics/msisensor_pro:1.1.a"
-  PoN: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/Msisensor_pro_reference_26_normal.list_baseline"
+  PoN: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/Msisensor_pro_reference_nextseq_36.list_baseline"
 
 multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
@@ -130,6 +136,12 @@ mutect2_gvcf:
 normalize:
   container: "docker://gmsuppsala/somatic:develop"
 
+optitype:
+  #container: "docker://hydragenetics/optitype:1.3.5"
+  container: "docker://fred2/optitype"
+  sample_type: "-d"
+  enumeration: 4
+
 picard_collect_alignment_summary_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
 
@@ -150,6 +162,11 @@ svdb_merge:
   cnv_callers:
     - "cnvkit"
     - "gatk_cnv"
+
+svdb_query:
+  container: "docker://hydragenetics/svdb:2.5.0"
+  vcf: /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/all_TN_306_svdb_0.8.vcf
+  extra: "-db /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/gnomad_v2.1_sv.controls_only.sites.vcf"
 
 tmb:
   filter_nr_observations: 1
