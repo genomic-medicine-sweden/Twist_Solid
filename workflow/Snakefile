@@ -24,8 +24,6 @@ ruleorder: annotation_bgzip_vcf > misc_bgzip
 ruleorder: annotation_tabix_vcf > misc_tabix
 ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
 
-report: "report/workflow.rst"
-
 module prealignment:
    snakefile: github("hydra-genetics/prealignment", path="workflow/Snakefile", tag="v0.2.0")
    config: config
