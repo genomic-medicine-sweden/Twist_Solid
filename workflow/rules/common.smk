@@ -106,19 +106,19 @@ def compile_result_file_list():
     #     {"in": ["cnv_sv/cnvkit_diagram", ".pdf"], "out": ["results/dna/cnv", ".cnvkit.diagram.pdf"]},
     #     {"in": ["cnv_sv/svdb_merge", ".merged.vcf"], "out": ["results/dna/cnv", ".merged.vcf"]},
     #     {"in": ["cnv_sv/svdb_query", ".svdb_query.vcf"], "out": ["results/dna/cnv", ".svdb_query.vcf"]},
-    # ]
-    # output_files = [
-    #     "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
-    #     for file_info in files
-    #     for sample in get_samples(samples)
-    #     for unit_type in get_unit_types(units, sample)
-    # ]
-    # input_files = [
-    #     "%s/%s_%s%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
-    #     for file_info in files
-    #     for sample in get_samples(samples)
-    #     for unit_type in get_unit_types(units, sample)
-    # ]
+    ]
+    output_files = [
+        "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
+        for file_info in files
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+    ]
+    input_files = [
+        "%s/%s_%s%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
+        for file_info in files
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+    ]
     # output_files += [
     #     "results/dna/vcf/%s_%s_%s.vcf.gz" % (caller, sample, t)
     #     for caller in ["mutect2", "vardict"]
