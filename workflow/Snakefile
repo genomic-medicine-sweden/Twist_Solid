@@ -16,16 +16,16 @@ rule all:
     input:
         unpack(compile_output_list),
 
-ruleorder: snv_indels_tabix > misc_tabix
+ruleorder: snv_indels_tabix_vcf > misc_tabix
 ruleorder: snv_indels_mutect2 > misc_tabix
 ruleorder: snv_indels_mutect2_gvcf > misc_tabix
-ruleorder: snv_indels_bgzip > misc_bgzip
+ruleorder: snv_indels_bgzip_vcf > misc_bgzip
 ruleorder: annotation_bgzip_vcf > misc_bgzip
 ruleorder: annotation_tabix_vcf > misc_tabix
 ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
 ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
 ruleorder: annotation_tabix_vcf > snv_indels_tabix
-ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
+ruleorder: annotation_bgzip_vcf > snv_indels_sort_vcf
 
 module prealignment:
    snakefile: github("hydra-genetics/prealignment", path="workflow/Snakefile", tag="v0.2.0")
@@ -48,10 +48,6 @@ module snv_indels:
    config: config
 
 use rule * from snv_indels as snv_indels_*
-
-use rule bcbio_variation_recall_ensemble from snv_indels as snv_indels_bcbio_variation_recall_ensemble with:
-    output:
-        vcf=temp("snv_indels/ensemble_vcf/{sample}_{type}.ensembled.vcf.gz"),
 
 module annotation:
    snakefile: github("hydra-genetics/annotation", path="workflow/Snakefile", tag="4690399")
