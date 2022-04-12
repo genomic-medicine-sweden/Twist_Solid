@@ -23,8 +23,8 @@ ruleorder: snv_indels_bgzip_vcf > misc_bgzip
 ruleorder: annotation_bgzip_vcf > misc_bgzip
 ruleorder: annotation_tabix_vcf > misc_tabix
 ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
-ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
-ruleorder: annotation_tabix_vcf > snv_indels_tabix
+ruleorder: annotation_bgzip_vcf > snv_indels_bgzip_vcf
+ruleorder: annotation_tabix_vcf > snv_indels_tabix_vcf
 ruleorder: annotation_bgzip_vcf > snv_indels_sort_vcf
 
 module prealignment:
