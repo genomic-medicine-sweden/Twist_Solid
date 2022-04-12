@@ -49,6 +49,27 @@ module snv_indels:
 
 use rule * from snv_indels as snv_indels_*
 
+use rule mutect2 from snv_indels as snv_indels_mutect2:
+    input:
+        map="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam",
+        bai="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam.bai",
+        fasta=config["reference"]["fasta"],
+        bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
+
+use rule vardict from snv_indels as snv_indels_vardict:
+    input:
+        bam="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam",
+        bai="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam.bai",
+        reference=config["reference"]["fasta"],
+        regions="snv_indels/bed_split/design_bedfile_{chr}.bed",
+
+use rule mutect2_gvcf from snv_indels as snv_indels_mutect2_gvcf:
+    input:
+        map="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam",
+        bai="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam.bai",
+        fasta=config["reference"]["fasta"],
+        bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
+
 module annotation:
    snakefile: github("hydra-genetics/annotation", path="workflow/Snakefile", tag="4690399")
    config: config
