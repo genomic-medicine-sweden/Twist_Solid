@@ -44,7 +44,7 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam with:
         bam=temp("alignment/merge_bam/{sample}_{type}.bam_unsorted"),
 
 module snv_indels:
-   snakefile: github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="a9a90ce")
+   snakefile: github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="47a7842")
    config: config
 
 use rule * from snv_indels as snv_indels_*
