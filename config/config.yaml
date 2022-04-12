@@ -29,7 +29,7 @@ bcftools_filter_include_region:
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
-  extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
+  #extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
 
 calculate_seqrun_background:
   container: "docker://python:3.9.7-slim"
