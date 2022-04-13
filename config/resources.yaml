@@ -6,6 +6,8 @@ default_resources:
   partition: "low"
 
 bwa_mem:
+  mem_mb: 61440
+  mem_per_cpu: 6144
   threads: 10
   time: "8:00:00"
 

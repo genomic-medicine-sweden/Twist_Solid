@@ -18,7 +18,7 @@ reference:
   pac: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.pac"
   sa: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.sa"
   design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed"
-  design_intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.interval_list"
+  design_intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.bed.preprocessed.interval_list"
   design_intervals_gatk_cnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.bed.preprocessed.interval_list"
   skip_chrs:
     - "chrM"
@@ -110,9 +110,6 @@ hotspot_report:
     - [30, "low", "yes"]
     - [0, "low", "not analyzable"]
 
-mark_duplicates:
-  container: "docker://hydragenetics/picard:2.25.0"
-
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"
 
@@ -129,7 +126,6 @@ multiqc:
     - "qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
     - "qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
     - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
-    - "qc/mosdepth/{sample}_{type}.mosdepth.summary.txt"
     - "qc/mosdepth_bed/{sample}_{type}.per-base.bed.gz"
     - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
     - "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}.json"
@@ -159,6 +155,9 @@ picard_collect_duplication_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
 
 picard_collect_insert_size_metrics:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
 soft_filter_vcf:
