@@ -105,6 +105,12 @@ module biomarker:
 
 use rule * from biomarker as biomarker_*
 
+use rule msisensor_pro from biomarker as biomarker_msisensor_pro with:
+    input:
+        bam="alignment/merge_bam/{sample}_{type}.bam",
+        bai="alignment/merge_bam/{sample}_{type}.bam.bai",
+        PoN=config["msisensor_pro"]["PoN"],
+
 module fusions:
    snakefile: github("hydra-genetics/fusions", path="workflow/Snakefile", tag="b5ba1cf")
    config: config
@@ -116,6 +122,20 @@ module cnv_sv:
    config: config
 
 use rule * from cnv_sv as cnv_sv_*
+
+use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch with:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        cnv_reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
+
+use rule gatk_cnv_collect_read_counts from cnv_sv as cnv_sv_gatk_cnv_collect_read_counts with:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        interval=config.get("reference", {}).get("design_intervals_gatk_cnv", ""),
+
+
 
 module misc:
    snakefile: github("hydra-genetics/misc", path="workflow/Snakefile", tag="f8706d4")
