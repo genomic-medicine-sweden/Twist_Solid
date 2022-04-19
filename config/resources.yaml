@@ -15,10 +15,10 @@ fastp_pe:
   threads: 5
 
 vep:
-  threads: 10
+  threads: 4
 
 fastqc:
-  threads: 10
+  threads: 2
 
 mutect2_gvcf:
   time: "8:00:00"
