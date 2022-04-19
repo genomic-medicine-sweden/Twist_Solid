@@ -100,7 +100,7 @@ use rule multiqc from qc as qc_multiqc with:
         ],
 
 module biomarker:
-   snakefile: github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="0e662ec")
+   snakefile: github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="aa89042")
    config: config
 
 use rule * from biomarker as biomarker_*
@@ -112,7 +112,7 @@ module fusions:
 use rule * from fusions as fusions_*
 
 module cnv_sv:
-   snakefile: github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="de0688c")
+   snakefile: github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="7aacbae")
    config: config
 
 use rule * from cnv_sv as cnv_sv_*
