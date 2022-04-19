@@ -95,14 +95,14 @@ hard_filter_vcf:
   filter_config: "config/config_hard_filter.yaml"
 
 hotspot_annotation:
-  hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined.csv"
+  hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions.csv"
   chr_translation_file: "config/hotspot_report.chr.translation.hg19"
 
 hotspot_info:
   hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined.csv"
 
 hotspot_report:
-  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined.csv"
+  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions.csv"
   report_config: "config/hotspot_report.yaml"
   chr_translation_file: "config/hotspot_report.chr.translation.hg19"
   levels:

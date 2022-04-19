@@ -29,5 +29,5 @@ filters:
     soft_filter: "False"
   ad_TERT:
     description: "Hard filter TERT variants with few observations (AD lower than 4)"
-    expression: "(FORMAT:AD:1 < 4 and exist[1-hotspot, INFO:Hotspot] and VEP:Gene == TERT)"
+    expression: "(FORMAT:AD:1 < 4 and exist[1-hotspot, INFO:Hotspot] and VEP:Gene = TERT)"
     soft_filter: "False"
