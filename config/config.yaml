@@ -2,7 +2,7 @@ resources: "config/resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://hydragenetics/common:0.1.0"
+default_container: "docker://hydragenetics/common:0.1.2"
 
 trimmer_software: "fastp_pe"
 
@@ -19,7 +19,7 @@ reference:
   sa: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.sa"
   design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed"
   design_intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.bed.preprocessed.interval_list"
-  design_intervals_gatk_cnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.bed.preprocessed.interval_list"
+  design_intervals_gatk_cnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
   skip_chrs:
     - "chrM"
 
@@ -171,8 +171,8 @@ svdb_merge:
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.5.0"
-  vcf: /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/all_TN_306_svdb_0.8.vcf
-  extra: "-db /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/gnomad_v2.1_sv.controls_only.sites.vcf"
+  vcf: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/all_TN_306_svdb_0.8.vcf"
+  extra: "--db /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/gnomad_v2.1_sv.controls_only.sites.vcf"
 
 tmb:
   filter_nr_observations: 1
