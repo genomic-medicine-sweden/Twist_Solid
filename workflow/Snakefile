@@ -142,6 +142,11 @@ use rule gatk_cnv_collect_allelic_counts from cnv_sv as cnv_sv_gatk_cnv_collect_
         interval=config.get("gatk_cnv_collect_allelic_counts", {}).get("SNP_interval", ""),
         ref=config["reference"]["fasta"],
 
+use rule config_manta_t from cnv_sv as cnv_sv_config_manta_t with:
+    input:
+        bam_t="alignment/merge_bam/{sample}_T.bam",
+        bai_t="alignment/merge_bam/{sample}_T.bam.bai",
+        ref=config["reference"]["fasta"],
 
 module misc:
    snakefile: github("hydra-genetics/misc", path="workflow/Snakefile", tag="f8706d4")

@@ -48,6 +48,9 @@ cnvkit_diagram:
 cnvkit_scatter:
   container: "docker://marrip/cnvkit:0.9.9"
 
+config_manta_t:
+  container: "docker://marrip/manta:v1.6.0"
+
 decompose:
   container: "docker://gmsuppsala/somatic:develop"
 
@@ -109,6 +112,9 @@ hotspot_report:
     - [300, "ok", "yes"]
     - [30, "low", "yes"]
     - [0, "low", "not analyzable"]
+
+manta_run_workflow_t:
+  container: "docker://marrip/manta:v1.6.0"
 
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"

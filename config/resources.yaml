@@ -20,6 +20,9 @@ vep:
 fastqc:
   threads: 2
 
+manta_run_workflow_t:
+  threads: 4
+
 mutect2_gvcf:
   time: "8:00:00"
 
