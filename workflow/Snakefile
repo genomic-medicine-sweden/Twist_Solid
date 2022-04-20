@@ -16,10 +16,16 @@ rule all:
     input:
         unpack(compile_output_list),
 
-ruleorder: snv_indels_tabix_vcf > misc_tabix
+ruleorder: prealignment_fastp_pe > misc_bgzip
+ruleorder: snv_indels_tabix > annotation_tabix_vcf > misc_tabix
 ruleorder: snv_indels_mutect2 > misc_tabix
+ruleorder: snv_indels_mutect2_gvcf > alignment_samtools_sort
 ruleorder: snv_indels_mutect2_gvcf > misc_tabix
-ruleorder: snv_indels_bgzip_vcf > misc_bgzip
+ruleorder: snv_indels_mutect2_gvcf > misc_bgzip
+ruleorder: snv_indels_bgzip > misc_bgzip
+ruleorder: snv_indels_bcftools_sort > snv_indels_bcftools_sort
+ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
+ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
 ruleorder: annotation_bgzip_vcf > misc_bgzip
 ruleorder: annotation_tabix_vcf > misc_tabix
 ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
@@ -34,7 +40,7 @@ module prealignment:
 use rule * from prealignment as prealignment_*
 
 module alignment:
-   snakefile: github("hydra-genetics/alignment", path="workflow/Snakefile", tag="e39197e")
+   snakefile: github("hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.1.0")
    config: config
 
 use rule * from alignment as alignment_*
@@ -44,7 +50,7 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam with:
         bam=temp("alignment/merge_bam/{sample}_{type}.bam_unsorted"),
 
 module snv_indels:
-   snakefile: github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="47a7842")
+   snakefile: github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.1.0")
    config: config
 
 use rule * from snv_indels as snv_indels_*
@@ -71,7 +77,7 @@ use rule mutect2_gvcf from snv_indels as snv_indels_mutect2_gvcf with:
         bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
 
 module annotation:
-   snakefile: github("hydra-genetics/annotation", path="workflow/Snakefile", tag="8a28bb3")
+   snakefile: github("hydra-genetics/annotation", path="workflow/Snakefile", tag="f97a493")
    config: config
 
 use rule * from annotation as annotation_*
@@ -89,7 +95,7 @@ module filtering:
 use rule * from filtering as filtering_*
 
 module qc:
-   snakefile: github("hydra-genetics/qc", path="workflow/Snakefile", tag="20b855b")
+   snakefile: github("hydra-genetics/qc", path="workflow/Snakefile", tag="d1e0ae1")
    config: config
 
 use rule * from qc as qc_*
@@ -124,7 +130,7 @@ module fusions:
 use rule * from fusions as fusions_*
 
 module cnv_sv:
-   snakefile: github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="e4e78a5")
+   snakefile: github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="4c57208")
    config: config
 
 use rule * from cnv_sv as cnv_sv_*

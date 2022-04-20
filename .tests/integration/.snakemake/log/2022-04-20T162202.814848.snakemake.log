@@ -1,0 +1,101 @@
+Building DAG of jobs...
+WorkflowError:
+WorkflowError:
+    WorkflowError:
+        WorkflowError:
+            MissingInputException: Missing input files for rule snv_indels_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            MissingInputException: Missing input files for rule misc_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+        WorkflowError:
+            WorkflowError:
+                MissingInputException: Missing input files for rule snv_indels_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+                MissingInputException: Missing input files for rule misc_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            WorkflowError:
+                MissingInputException: Missing input files for rule snv_indels_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+                MissingInputException: Missing input files for rule misc_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            WorkflowError:
+                MissingInputException: Missing input files for rule snv_indels_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+                MissingInputException: Missing input files for rule misc_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+        WorkflowError:
+            MissingInputException: Missing input files for rule snv_indels_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            MissingInputException: Missing input files for rule misc_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+        WorkflowError:
+            MissingInputException: Missing input files for rule snv_indels_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            MissingInputException: Missing input files for rule misc_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+    WorkflowError:
+        WorkflowError:
+            MissingInputException: Missing input files for rule snv_indels_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            MissingInputException: Missing input files for rule misc_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+        WorkflowError:
+            WorkflowError:
+                MissingInputException: Missing input files for rule snv_indels_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+                MissingInputException: Missing input files for rule misc_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            WorkflowError:
+                MissingInputException: Missing input files for rule snv_indels_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+                MissingInputException: Missing input files for rule misc_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            WorkflowError:
+                MissingInputException: Missing input files for rule snv_indels_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+                MissingInputException: Missing input files for rule misc_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+        WorkflowError:
+            MissingInputException: Missing input files for rule snv_indels_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            MissingInputException: Missing input files for rule misc_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+        WorkflowError:
+            MissingInputException: Missing input files for rule snv_indels_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            MissingInputException: Missing input files for rule misc_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+    WorkflowError:
+        WorkflowError:
+            MissingInputException: Missing input files for rule snv_indels_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            MissingInputException: Missing input files for rule misc_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+        WorkflowError:
+            WorkflowError:
+                MissingInputException: Missing input files for rule snv_indels_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+                MissingInputException: Missing input files for rule misc_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            WorkflowError:
+                MissingInputException: Missing input files for rule snv_indels_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+                MissingInputException: Missing input files for rule misc_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            WorkflowError:
+                MissingInputException: Missing input files for rule snv_indels_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+                MissingInputException: Missing input files for rule misc_bgzip:
+                snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+        WorkflowError:
+            MissingInputException: Missing input files for rule snv_indels_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            MissingInputException: Missing input files for rule misc_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+        WorkflowError:
+            MissingInputException: Missing input files for rule snv_indels_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+            MissingInputException: Missing input files for rule misc_bgzip:
+            snv_indels/ensemble_vcf/NA12878_N.ensembled.vcf
+MissingInputException: Missing input files for rule alignment_samtools_sort:
+results/dna/bam/NA12878_N.bam_unsorted

@@ -1,0 +1,95 @@
+samples: "samples.tsv"
+units: "units.tsv"
+resources: "resources.yaml"
+
+trimmer_software: "fastp_pe"
+
+default_container: "docker://hydragenetics/common:0.1.2"
+
+reference:
+  artifacts: "DATA/artifact_panel_normal.tsv"
+  background: "DATA/artifact_panel_normal.tsv"
+  design_bed: "DATA/design.bed"
+  design_intervals_gatk_cnv: "DATA/design.interval_list"
+  design_intervals: "DATA/design.interval_list"
+  fasta: "reference/WASH7P.fna"
+  dict: "reference/WASH7P.dict"
+  amb: "reference/WASH7P.fna.amb"
+  ann: "reference/WASH7P.fna.ann"
+  bwt: "reference/WASH7P.fna.bwt"
+  fai: "reference/WASH7P.fna.fai"
+  pac: "reference/WASH7P.fna.pac"
+  sa: "reference/WASH7P.fna.sa"
+
+bcftools_filter_include_region:
+  exon: "DATA/design.noexon1.bed"
+  nocnv: "DATA/design.noexon1.bed"
+
+bcftools_filter_exclude_region:
+  exon: "DATA/design.noexon1.bed"
+  noćnv: "DATA/design.noexon1.bed"
+
+cnvkit_batch:
+  container: "docker://gmsuppsala/somatic:develop"
+  normal_reference: "DATA/design.PoN.cnn"
+  method: "hybrid"
+
+gatk_cnv_collect_allelic_counts:
+  SNP_interval: "DATA/design.interval_list"
+
+gatk_cnv_denoise_read_counts:
+  normal_reference: "DATA/design.hdf5"
+
+gene_fuse:
+  genes: "DATA/druggable.expanded.hg19.csv"
+
+hard_filter_vcf:
+  filter_config: "../../config/config_hard_filter.yaml"
+
+# hard_filter_vcf:
+#   filter_config: "config_hard_filter.yaml"
+#
+# soft_filter_vcf:
+#   filter_config: "config_soft_filter.yaml"
+
+hotspot_annotation:
+  hotspots: "DATA/Hotspots_combined.csv"
+  chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"
+
+hotspot_info:
+  hotspot_mutations: "DATA/Hotspots_combined.csv"
+
+hotspot_report:
+  hotspot_mutations: "DATA/Hotspots_combined.csv"
+  report_config: "../../config/config/hotspot_report.yaml"
+  chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"
+  levels:
+    - [300, "ok", "yes"]
+    - [30, "low", "yes"]
+    - [0, "low", "not analyzable"]
+
+msisensor_pro:
+  PoN: "DATA/msisensor_pro_reference_26_normal.list_baseline"
+
+multiqc:
+  container: "docker://hydragenetics/multiqc:1.11"
+  config: "../../config/multiqc_config.yaml"
+  qc_files:
+    - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
+    - "qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
+    - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.zip"
+    - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.zip"
+    - "qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
+    - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
+
+picard_mark_duplicates:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+soft_filter_vcf:
+  filter_config: "../../config/config_soft_filter.yaml"
+
+vep:
+  container: "docker://hydragenetics/vep:105"
+  vep_cache:  "DATA/VEP/homo_sapiens/"
+  mode: --offline --cache
+  extra: " --check_existing --pick --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "

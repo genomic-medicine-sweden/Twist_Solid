@@ -1,0 +1,6 @@
+Building DAG of jobs...
+WorkflowError:
+MissingInputException: Missing input files for rule copy_results_files:
+qc/multiqc/MultiQC.html
+MissingInputException: Missing input files for rule alignment_samtools_sort:
+results/dna/bam/NA12878_N.bam_unsorted

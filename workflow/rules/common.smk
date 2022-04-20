@@ -45,16 +45,20 @@ validate(units, schema="../schemas/units.schema.yaml")
 
 
 wildcard_constraints:
-    sample="|".join(samples.index),
-    unit="N|T|R",
+    barcode="[A-Z+]+",
+    chr="[^_]+",
+    flowcell="[A-Z0-9]+",
+    lane="L[0-9]+",
+    sample="|".join(get_samples(samples)),
+    type="N|T|R",
 
 
 
 def compile_result_file_list():
     files = [
-        {"in": ["alignment/merge_bam", ".bam"], "out": ["results/dna/bam", ".bam"]},
-        {"in": ["alignment/merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"]},
-        {"in": ["snv_indels/ensemble_vcf", ".ensembled.vcf.gz"], "out": ["results/dna/vcf", ".ensembled.vcf.gz"]},
+        {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["results/dna/bam", ".bam"]},
+        {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"]},
+        {"in": ["snv_indels/bcbio_variation_recall_ensemble", ".ensembled.vcf.gz"], "out": ["results/dna/vcf", ".ensembled.vcf.gz"]},
         {
             "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
             "out": ["results/dna/vcf", ".annotated.vcf.gz"]
@@ -75,7 +79,7 @@ def compile_result_file_list():
             "in": ["annotation/background_annotation", ".background_annotation.hard_filter.vcf"],
             "out": ["results/dna/vcf", ".annotated.hard_filter.vcf"]
         },
-        {"in": ["snv_indels/mutect2_gvcf", ".merged.gvcf.gz"], "out": ["results/dna/gvcf", ".gvcf.gz"]},
+        {"in": ["snv_indels/mutect2_gvcf", ".merged.g.vcf.gz"], "out": ["results/dna/gvcf", ".g.vcf.gz"]},
         {
             "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
             "out": ["results/dna/qc", ".duplication_metrics.txt"]
@@ -90,7 +94,7 @@ def compile_result_file_list():
             "out": ["results/dna/qc", ".insert_size_metrics.txt"]
         },
         {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
-        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.gvcf.gz"], "out": ["results/dna/qc", ".mosdepth.gvcf.gz"]},
+        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["results/dna/qc", ".mosdepth.g.vcf.gz"]},
         {"in": ["qc/hotspot_report", ".output.tsv"], "out": ["results/dna/qc", ".hotspot.tsv"]},
         {"in": ["qc/hotspot_info", ".hotspot_coverage_info.tsv"], "out": ["results/dna/qc", ".hotspot_coverage_info.tsv"]},
         {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
@@ -149,7 +153,7 @@ def compile_result_file_list():
     #     for sample in get_samples(samples)
     #     for t in get_unit_types(units, sample)
     # ]
-    output_files.append("results/dna/qc/MultiQC.html")
+    output_files.append("results/dna/qc/multiqc.html")
     input_files.append("qc/multiqc/multiqc.html")
     return input_files, output_files
 

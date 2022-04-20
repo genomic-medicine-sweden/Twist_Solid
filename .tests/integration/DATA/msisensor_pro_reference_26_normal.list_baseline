@@ -1,0 +1,2 @@
+chromosome	location	repeat_unit_length	repeat_unit_binary	repeat_times	left_flank_binary	right_flank_binary	repeat_unit_bases	left_flank_bases	right_flank_bases	threshold	supportSamples
+chr1	700513	1	0	18	221	983	A	ATCTC	TTCCT	0.0808498	25

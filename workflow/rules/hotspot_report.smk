@@ -12,8 +12,8 @@ rule hotspot_report:
         hotspots=config['hotspot_report']['hotspot_mutations'],
         vcf="annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz",
         vcf_index="annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz.tbi",
-        gvcf="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.gvcf.gz",
-        gvcf_index="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.gvcf.gz.tbi",
+        gvcf="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz",
+        gvcf_index="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz.tbi",
     output:
         report=temp("qc/hotspot_report/{sample}_{type}.output.tsv"),
     params:
