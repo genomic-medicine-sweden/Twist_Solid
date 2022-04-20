@@ -71,7 +71,7 @@ use rule mutect2_gvcf from snv_indels as snv_indels_mutect2_gvcf with:
         bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
 
 module annotation:
-   snakefile: github("hydra-genetics/annotation", path="workflow/Snakefile", tag="4690399")
+   snakefile: github("hydra-genetics/annotation", path="workflow/Snakefile", tag="8a28bb3")
    config: config
 
 use rule * from annotation as annotation_*

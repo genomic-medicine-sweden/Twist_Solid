@@ -27,7 +27,7 @@ filters:
   ad_TERT:
     description: "Hard filter TERT variants with few observations (AD lower than 4)"
     expression: "(FORMAT:AD:1 < 4 and exist[1-hotspot, INFO:Hotspot] and VEP:Gene = TERT)"
-    soft_filter_flag: "AD_TERT_lt_10"
+    soft_filter_flag: "AD_TERT_lt_4"
     soft_filter: "True"
   germline:
     description: "Germline"
