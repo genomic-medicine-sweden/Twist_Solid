@@ -76,7 +76,7 @@ module annotation:
 
 use rule * from annotation as annotation_*
 
-use rule add_multi_snv_in_codon from snv_indels as annotation_add_multi_snv_in_codon with:
+use rule add_multi_snv_in_codon from annotation as annotation_add_multi_snv_in_codon with:
     input:
         vcf="snv_indels/ensemble_vcf/{sample}_{type}.ensembled.vep_annotated.vcf",
         ref=config["reference"]["fasta"],
