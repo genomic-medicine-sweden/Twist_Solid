@@ -12,6 +12,8 @@ rule copy_results_files:
         input_files,
     output:
         output_files,
+    log:
+        "logs/copy_result.log",
     resources:
         threads=config.get("copy_results_files", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("copy_results_files", {}).get("time", config["default_resources"]["time"]),

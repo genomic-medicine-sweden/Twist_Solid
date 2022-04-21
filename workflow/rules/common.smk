@@ -167,4 +167,11 @@ def compile_output_list(wildcards):
     return output_files
 
 
+def get_flowcell(units, wildcards):
+    flowcells = set([u.flowcell for u in get_units(units, wildcards)])
+    if len(flowcells) > 1:
+        raise ValueError("Sample type combination from different sequence flowcells")
+    return flowcells.pop()
+
+
 input_files, output_files = compile_result_file_list()
