@@ -15,10 +15,6 @@ properties:
     type: string
     description: name or path to a default docker/singularity container
 
-
-  alignment_software:
-    type: string
-
   cnvkit_batch:
     type: object
     properties:
@@ -61,12 +57,6 @@ properties:
   hard_filter:
     type: object
     properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for hard_filter
-      container:
-        type: string
-        description: name or path to docker/singularity container
       filter_config:
         type: string
         description: Config file specifying which hard filters should be applied.
@@ -140,15 +130,6 @@ properties:
   msisensor_pro:
     type: object
     properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for msisensor_pro
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded to msisensor_pro
       PoN:
         type: string
         description: path to panel of normals
@@ -158,18 +139,6 @@ properties:
   multiqc:
     type: object
     properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for fastqc
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      config:
-        type: string
-        description: path to multiqc_config.yaml
-      extra:
-        type: string
-        description: extra parameters to multiqc
       qc_files:
         type: array
         items:
@@ -244,12 +213,6 @@ properties:
   soft_filter:
     type: object
     properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for soft_filter
-      container:
-        type: string
-        description: name or path to docker/singularity container
       filter_config:
         type: string
         description: Config file specifying which soft filters should be applied.
@@ -262,23 +225,10 @@ properties:
   vep:
     type: object
     properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for vep
-      container:
-        type: string
-        description: name or path to docker/singularity vep
       vep_cache:
         type: string
         description: path to vep cache directory
-      extra:
-        type: string
-        description: parameters that should be forwarded to vep annotate
-      mode:
-        type: string
-        description: Used to make vep query online database, by setting mode to --database
       required:
-        - extra
         - vep_cache
 
 required:
@@ -286,14 +236,16 @@ required:
   - units
   - resources
   - default_container
+  - cnvkit_batch
   - gatk_cnv_collect_allelic_counts
   - gatk_cnv_denoise_read_counts
   - gene_fuse
+  - hard_filter_vcf
   - hotspot_info
   - hotspot_report
-  - reference
-  - vep
-  - hard_filter_vcf
-  - soft_filter_vcf
-  - multiqc
   - msisensor_pro
+  - multiqc
+  - reference
+  - soft_filter_vcf
+  - trimmer_software
+  - vep

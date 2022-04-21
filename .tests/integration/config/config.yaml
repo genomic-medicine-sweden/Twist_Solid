@@ -2,9 +2,21 @@ samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
 
-trimmer_software: "fastp_pe"
-
 default_container: "docker://hydragenetics/common:0.1.2"
+
+cnvkit_batch:
+  container: "docker://gmsuppsala/somatic:develop"
+  normal_reference: "DATA/design.PoN.cnn"
+  method: "hybrid"
+
+gatk_cnv_collect_allelic_counts:
+  SNP_interval: "DATA/design.interval_list"
+
+gatk_cnv_denoise_read_counts:
+  normal_reference: "DATA/design.hdf5"
+
+gene_fuse:
+  genes: "DATA/druggable.expanded.hg19.csv"
 
 reference:
   artifacts: "DATA/artifact_panel_normal.tsv"
@@ -21,6 +33,8 @@ reference:
   pac: "reference/WASH7P.fna.pac"
   sa: "reference/WASH7P.fna.sa"
 
+trimmer_software: "fastp_pe"
+
 bcftools_filter_include_region:
   exon: "DATA/design.noexon1.bed"
   nocnv: "DATA/design.noexon1.bed"
@@ -29,19 +43,6 @@ bcftools_filter_exclude_region:
   exon: "DATA/design.noexon1.bed"
   noćnv: "DATA/design.noexon1.bed"
 
-cnvkit_batch:
-  container: "docker://gmsuppsala/somatic:develop"
-  normal_reference: "DATA/design.PoN.cnn"
-  method: "hybrid"
-
-gatk_cnv_collect_allelic_counts:
-  SNP_interval: "DATA/design.interval_list"
-
-gatk_cnv_denoise_read_counts:
-  normal_reference: "DATA/design.hdf5"
-
-gene_fuse:
-  genes: "DATA/druggable.expanded.hg19.csv"
 
 hard_filter_vcf:
   filter_config: "../../config/config_hard_filter.yaml"
