@@ -1,6 +1,0 @@
-Building DAG of jobs...
-WorkflowError:
-MissingInputException: Missing input files for rule misc_bgzip:
-qc/add_mosdepth_coverage_to_gvcf/NA12878_N.mosdepth.gvcf
-MissingInputException: Missing input files for rule alignment_samtools_sort:
-results/dna/bam/NA12878_N.bam_unsorted

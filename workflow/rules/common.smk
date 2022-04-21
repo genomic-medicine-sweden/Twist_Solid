@@ -143,10 +143,13 @@ def compile_result_file_list():
         "results/dna/cnv/%s_%s.manta_tumorSV.vcf.gz" % (sample, t)
         for sample in get_samples(samples)
         for t in get_unit_types(units, sample)
+        if t == "T"
     ]
     input_files += [
         "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
         for sample in get_samples(samples)
+        for t in get_unit_types(units, sample)
+        if t == "T"
     ]
     # output_files += [
     #     "results/dna/optitype/%s_%s.hla_type_result.tsv" % (sample, t)
