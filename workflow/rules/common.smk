@@ -34,7 +34,11 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
 
-units = pd.read_table(config["units"], dtype=str).set_index(["sample", "type"], drop=False)
+units = (
+    pandas.read_table(config["units"], dtype=str)
+    .set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False)
+    .sort_index()
+)
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
@@ -92,12 +96,15 @@ def compile_result_file_list():
         {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
         {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
         {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ["results/dna/hrd", ".hrd_score.txt"]},
-        {"in": ["fusions/gene_fuse", "_gene_fuse_fusions.txt"], "out": ["results/dna/fusions", "_gene_fuse_fusions.txt"]},
+        {"in": ["fusions/gene_fuse", "_gene_fuse_fusions.txt"], "out": ["results/dna/fusions", ".gene_fuse_fusions.txt"]},
         {"in": ["cnv_sv/cnvkit_call", ".loh.cns"], "out": ["results/dna/cnv", ".cnvkit.loh.cns"]},
         {"in": ["cnv_sv/gatk_cnv_call_copy_ratio_segments", ".clean.calledCNVs.seg"], "out": ["results/dna/cnv", ".gatk_cnv.seg"]},
         {"in": ["cnv_sv/gatk_cnv_vcf", ".vcf"], "out": ["results/dna/cnv", ".gatk_cnv.vcf"]},
         {"in": ["cnv_sv/cnvkit_vcf", ".vcf"], "out": ["results/dna/cnv", ".cnvkit.vcf"]},
+        {"in": ["cnv_sv/cnvkit_scatter", ".png"], "out": ["results/dna/cnv", ".cnvkit.scatter.png"]},
+        {"in": ["cnv_sv/cnvkit_diagram", ".pdf"], "out": ["results/dna/cnv", ".cnvkit.diagram.pdf"]},
         {"in": ["cnv_sv/svdb_merge", ".merged.vcf"], "out": ["results/dna/cnv", ".merged.vcf"]},
+        {"in": ["cnv_sv/svdb_query", ".svdb_query.vcf"], "out": ["results/dna/cnv", ".svdb_query.vcf"]},
     ]
     output_files = [
         "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
@@ -124,19 +131,26 @@ def compile_result_file_list():
         for t in get_unit_types(units, sample)
     ]
     output_files += [
-        "results/dna/qc/%s_%s_%s_fastqc.html" % (sample, t, read)
-        for read in ["fastq1", "fastq2"]
+        "results/dna/cnv/%s_%s.manta_tumorSV.vcf.gz" % (sample, t)
         for sample in get_samples(samples)
         for t in get_unit_types(units, sample)
     ]
     input_files += [
-        "qc/fastqc/%s_%s_%s_fastqc.html" % (sample, t, read)
-        for read in ["fastq1", "fastq2"]
+        "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
         for sample in get_samples(samples)
-        for t in get_unit_types(units, sample)
     ]
+    # output_files += [
+    #     "results/dna/optitype/%s_%s.hla_type_result.tsv" % (sample, t)
+    #     for sample in get_samples(samples)
+    #     for t in get_unit_types(units, sample)
+    # ]
+    # input_files += [
+    #     "biomarker/optitype/%s_%s/%s_%s_hla_type_result.tsv" % (sample, t, sample, t)
+    #     for sample in get_samples(samples)
+    #     for t in get_unit_types(units, sample)
+    # ]
     output_files.append("results/dna/qc/MultiQC.html")
-    input_files.append("qc/multiqc/MultiQC.html")
+    input_files.append("qc/multiqc/multiqc.html")
     return input_files, output_files
 
 

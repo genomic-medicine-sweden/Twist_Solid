@@ -1,19 +1,11 @@
 filters:
-  dp:
-    description: "Hard filter variants with low coverage (DP lower than 50)"
-    expression: "FORMAT:DP < 50"
-    soft_filter: "False"
   vaf:
-    description: "Hard filter variants with low vaf (AF lower than 0.02)"
-    expression: "FORMAT:AF:0 < 0.02"
+    description: "Filter variants with low vaf (AF lower than 0.05)"
+    expression: "(FORMAT:AF:0 < 0.05 and !exist[1-hotspot, INFO:Hotspot])"
     soft_filter: "False"
-  ad:
-    description: "Hard filter variants with few observations (AD lower than 10)"
-    expression: "FORMAT:AD:1 < 10"
-    soft_filter: "False"
-  germline:
-    description: "Hard filter germline"
-    expression: "(VEP:AF > 0.01 and !exist[COSV_[0-9]+, VEP:Existing_variation])"
+  vaf_hotspot:
+    description: "Filter hotspot variants with low vaf (AF lower than 0.02)"
+    expression: "(FORMAT:AF:0 < 0.02 and exist[1-hotspot, INFO:Hotspot])"
     soft_filter: "False"
   artifacts:
     description: "Hard filter variants found in more than 3 normal samples"
@@ -22,4 +14,20 @@ filters:
   background:
     description: "Hard filter position with where backgound distribution overlaps variant (lower than 5 SD from median)"
     expression: "INFO:PositionNrSD < 5"
+    soft_filter: "False"
+  germline:
+    description: "Hard filter germline"
+    expression: "(VEP:AF > 0.001 and !exist[COSV_[0-9]+, VEP:Existing_variation])"
+    soft_filter: "False"
+  ad:
+    description: "Hard filter variants with few observations (AD lower than 20)"
+    expression: "(FORMAT:AD:1 < 20 and !exist[1-hotspot, INFO:Hotspot] and VEP:Gene != TERT)"
+    soft_filter: "False"
+  ad_hotspot:
+    description: "Hard filter hotspot variants with few observations (AD lower than 10)"
+    expression: "(FORMAT:AD:1 < 10 and exist[1-hotspot, INFO:Hotspot] and VEP:Gene != TERT)"
+    soft_filter: "False"
+  ad_TERT:
+    description: "Hard filter TERT variants with few observations (AD lower than 4)"
+    expression: "(FORMAT:AD:1 < 4 and exist[1-hotspot, INFO:Hotspot] and VEP:Gene = TERT)"
     soft_filter: "False"
