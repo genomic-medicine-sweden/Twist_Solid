@@ -19,8 +19,11 @@ rule copy_results_files:
         mem_per_cpu=config.get("copy_results_files", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("copy_results_files", {}).get("partition", config["default_resources"]["partition"]),
     run:
+        """
         import subprocess
+
         i = 0
         for file in input:
             subprocess.run(["cp", file, output[i]])
             i += 1
+        """

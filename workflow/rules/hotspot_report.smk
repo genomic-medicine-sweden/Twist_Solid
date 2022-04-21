@@ -9,7 +9,7 @@ __license__ = "GPL-3"
 
 rule hotspot_report:
     input:
-        hotspots=config['hotspot_report']['hotspot_mutations'],
+        hotspots=config["hotspot_report"]["hotspot_mutations"],
         vcf="annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz",
         vcf_index="annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz.tbi",
         gvcf="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz",
@@ -40,6 +40,6 @@ rule hotspot_report:
     conda:
         "../envs/hotspot_report.yaml"
     message:
-       "{rule}: Do stuff on twist_dna_solid_uppsala/{rule}/{wildcards.sample}_{wildcards.type}.input"
+        "{rule}: Do stuff on twist_dna_solid_uppsala/{rule}/{wildcards.sample}_{wildcards.type}.input"
     script:
         "../scripts/hotspot_report.py"

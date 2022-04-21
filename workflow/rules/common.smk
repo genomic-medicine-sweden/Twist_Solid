@@ -53,45 +53,47 @@ wildcard_constraints:
     type="N|T|R",
 
 
-
 def compile_result_file_list():
     files = [
         {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["results/dna/bam", ".bam"]},
         {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"]},
-        {"in": ["snv_indels/bcbio_variation_recall_ensemble", ".ensembled.vcf.gz"], "out": ["results/dna/vcf", ".ensembled.vcf.gz"]},
+        {
+            "in": ["snv_indels/bcbio_variation_recall_ensemble", ".ensembled.vcf.gz"],
+            "out": ["results/dna/vcf", ".ensembled.vcf.gz"],
+        },
         {
             "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
-            "out": ["results/dna/vcf", ".annotated.vcf.gz"]
+            "out": ["results/dna/vcf", ".annotated.vcf.gz"],
         },
         {
             "in": ["annotation/background_annotation", ".background_annotation.include.nocnv.vcf.gz"],
-            "out": ["results/dna/vcf", ".annotated.nocnv.vcf.gz"]
+            "out": ["results/dna/vcf", ".annotated.nocnv.vcf.gz"],
         },
         {
             "in": ["annotation/background_annotation", ".background_annotation.include.exon.vcf.gz"],
-            "out": ["results/dna/vcf", ".annotated.exon_only.vcf.gz"]
+            "out": ["results/dna/vcf", ".annotated.exon_only.vcf.gz"],
         },
         {
             "in": ["annotation/background_annotation", ".background_annotation.soft_filter.vcf"],
-            "out": ["results/dna/vcf", ".annotated.soft_filter.vcf"]
+            "out": ["results/dna/vcf", ".annotated.soft_filter.vcf"],
         },
         {
             "in": ["annotation/background_annotation", ".background_annotation.hard_filter.vcf"],
-            "out": ["results/dna/vcf", ".annotated.hard_filter.vcf"]
+            "out": ["results/dna/vcf", ".annotated.hard_filter.vcf"],
         },
         {"in": ["snv_indels/mutect2_gvcf", ".merged.g.vcf.gz"], "out": ["results/dna/gvcf", ".g.vcf.gz"]},
         {
             "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
-            "out": ["results/dna/qc", ".duplication_metrics.txt"]
+            "out": ["results/dna/qc", ".duplication_metrics.txt"],
         },
         {
             "in": ["qc/picard_collect_alignment_summary_metrics", ".alignment_summary_metrics.txt"],
-            "out": ["results/dna/qc", ".alignment_summary_metrics.txt"]
+            "out": ["results/dna/qc", ".alignment_summary_metrics.txt"],
         },
         {"in": ["qc/picard_collect_hs_metrics", ".HsMetrics.txt"], "out": ["results/dna/qc", ".HsMetrics.txt"]},
         {
             "in": ["qc/picard_collect_insert_size_metrics", ".insert_size_metrics.txt"],
-            "out": ["results/dna/qc", ".insert_size_metrics.txt"]
+            "out": ["results/dna/qc", ".insert_size_metrics.txt"],
         },
         {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
         {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["results/dna/qc", ".mosdepth.g.vcf.gz"]},
@@ -102,7 +104,10 @@ def compile_result_file_list():
         {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ["results/dna/hrd", ".hrd_score.txt"]},
         {"in": ["fusions/gene_fuse", "_gene_fuse_fusions.txt"], "out": ["results/dna/fusions", ".gene_fuse_fusions.txt"]},
         {"in": ["cnv_sv/cnvkit_call", ".loh.cns"], "out": ["results/dna/cnv", ".cnvkit.loh.cns"]},
-        {"in": ["cnv_sv/gatk_cnv_call_copy_ratio_segments", ".clean.calledCNVs.seg"], "out": ["results/dna/cnv", ".gatk_cnv.seg"]},
+        {
+            "in": ["cnv_sv/gatk_cnv_call_copy_ratio_segments", ".clean.calledCNVs.seg"],
+            "out": ["results/dna/cnv", ".gatk_cnv.seg"],
+        },
         {"in": ["cnv_sv/gatk_cnv_vcf", ".vcf"], "out": ["results/dna/cnv", ".gatk_cnv.vcf"]},
         {"in": ["cnv_sv/cnvkit_vcf", ".vcf"], "out": ["results/dna/cnv", ".cnvkit.vcf"]},
         {"in": ["cnv_sv/cnvkit_scatter", ".png"], "out": ["results/dna/cnv", ".cnvkit.scatter.png"]},
