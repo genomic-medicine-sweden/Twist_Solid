@@ -250,6 +250,7 @@ required:
   - units
   - resources
   - default_container
+  - bcbio_variation_recall_ensemble
   - cnvkit_batch
   - gatk_cnv_collect_allelic_counts
   - gatk_cnv_denoise_read_counts
