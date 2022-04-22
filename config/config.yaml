@@ -54,12 +54,11 @@ config_manta_t:
 decompose:
   container: "docker://gmsuppsala/somatic:develop"
 
-ensemble_vcf:
+bcbio_variation_recall_ensemble:
   container: "docker://gmsuppsala/somatic:develop"
   callers:
     - vardict
     - mutect2
-  sort_order: "vardict,mutect2"
 
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"
