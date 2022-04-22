@@ -87,7 +87,7 @@ columns:
     order: 15
   alt:
      order: 16
- ref_depth:
+  ref_depth:
     order: 17
   alt_depth:
     order: 18
