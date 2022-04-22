@@ -35,6 +35,12 @@ reference:
 
 trimmer_software: "fastp_pe"
 
+bcbio_variation_recall_ensemble:
+  container: "docker://gmsuppsala/somatic:develop"
+  callers:
+    - vardict
+    - mutect2
+
 bcftools_filter_include_region:
   exon: "DATA/design.noexon1.bed"
   nocnv: "DATA/design.noexon1.bed"
