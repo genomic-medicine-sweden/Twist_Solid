@@ -76,6 +76,8 @@ properties:
       chr_translation_file:
         type: string
         description: Chromosome translation file (NCXXXX to chrXX)
+    required:
+      - hotspots
 
   hotspot_info:
     type: object
@@ -241,6 +243,7 @@ required:
   - gatk_cnv_denoise_read_counts
   - gene_fuse
   - hard_filter_vcf
+  - hotspot_annotation
   - hotspot_info
   - hotspot_report
   - msisensor_pro
