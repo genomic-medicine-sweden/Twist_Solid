@@ -27,6 +27,18 @@ properties:
     required:
       - normal_reference
 
+  bcbio_variation_recall_ensemble:
+    type: object
+    properties:
+      callers:
+        type: array
+        description: list of callers that are included in the ensemble vcf in sort order
+        items:
+          type: string
+      sort_order:
+        type: string
+        description: 
+
   gatk_cnv_collect_allelic_counts:
     type: object
     properties:
