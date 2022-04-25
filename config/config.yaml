@@ -31,8 +31,6 @@ bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
   #extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
 
-calculate_seqrun_background:
-  container: "docker://python:3.9.7-slim"
 
 cnvkit_batch:
   container: "docker://marrip/cnvkit:0.9.9"
@@ -197,6 +195,6 @@ vep:
 
 vt_decompose:
   container: "docker://hydragenetics/vt:2015.11.10"
-  
+
 vt_normalize:
   container: "docker://hydragenetics/vt:2015.11.10"

@@ -1,0 +1,430 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake configuration file
+type: object
+properties:
+  default_container:
+    type: string
+    description: name or path to a default docker/singularity container
+
+  bcbio_variation_recall_ensemble:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            gmsuppsala/somatic:develop$
+    required:
+      - container
+
+  bwa_mem:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/bwa_mem:0\.7\.17$
+    required:
+      - container
+
+  cnvkit_batch:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            marrip/cnvkit:0\.9\.9$
+    required:
+      - container
+
+  cnvkit_call:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            marrip/cnvkit:0\.9\.9$
+    required:
+      - container
+
+  cnvkit_diagram:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            marrip/cnvkit:0\.9\.9$
+    required:
+      - container
+
+  cnvkit_scatter:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            marrip/cnvkit:0\.9\.9$
+    required:
+      - container
+
+  config_manta_t:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            marrip/manta:v1\.6\.0$
+    required:
+      - container
+
+  fastp_pe:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/fastp:0\.20\.1$
+      required:
+        - container
+
+  fastqc:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/fastqc:0\.11\.9$
+      required:
+        - container
+
+  freebayes:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            gmsuppsala/somatic:develop$
+      required:
+        - container
+
+  gatk_cnv_call_copy_ratio_segments:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            gmsuppsala/somatic:develop$
+      required:
+        - container
+
+  gatk_cnv_collect_allelic_counts:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            gmsuppsala/somatic:develop$
+      required:
+        - container
+
+  gatk_cnv_collect_read_counts:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            gmsuppsala/somatic:develop$
+      required:
+        - container
+
+  gatk_cnv_denoise_read_counts:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            gmsuppsala/somatic:develop$
+      required:
+        - container
+
+  gatk_cnv_model_segments:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            gmsuppsala/somatic:develop$
+      required:
+        - container
+
+  gene_fuse:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/genefuse:0\.6\.1$
+      required:
+        - container
+
+  germline_vcf:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/vep:105$
+      required:
+        - container
+
+  manta_run_workflow_t:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            marrip/manta:v1\.6\.0$
+      required:
+        - container
+
+  mosdepth_bed:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/mosdepth:0\.3\.2$
+      required:
+        - container
+
+  msisensor_pro:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/msisensor_pro:1\.1\.a$
+      required:
+        - container
+
+  multiqc:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/multiqc:1\.11$
+      required:
+        - container
+
+  mutect2:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$
+      required:
+        - container
+
+  mutect2_gvcf:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$
+      required:
+        - container
+
+  optitype:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            fred2/optitype$
+      required:
+        - container
+
+  picard_collect_alignment_summary_metrics:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/picard:2\.25\.0$
+      required:
+        - container
+
+  picard_collect_hs_metrics:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/picard:2\.25\.0$
+      required:
+        - container
+
+  picard_collect_duplication_metrics:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/picard:2\.25\.0$
+      required:
+        - container
+
+  picard_collect_insert_size_metrics:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/picard:2\.25\.0$
+      required:
+        - container
+
+  picard_mark_duplicates:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/picard:2\.25\.0$
+      required:
+        - container
+
+  svdb_merge:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/svdb:2\.6\.0$
+    required:
+      - container
+
+  svdb_query:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/svdb:2\.6\.0$
+    required:
+      - container
+
+  vardict:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            gmsuppsala/somatic:develop$
+    required:
+      - container
+
+  vep:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/vep:105$
+    required:
+      - container
+
+  vt_decompose:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/vt:2015\.11\.10$
+    required:
+      - container
+
+  vt_normalize:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/vt:2015\.11\.10$
+      required:
+        - container
+
+required:
+  - default_container
+  - bcbio_variation_recall_ensemble
+  - bwa_mem
+  - cnvkit_batch
+  - cnvkit_call
+  - cnvkit_diagram
+  - cnvkit_scatter
+  - config_manta_t
+  - fastp_pe
+  - fastqc
+  - freebayes
+  - gatk_cnv_call_copy_ratio_segments
+  - gatk_cnv_collect_allelic_counts
+  - gatk_cnv_collect_read_counts
+  - gatk_cnv_denoise_read_counts
+  - gatk_cnv_model_segments
+  - gene_fuse
+  - germline_vcf
+  - manta_run_workflow_t
+  - mosdepth_bed
+  - msisensor_pro
+  - multiqc
+  - mutect2
+  - mutect2_gvcf
+  - optitype
+  - picard_collect_alignment_summary_metrics
+  - picard_collect_hs_metrics
+  - picard_collect_duplication_metrics
+  - picard_collect_insert_size_metrics
+  - picard_mark_duplicates
+  - svdb_merge
+  - svdb_query
+  - vardict
+  - vep
+  - vt_decompose
+  - vt_normalize
