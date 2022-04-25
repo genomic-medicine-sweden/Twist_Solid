@@ -4,19 +4,82 @@ resources: "resources.yaml"
 
 default_container: "docker://hydragenetics/common:0.1.2"
 
+bwa_mem:
+  container: "docker://hydragenetics/bwa_mem:0.7.17"
+
+bcftools_filter_include_region:
+  exon: "DATA/design.noexon1.bed"
+  nocnv: "DATA/design.noexon1.bed"
+
+bcftools_filter_exclude_region:
+  exon: "DATA/design.noexon1.bed"
+  noćnv: "DATA/design.noexon1.bed"
+
 cnvkit_batch:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://marrip/cnvkit:0.9.9"
   normal_reference: "DATA/design.PoN.cnn"
   method: "hybrid"
 
+cnvkit_call:
+  container: "docker://marrip/cnvkit:0.9.9"
+
+cnvkit_diagram:
+  container: "docker://marrip/cnvkit:0.9.9"
+
+cnvkit_scatter:
+  container: "docker://marrip/cnvkit:0.9.9"
+
+config_manta_t:
+  container: "docker://marrip/manta:v1.6.0"
+
+fastp_pe:
+  container: "docker://hydragenetics/fastp:0.20.1"
+
+fastqc:
+  container: "docker://hydragenetics/fastqc:0.11.9"
+
+freebayes:
+  container: "docker://gmsuppsala/somatic:develop"
+
+gatk_cnv_call_copy_ratio_segments:
+  container: "docker://gmsuppsala/somatic:develop"
+
 gatk_cnv_collect_allelic_counts:
-  SNP_interval: "DATA/design.interval_list"
+  container: "docker://gmsuppsala/somatic:develop"
+  SNP_interval: "DATA/gnomad_SNP_0.001_target.annotated.interval_list"
+
+gatk_cnv_collect_read_counts:
+  container: "docker://gmsuppsala/somatic:develop"
 
 gatk_cnv_denoise_read_counts:
-  normal_reference: "DATA/design.hdf5"
+  container: "docker://gmsuppsala/somatic:develop"
+  normal_reference: "DATA/gatk_cnv_nextseq_36.hdf5"
+
+gatk_cnv_model_segments:
+  container: "docker://gmsuppsala/somatic:develop"
 
 gene_fuse:
+  container: "docker://hydragenetics/genefuse:0.6.1"
   genes: "DATA/druggable.expanded.hg19.csv"
+
+germline_vcf:
+  container: "docker://hydragenetics/vep:105"
+
+manta_run_workflow_t:
+  container: "docker://marrip/manta:v1.6.0"
+
+mosdepth_bed:
+  container: "docker://hydragenetics/mosdepth:0.3.2"
+
+msisensor_pro:
+  container: "docker://hydragenetics/msisensor_pro:1.1.a"
+  PoN: "DATA/msisensor_pro_reference_26_normal.list_baseline"
+
+mutect2:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+mutect2_gvcf:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
 
 reference:
   artifacts: "DATA/artifact_panel_normal.tsv"
@@ -53,12 +116,6 @@ bcftools_filter_exclude_region:
 hard_filter_vcf:
   filter_config: "../../config/config_hard_filter.yaml"
 
-# hard_filter_vcf:
-#   filter_config: "config_hard_filter.yaml"
-#
-# soft_filter_vcf:
-#   filter_config: "config_soft_filter.yaml"
-
 hotspot_annotation:
   hotspots: "DATA/Hotspots_combined.csv"
   chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"
@@ -75,9 +132,6 @@ hotspot_report:
     - [30, "low", "yes"]
     - [0, "low", "not analyzable"]
 
-msisensor_pro:
-  PoN: "DATA/msisensor_pro_reference_26_normal.list_baseline"
-
 multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
   config: "../../config/multiqc_config.yaml"
@@ -89,14 +143,52 @@ multiqc:
     - "qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
     - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
 
+optitype:
+  container: "docker://fred2/optitype"
+
+picard_mark_duplicates:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+picard_collect_alignment_summary_metrics:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+picard_collect_hs_metrics:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+picard_collect_duplication_metrics:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+picard_collect_insert_size_metrics:
+  container: "docker://hydragenetics/picard:2.25.0"
+
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
 soft_filter_vcf:
   filter_config: "../../config/config_soft_filter.yaml"
 
+svdb_merge:
+  container: "docker://hydragenetics/svdb:2.6.0"
+  cnv_callers:
+    - "cnvkit"
+    - "gatk_cnv"
+
+svdb_query:
+  container: "docker://hydragenetics/svdb:2.6.0"
+
+vardict:
+  container: "docker://gmsuppsala/somatic:develop"
+  bed_columns: "-c 1 -S 2 -E 3 -g 4"
+  allele_frequency_threshold: "0.01"
+
 vep:
   container: "docker://hydragenetics/vep:105"
   vep_cache:  "DATA/VEP/homo_sapiens/"
   mode: --offline --cache
   extra: " --check_existing --pick --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
+
+vt_decompose:
+  container: "docker://hydragenetics/vt:2015.11.10"
+
+vt_normalize:
+  container: "docker://hydragenetics/vt:2015.11.10"
