@@ -12,6 +12,8 @@ rule copy_results_files:
         input_files,
     output:
         output_files,
+    log:
+        "logs/copy_result.log",
     resources:
         threads=config.get("copy_results_files", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("copy_results_files", {}).get("time", config["default_resources"]["time"]),
@@ -20,6 +22,7 @@ rule copy_results_files:
         partition=config.get("copy_results_files", {}).get("partition", config["default_resources"]["partition"]),
     run:
         import subprocess
+
         i = 0
         for file in input:
             subprocess.run(["cp", file, output[i]])

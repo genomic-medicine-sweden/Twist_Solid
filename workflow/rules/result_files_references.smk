@@ -23,6 +23,7 @@ output_files = [
     "results/svdb_cnv.vcf",
 ]
 
+
 rule copy_cnvkit:
     input:
         "references/cnvkit_build_normal_reference/cnvkit.PoN.cnn",

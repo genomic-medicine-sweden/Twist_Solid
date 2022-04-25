@@ -7,24 +7,17 @@ __email__ = "patrik.smeds@scilifelab.uu.se"
 __license__ = "GPL3"
 
 
-def get_flowcell(units, wildcards):
-    flowcells = set([u.flowcell for u in get_units(units, wildcards)])
-    if len(flowcells) > 1:
-        raise ValueError("Sample type combination from different sequence flowcells")
-    return flowcells.pop()
-
-
 rule hotspot_info:
     input:
-        bam="alignment/merge_bam/{sample}_{type}.bam",
-        bai="alignment/merge_bam/{sample}_{type}.bam.bai",
-        vcf="snv_indels/ensemble_vcf/{sample}_{type}.ensembled.vep_annotated.vcf",
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.vcf",
         hotspots=config.get("hotspot_info", {}).get("hotspot_mutations", ""),
         background_panel=config.get("reference", {}).get("background", ""),
         background_run=lambda wildcards: "annotation/calculate_seqrun_background/%s_seqrun_background.tsv"
         % get_flowcell(units, wildcards),
-        gvcf="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.gvcf.gz",
-        gvcf_index="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.gvcf.gz.tbi",
+        gvcf="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz",
+        gvcf_index="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz.tbi",
     output:
         low_coverage=temp("qc/hotspot_info/{sample}_{type}.hotspot_low_coverage.txt"),
         hotspot_info=temp("qc/hotspot_info/{sample}_{type}.hotspot_coverage_info.tsv"),

@@ -7,15 +7,63 @@ columns:
     order: 3
   sample:
     visible: 0
+  Gene:
+    from: 'merge'
+    divider: ';'
+    elements:
+      hotspot:
+        from: 'hotspot'
+        field: 'GENE'
+        format: ['replace', 'SEPT', '´SEPT']
+      vep:
+        from: 'vep'
+        field: 'SYMBOL'
+        format: ['replace', 'SEPT', '´SEPT']
+    order: 4  
+  Consequence:
+    from: 'vep'
+    field: 'Consequence'
+    order: 5
+  Exon:
+    from: 'hotspot'
+    field: 'EXON'
+    order: 6
+  Exon_VEP:
+    from: 'vep'
+    field: 'EXON'
+    format: ['replace', '/', ',']
+  AA_change:
+    from: 'merge'
+    divider: ';'
+    elements:
+      hotspot:
+        from: 'hotspot'
+        field: 'AA_MUTATION_SYNTAX'
+      vep:
+        from: 'vep'
+        field: 'HGVSp'
+    order: 7
+  CDS_change:
+    from: 'merge'
+    divider: ';'
+    elements:
+      hotspot:
+        from: 'hotspot'
+        field: 'CDS_MUTATION_SYNTAX'
+      vep:
+        from: 'vep'
+        field: 'HGVSc'
+    order: 8
+  Accession_number:
+    from: 'hotspot'
+    field: 'ACCESSION_NUMBER'
+    order: 9
   report:
     order: 10
-  gvcf_depth:
-    order: 14
-    field: 'DP_mosdepth'
-  ref_depth:
-    order: 15
-  alt_depth: 
-    order: 16
+  Comment:
+    from: 'hotspot'
+    field: 'COMMENT'
+    order: 11
   Analyzable:
     from: 'function'
     name: "get_read_level"
@@ -32,75 +80,41 @@ columns:
       - depth
     column: 0
     order: 13
-  Gene:
-    from: 'hotspot'
-    field: 'GENE'
-    order: 4
-    format: ['replace', 'SEPT', '´SEPT']
-  Gene_VEP:
-    from: 'vep'
-    field: 'SYMBOL'
-    format: ['replace', 'SEPT', '´SEPT']
-  Consequence:
-    from: 'vep'
-    field: 'Consequence'
-    order: 5
-  Exon:
-    from: 'hotspot'
-    field: 'EXON'
-    order: 6
-  Exon_VEP:
-    from: 'vep'
-    field: 'EXON'
-    format: ['replace', '/', ',']
-  db1000G:
-    from: 'vep'
-    field: 'AF'
-    order: 19
-  GnomAD:
-    from: 'vep'
-    field: 'MAX_AF'
-    order: 20
-  Accession_number:
-    from: 'hotspot'
-    field: 'ACCESSION_NUMBER'
-    order: 9
+  gvcf_depth:
+    order: 14
+    field: 'DP_mosdepth'
+  ref:
+    order: 15
+  alt:
+     order: 16
+  ref_depth:
+    order: 17
+  alt_depth:
+    order: 18
   Accession_number_VEP:
     from: 'vep'
     field: 'Feature'
-  rs:
-    from: 'vep'
-    field: 'Existing_variation'
-    extract_regex: '(rs[0-9]+)'
-    order: 18
-  clinvar:
-    from: 'vep'
-    field: 'CLIN_SIG'
-    order: 21
-  CDS_change_VEP:
-    from: 'vep'
-    field: 'HGVSc'
-  CDS_change:
-    from: 'hotspot'
-    field: 'CDS_MUTATION_SYNTAX'
-    order: 8
-  AA_change_VEP:
-    from: 'vep'
-    field: 'HGVSp'
-  AA_change:
-    from: 'hotspot'
-    field: 'AA_MUTATION_SYNTAX'
-    order: 7
-  Comment:
-    from: 'hotspot'
-    field: 'COMMENT'
-    order: 11
   AF:
     from: 'function'
     name: 'get_info_field'
     variables:
       - 'var'
       - 'AF'
-    order: 17
-
-
+    order: 19
+  rs:
+    from: 'vep'
+    field: 'Existing_variation'
+    extract_regex: '(rs[0-9]+)'
+    order: 20
+  db1000G:
+    from: 'vep'
+    field: 'AF'
+    order: 21
+  GnomAD:
+    from: 'vep'
+    field: 'MAX_AF'
+    order: 22
+  clinvar:
+    from: 'vep'
+    field: 'CLIN_SIG'
+    order: 23

@@ -13,6 +13,9 @@ from snakemake.utils import min_version
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
+from hydra_genetics import min_version as hydra_min_version
+
+hydra_min_version("0.10.0")
 
 min_version("6.10.0")
 
@@ -45,52 +48,58 @@ validate(units, schema="../schemas/units.schema.yaml")
 
 
 wildcard_constraints:
-    sample="|".join(samples.index),
-    unit="N|T|R",
-
+    barcode="[A-Z+]+",
+    chr="[^_]+",
+    flowcell="[A-Z0-9]+",
+    lane="L[0-9]+",
+    sample="|".join(get_samples(samples)),
+    type="N|T|R",
 
 
 def compile_result_file_list():
     files = [
-        {"in": ["alignment/merge_bam", ".bam"], "out": ["results/dna/bam", ".bam"]},
-        {"in": ["alignment/merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"]},
-        {"in": ["snv_indels/ensemble_vcf", ".ensembled.vcf.gz"], "out": ["results/dna/vcf", ".ensembled.vcf.gz"]},
+        {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["results/dna/bam", ".bam"]},
+        {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"]},
+        {
+            "in": ["snv_indels/bcbio_variation_recall_ensemble", ".ensembled.vcf.gz"],
+            "out": ["results/dna/vcf", ".ensembled.vcf.gz"],
+        },
         {
             "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
-            "out": ["results/dna/vcf", ".annotated.vcf.gz"]
+            "out": ["results/dna/vcf", ".annotated.vcf.gz"],
         },
         {
             "in": ["annotation/background_annotation", ".background_annotation.include.nocnv.vcf.gz"],
-            "out": ["results/dna/vcf", ".annotated.nocnv.vcf.gz"]
+            "out": ["results/dna/vcf", ".annotated.nocnv.vcf.gz"],
         },
         {
             "in": ["annotation/background_annotation", ".background_annotation.include.exon.vcf.gz"],
-            "out": ["results/dna/vcf", ".annotated.exon_only.vcf.gz"]
+            "out": ["results/dna/vcf", ".annotated.exon_only.vcf.gz"],
         },
         {
             "in": ["annotation/background_annotation", ".background_annotation.soft_filter.vcf"],
-            "out": ["results/dna/vcf", ".annotated.soft_filter.vcf"]
+            "out": ["results/dna/vcf", ".annotated.soft_filter.vcf"],
         },
         {
             "in": ["annotation/background_annotation", ".background_annotation.hard_filter.vcf"],
-            "out": ["results/dna/vcf", ".annotated.hard_filter.vcf"]
+            "out": ["results/dna/vcf", ".annotated.hard_filter.vcf"],
         },
-        {"in": ["snv_indels/mutect2_gvcf", ".merged.gvcf.gz"], "out": ["results/dna/gvcf", ".gvcf.gz"]},
+        {"in": ["snv_indels/mutect2_gvcf", ".merged.g.vcf.gz"], "out": ["results/dna/gvcf", ".g.vcf.gz"]},
         {
             "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
-            "out": ["results/dna/qc", ".duplication_metrics.txt"]
+            "out": ["results/dna/qc", ".duplication_metrics.txt"],
         },
         {
             "in": ["qc/picard_collect_alignment_summary_metrics", ".alignment_summary_metrics.txt"],
-            "out": ["results/dna/qc", ".alignment_summary_metrics.txt"]
+            "out": ["results/dna/qc", ".alignment_summary_metrics.txt"],
         },
         {"in": ["qc/picard_collect_hs_metrics", ".HsMetrics.txt"], "out": ["results/dna/qc", ".HsMetrics.txt"]},
         {
             "in": ["qc/picard_collect_insert_size_metrics", ".insert_size_metrics.txt"],
-            "out": ["results/dna/qc", ".insert_size_metrics.txt"]
+            "out": ["results/dna/qc", ".insert_size_metrics.txt"],
         },
         {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
-        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.gvcf.gz"], "out": ["results/dna/qc", ".mosdepth.gvcf.gz"]},
+        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["results/dna/qc", ".mosdepth.g.vcf.gz"]},
         {"in": ["qc/hotspot_report", ".output.tsv"], "out": ["results/dna/qc", ".hotspot.tsv"]},
         {"in": ["qc/hotspot_info", ".hotspot_coverage_info.tsv"], "out": ["results/dna/qc", ".hotspot_coverage_info.tsv"]},
         {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
@@ -98,7 +107,10 @@ def compile_result_file_list():
         {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ["results/dna/hrd", ".hrd_score.txt"]},
         {"in": ["fusions/gene_fuse", "_gene_fuse_fusions.txt"], "out": ["results/dna/fusions", ".gene_fuse_fusions.txt"]},
         {"in": ["cnv_sv/cnvkit_call", ".loh.cns"], "out": ["results/dna/cnv", ".cnvkit.loh.cns"]},
-        {"in": ["cnv_sv/gatk_cnv_call_copy_ratio_segments", ".clean.calledCNVs.seg"], "out": ["results/dna/cnv", ".gatk_cnv.seg"]},
+        {
+            "in": ["cnv_sv/gatk_cnv_call_copy_ratio_segments", ".clean.calledCNVs.seg"],
+            "out": ["results/dna/cnv", ".gatk_cnv.seg"],
+        },
         {"in": ["cnv_sv/gatk_cnv_vcf", ".vcf"], "out": ["results/dna/cnv", ".gatk_cnv.vcf"]},
         {"in": ["cnv_sv/cnvkit_vcf", ".vcf"], "out": ["results/dna/cnv", ".cnvkit.vcf"]},
         {"in": ["cnv_sv/cnvkit_scatter", ".png"], "out": ["results/dna/cnv", ".cnvkit.scatter.png"]},
@@ -134,10 +146,13 @@ def compile_result_file_list():
         "results/dna/cnv/%s_%s.manta_tumorSV.vcf.gz" % (sample, t)
         for sample in get_samples(samples)
         for t in get_unit_types(units, sample)
+        if t == "T"
     ]
     input_files += [
         "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
         for sample in get_samples(samples)
+        for t in get_unit_types(units, sample)
+        if t == "T"
     ]
     # output_files += [
     #     "results/dna/optitype/%s_%s.hla_type_result.tsv" % (sample, t)
@@ -149,13 +164,20 @@ def compile_result_file_list():
     #     for sample in get_samples(samples)
     #     for t in get_unit_types(units, sample)
     # ]
-    output_files.append("results/dna/qc/MultiQC.html")
+    output_files.append("results/dna/qc/multiqc.html")
     input_files.append("qc/multiqc/multiqc.html")
     return input_files, output_files
 
 
 def compile_output_list(wildcards):
     return output_files
+
+
+def get_flowcell(units, wildcards):
+    flowcells = set([u.flowcell for u in get_units(units, wildcards)])
+    if len(flowcells) > 1:
+        raise ValueError("Sample type combination from different sequence flowcells")
+    return flowcells.pop()
 
 
 input_files, output_files = compile_result_file_list()
