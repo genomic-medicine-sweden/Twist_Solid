@@ -1,2 +1,0 @@
-jobs: 100
-drmaa: " -A wp1 -N 1-1 -t {resources.time} -n {resources.threads} --mem={resources.mem_mb} --mem-per-cpu={resources.mem_per_cpu} --mem-per-cpu={resources.mem_per_cpu} --partition={resources.partition}"
