@@ -86,7 +86,6 @@ def compile_result_file_list():
             "in": ["annotation/background_annotation", ".background_annotation.hard_filter.vcf"],
             "out": ["results/dna/vcf", ".annotated.hard_filter.vcf"],
         },
-        {"in": ["snv_indels/mutect2_gvcf", ".merged.g.vcf.gz"], "out": ["results/dna/gvcf", ".g.vcf.gz"]},
         {
             "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
             "out": ["results/dna/qc", ".duplication_metrics.txt"],
@@ -101,7 +100,7 @@ def compile_result_file_list():
             "out": ["results/dna/qc", ".insert_size_metrics.txt"],
         },
         {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
-        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["results/dna/qc", ".mosdepth.g.vcf.gz"]},
+        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["results/dna/gvcf", ".mosdepth.g.vcf.gz"]},
         {"in": ["qc/hotspot_report", ".output.tsv"], "out": ["results/dna/qc", ".hotspot.tsv"]},
         {"in": ["qc/hotspot_info", ".hotspot_coverage_info.tsv"], "out": ["results/dna/qc", ".hotspot_coverage_info.tsv"]},
         {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
