@@ -37,6 +37,10 @@ for file in cnv_vcf_files:
     sample = file.split("/")[-1].split(".")[0]
 
     header = True
+    amp_gene_sample_dict = {}
+    loh_gene_sample_dict = {}
+    amp_list = []
+    loh_list = []
     for line in cvn_vcf:
         if header:
             if line[:6] == "#CHROM" :
@@ -48,11 +52,14 @@ for file in cnv_vcf_files:
         end_pos = int(columns[7].split("END=")[1].split(";")[0])
         amp_found = cnv_in_gene_list(amp_gene_dict, chrom, start_pos, end_pos)
         loh_found = cnv_in_gene_list(loh_gene_dict, chrom, start_pos, end_pos)
+        caller = ""
         cn = 2.0
         if line.find("CORRECTED_COPY_NUMBER=") != -1:
             cn = float(columns[7].split("CORRECTED_COPY_NUMBER=")[1].split(";")[0])
+            caller = "gatk_cnv"
         else :
             cn = float(columns[7].split("COPY_NUMBER=")[1].split(";")[0])
+            caller = "cnvkit"
         twist_af = 0.0
         if line.find("Twist_AF=") != -1:
             twist_af = float(columns[7].split("Twist_AF=")[1].split(";")[0])
@@ -69,13 +76,44 @@ for file in cnv_vcf_files:
         if line.find("BAF_PROBES=") != -1:
             baf_probes = int(columns[7].split("BAF_PROBES=")[1].split(";")[0])
         if amp_found != []:
+            genes = ','.join(amp_found)
+            for gene in genes.split(","):
+                if gene not in amp_gene_sample_dict:
+                    amp_gene_sample_dict[gene] = {}
+                amp_gene_sample_dict[gene][caller] = ""
             if cn >= 4.0:
-                genes = ','.join(amp_found)
-                outstring = "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (sample, genes, chrom, start_pos, end_pos, cn, twist_af, sv_len, probes, baf, baf_probes)
-                out_amp.write(outstring)
+                amp_list.append([sample, caller, genes, chrom, start_pos, end_pos, cn, twist_af, sv_len, probes, baf, baf_probes])
         if loh_found != []:
-            if cn < 1.5:
-                #print(loh_found, chrom, start_pos, end_pos, cn, twist_af, sv_len, probes, baf, baf_probes)
-                genes = ','.join(loh_found)
-                outstring = "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (sample, genes, chrom, start_pos, end_pos, cn, twist_af, sv_len, probes, baf, baf_probes)
-                out_loh.write(outstring)
+            genes = ','.join(loh_found)
+            for gene in genes.split(","):
+                if gene not in loh_gene_sample_dict:
+                    loh_gene_sample_dict[gene] = {}
+                loh_gene_sample_dict[gene][caller] = ""
+            if cn <= 1.3 and twist_af < 0.05 and sv_len < 1000000:
+                loh_list.append([sample, caller, genes, chrom, start_pos, end_pos, cn, twist_af, sv_len, probes, baf, baf_probes])
+
+    for amp in amp_list:
+        found_gene = False
+        for gene in amp[2].split(","):
+            if gene in amp_gene_sample_dict:
+                if ((caller == "cnvkit" and "gatk_cnv" in amp_gene_sample_dict[gene]) or
+                    (caller == "gatk_cnv" and "cnvkit" in amp_gene_sample_dict[gene])):
+                    found_gene = True
+        if found_gene:
+            print(amp[0])
+            out_amp.write(amp[0])
+            for a in amp[1:]:
+                out_amp.write("\t" + str(a))
+            out_amp.write("\n")
+    for loh in loh_list:
+        found_gene = False
+        for gene in loh[2].split(","):
+            if gene in loh_gene_sample_dict:
+                if ((caller == "cnvkit" and "gatk_cnv" in loh_gene_sample_dict[gene]) or
+                    (caller == "gatk_cnv" and "cnvkit" in loh_gene_sample_dict[gene])):
+                    found_gene = True
+        if found_gene:
+            out_loh.write(loh[0])
+            for a in loh[1:]:
+                out_loh.write("\t" + str(a))
+            out_loh.write("\n")
