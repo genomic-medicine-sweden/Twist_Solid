@@ -12,152 +12,128 @@ include: "rules/hotspot_info.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/result_files.smk"
 
+
 rule all:
     input:
         unpack(compile_output_list),
 
-ruleorder: snv_indels_tabix_vcf > misc_tabix
+
+ruleorder: prealignment_fastp_pe > misc_bgzip
+ruleorder: snv_indels_tabix > annotation_tabix_vcf > misc_tabix
 ruleorder: snv_indels_mutect2 > misc_tabix
+ruleorder: snv_indels_mutect2_gvcf > alignment_samtools_sort
 ruleorder: snv_indels_mutect2_gvcf > misc_tabix
-ruleorder: snv_indels_bgzip_vcf > misc_bgzip
+ruleorder: snv_indels_mutect2_gvcf > misc_bgzip
+ruleorder: snv_indels_bgzip > misc_bgzip
+ruleorder: snv_indels_bcftools_sort > snv_indels_bcftools_sort
+ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
+ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
 ruleorder: annotation_bgzip_vcf > misc_bgzip
 ruleorder: annotation_tabix_vcf > misc_tabix
 ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
-ruleorder: annotation_bgzip_vcf > snv_indels_bgzip_vcf
-ruleorder: annotation_tabix_vcf > snv_indels_tabix_vcf
-ruleorder: annotation_bgzip_vcf > snv_indels_sort_vcf
+ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
+ruleorder: annotation_tabix_vcf > snv_indels_tabix
+ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
+
 
 module prealignment:
-   snakefile: github("hydra-genetics/prealignment", path="workflow/Snakefile", tag="v0.2.0")
-   config: config
+    snakefile:
+        github("hydra-genetics/prealignment", path="workflow/Snakefile", tag="v0.2.0")
+    config:
+        config
+
 
 use rule * from prealignment as prealignment_*
 
+
 module alignment:
-   snakefile: github("hydra-genetics/alignment", path="workflow/Snakefile", tag="e39197e")
-   config: config
+    snakefile:
+        github("hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.1.0")
+    config:
+        config
+
 
 use rule * from alignment as alignment_*
 
-use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam with:
-    output:
-        bam=temp("alignment/merge_bam/{sample}_{type}.bam_unsorted"),
 
 module snv_indels:
-   snakefile: github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="47a7842")
-   config: config
+    snakefile:
+        github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.1.0")
+    config:
+        config
+
 
 use rule * from snv_indels as snv_indels_*
 
-use rule mutect2 from snv_indels as snv_indels_mutect2 with:
-    input:
-        map="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam",
-        bai="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam.bai",
-        fasta=config["reference"]["fasta"],
-        bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
-
-use rule vardict from snv_indels as snv_indels_vardict with:
-    input:
-        bam="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam",
-        bai="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam.bai",
-        reference=config["reference"]["fasta"],
-        regions="snv_indels/bed_split/design_bedfile_{chr}.bed",
-
-use rule mutect2_gvcf from snv_indels as snv_indels_mutect2_gvcf with:
-    input:
-        map="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam",
-        bai="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam.bai",
-        fasta=config["reference"]["fasta"],
-        bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
 
 module annotation:
-   snakefile: github("hydra-genetics/annotation", path="workflow/Snakefile", tag="8a28bb3")
-   config: config
+    snakefile:
+        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="f97a493")
+    config:
+        config
+
 
 use rule * from annotation as annotation_*
 
-use rule add_multi_snv_in_codon from annotation as annotation_add_multi_snv_in_codon with:
-    input:
-        vcf="snv_indels/ensemble_vcf/{sample}_{type}.ensembled.vep_annotated.vcf",
-        ref=config["reference"]["fasta"],
-
 
 module filtering:
-   snakefile: github("hydra-genetics/filtering", path="workflow/Snakefile", tag="af049cd")
-   config: config
+    snakefile:
+        github("hydra-genetics/filtering", path="workflow/Snakefile", tag="af049cd")
+    config:
+        config
+
 
 use rule * from filtering as filtering_*
 
+
 module qc:
-   snakefile: github("hydra-genetics/qc", path="workflow/Snakefile", tag="20b855b")
-   config: config
+    snakefile:
+        github("hydra-genetics/qc", path="workflow/Snakefile", tag="d1e0ae1")
+    config:
+        config
+
 
 use rule * from qc as qc_*
 
-use rule multiqc from qc as qc_multiqc with:
-    input:
-        files=[
-            file.format(sample=sample, type=u.type, lane=u.lane, flowcell=u.flowcell, barcode=u.barcode, read=read, ext=ext)
-            for file in config["multiqc"]["qc_files"]
-            for sample in get_samples(samples)
-            for u in units.loc[sample].dropna().itertuples()
-            for read in ["fastq1", "fastq2"]
-            for ext in config.get("picard_collect_multiple_metrics", {}).get("output_ext", [""])
-        ],
 
 module biomarker:
-   snakefile: github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="aa89042")
-   config: config
+    snakefile:
+        github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="aa89042")
+    config:
+        config
+
 
 use rule * from biomarker as biomarker_*
 
-use rule msisensor_pro from biomarker as biomarker_msisensor_pro with:
-    input:
-        bam="alignment/merge_bam/{sample}_{type}.bam",
-        bai="alignment/merge_bam/{sample}_{type}.bam.bai",
-        PoN=config["msisensor_pro"]["PoN"],
 
 module fusions:
-   snakefile: github("hydra-genetics/fusions", path="workflow/Snakefile", tag="b5ba1cf")
-   config: config
+    snakefile:
+        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="b5ba1cf")
+    config:
+        config
+
 
 use rule * from fusions as fusions_*
 
+
 module cnv_sv:
-   snakefile: github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="e4e78a5")
-   config: config
+    snakefile:
+        github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="6a02ae3")
+    config:
+        config
+
 
 use rule * from cnv_sv as cnv_sv_*
 
-use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch with:
-    input:
-        bam="alignment/merge_bam/{sample}_{type}.bam",
-        bai="alignment/merge_bam/{sample}_{type}.bam.bai",
-        cnv_reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
-
-use rule gatk_cnv_collect_read_counts from cnv_sv as cnv_sv_gatk_cnv_collect_read_counts with:
-    input:
-        bam="alignment/merge_bam/{sample}_{type}.bam",
-        bai="alignment/merge_bam/{sample}_{type}.bam.bai",
-        interval=config.get("reference", {}).get("design_intervals_gatk_cnv", ""),
-
-use rule gatk_cnv_collect_allelic_counts from cnv_sv as cnv_sv_gatk_cnv_collect_allelic_counts with:
-    input:
-        bam="alignment/merge_bam/{sample}_{type}.bam",
-        bai="alignment/merge_bam/{sample}_{type}.bam.bai",
-        interval=config.get("gatk_cnv_collect_allelic_counts", {}).get("SNP_interval", ""),
-        ref=config["reference"]["fasta"],
-
-use rule config_manta_t from cnv_sv as cnv_sv_config_manta_t with:
-    input:
-        bam_t="alignment/merge_bam/{sample}_T.bam",
-        bai_t="alignment/merge_bam/{sample}_T.bam.bai",
-        ref=config["reference"]["fasta"],
 
 module misc:
-   snakefile: github("hydra-genetics/misc", path="workflow/Snakefile", tag="f8706d4")
-   config: config
+    snakefile:
+        github("hydra-genetics/misc", path="workflow/Snakefile", tag="f8706d4")
+    config:
+        config
+
 
 use rule tabix from misc as misc_tabix
+
 
 use rule bgzip from misc as misc_bgzip
