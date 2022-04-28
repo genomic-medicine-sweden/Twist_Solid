@@ -7,25 +7,25 @@ default_container: "docker://hydragenetics/common:0.1.2"
 trimmer_software: "fastp_pe"
 
 reference:
-  background: "/data/ref_data/wp1/Twist_DNA/GMS560/Background/background_panel_nextseq_36.tsv"
-  artifacts: "/data/ref_data/wp1/Twist_DNA/GMS560/Artifact/artifact_panel_nextseq_36.tsv"
-  fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
-  dict: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
-  amb: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.amb"
-  ann: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.ann"
-  bwt: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.bwt"
-  fai: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fai"
-  pac: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.pac"
-  sa: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.sa"
-  design_bed: "/data/ref_data/wp1/Twist_DNA/GMS560/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed"
-  design_intervals: "/data/ref_data/wp1/Twist_DNA/GMS560/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.bed.preprocessed.interval_list"
-  design_intervals_gatk_cnv: "/data/ref_data/wp1/Twist_DNA/GMS560/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
+  background: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/Background/background_panel_nextseq_36.tsv"
+  artifacts: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/Artifact/artifact_panel_nextseq_36.tsv"
+  fasta: "/beegfs-storage/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
+  dict: "/beegfs-storage/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
+  amb: "/beegfs-storage/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.amb"
+  ann: "/beegfs-storage/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.ann"
+  bwt: "/beegfs-storage/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.bwt"
+  fai: "/beegfs-storage/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fai"
+  pac: "/beegfs-storage/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.pac"
+  sa: "/beegfs-storage/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.sa"
+  design_bed: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed"
+  design_intervals: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.bed.preprocessed.interval_list"
+  design_intervals_gatk_cnv: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
   skip_chrs:
     - "chrM"
 
 bcftools_filter_include_region:
-  nocnv: "/data/ref_data/wp1/Twist_DNA/GMS560/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.noCNV.MYD88.bed"
-  exon: "/data/ref_data/wp1/Twist_DNA/GMS560/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.Exon_only_extended.bed"
+  nocnv: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.noCNV.MYD88.bed"
+  exon: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.Exon_only_extended.bed"
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
@@ -34,7 +34,7 @@ bwa_mem:
 
 cnvkit_batch:
   container: "docker://marrip/cnvkit:0.9.9"
-  normal_reference: "/data/ref_data/wp1/Twist_DNA/GMS560/PoN/cnvkit_nextseq_36.cnn"
+  normal_reference: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/PoN/cnvkit_nextseq_36.cnn"
   method: "hybrid"
 
 cnvkit_call:
@@ -69,21 +69,21 @@ gatk_cnv_call_copy_ratio_segments:
 
 gatk_cnv_collect_allelic_counts:
   container: "docker://gmsuppsala/somatic:develop"
-  SNP_interval: "/data/ref_data/wp1/Twist_DNA/GMS560/bed/gnomad_SNP_0.001_target.annotated.interval_list"
+  SNP_interval: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/bed/gnomad_SNP_0.001_target.annotated.interval_list"
 
 gatk_cnv_collect_read_counts:
   container: "docker://gmsuppsala/somatic:develop"
 
 gatk_cnv_denoise_read_counts:
   container: "docker://gmsuppsala/somatic:develop"
-  normal_reference: "/data/ref_data/wp1/Twist_DNA/GMS560/PoN/gatk_cnv_nextseq_36.hdf5"
+  normal_reference: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/PoN/gatk_cnv_nextseq_36.hdf5"
 
 gatk_cnv_model_segments:
   container: "docker://gmsuppsala/somatic:develop"
 
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
-  genes: "/data/ref_data/wp1/Twist_DNA/GMS560/gene_fuse/druggable.expanded.hg19.csv"
+  genes: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/gene_fuse/druggable.expanded.hg19.csv"
 
 germline_vcf:
   container: "docker://hydragenetics/vep:105"
@@ -92,14 +92,14 @@ hard_filter_vcf:
   filter_config: "config/config_hard_filter.yaml"
 
 hotspot_annotation:
-  hotspots: "/data/ref_data/wp1/Twist_DNA/GMS560/bed/Hotspots_combined_regions.csv"
+  hotspots: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/bed/Hotspots_combined_regions.csv"
   chr_translation_file: "config/hotspot_report.chr.translation.hg19"
 
 hotspot_info:
-  hotspot_mutations: "/data/ref_data/wp1/Twist_DNA/GMS560/bed/Hotspots_combined.csv"
+  hotspot_mutations: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/bed/Hotspots_combined.csv"
 
 hotspot_report:
-  hotspot_mutations: "/data/ref_data/wp1/Twist_DNA/GMS560/bed/Hotspots_combined_regions.csv"
+  hotspot_mutations: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/bed/Hotspots_combined_regions.csv"
   report_config: "config/hotspot_report.yaml"
   chr_translation_file: "config/hotspot_report.chr.translation.hg19"
   levels:
@@ -115,7 +115,7 @@ mosdepth_bed:
 
 msisensor_pro:
   container: "docker://hydragenetics/msisensor_pro:1.1.a"
-  PoN: "/data/ref_data/wp1/Twist_DNA/GMS560/PoN/Msisensor_pro_reference_nextseq_36.list_baseline"
+  PoN: "/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/PoN/Msisensor_pro_reference_nextseq_36.list_baseline"
 
 multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
@@ -169,7 +169,7 @@ svdb_merge:
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.6.0"
-  db_string: "--db /data/ref_data/wp1/Twist_DNA/GMS560/SVDB/all_TN_306_svdb_0.8.vcf,/data/ref_data/wp1/Twist_DNA/GMS560/SVDB/gnomad_v2.1_sv.controls_only.sites.vcf --in_occ default,AN --in_frq default,AF --out_frq Twist_AF,GnomAD_AF --out_occ Twist_OCC,GnomAD_OCC"
+  db_string: "--db /beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/SVDB/all_TN_306_svdb_0.8.vcf,/beegfs-storage/data/ref_data/wp1/Twist_DNA/GMS560/SVDB/gnomad_v2.1_sv.controls_only.sites.vcf --in_occ default,AN --in_frq default,AF --out_frq Twist_AF,GnomAD_AF --out_occ Twist_OCC,GnomAD_OCC"
 
 tmb:
   filter_nr_observations: 1
@@ -190,7 +190,7 @@ vardict:
 
 vep:
   container: "docker://hydragenetics/vep:105"
-  vep_cache:  "/data/ref_genomes/VEP/"
+  vep_cache:  "/beegfs-storage/data/ref_genomes/VEP"
   mode: --offline --cache
   extra: " --check_existing --pick --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
 
