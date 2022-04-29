@@ -15,13 +15,15 @@ fastp_pe:
   threads: 5
 
 vep:
-  threads: 4
+  threads: 5
+  time: "6:00:00"
 
 fastqc:
   threads: 2
 
 manta_run_workflow_t:
   threads: 4
+  time: "8:00:00"
 
 mutect2_gvcf:
   time: "8:00:00"
