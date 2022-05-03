@@ -170,7 +170,7 @@ def compile_result_file_list():
     #     for t in get_unit_types(units, sample)
     # ]
     output_files += [
-        "results/rna/fusion/%s_%s.manta_tumorSV.vcf.gz" % (sample, t)
+        "results/rna/fusion/%s_%s.star-fusion.fusion_predictions.tsv" % (sample, t)
         for sample in get_samples(samples)
         for t in get_unit_types(units, sample)
         if t == "R"
