@@ -169,7 +169,7 @@ svdb_merge:
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.6.0"
-  db_string: "--db /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/all_TN_306_svdb_0.8.vcf,/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/gnomad_v2.1_sv.controls_only.sites.vcf --in_occ default,AN --in_frq default,AF --out_frq Twist_AF,GnomAD_AF --out_occ Twist_OCC,GnomAD_OCC"
+  db_string: "--db /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/all_TN_292_svdb_0.8_20220505.vcf,/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/gnomad_v2.1_sv.controls_only.sites.vcf --in_occ default,AN --in_frq default,AF --out_frq Twist_AF,GnomAD_AF --out_occ Twist_OCC,GnomAD_OCC"
 
 tmb:
   filter_nr_observations: 1
