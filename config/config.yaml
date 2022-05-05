@@ -22,7 +22,6 @@ reference:
   design_intervals_gatk_cnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
   skip_chrs:
     - "chrM"
-  star_fusion: "/data/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/"
 
 bcftools_filter_include_region:
   nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.noCNV.MYD88.bed"
@@ -30,6 +29,10 @@ bcftools_filter_include_region:
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
+  #extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
+
+calculate_seqrun_background:
+  container: "docker://python:3.9.7-slim"
 
 cnvkit_batch:
   container: "docker://marrip/cnvkit:0.9.9"
@@ -160,7 +163,7 @@ soft_filter_vcf:
   filter_config: "config/config_soft_filter.yaml"
 
 star_fusion:
-  container: "docker://hydragenetics/star-fusion:1.10.1"
+  container: "docker://trinityctat/starfusion:1.10.1"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
@@ -171,7 +174,7 @@ svdb_merge:
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.6.0"
-  db_string: "--db /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/all_TN_306_svdb_0.8.vcf,/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/gnomad_v2.1_sv.controls_only.sites.vcf --in_occ default,AN --in_frq default,AF --out_frq Twist_AF,GnomAD_AF --out_occ Twist_OCC,GnomAD_OCC"
+  db_string: "--db /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/all_TN_292_svdb_0.8_20220505.vcf,/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/gnomad_v2.1_sv.controls_only.sites.vcf --in_occ default,AN --in_frq default,AF --out_frq Twist_AF,GnomAD_AF --out_occ Twist_OCC,GnomAD_OCC"
 
 tmb:
   filter_nr_observations: 1
