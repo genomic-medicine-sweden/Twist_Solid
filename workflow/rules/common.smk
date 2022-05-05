@@ -181,8 +181,8 @@ def compile_result_file_list():
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
     ]
-    #output_files.append("results/dna/qc/multiqc.html")
-    #input_files.append("qc/multiqc/multiqc.html")
+    output_files.append("results/dna/qc/multiqc.html")
+    input_files.append("qc/multiqc/multiqc.html")
     return input_files, output_files
 
 
