@@ -48,7 +48,7 @@ use rule * from prealignment as prealignment_*
 
 module alignment:
     snakefile:
-        github("hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.1.0")
+        github("hydra-genetics/alignment", path="workflow/Snakefile", tag="Smeds-patch-1")
     config:
         config
 
