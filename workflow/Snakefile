@@ -123,7 +123,7 @@ module fusions:
     snakefile:
         #github("hydra-genetics/fusions", path="workflow/Snakefile", tag="b5ba1cf")
         #github("hydra-genetics/fusions", path="workflow/Snakefile", tag="star_fusion")
-        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="2fc99a6")
+        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="8daaf50")
     config:
         config
 
