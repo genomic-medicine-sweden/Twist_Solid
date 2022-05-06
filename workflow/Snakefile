@@ -95,7 +95,7 @@ module qc:
 
 use rule * from qc as qc_*
 
-use rule multiqc from qc as qc_mutliqc with:
+use rule multiqc from qc as qc_multiqc with:
     input:
         files=[
             file.format(sample=sample, type=u.type, lane=u.lane, flowcell=u.flowcell, barcode=u.barcode, read=read, ext=ext)
