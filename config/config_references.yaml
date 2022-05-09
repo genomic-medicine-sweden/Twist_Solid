@@ -2,7 +2,7 @@ resources: "config/resources_references.yaml"
 samples: "samples_references.tsv"
 units: "units_references.tsv"
 
-default_container: "docker://hydragenetics/common:0.1.2"
+default_container: "docker://hydragenetics/common:0.1.3"
 
 reference:
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
@@ -12,13 +12,13 @@ reference:
 
 
 cnvkit_create_targets:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://marrip/cnvkit:0.9.9"
 
 cnvkit_create_anti_targets:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://marrip/cnvkit:0.9.9"
 
 cnvkit_build_normal_reference:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://marrip/cnvkit:0.9.9"
 
 bed_to_interval_list:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
