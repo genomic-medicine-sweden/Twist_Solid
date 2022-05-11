@@ -80,7 +80,7 @@ def compile_result_file_list():
         },
         {
             "in": ["annotation/background_annotation", ".background_annotation.include.exon.hard_filter.vcf"],
-            "out": ["results/dna/vcf", ".annotated.exon_only..hard_filter.vcf"],
+            "out": ["results/dna/vcf", ".annotated.exon_only.hard_filter.vcf"],
         },
         {
             "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
