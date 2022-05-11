@@ -25,5 +25,5 @@ rule copy_results_files:
 
         i = 0
         for file in input:
-            subprocess.run(["rsync", "--update", "-a", file, output[i]])
+            subprocess.run(["rsync", "--ignore-existing", "-a", file, output[i]])
             i += 1

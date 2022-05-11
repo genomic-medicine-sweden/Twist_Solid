@@ -89,7 +89,7 @@ germline_vcf:
   container: "docker://hydragenetics/vep:105"
 
 hard_filter_vcf:
-  filter_config: "config/config_hard_filter.yaml"
+  filter_config: "config/config_hard_filter_uppsala.yaml"
 
 hotspot_annotation:
   hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions.csv"
@@ -158,7 +158,7 @@ picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
 soft_filter_vcf:
-  filter_config: "config/config_soft_filter.yaml"
+  filter_config: "config/config_soft_filter_uppsala.yaml"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"

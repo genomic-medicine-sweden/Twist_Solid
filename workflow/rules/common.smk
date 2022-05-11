@@ -75,16 +75,12 @@ def compile_result_file_list():
             "out": ["results/dna/vcf", ".annotated.nocnv.vcf.gz"],
         },
         {
-            "in": ["annotation/background_annotation", ".background_annotation.include.exon.vcf.gz"],
-            "out": ["results/dna/vcf", ".annotated.exon_only.vcf.gz"],
+            "in": ["annotation/background_annotation", ".background_annotation.include.exon.soft_filter.vcf"],
+            "out": ["results/dna/vcf", ".annotated.exon_only.soft_filter.vcf"],
         },
         {
-            "in": ["annotation/background_annotation", ".background_annotation.soft_filter.vcf"],
-            "out": ["results/dna/vcf", ".annotated.soft_filter.vcf"],
-        },
-        {
-            "in": ["annotation/background_annotation", ".background_annotation.hard_filter.vcf"],
-            "out": ["results/dna/vcf", ".annotated.hard_filter.vcf"],
+            "in": ["annotation/background_annotation", ".background_annotation.include.exon.hard_filter.vcf"],
+            "out": ["results/dna/vcf", ".annotated.exon_only..hard_filter.vcf"],
         },
         {
             "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
