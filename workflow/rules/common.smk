@@ -114,6 +114,7 @@ def compile_result_file_list():
         {"in": ["cnv_sv/cnvkit_diagram", ".pdf"], "out": ["results/dna/cnv", ".cnvkit.diagram.pdf"]},
         {"in": ["cnv_sv/svdb_merge", ".merged.vcf"], "out": ["results/dna/cnv", ".merged.vcf"]},
         {"in": ["cnv_sv/svdb_query", ".svdb_query.vcf"], "out": ["results/dna/cnv", ".svdb_query.vcf"]},
+        {"in": ["cnv_sv/svdb_query", ".svdb_query.vep_annotated.vcf"], "out": ["results/dna/cnv", ".svdb_query.annotated.vcf"]},
     ]
     output_files = [
         "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])

@@ -1,0 +1,13 @@
+filters:
+  artifacts:
+    description: "Hard filter variants found in more than 15% of the normal samples"
+    expression: "(INFO:Twist_AF > 0.15)"
+    soft_filter: "False"
+  copy_number:
+    description: "Hard filter cnvs with under 6 copies"
+    expression: "(INFO:CORRECTED_COPY_NUMBER < 6.0)"
+    soft_filter: "False"
+  amp_genes:
+    description: "Hard filter genes"
+    expression: "(VEP:SYMBOL = ERBB2 or VEP:SYMBOL = ALK or VEP:SYMBOL = CDK4 or VEP:SYMBOL = CDK6 or VEP:SYMBOL = EGFR or VEP:SYMBOL = MET or VEP:SYMBOL = NTRK1 or VEP:SYMBOL = NTRK2 or VEP:SYMBOL = NTRK3 or VEP:SYMBOL = FGFR1 or VEP:SYMBOL = FGFR2 or VEP:SYMBOL = FGFR3 or VEP:SYMBOL = FGFR4 or VEP:SYMBOL = AR or VEP:SYMBOL = BRAF or VEP:SYMBOL = KIT or VEP:SYMBOL = KRAS or VEP:SYMBOL = MYC or VEP:SYMBOL = MTOR or VEP:SYMBOL = MYCN or VEP:SYMBOL = PDGFRA or VEP:SYMBOL = CDKN2A or VEP:SYMBOL = PTEN")
+    soft_filter: "False"

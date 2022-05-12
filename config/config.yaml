@@ -23,6 +23,10 @@ reference:
   skip_chrs:
     - "chrM"
 
+add_multi_snv_in_codon:
+  af_limit: 0.05
+  artifact_limit: 3
+
 bcftools_filter_include_region:
   nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.noCNV.MYD88.bed"
   exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.Exon_only_extended.bed"
@@ -30,7 +34,6 @@ bcftools_filter_include_region:
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
   #extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
-
 
 cnvkit_batch:
   container: "docker://marrip/cnvkit:0.9.9"
