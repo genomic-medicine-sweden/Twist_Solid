@@ -30,6 +30,7 @@ add_multi_snv_in_codon:
 bcftools_filter_include_region:
   nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.noCNV.MYD88.bed"
   exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.Exon_only_extended.bed"
+  cnv_amp_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed"
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
@@ -64,6 +65,11 @@ fastp_pe:
 fastqc:
   container: "docker://hydragenetics/fastqc:0.11.9"
 
+filter_vcf:
+  snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
+  snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
+  cnv_hard_filter: "config/config_hard_filter_cnv.yaml"
+
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
 
@@ -90,9 +96,6 @@ gene_fuse:
 
 germline_vcf:
   container: "docker://hydragenetics/vep:105"
-
-hard_filter_vcf:
-  filter_config: "config/config_hard_filter_uppsala.yaml"
 
 hotspot_annotation:
   hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions.csv"
@@ -159,9 +162,6 @@ picard_collect_insert_size_metrics:
 
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
-
-soft_filter_vcf:
-  filter_config: "config/config_soft_filter_uppsala.yaml"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"

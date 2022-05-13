@@ -7,7 +7,3 @@ filters:
     description: "Hard filter cnvs with under 6 copies"
     expression: "(INFO:CORRECTED_COPY_NUMBER < 6.0)"
     soft_filter: "False"
-  amp_genes:
-    description: "Hard filter genes"
-    expression: "(VEP:SYMBOL = ERBB2 and VEP:SYMBOL = ALK and VEP:SYMBOL = CDK4 and VEP:SYMBOL = CDK6 and VEP:SYMBOL = EGFR and VEP:SYMBOL = MET and VEP:SYMBOL = NTRK1 and VEP:SYMBOL = NTRK2 and VEP:SYMBOL = NTRK3 and VEP:SYMBOL = FGFR1 and VEP:SYMBOL = FGFR2 and VEP:SYMBOL = FGFR3 and VEP:SYMBOL = FGFR4 and VEP:SYMBOL = AR and VEP:SYMBOL = BRAF and VEP:SYMBOL = KIT and VEP:SYMBOL = KRAS and VEP:SYMBOL = MYC and VEP:SYMBOL = MTOR and VEP:SYMBOL = MYCN and VEP:SYMBOL = PDGFRA and VEP:SYMBOL = CDKN2A and VEP:SYMBOL = PTEN")
-    soft_filter: "False"
