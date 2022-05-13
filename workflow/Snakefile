@@ -25,7 +25,6 @@ ruleorder: snv_indels_mutect2_gvcf > alignment_samtools_sort
 ruleorder: snv_indels_mutect2_gvcf > misc_tabix
 ruleorder: snv_indels_mutect2_gvcf > misc_bgzip
 ruleorder: snv_indels_bgzip > misc_bgzip
-ruleorder: snv_indels_bcftools_sort > snv_indels_bgzip
 ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
 ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
 ruleorder: annotation_bgzip_vcf > misc_bgzip
@@ -78,7 +77,7 @@ use rule * from annotation as annotation_*
 
 module filtering:
     snakefile:
-        github("hydra-genetics/filtering", path="workflow/Snakefile", tag="173ec15")
+        github("hydra-genetics/filtering", path="workflow/Snakefile", tag="f0e6717")
     config:
         config
 
