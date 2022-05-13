@@ -37,7 +37,7 @@ properties:
           type: string
       sort_order:
         type: string
-        description: 
+        description:
 
   gatk_cnv_collect_allelic_counts:
     type: object
@@ -224,12 +224,18 @@ properties:
       - pac
       - sa
 
-  soft_filter:
+  filter_vcf:
     type: object
     properties:
-      filter_config:
+      snv_soft_filter:
         type: string
-        description: Config file specifying which soft filters should be applied.
+        description: Config file specifying which soft filters should be applied on snv_indels.
+      snv_hard_filter:
+        type: string
+        description: Config file specifying which hard filters should be applied on snv_indels.
+      cnv_hard_filter:
+        type: string
+        description: Config file specifying which hard filters should be applied on cnvs.
 
   trimmer_software:
     description: trimmer software that should be used
@@ -252,16 +258,15 @@ required:
   - default_container
   - bcbio_variation_recall_ensemble
   - cnvkit_batch
+  - filter_vcf
   - gatk_cnv_collect_allelic_counts
   - gatk_cnv_denoise_read_counts
   - gene_fuse
-  - hard_filter_vcf
   - hotspot_annotation
   - hotspot_info
   - hotspot_report
   - msisensor_pro
   - multiqc
   - reference
-  - soft_filter_vcf
   - trimmer_software
   - vep
