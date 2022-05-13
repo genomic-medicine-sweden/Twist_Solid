@@ -181,8 +181,13 @@ def compile_result_file_list():
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
     ]
-    output_files.append("results/dna/qc/multiqc.html")
-    input_files.append("qc/multiqc/multiqc.html")
+    types = set([unit.type for unit in units.itertuples()])
+    if "R" in types:
+        output_files.append("results/dna/qc/multiqc_RNA.html")
+        input_files.append("qc/multiqc/multiqc_RNA.html")
+    if not set(["N", "T"]).isdisjoint(types):
+        output_files.append("results/dna/qc/multiqc_DNA.html")
+        input_files.append("qc/multiqc/multiqc_DNA.html")
     return input_files, output_files
 
 
