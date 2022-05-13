@@ -77,7 +77,7 @@ use rule * from annotation as annotation_*
 
 module filtering:
     snakefile:
-        github("hydra-genetics/filtering", path="workflow/Snakefile", tag="f0e6717")
+        github("hydra-genetics/filtering", path="workflow/Snakefile", tag="8877717")
     config:
         config
 
@@ -117,7 +117,7 @@ use rule * from fusions as fusions_*
 
 module cnv_sv:
     snakefile:
-        github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="5936c94")
+        github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="5d97f36")
     config:
         config
 
