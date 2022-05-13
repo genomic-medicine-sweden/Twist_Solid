@@ -37,7 +37,7 @@ properties:
           type: string
       sort_order:
         type: string
-        description: 
+        description:
 
   gatk_cnv_collect_allelic_counts:
     type: object
@@ -153,13 +153,10 @@ properties:
   multiqc:
     type: object
     properties:
-      qc_files:
-        type: array
-        items:
-            type: string
-        description: list with path to qc-files that will be used to generate a MultiQC report.
+      reports:
+        type: object
     required:
-      - qc_files
+      - reports
 
   reference:
     type: object

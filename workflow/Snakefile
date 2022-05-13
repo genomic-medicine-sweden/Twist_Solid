@@ -88,7 +88,7 @@ use rule * from filtering as filtering_*
 
 module qc:
     snakefile:
-        github("hydra-genetics/qc", path="workflow/Snakefile", tag="d1e0ae1")
+        github("hydra-genetics/qc", path="workflow/Snakefile", tag="4b1edaa")
     config:
         config
 
@@ -108,7 +108,9 @@ use rule * from biomarker as biomarker_*
 
 module fusions:
     snakefile:
-        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="b5ba1cf")
+        #github("hydra-genetics/fusions", path="workflow/Snakefile", tag="b5ba1cf")
+        #github("hydra-genetics/fusions", path="workflow/Snakefile", tag="star_fusion")
+        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="8daaf50")
     config:
         config
 
