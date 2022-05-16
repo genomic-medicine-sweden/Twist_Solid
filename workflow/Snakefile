@@ -117,7 +117,7 @@ use rule * from fusions as fusions_*
 
 module cnv_sv:
     snakefile:
-        github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="0b39cf4")
+        github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="331be7e")
     config:
         config
 
