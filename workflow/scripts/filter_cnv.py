@@ -40,7 +40,9 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
     for variant in vcf_in:
         chrom = variant.contig
         start = int(variant.pos)
-        end = int(variant.info.split("END=")[1].split(";")[0])
+        #end = int(variant.info["END"])
+        #end = int(variant.stop)
+        end = start + int(variant.info["SVLEN"]) - 1
         keep_variant, genes = variant_in_genelist(chrom, start, end, gene_dict)
         if keep_variant:
             variant.info.__setitem__('Gene',genes)
