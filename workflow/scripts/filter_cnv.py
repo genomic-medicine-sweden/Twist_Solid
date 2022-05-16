@@ -33,7 +33,7 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
             gene_dict[chrom].append([start, end, gene])
 
     vcf_in = VariantFile(in_vcf)
-    new_header = in_vcf.header
+    new_header = vcf_in.header
     new_header.info.add("Gene", "1", "String", "Gene name")
     out_vcf = VariantFile(out_vcf_filename, 'w', header=new_header)
     out_vcf.write(vcf_in.header)
