@@ -36,7 +36,6 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
     new_header = vcf_in.header
     new_header.info.add("Gene", "1", "String", "Gene name")
     vcf_out = VariantFile(out_vcf, 'w', header=new_header)
-    vcf_out.write(vcf_in.header)
 
     for variant in vcf_in:
         chrom = variant.contig
