@@ -11,11 +11,11 @@ rule filter_cnv:
     input:
         vcf="{file}.vcf",
     output:
-        vcf="{file}.include.{tag}.vcf",
+        vcf="{file}.include_cnv.{tag}.vcf",
     params:
         filter_config=lambda wildcards: config["filter_cnv"][wildcards.tag],
     log:
-        "{file}.include.{tag}.log",
+        "{file}.include_cnv.{tag}.log",
     threads: config.get("filter_cnv", {}).get("threads", config["default_resources"]["threads"])
     resources:
         threads=config.get("filter_cnv", {}).get("threads", config["default_resources"]["threads"]),
@@ -25,7 +25,7 @@ rule filter_cnv:
         partition=config.get("filter_cnv", {}).get("partition", config["default_resources"]["partition"]),
     benchmark:
         repeat(
-            "{file}.include.{tag}.benchmark.tsv",
+            "{file}.include_cnv.{tag}.benchmark.tsv",
             config.get("filter_cnv", {}).get("benchmark_repeats", 1),
         )
     conda:

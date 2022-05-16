@@ -114,8 +114,8 @@ def compile_result_file_list():
         {"in": ["cnv_sv/cnvkit_diagram", ".pdf"], "out": ["results/dna/cnv", ".cnvkit.diagram.pdf"]},
         {"in": ["cnv_sv/svdb_merge", ".merged.vcf"], "out": ["results/dna/cnv", ".merged.vcf"]},
         {"in": ["cnv_sv/svdb_query", ".svdb_query.vcf"], "out": ["results/dna/cnv", ".svdb_query.vcf"]},
-        {"in": ["cnv_sv/svdb_query", ".svdb_query.include.cnv_amp_genes.vcf.gz"], "out": ["results/dna/cnv", ".svdb_query.only.amp_genes.vcf.gz"]},
-        {"in": ["cnv_sv/svdb_query", ".svdb_query.include.cnv_amp_genes.filter.cnv_hard_filter.vcf"], "out": ["results/dna/cnv", ".svdb_query.only.amp_genes.cnv_hard_filter.vcf"]},
+        {"in": ["cnv_sv/svdb_query", ".svdb_query.include_cnv.cnv_amp_genes.vcf.gz"], "out": ["results/dna/cnv", ".svdb_query.only_amp_genes.vcf.gz"]},
+        {"in": ["cnv_sv/svdb_query", ".svdb_query.include_cnv.cnv_amp_genes.filter.cnv_hard_filter.vcf"], "out": ["results/dna/cnv", ".svdb_query.only_amp_genes.cnv_hard_filter.vcf"]},
     ]
     output_files = [
         "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])

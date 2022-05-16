@@ -34,6 +34,9 @@ ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
 ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
 ruleorder: annotation_tabix_vcf > snv_indels_tabix
 ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
+ruleorder: filtering_bcftools_filter_include_region > annotation_bgzip_vcf
+ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
+ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
 
 
 module prealignment:
