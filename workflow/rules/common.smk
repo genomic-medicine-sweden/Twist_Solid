@@ -188,7 +188,7 @@ def compile_result_file_list():
         if unit_type == "R"
     ]
     input_files += [
-        "fusions/fusioncatcher/%s_%s/FusionCatcher_final-list_candidate-fusion-genes.hg19.txt" % (sample, unit_type)
+        "fusions/fusioncatcher/%s_%s/final-list_candidate-fusion-genes.hg19.txt" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
