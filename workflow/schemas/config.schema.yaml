@@ -66,13 +66,6 @@ properties:
       required:
         - genes
 
-  hard_filter:
-    type: object
-    properties:
-      filter_config:
-        type: string
-        description: Config file specifying which hard filters should be applied.
-
   hotspot_annotation:
     type: object
     properties:
@@ -236,6 +229,14 @@ properties:
       cnv_hard_filter:
         type: string
         description: Config file specifying which hard filters should be applied on cnvs.
+
+  filter_cnv:
+      type: object
+      properties:
+        cnv_amp_genes:
+          type: string
+          description: Gene annotated bed files with genes to be included.
+
 
   trimmer_software:
     description: trimmer software that should be used

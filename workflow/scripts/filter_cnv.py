@@ -23,10 +23,10 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
     gene_dict = {}
     for line in filter_bed_file:
         columns = line.strip().split("\t")
-        chrom = colums[0]
-        start = int(colums[1])
-        end = int(colums[2])
-        gene = colums[3]
+        chrom = columns[0]
+        start = int(columns[1])
+        end = int(columns[2])
+        gene = columns[3]
         if chrom not in gene_dict:
             gene_dict[chrom] = [[start, end, gene]]
         else:
