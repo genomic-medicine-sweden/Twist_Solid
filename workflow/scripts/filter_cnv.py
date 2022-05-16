@@ -53,6 +53,6 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
 if __name__ == "__main__":
     in_vcf = snakemake.input.vcf
     out_vcf = open(snakemake.output.vcf, "w")
-    filter_gene_file = snakemake.params.filter_config
+    filter_bed_file = open(snakemake.params.filter_config)
 
-    filter_variants(in_vcf, out_vcf, filter_gene_file)
+    filter_variants(in_vcf, out_vcf, filter_bed_file)
