@@ -66,6 +66,10 @@ fastqc:
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
 
+fusioncatcher:
+  container: "docker://blcdsdockerregistry/fusioncatcher:1.33"
+  genome_path: "/data/ref_data/fusioncatcher/human_v102/human_v102/"
+
 gatk_cnv_call_copy_ratio_segments:
   container: "docker://gmsuppsala/somatic:develop"
 
