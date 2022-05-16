@@ -27,10 +27,15 @@ add_multi_snv_in_codon:
   af_limit: 0.05
   artifact_limit: 3
 
+bcbio_variation_recall_ensemble:
+  container: "docker://gmsuppsala/somatic:develop"
+  callers:
+    - vardict
+    - mutect2
+
 bcftools_filter_include_region:
   nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.noCNV.MYD88.bed"
   exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.Exon_only_extended.bed"
-  cnv_amp_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed"
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
@@ -53,12 +58,6 @@ cnvkit_scatter:
 config_manta_t:
   container: "docker://marrip/manta:v1.6.0"
 
-bcbio_variation_recall_ensemble:
-  container: "docker://gmsuppsala/somatic:develop"
-  callers:
-    - vardict
-    - mutect2
-
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"
 
@@ -69,6 +68,9 @@ filter_vcf:
   snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
   cnv_hard_filter: "config/config_hard_filter_cnv.yaml"
+
+filter_cnv:
+  cnv_amp_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed"
 
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
@@ -172,7 +174,7 @@ svdb_merge:
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.6.0"
-  db_string: "--db /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/all_TN_306_svdb_0.8.vcf,/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/gnomad_v2.1_sv.controls_only.sites.vcf --in_occ default,AN --in_frq default,AF --out_frq Twist_AF,GnomAD_AF --out_occ Twist_OCC,GnomAD_OCC"
+  db_string: "--db /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/all_TN_306_svdb_0.8.vcf --in_occ default --in_frq default --out_frq Twist_AF --out_occ Twist_OCC"
 
 tmb:
   filter_nr_observations: 1
