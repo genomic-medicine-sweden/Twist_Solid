@@ -35,8 +35,8 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
     vcf_in = VariantFile(in_vcf)
     new_header = vcf_in.header
     new_header.info.add("Gene", "1", "String", "Gene name")
-    out_vcf = VariantFile(out_vcf_filename, 'w', header=new_header)
-    out_vcf.write(vcf_in.header)
+    vcf_out = VariantFile(out_vcf, 'w', header=new_header)
+    vcf_out.write(vcf_in.header)
 
     for variant in vcf_in:
         chrom = variant.contig
@@ -45,14 +45,14 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
         keep_variant, genes = variant_in_genelist(chrom, start, end, gene_dict)
         if keep_variant:
             variant.info.__setitem__('Gene',genes)
-            out_vcf.write(variant)
+            vcf_out.write(variant)
 
-    out_vcf.close()
+    vcf_out.close()
 
 
 if __name__ == "__main__":
     in_vcf = snakemake.input.vcf
-    out_vcf = open(snakemake.output.vcf, "w")
+    out_vcf = snakemake.output.vcf
     filter_bed_file = open(snakemake.params.filter_config)
 
     filter_variants(in_vcf, out_vcf, filter_bed_file)
