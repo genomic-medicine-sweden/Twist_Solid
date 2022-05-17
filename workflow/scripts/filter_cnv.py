@@ -35,22 +35,21 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
     vcf_out = open(out_vcf, "a")
     vcf_in = open(in_vcf)
     header = True
+    info_ids = {}
     for line in vcf_in:
         if header:
             if line[:6] == "#CHROM":
                 vcf_out.write("##INFO=<ID=Genes,Number=1,Type=String,Description=\"Gene names\">\n")
                 vcf_out.write(line)
                 header = False
-            elif line[:11] == "##INFO=<ID=":
-                if line.split(",")[0].find("-") != -1:
-                    header_id = line.split(",")[0].split("-")[0]
-                    for hi in line.split(",")[0].split("-")[1:]:
-                        header_id += "_" + hi
-                    for hi in line.split(",")[1:]:
-                        header_id += "," + hi
-                    vcf_out.write(header_id)
-                else:
-                    vcf_out.write(line)
+            elif line[:11] == "##INFO=<ID=" and line.find("pipe separated list of all details in the") != -1:
+                header_id = "##INFO=<ID=CNV_" + line.split(",")[0].split("_")[-1]
+                header_id_new = "CNV_" + line.split(",")[0].split("_")[-1]
+                header_id_org = line.split(",")[0].split("ID=")[1]
+                info_ids[header_id_org] = header_id_new
+                for hi in line.split(",")[1:]:
+                    header_id += "," + hi
+                vcf_out.write(header_id)
             else:
                 vcf_out.write(line)
             continue
@@ -61,11 +60,8 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
         end = int(INFO.split("END=")[1].split(";")[0])
         INFO_mod = INFO.split(";")[0]
         for info in INFO.split(";")[1:]:
-            if info.find("=") != -1 and info.split("=")[0].find("-") != -1:
-                info_mod = info.split("=")[0].split("-")[0]
-                for im in info.split("=")[0].split("-")[1:]:
-                    info_mod += "_" + im
-                info_mod += "=" + info.split("=")[1]
+            if info.split("=")[0] in info_ids:
+                info_mod = info_ids[info.split("=")[0]] + "=" + info.split("=")[1]
                 INFO_mod = "%s;%s" % (INFO_mod, info_mod)
             else:
                 INFO_mod = "%s;%s" % (INFO_mod, info)
