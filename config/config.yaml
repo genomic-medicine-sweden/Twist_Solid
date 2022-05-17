@@ -23,6 +23,13 @@ reference:
   skip_chrs:
     - "chrM"
 
+arriba:
+  assembly: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
+  blacklist: "/data/ref_data/arriba/arriba_v2.2.1/database/blacklist_hg19_hs37d5_GRCh37_v2.2.1.tsv"
+  container: "docker://hydragenetics/arriba:2.2.1"
+  gtf: "/data/ref_genomes/hg19/gtf/hg19.refGene.gtf"
+  extra: "-p /data/ref_data/arriba/arriba_v2.2.1/database/protein_domains_hg19_hs37d5_GRCh37_v2.2.1.gff3 -k /data/ref_data/arriba/arriba_v2.2.1/database/known_fusions_hg19_hs37d5_GRCh37_v2.2.1.tsv.gz"
+
 bcftools_filter_include_region:
   nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.noCNV.MYD88.bed"
   exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.Exon_only_extended.bed"
@@ -172,6 +179,11 @@ picard_mark_duplicates:
 
 soft_filter_vcf:
   filter_config: "config/config_soft_filter.yaml"
+
+star:
+  container: "docker://hydragenetics/star:2.7.10a"
+  genome_index: "/data/ref_data/star/v2.7.10a_hg19/"
+  extra: "--outSAMtype BAM SortedByCoordinate --chimOutType WithinBAM"
 
 star_fusion:
   container: "docker://trinityctat/starfusion:1.10.1"
