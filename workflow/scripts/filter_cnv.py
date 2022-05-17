@@ -75,6 +75,7 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
             else:
                 INFO_mod = "%s;%s" % (INFO_mod, info)
 
+
         keep_variant, genes = variant_in_genelist(chrom, start, end, gene_dict)
         if keep_variant:
             INFO_mod = "Genes=%s;%s" % (genes, INFO_mod)
