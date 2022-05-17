@@ -51,6 +51,8 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
                     vcf_out.write(header_id)
                 else:
                     vcf_out.write(line)
+            else:
+                vcf_out.write(line)
             continue
         columns = line.strip().split("\t")
         chrom = columns[0]
