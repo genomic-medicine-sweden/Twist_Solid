@@ -52,6 +52,10 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
         start = int(columns[1])
         INFO = columns[7]
         end = int(INFO.split("END=")[1].split(";")[0])
+        INFO_mod = INFO.split(";")[0]
+        for info in INFO.split(";")[1] :
+            if info.find("END=") == -1 :
+                INFO_mod = ";%s" % info
 
         keep_variant, genes = variant_in_genelist(chrom, start, end, gene_dict)
         if keep_variant:
