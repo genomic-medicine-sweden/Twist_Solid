@@ -55,12 +55,6 @@ module alignment:
 
 use rule * from alignment as alignment_*
 
-# use rule samtools_sort from alignment as alignment_samtools_sort with:
-#     input:
-#         "alignment/samtools_merge_bam/{path_file}.bam_unsorted",
-#     output:
-#         temp("alignment/samtools_merge_bam/{path_file}.bam"),
-
 
 module snv_indels:
     snakefile:
@@ -94,7 +88,7 @@ use rule * from filtering as filtering_*
 
 module qc:
     snakefile:
-        github("hydra-genetics/qc", path="workflow/Snakefile", tag="4b1edaa")
+        github("hydra-genetics/qc", path="workflow/Snakefile", tag="2701f99")
     config:
         config
 
