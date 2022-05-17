@@ -53,14 +53,14 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
         INFO = columns[7]
         end = int(INFO.split("END=")[1].split(";")[0])
         INFO_mod = INFO.split(";")[0]
-        for info in INFO.split(";")[1] :
+        for info in INFO.split(";")[1:] :
             if info.find("END=") == -1 :
                 INFO_mod = ";%s" % info
 
         keep_variant, genes = variant_in_genelist(chrom, start, end, gene_dict)
         if keep_variant:
-            INFO = "Genes=%s;%s" % (genes, INFO)
-            columns[7] = INFO
+            INFO_mod = "Genes=%s;%s" % (genes, INFO_mod)
+            columns[7] = INFO_mod
             vcf_out.write(columns[0])
             for column in columns[1:]:
                 vcf_out.write("\t" + column)
