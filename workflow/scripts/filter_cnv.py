@@ -46,6 +46,10 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
                 header_id = "##INFO=<ID=CNV_" + line.split(",")[0].split("_")[-1]
                 header_id_new = "CNV_" + line.split(",")[0].split("_")[-1]
                 header_id_org = line.split(",")[0].split("ID=")[1]
+                if header_id.find("SAMPLE") != -1:
+                    header_id += "S"
+                    header_id_new += "S"
+                    header_id_org += "S"
                 info_ids[header_id_org] = header_id_new
                 for hi in line.split(",")[1:]:
                     header_id += "," + hi
