@@ -182,7 +182,7 @@ soft_filter_vcf:
 star:
   container: "docker://hydragenetics/star:2.7.10a"
   genome_index: "/data/ref_data/star/v2.7.10a_hg19/"
-  extra: "--quantMode GeneCounts --sjdbGTFfile /data/ref_genomes/hg19/gtf/hg19.refGene.gtf --outSAMtype BAM Unsorted --chimSegmentMin 10 --chimOutType WithinBAM SoftClip --chimJunctionOverhangMin 10 --chimScoreMin 1 --chimScoreDropMax 30 --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --alignSJstitchMismatchNmax 5 -1 5 5 --chimSegmentReadGapMax 3"
+  extra: "--quantMode GeneCounts --sjdbGTFfile /data/ref_genomes/hg19/gtf/hg19.refGene.gtf --outSAMtype BAM SortedByCoordinate --chimSegmentMin 10 --chimOutType WithinBAM SoftClip --chimJunctionOverhangMin 10 --chimScoreMin 1 --chimScoreDropMax 30 --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --alignSJstitchMismatchNmax 5 -1 5 5 --chimSegmentReadGapMax 3"
 
 star_fusion:
   container: "docker://trinityctat/starfusion:1.10.1"
