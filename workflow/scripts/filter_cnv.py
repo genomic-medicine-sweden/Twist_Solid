@@ -45,7 +45,19 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
     for line in vcf_in:
         if header:
             if line[:6] == "#CHROM":
+                vcf_out.write("##INFO=<ID=Genes,Number=1,Type=String,Description=\"Gene names\">\n")
+                vcf_out.write(line)
                 header = False
+            elif line[:11] == "##INFO=<ID=":
+                if line.split(",")[0].find("-") != -1:
+                    header_id = line.split(",")[0].split("-")[0]
+                    for hi in line.split(",")[0].split("-")[1:]:
+                        header_id += "_" + hi
+                    for hi in line.split(",")[1:]:
+                        header_id += "," + hi
+                    vcf_out.write(header_id)
+                else:
+                    vcf_out.write(line)
             continue
         columns = line.strip().split("\t")
         chrom = columns[0]
@@ -54,7 +66,13 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
         end = int(INFO.split("END=")[1].split(";")[0])
         INFO_mod = INFO.split(";")[0]
         for info in INFO.split(";")[1:]:
-            if info.find("END=") == -1:
+            if info.find("=") != -1 and info.split("=")[0].find("-") != -1:
+                info_mod = info.split("=")[0].split("-")[0]
+                for im in info.split("=")[0].split("-")[1:]:
+                    info_mod += "_" + im
+                info_mod += "=" + info.split("=")[1]
+                INFO_mod = "%s;%s" % (INFO_mod, info_mod)
+            else:
                 INFO_mod = "%s;%s" % (INFO_mod, info)
 
         keep_variant, genes = variant_in_genelist(chrom, start, end, gene_dict)
