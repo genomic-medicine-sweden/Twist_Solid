@@ -50,7 +50,7 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
         columns = line.strip().split("\t")
         chrom = columns[0]
         start = int(columns[1])
-        INFO = lline[7]
+        INFO = columns[7]
         end = int(INFO.split("END=")[1].split(";")[0])
 
         keep_variant, genes = variant_in_genelist(chrom, start, end, gene_dict)
