@@ -55,6 +55,12 @@ module alignment:
 
 use rule * from alignment as alignment_*
 
+# use rule samtools_sort from alignment as alignment_samtools_sort with:
+#     input:
+#         "alignment/samtools_merge_bam/{path_file}.bam_unsorted",
+#     output:
+#         temp("alignment/samtools_merge_bam/{path_file}.bam"),
+
 
 module snv_indels:
     snakefile:
