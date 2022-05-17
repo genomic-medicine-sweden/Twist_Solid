@@ -34,20 +34,33 @@ def filter_variants(in_vcf, out_vcf, filter_bed_file):
 
     vcf_in = VariantFile(in_vcf)
     new_header = vcf_in.header
-    new_header.info.add("Gene", "1", "String", "Gene name")
+    new_header.info.add("Genes", "1", "String", "Gene names")
     vcf_out = VariantFile(out_vcf, 'w', header=new_header)
+    vcf_out.close()
+    vcf_in.close()
 
-    for variant in vcf_in:
-        chrom = variant.contig
-        start = int(variant.pos)
-        #end = int(variant.info["END"])
-        #end = int(variant.stop)
-        end = start + int(variant.info["SVLEN"]) - 1
+    vcf_out = open(out_vcf, "a")
+    vcf_in = open(in_vcf)
+    header = True
+    for line in vcf_in:
+        if header:
+            if line[:6] == "#CHROM":
+                header = False
+            continue
+        columns = line.strip().split("\t")
+        chrom = columns[0]
+        start = int(columns[1])
+        INFO = lline[7]
+        end = int(INFO.split("END=")[1].split(";")[0])
+
         keep_variant, genes = variant_in_genelist(chrom, start, end, gene_dict)
         if keep_variant:
-            variant.info.__setitem__('Gene',genes)
-            vcf_out.write(variant)
-
+            INFO = "Genes=%s;%s" % (genes, INFO)
+            columns[7] = INFO
+            vcf_out.write(columns[0])
+            for column in columns[1:]:
+                vcf_out.write("\t" + column)
+            vcf_out.write("\n")
     vcf_out.close()
 
 
