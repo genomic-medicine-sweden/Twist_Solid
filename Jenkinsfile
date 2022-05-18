@@ -19,8 +19,7 @@ pipeline {
       }
       steps {
         sshagent(['jenkins']) {
-          sh """
-                source /etc/bashrc
+          sh '''#!/bin/bash
                 virtualenv venv -p python3.8
                 source venv/bin/activate
                 pip install -r requirements.txt
@@ -34,7 +33,7 @@ pipeline {
                 module load singularity
                 module load slurm-drmaa
                 snakemake -s workflow/Snakefile --profile .tests/release/profile -d HD832 -w 60
-             """
+             '''
          }
        }
     }
@@ -46,8 +45,7 @@ pipeline {
       }
       steps {
         sshagent(['jenkins']) {
-          sh """
-                source /etc/bashrc
+          sh '''#!/bin/bash
                 virtualenv venv -p python3.8
                 source venv/bin/activate
                 pip install -r requirements.txt
@@ -61,9 +59,24 @@ pipeline {
                 module load singularity
                 module load slurm-drmaa
                 snakemake -s workflow/Snakefile --profile .tests/release/profile -d ALL -w 60
-             """
+             '''
          }
        }
+    }
+  }
+  post {
+    always {
+      cleanWs()
+
+      dir("${env.WORKSPACE}@tmp") {
+        deleteDir()
+      }
+      dir("${env.WORKSPACE}@script") {
+        deleteDir()
+      }
+      dir("${env.WORKSPACE}@script@tmp") {
+        deleteDir()
+      }
     }
   }
 }
