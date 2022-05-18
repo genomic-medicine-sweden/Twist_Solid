@@ -88,12 +88,25 @@ use rule * from filtering as filtering_*
 
 module qc:
     snakefile:
-        github("hydra-genetics/qc", path="workflow/Snakefile", tag="2701f99")
+        github("hydra-genetics/qc", path="workflow/Snakefile", tag="8627986")
     config:
         config
 
 
 use rule * from qc as qc_*
+
+
+use rule multiqc from qc as qc_multiqc with:
+    input:
+        files=[
+            file.format(sample=sample, type=u.type, lane=u.lane, flowcell=u.flowcell, barcode=u.barcode, read=read, ext=ext)
+            for file in config["multiqc"]["qc_files"]
+            for sample in get_samples(samples)
+            for u in units.loc[sample].dropna().itertuples()
+            if u.type != "R"
+            for read in ["fastq1", "fastq2"]
+            for ext in config.get("picard_collect_multiple_metrics", {}).get("output_ext", [""])
+        ],
 
 
 module biomarker:
@@ -108,7 +121,9 @@ use rule * from biomarker as biomarker_*
 
 module fusions:
     snakefile:
-        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="9b45d83")
+        #github("hydra-genetics/fusions", path="workflow/Snakefile", tag="b5ba1cf")
+        #github("hydra-genetics/fusions", path="workflow/Snakefile", tag="star_fusion")
+        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="8daaf50")
     config:
         config
 
