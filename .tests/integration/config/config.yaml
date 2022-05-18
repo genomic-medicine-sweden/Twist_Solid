@@ -112,9 +112,13 @@ bcftools_filter_exclude_region:
   exon: "DATA/design.noexon1.bed"
   noćnv: "DATA/design.noexon1.bed"
 
+filter_vcf:
+  snv_soft_filter: "../../config/config_soft_filter_uppsala.yaml"
+  snv_hard_filter: "../../config/config_hard_filter_uppsala.yaml"
+  cnv_hard_filter: "../../config/config_hard_filter_cnv.yaml"
 
-hard_filter_vcf:
-  filter_config: "../../config/config_hard_filter.yaml"
+filter_cnv:
+  cnv_amp_genes: "reference/cnv_amp_genes.bed"
 
 hotspot_annotation:
   hotspots: "DATA/Hotspots_combined.csv"
@@ -174,9 +178,6 @@ picard_collect_insert_size_metrics:
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
-soft_filter_vcf:
-  filter_config: "../../config/config_soft_filter.yaml"
-
 star:
   container: "docker://hydragenetics/star:2.7.10a"
   genome_index: "reference_star_fusion/star_idx/"
@@ -185,7 +186,6 @@ star_fusion:
   container: "docker://trinityctat/starfusion:1.10.1"
   genome_path: "reference_star_fusion/"
   extra: "--examine_coding_effect"
-
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
