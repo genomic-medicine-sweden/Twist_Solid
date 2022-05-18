@@ -1,0 +1,75 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake configuration file
+type: object
+properties:
+  samples:
+    type: string
+    description: Path to samples.tsv file
+  units:
+    type: string
+    description: Path to units.tsv file
+  resources:
+    type: string
+    description: Path to resources.yaml file
+  default_container:
+    type: string
+    description: name or path to a default docker/singularity container
+
+  cnvkit_batch:
+    type: object
+    properties:
+      method:
+        type: string
+        description: One of three methods (wgs, amplicon, hybrid) to use for cnvkit_batch
+      normal_reference:
+        type: string
+        description: path to normal reference panel for cnvkit_batch
+    required:
+      - normal_reference
+
+  gatk_cnv_collect_allelic_counts:
+    type: object
+    properties:
+      SNP_interval:
+        type: string
+        description: picard interval file for the germline SNPs
+    required:
+      - SNP_interval
+
+  gatk_cnv_denoise_read_counts:
+    type: object
+    properties:
+      normal_reference:
+        type: string
+        description: path to normal reference panel for gatk DenoiseReadCounts
+    required:
+      - normal_reference
+
+  msisensor_pro:
+    type: object
+    properties:
+      PoN:
+        type: string
+        description: path to panel of normals
+    required:
+      - PoN
+
+  reference:
+    type: object
+    description: reference files
+    properties:
+      design_bedfile:
+        type: string
+        description: path to panel design bed file
+      design_intervals:
+        type: string
+        description: picard style bed file for design regions
+    required:
+      - design_bedfile
+
+required:
+  - samples
+  - units
+  - resources
+  - default_container
+  - reference

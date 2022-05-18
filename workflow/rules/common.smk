@@ -122,36 +122,40 @@ def compile_result_file_list():
         for file_info in files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
+        if unit_type != "R"
     ]
     input_files = [
         "%s/%s_%s%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
         for file_info in files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
+        if unit_type != "R"
     ]
     output_files += [
-        "results/dna/vcf/%s_%s_%s.vcf.gz" % (caller, sample, t)
+        "results/dna/vcf/%s_%s_%s.vcf.gz" % (caller, sample, unit_type)
         for caller in ["mutect2", "vardict"]
         for sample in get_samples(samples)
-        for t in get_unit_types(units, sample)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type != "R"
     ]
     input_files += [
-        "snv_indels/%s/%s_%s.merged.vcf.gz" % (caller, sample, t)
+        "snv_indels/%s/%s_%s.merged.vcf.gz" % (caller, sample, unit_type)
         for caller in ["mutect2", "vardict"]
         for sample in get_samples(samples)
-        for t in get_unit_types(units, sample)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type != "R"
     ]
     output_files += [
-        "results/dna/cnv/%s_%s.manta_tumorSV.vcf.gz" % (sample, t)
+        "results/dna/cnv/%s_%s.manta_tumorSV.vcf.gz" % (sample, unit_type)
         for sample in get_samples(samples)
-        for t in get_unit_types(units, sample)
-        if t == "T"
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "T"
     ]
     input_files += [
         "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
         for sample in get_samples(samples)
-        for t in get_unit_types(units, sample)
-        if t == "T"
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "T"
     ]
     # output_files += [
     #     "results/dna/optitype/%s_%s.hla_type_result.tsv" % (sample, t)
@@ -163,8 +167,25 @@ def compile_result_file_list():
     #     for sample in get_samples(samples)
     #     for t in get_unit_types(units, sample)
     # ]
-    output_files.append("results/dna/qc/multiqc.html")
-    input_files.append("qc/multiqc/multiqc.html")
+    output_files += [
+        "results/rna/fusion/%s_%s.star-fusion.fusion_predictions.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "fusions/star_fusion/%s_%s/star-fusion.fusion_predictions.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    types = set([unit.type for unit in units.itertuples()])
+    if "R" in types:
+        output_files.append("results/dna/qc/multiqc_RNA.html")
+        input_files.append("qc/multiqc/multiqc_RNA.html")
+    if not set(["N", "T"]).isdisjoint(types):
+        output_files.append("results/dna/qc/multiqc_DNA.html")
+        input_files.append("qc/multiqc/multiqc_DNA.html")
     return input_files, output_files
 
 

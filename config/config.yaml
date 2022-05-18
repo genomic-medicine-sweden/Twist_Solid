@@ -127,16 +127,23 @@ msisensor_pro:
 
 multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
-  config: "config/multiqc_config.yaml"
-  qc_files:
-    - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_{read}.zip"
-    - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
-    - "qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
-    - "qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
-    - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
-    - "qc/mosdepth_bed/{sample}_{type}.per-base.bed.gz"
-    - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
-    - "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}.json"
+  reports:
+    DNA:
+      config: "../../config/multiqc_config.yaml"
+      included_unit_types: ["N", "T"]
+      qc_files:
+        - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
+        - "qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.zip"
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.zip"
+        - "qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
+        - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
+    RNA:
+      config: "../../config/multiqc_config.yaml"
+      included_unit_types: ["R"]
+      qc_files:
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.zip"
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.zip"
 
 mutect2:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
@@ -164,6 +171,11 @@ picard_collect_insert_size_metrics:
 
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
+
+star_fusion:
+  container: "docker://trinityctat/starfusion:1.10.1"
+  genome_path: "/data/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/"
+  extra: "--examine_coding_effect"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
