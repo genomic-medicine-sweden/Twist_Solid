@@ -197,8 +197,8 @@ tmb:
   gnomad_limit: 0.0001
   db1000g_limit: 0.0001
   background_sd_limit: 5
-  nsanv_tmb_correction: 0.78
-  nssnv_ssnv_tmb_correction: 0.57
+  nsanv_tmb_correction: 0.89
+  nssnv_ssnv_tmb_correction: 0.70
 
 vardict:
   container: "docker://gmsuppsala/somatic:develop"
