@@ -134,14 +134,24 @@ hotspot_report:
 
 multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
-  config: "../../config/multiqc_config.yaml"
-  qc_files:
-    - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
-    - "qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
-    - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.zip"
-    - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.zip"
-    - "qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
-    - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
+  reports:
+    DNA:
+      config: "../../config/multiqc_config.yaml"
+      included_unit_types: ["N", "T"]
+      qc_files:
+        - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
+        - "qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.zip"
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.zip"
+        - "qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
+        - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
+    RNA:
+      config: "../../config/multiqc_config.yaml"
+      included_unit_types: ["R"]
+      qc_files:
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.zip"
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.zip"
+
 
 optitype:
   container: "docker://fred2/optitype"
@@ -166,6 +176,16 @@ picard_mark_duplicates:
 
 soft_filter_vcf:
   filter_config: "../../config/config_soft_filter.yaml"
+
+star:
+  container: "docker://hydragenetics/star:2.7.10a"
+  genome_index: "reference_star_fusion/star_idx/"
+
+star_fusion:
+  container: "docker://trinityctat/starfusion:1.10.1"
+  genome_path: "reference_star_fusion/"
+  extra: "--examine_coding_effect"
+
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
