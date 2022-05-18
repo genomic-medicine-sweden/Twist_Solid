@@ -5,5 +5,5 @@ filters:
     soft_filter: "False"
   copy_number:
     description: "Hard filter cnvs with under 6 copies"
-    expression: "(INFO:CORRECTED_COPY_NUMBER < 6.0)"
+    expression: "(INFO:CORR_CN < 6.0)"
     soft_filter: "False"
