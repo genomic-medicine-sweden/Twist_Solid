@@ -123,7 +123,7 @@ multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
   reports:
     DNA:
-      config: "../../config/multiqc_config.yaml"
+      config: "config/multiqc_config.yaml"
       included_unit_types: ["N", "T"]
       qc_files:
         - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
@@ -133,7 +133,7 @@ multiqc:
         - "qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
         - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
     RNA:
-      config: "../../config/multiqc_config.yaml"
+      config: "config/multiqc_config.yaml"
       included_unit_types: ["R"]
       qc_files:
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.zip"
