@@ -8,7 +8,6 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
-include: "rules/filter_cnv.smk"
 include: "rules/hotspot_info.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/result_files.smk"
@@ -62,7 +61,7 @@ use rule * from alignment as alignment_*
 
 module snv_indels:
     snakefile:
-        github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.1.0")
+        github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="f7bc770")
     config:
         config
 
@@ -72,7 +71,7 @@ use rule * from snv_indels as snv_indels_*
 
 module annotation:
     snakefile:
-        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="c4c40d3")
+        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="cnv-annotate-step")
     config:
         config
 

@@ -31,7 +31,7 @@ bcbio_variation_recall_ensemble:
   container: "docker://gmsuppsala/somatic:develop"
   callers:
     - vardict
-    - mutect2
+    - gatk_mutect2
 
 bcftools_filter_include_region:
   nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.noCNV.MYD88.bed"
@@ -145,10 +145,16 @@ multiqc:
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2_fastqc.zip"
 
-mutect2:
+gatk_mutect2:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
-mutect2_gvcf:
+gatk_mutect2_filtering:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_gvcf:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_merge_stats:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
 optitype:
