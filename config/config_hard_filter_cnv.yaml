@@ -9,5 +9,5 @@ filters:
     soft_filter: "False"
   amp_gene:
     description: "Only keep variants with gene annotations"
-    expression: "(FORMAT:NA_FALSE:Genes)"
+    expression: "(!exist[[A-Za-z0-9_,-]+, INFO:Genes])"
     soft_filter: "False"

@@ -83,6 +83,13 @@ def compile_result_file_list():
             "out": ["results/dna/vcf", ".annotated.exon_only.filter.hard_filter.vcf"],
         },
         {
+            "in": [
+                "annotation/add_multi_snv_in_codon",
+                ".background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf"
+                ],
+            "out": ["results/dna/vcf", ".annotated.exon_only.filter.hard_filter.codon_snv.vcf"],
+        },
+        {
             "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
             "out": ["results/dna/qc", ".duplication_metrics.txt"],
         },

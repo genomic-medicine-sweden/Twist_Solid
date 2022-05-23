@@ -62,7 +62,7 @@ use rule * from alignment as alignment_*
 
 module snv_indels:
     snakefile:
-        github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="f7bc770")
+        github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="21bac73")
     config:
         config
 
@@ -72,7 +72,7 @@ use rule * from snv_indels as snv_indels_*
 
 module annotation:
     snakefile:
-        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="3bf19be")
+        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="0ce2e7e")
     config:
         config
 
@@ -82,7 +82,7 @@ use rule * from annotation as annotation_*
 
 module filtering:
     snakefile:
-        github("hydra-genetics/filtering", path="workflow/Snakefile", tag="8877717")
+        github("hydra-genetics/filtering", path="workflow/Snakefile", tag="34db914")
     config:
         config
 

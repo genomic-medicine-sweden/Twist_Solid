@@ -7,7 +7,7 @@ default_container: "docker://hydragenetics/common:0.1.2"
 trimmer_software: "fastp_pe"
 
 reference:
-  background: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/Background/background_panel_nextseq_36.tsv"
+  background: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/Background/background_panel_nextseq_noUmea_27.tsv"
   artifacts: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/Artifact/artifact_panel_nextseq_36.tsv"
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
   dict: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
@@ -24,8 +24,8 @@ reference:
     - "chrM"
 
 add_multi_snv_in_codon:
-  af_limit: 0.05
-  artifact_limit: 3
+  af_limit: 0.00
+  artifact_limit: 0
 
 annotate_cnv:
   cnv_amp_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed"
@@ -92,6 +92,18 @@ gatk_cnv_denoise_read_counts:
 gatk_cnv_model_segments:
   container: "docker://gmsuppsala/somatic:develop"
 
+gatk_mutect2:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_filter:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_gvcf:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_merge_stats:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
   genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/druggable.expanded.hg19.csv"
@@ -144,18 +156,6 @@ multiqc:
       qc_files:
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2_fastqc.zip"
-
-gatk_mutect2:
-  container: "docker://hydragenetics/gatk4:4.1.9.0"
-
-gatk_mutect2_filtering:
-  container: "docker://hydragenetics/gatk4:4.1.9.0"
-
-gatk_mutect2_gvcf:
-  container: "docker://hydragenetics/gatk4:4.1.9.0"
-
-gatk_mutect2_merge_stats:
-  container: "docker://hydragenetics/gatk4:4.1.9.0"
 
 optitype:
   #container: "docker://hydragenetics/optitype:1.3.5"

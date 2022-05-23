@@ -4,6 +4,9 @@ resources: "resources.yaml"
 
 default_container: "docker://hydragenetics/common:0.1.2"
 
+annotate_cnv:
+  cnv_amp_genes: "reference/cnv_amp_genes.bed"
+
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
 
@@ -75,10 +78,16 @@ msisensor_pro:
   container: "docker://hydragenetics/msisensor_pro:1.1.a"
   PoN: "DATA/msisensor_pro_reference_26_normal.list_baseline"
 
-mutect2:
+gatk_mutect2:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
-mutect2_gvcf:
+gatk_mutect2_filter:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_gvcf:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_merge_stats:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
 reference:
@@ -102,7 +111,7 @@ bcbio_variation_recall_ensemble:
   container: "docker://gmsuppsala/somatic:develop"
   callers:
     - vardict
-    - mutect2
+    - gatk_mutect2
 
 bcftools_filter_include_region:
   exon: "DATA/design.noexon1.bed"
@@ -116,9 +125,6 @@ filter_vcf:
   snv_soft_filter: "../../config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "../../config/config_hard_filter_uppsala.yaml"
   cnv_hard_filter: "../../config/config_hard_filter_cnv.yaml"
-
-filter_cnv:
-  cnv_amp_genes: "reference/cnv_amp_genes.bed"
 
 hotspot_annotation:
   hotspots: "DATA/Hotspots_combined.csv"
