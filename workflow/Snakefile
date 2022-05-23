@@ -82,7 +82,7 @@ use rule * from annotation as annotation_*
 
 module filtering:
     snakefile:
-        github("hydra-genetics/filtering", path="workflow/Snakefile", tag="95911f9")
+        github("hydra-genetics/filtering", path="workflow/Snakefile", tag="8877717")
     config:
         config
 
