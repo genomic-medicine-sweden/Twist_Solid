@@ -25,7 +25,7 @@ reference:
 
 add_multi_snv_in_codon:
   af_limit: 0.00
-  artifact_limit: 0
+  artifact_limit: 10000
 
 annotate_cnv:
   cnv_amp_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed"
@@ -112,14 +112,14 @@ germline_vcf:
   container: "docker://hydragenetics/vep:105"
 
 hotspot_annotation:
-  hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions.csv"
+  hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
   chr_translation_file: "config/hotspot_report.chr.translation.hg19"
 
 hotspot_info:
-  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined.csv"
+  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
 
 hotspot_report:
-  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions.csv"
+  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
   report_config: "config/hotspot_report.yaml"
   chr_translation_file: "config/hotspot_report.chr.translation.hg19"
   levels:
