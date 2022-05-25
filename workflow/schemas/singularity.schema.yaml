@@ -237,7 +237,7 @@ properties:
       required:
         - container
 
-  mutect2:
+  gatk_mutect2:
     type: object
     properties:
       container:
@@ -248,7 +248,7 @@ properties:
       required:
         - container
 
-  mutect2_gvcf:
+  gatk_mutect2_gvcf:
     type: object
     properties:
       container:
@@ -414,8 +414,8 @@ required:
   - mosdepth_bed
   - msisensor_pro
   - multiqc
-  - mutect2
-  - mutect2_gvcf
+  - gatk_mutect2
+  - gatk_mutect2_gvcf
   - optitype
   - picard_collect_alignment_summary_metrics
   - picard_collect_hs_metrics
