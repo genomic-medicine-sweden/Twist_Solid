@@ -25,10 +25,10 @@ manta_run_workflow_t:
   threads: 4
   time: "8:00:00"
 
-mutect2_gvcf:
+gatk_mutect2_gvcf:
   time: "8:00:00"
 
-mutect2:
+gatk_mutect2:
   time: "8:00:00"
 
 gene_fuse:
