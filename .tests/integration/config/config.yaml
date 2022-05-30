@@ -9,6 +9,11 @@ annotate_cnv:
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
+  amb: "reference/WASH7P.fna.amb"
+  ann: "reference/WASH7P.fna.ann"
+  bwt: "reference/WASH7P.fna.bwt"
+  pac: "reference/WASH7P.fna.pac"
+  sa: "reference/WASH7P.fna.sa"
 
 bcftools_filter_include_region:
   exon: "DATA/design.noexon1.bed"
@@ -97,13 +102,8 @@ reference:
   design_intervals_gatk_cnv: "DATA/design.interval_list"
   design_intervals: "DATA/design.interval_list"
   fasta: "reference/WASH7P.fna"
-  dict: "reference/WASH7P.dict"
-  amb: "reference/WASH7P.fna.amb"
-  ann: "reference/WASH7P.fna.ann"
-  bwt: "reference/WASH7P.fna.bwt"
   fai: "reference/WASH7P.fna.fai"
-  pac: "reference/WASH7P.fna.pac"
-  sa: "reference/WASH7P.fna.sa"
+  dict: "reference/WASH7P.dict"
 
 trimmer_software: "fastp_pe"
 
