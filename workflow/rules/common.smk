@@ -126,8 +126,8 @@ def compile_result_file_list():
             "out": ["results/dna/cnv", ".svdb_query.only_amp_genes.vcf.gz"],
         },
         {
-            "in": ["cnv_sv/svdb_query", ".svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter.vcf"],
-            "out": ["results/dna/cnv", ".svdb_query.only_amp_genes.cnv_hard_filter.vcf"],
+            "in": ["cnv_sv/svdb_query", ".svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf"],
+            "out": ["results/dna/cnv", ".cnv_hard_filter_amp.vcf"],
         },
     ]
     output_files = [

@@ -30,7 +30,7 @@ filters:
     soft_filter_flag: "Artifact_gt_3"
     soft_filter: "True"
   background:
-    description: "Filter position with where backgound distribution overlaps variant (lower than 5 SD from median)"
-    expression: "INFO:PositionNrSD < 5"
-    soft_filter_flag: "Background_lt_5"
+    description: "Filter position with where backgound distribution overlaps variant (lower than 4 SD from median)"
+    expression: "INFO:PositionNrSD < 4"
+    soft_filter_flag: "Background_lt_4"
     soft_filter: "True"

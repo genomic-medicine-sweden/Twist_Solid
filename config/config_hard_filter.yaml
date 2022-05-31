@@ -4,16 +4,16 @@ filters:
     expression: "(FORMAT:AF:0 < 0.05 and !exist[1-hotspot, INFO:Hotspot])"
     soft_filter: "False"
   vaf_hotspot:
-    description: "Filter hotspot variants with low vaf (AF lower than 0.02)"
-    expression: "(FORMAT:AF:0 < 0.02 and exist[1-hotspot, INFO:Hotspot])"
+    description: "Filter hotspot variants with low vaf (AF lower than 0.01)"
+    expression: "(FORMAT:AF:0 < 0.01 and exist[1-hotspot, INFO:Hotspot])"
     soft_filter: "False"
   artifacts:
     description: "Hard filter variants found in more than 3 normal samples"
     expression: "(INFO:Artifact:0 > 3 or INFO:Artifact:1 > 3)"
     soft_filter: "False"
   background:
-    description: "Hard filter position with where backgound distribution overlaps variant (lower than 5 SD from median)"
-    expression: "INFO:PositionNrSD < 5"
+    description: "Hard filter position with where backgound distribution overlaps variant (lower than 4 SD from median)"
+    expression: "INFO:PositionNrSD < 4"
     soft_filter: "False"
   germline:
     description: "Hard filter germline"

@@ -69,7 +69,7 @@ fastqc:
 filter_vcf:
   snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
-  cnv_hard_filter: "config/config_hard_filter_cnv.yaml"
+  cnv_hard_filter_amp: "config/config_hard_filter_cnv_amp.yaml"
 
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
