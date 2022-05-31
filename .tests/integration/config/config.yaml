@@ -69,6 +69,7 @@ gatk_cnv_model_segments:
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
   genes: "DATA/druggable.expanded.hg19.csv"
+  fasta: "reference/WASH7P.fna"
 
 germline_vcf:
   container: "docker://hydragenetics/vep:105"
