@@ -6,6 +6,7 @@ __copyright__ = "Copyright 2021, Jonas A"
 __email__ = "jonas.almlof@igp.uu.se"
 __license__ = "GPL-3"
 
+import os
 import pandas as pd
 from snakemake.utils import validate
 from snakemake.utils import min_version
@@ -21,8 +22,18 @@ min_version("6.10.0")
 
 ### Set and validate config file
 
+if os.path.isfile("config/config.yaml"):
 
-configfile: "config/config.yaml"
+    configfile: "config/config.yaml"
+
+
+elif os.path.isfile("config.yaml"):
+
+    configfile: "config.yaml"
+
+
+elif not workflow.overwrite_configfiles:
+    raise FileExistsError("No config file found in working directory or passed as argument!")
 
 
 validate(config, schema="../schemas/config.schema.yaml")
