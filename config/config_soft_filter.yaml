@@ -10,9 +10,9 @@ filters:
     soft_filter_flag: "AF_lt_0.05"
     soft_filter: "True"
   vaf_hotspot:
-    description: "Filter hotspot variants with low vaf (AF lower than 0.02)"
-    expression: "(FORMAT:AF:0 < 0.02 and exist[1-hotspot, INFO:Hotspot])"
-    soft_filter_flag: "AF_HS_lt_0.02"
+    description: "Filter hotspot variants with low vaf (AF lower than 0.01)"
+    expression: "(FORMAT:AF:0 < 0.01 and exist[1-hotspot, INFO:Hotspot])"
+    soft_filter_flag: "AF_HS_lt_0.01"
     soft_filter: "True"
   ad:
     description: "Hard filter variants with few observations (AD lower than 20)"
@@ -40,7 +40,7 @@ filters:
     soft_filter_flag: "Artifact_gt_2"
     soft_filter: "True"
   background:
-    description: "Filter position with where backgound distribution overlaps variant (lower than 5 SD from median)"
-    expression: "INFO:PositionNrSD < 5"
-    soft_filter_flag: "Background_lt_5"
+    description: "Filter position with where backgound distribution overlaps variant (lower than 4 SD from median)"
+    expression: "INFO:PositionNrSD < 4"
+    soft_filter_flag: "Background_lt_4"
     soft_filter: "True"

@@ -1,11 +1,7 @@
 filters:
   vaf:
-    description: "Filter variants with low vaf (AF lower than 0.05)"
-    expression: "(FORMAT:AF:0 < 0.05 and !exist[1-hotspot, INFO:Hotspot])"
-    soft_filter: "False"
-  vaf_hotspot:
-    description: "Filter hotspot variants with low vaf (AF lower than 0.01)"
-    expression: "(FORMAT:AF:0 < 0.01 and exist[1-hotspot, INFO:Hotspot])"
+    description: "Filter variants with low vaf (AF lower than 0.01)"
+    expression: "(FORMAT:AF:0 < 0.01)"
     soft_filter: "False"
   artifacts:
     description: "Hard filter variants found in more than 3 normal samples"
