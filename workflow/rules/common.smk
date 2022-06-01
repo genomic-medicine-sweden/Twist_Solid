@@ -192,6 +192,30 @@ def compile_result_file_list():
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
     ]
+    output_files += [
+        "results/rna/fusion/%s_%s.fusioncatcher.fusion_predictions.txt" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "fusions/fusioncatcher/%s_%s/final-list_candidate-fusion-genes.hg19.txt" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    output_files += [
+        "results/rna/fusion/%s_%s.arriba.fusions.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "fusions/arriba/%s_%s.fusions.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
     types = set([unit.type for unit in units.itertuples()])
     if "R" in types:
         output_files.append("results/dna/qc/multiqc_RNA.html")

@@ -10,13 +10,20 @@ reference:
   background: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/Background/background_panel_nextseq_noUmea_27.tsv"
   artifacts: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/Artifact/artifact_panel_nextseq_36.tsv"
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
-  fai: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fai"
   dict: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
+  fai: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fai"
   design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed"
   design_intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.interval_list"
   design_intervals_gatk_cnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
   skip_chrs:
     - "chrM"
+
+arriba:
+  assembly: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
+  blacklist: "/data/ref_data/arriba/arriba_v2.2.1/database/blacklist_hg19_hs37d5_GRCh37_v2.2.1.tsv.gz"
+  container: "docker://hydragenetics/arriba:2.2.1"
+  gtf: "/data/ref_genomes/hg19/gtf/hg19.refGene.gtf"
+  extra: "-p /data/ref_data/arriba/arriba_v2.2.1/database/protein_domains_hg19_hs37d5_GRCh37_v2.2.1.gff3 -k /data/ref_data/arriba/arriba_v2.2.1/database/known_fusions_hg19_hs37d5_GRCh37_v2.2.1.tsv.gz"
 
 add_multi_snv_in_codon:
   af_limit: 0.00
@@ -76,6 +83,10 @@ filter_vcf:
 
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
+
+fusioncatcher:
+  container: "docker://gmsuppsala/fusioncatcher:1.33"
+  genome_path: "/data/ref_data/fusioncatcher/human_v102/human_v102/"
 
 gatk_cnv_call_copy_ratio_segments:
   container: "docker://gmsuppsala/somatic:develop"
@@ -183,6 +194,11 @@ picard_mark_duplicates:
 
 samtools_merge_bam:
   extra: "-c"
+
+star:
+  container: "docker://hydragenetics/star:2.7.10a"
+  genome_index: "/data/ref_data/star/v2.7.10a_hg19/"
+  extra: "--quantMode GeneCounts --sjdbGTFfile /data/ref_genomes/hg19/gtf/hg19.refGene.gtf --outSAMtype BAM SortedByCoordinate --chimSegmentMin 10 --chimOutType WithinBAM SoftClip --chimJunctionOverhangMin 10 --chimScoreMin 1 --chimScoreDropMax 30 --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --alignSJstitchMismatchNmax 5 -1 5 5 --chimSegmentReadGapMax 3"
 
 star_fusion:
   container: "docker://trinityctat/starfusion:1.10.1"
