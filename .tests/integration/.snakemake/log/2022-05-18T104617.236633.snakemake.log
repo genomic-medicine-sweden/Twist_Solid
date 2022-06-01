@@ -1,4 +1,0 @@
-ImportError in line 16 of /home/jonas/Snakemake/Twist_DNA_Solid_GMS/workflow/rules/common.smk:
-cannot import name 'min_version' from 'hydra_genetics' (/home/jonas/Snakemake/venv/lib/python3.9/site-packages/hydra_genetics/__init__.py)
-  File "/home/jonas/Snakemake/Twist_DNA_Solid_GMS/workflow/Snakefile", line 10, in <module>
-  File "/home/jonas/Snakemake/Twist_DNA_Solid_GMS/workflow/rules/common.smk", line 16, in <module>
