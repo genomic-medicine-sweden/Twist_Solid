@@ -62,7 +62,7 @@ use rule * from alignment as alignment_*
 
 module snv_indels:
     snakefile:
-        github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="5c8f178")
+        github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.2.0")
     config:
         config
 
