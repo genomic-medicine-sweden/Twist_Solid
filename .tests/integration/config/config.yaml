@@ -182,6 +182,7 @@ reference:
   design_intervals_gatk_cnv: "DATA/design.interval_list"
   design_intervals: "DATA/design.interval_list"
   fasta: "reference/WASH7P.fna"
+  fai: "reference/WASH7P.fna.fai"
   dict: "reference/WASH7P.dict"
 
 star:
