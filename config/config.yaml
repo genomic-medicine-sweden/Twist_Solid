@@ -70,6 +70,9 @@ cnvkit_scatter:
 config_manta_t:
   container: "docker://marrip/manta:v1.6.0"
 
+exon_skipping:
+  design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"
+
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"
 

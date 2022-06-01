@@ -41,6 +41,9 @@ bcftools_filter_exclude_region:
   exon: "DATA/design.noexon1.bed"
   noćnv: "DATA/design.noexon1.bed"
 
+exon_skipping:
+  design_bed: "reference/Twist_RNA_Design5.annotated.bed"
+
 hotspot_annotation:
   hotspots: "DATA/Hotspots_combined.csv"
   chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"

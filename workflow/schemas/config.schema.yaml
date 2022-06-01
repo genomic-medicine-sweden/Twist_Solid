@@ -15,6 +15,18 @@ properties:
     type: string
     description: name or path to a default docker/singularity container
 
+  bcbio_variation_recall_ensemble:
+    type: object
+    properties:
+      callers:
+        type: array
+        description: list of callers that are included in the ensemble vcf in sort order
+        items:
+          type: string
+      sort_order:
+        type: string
+        description:
+
   cnvkit_batch:
     type: object
     properties:
@@ -27,17 +39,14 @@ properties:
     required:
       - normal_reference
 
-  bcbio_variation_recall_ensemble:
+  exon_skipping:
     type: object
     properties:
-      callers:
-        type: array
-        description: list of callers that are included in the ensemble vcf in sort order
-        items:
-          type: string
-      sort_order:
+      design_bed:
         type: string
-        description:
+        description: path to design bed file
+    required:
+      - design_bed
 
   gatk_cnv_collect_allelic_counts:
     type: object

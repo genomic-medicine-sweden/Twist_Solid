@@ -183,7 +183,7 @@ with gzip.open(gvcf, 'rt') as infile:
                     AD_id = i
                 if f == "DP_mosdepth":
                     DP_mosdepth_id = i
-                i +=1
+                i += 1
             AD_info = data[AD_id].split(",")
             DP_mosdepth = data[DP_mosdepth_id]
             ref_AD = int(AD_info[0])
