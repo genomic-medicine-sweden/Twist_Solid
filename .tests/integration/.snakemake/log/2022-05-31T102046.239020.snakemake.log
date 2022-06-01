@@ -1,0 +1,12 @@
+Building DAG of jobs...
+WorkflowError:
+MissingInputException: Missing input files for rule fusions_gene_fuse:
+    output: fusions/gene_fuse/NA12878_T_gene_fuse_report.html, fusions/gene_fuse/NA12878_T_gene_fuse_fusions.txt
+    wildcards: sample=NA12878, type=T
+    affected files:
+        
+MissingInputException: Missing input files for rule alignment_samtools_sort:
+    output: results/dna/bam/NA12878_T.bam
+    wildcards: path_file=results/dna/bam/NA12878_T
+    affected files:
+        results/dna/bam/NA12878_T.bam_unsorted

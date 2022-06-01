@@ -1,0 +1,12 @@
+Building DAG of jobs...
+WorkflowError:
+MissingInputException: Missing input files for rule fusions_fusioncatcher:
+    output: fusions/fusioncatcher/NA12879_R/final-list_candidate-fusion-genes.hg19.txt, fusions/fusioncatcher/NA12879_R/summary_candidate_fusions.txt
+    wildcards: sample=NA12879, type=R
+    affected files:
+        /data/ref_data/fusioncatcher/human_v102/human_v102
+MissingInputException: Missing input files for rule alignment_samtools_sort:
+    output: results/dna/bam/NA12878_T.bam
+    wildcards: path_file=results/dna/bam/NA12878_T
+    affected files:
+        results/dna/bam/NA12878_T.bam_unsorted

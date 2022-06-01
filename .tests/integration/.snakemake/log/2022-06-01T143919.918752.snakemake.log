@@ -1,0 +1,12 @@
+Building DAG of jobs...
+WorkflowError:
+MissingInputException: Missing input files for rule fusions_arriba:
+    output: fusions/arriba/NA12879_R.fusions.tsv, fusions/arriba/NA12879_R.fusions.discarded.tsv
+    wildcards: sample=NA12879, type=R
+    affected files:
+        
+MissingInputException: Missing input files for rule alignment_samtools_sort:
+    output: results/dna/bam/NA12878_T.bam
+    wildcards: path_file=results/dna/bam/NA12878_T
+    affected files:
+        results/dna/bam/NA12878_T.bam_unsorted

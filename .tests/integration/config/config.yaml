@@ -4,8 +4,20 @@ resources: "resources.yaml"
 
 default_container: "docker://hydragenetics/common:0.1.2"
 
+arriba:
+  assembly: "reference/WASH7P.fna"
+  blacklist: "reference/blacklist_hg19_hs37d5_GRCh37_v2.2.1.tsv.gz"
+  container: "docker://hydragenetics/arriba:2.2.1"
+  gtf: "reference/hg19.refGene.gtf"
+  extra: "-p reference/protein_domains_hg19_hs37d5_GRCh37_v2.2.1.gff3 -k reference/known_fusions_hg19_hs37d5_GRCh37_v2.2.1.tsv.gz"
+
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
+  amb: "reference/WASH7P.fna.amb"
+  ann: "reference/WASH7P.fna.ann"
+  bwt: "reference/WASH7P.fna.bwt"
+  pac: "reference/WASH7P.fna.pac"
+  sa: "reference/WASH7P.fna.sa"
 
 bcftools_filter_include_region:
   exon: "DATA/design.noexon1.bed"
@@ -28,9 +40,6 @@ bcftools_filter_include_region:
 bcftools_filter_exclude_region:
   exon: "DATA/design.noexon1.bed"
   noćnv: "DATA/design.noexon1.bed"
-
-hard_filter_vcf:
-  filter_config: "../../config/config_hard_filter.yaml"
 
 hotspot_annotation:
   hotspots: "DATA/Hotspots_combined.csv"
@@ -71,12 +80,17 @@ fastp_pe:
 fastqc:
   container: "docker://hydragenetics/fastqc:0.11.9"
 
+filter_vcf:
+  snv_soft_filter: "../../config/config_soft_filter_uppsala.yaml"
+  snv_hard_filter: "../../config/config_hard_filter_uppsala.yaml"
+  cnv_hard_filter_amp: "../../config/config_hard_filter_cnv_amp.yaml"
+
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
 
 fusioncatcher:
   container: "docker://gmsuppsala/fusioncatcher:1.33"
-  genome_path: "/data/ref_data/fusioncatcher/human_v102/human_v102/"
+  genome_path: "reference/human_v102/"
 
 gatk_cnv_call_copy_ratio_segments:
   container: "docker://gmsuppsala/somatic:develop"
@@ -98,6 +112,7 @@ gatk_cnv_model_segments:
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
   genes: "DATA/druggable.expanded.hg19.csv"
+  fasta: "reference/WASH7P.fna"
 
 germline_vcf:
   container: "docker://hydragenetics/vep:105"
@@ -174,9 +189,6 @@ reference:
   fai: "reference/WASH7P.fna.fai"
   pac: "reference/WASH7P.fna.pac"
   sa: "reference/WASH7P.fna.sa"
-
-soft_filter_vcf:
-  filter_config: "../../config/config_soft_filter.yaml"
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"

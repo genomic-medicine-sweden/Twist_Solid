@@ -1,0 +1,80 @@
+WorkflowError in line 27 of https://github.com/hydra-genetics/alignment/raw/v0.2.0/workflow/rules/common.smk:
+Error validating config file.
+ValidationError: 'amb' is a required property
+
+Failed validating 'required' in schema['properties']['bwa_mem']:
+    OrderedDict([('type', 'object'),
+                 ('description', 'parameters for bwa mem'),
+                 ('properties',
+                  OrderedDict([('benchmark_repeats',
+                                OrderedDict([('type', 'integer'),
+                                             ('description',
+                                              'set number of times '
+                                              'benchmark should be '
+                                              'repeated')])),
+                               ('container',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'name or path to '
+                                              'docker/singularity '
+                                              'container')])),
+                               ('extra',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'parameters that should be '
+                                              'forwarded')])),
+                               ('read_group',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'RG string will be added to '
+                                              'bam file')])),
+                               ('sorting',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'program hangling the bam '
+                                              'sorting (default '
+                                              'samtools)')])),
+                               ('sort_order',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'how the bam file should be '
+                                              'sorted (default '
+                                              'coordinate)')])),
+                               ('sort_extra',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'parameters that should be '
+                                              'forwarded to sorting (ie, '
+                                              'number of threads)')])),
+                               ('amb',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'fasta reference amb '
+                                              'file')])),
+                               ('ann',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'fasta reference ann '
+                                              'file')])),
+                               ('bwt',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'fasta reference bwt '
+                                              'file')])),
+                               ('pac',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'fasta reference pac '
+                                              'file')])),
+                               ('sa',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'fasta reference sa '
+                                              'file')]))])),
+                 ('required', ['amb', 'ann', 'bwt', 'pac', 'sa'])])
+
+On instance['bwa_mem']:
+    {'container': 'docker://hydragenetics/bwa_mem:0.7.17'}
+  File "/home/jonas/Snakemake/Twist_DNA_Solid_GMS/workflow/Snakefile", line 60, in <module>
+  File "https://github.com/hydra-genetics/alignment/raw/v0.2.0/workflow/Snakefile", line 7, in <module>
+  File "https://github.com/hydra-genetics/alignment/raw/v0.2.0/workflow/rules/common.smk", line 27, in <module>

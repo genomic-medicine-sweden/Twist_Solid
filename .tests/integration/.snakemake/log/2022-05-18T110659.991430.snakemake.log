@@ -1,0 +1,17 @@
+KeyError in line 130 of /home/jonas/Snakemake/Twist_DNA_Solid_GMS/workflow/rules/common.smk:
+'#NA12879'
+  File "/home/jonas/Snakemake/Twist_DNA_Solid_GMS/workflow/Snakefile", line 10, in <module>
+  File "/home/jonas/Snakemake/Twist_DNA_Solid_GMS/workflow/rules/common.smk", line 209, in <module>
+  File "/home/jonas/Snakemake/Twist_DNA_Solid_GMS/workflow/rules/common.smk", line 126, in compile_result_file_list
+  File "/home/jonas/Snakemake/Twist_DNA_Solid_GMS/workflow/rules/common.smk", line 130, in <listcomp>
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/hydra_genetics/utils/units.py", line 206, in get_unit_types
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/pandas/core/indexing.py", line 925, in __getitem__
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/pandas/core/indexing.py", line 1100, in _getitem_tuple
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/pandas/core/indexing.py", line 838, in _getitem_lowerdim
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/pandas/core/indexing.py", line 1164, in _getitem_axis
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/pandas/core/indexing.py", line 1113, in _get_label
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/pandas/core/generic.py", line 3770, in xs
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/pandas/core/indexes/multi.py", line 3112, in _get_loc_level
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/pandas/core/indexes/multi.py", line 3204, in _get_level_indexer
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/pandas/core/indexes/multi.py", line 2855, in _get_loc_single_level_index
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3363, in get_loc

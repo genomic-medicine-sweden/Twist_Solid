@@ -1,0 +1,26 @@
+KeyboardInterrupt in line 12 of https://github.com/hydra-genetics/cnv_sv/raw/331be7e/workflow/Snakefile.
+  File "/home/jonas/Snakemake/Twist_DNA_Solid_GMS/workflow/Snakefile", line 132, in <module>
+  File "https://github.com/hydra-genetics/cnv_sv/raw/331be7e/workflow/Snakefile", line 12, in <module>
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/retry/api.py", line 101, in retry_call
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/retry/api.py", line 33, in __retry_internal
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/smart_open/smart_open_lib.py", line 235, in open
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/smart_open/smart_open_lib.py", line 398, in _open_binary_stream
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/smart_open/http.py", line 49, in open_uri
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/smart_open/http.py", line 81, in open
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/smart_open/http.py", line 237, in __init__
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/smart_open/http.py", line 324, in _partial_request
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/requests/api.py", line 75, in get
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/requests/api.py", line 61, in request
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/requests/sessions.py", line 542, in request
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/requests/sessions.py", line 655, in send
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/requests/adapters.py", line 439, in send
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+  File "<string>", line 3, in raise_from
+  File "/home/jonas/Snakemake/venv/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+  File "/usr/lib/python3.9/http/client.py", line 1377, in getresponse
+  File "/usr/lib/python3.9/http/client.py", line 320, in begin
+  File "/usr/lib/python3.9/http/client.py", line 281, in _read_status
+  File "/usr/lib/python3.9/socket.py", line 704, in readinto
+  File "/usr/lib/python3.9/ssl.py", line 1241, in recv_into
+  File "/usr/lib/python3.9/ssl.py", line 1099, in read

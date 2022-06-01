@@ -1,0 +1,982 @@
+Building DAG of jobs...
+candidate job all
+    wildcards: 
+candidate job copy_results_files
+    wildcards: 
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+candidate job alignment_samtools_merge_bam
+    wildcards: sample=NA12878, type=T
+candidate job alignment_picard_mark_duplicates
+    wildcards: sample=NA12878, type=T, chr=chr1
+candidate job alignment_samtools_extract_reads
+    wildcards: sample=NA12878, type=T, chr=chr1
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/bwa_mem/NA12878_T
+candidate job alignment_bwa_mem_merge
+    wildcards: sample=NA12878, type=T
+candidate job alignment_bwa_mem
+    wildcards: sample=NA12878, flowcell=HKTG2BGXG, lane=L001, barcode=ACGGAACA+ACGAGAAC, type=T
+candidate job prealignment_fastp_pe
+    wildcards: sample=NA12878, flowcell=HKTG2BGXG, lane=L001, barcode=ACGGAACA+ACGAGAAC, type=T
+candidate job misc_bgzip
+    wildcards: file=fastq/NA12878_fastq1.fastq
+file fastq/NA12878_fastq1.fastq.gz:
+    No producers found, but file is present on disk.
+    Missing input files for rule misc_bgzip:
+        output: fastq/NA12878_fastq1.fastq.gz
+        wildcards: file=fastq/NA12878_fastq1.fastq
+        affected files:
+            fastq/NA12878_fastq1.fastq
+candidate job misc_bgzip
+    wildcards: file=fastq/NA12878_fastq2.fastq
+file fastq/NA12878_fastq2.fastq.gz:
+    No producers found, but file is present on disk.
+    Missing input files for rule misc_bgzip:
+        output: fastq/NA12878_fastq2.fastq.gz
+        wildcards: file=fastq/NA12878_fastq2.fastq
+        affected files:
+            fastq/NA12878_fastq2.fastq
+selected job prealignment_fastp_pe
+    wildcards: sample=NA12878, flowcell=HKTG2BGXG, lane=L001, barcode=ACGGAACA+ACGAGAAC, type=T
+file prealignment/fastp_pe/NA12878_HKTG2BGXG_L001_ACGGAACA+ACGAGAAC_T_fastq1.fastq.gz:
+    Producer found, hence exceptions are ignored.
+
+candidate job prealignment_fastp_pe
+    wildcards: sample=NA12878, flowcell=HKTG2BGXG, lane=L001, barcode=ACGGAACA+ACGAGAAC, type=T
+selected job prealignment_fastp_pe
+    wildcards: sample=NA12878, flowcell=HKTG2BGXG, lane=L001, barcode=ACGGAACA+ACGAGAAC, type=T
+file prealignment/fastp_pe/NA12878_HKTG2BGXG_L001_ACGGAACA+ACGAGAAC_T_fastq2.fastq.gz:
+    Producer found, hence exceptions are ignored.
+
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/bwa_mem/NA12878_HKTG2BGXG_L001_ACGGAACA+ACGAGAAC_T
+selected job alignment_bwa_mem
+    wildcards: sample=NA12878, flowcell=HKTG2BGXG, lane=L001, barcode=ACGGAACA+ACGAGAAC, type=T
+file alignment/bwa_mem/NA12878_HKTG2BGXG_L001_ACGGAACA+ACGAGAAC_T.bam:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule alignment_samtools_sort:
+        output: alignment/bwa_mem/NA12878_HKTG2BGXG_L001_ACGGAACA+ACGAGAAC_T.bam
+        wildcards: path_file=alignment/bwa_mem/NA12878_HKTG2BGXG_L001_ACGGAACA+ACGAGAAC_T
+        affected files:
+            alignment/bwa_mem/NA12878_HKTG2BGXG_L001_ACGGAACA+ACGAGAAC_T.bam_unsorted
+selected job alignment_bwa_mem_merge
+    wildcards: sample=NA12878, type=T
+file alignment/bwa_mem/NA12878_T.bam_unsorted:
+    Producer found, hence exceptions are ignored.
+
+selected job alignment_samtools_sort
+    wildcards: path_file=alignment/bwa_mem/NA12878_T
+file alignment/bwa_mem/NA12878_T.bam:
+    Producer found, hence exceptions are ignored.
+
+candidate job alignment_samtools_index
+    wildcards: file=alignment/bwa_mem/NA12878_T
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/bwa_mem/NA12878_T
+selected job alignment_samtools_sort
+    wildcards: path_file=alignment/bwa_mem/NA12878_T
+file alignment/bwa_mem/NA12878_T.bam:
+    Producer found, hence exceptions are ignored.
+
+selected job alignment_samtools_index
+    wildcards: file=alignment/bwa_mem/NA12878_T
+file alignment/bwa_mem/NA12878_T.bam.bai:
+    Producer found, hence exceptions are ignored.
+
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_extract_reads/NA12878_T_chr1
+selected job alignment_samtools_extract_reads
+    wildcards: sample=NA12878, type=T, chr=chr1
+file alignment/samtools_extract_reads/NA12878_T_chr1.bam:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule alignment_samtools_sort:
+        output: alignment/samtools_extract_reads/NA12878_T_chr1.bam
+        wildcards: path_file=alignment/samtools_extract_reads/NA12878_T_chr1
+        affected files:
+            alignment/samtools_extract_reads/NA12878_T_chr1.bam_unsorted
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/picard_mark_duplicates/NA12878_T_chr1
+selected job alignment_picard_mark_duplicates
+    wildcards: sample=NA12878, type=T, chr=chr1
+file alignment/picard_mark_duplicates/NA12878_T_chr1.bam:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule alignment_samtools_sort:
+        output: alignment/picard_mark_duplicates/NA12878_T_chr1.bam
+        wildcards: path_file=alignment/picard_mark_duplicates/NA12878_T_chr1
+        affected files:
+            alignment/picard_mark_duplicates/NA12878_T_chr1.bam_unsorted
+selected job alignment_samtools_merge_bam
+    wildcards: sample=NA12878, type=T
+file alignment/samtools_merge_bam/NA12878_T.bam_unsorted:
+    Producer found, hence exceptions are ignored.
+
+selected job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+file alignment/samtools_merge_bam/NA12878_T.bam:
+    Producer found, hence exceptions are ignored.
+
+candidate job alignment_samtools_index
+    wildcards: file=alignment/samtools_merge_bam/NA12878_T
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+selected job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+file alignment/samtools_merge_bam/NA12878_T.bam:
+    Producer found, hence exceptions are ignored.
+
+selected job alignment_samtools_index
+    wildcards: file=alignment/samtools_merge_bam/NA12878_T
+file alignment/samtools_merge_bam/NA12878_T.bam.bai:
+    Producer found, hence exceptions are ignored.
+
+candidate job snv_indels_bcbio_variation_recall_ensemble
+    wildcards: sample=NA12878, type=T
+candidate job snv_indels_bcftools_sort
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized
+candidate job snv_indels_vt_normalize
+    wildcards: caller=vardict, sample=NA12878, type=T
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T.decomposed
+candidate job snv_indels_vt_decompose
+    wildcards: caller=vardict, sample=NA12878, type=T
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T.fix_af
+candidate job snv_indels_fix_af
+    wildcards: caller=vardict, sample=NA12878, type=T
+candidate job snv_indels_bcftools_concat
+    wildcards: file=snv_indels/vardict/NA12878_T, vcf=vcf
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T_chr1
+candidate job snv_indels_vardict
+    wildcards: sample=NA12878, type=T, chr=chr1
+candidate job alignment_picard_mark_duplicates
+    wildcards: sample=NA12878, type=T, chr=chr1
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/picard_mark_duplicates/NA12878_T_chr1
+selected job alignment_picard_mark_duplicates
+    wildcards: sample=NA12878, type=T, chr=chr1
+file alignment/picard_mark_duplicates/NA12878_T_chr1.bam:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule alignment_samtools_sort:
+        output: alignment/picard_mark_duplicates/NA12878_T_chr1.bam
+        wildcards: path_file=alignment/picard_mark_duplicates/NA12878_T_chr1
+        affected files:
+            alignment/picard_mark_duplicates/NA12878_T_chr1.bam_unsorted
+candidate job alignment_samtools_index
+    wildcards: file=alignment/picard_mark_duplicates/NA12878_T_chr1
+candidate job alignment_picard_mark_duplicates
+    wildcards: sample=NA12878, type=T, chr=chr1
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/picard_mark_duplicates/NA12878_T_chr1
+selected job alignment_picard_mark_duplicates
+    wildcards: sample=NA12878, type=T, chr=chr1
+file alignment/picard_mark_duplicates/NA12878_T_chr1.bam:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule alignment_samtools_sort:
+        output: alignment/picard_mark_duplicates/NA12878_T_chr1.bam
+        wildcards: path_file=alignment/picard_mark_duplicates/NA12878_T_chr1
+        affected files:
+            alignment/picard_mark_duplicates/NA12878_T_chr1.bam_unsorted
+selected job alignment_samtools_index
+    wildcards: file=alignment/picard_mark_duplicates/NA12878_T_chr1
+file alignment/picard_mark_duplicates/NA12878_T_chr1.bam.bai:
+    Producer found, hence exceptions are ignored.
+
+candidate job snv_indels_bed_split
+    wildcards: chr=chr1
+selected job snv_indels_bed_split
+    wildcards: chr=chr1
+file snv_indels/bed_split/design_bedfile_chr1.bed:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_vardict
+    wildcards: sample=NA12878, type=T, chr=chr1
+file snv_indels/vardict/NA12878_T_chr1.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T_chr1
+file snv_indels/vardict/NA12878_T_chr1.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+candidate job snv_indels_tabix
+    wildcards: file=snv_indels/vardict/NA12878_T_chr1
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T_chr1
+selected job snv_indels_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T_chr1
+file snv_indels/vardict/NA12878_T_chr1.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_tabix
+    wildcards: file=snv_indels/vardict/NA12878_T_chr1
+file snv_indels/vardict/NA12878_T_chr1.vcf.gz.tbi:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_bcftools_concat
+    wildcards: file=snv_indels/vardict/NA12878_T, vcf=vcf
+file snv_indels/vardict/NA12878_T.merged.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_fix_af
+    wildcards: caller=vardict, sample=NA12878, type=T
+file snv_indels/vardict/NA12878_T.fix_af.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T.fix_af
+file snv_indels/vardict/NA12878_T.fix_af.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+candidate job misc_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T.decomposed.vcf
+selected job snv_indels_vt_decompose
+    wildcards: caller=vardict, sample=NA12878, type=T
+file snv_indels/vardict/NA12878_T.decomposed.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/vardict/NA12878_T.decomposed.vcf.gz
+        wildcards: file=snv_indels/vardict/NA12878_T.decomposed
+        affected files:
+            snv_indels/vardict/NA12878_T.decomposed.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/vardict/NA12878_T.decomposed.vcf.gz
+        wildcards: file=snv_indels/vardict/NA12878_T.decomposed.vcf
+        affected files:
+            snv_indels/vardict/NA12878_T.decomposed.vcf
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized
+candidate job misc_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized.vcf
+selected job snv_indels_vt_normalize
+    wildcards: caller=vardict, sample=NA12878, type=T
+file snv_indels/vardict/NA12878_T.normalized.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/vardict/NA12878_T.normalized.vcf.gz
+        wildcards: file=snv_indels/vardict/NA12878_T.normalized
+        affected files:
+            snv_indels/vardict/NA12878_T.normalized.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/vardict/NA12878_T.normalized.vcf.gz
+        wildcards: file=snv_indels/vardict/NA12878_T.normalized.vcf
+        affected files:
+            snv_indels/vardict/NA12878_T.normalized.vcf
+candidate job snv_indels_tabix
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized
+candidate job snv_indels_vt_normalize
+    wildcards: caller=vardict, sample=NA12878, type=T
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized
+candidate job misc_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized.vcf
+selected job snv_indels_vt_normalize
+    wildcards: caller=vardict, sample=NA12878, type=T
+file snv_indels/vardict/NA12878_T.normalized.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/vardict/NA12878_T.normalized.vcf.gz
+        wildcards: file=snv_indels/vardict/NA12878_T.normalized
+        affected files:
+            snv_indels/vardict/NA12878_T.normalized.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/vardict/NA12878_T.normalized.vcf.gz
+        wildcards: file=snv_indels/vardict/NA12878_T.normalized.vcf
+        affected files:
+            snv_indels/vardict/NA12878_T.normalized.vcf
+selected job snv_indels_tabix
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized
+file snv_indels/vardict/NA12878_T.normalized.vcf.gz.tbi:
+    Producer found, hence exceptions are ignored.
+
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized.sorted
+candidate job misc_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized.sorted.vcf
+selected job snv_indels_bcftools_sort
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized
+file snv_indels/vardict/NA12878_T.normalized.sorted.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/vardict/NA12878_T.normalized.sorted.vcf.gz
+        wildcards: file=snv_indels/vardict/NA12878_T.normalized.sorted
+        affected files:
+            snv_indels/vardict/NA12878_T.normalized.sorted.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/vardict/NA12878_T.normalized.sorted.vcf.gz
+        wildcards: file=snv_indels/vardict/NA12878_T.normalized.sorted.vcf
+        affected files:
+            snv_indels/vardict/NA12878_T.normalized.sorted.vcf
+candidate job snv_indels_bcftools_sort
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized
+candidate job snv_indels_vt_normalize
+    wildcards: caller=mutect2, sample=NA12878, type=T
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T.decomposed
+candidate job snv_indels_vt_decompose
+    wildcards: caller=mutect2, sample=NA12878, type=T
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T.fix_af
+candidate job snv_indels_fix_af
+    wildcards: caller=mutect2, sample=NA12878, type=T
+candidate job snv_indels_bcftools_concat
+    wildcards: file=snv_indels/mutect2/NA12878_T, vcf=vcf
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T_chr1
+candidate job misc_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T_chr1.vcf
+candidate job snv_indels_mutect2
+    wildcards: sample=NA12878, type=T, chr=chr1
+candidate job alignment_picard_mark_duplicates
+    wildcards: sample=NA12878, type=T, chr=chr1
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/picard_mark_duplicates/NA12878_T_chr1
+selected job alignment_picard_mark_duplicates
+    wildcards: sample=NA12878, type=T, chr=chr1
+file alignment/picard_mark_duplicates/NA12878_T_chr1.bam:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule alignment_samtools_sort:
+        output: alignment/picard_mark_duplicates/NA12878_T_chr1.bam
+        wildcards: path_file=alignment/picard_mark_duplicates/NA12878_T_chr1
+        affected files:
+            alignment/picard_mark_duplicates/NA12878_T_chr1.bam_unsorted
+candidate job alignment_samtools_index
+    wildcards: file=alignment/picard_mark_duplicates/NA12878_T_chr1
+selected job alignment_samtools_index
+    wildcards: file=alignment/picard_mark_duplicates/NA12878_T_chr1
+file alignment/picard_mark_duplicates/NA12878_T_chr1.bam.bai:
+    Producer found, hence exceptions are ignored.
+
+candidate job snv_indels_bed_split
+    wildcards: chr=chr1
+selected job snv_indels_bed_split
+    wildcards: chr=chr1
+file snv_indels/bed_split/design_bedfile_chr1.bed:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_mutect2
+    wildcards: sample=NA12878, type=T, chr=chr1
+file snv_indels/mutect2/NA12878_T_chr1.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/mutect2/NA12878_T_chr1.vcf.gz
+        wildcards: file=snv_indels/mutect2/NA12878_T_chr1
+        affected files:
+            snv_indels/mutect2/NA12878_T_chr1.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/mutect2/NA12878_T_chr1.vcf.gz
+        wildcards: file=snv_indels/mutect2/NA12878_T_chr1.vcf
+        affected files:
+            snv_indels/mutect2/NA12878_T_chr1.vcf
+candidate job snv_indels_mutect2
+    wildcards: sample=NA12878, type=T, chr=chr1
+selected job snv_indels_mutect2
+    wildcards: sample=NA12878, type=T, chr=chr1
+file snv_indels/mutect2/NA12878_T_chr1.vcf.gz.tbi:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_bcftools_concat
+    wildcards: file=snv_indels/mutect2/NA12878_T, vcf=vcf
+file snv_indels/mutect2/NA12878_T.merged.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_fix_af
+    wildcards: caller=mutect2, sample=NA12878, type=T
+file snv_indels/mutect2/NA12878_T.fix_af.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T.fix_af
+file snv_indels/mutect2/NA12878_T.fix_af.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+candidate job misc_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T.decomposed.vcf
+selected job snv_indels_vt_decompose
+    wildcards: caller=mutect2, sample=NA12878, type=T
+file snv_indels/mutect2/NA12878_T.decomposed.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/mutect2/NA12878_T.decomposed.vcf.gz
+        wildcards: file=snv_indels/mutect2/NA12878_T.decomposed
+        affected files:
+            snv_indels/mutect2/NA12878_T.decomposed.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/mutect2/NA12878_T.decomposed.vcf.gz
+        wildcards: file=snv_indels/mutect2/NA12878_T.decomposed.vcf
+        affected files:
+            snv_indels/mutect2/NA12878_T.decomposed.vcf
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized
+candidate job misc_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized.vcf
+selected job snv_indels_vt_normalize
+    wildcards: caller=mutect2, sample=NA12878, type=T
+file snv_indels/mutect2/NA12878_T.normalized.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/mutect2/NA12878_T.normalized.vcf.gz
+        wildcards: file=snv_indels/mutect2/NA12878_T.normalized
+        affected files:
+            snv_indels/mutect2/NA12878_T.normalized.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/mutect2/NA12878_T.normalized.vcf.gz
+        wildcards: file=snv_indels/mutect2/NA12878_T.normalized.vcf
+        affected files:
+            snv_indels/mutect2/NA12878_T.normalized.vcf
+candidate job snv_indels_tabix
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized
+candidate job snv_indels_vt_normalize
+    wildcards: caller=mutect2, sample=NA12878, type=T
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized
+candidate job misc_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized.vcf
+selected job snv_indels_vt_normalize
+    wildcards: caller=mutect2, sample=NA12878, type=T
+file snv_indels/mutect2/NA12878_T.normalized.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/mutect2/NA12878_T.normalized.vcf.gz
+        wildcards: file=snv_indels/mutect2/NA12878_T.normalized
+        affected files:
+            snv_indels/mutect2/NA12878_T.normalized.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/mutect2/NA12878_T.normalized.vcf.gz
+        wildcards: file=snv_indels/mutect2/NA12878_T.normalized.vcf
+        affected files:
+            snv_indels/mutect2/NA12878_T.normalized.vcf
+selected job snv_indels_tabix
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized
+file snv_indels/mutect2/NA12878_T.normalized.vcf.gz.tbi:
+    Producer found, hence exceptions are ignored.
+
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized.sorted
+candidate job misc_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized.sorted.vcf
+selected job snv_indels_bcftools_sort
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized
+file snv_indels/mutect2/NA12878_T.normalized.sorted.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/mutect2/NA12878_T.normalized.sorted.vcf.gz
+        wildcards: file=snv_indels/mutect2/NA12878_T.normalized.sorted
+        affected files:
+            snv_indels/mutect2/NA12878_T.normalized.sorted.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/mutect2/NA12878_T.normalized.sorted.vcf.gz
+        wildcards: file=snv_indels/mutect2/NA12878_T.normalized.sorted.vcf
+        affected files:
+            snv_indels/mutect2/NA12878_T.normalized.sorted.vcf
+candidate job snv_indels_tabix
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized.sorted
+candidate job snv_indels_bcftools_sort
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized.sorted
+candidate job misc_bgzip
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized.sorted.vcf
+selected job snv_indels_bcftools_sort
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized
+file snv_indels/vardict/NA12878_T.normalized.sorted.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/vardict/NA12878_T.normalized.sorted.vcf.gz
+        wildcards: file=snv_indels/vardict/NA12878_T.normalized.sorted
+        affected files:
+            snv_indels/vardict/NA12878_T.normalized.sorted.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/vardict/NA12878_T.normalized.sorted.vcf.gz
+        wildcards: file=snv_indels/vardict/NA12878_T.normalized.sorted.vcf
+        affected files:
+            snv_indels/vardict/NA12878_T.normalized.sorted.vcf
+selected job snv_indels_tabix
+    wildcards: file=snv_indels/vardict/NA12878_T.normalized.sorted
+file snv_indels/vardict/NA12878_T.normalized.sorted.vcf.gz.tbi:
+    Producer found, hence exceptions are ignored.
+
+candidate job snv_indels_tabix
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized.sorted
+candidate job snv_indels_bcftools_sort
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized.sorted
+candidate job misc_bgzip
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized.sorted.vcf
+selected job snv_indels_bcftools_sort
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized
+file snv_indels/mutect2/NA12878_T.normalized.sorted.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/mutect2/NA12878_T.normalized.sorted.vcf.gz
+        wildcards: file=snv_indels/mutect2/NA12878_T.normalized.sorted
+        affected files:
+            snv_indels/mutect2/NA12878_T.normalized.sorted.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/mutect2/NA12878_T.normalized.sorted.vcf.gz
+        wildcards: file=snv_indels/mutect2/NA12878_T.normalized.sorted.vcf
+        affected files:
+            snv_indels/mutect2/NA12878_T.normalized.sorted.vcf
+selected job snv_indels_tabix
+    wildcards: file=snv_indels/mutect2/NA12878_T.normalized.sorted
+file snv_indels/mutect2/NA12878_T.normalized.sorted.vcf.gz.tbi:
+    Producer found, hence exceptions are ignored.
+
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled
+candidate job misc_bgzip
+    wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf
+selected job snv_indels_bcbio_variation_recall_ensemble
+    wildcards: sample=NA12878, type=T
+file snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf.gz
+        wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled
+        affected files:
+            snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf.gz
+        wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf
+        affected files:
+            snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf
+candidate job annotation_bgzip_vcf
+    wildcards: file=background_annotation/NA12878_T.background_annotation
+candidate job annotation_background_annotation
+    wildcards: sample=NA12878, type=T
+candidate job annotation_hotspot_annotation
+    wildcards: sample=NA12878, type=T
+candidate job annotation_vep
+    wildcards: file=annotation/add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted
+candidate job annotation_bgzip_vcf
+    wildcards: file=add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted
+candidate job annotation_sort_vcf
+    wildcards: file=NA12878_T.codon_snvs
+candidate job annotation_add_multi_snv_in_codon
+    wildcards: sample=NA12878, type=T
+candidate job annotation_artifact_annotation
+    wildcards: sample=NA12878, type=T
+candidate job annotation_vep
+    wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled
+candidate job snv_indels_bcbio_variation_recall_ensemble
+    wildcards: sample=NA12878, type=T
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled
+candidate job misc_bgzip
+    wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf
+selected job snv_indels_bcbio_variation_recall_ensemble
+    wildcards: sample=NA12878, type=T
+file snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf.gz
+        wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled
+        affected files:
+            snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf.gz
+        wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf
+        affected files:
+            snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf
+candidate job snv_indels_tabix
+    wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled
+candidate job snv_indels_bcbio_variation_recall_ensemble
+    wildcards: sample=NA12878, type=T
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled
+candidate job misc_bgzip
+    wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf
+selected job snv_indels_bcbio_variation_recall_ensemble
+    wildcards: sample=NA12878, type=T
+file snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf.gz
+        wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled
+        affected files:
+            snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf.gz
+        wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf
+        affected files:
+            snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf
+selected job snv_indels_tabix
+    wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled
+file snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vcf.gz.tbi:
+    Producer found, hence exceptions are ignored.
+
+selected job annotation_vep
+    wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled
+file snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vep_annotated.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job annotation_artifact_annotation
+    wildcards: sample=NA12878, type=T
+file annotation/artifact_annotation/NA12878_T.artifact_annotation.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job annotation_add_multi_snv_in_codon
+    wildcards: sample=NA12878, type=T
+file annotation/add_multi_snv_in_codon/NA12878_T.codon_snvs.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job annotation_sort_vcf
+    wildcards: file=NA12878_T.codon_snvs
+file annotation/add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job annotation_bgzip_vcf
+    wildcards: file=add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted
+file annotation/add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+candidate job annotation_tabix_vcf
+    wildcards: file=add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted
+candidate job annotation_bgzip_vcf
+    wildcards: file=add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted
+selected job annotation_bgzip_vcf
+    wildcards: file=add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted
+file annotation/add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+selected job annotation_tabix_vcf
+    wildcards: file=add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted
+file annotation/add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted.vcf.gz.tbi:
+    Producer found, hence exceptions are ignored.
+
+selected job annotation_vep
+    wildcards: file=annotation/add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted
+file annotation/add_multi_snv_in_codon/NA12878_T.codon_snvs.sorted.vep_annotated.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job annotation_hotspot_annotation
+    wildcards: sample=NA12878, type=T
+file annotation/hotspot_annotation/NA12878_T.hotspot_annotation.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job annotation_background_annotation
+    wildcards: sample=NA12878, type=T
+file annotation/background_annotation/NA12878_T.background_annotation.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job annotation_bgzip_vcf
+    wildcards: file=background_annotation/NA12878_T.background_annotation
+file annotation/background_annotation/NA12878_T.background_annotation.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+candidate job filtering_bcftools_filter_include_region
+    wildcards: file=annotation/background_annotation/NA12878_T.background_annotation, tag=nocnv
+candidate job annotation_bgzip_vcf
+    wildcards: file=background_annotation/NA12878_T.background_annotation
+selected job annotation_bgzip_vcf
+    wildcards: file=background_annotation/NA12878_T.background_annotation
+file annotation/background_annotation/NA12878_T.background_annotation.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+candidate job annotation_tabix_vcf
+    wildcards: file=background_annotation/NA12878_T.background_annotation
+candidate job annotation_bgzip_vcf
+    wildcards: file=background_annotation/NA12878_T.background_annotation
+selected job annotation_bgzip_vcf
+    wildcards: file=background_annotation/NA12878_T.background_annotation
+file annotation/background_annotation/NA12878_T.background_annotation.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+selected job annotation_tabix_vcf
+    wildcards: file=background_annotation/NA12878_T.background_annotation
+file annotation/background_annotation/NA12878_T.background_annotation.vcf.gz.tbi:
+    Producer found, hence exceptions are ignored.
+
+selected job filtering_bcftools_filter_include_region
+    wildcards: file=annotation/background_annotation/NA12878_T.background_annotation, tag=nocnv
+file annotation/background_annotation/NA12878_T.background_annotation.include.nocnv.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+candidate job qc_picard_collect_duplication_metrics
+    wildcards: sample=NA12878, type=T
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+selected job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+file alignment/samtools_merge_bam/NA12878_T.bam:
+    Producer found, hence exceptions are ignored.
+
+selected job qc_picard_collect_duplication_metrics
+    wildcards: sample=NA12878, type=T
+file qc/picard_collect_duplication_metrics/NA12878_T.duplication_metrics.txt:
+    Producer found, hence exceptions are ignored.
+
+candidate job qc_picard_collect_alignment_summary_metrics
+    wildcards: sample=NA12878, type=T
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+selected job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+file alignment/samtools_merge_bam/NA12878_T.bam:
+    Producer found, hence exceptions are ignored.
+
+selected job qc_picard_collect_alignment_summary_metrics
+    wildcards: sample=NA12878, type=T
+file qc/picard_collect_alignment_summary_metrics/NA12878_T.alignment_summary_metrics.txt:
+    Producer found, hence exceptions are ignored.
+
+candidate job qc_picard_collect_hs_metrics
+    wildcards: sample=NA12878, type=T
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+selected job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+file alignment/samtools_merge_bam/NA12878_T.bam:
+    Producer found, hence exceptions are ignored.
+
+selected job qc_picard_collect_hs_metrics
+    wildcards: sample=NA12878, type=T
+file qc/picard_collect_hs_metrics/NA12878_T.HsMetrics.txt:
+    Producer found, hence exceptions are ignored.
+
+candidate job qc_picard_collect_insert_size_metrics
+    wildcards: sample=NA12878, type=T
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+selected job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+file alignment/samtools_merge_bam/NA12878_T.bam:
+    Producer found, hence exceptions are ignored.
+
+selected job qc_picard_collect_insert_size_metrics
+    wildcards: sample=NA12878, type=T
+file qc/picard_collect_insert_size_metrics/NA12878_T.insert_size_metrics.txt:
+    Producer found, hence exceptions are ignored.
+
+candidate job qc_samtools_stats
+    wildcards: sample=NA12878, type=T
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+selected job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+file alignment/samtools_merge_bam/NA12878_T.bam:
+    Producer found, hence exceptions are ignored.
+
+selected job qc_samtools_stats
+    wildcards: sample=NA12878, type=T
+file qc/samtools_stats/NA12878_T.samtools-stats.txt:
+    Producer found, hence exceptions are ignored.
+
+candidate job snv_indels_bgzip
+    wildcards: file=qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g
+candidate job annotation_add_mosdepth_coverage_to_gvcf
+    wildcards: sample=NA12878, type=T
+candidate job misc_bgzip
+    wildcards: file=qc/mosdepth_bed/NA12878_T.per-base.bed
+candidate job qc_mosdepth_bed
+    wildcards: sample=NA12878, type=T
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+selected job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+file alignment/samtools_merge_bam/NA12878_T.bam:
+    Producer found, hence exceptions are ignored.
+
+candidate job alignment_samtools_index
+    wildcards: file=alignment/samtools_merge_bam/NA12878_T
+selected job alignment_samtools_index
+    wildcards: file=alignment/samtools_merge_bam/NA12878_T
+file alignment/samtools_merge_bam/NA12878_T.bam.bai:
+    Producer found, hence exceptions are ignored.
+
+selected job qc_mosdepth_bed
+    wildcards: sample=NA12878, type=T
+file qc/mosdepth_bed/NA12878_T.per-base.bed.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule misc_bgzip:
+        output: qc/mosdepth_bed/NA12878_T.per-base.bed.gz
+        wildcards: file=qc/mosdepth_bed/NA12878_T.per-base.bed
+        affected files:
+            qc/mosdepth_bed/NA12878_T.per-base.bed
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2_gvcf/NA12878_T.merged.g
+candidate job snv_indels_bcftools_concat
+    wildcards: file=snv_indels/mutect2_gvcf/NA12878_T, vcf=g.vcf
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2_gvcf/NA12878_T_chr1.g
+candidate job snv_indels_mutect2_gvcf
+    wildcards: sample=NA12878, type=T, chr=chr1
+candidate job alignment_picard_mark_duplicates
+    wildcards: sample=NA12878, type=T, chr=chr1
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/picard_mark_duplicates/NA12878_T_chr1
+selected job alignment_picard_mark_duplicates
+    wildcards: sample=NA12878, type=T, chr=chr1
+file alignment/picard_mark_duplicates/NA12878_T_chr1.bam:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule alignment_samtools_sort:
+        output: alignment/picard_mark_duplicates/NA12878_T_chr1.bam
+        wildcards: path_file=alignment/picard_mark_duplicates/NA12878_T_chr1
+        affected files:
+            alignment/picard_mark_duplicates/NA12878_T_chr1.bam_unsorted
+candidate job alignment_samtools_index
+    wildcards: file=alignment/picard_mark_duplicates/NA12878_T_chr1
+selected job alignment_samtools_index
+    wildcards: file=alignment/picard_mark_duplicates/NA12878_T_chr1
+file alignment/picard_mark_duplicates/NA12878_T_chr1.bam.bai:
+    Producer found, hence exceptions are ignored.
+
+candidate job snv_indels_bed_split
+    wildcards: chr=chr1
+selected job snv_indels_bed_split
+    wildcards: chr=chr1
+file snv_indels/bed_split/design_bedfile_chr1.bed:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_mutect2_gvcf
+    wildcards: sample=NA12878, type=T, chr=chr1
+file snv_indels/mutect2_gvcf/NA12878_T_chr1.g.vcf.gz:
+    Producer found, hence exceptions are ignored.
+    MissingInputException: Missing input files for rule snv_indels_bgzip:
+        output: snv_indels/mutect2_gvcf/NA12878_T_chr1.g.vcf.gz
+        wildcards: file=snv_indels/mutect2_gvcf/NA12878_T_chr1.g
+        affected files:
+            snv_indels/mutect2_gvcf/NA12878_T_chr1.g.vcf
+candidate job snv_indels_mutect2_gvcf
+    wildcards: sample=NA12878, type=T, chr=chr1
+selected job snv_indels_mutect2_gvcf
+    wildcards: sample=NA12878, type=T, chr=chr1
+file snv_indels/mutect2_gvcf/NA12878_T_chr1.g.vcf.gz.tbi:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_bcftools_concat
+    wildcards: file=snv_indels/mutect2_gvcf/NA12878_T, vcf=g.vcf
+file snv_indels/mutect2_gvcf/NA12878_T.merged.g.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2_gvcf/NA12878_T.merged.g
+file snv_indels/mutect2_gvcf/NA12878_T.merged.g.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+selected job annotation_add_mosdepth_coverage_to_gvcf
+    wildcards: sample=NA12878, type=T
+file qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g.vcf:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_bgzip
+    wildcards: file=qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g
+file qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+candidate job hotspot_report
+    wildcards: sample=NA12878, type=T
+candidate job annotation_bgzip_vcf
+    wildcards: file=background_annotation/NA12878_T.background_annotation
+selected job annotation_bgzip_vcf
+    wildcards: file=background_annotation/NA12878_T.background_annotation
+file annotation/background_annotation/NA12878_T.background_annotation.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+candidate job annotation_tabix_vcf
+    wildcards: file=background_annotation/NA12878_T.background_annotation
+selected job annotation_tabix_vcf
+    wildcards: file=background_annotation/NA12878_T.background_annotation
+file annotation/background_annotation/NA12878_T.background_annotation.vcf.gz.tbi:
+    Producer found, hence exceptions are ignored.
+
+candidate job snv_indels_bgzip
+    wildcards: file=qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g
+selected job snv_indels_bgzip
+    wildcards: file=qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g
+file qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+candidate job snv_indels_tabix
+    wildcards: file=qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g
+candidate job snv_indels_bgzip
+    wildcards: file=qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g
+selected job snv_indels_bgzip
+    wildcards: file=qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g
+file qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g.vcf.gz:
+    Producer found, hence exceptions are ignored.
+
+selected job snv_indels_tabix
+    wildcards: file=qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g
+file qc/add_mosdepth_coverage_to_gvcf/NA12878_T.mosdepth.g.vcf.gz.tbi:
+    Producer found, hence exceptions are ignored.
+
+selected job hotspot_report
+    wildcards: sample=NA12878, type=T
+file qc/hotspot_report/NA12878_T.output.tsv:
+    Producer found, hence exceptions are ignored.
+
+candidate job hotspot_info
+    wildcards: sample=NA12878, type=T
+candidate job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+selected job alignment_samtools_sort
+    wildcards: path_file=alignment/samtools_merge_bam/NA12878_T
+file alignment/samtools_merge_bam/NA12878_T.bam:
+    Producer found, hence exceptions are ignored.
+
+candidate job alignment_samtools_index
+    wildcards: file=alignment/samtools_merge_bam/NA12878_T
+selected job alignment_samtools_index
+    wildcards: file=alignment/samtools_merge_bam/NA12878_T
+file alignment/samtools_merge_bam/NA12878_T.bam.bai:
+    Producer found, hence exceptions are ignored.
+
+candidate job annotation_vep
+    wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled
+selected job annotation_vep
+    wildcards: file=snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled
+file snv_indels/bcbio_variation_recall_ensemble/NA12878_T.ensembled.vep_annotated.vcf:
+    Producer found, hence exceptions are ignored.
+
+candidate job annotation_calculate_seqrun_background
+    wildcards: flowcell=HKTG2BGXG
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2_gvcf/NA12879_R.merged.g
+candidate job snv_indels_bcftools_concat
+    wildcards: file=snv_indels/mutect2_gvcf/NA12879_R, vcf=g.vcf
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2_gvcf/NA12879_R_chr1.g
+candidate job misc_bgzip
+    wildcards: file=snv_indels/mutect2_gvcf/NA12879_R_chr1.g.vcf
+candidate job misc_bgzip
+    wildcards: file=snv_indels/mutect2_gvcf/NA12879_R.merged.g.vcf
+candidate job snv_indels_bcftools_concat
+    wildcards: file=snv_indels/mutect2_gvcf/NA12879_R, vcf=g.vcf
+candidate job snv_indels_bgzip
+    wildcards: file=snv_indels/mutect2_gvcf/NA12879_R_chr1.g
+candidate job misc_bgzip
+    wildcards: file=snv_indels/mutect2_gvcf/NA12879_R_chr1.g.vcf
+candidate job alignment_samtools_sort
+    wildcards: path_file=results/dna/bam/NA12878_T
+WorkflowError:
+WorkflowError:
+    WorkflowError:
+        MissingInputException: Missing input files for rule snv_indels_bgzip:
+            output: snv_indels/mutect2_gvcf/NA12879_R_chr1.g.vcf.gz
+            wildcards: file=snv_indels/mutect2_gvcf/NA12879_R_chr1.g
+            affected files:
+                snv_indels/mutect2_gvcf/NA12879_R_chr1.g.vcf
+        MissingInputException: Missing input files for rule misc_bgzip:
+            output: snv_indels/mutect2_gvcf/NA12879_R_chr1.g.vcf.gz
+            wildcards: file=snv_indels/mutect2_gvcf/NA12879_R_chr1.g.vcf
+            affected files:
+                snv_indels/mutect2_gvcf/NA12879_R_chr1.g.vcf
+    WorkflowError:
+        MissingInputException: Missing input files for rule snv_indels_bgzip:
+            output: snv_indels/mutect2_gvcf/NA12879_R_chr1.g.vcf.gz
+            wildcards: file=snv_indels/mutect2_gvcf/NA12879_R_chr1.g
+            affected files:
+                snv_indels/mutect2_gvcf/NA12879_R_chr1.g.vcf
+        MissingInputException: Missing input files for rule misc_bgzip:
+            output: snv_indels/mutect2_gvcf/NA12879_R_chr1.g.vcf.gz
+            wildcards: file=snv_indels/mutect2_gvcf/NA12879_R_chr1.g.vcf
+            affected files:
+                snv_indels/mutect2_gvcf/NA12879_R_chr1.g.vcf
+MissingInputException: Missing input files for rule alignment_samtools_sort:
+    output: results/dna/bam/NA12878_T.bam
+    wildcards: path_file=results/dna/bam/NA12878_T
+    affected files:
+        results/dna/bam/NA12878_T.bam_unsorted
