@@ -28,7 +28,6 @@ pipeline {
                 cp .tests/release/units.tsv HD832/units.tsv
                 cp .tests/release/samples_HD832.tsv HD832/samples.tsv
                 cp .tests/release/resources.yaml HD832/config/resources.yaml
-                cp .tests/release/config.yaml HD832/config/config.yaml
 
                 module load singularity
                 module load slurm-drmaa
@@ -54,8 +53,7 @@ pipeline {
                 cp .tests/release/units.tsv ALL/units.tsv
                 cp .tests/release/samples_all.tsv ALL/samples.tsv
                 cp .tests/release/resources.yaml ALL/config/resources.yaml
-                cp .tests/release/config.yaml ALL/config/config.yaml
-
+                
                 module load singularity
                 module load slurm-drmaa
                 snakemake -s workflow/Snakefile --profile .tests/release/profile -d ALL -w 60
