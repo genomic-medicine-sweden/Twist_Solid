@@ -6,10 +6,10 @@ __license__ = "GPL-3"
 
 rule exon_skipping:
     input:
-        bed=config.get("exon_skipping", {}).get("design_bed", []),
-        junction_file="fusions/star_fusion/{sample}_{type}/SJ.out.tab",
+        bed=config.get("exon_skipping", {}).get("design_bed", ""),
+        junction="fusions/star_fusion/{sample}_{type}/SJ.out.tab",
     output:
-        results=temp("fusions/exon_skipping/{sample}_{type}.results.tsv"),
+        result=temp("fusions/exon_skipping/{sample}_{type}.results.tsv"),
     log:
         "fusions/exon_skipping/{sample}_{type}.results.tsv.log",
     benchmark:
@@ -29,6 +29,6 @@ rule exon_skipping:
     conda:
         "../envs/exon_skipping.yaml"
     message:
-        "{rule}: Find intrgenic fusions and report them in {output.results}"
+        "{rule}: Find intergenic fusions and report them in {output.result}"
     script:
         "../scripts/exon_skipping.py"

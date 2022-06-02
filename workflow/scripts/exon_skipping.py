@@ -12,7 +12,7 @@ pos_dict = {}
 for line in bed_file:
     lline = line.strip().split("\t")
     chrom = lline[0]
-    start_pos = int(lline[1])
+    start_pos = int(lline[1])+1
     end_pos = int(lline[2])
     key1 = chrom + "_" + str(start_pos)
     key2 = chrom + "_" + str(end_pos)
