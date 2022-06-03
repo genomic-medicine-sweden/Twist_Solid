@@ -6,10 +6,16 @@ default_container: "docker://hydragenetics/common:0.1.3"
 
 arriba:
   assembly: "reference/WASH7P.fna"
-  blacklist: "reference/blacklist_hg19_hs37d5_GRCh37_v2.2.1.tsv.gz"
-  container: "docker://hydragenetics/arriba:2.2.1"
+  blacklist: "reference/blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz"
+  container: "docker://hydragenetics/arriba:2.3.0"
   gtf: "reference/hg19.refGene.gtf"
-  extra: "-p reference/protein_domains_hg19_hs37d5_GRCh37_v2.2.1.gff3 -k reference/known_fusions_hg19_hs37d5_GRCh37_v2.2.1.tsv.gz"
+  extra: "-p reference/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3 -k reference/known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz"
+
+arriba_draw_fusion:
+  container: "docker://hydragenetics/arriba:2.3.0"
+  cytobands: "reference/cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv"
+  gtf: "reference/WASH7P.gtf"
+  protein_domains: "reference/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3"
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
