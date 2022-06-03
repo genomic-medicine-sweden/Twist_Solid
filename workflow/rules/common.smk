@@ -228,6 +228,18 @@ def compile_result_file_list():
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
     ]
+    output_files += [
+        "results/rna/fusion/%s_%s.exon_skipping.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "fusions/exon_skipping/%s_%s.results.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
     types = set([unit.type for unit in units.itertuples()])
     if "R" in types:
         output_files.append("results/dna/qc/multiqc_RNA.html")

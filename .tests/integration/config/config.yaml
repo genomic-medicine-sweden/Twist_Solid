@@ -47,6 +47,9 @@ bcftools_filter_exclude_region:
   exon: "DATA/design.noexon1.bed"
   noćnv: "DATA/design.noexon1.bed"
 
+exon_skipping:
+  design_bed: "reference/Twist_RNA_Design5.annotated.bed"
+
 hotspot_annotation:
   hotspots: "DATA/Hotspots_combined.csv"
   chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"
@@ -95,7 +98,7 @@ freebayes:
   container: "docker://gmsuppsala/somatic:develop"
 
 fusioncatcher:
-  container: "docker://gmsuppsala/fusioncatcher:1.33"
+  container: "docker://hydragenetics/fusioncatcher:1.33"
   genome_path: "reference/human_v102/"
 
 gatk_cnv_call_copy_ratio_segments:
