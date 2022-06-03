@@ -9,6 +9,14 @@ input_fusioncatcher = open(snakemake.input.fusioncathcer)
 input_bam = snakemake.input.bam
 output_fusions = open(snakemake.output.fusions, "w")
 output_coverage_file_name = snakemake.output.coverage
+star_fusion_flag_low_support = snakemake.params.star_fusion_flag_low_support
+star_fusion_low_support = snakemake.params.star_fusion_low_support
+star_fusion_low_support_inframe = snakemake.params.star_fusion_low_support_inframe
+star_fusion_low_support_fp_genes = snakemake.params.star_fusion_low_support_fp_genes
+fusioncather_flag_low_support = snakemake.params.fusioncather_flag_low_support
+fusioncather_low_support = snakemake.params.fusioncather_low_support
+fusioncather_low_support_inframe = snakemake.params.fusioncather_low_support_inframe
+fusioncather_low_support_fp_genes = snakemake.params.fusioncather_low_support_fp_genes
 
 
 housekeeping_genes = ["GAPDH", "GUSB", "OAZ1", "POLR2A"]
@@ -104,17 +112,17 @@ for line in input_starfusion :
     predicted_effect = lline[21]
     #Flag fusions with junction_read_count < 15 and Spanning_Frag_count < 2
     confidence = ""
-    if int(Junction_read_count) < 15 :
+    if int(Junction_read_count) < star_fusion_flag_low_support :
         confidence = "Low support"
     #Remove Fusions with very weak read support
-    if int(Junction_read_count) <= 6 and predicted_effect != "INFRAME":
+    if int(Junction_read_count) <= star_fusion_low_support_inframe and predicted_effect != "INFRAME":
         continue
-    if int(Junction_read_count) <= 2 :
+    if int(Junction_read_count) <= star_fusion_low_support :
         continue
     #Higher demand of read support for genes with frequent FP, house keeping genes
     if (((gene1 in artefact_genes and gene2 in artefact_genes[gene1]) or (gene2 in artefact_genes and gene1 in artefact_genes[gene2])) or
         gene1 in housekeeping_genes or gene2 in housekeeping_genes) :
-        if int(Junction_read_count) < 20 :
+        if int(Junction_read_count) < star_fusion_low_support_fp_genes :
             continue
     breakpoint1 = lline[7]
     breakpoint2 = lline[9]
@@ -177,17 +185,17 @@ for line in input_fusioncatcher :
     predicted_effect = lline[15]
     #Flag fusions with Spanning_reads_unique < 5
     confidence = ""
-    if int(Spanning_reads_unique) < 15:
+    if int(Spanning_reads_unique) < fusioncather_flag_low_support:
         confidence = "Low support"
     #Filter fusions with very low support
-    if int(Spanning_reads_unique) <= 6 and predicted_effect != "in-frame":
+    if int(Spanning_reads_unique) <= fusioncather_low_support_inframe and predicted_effect != "in-frame":
         continue
-    if int(Spanning_reads_unique) <= 3 :
+    if int(Spanning_reads_unique) <= fusioncather_low_support :
         continue
     #Higher demand of read support for genes with frequent FP, house keeping genes, and pool2 genes without fusion to pool1 gene
     if (((gene1 in artefact_genes and gene2 in artefact_genes[gene1]) or (gene2 in artefact_genes and gene1 in artefact_genes[gene2])) or
         gene1 in housekeeping_genes or gene2 in housekeeping_genes) :
-        if int(Spanning_reads_unique) < 20 :
+        if int(Spanning_reads_unique) < fusioncather_low_support_fp_genes :
             continue
     #Flag fusions annotated that are fusions with very high probability
     fp_db = ["banned", "bodymap2", "cacg", "1000genomes", "conjoing", "cortex", "distance1000bp", "ensembl_fully_overlapping", "ensembl_same_strand_overlapping", "gtex", "hpa", "mt", "paralogs", "refseq_fully_overlapping", "refseq_same_strand_overlapping", "rrna", "similar_reads", "similar_symbols", "ucsc_fully_overlapping", "ucsc_same_strand_overlapping"]

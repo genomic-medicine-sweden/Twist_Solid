@@ -16,7 +16,14 @@ rule report_fusions:
         fusions = "fusions/report_fusions/{sample}_{type}.fusion_report.tsv",
         coverage = "fusions/report_fusions/{sample}_{type}.coverage.tsv",
     params:
-        star_fusion=config.get("report_fusions", {}).get("filtering", []),
+        star_fusion_flag_low_support=config.get("report_fusions", {}).get("star_fusion", {}).get("flag_low_support", 15),
+        star_fusion_low_support=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support", 2),
+        star_fusion_low_support_inframe=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support_inframe", 6),
+        star_fusion_low_support_fp_genes=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support_fp_genes", 20),
+        fusioncather_flag_low_support=config.get("report_fusions", {}).get("fusioncather", {}).get("flag_low_support", 15),
+        fusioncather_low_support=config.get("report_fusions", {}).get("fusioncather", {}).get("low_support", 3),
+        fusioncather_low_support_inframe=config.get("report_fusions", {}).get("fusioncather", {}).get("low_support_inframe", 6),
+        fusioncather_low_support_fp_genes=config.get("report_fusions", {}).get("fusioncather", {}).get("low_support_fp_genes", 20),
     log:
         "qc/report_fusions/{sample}_{type}.fusion_report.tsv.log",
     threads: config.get("report_fusions", {}).get("threads", config["default_resources"]["threads"])
