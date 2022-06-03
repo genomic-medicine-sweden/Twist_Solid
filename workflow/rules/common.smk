@@ -17,7 +17,7 @@ from hydra_genetics import min_version as hydra_min_version
 
 hydra_min_version("0.10.0")
 
-min_version("6.10.0")
+min_version("7.8.0")
 
 ### Set and validate config file
 
