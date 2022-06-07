@@ -6,6 +6,7 @@ __copyright__ = "Copyright 2021, Jonas A"
 __email__ = "jonas.almlof@igp.uu.se"
 __license__ = "GPL-3"
 
+import os
 import pandas as pd
 from snakemake.utils import validate
 from snakemake.utils import min_version
@@ -21,8 +22,8 @@ min_version("6.10.0")
 
 ### Set and validate config file
 
-
-configfile: "config/config.yaml"
+if not workflow.overwrite_configfiles:
+    sys.exit("At least one config file must be passed using --configfile/--configfiles, by command line or a profile!")
 
 
 validate(config, schema="../schemas/config.schema.yaml")
