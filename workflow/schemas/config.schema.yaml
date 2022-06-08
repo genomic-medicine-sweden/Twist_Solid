@@ -39,6 +39,26 @@ properties:
         type: string
         description:
 
+  filter_vcf:
+    type: object
+    properties:
+      snv_soft_filter:
+        type: string
+        description: Config file specifying which soft filters should be applied on snv_indels.
+      snv_hard_filter:
+        type: string
+        description: Config file specifying which hard filters should be applied on snv_indels.
+      cnv_hard_filter:
+        type: string
+        description: Config file specifying which hard filters should be applied on cnvs.
+
+  filter_cnv:
+      type: object
+      properties:
+        cnv_amp_genes:
+          type: string
+          description: Gene annotated bed files with genes to be included.
+
   gatk_cnv_collect_allelic_counts:
     type: object
     properties:
@@ -194,26 +214,34 @@ properties:
       - design_intervals
       - dict
 
-  filter_vcf:
+  report_fusions:
+    description: gather results from different fusion callers into one report
     type: object
     properties:
-      snv_soft_filter:
-        type: string
-        description: Config file specifying which soft filters should be applied on snv_indels.
-      snv_hard_filter:
-        type: string
-        description: Config file specifying which hard filters should be applied on snv_indels.
-      cnv_hard_filter:
-        type: string
-        description: Config file specifying which hard filters should be applied on cnvs.
-
-  filter_cnv:
-      type: object
-      properties:
-        cnv_amp_genes:
-          type: string
-          description: Gene annotated bed files with genes to be included.
-
+      fusioncather_flag_low_support:
+        type: integer
+        description: lower limit of supporting reads to flag for low support
+      fusioncather_low_support:
+        type: integer
+        description: lower limit of supporting reads to filter fusion
+      fusioncather_low_support_fp_genes:
+        type: integer
+        description: lower limit of supporting reads to filter fusion in common fp genes
+      fusioncather_low_support_inframe:
+        type: integer
+        description: lower limit of supporting reads to filter fusion that are inframe
+      star_fusion_flag_low_support:
+        type: integer
+        description: lower limit of supporting reads to filter fusion
+      star_fusion_low_support:
+        type: integer
+        description: lower limit of supporting reads to filter fusion
+      star_fusion_low_support_fp_genes:
+        type: integer
+        description: lower limit of supporting reads to flag filter fusion in common fp genes
+      star_fusion_low_support_inframe:
+        type: integer
+        description: lower limit of supporting reads to flag filter fusion that are inframe
 
   trimmer_software:
     description: trimmer software that should be used

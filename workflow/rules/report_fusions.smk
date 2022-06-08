@@ -7,23 +7,22 @@ __license__ = "GPL3"
 rule report_fusions:
     input:
         arriba = "fusions/arriba/{sample}_{type}.fusions.tsv",
-        bed = config.get("report_fusions", {}).get("design_bed", ""),
-        starfusion = "fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.tsv",
-        fusioncatcher = "fusions/fusioncatcher/{sample}_{type}/final-list_candidate-fusion-genes.hg19.txt",
         bam = "fusions/star_fusion/{sample}_{type}/Aligned.out.bam",
         bai = "fusions/star_fusion/{sample}_{type}/Aligned.out.bam.bai",
+        bed = config.get("report_fusions", {}).get("design_bed", ""),
+        fusioncatcher = "fusions/fusioncatcher/{sample}_{type}/final-list_candidate-fusion-genes.hg19.txt",
+        starfusion = "fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.tsv",
     output:
-        fusions = "fusions/report_fusions/{sample}_{type}.fusion_report.tsv",
-        coverage = "fusions/report_fusions/{sample}_{type}.coverage.tsv",
+        fusions = temp("fusions/report_fusions/{sample}_{type}.fusion_report.tsv"),
     params:
-        star_fusion_flag_low_support=config.get("report_fusions", {}).get("star_fusion", {}).get("flag_low_support", 15),
-        star_fusion_low_support=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support", 2),
-        star_fusion_low_support_inframe=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support_inframe", 6),
-        star_fusion_low_support_fp_genes=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support_fp_genes", 20),
         fusioncather_flag_low_support=config.get("report_fusions", {}).get("fusioncather", {}).get("flag_low_support", 15),
         fusioncather_low_support=config.get("report_fusions", {}).get("fusioncather", {}).get("low_support", 3),
-        fusioncather_low_support_inframe=config.get("report_fusions", {}).get("fusioncather", {}).get("low_support_inframe", 6),
         fusioncather_low_support_fp_genes=config.get("report_fusions", {}).get("fusioncather", {}).get("low_support_fp_genes", 20),
+        fusioncather_low_support_inframe=config.get("report_fusions", {}).get("fusioncather", {}).get("low_support_inframe", 6),
+        star_fusion_flag_low_support=config.get("report_fusions", {}).get("star_fusion", {}).get("flag_low_support", 15),
+        star_fusion_low_support=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support", 2),
+        star_fusion_low_support_fp_genes=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support_fp_genes", 20),
+        star_fusion_low_support_inframe=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support_inframe", 6),
     log:
         "qc/report_fusions/{sample}_{type}.fusion_report.tsv.log",
     threads: config.get("report_fusions", {}).get("threads", config["default_resources"]["threads"])
