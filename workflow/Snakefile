@@ -11,6 +11,7 @@ include: "rules/common.smk"
 include: "rules/hotspot_info.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/result_files.smk"
+include: "rules/report_fusions.smk"
 
 
 rule all:
