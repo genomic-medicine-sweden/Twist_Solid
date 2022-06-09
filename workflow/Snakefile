@@ -11,6 +11,7 @@ include: "rules/common.smk"
 include: "rules/exon_skipping.smk"
 include: "rules/hotspot_info.smk"
 include: "rules/hotspot_report.smk"
+include: "rules/house_keeping_gene_coverage.smk"
 include: "rules/result_files.smk"
 
 
