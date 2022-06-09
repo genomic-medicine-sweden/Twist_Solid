@@ -85,7 +85,7 @@ freebayes:
   container: "docker://gmsuppsala/somatic:develop"
 
 fusioncatcher:
-  container: "docker://gmsuppsala/fusioncatcher:1.33"
+  container: "docker://hydragenetics/fusioncatcher:1.33"
   genome_path: "/data/ref_data/fusioncatcher/human_v102/human_v102/"
 
 gatk_cnv_call_copy_ratio_segments:
