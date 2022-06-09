@@ -39,6 +39,7 @@ ruleorder: annotation_annotate_cnv > snv_indels_bgzip
 ruleorder: filtering_bcftools_filter_include_region > annotation_bgzip_vcf
 ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
 ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
+ruleorder: qc_samtools_stats_rna > qc_samtools_stats
 
 
 module prealignment:
@@ -100,21 +101,25 @@ module qc:
 
 use rule * from qc as qc_*
 
+
 use rule mosdepth from qc as qc_mosdepth with:
     input:
         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.bam",
         bai="fusions/star_fusion/{sample}_{type}/Aligned.out.bam.bai",
+
 
 use rule samtools_stats from qc as qc_samtools_stats_rna with:
     input:
         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.bam",
         bai="fusions/star_fusion/{sample}_{type}/Aligned.out.bam.bai",
     params:
-            extra="%s -t %s"
-            % (
-                config.get("samtools_stats", {}).get("extra", ""),
-                config.get("reference", {}).get("design_bed_rna", ""),
-            ),
+        extra="%s -t %s"
+        % (
+            config.get("samtools_stats", {}).get("extra", ""),
+            config.get("reference", {}).get("design_bed_rna", ""),
+        ),
+    wildcard_constraints:
+        type="R",
 
 use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics_rna with:
     input:
@@ -123,7 +128,8 @@ use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics_rna w
         reference=config.get("reference", {}).get("fasta_rna", ""),
         target_intervals=config.get("reference", {}).get("design_rna_intervals", ""),
 
-rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics_rna with:
+
+use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics_rna with:
     input:
         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.bam",
         ref=config.get("reference", {}).get("fasta_rna", ""),

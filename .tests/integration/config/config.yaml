@@ -161,7 +161,12 @@ multiqc:
       qc_files:
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2_fastqc.zip"
-
+        - "qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
+        - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
+        - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
+        - "qc/mosdepth/{sample}_{type}.regions.bed.gz"
+        - "qc/mosdepth/{sample}_{type}.mosdepth.global.dist.txt"
+        - "qc/mosdepth/{sample}_{type}.mosdepth.region.dist.txt"
 
 optitype:
   container: "docker://fred2/optitype"

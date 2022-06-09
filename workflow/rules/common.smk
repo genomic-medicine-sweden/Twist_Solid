@@ -242,7 +242,6 @@ def compile_result_file_list():
         if unit_type == "R"
     ]
     output_files += [
-        "results/rna/fusion/%s_%s.exon_skipping.tsv" % (sample, unit_type)
         "results/rna/qc/%s_%s.region.coverage.bed.gz" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
