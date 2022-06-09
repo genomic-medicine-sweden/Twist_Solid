@@ -6,6 +6,7 @@ __copyright__ = "Copyright 2021, Jonas A"
 __email__ = "jonas.almlof@igp.uu.se"
 __license__ = "GPL-3"
 
+import os
 import pandas as pd
 from snakemake.utils import validate
 from snakemake.utils import min_version
@@ -17,12 +18,12 @@ from hydra_genetics import min_version as hydra_min_version
 
 hydra_min_version("0.10.0")
 
-min_version("6.10.0")
+min_version("7.8.0")
 
 ### Set and validate config file
 
-
-configfile: "config/config.yaml"
+if not workflow.overwrite_configfiles:
+    sys.exit("At least one config file must be passed using --configfile/--configfiles, by command line or a profile!")
 
 
 validate(config, schema="../schemas/config.schema.yaml")
@@ -224,6 +225,30 @@ def compile_result_file_list():
     ]
     input_files += [
         "fusions/report_fusions/%s_%s.fusion_report.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    output_files += [
+        "results/rna/fusion/%s_%s.arriba.fusions.pdf" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "fusions/arriba_draw_fusion/%s_%s.pdf" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    output_files += [
+        "results/rna/fusion/%s_%s.exon_skipping.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "fusions/exon_skipping/%s_%s.results.tsv" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"

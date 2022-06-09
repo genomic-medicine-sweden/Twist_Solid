@@ -8,6 +8,7 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
+include: "rules/exon_skipping.smk"
 include: "rules/hotspot_info.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/result_files.smk"
@@ -113,7 +114,7 @@ use rule * from biomarker as biomarker_*
 
 module fusions:
     snakefile:
-        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="1d538b6")
+        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="bedaebf")
     config:
         config
 
