@@ -28,5 +28,24 @@ properties:
       - mem_per_cpu
       - partition
 
+    cnv_tsv_report:
+      type: object
+      properties:
+        threads:
+          type: integer
+          description: default number of threads that will be used by a rule
+        time:
+          type: string
+          description: default max execution time for a rule
+        mem_mb:
+          type: integer
+          description: default memory used for a rule
+        mem_per_cpu:
+          type: integer
+          description: default memory used per cpu for a rule
+        partition:
+          type: string
+          description: default partition to use on the cluser for a rule
+
 required:
   - default_resources

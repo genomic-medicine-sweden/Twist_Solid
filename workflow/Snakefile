@@ -8,6 +8,7 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
+include: "rules/cnv_tsv_report.smk"
 include: "rules/exon_skipping.smk"
 include: "rules/hotspot_info.smk"
 include: "rules/hotspot_report.smk"
