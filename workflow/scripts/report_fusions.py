@@ -24,12 +24,10 @@ artefact_genes = {"MAML2": [
     "FRMPD3", "NCOA6", "ATXN3", "SRP14", "KMT2D", "CHD1", "NFAT5", "FOXP2", "NUMBL", "GLG1", "VEZF1", "AAK1", "NCOR2"
 ]}
 
-output_fusions.write(
-    "Caller\tgene1\tgene2\texon1\texon2\tconfidence\tpredicted_effect\tbreakpoint1\tbreakpoint2\tcoverage1\tcoverage2\t
-    split_reads\tSpanning_pairs\tBreakpoint1_covarage/SplitReads\tBreakpoint2_covarage/SplitReads\n"
-)
+output_fusions.write("Caller\tgene1\tgene2\texon1\texon2\tconfidence\tpredicted_effect\tbreakpoint1\tbreakpoint2\tcoverage1\t
+                     coverage2\tsplit_reads\tSpanning_pairs\tBreakpoint1_covarage/SplitReads\tBreakpoint2_covarage/SplitReads\n")
 
-#Only keep fusions with one gene that are in the design
+# Only keep fusions with one gene that are in the design
 design_genes = {}
 for line in input_bed:
     lline = line.strip().split("\t")
@@ -43,7 +41,7 @@ for line in input_bed:
     else:
         design_genes[gene] = [[chrom, start, end, exon]]
 
-#Extra annotation of partner genes
+# Extra annotation of partner genes
 annotation_genes = {}
 for line in input_bed_extra_annotation:
     lline = line.strip().split("\t")
@@ -57,7 +55,7 @@ for line in input_bed_extra_annotation:
     else:
         design_genes[gene] = [[chrom, start, end, exon]]
 
-#Arriba fusions
+# Arriba fusions
 header = True
 for line in input_arriba:
     if header:
@@ -66,7 +64,7 @@ for line in input_arriba:
     lline = line.strip().split("\t")
     gene1 = lline[0]
     gene2 = lline[1]
-    #Only keep fusions with one gene that are in the design
+    # Only keep fusions with one gene that are in the design
     if (gene1 not in design_genes and gene2 not in design_genes):
         continue
     confidence = lline[14]
@@ -79,12 +77,12 @@ for line in input_arriba:
     coverage1 = lline[12]
     coverage2 = lline[13]
     predicted_effect = lline[15]
-    #Compare fusion coverage with coverage in breakpoints
+    # Compare fusion coverage with coverage in breakpoints
     chrom1 = "chr" + breakpoint1.split(":")[0]
     pos1 = breakpoint1.split(":")[1]
     chrom2 = "chr" + breakpoint2.split(":")[0]
     pos2 = breakpoint2.split(":")[1]
-    #Get exon name if it is in design
+    # Get exon name if it is in design
     exon1 = ""
     exon2 = ""
     if gene1 in design_genes:
@@ -109,7 +107,7 @@ for line in input_arriba:
     )
 
 
-#Star-fusions
+# Star-fusions
 header = True
 for line in input_starfusion:
     if header:
@@ -118,37 +116,37 @@ for line in input_starfusion:
     lline = line.strip().split("\t")
     gene1 = lline[0].split("--")[0]
     gene2 = lline[0].split("--")[1]
-    #Only keep fusions with one gene that are in the design
+    # Only keep fusions with one gene that are in the design
     if (gene1 not in design_genes and gene2 not in design_genes):
         continue
     Junction_read_count = lline[1]
     Spanning_Frag_count = lline[2]
     predicted_effect = lline[21]
-    #Flag fusions with junction_read_count < 15 and Spanning_Frag_count < 2
+    # Flag fusions with junction_read_count < 15 and Spanning_Frag_count < 2
     confidence = ""
     if int(Junction_read_count) < star_fusion_flag_low_support:
         confidence = "Low support"
-    #Remove Fusions with very weak read support
+    # Remove Fusions with very weak read support
     if int(Junction_read_count) <= star_fusion_low_support_inframe and predicted_effect != "INFRAME":
         continue
     if int(Junction_read_count) <= star_fusion_low_support:
         continue
-    #Higher demand of read support for genes with frequent FP, house keeping genes
+    # Higher demand of read support for genes with frequent FP, house keeping genes
     if (((gene1 in artefact_genes and gene2 in artefact_genes[gene1]) or
         (gene2 in artefact_genes and gene1 in artefact_genes[gene2])) or
-        gene1 in housekeeping_genes or gene2 in housekeeping_genes):
+       gene1 in housekeeping_genes or gene2 in housekeeping_genes):
         if int(Junction_read_count) < star_fusion_low_support_fp_genes:
             continue
     breakpoint1 = lline[7]
     breakpoint2 = lline[9]
     FFPM = lline[11]
     DBs = lline[16]
-    #Compare fusion coverage with coverage in breakpoints
+    # Compare fusion coverage with coverage in breakpoints
     chrom1 = breakpoint1.split(":")[0]
     pos1 = breakpoint1.split(":")[1]
     chrom2 = breakpoint2.split(":")[0]
     pos2 = breakpoint2.split(":")[1]
-    #Get exon name if it is in design
+    # Get exon name if it is in design
     exon1 = ""
     exon2 = ""
     if gene1 in design_genes:
@@ -165,8 +163,7 @@ for line in input_starfusion:
         )
 
 
-
-#FusionCatcher
+# FusionCatcher
 header = True
 for line in input_fusioncatcher:
     if header:
@@ -175,7 +172,7 @@ for line in input_fusioncatcher:
     lline = line.strip().split("\t")
     gene1 = lline[0]
     gene2 = lline[1]
-    #Only keep fusions with one gene that are in the design
+    # Only keep fusions with one gene that are in the design
     if (gene1 not in design_genes and gene2 not in design_genes):
         continue
     fp_filters = lline[2].split(",")
@@ -187,22 +184,22 @@ for line in input_fusioncatcher:
     breakpoint1 = lline[8]
     breakpoint2 = lline[9]
     predicted_effect = lline[15]
-    #Flag fusions with Spanning_reads_unique < 5
+    # Flag fusions with Spanning_reads_unique < 5
     confidence = ""
     if int(Spanning_reads_unique) < fusioncather_flag_low_support:
         confidence = "Low support"
-    #Filter fusions with very low support
+    # Filter fusions with very low support
     if int(Spanning_reads_unique) <= fusioncather_low_support_inframe and predicted_effect != "in-frame":
         continue
     if int(Spanning_reads_unique) <= fusioncather_low_support:
         continue
-    #Higher demand of read support for genes with frequent FP, house keeping genes, and pool2 genes without fusion to pool1 gene
+    # Higher demand of read support for genes with frequent FP, house keeping genes, and pool2 genes without fusion to pool1 gene
     if (((gene1 in artefact_genes and gene2 in artefact_genes[gene1]) or
         (gene2 in artefact_genes and gene1 in artefact_genes[gene2])) or
-        gene1 in housekeeping_genes or gene2 in housekeeping_genes):
+       gene1 in housekeeping_genes or gene2 in housekeeping_genes):
         if int(Spanning_reads_unique) < fusioncather_low_support_fp_genes:
             continue
-    #Flag fusions annotated that are fusions with very high probability
+    # Flag fusions annotated that are fusions with very high probability
     fp_db = [
         "banned", "bodymap2", "cacg", "1000genomes", "conjoing", "cortex", "distance1000bp", "ensembl_fully_overlapping",
         "ensembl_same_strand_overlapping", "gtex", "hpa", "mt", "paralogs", "refseq_fully_overlapping",
@@ -213,7 +210,7 @@ for line in input_fusioncatcher:
     for fp in fp_db:
         if fp in fp_filters:
             fp_found = "FP"
-    #Compare fusion coverage with coverage in breakpoints
+    # Compare fusion coverage with coverage in breakpoints
     pos1 = "0"
     pos2 = "0"
     if len(breakpoint1.split(":")) == 3 and len(breakpoint2.split(":")) == 3:
@@ -221,7 +218,7 @@ for line in input_fusioncatcher:
         pos1 = breakpoint1.split(":")[1]
         chrom2 = "chr" + breakpoint2.split(":")[0]
         pos2 = breakpoint2.split(":")[1]
-    #Get exon name if it is in design
+    # Get exon name if it is in design
     exon1 = ""
     exon2 = ""
     if gene1 in design_genes:

@@ -14,7 +14,7 @@ rule report_fusions:
         fusioncatcher="fusions/fusioncatcher/{sample}_{type}/final-list_candidate-fusion-genes.hg19.txt",
         starfusion="fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.tsv",
     output:
-        fusions = temp("fusions/report_fusions/{sample}_{type}.fusion_report.tsv"),
+        fusions=temp("fusions/report_fusions/{sample}_{type}.fusion_report.tsv"),
     params:
         fusioncather_flag_low_support=config.get("report_fusions", {}).get("fusioncather", {}).get("flag_low_support", 15),
         fusioncather_low_support=config.get("report_fusions", {}).get("fusioncather", {}).get("low_support", 3),
