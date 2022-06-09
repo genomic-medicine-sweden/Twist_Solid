@@ -227,6 +227,9 @@ properties:
     description: gather results from different fusion callers into one report
     type: object
     properties:
+      annotation_bed:
+        type: string
+        description: extra bed for annotation of partner gene exons
       fusioncather_flag_low_support:
         type: integer
         description: lower limit of supporting reads to flag for low support

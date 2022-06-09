@@ -190,11 +190,13 @@ reference:
   design_bed: "DATA/design.bed"
   design_intervals_gatk_cnv: "DATA/design.interval_list"
   design_intervals: "DATA/design.interval_list"
+  design_bed_rna: "reference/Twist_RNA_Design5.annotated.bed"
   fasta: "reference/WASH7P.fna"
   fai: "reference/WASH7P.fna.fai"
   dict: "reference/WASH7P.dict"
 
 report_fusions:
+  annotation_bed: "reference/Twist_RNA_fusionpartners.bed"
   fusioncather_flag_low_support: 15
   fusioncather_low_support: 3
   fusioncather_low_support_fp_genes: 20

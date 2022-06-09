@@ -9,7 +9,7 @@ rule report_fusions:
         arriba="fusions/arriba/{sample}_{type}.fusions.tsv",
         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.bam",
         bai="fusions/star_fusion/{sample}_{type}/Aligned.out.bam.bai",
-        bed=config.get("report_fusions", {}).get("design_bed", ""),
+        bed=config.get("reference", {}).get("design_bed_rna", ""),
         bed_extra_annotation=config.get("report_fusions", {}).get("annotation_bed", ""),
         fusioncatcher="fusions/fusioncatcher/{sample}_{type}/final-list_candidate-fusion-genes.hg19.txt",
         starfusion="fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.tsv",

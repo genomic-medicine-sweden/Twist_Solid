@@ -15,6 +15,7 @@ reference:
   design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv400.hg19.split_fusion_genes.210608.bed"
   design_intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.interval_list"
   design_intervals_gatk_cnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
+  design_bed_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"
   skip_chrs:
     - "chrM"
 
@@ -202,6 +203,7 @@ picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
 report_fusions:
+  annotation_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_fusionpartners.bed"
   fusioncather_flag_low_support: 15
   fusioncather_low_support: 3
   fusioncather_low_support_fp_genes: 20
