@@ -1,5 +1,4 @@
 import logging
-import snakemake
 from pysam import VariantFile
 from hydra_genetics.utils.io import utils
 
