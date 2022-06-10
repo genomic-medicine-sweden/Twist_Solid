@@ -61,6 +61,7 @@ module alignment:
 
 use rule * from alignment as alignment_*
 
+
 use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
     input:
         "fusions/star_fusion/{path_file}.out.bam",
