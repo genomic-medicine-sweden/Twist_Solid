@@ -1,2 +1,4 @@
 .snakemake
 .tests/integration/.snakemake
+*.pyc
+venv

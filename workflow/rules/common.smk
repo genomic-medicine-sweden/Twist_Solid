@@ -130,6 +130,7 @@ def compile_result_file_list():
             "in": ["cnv_sv/svdb_query", ".svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf"],
             "out": ["results/dna/cnv", ".cnv_hard_filter_amp.vcf"],
         },
+        {"in": ["cnv_sv/svdb_query", ".cnv_report.tsv"], "out": ["results/dna/cnv", ".cnv_report.tsv"]},
     ]
     output_files = [
         "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
