@@ -28,6 +28,6 @@ rule cnv_tsv_report:
     conda:
         "../envs/cnv_tsv_report.yaml"
     message:
-        "{rule}: Convert cnv vcf to a tsv file: {output.result}"
+        "{rule}: Convert cnv vcf to a tsv file: {output.tsv}"
     script:
         "../scripts/cnv_report.py"
