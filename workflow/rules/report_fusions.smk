@@ -12,7 +12,7 @@ rule report_fusions:
         bed=config.get("reference", {}).get("design_bed_rna", ""),
         bed_extra_annotation=config.get("report_fusions", {}).get("annotation_bed", ""),
         fusioncatcher="fusions/fusioncatcher/{sample}_{type}/final-list_candidate-fusion-genes.hg19.txt",
-        starfusion="fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.tsv",
+        star_fusion="fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.tsv",
     output:
         fusions=temp("fusions/report_fusions/{sample}_{type}.fusion_report.tsv"),
     params:
