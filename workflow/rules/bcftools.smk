@@ -3,33 +3,39 @@ __copyright__ = "Copyright 2022, Jonas Almlöf"
 __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
-"bcftools mpileup -r chr19:49469088 -O v -f /data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta R21-259_Aligned.sortedByCoord.out.bam -d 20000 | bcftools call -c"
 
 rule bcftools_id_snps:
     input:
         bam="fusions/star_fusion/{sample}_{type}.Aligned.out.sorted.bam",
         bed=config.get("bcftools_id_snps", {}).get("snps_bed", ""),
+        ref=config.get("reference", {}).get("fasta_rna", ""),
     output:
-        result=temp("fusions/exon_skipping/{sample}_{type}.results.tsv"),
+        vcf=temp("snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf"),
     log:
-        "fusions/exon_skipping/{sample}_{type}.results.tsv.log",
+        "snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf.log",
     benchmark:
         repeat(
-            "fusions/exon_skipping/{sample}_{type}.results.tsv.benchmark.tsv",
-            config.get("exon_skipping", {}).get("benchmark_repeats", 1),
+            "snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf.benchmark.tsv",
+            config.get("bcftools_id_snps", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("exon_skipping", {}).get("threads", config["default_resources"]["threads"])
+    threads: config.get("bcftools_id_snps", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("exon_skipping", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("exon_skipping", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("exon_skipping", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("exon_skipping", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("exon_skipping", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("bcftools_id_snps", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("bcftools_id_snps", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("bcftools_id_snps", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("bcftools_id_snps", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("bcftools_id_snps", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("exon_skipping", {}).get("container", config["default_container"])
+        config.get("bcftools_id_snps", {}).get("container", config["default_container"])
     conda:
-        "../envs/exon_skipping.yaml"
+        "../envs/bcftools.yaml"
     message:
-        "{rule}: Find intergenic fusions and report them in {output.result}"
-    script:
-        "../scripts/exon_skipping.py"
+        "{rule}: call id SNPs in the RNA data {output.vcf}"
+    shell:
+        "(bcftools mpileup "
+        "-R {input.bed} "
+        "-O v "
+        "-f {intput.ref} "
+        "-d 1000000 "
+        "| bcftools call -c) "
+        "&> {log}"
