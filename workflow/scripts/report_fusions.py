@@ -24,8 +24,8 @@ artefact_genes = {"MAML2": [
     "FRMPD3", "NCOA6", "ATXN3", "SRP14", "KMT2D", "CHD1", "NFAT5", "FOXP2", "NUMBL", "GLG1", "VEZF1", "AAK1", "NCOR2"
 ]}
 
-output_fusions.write("Caller\tgene1\tgene2\texon1\texon2\tconfidence\tpredicted_effect\tbreakpoint1\tbreakpoint2\tcoverage1\t
-                     coverage2\tsplit_reads\tSpanning_pairs\tBreakpoint1_covarage/SplitReads\tBreakpoint2_covarage/SplitReads\n")
+output_fusions.write("Caller\tgene1\tgene2\texon1\texon2\tconfidence\tpredicted_effect\tbreakpoint1\tbreakpoint2\tcoverage1\t")
+output_fusions.write("coverage2\tsplit_reads\tSpanning_pairs\tBreakpoint1_covarage/SplitReads\tBreakpoint2_covarage/SplitReads\n")
 
 # Only keep fusions with one gene that are in the design
 design_genes = {}
