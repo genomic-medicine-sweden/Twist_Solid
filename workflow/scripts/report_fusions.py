@@ -101,10 +101,8 @@ for line in input_arriba:
         for region in annotation_genes[gene2]:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
-    output_fusions.write(
-        f"Arriba\t{gene1}\t{gene}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}\t{breakpoint2}\t{coverage1}
-        \t{coverage2}\t{total_split_reads}\t{discordant_mates}\n"
-    )
+    output_fusions.write(f"Arriba\t{gene1}\t{gene}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}")
+    output_fusions.write(f"\t{breakpoint2}\t{coverage1}\t{coverage2}\t{total_split_reads}\t{discordant_mates}\n")
 
 
 # Star-fusions
@@ -157,10 +155,8 @@ for line in input_starfusion:
         for region in design_genes[gene2]:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
-    output_fusions.write(
-        f"StarFusion\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}\t{breakpoint2}
-        \t\t\t{Junction_read_count}\t{Spanning_Frag_count}\n"
-        )
+    output_fusions.write(f"StarFusion\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}")
+    output_fusions.write(f"\t{breakpoint2}\t\t\t{Junction_read_count}\t{Spanning_Frag_count}\n")
 
 
 # FusionCatcher
@@ -229,7 +225,5 @@ for line in input_fusioncatcher:
         for region in design_genes[gene2]:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
-    output_fusions.write(
-        f"FusionCatcher\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}\t{breakpoint2}
-        \t\t\t{Spanning_pairs}\t{Spanning_reads_unique}\n"
-    )
+    output_fusions.write(f"FusionCatcher\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}")
+    output_fusions.write(f"\t{breakpoint2}\t\t\t{Spanning_pairs}\t{Spanning_reads_unique}\n")
