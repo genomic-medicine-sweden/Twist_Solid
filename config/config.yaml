@@ -224,7 +224,7 @@ star:
 star_fusion:
   container: "docker://trinityctat/starfusion:1.10.1"
   genome_path: "/data/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/"
-  extra: "--examine_coding_effect"
+  extra: "--examine_coding_effect --outSAMtype BAM SortedByCoordinate"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
