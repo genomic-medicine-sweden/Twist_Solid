@@ -122,6 +122,14 @@ module fusions:
 use rule * from fusions as fusions_*
 
 
+use rule star_fusion from fusions as fusions_star_fusion with:
+    output:
+        bam=temp("fusions/star_fusion/{sample}_{type}/Aligned.out.bam_unsorted"),
+        fusions=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv"),
+        fusions_abridged=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.tsv"),
+        sj=temp("fusions/star_fusion/{sample}_{type}/SJ.out.tab"),
+
+
 module cnv_sv:
     snakefile:
         github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="4b3f69e")
