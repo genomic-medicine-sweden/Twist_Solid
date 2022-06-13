@@ -46,7 +46,7 @@ bcbio_variation_recall_ensemble:
 
 bcftools_filter_include_region:
   nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv400.hg19.split_fusion_genes.noCNV.210608.bed"
-  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv400.hg19.split_fusion_genes.exon_only.MUC6_31_rm.210608.bed"
+  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv400.hg19.split_fusion_genes.MUC6_31_rm.exon_only.210608.bed"
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
