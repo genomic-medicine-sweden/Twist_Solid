@@ -6,7 +6,7 @@ genes = ["GAPDH", "GUSB", "OAZ1", "POLR2A"]
 
 bam_file = snakemake.input.bam
 bedfilename = snakemake.input.bed
-outfile = open(snakemake.output.hk, "w")
+outfile = open(snakemake.output.result, "w")
 outfile.write("Gene\tAvg_coverage\n")
 
 
