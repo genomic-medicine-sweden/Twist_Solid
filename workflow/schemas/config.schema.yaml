@@ -27,6 +27,13 @@ properties:
         type: string
         description:
 
+  cnv_tsv_report:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
   cnvkit_batch:
     type: object
     properties:
