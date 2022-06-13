@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule house_keeping_gene_coverage:
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.bam",
-        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.bam.bai",
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
         bed=config.get("reference", {}).get("design_bed_rna", ""),
     output:
         result=temp("qc/house_keeping_gene_coverage/{sample}_{type}.house_keeping_gene_coverage.tsv"),
