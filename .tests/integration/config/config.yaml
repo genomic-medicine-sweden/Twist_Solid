@@ -48,7 +48,7 @@ bcftools_filter_exclude_region:
   noćnv: "DATA/design.noexon1.bed"
 
 bcftools_id_snps:
-  snps_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/ID_SNPs.bed"
+  snps_bed: "reference/ID_SNPs.bed"
 
 exon_skipping:
   design_bed: "reference/Twist_RNA_Design5.annotated.bed"

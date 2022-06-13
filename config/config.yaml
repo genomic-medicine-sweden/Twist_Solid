@@ -18,7 +18,6 @@ reference:
   design_intervals_gatk_cnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
   design_bed_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"
   design_intervals_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.interval_list"
-  fasta_rna: "/data/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
   skip_chrs:
     - "chrM"
 
@@ -53,7 +52,7 @@ bcftools_filter_include_region:
   exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv400.hg19.split_fusion_genes.exon_only.210608.bed"
 
 bcftools_id_snps:
-  snps_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/ID_SNPs.bed"
+  snps_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/ID_SNPs.bed"
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
