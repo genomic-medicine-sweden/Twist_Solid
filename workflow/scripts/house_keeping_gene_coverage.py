@@ -23,9 +23,11 @@ for gene in genes:
     coverage_list = []
     for region in regions:
         region = region[0] + ":" + region[1] + "-" + region[2]
-        samtools_coverage = subprocess.check_output(f"samtools depth -d 5000000 -a -r {region} {bam_file} > {cov_outfile_name}",
-                                                    shell=True)
-        for line in samtools_coverage:
+        samtools_coverage = subprocess.check_output(f"samtools depth -d 5000000 -a -r {region} {bam_file}",
+                                                    shell=True).decode('ascii')
+        for line in samtools_coverage.split("\n"):
+            if len(line.strip().split("\t")) < 2:
+                continue
             coverage = int(line.strip().split("\t")[2])
             coverage_sum += coverage
             coverage_nr_pos += 1
