@@ -23,5 +23,5 @@ jobs:
         with:
           directory: ".tests/integration"
           snakefile: "workflow/Snakefile"
-          args: "--lint --configfile .tests/integration/config/config.yaml"
+          args: "--lint --configfiles .tests/integration/config/config.yaml"
           stagein: "pip install -r requirements.txt"

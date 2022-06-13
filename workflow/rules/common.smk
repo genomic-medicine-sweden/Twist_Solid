@@ -130,6 +130,7 @@ def compile_result_file_list():
             "in": ["cnv_sv/svdb_query", ".svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf"],
             "out": ["results/dna/cnv", ".cnv_hard_filter_amp.vcf"],
         },
+        {"in": ["cnv_sv/svdb_query", ".cnv_report.tsv"], "out": ["results/dna/cnv", ".cnv_report.tsv"]},
     ]
     output_files = [
         "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
@@ -255,7 +256,7 @@ def compile_result_file_list():
     ]
     types = set([unit.type for unit in units.itertuples()])
     if "R" in types:
-        output_files.append("results/dna/qc/multiqc_RNA.html")
+        output_files.append("results/rna/qc/multiqc_RNA.html")
         input_files.append("qc/multiqc/multiqc_RNA.html")
     if not set(["N", "T"]).isdisjoint(types):
         output_files.append("results/dna/qc/multiqc_DNA.html")
