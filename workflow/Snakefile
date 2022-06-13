@@ -12,6 +12,7 @@ include: "rules/cnv_tsv_report.smk"
 include: "rules/exon_skipping.smk"
 include: "rules/hotspot_info.smk"
 include: "rules/hotspot_report.smk"
+include: "rules/house_keeping_gene_coverage.smk"
 include: "rules/result_files.smk"
 
 
@@ -63,6 +64,13 @@ module alignment:
 
 
 use rule * from alignment as alignment_*
+
+
+use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
+    input:
+        "fusions/star_fusion/{path_file}.out.bam",
+    output:
+        temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
 
 
 module snv_indels:
