@@ -200,6 +200,7 @@ reference:
   fasta: "reference/WASH7P.fna"
   fai: "reference/WASH7P.fna.fai"
   dict: "reference/WASH7P.dict"
+  fasta_rna: "reference/WASH7P.fna"
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
