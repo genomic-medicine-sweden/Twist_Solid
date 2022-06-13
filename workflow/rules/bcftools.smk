@@ -7,6 +7,7 @@ __license__ = "GPL-3"
 rule bcftools_id_snps:
     input:
         bam="fusions/star_fusion/{sample}_{type}.Aligned.out.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}.Aligned.out.sorted.bam.bai",
         bed=config.get("bcftools_id_snps", {}).get("snps_bed", ""),
         ref=config.get("reference", {}).get("fasta_rna", ""),
     output:
