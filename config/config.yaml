@@ -89,6 +89,7 @@ filter_vcf:
   snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
   cnv_hard_filter_amp: "config/config_hard_filter_cnv_amp.yaml"
+  germline: "config/config_hard_filter_germline.yaml"
 
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
@@ -130,9 +131,6 @@ gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
   genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/druggable.expanded.hg19.csv"
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
-
-germline_vcf:
-  container: "docker://hydragenetics/vep:105"
 
 hotspot_annotation:
   hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
