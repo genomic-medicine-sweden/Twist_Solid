@@ -188,12 +188,25 @@ use rule * from fusions as fusions_*
 
 module cnv_sv:
     snakefile:
-        github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="4b3f69e")
+        github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="5738dd8")
     config:
         config
 
 
 use rule * from cnv_sv as cnv_sv_*
+
+
+use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:
+    input:
+        segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+
+
+use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
+    input:
+        segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+        segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
 
 
 module misc:
