@@ -11,7 +11,6 @@ include: "rules/common.smk"
 include: "rules/bcftools.smk"
 include: "rules/cnv_tsv_report.smk"
 include: "rules/exon_skipping.smk"
-include: "rules/hotspot_info.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/house_keeping_gene_coverage.smk"
 include: "rules/result_files.smk"
@@ -117,8 +116,8 @@ use rule * from qc as qc_*
 
 use rule mosdepth from qc as qc_mosdepth with:
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.bam",
-        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.bam.bai",
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
 
 
 use rule samtools_stats from qc as qc_samtools_stats with:
@@ -128,8 +127,8 @@ use rule samtools_stats from qc as qc_samtools_stats with:
 
 use rule samtools_stats from qc as qc_samtools_stats_rna with:
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.bam",
-        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.bam.bai",
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
     params:
         extra="%s -t %s"
         % (
@@ -147,7 +146,8 @@ use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics with:
 
 use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics_rna with:
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.bam",
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
         bait_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
         reference=config.get("reference", {}).get("fasta_rna", ""),
         target_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
@@ -162,7 +162,8 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics_rna with:
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.bam",
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
         ref=config.get("reference", {}).get("fasta_rna", ""),
     wildcard_constraints:
         type="R",

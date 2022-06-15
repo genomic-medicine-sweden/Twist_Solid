@@ -149,15 +149,6 @@ properties:
     required:
       - hotspots
 
-  hotspot_info:
-    type: object
-    properties:
-      hotspot_mutations:
-        type: string
-        description: Hotspot file
-    required:
-      - hotspot_mutations
-
   hotspot_report:
     type: object
     properties:

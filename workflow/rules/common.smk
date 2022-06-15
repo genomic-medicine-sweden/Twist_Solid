@@ -104,9 +104,8 @@ def compile_result_file_list():
             "out": ["results/dna/qc", ".insert_size_metrics.txt"],
         },
         {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
-        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["results/dna/gvcf", ".mosdepth.g.vcf.gz"]},
+        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["gvcf_dna", ".mosdepth.g.vcf.gz"]},
         {"in": ["qc/hotspot_report", ".output.tsv"], "out": ["results/dna/qc", ".hotspot.tsv"]},
-        {"in": ["qc/hotspot_info", ".hotspot_coverage_info.tsv"], "out": ["results/dna/qc", ".hotspot_coverage_info.tsv"]},
         {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
         {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
         {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ["results/dna/hrd", ".hrd_score.txt"]},
@@ -190,6 +189,30 @@ def compile_result_file_list():
     ]
     input_files += [
         "fusions/star_fusion/%s_%s/star-fusion.fusion_predictions.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    output_files += [
+        "bam_rna/%s_%s.star_fusion.bam" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "fusions/star_fusion/%s_%s/Aligned.out.sorted.bam" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    output_files += [
+        "bam_rna/%s_%s.star_fusion.bam.bai" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "fusions/star_fusion/%s_%s/Aligned.out.sorted.bam.bai" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
