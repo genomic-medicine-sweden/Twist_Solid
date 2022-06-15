@@ -194,6 +194,30 @@ def compile_result_file_list():
         if unit_type == "R"
     ]
     output_files += [
+        "bam_rna/%s_%s.star_fusion.bam" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "fusions/star_fusion/%s_%s/Aligned.out.sorted.bam" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    output_files += [
+        "bam_rna/%s_%s.star_fusion.bam.bai" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "fusions/star_fusion/%s_%s/Aligned.out.sorted.bam.bai" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    output_files += [
         "results/rna/fusion/%s_%s.fusioncatcher.fusion_predictions.txt" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
