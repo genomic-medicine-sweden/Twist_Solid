@@ -1,4 +1,8 @@
 filters:
+  intron:
+    description: "Hard filter intronic variants"
+    expression: "(exist[intron_variant, VEP:Consequence] and !exist[splice, VEP:Consequence] and VEP:SYMBOL != MET and VEP:SYMBOL != TERT and !exist[COSV_[0-9]+, VEP:Existing_variation])"
+    soft_filter: "False"
   vaf:
     description: "Hard filter variants with low vaf (AF lower than 0.01)"
     expression: "(FORMAT:AF:0 < 0.01)"

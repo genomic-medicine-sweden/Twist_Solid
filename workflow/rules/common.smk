@@ -61,8 +61,8 @@ wildcard_constraints:
 
 def compile_result_file_list():
     files = [
-        {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["results/dna/bam", ".bam"]},
-        {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"]},
+        {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna/bam", ".bam"]},
+        {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna/bam", ".bam.bai"]},
         {
             "in": ["snv_indels/bcbio_variation_recall_ensemble", ".ensembled.vcf.gz"],
             "out": ["results/dna/vcf", ".ensembled.vcf.gz"],
