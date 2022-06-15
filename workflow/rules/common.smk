@@ -60,7 +60,7 @@ wildcard_constraints:
 
 
 def compile_result_file_list():
-    files = [
+    dna_files = [
         {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna/bam", ".bam"]},
         {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna/bam", ".bam.bai"]},
         {
@@ -133,14 +133,14 @@ def compile_result_file_list():
     ]
     output_files = [
         "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
-        for file_info in files
+        for file_info in dna_files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type != "R"
     ]
     input_files = [
         "%s/%s_%s%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
-        for file_info in files
+        for file_info in dna_files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type != "R"
@@ -181,126 +181,60 @@ def compile_result_file_list():
     #     for sample in get_samples(samples)
     #     for t in get_unit_types(units, sample)
     # ]
-    output_files += [
-        "results/rna/fusion/%s_%s.star-fusion.fusion_predictions.tsv" % (sample, unit_type)
+
+    rna_files = [
+        {"in": ["fusions/arriba", ".fusions.tsv"], "out": ["results/rna/fusion", ".arriba.fusions.tsv"]},
+        {"in": ["fusions/arriba_draw_fusion", ".pdf"], "out": ["results/rna/fusion", ".arriba.fusions.pdf"]},
+        {"in": ["fusions/report_fusions", ".fusion_report.tsv"], "out": ["results/rna/fusion", ".fusion_report.tsv"]},
+        {"in": ["fusions/exon_skipping", ".results.tsv"], "out": ["results/rna/fusion", ".exon_skipping.tsv"]},
+        {
+            "in": ["qc/house_keeping_gene_coverage", ".house_keeping_gene_coverage.tsv"],
+            "out": ["results/rna/qc", ".house_keeping_gene_coverage.tsv"],
+        },
+        {"in": ["snv_indels/bcftools_id_snps", ".id_snps.vcf"], "out": ["results/rna/id_snps", ".id_snps.vcf"]},
+    ]
+    output_files = [
+        "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
+        for file_info in rna_files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
     ]
-    input_files += [
-        "fusions/star_fusion/%s_%s/star-fusion.fusion_predictions.tsv" % (sample, unit_type)
+    input_files = [
+        "%s/%s_%s%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
+        for file_info in rna_files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
     ]
-    output_files += [
-        "bam_rna/%s_%s.star_fusion.bam" % (sample, unit_type)
+
+    rna_files2 = [
+        {
+            "in": ["fusions/star_fusion", "star-fusion.fusion_predictions.tsv"],
+            "out": ["results/rna/fusion", ".star-fusion.fusion_predictions.tsv"],
+        },
+        {"in": ["fusions/star_fusion", "Aligned.out.sorted.bam"], "out": ["bam_rna", ".star_fusion.bam"]},
+        {"in": ["fusions/star_fusion", "Aligned.out.sorted.bam.bai"], "out": ["bam_rna", ".star_fusion.bam.bai"]},
+        {
+            "in": ["fusions/fusioncatcher", "final-list_candidate-fusion-genes.hg19.txt"],
+            "out": ["results/rna/fusion", ".fusioncatcher.fusion_predictions.txt"],
+        },
+    ]
+    output_files = [
+        "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
+        for file_info in rna_files2
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
     ]
-    input_files += [
-        "fusions/star_fusion/%s_%s/Aligned.out.sorted.bam" % (sample, unit_type)
+    input_files = [
+        "%s/%s_%s/%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
+        for file_info in rna_files2
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
     ]
-    output_files += [
-        "bam_rna/%s_%s.star_fusion.bam.bai" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "fusions/star_fusion/%s_%s/Aligned.out.sorted.bam.bai" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    output_files += [
-        "results/rna/fusion/%s_%s.fusioncatcher.fusion_predictions.txt" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "fusions/fusioncatcher/%s_%s/final-list_candidate-fusion-genes.hg19.txt" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    output_files += [
-        "results/rna/fusion/%s_%s.arriba.fusions.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "fusions/arriba/%s_%s.fusions.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    output_files += [
-        "results/rna/fusion/%s_%s.fusion_report.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "fusions/report_fusions/%s_%s.fusion_report.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    output_files += [
-        "results/rna/fusion/%s_%s.arriba.fusions.pdf" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "fusions/arriba_draw_fusion/%s_%s.pdf" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    output_files += [
-        "results/rna/fusion/%s_%s.exon_skipping.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "fusions/exon_skipping/%s_%s.results.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    output_files += [
-        "results/rna/qc/%s_%s.house_keeping_gene_coverage.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "qc/house_keeping_gene_coverage/%s_%s.house_keeping_gene_coverage.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    output_files += [
-        "results/rna/id_snps/%s_%s.id_snps.vcf" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "snv_indels/bcftools_id_snps/%s_%s.id_snps.vcf" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
+
     types = set([unit.type for unit in units.itertuples()])
     if "R" in types:
         output_files.append("results/rna/qc/multiqc_RNA.html")
