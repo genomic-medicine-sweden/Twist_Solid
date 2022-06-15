@@ -398,7 +398,6 @@ required:
   - gatk_cnv_denoise_read_counts
   - gatk_cnv_model_segments
   - gene_fuse
-  - germline_vcf
   - manta_run_workflow_t
   - mosdepth_bed
   - msisensor_pro
