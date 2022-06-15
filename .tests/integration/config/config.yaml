@@ -200,6 +200,17 @@ reference:
   dict: "reference/WASH7P.dict"
   fasta_rna: "reference/WASH7P.fna"
 
+report_fusions:
+  annotation_bed: "reference/Twist_RNA_fusionpartners.bed"
+  fusioncather_flag_low_support: 15
+  fusioncather_low_support: 3
+  fusioncather_low_support_fp_genes: 20
+  fusioncather_low_support_inframe: 6
+  star_fusion_flag_low_support: 15
+  star_fusion_low_support: 2
+  star_fusion_low_support_fp_genes: 20
+  star_fusion_low_support_inframe: 6
+
 star:
   container: "docker://hydragenetics/star:2.7.10a"
   genome_index: "reference_star_fusion/star_idx/"

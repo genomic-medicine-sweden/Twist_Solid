@@ -219,6 +219,18 @@ def compile_result_file_list():
         if unit_type == "R"
     ]
     output_files += [
+        "results/rna/fusion/%s_%s.fusion_report.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "fusions/report_fusions/%s_%s.fusion_report.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    output_files += [
         "results/rna/fusion/%s_%s.arriba.fusions.pdf" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)

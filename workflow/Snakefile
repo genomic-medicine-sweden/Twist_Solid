@@ -14,6 +14,7 @@ include: "rules/hotspot_info.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/house_keeping_gene_coverage.smk"
 include: "rules/result_files.smk"
+include: "rules/report_fusions.smk"
 
 
 rule all:
@@ -184,6 +185,14 @@ module fusions:
 
 
 use rule * from fusions as fusions_*
+
+
+use rule star_fusion from fusions as fusions_star_fusion with:
+    output:
+        bam=temp("fusions/star_fusion/{sample}_{type}/Aligned.out.bam"),
+        fusions=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv"),
+        fusions_abridged=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.coding_effect.tsv"),
+        sj=temp("fusions/star_fusion/{sample}_{type}/SJ.out.tab"),
 
 
 module cnv_sv:
