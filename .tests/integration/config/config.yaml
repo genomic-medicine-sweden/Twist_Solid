@@ -93,6 +93,7 @@ filter_vcf:
   snv_soft_filter: "../../config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "../../config/config_hard_filter_uppsala.yaml"
   cnv_hard_filter_amp: "../../config/config_hard_filter_cnv_amp.yaml"
+  germline: "../../config/config_hard_filter_germline.yaml"
 
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
@@ -122,9 +123,6 @@ gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
   genes: "DATA/druggable.expanded.hg19.csv"
   fasta: "reference/WASH7P.fna"
-
-germline_vcf:
-  container: "docker://hydragenetics/vep:105"
 
 manta_run_workflow_t:
   container: "docker://marrip/manta:v1.6.0"

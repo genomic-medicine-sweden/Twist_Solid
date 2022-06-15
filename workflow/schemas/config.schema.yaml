@@ -64,9 +64,15 @@ properties:
       snv_hard_filter:
         type: string
         description: Config file specifying which hard filters should be applied on snv_indels.
-      cnv_hard_filter:
+      cnv_hard_filter_amp:
         type: string
-        description: Config file specifying which hard filters should be applied on cnvs.
+        description: Config file specifying which hard filters should be applied on cnvs with amplifications.
+      germline:
+        type: string
+        description: Config file specifying which hard filters should be applied to obtain a germline vcf.
+    required:
+      - germline
+
 
   filter_cnv:
       type: object
