@@ -182,17 +182,6 @@ properties:
       required:
         - container
 
-  germline_vcf:
-    type: object
-    properties:
-      container:
-        type: string
-        description: name or path to a default docker/singularity container
-        pattern: >-
-            hydragenetics/vep:105$
-      required:
-        - container
-
   manta_run_workflow_t:
     type: object
     properties:
