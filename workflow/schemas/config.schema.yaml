@@ -25,7 +25,20 @@ properties:
           type: string
       sort_order:
         type: string
-        description:
+        description: sort order
+
+  bcftools_id_snps:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for msisensor_pro
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      snps_bed:
+        type: string
+        description: path to bed file the id SNPs
 
   cnv_tsv_report:
     type: object
