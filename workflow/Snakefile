@@ -190,10 +190,10 @@ use rule * from fusions as fusions_*
 
 use rule star_fusion from fusions as fusions_star_fusion with:
     output:
-        bam=temp("fusions/star_fusion/{sample}_{type}/Aligned.out.bam"),
-        fusions=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv"),
-        fusions_abridged=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.coding_effect.tsv"),
-        sj=temp("fusions/star_fusion/{sample}_{type}/SJ.out.tab"),
+        bam=temp("fusions/star_fusion/{sample}_{type, R}/Aligned.out.bam"),
+        fusions=temp("fusions/star_fusion/{sample}_{type, R}/star-fusion.fusion_predictions.tsv"),
+        fusions_abridged=temp("fusions/star_fusion/{sample}_{type, R}/star-fusion.fusion_predictions.abridged.coding_effect.tsv"),
+        sj=temp("fusions/star_fusion/{sample}_{type, R}/SJ.out.tab"),
 
 
 module cnv_sv:

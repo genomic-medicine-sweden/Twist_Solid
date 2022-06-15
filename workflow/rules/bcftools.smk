@@ -36,7 +36,7 @@ rule bcftools_id_snps:
         "(bcftools mpileup "
         "-R {input.bed} "
         "-O v "
-        "-f {intput.ref} "
+        "-f {input.ref} "
         "-d 1000000 "
         "| bcftools call -c) "
         "&> {log}"
