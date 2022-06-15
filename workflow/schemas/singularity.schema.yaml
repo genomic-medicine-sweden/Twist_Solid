@@ -182,17 +182,6 @@ properties:
       required:
         - container
 
-  germline_vcf:
-    type: object
-    properties:
-      container:
-        type: string
-        description: name or path to a default docker/singularity container
-        pattern: >-
-            hydragenetics/vep:105$
-      required:
-        - container
-
   manta_run_workflow_t:
     type: object
     properties:
@@ -409,7 +398,6 @@ required:
   - gatk_cnv_denoise_read_counts
   - gatk_cnv_model_segments
   - gene_fuse
-  - germline_vcf
   - manta_run_workflow_t
   - mosdepth_bed
   - msisensor_pro

@@ -96,6 +96,7 @@ filter_vcf:
   snv_soft_filter: "../../config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "../../config/config_hard_filter_uppsala.yaml"
   cnv_hard_filter_amp: "../../config/config_hard_filter_cnv_amp.yaml"
+  germline: "../../config/config_hard_filter_germline.yaml"
 
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
@@ -125,9 +126,6 @@ gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
   genes: "DATA/druggable.expanded.hg19.csv"
   fasta: "reference/WASH7P.fna"
-
-germline_vcf:
-  container: "docker://hydragenetics/vep:105"
 
 manta_run_workflow_t:
   container: "docker://marrip/manta:v1.6.0"
@@ -204,6 +202,17 @@ reference:
   fai: "reference/WASH7P.fna.fai"
   dict: "reference/WASH7P.dict"
   fasta_rna: "reference/WASH7P.fna"
+
+report_fusions:
+  annotation_bed: "reference/Twist_RNA_fusionpartners.bed"
+  fusioncather_flag_low_support: 15
+  fusioncather_low_support: 3
+  fusioncather_low_support_fp_genes: 20
+  fusioncather_low_support_inframe: 6
+  star_fusion_flag_low_support: 15
+  star_fusion_low_support: 2
+  star_fusion_low_support_fp_genes: 20
+  star_fusion_low_support_inframe: 6
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"

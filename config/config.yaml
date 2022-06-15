@@ -13,7 +13,7 @@ reference:
   fasta_rna: "/data/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
   dict: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
   fai: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fai"
-  design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv400.hg19.split_fusion_genes.210608.bed"
+  design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed"
   design_intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.interval_list"
   design_intervals_gatk_cnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
   design_bed_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"
@@ -48,8 +48,8 @@ bcbio_variation_recall_ensemble:
     - gatk_mutect2
 
 bcftools_filter_include_region:
-  nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv400.hg19.split_fusion_genes.noCNV.210608.bed"
-  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv400.hg19.split_fusion_genes.exon_only.210608.bed"
+  nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.noCNV.210608.bed"
+  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.210608.bed"
 
 bcftools_id_snps:
   snps_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/ID_SNPs.bed"
@@ -95,6 +95,7 @@ filter_vcf:
   snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
   cnv_hard_filter_amp: "config/config_hard_filter_cnv_amp.yaml"
+  germline: "config/config_hard_filter_germline.yaml"
 
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
@@ -136,9 +137,6 @@ gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
   genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/druggable.expanded.hg19.csv"
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
-
-germline_vcf:
-  container: "docker://hydragenetics/vep:105"
 
 hotspot_annotation:
   hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
@@ -216,6 +214,17 @@ picard_collect_insert_size_metrics:
 
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
+
+report_fusions:
+  annotation_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_fusionpartners.bed"
+  fusioncather_flag_low_support: 15
+  fusioncather_low_support: 3
+  fusioncather_low_support_fp_genes: 20
+  fusioncather_low_support_inframe: 6
+  star_fusion_flag_low_support: 15
+  star_fusion_low_support: 2
+  star_fusion_low_support_fp_genes: 20
+  star_fusion_low_support_inframe: 6
 
 samtools_merge_bam:
   extra: "-c"

@@ -61,8 +61,8 @@ wildcard_constraints:
 
 def compile_result_file_list():
     files = [
-        {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["results/dna/bam", ".bam"]},
-        {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"]},
+        {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna/bam", ".bam"]},
+        {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna/bam", ".bam.bai"]},
         {
             "in": ["snv_indels/bcbio_variation_recall_ensemble", ".ensembled.vcf.gz"],
             "out": ["results/dna/vcf", ".ensembled.vcf.gz"],
@@ -219,6 +219,18 @@ def compile_result_file_list():
         if unit_type == "R"
     ]
     output_files += [
+        "results/rna/fusion/%s_%s.fusion_report.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "fusions/report_fusions/%s_%s.fusion_report.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    output_files += [
         "results/rna/fusion/%s_%s.arriba.fusions.pdf" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
@@ -238,6 +250,18 @@ def compile_result_file_list():
     ]
     input_files += [
         "fusions/exon_skipping/%s_%s.results.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    output_files += [
+        "results/rna/qc/%s_%s.house_keeping_gene_coverage.tsv" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "R"
+    ]
+    input_files += [
+        "qc/house_keeping_gene_coverage/%s_%s.house_keeping_gene_coverage.tsv" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
