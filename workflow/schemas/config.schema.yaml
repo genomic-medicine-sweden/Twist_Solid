@@ -82,6 +82,16 @@ properties:
       required:
         - genes
 
+  house_keeping_gene_coverage:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for hotspot_annotation
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
   hotspot_annotation:
     type: object
     properties:
