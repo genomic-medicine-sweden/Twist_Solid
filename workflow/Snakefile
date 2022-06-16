@@ -114,10 +114,11 @@ module qc:
 use rule * from qc as qc_*
 
 
-use rule mosdepth from qc as qc_mosdepth with:
+use rule mosdepth_bed from qc as qc_mosdepth_bed with:
     input:
         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
         bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        bed=config.get("reference", {}).get("design_bed_rna", ""),
 
 
 use rule samtools_stats from qc as qc_samtools_stats with:
@@ -128,7 +129,6 @@ use rule samtools_stats from qc as qc_samtools_stats with:
 use rule samtools_stats from qc as qc_samtools_stats_rna with:
     input:
         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
     params:
         extra="%s -t %s"
         % (
@@ -164,7 +164,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics_rna with:
     params:
-        extra=config.get("picard_collect_hs_metrics", {}).get("extra", "COVERAGE_CAP=5000 VALIDATION_STRINGENCY=LENIENT"),
+        extra=config.get("picard_collect_hs_metrics", {}).get("extra", "VALIDATION_STRINGENCY=LENIENT"),
     input:
         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
         bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
