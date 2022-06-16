@@ -201,6 +201,9 @@ optitype:
   sample_type: "-d"
   enumeration: 4
 
+picard_add_read_group:
+  container: "docker://hydragenetics/picard:2.25.0"
+
 picard_collect_alignment_summary_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
 

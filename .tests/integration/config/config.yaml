@@ -172,6 +172,9 @@ multiqc:
 optitype:
   container: "docker://fred2/optitype"
 
+picard_add_read_group:
+  container: "docker://hydragenetics/picard:2.25.0"
+
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
