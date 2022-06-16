@@ -145,6 +145,8 @@ use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics with:
 
 
 use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics_rna with:
+    params:
+        extra=config.get("picard_collect_hs_metrics", {}).get("extra", "COVERAGE_CAP=5000 VALIDATION_STRINGENCY=LENIENT"),
     input:
         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
         bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
@@ -161,6 +163,8 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 
 use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics_rna with:
+    params:
+        extra=config.get("picard_collect_hs_metrics", {}).get("extra", "COVERAGE_CAP=5000 VALIDATION_STRINGENCY=LENIENT"),
     input:
         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
         bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
