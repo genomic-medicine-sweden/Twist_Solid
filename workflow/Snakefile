@@ -181,7 +181,7 @@ use rule * from biomarker as biomarker_*
 
 module fusions:
     snakefile:
-        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="4d3a0fc")
+        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="8c2f465")
     config:
         config
 
