@@ -213,8 +213,8 @@ def compile_result_file_list():
             "in": ["fusions/star_fusion", "star-fusion.fusion_predictions.tsv"],
             "out": ["results/rna/fusion", ".star-fusion.fusion_predictions.tsv"],
         },
-        {"in": ["fusions/star_fusion", "Aligned.out.sorted.bam"], "out": ["bam_rna", ".star_fusion.bam"]},
-        {"in": ["fusions/star_fusion", "Aligned.out.sorted.bam.bai"], "out": ["bam_rna", ".star_fusion.bam.bai"]},
+        {"in": ["fusions/star_fusion", "Aligned.out.rg.sorted.bam"], "out": ["bam_rna", ".star_fusion.bam"]},
+        {"in": ["fusions/star_fusion", "Aligned.out.rg.sorted.bam.bai"], "out": ["bam_rna", ".star_fusion.bam.bai"]},
         {
             "in": ["fusions/fusioncatcher", "final-list_candidate-fusion-genes.hg19.txt"],
             "out": ["results/rna/fusion", ".fusioncatcher.fusion_predictions.txt"],

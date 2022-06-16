@@ -69,9 +69,9 @@ use rule * from alignment as alignment_*
 
 use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
     input:
-        "fusions/star_fusion/{path_file}.out.bam",
+        "fusions/star_fusion/{path_file}.out.rg.bam",
     output:
-        temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
+        temp("fusions/star_fusion/{path_file}.out.rg.sorted.bam"),
 
 
 module snv_indels:
@@ -116,8 +116,8 @@ use rule * from qc as qc_*
 
 use rule mosdepth from qc as qc_mosdepth with:
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.rg.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.rg.sorted.bam.bai",
 
 
 use rule samtools_stats from qc as qc_samtools_stats with:
@@ -127,8 +127,8 @@ use rule samtools_stats from qc as qc_samtools_stats with:
 
 use rule samtools_stats from qc as qc_samtools_stats_rna with:
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.rg.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.rg.sorted.bam.bai",
     params:
         extra="%s -t %s"
         % (
@@ -146,8 +146,8 @@ use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics with:
 
 use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics_rna with:
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.rg.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.rg.sorted.bam.bai",
         bait_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
         reference=config.get("reference", {}).get("fasta_rna", ""),
         target_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
@@ -162,8 +162,8 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics_rna with:
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.rg.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.rg.sorted.bam.bai",
         ref=config.get("reference", {}).get("fasta_rna", ""),
     wildcard_constraints:
         type="R",
@@ -181,7 +181,7 @@ use rule * from biomarker as biomarker_*
 
 module fusions:
     snakefile:
-        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="bedaebf")
+        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="star_rg")
     config:
         config
 
