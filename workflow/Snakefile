@@ -114,7 +114,7 @@ module qc:
 use rule * from qc as qc_*
 
 
-use rule mosdepth_bed from qc as qc_mosdepth_bed with:
+use rule mosdepth from qc as qc_mosdepth with:
     input:
         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
         bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
