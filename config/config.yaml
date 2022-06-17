@@ -206,6 +206,7 @@ picard_collect_alignment_summary_metrics:
 
 picard_collect_hs_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
+  extra: "COVERAGE_CAP=5000"
 
 picard_collect_duplication_metrics:
   container: "docker://hydragenetics/picard:2.25.0"

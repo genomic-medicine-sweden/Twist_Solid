@@ -146,7 +146,8 @@ use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics with:
 
 use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics_rna with:
     params:
-        extra="%s %s" % (
+        extra="%s %s"
+        % (
             config.get("picard_collect_hs_metrics", {}).get("extra", ""),
             "VALIDATION_STRINGENCY=LENIENT",
         ),
@@ -167,7 +168,8 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics_rna with:
     params:
-        extra="%s %s" % (
+        extra="%s %s"
+        % (
             config.get("picard_collect_hs_metrics", {}).get("extra", ""),
             "VALIDATION_STRINGENCY=LENIENT",
         ),
