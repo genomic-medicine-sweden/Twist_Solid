@@ -185,6 +185,7 @@ multiqc:
     RNA:
       config: "config/multiqc_config.yaml"
       included_unit_types: ["R"]
+      extra: "-d -dd 1"
       qc_files:
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2_fastqc.zip"
