@@ -170,7 +170,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
     params:
         extra="%s %s"
         % (
-            config.get("picard_collect_hs_metrics", {}).get("extra", ""),
+            config.get("picard_collect_alignment_summary_metrics", {}).get("extra", ""),
             "VALIDATION_STRINGENCY=LENIENT",
         ),
     input:
