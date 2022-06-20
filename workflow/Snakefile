@@ -106,7 +106,7 @@ use rule * from filtering as filtering_*
 
 module qc:
     snakefile:
-        github("hydra-genetics/qc", path="workflow/Snakefile", tag="e8fd98d")
+        github("hydra-genetics/qc", path="workflow/Snakefile", tag="cd029ff")
     config:
         config
 
@@ -170,7 +170,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
     params:
         extra="%s %s"
         % (
-            config.get("picard_collect_hs_metrics", {}).get("extra", ""),
+            config.get("picard_collect_alignment_summary_metrics", {}).get("extra", ""),
             "VALIDATION_STRINGENCY=LENIENT",
         ),
     input:
