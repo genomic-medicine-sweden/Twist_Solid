@@ -31,7 +31,7 @@ filters:
     soft_filter: "True"
   germline:
     description: "Soft filter germline SNVs based on GnomAD"
-    expression: "(VEP:gnomAD_AF > 0.00001 and !exist[COSV_[0-9]+, VEP:Existing_variation])"
+    expression: "(VEP:gnomAD_AF > 0.00001 and !exist[COSV[0-9]+, VEP:Existing_variation])"
     soft_filter_flag: "Germline"
     soft_filter: "True"
   artifacts:
