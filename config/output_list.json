@@ -41,6 +41,6 @@
   "bam_rna/{sample}_{type}.star_fusion.bam": {"name": "_result_star_fusion_bam", "file": "fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam", "types": ["R"]},
   "bam_rna/{sample}_{type}.star_fusion.bam.bai": {"name": "_result_start_fusion_bai", "file": null, "types": ["R"]},
   "results/rna/fusion{sample}_{type}.fusioncatcher.fusion_predictions.txt": {"name": "_result_fusioncatcher_prediction_tsv", "file": "fusions/fusioncatcher/{sample}_{type}/final-list_candidate-fusion-genes.hg19.txt", "types": ["R"]},
-  "results/rna/qc/multiqc_RNA.html": {"name": "_result_multiqc_rna_html", "file": "qc/multiqc/multiqc_RNA.html", "types": ["T", "N"]},
-  "results/dna/qc/multiqc_DNA.html": {"name": "_result_multiqc_dna_html", "file": "qc/multiqc/multiqc_DNA.html", "types": ["R"]}
+  "results/rna/qc/multiqc_RNA.html": {"name": "_result_multiqc_rna_html", "file": "qc/multiqc/multiqc_RNA.html", "types": ["R"]},
+  "results/dna/qc/multiqc_DNA.html": {"name": "_result_multiqc_dna_html", "file": "qc/multiqc/multiqc_DNA.html", "types": ["T", "N"]}
 }
