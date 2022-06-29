@@ -1,4 +1,11 @@
 .snakemake
 .tests/integration/.snakemake
+
+.vscode
+.idea
+
+*~
 *.pyc
+*.swp
+
 venv
