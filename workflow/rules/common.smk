@@ -64,13 +64,14 @@ wildcard_constraints:
 
 def compile_output_list(wildcards):
     output_files = []
+    types = set([unit.type for unit in units.itertuples()])
     for output in output_json:
         output_files += set(
             [
                 output.format(sample=sample, type=unit_type, caller=caller)
                 for sample in get_samples(samples)
                 for unit_type in get_unit_types(units, sample)
-                if unit_type in output_json[output]["types"]
+                if unit_type in set(output_json[output]["types"]).intersection(types)
                 for caller in config["bcbio_variation_recall_ensemble"]["callers"]
             ]
         )
@@ -97,7 +98,7 @@ def generate_copy_code(workflow, output_json):
             code += f'@workflow.output("{output_file}")\n'
             code += f'@workflow.log("logs/{rule_name}_{result_file}.log")\n'
             code += f'@workflow.conda("envs/copy_result.yaml")\n'
-            code += f'@workflow.container("None")\n'
+            code += f'@workflow.container(None)\n'
             code += '@workflow.shellcmd("cp {input} {output}")\n\n'
             code += "@workflow.run\n"
             code += (
@@ -105,7 +106,7 @@ def generate_copy_code(workflow, output_json):
                 "conda_env, container_img, singularity_args, use_singularity, env_modules, bench_record, jobid, is_shell, "
                 "bench_iteration, cleanup_scripts, shadow_dir, edit_notebook, conda_base_path, basedir, runtime_sourcecache_path, "
                 "__is_snakemake_rule_func=True):\n"
-                '\tshell ( "cp {input[0]} {output[0]}" , bench_record=bench_record, bench_iteration=bench_iteration)\n\n'
+                '\tshell ( "(cp {input[0]} {output[0]}) &> {log}" , bench_record=bench_record, bench_iteration=bench_iteration)\n\n'
             )
     exec(compile(code, "result_to_copy", "exec"), workflow.globals)
 
