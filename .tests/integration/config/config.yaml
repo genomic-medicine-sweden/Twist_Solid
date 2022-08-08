@@ -4,6 +4,10 @@ resources: "resources.yaml"
 
 default_container: "docker://hydragenetics/common:0.1.3"
 
+annotate_cnv:
+  cnv_amp_genes: "reference/cnv_amp_genes.bed"
+  cnv_del_genes: "reference/cnv_loh_genes.bed"
+
 arriba:
   assembly: "reference/WASH7P.fna"
   blacklist: "reference/blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz"
@@ -45,7 +49,7 @@ bcftools_filter_include_region:
 
 bcftools_filter_exclude_region:
   exon: "DATA/design.noexon1.bed"
-  noćnv: "DATA/design.noexon1.bed"
+  nocnv: "DATA/design.noexon1.bed"
 
 bcftools_id_snps:
   snps_bed: "reference/ID_SNPs.bed"
@@ -96,6 +100,7 @@ filter_vcf:
   snv_soft_filter: "../../config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "../../config/config_hard_filter_uppsala.yaml"
   cnv_hard_filter_amp: "../../config/config_hard_filter_cnv_amp.yaml"
+  cnv_hard_filter_loh: "../../config/config_hard_filter_cnv_loh.yaml"
   germline: "../../config/config_hard_filter_germline.yaml"
 
 freebayes:
@@ -121,6 +126,18 @@ gatk_cnv_denoise_read_counts:
 
 gatk_cnv_model_segments:
   container: "docker://gmsuppsala/somatic:develop"
+
+gatk_mutect2:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_filter:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_gvcf:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_merge_stats:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
 
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
