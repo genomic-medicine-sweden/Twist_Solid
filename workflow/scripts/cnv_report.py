@@ -89,4 +89,4 @@ if __name__ == "__main__":
     in_vcfs = snakemake.input.vcfs
     in_org_vcfs = snakemake.input.org_vcfs
     out_tsv = snakemake.output.tsv
-    create_tsv_report(in_vcfs, out_tsv)
+    create_tsv_report(in_vcfs, in_org_vcfs, out_tsv)
