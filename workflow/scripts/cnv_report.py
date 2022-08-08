@@ -5,11 +5,11 @@ from hydra_genetics.utils.io import utils
 log = logging.getLogger()
 
 
-def create_tsv_report(input_vcfs, in_org_vcfs, output_txt):
+def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
     gene_all_dict = {}
     for input_org_vcf in input_org_vcfs:
         log.info(f"Opening vcf file: {input_org_vcf}")
-        variants = VariantFile(input_vcf)
+        variants = VariantFile(input_org_vcf)
         samples = list(variants.header.samples)
         if len(samples) > 1:
             raise Exeception(f"Unable to process vcf with more then one sample: {samples}")
@@ -25,7 +25,7 @@ def create_tsv_report(input_vcfs, in_org_vcfs, output_txt):
             end = variant.pos + int(utils.get_annotation_data_info(variant, "SVLEN")) - 1
             callers = utils.get_annotation_data_info(variant, "CALLER")
             cn = utils.get_annotation_data_info(variant, "CORR_CN")
-            for gene in genes:
+            for gene in genes.split(","):
                 if gene not in gene_all_dict:
                     gene_all_dict[gene] = []
                 gene_all_dict[gene].append([chr, start, end, callers, cn])
@@ -60,7 +60,7 @@ def create_tsv_report(input_vcfs, in_org_vcfs, output_txt):
                 cn = utils.get_annotation_data_info(variant, "CORR_CN")
                 writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{callers}\t{cn:.2f}")
                 counter += 1
-                for gene in genes:
+                for gene in genes.split(","):
                     if gene not in gene_variant_dict:
                         gene_variant_dict[gene] = []
                     gene_variant_dict[gene].append([chr, start, end, callers, cn])
@@ -80,7 +80,7 @@ def create_tsv_report(input_vcfs, in_org_vcfs, output_txt):
                                 (gene_variant_dict[gene][0][1] >= start and gene_variant_dict[gene][0][1] <= start) or
                                 (gene_variant_dict[gene][0][2] >= end and gene_variant_dict[gene][0][2] <= end)
                             ):
-                                writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{callers}\t{cn:.2f}")
+                                writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{cn:.2f}")
         log.info(f"Processed {counter} variants")
         first_vcf = False
 
