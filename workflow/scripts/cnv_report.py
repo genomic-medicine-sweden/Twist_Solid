@@ -20,9 +20,9 @@ def create_tsv_report(input_vcfs, output_txt):
         output_mode = "a"
         if first_vcf:
             output_mode = "w"
-            first_vcf = False
         with open(output_txt, output_mode) as writer:
-            writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tcopy_number")
+            if first_vcf:
+                writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tcopy_number")
             for variant in variants:
                 genes = utils.get_annotation_data_info(variant, "Genes")
                 log.debug(f"Processing variant: {variant}")
@@ -36,6 +36,7 @@ def create_tsv_report(input_vcfs, output_txt):
                 writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{callers}\t{cn:.2f}")
                 counter += 1
         log.info(f"Processed {counter} variants")
+        first_vcf = False
 
 
 if __name__ == "__main__":
