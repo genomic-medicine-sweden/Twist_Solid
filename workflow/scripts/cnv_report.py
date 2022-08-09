@@ -25,10 +25,11 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
             end = variant.pos + int(utils.get_annotation_data_info(variant, "SVLEN")) - 1
             callers = utils.get_annotation_data_info(variant, "CALLER")
             cn = utils.get_annotation_data_info(variant, "CORR_CN")
-            for gene in genes.split(","):
-                if gene not in gene_all_dict:
-                    gene_all_dict[gene] = []
-                gene_all_dict[gene].append([chr, start, end, callers, cn])
+            if genes is not None:
+                for gene in genes.split(","):
+                    if gene not in gene_all_dict:
+                        gene_all_dict[gene] = []
+                    gene_all_dict[gene].append([chr, start, end, callers, cn])
 
     first_vcf = True
     for input_vcf in input_vcfs:
