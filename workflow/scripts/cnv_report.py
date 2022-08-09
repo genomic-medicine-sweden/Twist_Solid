@@ -29,7 +29,16 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
                 for gene in genes.split(","):
                     if gene not in gene_all_dict:
                         gene_all_dict[gene] = []
-                    gene_all_dict[gene].append([chr, start, end, callers, cn])
+                        gene_all_dict[gene].append([chr, start, end, callers, cn])
+                    else :
+                        duplicate = False
+                        for variant in gene_all_dict[gene]:
+                            if chr == variant[0] and start == variant[1] and end == variant[2] and callers == variant[3]:
+                                duplicate = True
+                                break
+                        if not duplicate:
+                            gene_all_dict[gene].append([chr, start, end, callers, cn])
+
 
     first_vcf = True
     for input_vcf in input_vcfs:
