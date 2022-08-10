@@ -16,7 +16,7 @@ from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
 from hydra_genetics import min_version as hydra_min_version
 
-hydra_min_version("0.10.0")
+hydra_min_version("0.12.0")
 
 min_version("7.8.0")
 
@@ -60,9 +60,9 @@ wildcard_constraints:
 
 
 def compile_result_file_list():
-    files = [
-        {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["results/dna/bam", ".bam"]},
-        {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["results/dna/bam", ".bam.bai"]},
+    dna_files = [
+        {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna/bam", ".bam"]},
+        {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna/bam", ".bam.bai"]},
         {
             "in": ["snv_indels/bcbio_variation_recall_ensemble", ".ensembled.vcf.gz"],
             "out": ["results/dna/vcf", ".ensembled.vcf.gz"],
@@ -104,9 +104,8 @@ def compile_result_file_list():
             "out": ["results/dna/qc", ".insert_size_metrics.txt"],
         },
         {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
-        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["results/dna/gvcf", ".mosdepth.g.vcf.gz"]},
+        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["gvcf_dna", ".mosdepth.g.vcf.gz"]},
         {"in": ["qc/hotspot_report", ".output.tsv"], "out": ["results/dna/qc", ".hotspot.tsv"]},
-        {"in": ["qc/hotspot_info", ".hotspot_coverage_info.tsv"], "out": ["results/dna/qc", ".hotspot_coverage_info.tsv"]},
         {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
         {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
         {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ["results/dna/hrd", ".hrd_score.txt"]},
@@ -135,14 +134,14 @@ def compile_result_file_list():
     ]
     output_files = [
         "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
-        for file_info in files
+        for file_info in dna_files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type != "R"
     ]
     input_files = [
         "%s/%s_%s%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
-        for file_info in files
+        for file_info in dna_files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type != "R"
@@ -183,90 +182,60 @@ def compile_result_file_list():
     #     for sample in get_samples(samples)
     #     for t in get_unit_types(units, sample)
     # ]
+
+    rna_files = [
+        {"in": ["fusions/arriba", ".fusions.tsv"], "out": ["results/rna/fusion", ".arriba.fusions.tsv"]},
+        {"in": ["fusions/arriba_draw_fusion", ".pdf"], "out": ["results/rna/fusion", ".arriba.fusions.pdf"]},
+        {"in": ["fusions/report_fusions", ".fusion_report.tsv"], "out": ["results/rna/fusion", ".fusion_report.tsv"]},
+        {"in": ["fusions/exon_skipping", ".results.tsv"], "out": ["results/rna/fusion", ".exon_skipping.tsv"]},
+        {
+            "in": ["qc/house_keeping_gene_coverage", ".house_keeping_gene_coverage.tsv"],
+            "out": ["results/rna/qc", ".house_keeping_gene_coverage.tsv"],
+        },
+        {"in": ["snv_indels/bcftools_id_snps", ".id_snps.vcf"], "out": ["results/rna/id_snps", ".id_snps.vcf"]},
+    ]
     output_files += [
-        "results/rna/fusion/%s_%s.star-fusion.fusion_predictions.tsv" % (sample, unit_type)
+        "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
+        for file_info in rna_files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
     ]
     input_files += [
-        "fusions/star_fusion/%s_%s/star-fusion.fusion_predictions.tsv" % (sample, unit_type)
+        "%s/%s_%s%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
+        for file_info in rna_files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
     ]
+
+    rna_files2 = [
+        {
+            "in": ["fusions/star_fusion", "star-fusion.fusion_predictions.tsv"],
+            "out": ["results/rna/fusion", ".star-fusion.fusion_predictions.tsv"],
+        },
+        {"in": ["fusions/star_fusion", "Aligned.out.sorted.bam"], "out": ["bam_rna", ".star_fusion.bam"]},
+        {"in": ["fusions/star_fusion", "Aligned.out.sorted.bam.bai"], "out": ["bam_rna", ".star_fusion.bam.bai"]},
+        {
+            "in": ["fusions/fusioncatcher", "final-list_candidate-fusion-genes.hg19.txt"],
+            "out": ["results/rna/fusion", ".fusioncatcher.fusion_predictions.txt"],
+        },
+    ]
     output_files += [
-        "results/rna/fusion/%s_%s.fusioncatcher.fusion_predictions.txt" % (sample, unit_type)
+        "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
+        for file_info in rna_files2
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
     ]
     input_files += [
-        "fusions/fusioncatcher/%s_%s/final-list_candidate-fusion-genes.hg19.txt" % (sample, unit_type)
+        "%s/%s_%s/%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
+        for file_info in rna_files2
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type == "R"
     ]
-    output_files += [
-        "results/rna/fusion/%s_%s.arriba.fusions.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "fusions/arriba/%s_%s.fusions.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    output_files += [
-        "results/rna/fusion/%s_%s.fusion_report.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "fusions/report_fusions/%s_%s.fusion_report.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    output_files += [
-        "results/rna/fusion/%s_%s.arriba.fusions.pdf" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "fusions/arriba_draw_fusion/%s_%s.pdf" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    output_files += [
-        "results/rna/fusion/%s_%s.exon_skipping.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "fusions/exon_skipping/%s_%s.results.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    output_files += [
-        "results/rna/qc/%s_%s.house_keeping_gene_coverage.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
-    input_files += [
-        "qc/house_keeping_gene_coverage/%s_%s.house_keeping_gene_coverage.tsv" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type == "R"
-    ]
+
     types = set([unit.type for unit in units.itertuples()])
     if "R" in types:
         output_files.append("results/rna/qc/multiqc_RNA.html")

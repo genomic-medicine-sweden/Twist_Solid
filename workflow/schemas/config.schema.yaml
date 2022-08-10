@@ -25,7 +25,20 @@ properties:
           type: string
       sort_order:
         type: string
-        description:
+        description: sort order
+
+  bcftools_id_snps:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for msisensor_pro
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      snps_bed:
+        type: string
+        description: path to bed file the id SNPs
 
   cnv_tsv_report:
     type: object
@@ -64,9 +77,15 @@ properties:
       snv_hard_filter:
         type: string
         description: Config file specifying which hard filters should be applied on snv_indels.
-      cnv_hard_filter:
+      cnv_hard_filter_amp:
         type: string
-        description: Config file specifying which hard filters should be applied on cnvs.
+        description: Config file specifying which hard filters should be applied on cnvs with amplifications.
+      germline:
+        type: string
+        description: Config file specifying which hard filters should be applied to obtain a germline vcf.
+    required:
+      - germline
+
 
   filter_cnv:
       type: object
@@ -129,15 +148,6 @@ properties:
         description: Chromosome translation file (NCXXXX to chrXX)
     required:
       - hotspots
-
-  hotspot_info:
-    type: object
-    properties:
-      hotspot_mutations:
-        type: string
-        description: Hotspot file
-    required:
-      - hotspot_mutations
 
   hotspot_report:
     type: object

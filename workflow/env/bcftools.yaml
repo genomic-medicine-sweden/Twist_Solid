@@ -3,5 +3,5 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - pip:
-    - hydra-genetics==0.13.0
+  - bcftools==1.14
+  - snakemake-wrapper-utils==0.2
