@@ -35,7 +35,7 @@ rule report_fusions:
         partition=config.get("report_fusions", {}).get("partition", config["default_resources"]["partition"]),
     benchmark:
         repeat(
-            "qc/report_fusions/{sample}_{type}.fusion_report.tsv",
+            "qc/report_fusions/{sample}_{type}.fusion_report.tsv.benchmark.tsv",
             config.get("report_fusions", {}).get("benchmark_repeats", 1),
         )
     conda:
