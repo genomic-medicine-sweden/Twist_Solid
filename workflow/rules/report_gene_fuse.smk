@@ -12,7 +12,7 @@ rule report_gene_fuse:
     params:
         min_unique_reads=config.get("report_gene_fuse", {}).get("min_unique_reads", 6),
     log:
-        "qc/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv.log",
+        "fusions/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv.log",
     threads: config.get("report_gene_fuse", {}).get("threads", config["default_resources"]["threads"])
     resources:
         threads=config.get("report_gene_fuse", {}).get("threads", config["default_resources"]["threads"]),
@@ -22,7 +22,7 @@ rule report_gene_fuse:
         partition=config.get("report_gene_fuse", {}).get("partition", config["default_resources"]["partition"]),
     benchmark:
         repeat(
-            "qc/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv.benchmark.tsv",
+            "fusions/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv.benchmark.tsv",
             config.get("report_gene_fuse", {}).get("benchmark_repeats", 1),
         )
     conda:

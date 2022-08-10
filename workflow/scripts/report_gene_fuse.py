@@ -9,7 +9,6 @@ FP_gene_pairs = ["NPM1_ALK", "CLTC_NTRK3", "MASH2_ALK"]
 Noisy_genes = {"RSPO2": 8, "ABL1": 8, "BRAF": 8, "EZR": 8}
 
 for line in fusions:
-    lline = line.strip().split("\t")
     if line[:8] != "#Fusion:":
         continue
     gene1 = line.split(" ")[1].split("_")[0]
@@ -17,23 +16,23 @@ for line in fusions:
     unique_reads = int(line.split("unique:")[1].split(")")[0])
     gene_region1 = ""
     if "intron" in line.split("___")[0]:
-        gene_region1 = line.split("___")[0].split("intron:")[1].split("|")[0]
+        gene_region1 = "intron " + line.split("___")[0].split("intron:")[1].split("|")[0]
     if "exon" in line.split("___")[0]:
-        gene_region1 = line.split("___")[0].split("intron:")[1].split("|")[0]
+        gene_region1 = "exon " + line.split("___")[0].split("exon:")[1].split("|")[0]
     gene_region2 = ""
     if "intron" in line.split("___")[1]:
-        gene_region2 = line.split("___")[1].split("intron:")[1].split("|")[0]
+        gene_region2 = "intron " + line.split("___")[1].split("intron:")[1].split("|")[0]
     if "exon" in line.split("___")[1]:
-        gene_region2 = line.split("___")[1].split("intron:")[1].split("|")[0]
-    bp1 = "chr" + line.split("___")[0].split("chr")
-    bp2 = "chr" + line.split("___")[1].split("chr").split("  (")[0]
+        gene_region2 = "exon " + line.split("___")[1].split("exon:")[1].split("|")[0]
+    bp1 = "chr" + line.split("___")[0].split("chr")[1]
+    bp2 = "chr" + line.split("___")[1].split("chr")[1].split("  (")[0]
     transcript1 = line.split("_")[1].split(":")[0]
     transcript2 = line.split("___")[1].split("_")[1].split(":")[0]
     min_u_r = min_unique_reads
-    if gene1 in Noisy_gene_pairs:
-        min_u_r = Noisy_gene_pairs[gene1]
-    if gene2 in Noisy_gene_pairs:
-        min_u_r = Noisy_gene_pairs[gene2]
+    if gene1 in Noisy_genes:
+        min_u_r = Noisy_genes[gene1]
+    if gene2 in Noisy_genes:
+        min_u_r = Noisy_genes[gene2]
     if unique_reads < min_u_r:
         continue
     key = gene1 + "_" + gene2
