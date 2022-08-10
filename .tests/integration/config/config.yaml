@@ -47,6 +47,9 @@ bcftools_filter_exclude_region:
   exon: "DATA/design.noexon1.bed"
   nocnv: "DATA/design.noexon1.bed"
 
+bcftools_id_snps:
+  snps_bed: "DATA/ID_SNPs.bed"
+
 cnvkit_batch:
   container: "docker://marrip/cnvkit:0.9.9"
   normal_reference: "DATA/design.PoN.cnn"
