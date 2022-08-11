@@ -40,6 +40,7 @@ add_multi_snv_in_codon:
 
 annotate_cnv:
   cnv_amp_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed"
+  cnv_loh_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_uppsala_genes.bed"
 
 bcbio_variation_recall_ensemble:
   container: "docker://gmsuppsala/somatic:develop"
@@ -95,6 +96,7 @@ filter_vcf:
   snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
   cnv_hard_filter_amp: "config/config_hard_filter_cnv_amp.yaml"
+  cnv_hard_filter_loh: "config/config_hard_filter_cnv_loh.yaml"
   germline: "config/config_hard_filter_germline.yaml"
 
 freebayes:
