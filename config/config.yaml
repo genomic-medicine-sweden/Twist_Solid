@@ -79,6 +79,10 @@ cnvkit_diagram:
 cnvkit_scatter:
   container: "docker://marrip/cnvkit:0.9.9"
 
+cnvkit_scatter_regions:
+  container: "docker://marrip/cnvkit:0.9.9"
+  region_file: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnvkit_scatter_regions.txt"
+
 config_manta_t:
   container: "docker://marrip/manta:v1.6.0"
 
