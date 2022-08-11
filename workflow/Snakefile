@@ -231,6 +231,12 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
         segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
 
+use rule cnvkit_scatter_regions from cnv_sv as cnv_sv_cnvkit_scatter_regions with:
+    input:
+        segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+        segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+        region_file=config.get("cnvkit_scatter_regions", {}).get("region_file", ""),
 
 module misc:
     snakefile:
