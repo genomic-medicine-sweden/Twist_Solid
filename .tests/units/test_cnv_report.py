@@ -14,7 +14,7 @@ from cnv_report import create_tsv_report  # noqa
 class TestGetCaller(unittest.TestCase):
     def test_create_tsv_report(self):
         cnv = tempfile.mkdtemp() + "/tcvn.txt"
-        create_tsv_report(".tests/units/vcf/test.cnv.vcf", cnv)
+        create_tsv_report([".tests/units/vcf/test.cnv1.vcf"], [".tests/units/vcf/test.cnv2.vcf"], cnv)
 
         @dataclass
         class TestCase:
@@ -36,7 +36,7 @@ class TestGetCaller(unittest.TestCase):
                 ),
                 TestCase(
                     name="variant 3",
-                    expected=("testSample_T", "MYC", "chr8", "46689525-146144003", "cnvkit", "7.06")
+                    expected=("testSample_T", "MYC", "chr8", "46689525-146144003", "cnvkit", "5.06")
                 ),
         ]
 
