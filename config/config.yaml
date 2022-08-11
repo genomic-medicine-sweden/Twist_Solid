@@ -138,7 +138,7 @@ gatk_mutect2_merge_stats:
 
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
-  genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion.hg19.csv"
+  genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion_w_pool2.hg19.csv"
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
 
 hotspot_annotation:
@@ -229,6 +229,9 @@ report_fusions:
   star_fusion_low_support: 2
   star_fusion_low_support_fp_genes: 20
   star_fusion_low_support_inframe: 6
+
+report_gene_fuse:
+  min_unique_reads: 6
 
 samtools_merge_bam:
   extra: "-c"

@@ -35,7 +35,7 @@ bcftools_filter_include_region:
 
 bcftools_filter_exclude_region:
   exon: "DATA/design.noexon1.bed"
-  noćnv: "DATA/design.noexon1.bed"
+  nocnv: "DATA/design.noexon1.bed"
 
 bcbio_variation_recall_ensemble:
   container: "docker://gmsuppsala/somatic:develop"
@@ -52,26 +52,7 @@ bcftools_filter_exclude_region:
   nocnv: "DATA/design.noexon1.bed"
 
 bcftools_id_snps:
-  snps_bed: "reference/ID_SNPs.bed"
-
-exon_skipping:
-  design_bed: "reference/Twist_RNA_Design5.annotated.bed"
-
-hotspot_annotation:
-  hotspots: "DATA/Hotspots_combined.csv"
-  chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"
-
-hotspot_info:
-  hotspot_mutations: "DATA/Hotspots_combined.csv"
-
-hotspot_report:
-  hotspot_mutations: "DATA/Hotspots_combined.csv"
-  report_config: "../../config/config/hotspot_report.yaml"
-  chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"
-  levels:
-    - [300, "ok", "yes"]
-    - [30, "low", "yes"]
-    - [0, "low", "not analyzable"]
+  snps_bed: "DATA/ID_SNPs.bed"
 
 cnvkit_batch:
   container: "docker://marrip/cnvkit:0.9.9"
@@ -89,6 +70,9 @@ cnvkit_scatter:
 
 config_manta_t:
   container: "docker://marrip/manta:v1.6.0"
+
+exon_skipping:
+  design_bed: "reference/Twist_RNA_Design5.annotated.bed"
 
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"
@@ -143,6 +127,25 @@ gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
   genes: "DATA/druggable.expanded.hg19.csv"
   fasta: "reference/WASH7P.fna"
+
+germline_vcf:
+  container: "docker://hydragenetics/vep:105"
+
+hotspot_annotation:
+  hotspots: "DATA/Hotspots_combined.csv"
+  chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"
+
+hotspot_info:
+  hotspot_mutations: "DATA/Hotspots_combined.csv"
+
+hotspot_report:
+  hotspot_mutations: "DATA/Hotspots_combined.csv"
+  report_config: "../../config/config/hotspot_report.yaml"
+  chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"
+  levels:
+    - [300, "ok", "yes"]
+    - [30, "low", "yes"]
+    - [0, "low", "not analyzable"]
 
 manta_run_workflow_t:
   container: "docker://marrip/manta:v1.6.0"
@@ -230,6 +233,9 @@ report_fusions:
   star_fusion_low_support: 2
   star_fusion_low_support_fp_genes: 20
   star_fusion_low_support_inframe: 6
+
+report_gene_fuse:
+  min_unique_reads: 6
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
