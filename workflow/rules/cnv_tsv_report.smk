@@ -6,7 +6,14 @@ __license__ = "GPL-3"
 
 rule cnv_tsv_report:
     input:
-        vcf="cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf",
+        vcfs=[
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf",
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_loh_genes.filter.cnv_hard_filter_loh.vcf",
+        ],
+        org_vcfs=[
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_amp_genes.vcf",
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_loh_genes.vcf",
+        ],
     output:
         tsv=temp("cnv_sv/svdb_query/{sample}_{type}.cnv_report.tsv"),
     log:

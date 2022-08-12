@@ -282,6 +282,14 @@ properties:
         type: integer
         description: lower limit of supporting reads to flag filter fusion that are inframe
 
+  report_gene_fuse:
+    description: report results from genefuse
+    type: object
+    properties:
+      min_unique_reads:
+        type: integer
+        description: lower limit of uniquely supporting reads to report fusion
+
   trimmer_software:
     description: trimmer software that should be used
     pattern: "^(fastp_pe|None)$"
@@ -313,5 +321,6 @@ required:
   - msisensor_pro
   - multiqc
   - reference
+  - report_gene_fuse
   - trimmer_software
   - vep
