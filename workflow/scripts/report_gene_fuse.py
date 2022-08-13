@@ -1,6 +1,7 @@
 
 fusions = open(snakemake.input.fusions)
 report = open(snakemake.output.report, "w")
+min_unique_reads = snakemake.params.min_unique_reads
 
 report.write("Gene1\tGene2\tNr_unique_reads\tGene_region1\tBreak_point1\tTranscript1\tGene_region2\tBreak_point2\tTranscript2\n")
 
