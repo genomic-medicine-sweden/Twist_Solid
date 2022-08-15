@@ -78,7 +78,7 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
                 for gene in genes.split(","):
                     if gene not in gene_variant_dict:
                         gene_variant_dict[gene] = []
-                    gene_variant_dict[gene].append([chr, start, end, callers, cn,AF])
+                    gene_variant_dict[gene].append([chr, start, end, callers, cn, AF])
             for gene in gene_variant_dict:
                 if len(gene_variant_dict[gene]) == 1:
                     caller = gene_variant_dict[gene][0][3]
