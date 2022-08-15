@@ -28,7 +28,7 @@ class TestGetCaller(unittest.TestCase):
                 ),
                 TestCase(
                     name="variant 1",
-                    expected=("testSample_T", "FGFR1", "chr8", "34370199-43930232", "cnvkit", "0.01, "8.59")
+                    expected=("testSample_T", "FGFR1", "chr8", "34370199-43930232", "cnvkit", "0.01", "8.59")
                 ),
                 TestCase(
                     name="variant 2",
