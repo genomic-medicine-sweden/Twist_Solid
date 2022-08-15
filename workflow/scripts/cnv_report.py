@@ -25,11 +25,14 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
             end = variant.pos + int(utils.get_annotation_data_info(variant, "SVLEN")) - 1
             callers = utils.get_annotation_data_info(variant, "CALLER")
             cn = utils.get_annotation_data_info(variant, "CORR_CN")
+            AF = utils.get_annotation_data_info(variant, "Twist_AF")
+            if AF is None:
+                AF = 0.0
             if genes is not None:
                 for gene in genes.split(","):
                     if gene not in gene_all_dict:
                         gene_all_dict[gene] = []
-                        gene_all_dict[gene].append([chr, start, end, callers, cn])
+                        gene_all_dict[gene].append([chr, start, end, callers, cn, AF])
                     else:
                         duplicate = False
                         for variant in gene_all_dict[gene]:
@@ -37,7 +40,7 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
                                 duplicate = True
                                 break
                         if not duplicate:
-                            gene_all_dict[gene].append([chr, start, end, callers, cn])
+                            gene_all_dict[gene].append([chr, start, end, callers, cn, AF])
 
     first_vcf = True
     for input_vcf in input_vcfs:
@@ -56,7 +59,7 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
             output_mode = "w"
         with open(output_txt, output_mode) as writer:
             if first_vcf:
-                writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tcopy_number")
+                writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tnormal_freq\tcopy_number")
             for variant in variants:
                 genes = utils.get_annotation_data_info(variant, "Genes")
                 log.debug(f"Processing variant: {variant}")
@@ -67,12 +70,15 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
                 end = variant.pos + int(utils.get_annotation_data_info(variant, "SVLEN")) - 1
                 callers = utils.get_annotation_data_info(variant, "CALLER")
                 cn = utils.get_annotation_data_info(variant, "CORR_CN")
-                writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{callers}\t{cn:.2f}")
+                AF = utils.get_annotation_data_info(variant, "Twist_AF")
+                if AF is None:
+                    AF = 0.0
+                writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{callers}\t{AF:.2f}\t{cn:.2f}")
                 counter += 1
                 for gene in genes.split(","):
                     if gene not in gene_variant_dict:
                         gene_variant_dict[gene] = []
-                    gene_variant_dict[gene].append([chr, start, end, callers, cn])
+                    gene_variant_dict[gene].append([chr, start, end, callers, cn, AF])
             for gene in gene_variant_dict:
                 if len(gene_variant_dict[gene]) == 1:
                     caller = gene_variant_dict[gene][0][3]
@@ -83,13 +89,14 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
                             end = cnv[2]
                             callers = cnv[3]
                             cn = cnv[4]
+                            AF = cnv[5]
                             if (
                                 (start >= gene_variant_dict[gene][0][1] and start <= gene_variant_dict[gene][0][2]) or
                                 (end >= gene_variant_dict[gene][0][1] and end <= gene_variant_dict[gene][0][2]) or
                                 (gene_variant_dict[gene][0][1] >= start and gene_variant_dict[gene][0][1] <= end) or
                                 (gene_variant_dict[gene][0][2] >= end and gene_variant_dict[gene][0][2] <= start)
                             ):
-                                writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{cn:.2f}")
+                                writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF:.2f}\t{cn:.2f}")
         log.info(f"Processed {counter} variants")
         first_vcf = False
 
