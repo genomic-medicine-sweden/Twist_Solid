@@ -59,7 +59,7 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
             output_mode = "w"
         with open(output_txt, output_mode) as writer:
             if first_vcf:
-                writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tcopy_number")
+                writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tnormal_freq\tcopy_number")
             for variant in variants:
                 genes = utils.get_annotation_data_info(variant, "Genes")
                 log.debug(f"Processing variant: {variant}")
