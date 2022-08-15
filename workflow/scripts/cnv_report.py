@@ -86,8 +86,8 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
                             if (
                                 (start >= gene_variant_dict[gene][0][1] and start <= gene_variant_dict[gene][0][2]) or
                                 (end >= gene_variant_dict[gene][0][1] and end <= gene_variant_dict[gene][0][2]) or
-                                (gene_variant_dict[gene][0][1] >= start and gene_variant_dict[gene][0][1] <= start) or
-                                (gene_variant_dict[gene][0][2] >= end and gene_variant_dict[gene][0][2] <= end)
+                                (gene_variant_dict[gene][0][1] >= start and gene_variant_dict[gene][0][1] <= end) or
+                                (gene_variant_dict[gene][0][2] >= end and gene_variant_dict[gene][0][2] <= start)
                             ):
                                 writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{cn:.2f}")
         log.info(f"Processed {counter} variants")
