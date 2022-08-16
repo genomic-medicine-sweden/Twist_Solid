@@ -6,7 +6,7 @@ min_unique_reads = snakemake.params.min_unique_reads
 report.write("Gene1\tGene2\tNr_unique_reads\tGene_region1\tBreak_point1\tTranscript1\tGene_region2\tBreak_point2\tTranscript2\n")
 
 FP_gene_pairs = ["NPM1_ALK", "CLTC_NTRK3", "MASH2_ALK"]
-Noisy_genes = {"RSPO2": 8, "ABL1": 8, "BRAF": 8, "EZR": 8}
+Noisy_genes_pairs = {"LMNA_EZR" : 7, "ABL1_STRN" : 7, "EZR_ALK" : 8, "RSPO2_BRAF" : 8, "MASH2_HIP1" : 7}
 
 for line in fusions:
     if line[:8] != "#Fusion:":
@@ -29,13 +29,11 @@ for line in fusions:
     transcript1 = line.split("_")[1].split(":")[0]
     transcript2 = line.split("___")[1].split("_")[1].split(":")[0]
     min_u_r = min_unique_reads
-    if gene1 in Noisy_genes:
-        min_u_r = Noisy_genes[gene1]
-    if gene2 in Noisy_genes:
-        min_u_r = Noisy_genes[gene2]
+    key = gene1 + "_" + gene2
+    if key in Noisy_genes_pairs:
+        min_u_r = Noisy_genes_pairs[key]
     if unique_reads < min_u_r:
         continue
-    key = gene1 + "_" + gene2
     if key in FP_gene_pairs:
         continue
     report.write(
