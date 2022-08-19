@@ -35,8 +35,11 @@ rule bcftools_id_snps:
     shell:
         "(bcftools mpileup "
         "-R {input.bed} "
-        "-O v "
+        "-O u "
         "-f {input.ref} "
         "-d 1000000 "
-        "| bcftools call -c) "
+        "| bcftools call "
+        "--skip-variants indels "
+        "-m -O v "
+        "-o {output.vcf}) "
         "&> {log}"
