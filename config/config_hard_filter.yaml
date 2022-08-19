@@ -1,11 +1,11 @@
 filters:
-  vaf:
-    description: "Hard filter variants with low vaf (AF lower than 0.05)"
-    expression: "(FORMAT:AF:0 < 0.05 and !exist[1-hotspot, INFO:Hotspot])"
+  intron:
+    description: "Hard filter intronic variants"
+    expression: "(exist[intron_variant, VEP:Consequence] and !exist[splice, VEP:Consequence] and VEP:SYMBOL != MET and VEP:SYMBOL != TERT and !exist[COSV[0-9]+, VEP:Existing_variation])"
     soft_filter: "False"
-  vaf_hotspot:
-    description: "Hard filter hotspot variants with low vaf (AF lower than 0.01)"
-    expression: "(FORMAT:AF:0 < 0.01 and exist[1-hotspot, INFO:Hotspot])"
+  vaf:
+    description: "Hard filter variants with low vaf (AF lower than 0.01)"
+    expression: "(FORMAT:AF:0 < 0.01)"
     soft_filter: "False"
   artifacts:
     description: "Hard filter variants found in more than 3 normal samples"
@@ -13,11 +13,11 @@ filters:
     soft_filter: "False"
   background:
     description: "Hard filter position with where backgound distribution overlaps variant (lower than 4 SD from median)"
-    expression: "INFO:PositionNrSD < 4"
+    expression: "(INFO:PositionNrSD < 4 and !exist[1-hotspot, INFO:Hotspot])"
     soft_filter: "False"
   germline:
     description: "Hard filter germline"
-    expression: "(VEP:gnomAD_AF > 0.00001 and !exist[COSV[0-9]+, VEP:Existing_variation])"
+    expression: "(VEP:gnomAD_AF > 0.005)"
     soft_filter: "False"
   ad:
     description: "Hard filter variants with few observations (AD lower than 20)"
