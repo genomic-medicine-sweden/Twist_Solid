@@ -38,6 +38,7 @@ rule bcftools_id_snps:
         "-O u "
         "-f {input.ref} "
         "-d 1000000 "
+        "{input.bam} "
         "| bcftools call "
         "--skip-variants indels "
         "-m -O v "
