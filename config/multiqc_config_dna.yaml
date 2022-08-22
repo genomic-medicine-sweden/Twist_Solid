@@ -53,8 +53,8 @@ multiqc_cgs:
       scale: "RdYlGn-rev"
       format: "{:.1%}"
     PCT_SELECTED_BASES:
-      title: "Bases on target [%]"
-      description: "Bases on target [%] from Picard"
+      title: "Bases on exon target [%]"
+      description: "Bases on exon target [%] from Picard"
       min: 0.5
       max: 1.0
       scale: "RdYlGn"
@@ -62,25 +62,32 @@ multiqc_cgs:
     PCT_USABLE_BASES_ON_TARGET:
       title: "Usable bases [%]"
       format: "{:.0%}"
-      description: "Bases aligned, on target, and dedup [%] from Picard"
+      description: "Bases aligned, on exon target, and dedup [%] from Picard"
       min: 0.1
       max: 0.7
       scale: "RdYlGn"
       format: "{:.1%}"
     PCT_TARGET_BASES_100X:
-      title: "Target bases over 100X [%]"
-      description: "Target bases over 100X [%] from Picard"
+      title: "Exon target bases over 100X [%]"
+      description: "Exon target bases over 100X [%] from Picard"
       min: 0.5
       max: 1.0
       scale: "RdYlGn"
       format: "{:.1%}"
+    PCT_TARGET_BASES_500X:
+      title: "Exon target bases over 500X [%]"
+      description: "Exon target bases over 500X [%] from Picard"
+      min: 0.0
+      max: 1.0
+      scale: "RdYlGn"
+      format: "{:.1%}"
     MEAN_TARGET_COVERAGE:
-      title: "Mean target coverage"
-      description: "Mean target coverage from picard"
+      title: "Mean exon target coverage"
+      description: "Mean exon target coverage from picard"
       format: "{:.1f}"
     MEDIAN_TARGET_COVERAGE:
-      title: "Median target coverage"
-      description: "Median target coverage from picard"
+      title: "Median exon target coverage"
+      description: "Median exon target coverage from picard"
     MEDIAN_INSERT_SIZE:
       title: "Median insert size"
       description: "Median insert size from Picard"
@@ -134,11 +141,12 @@ table_columns_placement:
     PCT_SELECTED_BASES: 930
     PCT_USABLE_BASES_ON_TARGET: 940
     PCT_TARGET_BASES_100X: 950
-    MEAN_TARGET_COVERAGE: 960
-    MEDIAN_TARGET_COVERAGE: 970
-    MEDIAN_INSERT_SIZE: 980
-    STANDARD_DEVIATION: 990
-    AT_DROPOUT: 1000
-    GC_DROPOUT: 1010
-    ZERO_CVG_TARGETS_PCT: 1020
-    FOLD_80_BASE_PENALTY: 1030
+    PCT_TARGET_BASES_500X: 960
+    MEAN_TARGET_COVERAGE: 970
+    MEDIAN_TARGET_COVERAGE: 980
+    MEDIAN_INSERT_SIZE: 990
+    STANDARD_DEVIATION: 1000
+    AT_DROPOUT: 1010
+    GC_DROPOUT: 1020
+    ZERO_CVG_TARGETS_PCT: 1030
+    FOLD_80_BASE_PENALTY: 1040
