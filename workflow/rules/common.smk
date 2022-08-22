@@ -61,19 +61,11 @@ wildcard_constraints:
 
 def compile_result_file_list():
     dna_files = [
-        {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna/bam", ".bam"]},
-        {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna/bam", ".bam.bai"]},
-        {
-            "in": ["snv_indels/bcbio_variation_recall_ensemble", ".ensembled.vcf.gz"],
-            "out": ["results/dna/vcf", ".ensembled.vcf.gz"],
-        },
+        {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna", ".bam"]},
+        {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna", ".bam.bai"]},
         {
             "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
             "out": ["results/dna/vcf", ".annotated.vcf.gz"],
-        },
-        {
-            "in": ["annotation/background_annotation", ".background_annotation.include.nocnv.vcf.gz"],
-            "out": ["results/dna/vcf", ".annotated.nocnv.vcf.gz"],
         },
         {
             "in": ["annotation/background_annotation", ".background_annotation.include.exon.filter.snv_soft_filter.vcf"],
@@ -116,16 +108,9 @@ def compile_result_file_list():
             "in": ["cnv_sv/gatk_cnv_call_copy_ratio_segments", ".clean.calledCNVs.seg"],
             "out": ["results/dna/cnv", ".gatk_cnv.seg"],
         },
-        {"in": ["cnv_sv/gatk_cnv_vcf", ".vcf"], "out": ["results/dna/cnv", ".gatk_cnv.vcf"]},
-        {"in": ["cnv_sv/cnvkit_vcf", ".vcf"], "out": ["results/dna/cnv", ".cnvkit.vcf"]},
         {"in": ["cnv_sv/cnvkit_scatter", ".png"], "out": ["results/dna/cnv", ".cnvkit.scatter.png"]},
         {"in": ["cnv_sv/cnvkit_diagram", ".pdf"], "out": ["results/dna/cnv", ".cnvkit.diagram.pdf"]},
-        {"in": ["cnv_sv/svdb_merge", ".merged.vcf"], "out": ["results/dna/cnv", ".merged.vcf"]},
         {"in": ["cnv_sv/svdb_query", ".svdb_query.vcf"], "out": ["results/dna/cnv", ".svdb_query.vcf"]},
-        {
-            "in": ["cnv_sv/svdb_query", ".svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz"],
-            "out": ["results/dna/cnv", ".svdb_query.only_amp_genes.vcf.gz"],
-        },
         {
             "in": ["cnv_sv/svdb_query", ".svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf"],
             "out": ["results/dna/cnv", ".cnv_hard_filter_amp.vcf"],
