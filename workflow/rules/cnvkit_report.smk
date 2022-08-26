@@ -7,3 +7,12 @@ rule cnvkit_json:
         json="cnv_sv/cnvkit_report/{sample}_{type}_cnvkit.json"
     script:
         "../scripts/cnvkit_json.py"
+
+rule cnvkit_html_report:
+    input:
+        json="cnv_sv/cnvkit_report/{sample}_{type}_cnvkit.json",
+        template=config.get("cnvkit_html_report", {}).get("template", "")
+    output:
+        html="cnv_sv/cnvkit_report/{sample}_{type}_cnvkit.html"
+    script:
+        "../scripts/cnvkit_html_report.py"
