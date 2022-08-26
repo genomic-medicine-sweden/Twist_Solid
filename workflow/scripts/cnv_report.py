@@ -61,7 +61,7 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
                 writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tnormal_freq\tcopy_number")
                 first_vcf = False
             writer.write(f"\n{samples}\t1p19q\tNA\tNA\tcnvkit\tNA\tNA")
-        if del_1p19q["1p_gatk_cnv"] / del_1p19q["1p"][2] > 0.5 and del_1p19q["19q_gatk_cnv"] / del_1p19q["19q"][2] > 0.5:
+        if del_1p19q["1p_gatkcnv"] / del_1p19q["1p"][2] > 0.5 and del_1p19q["19q_gatkcnv"] / del_1p19q["19q"][2] > 0.5:
             if first_vcf:
                 writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tnormal_freq\tcopy_number")
                 first_vcf = False
