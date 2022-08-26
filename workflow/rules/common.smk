@@ -16,7 +16,7 @@ from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
 from hydra_genetics import min_version as hydra_min_version
 
-hydra_min_version("0.13.2")
+hydra_min_version("0.14.1")
 
 min_version("7.13.0")
 
