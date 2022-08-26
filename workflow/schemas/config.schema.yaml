@@ -47,10 +47,10 @@ properties:
         type: string
         description: name or path to docker/singularity container
       del_1p19q_cn_limit:
-        type: string
+        type: number
         description: Upper limit of copy number to be included in calculation of del_1p19q_chr_arm_fraction
       del_1p19q_chr_arm_fraction:
-        type: string
+        type: number
         description: Fraction of the chromosome arms that needs to be deleted
 
   cnvkit_batch:

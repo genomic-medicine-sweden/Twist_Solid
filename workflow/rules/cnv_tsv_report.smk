@@ -17,8 +17,8 @@ rule cnv_tsv_report:
     output:
         tsv=temp("cnv_sv/svdb_query/{sample}_{type}.cnv_report.tsv"),
     params:
-        del_1p19q_cn_limit=config.get("cnv_tsv_report", {}).get("del_1p19q_cn_limit", 2),
-        del_1p19q_chr_arm_fraction=config.get("cnv_tsv_report", {}).get("del_1p19q_chr_arm_fraction", 0),
+        del_1p19q_cn_limit=config.get("cnv_tsv_report", {}).get("del_1p19q_cn_limit", "2"),
+        del_1p19q_chr_arm_fraction=config.get("cnv_tsv_report", {}).get("del_1p19q_chr_arm_fraction", "0"),
     log:
         "cnv_sv/svdb_query/{sample}_{type}.cnv_report.tsv.log",
     benchmark:
