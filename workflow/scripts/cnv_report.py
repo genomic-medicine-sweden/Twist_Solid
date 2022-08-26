@@ -10,7 +10,7 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
     first_vcf = True
     for input_org_vcf in input_org_vcfs:
         del_1p19q = {
-            "1p_cnvkit": 0 "19q_cnvkit": 0, "1p_gatkcnv": 0, "19q_gatkcnv": 0,
+            "1p_cnvkit": 0, "19q_cnvkit": 0, "1p_gatkcnv": 0, "19q_gatkcnv": 0,
             "1p": [0, 125000000, 125000000], "19q": [26500000, 59128983, 32628983],
         }
         log.info(f"Opening vcf file: {input_org_vcf}")
