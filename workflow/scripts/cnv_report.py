@@ -7,7 +7,12 @@ log = logging.getLogger()
 
 def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
     gene_all_dict = {}
+    first_vcf = True
     for input_org_vcf in input_org_vcfs:
+        del_1p19q = {
+            "1p_cnvkit": 0 "19q_cnvkit": 0, "1p_gatkcnv": 0, "19q_gatkcnv": 0,
+            "1p": [0, 125000000, 125000000], "19q": [26500000, 59128983, 32628983],
+        }
         log.info(f"Opening vcf file: {input_org_vcf}")
         variants = VariantFile(input_org_vcf)
         samples = list(variants.header.samples)
@@ -28,6 +33,16 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
             AF = utils.get_annotation_data_info(variant, "Twist_AF")
             if AF is None:
                 AF = 0.0
+            if cn < 1.2 and chr == "chr1" and start >= del_1p19q["1p"][0] and start <= del_1p19q["1p"][1]:
+                if callers == "cnvkit":
+                    del_1p19q["1p_cnvkit"] += end - start + 1
+                elif callers == "gatk_cnv":
+                    del_1p19q["1p_gatkcnv"] += end - start + 1
+            if cn < 1.2 and chr == "chr19" and start >= del_1p19q["19q"][0] and start <= del_1p19q["19q"][1]:
+                if callers == "cnvkit":
+                    del_1p19q["19q_cnvkit"] += end - start + 1
+                elif callers == "gatk_cnv":
+                    del_1p19q["19q_gatkcnv"] += end - start + 1
             if genes is not None:
                 for gene in genes.split(","):
                     if gene not in gene_all_dict:
@@ -41,8 +56,17 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
                                 break
                         if not duplicate:
                             gene_all_dict[gene].append([chr, start, end, callers, cn, AF])
+        if del_1p19q["1p_cnvkit"] / del_1p19q["1p"][2] > 0.5 and del_1p19q["19q_cnvkit"] / del_1p19q["19q"][2] > 0.5:
+            if first_vcf:
+                writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tnormal_freq\tcopy_number")
+                first_vcf = False
+            writer.write(f"\n{samples}\t1p19q\tNA\tNA\tcnvkit\tNA\tNA")
+        if del_1p19q["1p_gatk_cnv"] / del_1p19q["1p"][2] > 0.5 and del_1p19q["19q_gatk_cnv"] / del_1p19q["19q"][2] > 0.5:
+            if first_vcf:
+                writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tnormal_freq\tcopy_number")
+                first_vcf = False
+            writer.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
 
-    first_vcf = True
     for input_vcf in input_vcfs:
         gene_variant_dict = {}
         log.info(f"Opening vcf file: {input_vcf}")
@@ -105,4 +129,6 @@ if __name__ == "__main__":
     in_vcfs = snakemake.input.vcfs
     in_org_vcfs = snakemake.input.org_vcfs
     out_tsv = snakemake.output.tsv
+    del_1p19q_cn = snakemake.params.del_1p19q_cn_limit
+    del_1p19q_chr_arm_fraction = snakemake.params.del_1p19q_chr_arm_fraction
     create_tsv_report(in_vcfs, in_org_vcfs, out_tsv)

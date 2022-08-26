@@ -84,6 +84,10 @@ cnvkit_scatter:
 config_manta_t:
   container: "docker://marrip/manta:v1.6.0"
 
+cnv_tsv_report:
+  del_1p19q_cn_limit: 1.2
+  del_1p19q_chr_arm_fraction: 0.5
+
 exon_skipping:
   design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"
 
