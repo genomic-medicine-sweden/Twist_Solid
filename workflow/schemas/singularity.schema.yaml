@@ -123,7 +123,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/gatk4:4\.1\.9\.0$
       required:
         - container
 
@@ -134,7 +134,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/gatk4:4\.1\.9\.0$
       required:
         - container
 
@@ -145,7 +145,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/gatk4:4\.1\.9\.0$
       required:
         - container
 
@@ -156,7 +156,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/gatk4:4\.1\.9\.0$
       required:
         - container
 
@@ -167,7 +167,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/gatk4:4\.1\.9\.0$
       required:
         - container
 
