@@ -100,30 +100,27 @@ filter_vcf:
   cnv_hard_filter_loh: "config/config_hard_filter_cnv_loh.yaml"
   germline: "config/config_hard_filter_germline.yaml"
 
-freebayes:
-  container: "docker://gmsuppsala/somatic:develop"
-
 fusioncatcher:
   container: "docker://blcdsdockerregistry/fusioncatcher:1.33"
   #container: "docker://hydragenetics/fusioncatcher:1.33"
   genome_path: "/data/ref_data/fusioncatcher/human_v102/human_v102/"
 
 gatk_cnv_call_copy_ratio_segments:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
 
 gatk_cnv_collect_allelic_counts:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
   SNP_interval: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/gnomad_SNP_0.001_target.annotated.interval_list"
 
 gatk_cnv_collect_read_counts:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
 
 gatk_cnv_denoise_read_counts:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/gatk_cnv_nextseq_36.hdf5"
 
 gatk_cnv_model_segments:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
 
 gatk_mutect2:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
