@@ -38,7 +38,7 @@
                 .range([0, width-margin.left-margin.right]);
 
             const yScale = d3.scaleLinear()
-                .domain([-6, 6])
+                .domain(d3.extent(data.regions, d => d.log2))
                 .range([height-margin.top-margin.bottom, 0]);
 
             const xAxis = g => g
@@ -131,9 +131,13 @@
 
             const update = function(data) {
                 xScale.domain([0, data.length]);
+                yScale.domain(d3.extent(data.regions, d => d.log2));
                 svg.transition().select(".x-axis")
                     .duration(500)
                     .call(xAxis);
+                svg.transition().select(".y-axis")
+                    .duration(500)
+                    .call(yAxis);
                 svg.select(".x-label").text(data.label);
                 plotRegions(data.regions);
                 plotSegments(data.segments);
@@ -170,7 +174,7 @@
                 .call(d3.axisLeft(yScale).ticks(4));
 
             const yScale = d3.scaleLinear()
-                .domain([-6, 6])
+                .domain(d3.extent(d3.merge(cnvData.map(d => d.regions)), d => d.log2))
                 .range([panelHeight, 0]);
 
             const svg = d3.select("svg#all-chromosomes")
