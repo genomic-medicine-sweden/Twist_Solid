@@ -72,12 +72,17 @@
                     .attr("cy", d => yScale(d.log2))
                     .attr("r", 2)
                     .attr("fill", "#333")
+                    .attr("fill-opacity", 0)
+                    .transition()
+                    .duration(500)
                     .attr("fill-opacity", 0.3);
                 points.transition()
                     .duration(500)
                     .attr("cx", d => xScale(d.start))
                     .attr("cy", d => yScale(d.log2));
                 points.exit()
+                    .transition()
+                    .attr("fill-opacity", 0)
                     .remove();
             }
 
@@ -91,9 +96,15 @@
                     .attr("d", d =>
                         `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`)
                     .attr("stroke", "orange")
-                    .attr("stroke-width", 2);
+                    .attr("stroke-width", 2)
+                    .attr("stroke-opacity", 0)
+                    .transition()
+                    .duration(500)
+                    .attr("stroke-opacity", 1)
 
                 lineSegments.exit()
+                    .transition()
+                    .attr("stroke-opacity", 0)
                     .remove();
 
                 lineSegments.transition()
