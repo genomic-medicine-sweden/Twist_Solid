@@ -9,148 +9,230 @@
 <body>
     <h1>CNV report</h1>
 
-    <svg id="all-chromosomes"></svg>
+    <section>
+        <h2>Chromosome view</h2>
+        <svg id="single-chromosome"></svg>
+    </section>
+
+    <section>
+        <h2>Genome view</h2>
+        <svg id="all-chromosomes"></svg>
+    </section>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
         const cnvData = {{ json }}
 
-        const totalLength = d3.sum(cnvData.map(d => d.length));
-        const height = 200;
-        const width = 800;
-        const panelPadding = 0;
-        const margin = {
-            top: 10,
-            right: 30,
-            bottom: 60,
-            left: 50,
-        };
-        const panelWidths = cnvData.map(d => (width - margin.left - margin.right) * d.length / totalLength - panelPadding);
-        const panelHeight = height - margin.top - margin.bottom;
+        const plotSingleChromosome = function(data) {
+            const height = 200;
+            const width = 800;
+            const margin = {
+                top: 10,
+                right: 30,
+                bottom: 60,
+                left: 50,
+            };
 
-        const xScales = cnvData.map((d, i) => d3.scaleLinear()
-                .domain([0, d.length])
-                .range([0, panelWidths[i]]));
+            const xScale = d3.scaleLinear()
+                .domain([0, data.length])
+                .range([0, width-margin.left-margin.right]);
 
-        const xAxis = (g, i) => g
-                .attr("transform", `translate(0,${panelHeight})`)
-                .call(d3.axisBottom(xScales[i]).ticks(5));
+            const yScale = d3.scaleLinear()
+                .domain([-6, 6])
+                .range([height-margin.top-margin.bottom, 0]);
 
-        const yAxis = g => g
-            .call(d3.axisLeft(yScale).ticks(4));
+            const xAxis = g => g
+                .call(d3.axisBottom(xScale));
 
-        const yScale = d3.scaleLinear()
-            .domain([-6, 6])
-            .range([panelHeight, 0]);
+            const yAxis = g => g
+                .call(d3.axisLeft(yScale));
 
-        const svg = d3.select("svg#all-chromosomes")
-            .attr("height", height)
-            .attr("width", width)
-            .attr("viewBox", [0, 0, width, height])
-            .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+            const svg = d3.select("#single-chromosome")
+                .attr("height", height)
+                .attr("width", width);
 
-        const panels = svg.append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`)
-            .selectAll(".chromosome-plot")
-            .data(cnvData)
-            .enter()
-            .append("g")
+            const plotArea = svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`)
+                .attr("class", "plot-area");
+
+            // Regions
+            plotArea.append("g")
+                .attr("class", "regions")
+                .selectAll(".point")
+                .data(data.regions)
+                .enter()
+                .append("circle")
+                .attr("class", "point")
+                .attr("cx", d => xScale(d.start))
+                .attr("cy", d => yScale(d.log2))
+                .attr("r", 2)
+                .attr("fill", "#333")
+                .attr("fill-opacity", 0.3);
+
+            // Segments
+            plotArea.append("g")
+                .attr("class", "segments")
+                .selectAll(".segment")
+                // Only draw segments that will actually be visible
+                .data(data.segments.filter(s => s.end - s.start > data.length/width))
+                .enter()
+                .append("path")
+                .attr("class", "segment")
+                .attr("d", (d, i, g) =>
+                    `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`)
+                .attr("stroke", "orange")
+                .attr("stroke-width", 2);
+
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},${height-margin.bottom})`)
+                .attr("class", "x-axis")
+                .call(xAxis);
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`)
+                .attr("class", "y-axis")
+                .call(yAxis);
+        }
+
+        const plotAllChromosomes = function() {
+            const totalLength = d3.sum(cnvData.map(d => d.length));
+            const height = 200;
+            const width = 800;
+            const panelPadding = 0;
+            const margin = {
+                top: 10,
+                right: 30,
+                bottom: 60,
+                left: 50,
+            };
+            const panelWidths = cnvData.map(d => (width - margin.left - margin.right) * d.length / totalLength - panelPadding);
+            const panelHeight = height - margin.top - margin.bottom;
+
+            const xScales = cnvData.map((d, i) => d3.scaleLinear()
+                    .domain([0, d.length])
+                    .range([0, panelWidths[i]]));
+
+            const xAxis = (g, i) => g
+                    .attr("transform", `translate(0,${panelHeight})`)
+                    .call(d3.axisBottom(xScales[i]).ticks(5));
+
+            const yAxis = g => g
+                .call(d3.axisLeft(yScale).ticks(4));
+
+            const yScale = d3.scaleLinear()
+                .domain([-6, 6])
+                .range([panelHeight, 0]);
+
+            const svg = d3.select("svg#all-chromosomes")
+                .attr("height", height)
+                .attr("width", width)
+                .attr("viewBox", [0, 0, width, height])
+                .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+
+            const panels = svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`)
+                .selectAll(".chromosome-plot")
+                .data(cnvData)
+                .enter()
+                .append("g")
+                    .attr("data-index", (d, i) => i)
+                    .attr("class", "chromosome-plot")
+                    .attr(
+                        "transform",
+                        (d, i) => `translate(${i === 0 ? 0 : d3.sum(panelWidths.slice(0, i))}, 0)`
+                    )
+                    .on("mouseenter", (e, d) => {
+                        panels.selectAll(".bg-rect").attr("fill", "#FFF");
+                        d3.select(e.target).select(".bg-rect").attr("fill", "#DDD");
+                    })
+                    .on("click", (e, d) => {
+                        console.log(`visualise ${d.label}`);
+                        plotSingleChromosome(d);
+                    });
+
+            // Panel backgrounds
+            panels.append("rect")
+                .attr("class", "bg-rect")
+                .attr("width", (d, i) => panelWidths[i])
+                .attr("height", panelHeight)
+                .attr("fill", "#FFF")
+                .attr("stroke", "#333");
+
+            // Baseline
+            panels.append("line")
+                .attr("class", "baseline")
+                .attr("transform", `translate(0,${yScale(0)})`)
+                .attr("x2", (d, i, g) => panelWidths[g[i].parentNode.dataset.index])
+                .attr("stroke", "#000")
+                .attr("stroke-opacity", 0.3)
+                .attr("stroke-dasharray", 4)
+
+            // Regions
+            panels.append("g")
+                // .attr("transform", `translate(0,0)`)
+                .attr("class", "regions")
                 .attr("data-index", (d, i) => i)
-                .attr("class", "chromosome-plot")
-                .attr(
-                    "transform",
-                    (d, i) => `translate(${i === 0 ? 0 : d3.sum(panelWidths.slice(0, i))}, 0)`
-                )
-                .on("mouseenter", (e, d) => {
-                    panels.selectAll(".bg-rect").attr("fill", "#FFF");
-                    d3.select(e.target).select(".bg-rect").attr("fill", "#DDD");
+                .selectAll(".point")
+                // Only plot every fifth point for performance
+                .data(d => d.regions.filter((r, i) => i % 5 === 0))
+                .enter()
+                .append("circle")
+                .attr("class", "point")
+                .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.start))
+                .attr("cy", d => yScale(d.log2))
+                .attr("r", 2)
+                .attr("fill", "#333")
+                .attr("fill-opacity", 0.3);
+
+            // Segments
+            panels.append("g")
+                .attr("class", "segments")
+                .attr("data-index", (d, i) => i)
+                .selectAll(".segment")
+                // Only draw segments that will actually be visible
+                .data(d => d.segments.filter(s => s.end - s.start > totalLength/width))
+                .enter()
+                .append("path")
+                .attr("class", "segment")
+                .attr("d", (d, i, g) => {
+                    let j = g[i].parentNode.dataset.index;
+                    let xScale = xScales[j];
+                    return `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`;
                 })
-                .on("click", (e, d) => {
-                    console.log(`visualise ${d.label}`);
-                });
+                .attr("stroke", "orange")
+                .attr("stroke-width", 2);
 
-        // Panel backgrounds
-        panels.append("rect")
-            .attr("class", "bg-rect")
-            .attr("width", (d, i) => panelWidths[i])
-            .attr("height", panelHeight)
-            .attr("fill", "#FFF")
-            .attr("stroke", "#333");
+            // X axes
+            // panels.each((d, i, g) => {
+            //     return d3.select(g[i])
+            //         .append("g")
+            //         .attr("class", "x-axis")
+            //         .call(xAxis, i)
+            //         .select(".domain").remove();
+            // });
 
-        // Baseline
-        panels.append("line")
-            .attr("class", "baseline")
-            .attr("transform", `translate(0,${yScale(0)})`)
-            .attr("x2", (d, i, g) => panelWidths[g[i].parentNode.dataset.index])
-            .attr("stroke", "#000")
-            .attr("stroke-opacity", 0.3)
-            .attr("stroke-dasharray", 4)
+            // Y axis
+            svg.append("g")
+                .attr("transform", `translate(${margin.left}, ${margin.top})`)
+                .call(yAxis);
 
-        // Regions
-        panels.append("g")
-            // .attr("transform", `translate(0,0)`)
-            .attr("class", "regions")
-            .attr("data-index", (d, i) => i)
-            .selectAll(".point")
-            // Only plot every fifth point for performance
-            .data(d => d.regions.filter((r, i) => i % 5 === 0))
-            .enter()
-            .append("circle")
-            .attr("class", "point")
-            .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.start))
-            .attr("cy", d => yScale(d.log2))
-            .attr("r", 2)
-            .attr("fill", "#333")
-            .attr("fill-opacity", 0.3);
+            // Labels
+            panels.append("text")
+                .attr("transform", (d, i) => `translate(${panelWidths[i]/2},${panelHeight+margin.top}) rotate(-90)`)
+                .text((d, i) => d.label)
+                .attr("text-anchor", "end")
+                .attr("dominant-baseline", "auto")
+                .style("font-size", "0.8rem");
 
-        // Segments
-        panels.append("g")
-            .attr("class", "segments")
-            .attr("data-index", (d, i) => i)
-            .selectAll(".segment")
-            // Only draw segments that will actually be visible
-            .data(d => d.segments.filter(s => s.end - s.start > totalLength/width))
-            .enter()
-            .append("path")
-            .attr("class", "segment")
-            .attr("d", (d, i, g) => {
-                let j = g[i].parentNode.dataset.index;
-                let xScale = xScales[j];
-                return `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`;
-            })
-            .attr("stroke", "orange")
-            .attr("stroke-width", 2);
+            svg.append("text")
+                .attr("transform", `translate(0,${margin.top+panelHeight/2}) rotate(-90)`)
+                .text("log2 ratio")
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "text-before-edge")
+                .style("font-size", "0.9rem");
+        };
 
-        // X axes
-        // panels.each((d, i, g) => {
-        //     return d3.select(g[i])
-        //         .append("g")
-        //         .attr("class", "x-axis")
-        //         .call(xAxis, i)
-        //         .select(".domain").remove();
-        // });
-
-        // Y axis
-        svg.append("g")
-            .attr("transform", `translate(${margin.left}, ${margin.top})`)
-            .call(yAxis);
-
-        // Labels
-        panels.append("text")
-            .attr("transform", (d, i) => `translate(${panelWidths[i]/2},${panelHeight+margin.top}) rotate(-90)`)
-            .text((d, i) => d.label)
-            .attr("text-anchor", "end")
-            .attr("dominant-baseline", "auto")
-            .style("font-size", "0.8rem");
-
-        svg.append("text")
-            .attr("transform", `translate(0,${margin.top+panelHeight/2}) rotate(-90)`)
-            .text("log2 ratio")
-            .attr("text-anchor", "middle")
-            .attr("dominant-baseline", "text-before-edge")
-            .style("font-size", "0.9rem");
-
-        document.querySelector("body").append(svg.node());
+        plotAllChromosomes();
+        plotSingleChromosome(cnvData[0]);
     </script>
 </body>
 </html>
