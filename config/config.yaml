@@ -68,18 +68,18 @@ bwa_mem_merge:
   extra: "-c"
 
 cnvkit_batch:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_nextseq_36.cnn"
   method: "hybrid"
 
 cnvkit_call:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnvkit_diagram:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnvkit_scatter:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 config_manta_t:
   container: "docker://marrip/manta:v1.6.0"
