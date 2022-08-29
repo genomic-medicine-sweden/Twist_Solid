@@ -87,7 +87,7 @@ use rule * from snv_indels as snv_indels_*
 
 module annotation:
     snakefile:
-        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="89177fe")
+        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="ad68059")
     config:
         config
 
@@ -194,7 +194,7 @@ use rule * from biomarker as biomarker_*
 
 module fusions:
     snakefile:
-        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="bedaebf")
+        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="12f8354")
     config:
         config
 
