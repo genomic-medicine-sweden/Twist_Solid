@@ -29,7 +29,7 @@
             const margin = {
                 top: 10,
                 right: 30,
-                bottom: 60,
+                bottom: 40,
                 left: 50,
             };
 
@@ -45,7 +45,7 @@
                 .call(d3.axisBottom(xScale));
 
             const yAxis = g => g
-                .call(d3.axisLeft(yScale));
+                .call(d3.axisLeft(yScale).ticks(4));
 
             const svg = d3.select("#single-chromosome")
                 .attr("height", height)
@@ -55,33 +55,55 @@
                 .attr("transform", `translate(${margin.left},${margin.top})`)
                 .attr("class", "plot-area");
 
-            // Regions
-            plotArea.append("g")
-                .attr("class", "regions")
-                .selectAll(".point")
-                .data(data.regions)
-                .enter()
-                .append("circle")
-                .attr("class", "point")
-                .attr("cx", d => xScale(d.start))
-                .attr("cy", d => yScale(d.log2))
-                .attr("r", 2)
-                .attr("fill", "#333")
-                .attr("fill-opacity", 0.3);
+            const regions = plotArea.append("g")
+                .attr("class", "regions");
 
-            // Segments
-            plotArea.append("g")
-                .attr("class", "segments")
-                .selectAll(".segment")
-                // Only draw segments that will actually be visible
-                .data(data.segments.filter(s => s.end - s.start > data.length/width))
-                .enter()
-                .append("path")
-                .attr("class", "segment")
-                .attr("d", (d, i, g) =>
-                    `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`)
-                .attr("stroke", "orange")
-                .attr("stroke-width", 2);
+            const segments = plotArea.append("g")
+                .attr("class", "segments");
+
+            const plotRegions = function(regionData) {
+                let points = regions.selectAll(".point")
+                    .data(regionData);
+
+                points.enter()
+                    .append("circle")
+                    .attr("class", "point")
+                    .attr("cx", d => xScale(d.start))
+                    .attr("cy", d => yScale(d.log2))
+                    .attr("r", 2)
+                    .attr("fill", "#333")
+                    .attr("fill-opacity", 0.3);
+                points.transition()
+                    .duration(500)
+                    .attr("cx", d => xScale(d.start))
+                    .attr("cy", d => yScale(d.log2));
+                points.exit()
+                    .remove();
+            }
+
+            const plotSegments = function(segmentData) {
+                let lineSegments = segments.selectAll(".segment")
+                    .data(segmentData);
+
+                lineSegments.enter()
+                    .append("path")
+                    .attr("class", "segment")
+                    .attr("d", d =>
+                        `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`)
+                    .attr("stroke", "orange")
+                    .attr("stroke-width", 2);
+
+                lineSegments.exit()
+                    .remove();
+
+                lineSegments.transition()
+                    .duration(500)
+                    .attr("d", d =>
+                        `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`);
+            }
+
+            plotRegions(data.regions);
+            plotSegments(data.segments);
 
             svg.append("g")
                 .attr("transform", `translate(${margin.left},${height-margin.bottom})`)
@@ -91,6 +113,35 @@
                 .attr("transform", `translate(${margin.left},${margin.top})`)
                 .attr("class", "y-axis")
                 .call(yAxis);
+
+            // Labels
+            svg.append("text")
+                .attr("transform", `translate(${width/2},${height})`)
+                .attr("class", "x-label")
+                .text(data.label)
+                .attr("text-anchor", "middle")
+                .style("font-size", "0.8rem");
+
+            svg.append("text")
+                .attr("transform", `translate(0,${margin.top+(height-margin.bottom)/2}) rotate(-90)`)
+                .text("log2 ratio")
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "text-before-edge")
+                .style("font-size", "0.9rem");
+
+            const update = function(data) {
+                xScale.domain([0, data.length]);
+                svg.transition().select(".x-axis")
+                    .duration(500)
+                    .call(xAxis);
+                svg.select(".x-label").text(data.label);
+                plotRegions(data.regions);
+                plotSegments(data.segments);
+            }
+
+            return {
+                update: update
+            }
         }
 
         const plotAllChromosomes = function() {
@@ -145,8 +196,7 @@
                         d3.select(e.target).select(".bg-rect").attr("fill", "#DDD");
                     })
                     .on("click", (e, d) => {
-                        console.log(`visualise ${d.label}`);
-                        plotSingleChromosome(d);
+                        chromosomeView.update(d);
                     });
 
             // Panel backgrounds
@@ -168,7 +218,6 @@
 
             // Regions
             panels.append("g")
-                // .attr("transform", `translate(0,0)`)
                 .attr("class", "regions")
                 .attr("data-index", (d, i) => i)
                 .selectAll(".point")
@@ -201,15 +250,6 @@
                 .attr("stroke", "orange")
                 .attr("stroke-width", 2);
 
-            // X axes
-            // panels.each((d, i, g) => {
-            //     return d3.select(g[i])
-            //         .append("g")
-            //         .attr("class", "x-axis")
-            //         .call(xAxis, i)
-            //         .select(".domain").remove();
-            // });
-
             // Y axis
             svg.append("g")
                 .attr("transform", `translate(${margin.left}, ${margin.top})`)
@@ -231,8 +271,8 @@
                 .style("font-size", "0.9rem");
         };
 
+        const chromosomeView = plotSingleChromosome(cnvData[0]);
         plotAllChromosomes();
-        plotSingleChromosome(cnvData[0]);
     </script>
 </body>
 </html>
