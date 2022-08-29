@@ -35,7 +35,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/cnvkit:0\.9\.9$
+            hydragenetics/cnvkit:0\.9\.9$
     required:
       - container
 
@@ -46,7 +46,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/cnvkit:0\.9\.9$
+            hydragenetics/cnvkit:0\.9\.9$
     required:
       - container
 
@@ -57,7 +57,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/cnvkit:0\.9\.9$
+            hydragenetics/cnvkit:0\.9\.9$
     required:
       - container
 
@@ -68,7 +68,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/cnvkit:0\.9\.9$
+            hydragenetics/cnvkit:0\.9\.9$
     required:
       - container
 
