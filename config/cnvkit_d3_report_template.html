@@ -200,19 +200,28 @@
                 .data(cnvData)
                 .enter()
                 .append("g")
-                    .attr("data-index", (d, i) => i)
-                    .attr("class", "chromosome-plot")
-                    .attr(
-                        "transform",
-                        (d, i) => `translate(${i === 0 ? 0 : d3.sum(panelWidths.slice(0, i))}, 0)`
-                    )
-                    .on("mouseenter", (e, d) => {
-                        panels.selectAll(".bg-rect").attr("fill", "#FFF");
-                        d3.select(e.target).select(".bg-rect").attr("fill", "#DDD");
-                    })
-                    .on("click", (e, d) => {
-                        chromosomeView.update(d);
-                    });
+                .attr("data-index", (d, i) => i)
+                .attr("class", "chromosome-plot")
+                .attr(
+                    "transform",
+                    (d, i) => `translate(${i === 0 ? 0 : d3.sum(panelWidths.slice(0, i))}, 0)`
+                )
+                .on("mouseenter", (e, d) => {
+                    panels.selectAll(".bg-rect").attr("fill", "#FFF");
+                    d3.select(e.target).select(".bg-rect").attr("fill", "#DDD");
+                })
+                .on("mouseout", e => {
+                    if (e.target.classList.contains("bg-rect") &&
+                            !e.relatedTarget.classList.contains("point") &&
+                            !e.relatedTarget.classList.contains("segment") &&
+                            !e.relatedTarget.classList.contains("baseline") &&
+                            !e.relatedTarget.classList.contains("chromosome-plot")) {
+                        d3.select(e.target).attr("fill", "#FFF");
+                    }
+                })
+                .on("click", (e, d) => {
+                    chromosomeView.update(d);
+                });
 
             // Panel backgrounds
             panels.append("rect")
