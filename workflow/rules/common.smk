@@ -141,20 +141,20 @@ def compile_result_file_list():
         for unit_type in get_unit_types(units, sample)
         if unit_type != "R"
     ]
-    # output_files += [
-    #     "results/dna/vcf/%s_%s_%s.vcf.gz" % (caller, sample, unit_type)
-    #     for caller in ["gatk_mutect2", "vardict"]
-    #     for sample in get_samples(samples)
-    #     for unit_type in get_unit_types(units, sample)
-    #     if unit_type != "R"
-    # ]
-    # input_files += [
-    #     "snv_indels/%s/%s_%s.merged.vcf.gz" % (caller, sample, unit_type)
-    #     for caller in ["gatk_mutect2", "vardict"]
-    #     for sample in get_samples(samples)
-    #     for unit_type in get_unit_types(units, sample)
-    #     if unit_type != "R"
-    # ]
+    output_files += [
+        "results/dna/vcf/%s_%s_%s.vcf.gz" % (caller, sample, unit_type)
+        for caller in ["gatk_mutect2", "vardict"]
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type != "R"
+    ]
+    input_files += [
+        "snv_indels/%s/%s_%s.merged.vcf.gz" % (caller, sample, unit_type)
+        for caller in ["gatk_mutect2", "vardict"]
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type != "R"
+    ]
     # output_files += [
     #     "results/dna/cnv/%s_%s.manta_tumorSV.vcf.gz" % (sample, unit_type)
     #     for sample in get_samples(samples)

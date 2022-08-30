@@ -74,18 +74,18 @@ use rule * from alignment as alignment_*
 #         "fusions/star_fusion/{path_file}.out.bam",
 #     output:
 #         temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
-#
-#
-# module snv_indels:
-#     snakefile:
-#         github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.2.0")
-#     config:
-#         config
-#
-#
-# use rule * from snv_indels as snv_indels_*
-#
-#
+
+
+module snv_indels:
+    snakefile:
+        github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.2.0")
+    config:
+        config
+
+
+use rule * from snv_indels as snv_indels_*
+
+
 # module annotation:
 #     snakefile:
 #         github("hydra-genetics/annotation", path="workflow/Snakefile", tag="ad68059")
@@ -232,16 +232,16 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 #         segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
 #         segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
 #         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
-#
-#
-# module misc:
-#     snakefile:
-#         github("hydra-genetics/misc", path="workflow/Snakefile", tag="f8706d4")
-#     config:
-#         config
-#
-#
-# use rule tabix from misc as misc_tabix
-#
-#
-# use rule bgzip from misc as misc_bgzip
+
+
+module misc:
+    snakefile:
+        github("hydra-genetics/misc", path="workflow/Snakefile", tag="f8706d4")
+    config:
+        config
+
+
+use rule tabix from misc as misc_tabix
+
+
+use rule bgzip from misc as misc_bgzip
