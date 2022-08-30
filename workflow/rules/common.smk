@@ -52,12 +52,17 @@ validate(units, schema="../schemas/units.schema.yaml")
 
 wildcard_constraints:
     barcode="[A-Z+]+",
-    chr="[^_]+",
+    chr="|".join(extract_chr(
+        "%s.fai" % (config.get("reference", {}).get("fasta", "")),
+        filter_out=config.get("reference", {}).get("skip_chrs", []),
+    )),
     flowcell="[A-Z0-9]+",
     lane="L[0-9]+",
     sample="|".join(get_samples(samples)),
     type="N|T|R",
 
+
+extract_chr
 
 def compile_result_file_list():
     dna_files = [
@@ -160,7 +165,7 @@ def compile_result_file_list():
     #     for sample in get_samples(samples)
     #     for unit_type in get_unit_types(units, sample)
     #     if unit_type == "T"
-    ]
+    # ]
     # output_files += [
     #     "results/dna/optitype/%s_%s.hla_type_result.tsv" % (sample, t)
     #     for sample in get_samples(samples)
@@ -170,7 +175,7 @@ def compile_result_file_list():
     #     "biomarker/optitype/%s_%s/%s_%s_hla_type_result.tsv" % (sample, t, sample, t)
     #     for sample in get_samples(samples)
     #     for t in get_unit_types(units, sample)
-    ]
+    # ]
 
     rna_files = [
         {"in": ["fusions/arriba", ".fusions.tsv"], "out": ["results/rna/fusion", ".arriba.fusions.tsv"]},
