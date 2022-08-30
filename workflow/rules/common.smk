@@ -88,21 +88,21 @@ def compile_result_file_list():
         #     ],
         #     "out": ["results/dna/vcf", ".annotated.exon_only.filter.hard_filter.codon_snv.vcf"],
         # },
-        # {
-        #     "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
-        #     "out": ["results/dna/qc", ".duplication_metrics.txt"],
-        # },
-        # {
-        #     "in": ["qc/picard_collect_alignment_summary_metrics", ".alignment_summary_metrics.txt"],
-        #     "out": ["results/dna/qc", ".alignment_summary_metrics.txt"],
-        # },
-        # {"in": ["qc/picard_collect_hs_metrics", ".HsMetrics.txt"], "out": ["results/dna/qc", ".HsMetrics.txt"]},
-        # {
-        #     "in": ["qc/picard_collect_insert_size_metrics", ".insert_size_metrics.txt"],
-        #     "out": ["results/dna/qc", ".insert_size_metrics.txt"],
-        # },
-        # {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
-        # {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["gvcf_dna", ".mosdepth.g.vcf.gz"]},
+        {
+            "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
+            "out": ["results/dna/qc", ".duplication_metrics.txt"],
+        },
+        {
+            "in": ["qc/picard_collect_alignment_summary_metrics", ".alignment_summary_metrics.txt"],
+            "out": ["results/dna/qc", ".alignment_summary_metrics.txt"],
+        },
+        {"in": ["qc/picard_collect_hs_metrics", ".HsMetrics.txt"], "out": ["results/dna/qc", ".HsMetrics.txt"]},
+        {
+            "in": ["qc/picard_collect_insert_size_metrics", ".insert_size_metrics.txt"],
+            "out": ["results/dna/qc", ".insert_size_metrics.txt"],
+        },
+        {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
+        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["gvcf_dna", ".mosdepth.g.vcf.gz"]},
         # {"in": ["qc/hotspot_report", ".output.tsv"], "out": ["results/dna/qc", ".coverage_and_mutations.tsv"]},
         # {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
         # {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
@@ -141,20 +141,20 @@ def compile_result_file_list():
         for unit_type in get_unit_types(units, sample)
         if unit_type != "R"
     ]
-    output_files += [
-        "results/dna/vcf/%s_%s_%s.vcf.gz" % (caller, sample, unit_type)
-        for caller in ["gatk_mutect2", "vardict"]
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type != "R"
-    ]
-    input_files += [
-        "snv_indels/%s/%s_%s.merged.vcf.gz" % (caller, sample, unit_type)
-        for caller in ["gatk_mutect2", "vardict"]
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type != "R"
-    ]
+    # output_files += [
+    #     "results/dna/vcf/%s_%s_%s.vcf.gz" % (caller, sample, unit_type)
+    #     for caller in ["gatk_mutect2", "vardict"]
+    #     for sample in get_samples(samples)
+    #     for unit_type in get_unit_types(units, sample)
+    #     if unit_type != "R"
+    # ]
+    # input_files += [
+    #     "snv_indels/%s/%s_%s.merged.vcf.gz" % (caller, sample, unit_type)
+    #     for caller in ["gatk_mutect2", "vardict"]
+    #     for sample in get_samples(samples)
+    #     for unit_type in get_unit_types(units, sample)
+    #     if unit_type != "R"
+    # ]
     # output_files += [
     #     "results/dna/cnv/%s_%s.manta_tumorSV.vcf.gz" % (sample, unit_type)
     #     for sample in get_samples(samples)
