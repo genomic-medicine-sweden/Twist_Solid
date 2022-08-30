@@ -106,83 +106,83 @@ use rule * from alignment as alignment_*
 # use rule * from filtering as filtering_*
 #
 #
-# module qc:
-#     snakefile:
-#         github("hydra-genetics/qc", path="workflow/Snakefile", tag="cd029ff")
-#     config:
-#         config
-#
-#
-# use rule * from qc as qc_*
-#
-#
-# use rule mosdepth from qc as qc_mosdepth with:
-#     input:
-#         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-#         bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
-#         bed=config.get("reference", {}).get("design_bed_rna", ""),
-#
-#
-# use rule samtools_stats from qc as qc_samtools_stats with:
-#     wildcard_constraints:
-#         type="T|N",
-#
-#
-# use rule samtools_stats from qc as qc_samtools_stats_rna with:
-#     input:
-#         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-#     params:
-#         extra="%s -t %s"
-#         % (
-#             config.get("samtools_stats", {}).get("extra", ""),
-#             config.get("reference", {}).get("design_bed_rna", ""),
-#         ),
-#     wildcard_constraints:
-#         type="R",
-#
-#
-# use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics with:
-#     wildcard_constraints:
-#         type="T|N",
-#
-#
-# use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics_rna with:
-#     params:
-#         extra="%s %s"
-#         % (
-#             config.get("picard_collect_hs_metrics", {}).get("extra", ""),
-#             "VALIDATION_STRINGENCY=LENIENT",
-#         ),
-#     input:
-#         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-#         bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
-#         bait_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
-#         reference=config.get("reference", {}).get("fasta_rna", ""),
-#         target_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
-#     wildcard_constraints:
-#         type="R",
-#
-#
-# use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics with:
-#     wildcard_constraints:
-#         type="T|N",
-#
-#
-# use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics_rna with:
-#     params:
-#         extra="%s %s"
-#         % (
-#             config.get("picard_collect_alignment_summary_metrics", {}).get("extra", ""),
-#             "VALIDATION_STRINGENCY=LENIENT",
-#         ),
-#     input:
-#         bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-#         bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
-#         ref=config.get("reference", {}).get("fasta_rna", ""),
-#     wildcard_constraints:
-#         type="R",
-#
-#
+module qc:
+    snakefile:
+        github("hydra-genetics/qc", path="workflow/Snakefile", tag="cd029ff")
+    config:
+        config
+
+
+use rule * from qc as qc_*
+
+
+use rule mosdepth from qc as qc_mosdepth with:
+    input:
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        bed=config.get("reference", {}).get("design_bed_rna", ""),
+
+
+use rule samtools_stats from qc as qc_samtools_stats with:
+    wildcard_constraints:
+        type="T|N",
+
+
+use rule samtools_stats from qc as qc_samtools_stats_rna with:
+    input:
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+    params:
+        extra="%s -t %s"
+        % (
+            config.get("samtools_stats", {}).get("extra", ""),
+            config.get("reference", {}).get("design_bed_rna", ""),
+        ),
+    wildcard_constraints:
+        type="R",
+
+
+use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics with:
+    wildcard_constraints:
+        type="T|N",
+
+
+use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics_rna with:
+    params:
+        extra="%s %s"
+        % (
+            config.get("picard_collect_hs_metrics", {}).get("extra", ""),
+            "VALIDATION_STRINGENCY=LENIENT",
+        ),
+    input:
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        bait_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
+        reference=config.get("reference", {}).get("fasta_rna", ""),
+        target_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
+    wildcard_constraints:
+        type="R",
+
+
+use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics with:
+    wildcard_constraints:
+        type="T|N",
+
+
+use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics_rna with:
+    params:
+        extra="%s %s"
+        % (
+            config.get("picard_collect_alignment_summary_metrics", {}).get("extra", ""),
+            "VALIDATION_STRINGENCY=LENIENT",
+        ),
+    input:
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        ref=config.get("reference", {}).get("fasta_rna", ""),
+    wildcard_constraints:
+        type="R",
+
+
 # module biomarker:
 #     snakefile:
 #         github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="aa89042")
