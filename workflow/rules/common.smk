@@ -170,7 +170,7 @@ def compile_result_file_list():
     #     "biomarker/optitype/%s_%s/%s_%s_hla_type_result.tsv" % (sample, t, sample, t)
     #     for sample in get_samples(samples)
     #     for t in get_unit_types(units, sample)
-    # ]
+    ]
 
     rna_files = [
         {"in": ["fusions/arriba", ".fusions.tsv"], "out": ["results/rna/fusion", ".arriba.fusions.tsv"]},
