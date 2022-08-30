@@ -44,7 +44,7 @@ annotate_cnv:
   # cnv_loh_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_genes.bed"
 
 bcbio_variation_recall_ensemble:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/bcbio-vr:0.2.6"
   callers:
     - vardict
     - gatk_mutect2
