@@ -79,7 +79,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/manta:v1\.6\.0$
+            hydragenetics/manta:1\.6\.0$
     required:
       - container
 
@@ -178,7 +178,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/manta:v1\.6\.0$
+            hydragenetics/manta:1\.6\.0$
       required:
         - container
 
