@@ -12,6 +12,7 @@ from snakemake.utils import validate
 from snakemake.utils import min_version
 
 from hydra_genetics.utils.resources import load_resources
+from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
 from hydra_genetics import min_version as hydra_min_version
@@ -87,21 +88,21 @@ def compile_result_file_list():
         #     ],
         #     "out": ["results/dna/vcf", ".annotated.exon_only.filter.hard_filter.codon_snv.vcf"],
         # },
-        {
-            "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
-            "out": ["results/dna/qc", ".duplication_metrics.txt"],
-        },
-        {
-            "in": ["qc/picard_collect_alignment_summary_metrics", ".alignment_summary_metrics.txt"],
-            "out": ["results/dna/qc", ".alignment_summary_metrics.txt"],
-        },
-        {"in": ["qc/picard_collect_hs_metrics", ".HsMetrics.txt"], "out": ["results/dna/qc", ".HsMetrics.txt"]},
-        {
-            "in": ["qc/picard_collect_insert_size_metrics", ".insert_size_metrics.txt"],
-            "out": ["results/dna/qc", ".insert_size_metrics.txt"],
-        },
-        {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
-        {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["gvcf_dna", ".mosdepth.g.vcf.gz"]},
+        # {
+        #     "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
+        #     "out": ["results/dna/qc", ".duplication_metrics.txt"],
+        # },
+        # {
+        #     "in": ["qc/picard_collect_alignment_summary_metrics", ".alignment_summary_metrics.txt"],
+        #     "out": ["results/dna/qc", ".alignment_summary_metrics.txt"],
+        # },
+        # {"in": ["qc/picard_collect_hs_metrics", ".HsMetrics.txt"], "out": ["results/dna/qc", ".HsMetrics.txt"]},
+        # {
+        #     "in": ["qc/picard_collect_insert_size_metrics", ".insert_size_metrics.txt"],
+        #     "out": ["results/dna/qc", ".insert_size_metrics.txt"],
+        # },
+        # {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
+        # {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["gvcf_dna", ".mosdepth.g.vcf.gz"]},
         # {"in": ["qc/hotspot_report", ".output.tsv"], "out": ["results/dna/qc", ".coverage_and_mutations.tsv"]},
         # {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
         # {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
