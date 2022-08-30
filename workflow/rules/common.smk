@@ -69,6 +69,7 @@ def compile_result_file_list():
     dna_files = [
         {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna", ".bam"]},
         {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna", ".bam.bai"]},
+        {"in": ["snv_indels/bcbio_variation_recall_ensemble", ".ensembled.vcf.gz"], "out": ["results/dna/vcf", ".merged.vcf.gz"]},
         # {
         #     "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
         #     "out": ["results/dna/vcf", ".annotated.vcf.gz"],
