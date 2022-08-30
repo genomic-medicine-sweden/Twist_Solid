@@ -275,7 +275,7 @@ tmb:
   nssnv_ssnv_tmb_correction: 0.74
 
 vardict:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/vardict:1.8.3"
   bed_columns: "-c 1 -S 2 -E 3 -g 4"
   allele_frequency_threshold: "0.01"
 
