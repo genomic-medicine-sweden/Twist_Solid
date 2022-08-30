@@ -8,6 +8,7 @@ log = logging.getLogger()
 def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
     gene_all_dict = {}
     first_vcf = True
+    nr_writes = 0
     log.info(f"Opening output tsv file: {output_txt}")
     with open(output_txt, "w") as writer:
         for input_org_vcf in input_org_vcfs:
@@ -35,12 +36,12 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
                 AF = utils.get_annotation_data_info(variant, "Twist_AF")
                 if AF is None:
                     AF = 0.0
-                if cn < 1.2 and chr == "chr1" and start >= del_1p19q["1p"][0] and start <= del_1p19q["1p"][1]:
+                if cn < del_1p19q_cn and chr == "chr1" and start >= del_1p19q["1p"][0] and start <= del_1p19q["1p"][1]:
                     if callers == "cnvkit":
                         del_1p19q["1p_cnvkit"] += end - start + 1
                     elif callers == "gatk_cnv":
                         del_1p19q["1p_gatkcnv"] += end - start + 1
-                if cn < 1.2 and chr == "chr19" and start >= del_1p19q["19q"][0] and start <= del_1p19q["19q"][1]:
+                if cn < del_1p19q_cn and chr == "chr19" and start >= del_1p19q["19q"][0] and start <= del_1p19q["19q"][1]:
                     if callers == "cnvkit":
                         del_1p19q["19q_cnvkit"] += end - start + 1
                     elif callers == "gatk_cnv":
@@ -58,16 +59,22 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
                                     break
                             if not duplicate:
                                 gene_all_dict[gene].append([chr, start, end, callers, cn, AF])
-            if del_1p19q["1p_cnvkit"] / del_1p19q["1p"][2] > 0.5 and del_1p19q["19q_cnvkit"] / del_1p19q["19q"][2] > 0.5:
+            if (del_1p19q["1p_cnvkit"] / del_1p19q["1p"][2] > del_1p19q_chr_arm_fraction and
+                    del_1p19q["19q_cnvkit"] / del_1p19q["19q"][2] > del_1p19q_chr_arm_fraction):
                 if first_vcf:
                     writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tnormal_freq\tcopy_number")
                     first_vcf = False
-                writer.write(f"\n{samples}\t1p19q\tNA\tNA\tcnvkit\tNA\tNA")
-            if del_1p19q["1p_gatkcnv"] / del_1p19q["1p"][2] > 0.5 and del_1p19q["19q_gatkcnv"] / del_1p19q["19q"][2] > 0.5:
+                if nr_writes < 2:
+                    writer.write(f"\n{samples}\t1p19q\tNA\tNA\tcnvkit\tNA\tNA")
+                    nr_writes += 1
+            if (del_1p19q["1p_gatkcnv"] / del_1p19q["1p"][2] > del_1p19q_chr_arm_fraction and
+                    del_1p19q["19q_gatkcnv"] / del_1p19q["19q"][2] > del_1p19q_chr_arm_fraction):
                 if first_vcf:
                     writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tnormal_freq\tcopy_number")
                     first_vcf = False
-                writer.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
+                if nr_writes < 2:
+                    writer.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
+                    nr_writes += 1
 
         for input_vcf in input_vcfs:
             gene_variant_dict = {}
@@ -81,6 +88,7 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
             counter = 0
             if first_vcf:
                 writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tnormal_freq\tcopy_number")
+                first_vcf = False
             for variant in variants:
                 genes = utils.get_annotation_data_info(variant, "Genes")
                 log.debug(f"Processing variant: {variant}")
@@ -119,7 +127,6 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt):
                             ):
                                 writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF:.2f}\t{cn:.2f}")
         log.info(f"Processed {counter} variants")
-        first_vcf = False
 
 
 if __name__ == "__main__":
@@ -128,4 +135,4 @@ if __name__ == "__main__":
     out_tsv = snakemake.output.tsv
     del_1p19q_cn = snakemake.params.del_1p19q_cn_limit
     del_1p19q_chr_arm_fraction = snakemake.params.del_1p19q_chr_arm_fraction
-    create_tsv_report(in_vcfs, in_org_vcfs, out_tsv)
+    create_tsv_report(in_vcfs, in_org_vcfs, out_tsv, del_1p19q_cn, del_1p19q_chr_arm_fraction)
