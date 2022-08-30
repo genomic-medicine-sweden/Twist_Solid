@@ -82,7 +82,7 @@ cnvkit_scatter:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
 config_manta_t:
-  container: "docker://marrip/manta:v1.6.0"
+  container: "docker://hydragenetics/manta:1.6.0"
 
 cnv_tsv_report:
   del_1p19q_cn_limit: 1.4
@@ -162,7 +162,7 @@ hotspot_report:
     - [0, "low", "not analyzable"]
 
 manta_run_workflow_t:
-  container: "docker://marrip/manta:v1.6.0"
+  container: "docker://marrip/hydragenetics:v1.6.0"
 
 mosdepth:
   container: "docker://hydragenetics/mosdepth:0.3.2"
