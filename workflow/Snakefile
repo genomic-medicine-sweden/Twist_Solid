@@ -23,29 +23,29 @@ rule all:
         unpack(compile_output_list),
 
 
-# ruleorder: prealignment_fastp_pe > misc_bgzip
-# ruleorder: snv_indels_tabix > annotation_tabix_vcf > misc_tabix
-# ruleorder: snv_indels_gatk_mutect2 > misc_tabix
-# ruleorder: snv_indels_gatk_mutect2_gvcf > alignment_samtools_sort
-# ruleorder: snv_indels_gatk_mutect2_gvcf > misc_tabix
-# ruleorder: snv_indels_gatk_mutect2_gvcf > misc_bgzip
-# ruleorder: snv_indels_bgzip > misc_bgzip
-# ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
-# ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
-# ruleorder: annotation_bgzip_vcf > misc_bgzip
-# ruleorder: annotation_tabix_vcf > misc_tabix
-# ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
-# ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
-# ruleorder: annotation_tabix_vcf > snv_indels_tabix
-# ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
-# ruleorder: annotation_annotate_cnv > misc_bgzip
-# ruleorder: annotation_annotate_cnv > snv_indels_bgzip
-# ruleorder: filtering_bcftools_filter_include_region > annotation_bgzip_vcf
-# ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
-# ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
-# ruleorder: qc_samtools_stats_rna > qc_samtools_stats
-# ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
-# ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
+ruleorder: prealignment_fastp_pe > misc_bgzip
+ruleorder: snv_indels_tabix > annotation_tabix_vcf > misc_tabix
+ruleorder: snv_indels_gatk_mutect2 > misc_tabix
+ruleorder: snv_indels_gatk_mutect2_gvcf > alignment_samtools_sort
+ruleorder: snv_indels_gatk_mutect2_gvcf > misc_tabix
+ruleorder: snv_indels_gatk_mutect2_gvcf > misc_bgzip
+ruleorder: snv_indels_bgzip > misc_bgzip
+ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
+ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
+ruleorder: annotation_bgzip_vcf > misc_bgzip
+ruleorder: annotation_tabix_vcf > misc_tabix
+ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
+ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
+ruleorder: annotation_tabix_vcf > snv_indels_tabix
+ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
+ruleorder: annotation_annotate_cnv > misc_bgzip
+ruleorder: annotation_annotate_cnv > snv_indels_bgzip
+ruleorder: filtering_bcftools_filter_include_region > annotation_bgzip_vcf
+ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
+ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
+ruleorder: qc_samtools_stats_rna > qc_samtools_stats
+ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
+ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
 
 
 module prealignment:
@@ -69,11 +69,11 @@ module alignment:
 use rule * from alignment as alignment_*
 
 
-# use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
-#     input:
-#         "fusions/star_fusion/{path_file}.out.bam",
-#     output:
-#         temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
+use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
+    input:
+        "fusions/star_fusion/{path_file}.out.bam",
+    output:
+        temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
 
 
 module snv_indels:
@@ -86,26 +86,26 @@ module snv_indels:
 use rule * from snv_indels as snv_indels_*
 
 
-# module annotation:
-#     snakefile:
-#         github("hydra-genetics/annotation", path="workflow/Snakefile", tag="ad68059")
-#     config:
-#         config
-#
-#
-# use rule * from annotation as annotation_*
-#
-#
-# module filtering:
-#     snakefile:
-#         github("hydra-genetics/filtering", path="workflow/Snakefile", tag="b7f4dc3")
-#     config:
-#         config
-#
-#
-# use rule * from filtering as filtering_*
-#
-#
+module annotation:
+    snakefile:
+        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="ad68059")
+    config:
+        config
+
+
+use rule * from annotation as annotation_*
+
+
+module filtering:
+    snakefile:
+        github("hydra-genetics/filtering", path="workflow/Snakefile", tag="b7f4dc3")
+    config:
+        config
+
+
+use rule * from filtering as filtering_*
+
+
 module qc:
     snakefile:
         github("hydra-genetics/qc", path="workflow/Snakefile", tag="cd029ff")
@@ -183,55 +183,55 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
         type="R",
 
 
-# module biomarker:
-#     snakefile:
-#         github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="aa89042")
-#     config:
-#         config
-#
-#
-# use rule * from biomarker as biomarker_*
-#
-#
-# module fusions:
-#     snakefile:
-#         github("hydra-genetics/fusions", path="workflow/Snakefile", tag="12f8354")
-#     config:
-#         config
-#
-#
-# use rule * from fusions as fusions_*
-#
-#
-# use rule star_fusion from fusions as fusions_star_fusion with:
-#     output:
-#         bam=temp("fusions/star_fusion/{sample}_{type}/Aligned.out.bam"),
-#         fusions=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv"),
-#         fusions_abridged=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.coding_effect.tsv"),
-#         sj=temp("fusions/star_fusion/{sample}_{type}/SJ.out.tab"),
-#
-#
-# module cnv_sv:
-#     snakefile:
-#         github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="5738dd8")
-#     config:
-#         config
-#
-#
-# use rule * from cnv_sv as cnv_sv_*
-#
-#
-# use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:
-#     input:
-#         segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
-#         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
-#
-#
-# use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
-#     input:
-#         segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
-#         segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
-#         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+module biomarker:
+    snakefile:
+        github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="aa89042")
+    config:
+        config
+
+
+use rule * from biomarker as biomarker_*
+
+
+module fusions:
+    snakefile:
+        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="12f8354")
+    config:
+        config
+
+
+use rule * from fusions as fusions_*
+
+
+use rule star_fusion from fusions as fusions_star_fusion with:
+    output:
+        bam=temp("fusions/star_fusion/{sample}_{type}/Aligned.out.bam"),
+        fusions=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv"),
+        fusions_abridged=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.coding_effect.tsv"),
+        sj=temp("fusions/star_fusion/{sample}_{type}/SJ.out.tab"),
+
+
+module cnv_sv:
+    snakefile:
+        github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="5738dd8")
+    config:
+        config
+
+
+use rule * from cnv_sv as cnv_sv_*
+
+
+use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:
+    input:
+        segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+
+
+use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
+    input:
+        segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+        segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
 
 
 module misc:
