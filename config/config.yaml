@@ -2600,7 +2600,7 @@ annotate_cnv:
   # cnv_loh_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_genes.bed"
 
 bcbio_variation_recall_ensemble:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/bcbio-vc:0.2.6"
   callers:
     - vardict
     - gatk_mutect2
@@ -2624,21 +2624,21 @@ bwa_mem_merge:
   extra: "-c"
 
 cnvkit_batch:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_nextseq_36.cnn"
   method: "hybrid"
 
 cnvkit_call:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnvkit_diagram:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnvkit_scatter:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 config_manta_t:
-  container: "docker://marrip/manta:v1.6.0"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 exon_skipping:
   design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"
@@ -2712,7 +2712,7 @@ hotspot_report:
     - [0, "low", "not analyzable"]
 
 manta_run_workflow_t:
-  container: "docker://marrip/manta:v1.6.0"
+  container: "docker://hydragenetics/manta:1.6.0"
 
 mosdepth:
   container: "docker://hydragenetics/mosdepth:0.3.2"
@@ -2825,7 +2825,7 @@ tmb:
   nssnv_ssnv_tmb_correction: 0.74
 
 vardict:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/vardict:1.8.3"
   bed_columns: "-c 1 -S 2 -E 3 -g 4"
   allele_frequency_threshold: "0.01"
 
