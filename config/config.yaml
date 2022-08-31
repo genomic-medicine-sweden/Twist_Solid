@@ -10,14 +10,14 @@ reference:
   background: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/Background/background_panel_nextseq_noUmea_27_dp500_af015.tsv"
   artifacts: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/Artifact/artifact_panel_nextseq_36.tsv"
   fasta: "/data/ref_genomes/GRCh38/hydra/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fna"
-  fasta_rna: "/data/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
+  fasta_rna: "/data/ref_data/star-fusion/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
   dict: "/data/ref_genomes/GRCh38/hydra/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fna.dict"
   fai: "/data/ref_genomes/GRCh38/hydra/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fna.fai"
   design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.hg38.210608.bed"
   design_intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.hg38.210608.interval_list"
   design_intervals_gatk_cnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
-  design_bed_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"
-  design_intervals_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.interval_list"
+  design_bed_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.hg38.bed"
+  design_intervals_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.hg38.interval_list"
   skip_chrs:
     - "chrM"
     - "chr1_KI270706v1_random"
@@ -2775,7 +2775,7 @@ picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
 report_fusions:
-  annotation_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_fusionpartners.bed"
+  annotation_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_fusionpartners.hg38.bed"
   fusioncather_flag_low_support: 15
   fusioncather_low_support: 3
   fusioncather_low_support_fp_genes: 20
