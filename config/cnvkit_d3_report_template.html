@@ -23,7 +23,8 @@
     <script>
         const cnvData = {{ json }}
 
-        const plotSingleChromosome = function(data) {
+        const plotSingleChromosome = function(plotData) {
+            let data = plotData;
             const height = 200;
             const width = 800;
             const margin = {
@@ -140,7 +141,8 @@
                 .attr("dominant-baseline", "text-before-edge")
                 .style("font-size", "0.9rem");
 
-            const update = function(data) {
+            const update = function(plotData) {
+                data = plotData;
                 xScale.domain([0, data.length]);
                 yScale.domain(d3.extent(data.regions, d => d.log2));
                 svg.transition().select(".x-axis")
