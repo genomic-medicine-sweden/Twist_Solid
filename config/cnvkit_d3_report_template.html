@@ -11,11 +11,13 @@
 
     <section>
         <h2>Chromosome view</h2>
+        <p>Click and drag to zoom. Click the plot to reset zoom.</p>
         <svg id="single-chromosome"></svg>
     </section>
 
     <section>
         <h2>Genome view</h2>
+        <p>Click a chromosome to visualise it above.</p>
         <svg id="all-chromosomes"></svg>
     </section>
 
@@ -34,8 +36,11 @@
                 left: 50,
             };
 
+            let leftBound = 0;
+            let rightBound = data.length;
+
             const xScale = d3.scaleLinear()
-                .domain([0, data.length])
+                .domain([leftBound, rightBound])
                 .range([0, width-margin.left-margin.right]);
 
             const yScale = d3.scaleLinear()
@@ -56,6 +61,13 @@
                 .attr("transform", `translate(${margin.left},${margin.top})`)
                 .attr("class", "plot-area");
 
+            // Clip path for plot area
+            plotArea.append("clipPath")
+                .attr("id", "plot-area-clip")
+                .append("rect")
+                .attr("width", width - margin.left - margin.right)
+                .attr("height", height - margin.top - margin.bottom);
+
             const regions = plotArea.append("g")
                 .attr("class", "regions");
 
@@ -72,6 +84,7 @@
                     .attr("cx", d => xScale(d.start))
                     .attr("cy", d => yScale(d.log2))
                     .attr("r", 2)
+                    .attr("clip-path", "url(#plot-area-clip)")
                     .attr("fill", "#333")
                     .attr("fill-opacity", 0)
                     .transition()
@@ -94,6 +107,7 @@
                 lineSegments.enter()
                     .append("path")
                     .attr("class", "segment")
+                    .attr("clip-path", "url(#plot-area-clip)")
                     .attr("d", d =>
                         `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`)
                     .attr("stroke", "orange")
@@ -116,6 +130,80 @@
 
             plotRegions(data.regions);
             plotSegments(data.segments);
+            let startPos = 0;
+            let endPos = 0;
+            let zoomStarted = false;
+            plotArea.append("g")
+                .attr("class", "zoom-layer")
+                .append("rect")
+                .attr("width", width - margin.left - margin.right)
+                .attr("height", height - margin.top - margin.bottom)
+                .attr("fill", "transparent")
+                .on("mousedown", e => {
+                    zoomStarted = true;
+                    startPos = d3.pointer(e)[0];
+                    endPos = startPos;
+                    leftBound = xScale.invert(startPos);
+                    rightBound = xScale.invert(startPos);
+                    d3.select(".zoom-layer")
+                        .append("rect")
+                        .attr("class", "zoom-region")
+                        .attr("x", startPos)
+                        .attr("height", height - margin.top - margin.bottom)
+                        .attr("width", 0)
+                        .attr("fill", "#DDD")
+                        .attr("fill-opacity", 0.3)
+                        .style("pointer-events", "none");
+                })
+                .on("mousemove", e => {
+                    if (!zoomStarted) {
+                        return;
+                    }
+                    endPos = d3.pointer(e)[0];
+                    if (startPos < endPos) {
+                        // Moving left to right
+                        d3.select(".zoom-region")
+                            .attr("width", endPos - startPos);
+                    } else {
+                        // Moving right to left
+                        d3.select(".zoom-region").remove();
+                        d3.select(".zoom-layer").append("rect")
+                            .attr("class", "zoom-region")
+                            .attr("x", endPos)
+                            .attr("height", height - margin.top - margin.bottom)
+                            .attr("width", startPos - endPos)
+                            .attr("fill", "#DDD")
+                            .attr("fill-opacity", 0.3)
+                            .style("pointer-events", "none");
+                    }
+                })
+                .on("mouseup", e => {
+                    zoomStarted = false;
+                    d3.selectAll(".zoom-region").remove();
+                    if (startPos === endPos) {
+                        // Reset zoom
+                        update(data);
+                        return;
+                    }
+                    rightBound = xScale.invert(d3.pointer(e)[0]);
+                    if (leftBound > rightBound) {
+                        [leftBound, rightBound] = [rightBound, leftBound];
+                    }
+                    xScale.domain([leftBound, rightBound]);
+                    let zoomRegions = data.regions.filter(d =>
+                        (d.start > leftBound && d.end < rightBound)
+                    );
+                    let zoomSegments = data.segments.filter(d =>
+                        (d.start > leftBound && d.start < rightBound) || // start within, or
+                        (d.end < rightBound && d.end > leftBound) || // end within, or
+                        (d.start < leftBound && d.end > rightBound) // covers whole
+                    );
+                    svg.transition().select(".x-axis")
+                        .duration(500)
+                        .call(xAxis);
+                    plotRegions(zoomRegions);
+                    plotSegments(zoomSegments);
+                });
 
             svg.append("g")
                 .attr("transform", `translate(${margin.left},${height-margin.bottom})`)
