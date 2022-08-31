@@ -52,6 +52,6 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
         "results/Msisensor_pro_reference.list_baseline",
         "results/background_panel.tsv",
         "results/artifact_panel.tsv",
-        "results/svdb_cnv.vcf",
+        # "results/svdb_cnv.vcf",
     ]
     return output_files
