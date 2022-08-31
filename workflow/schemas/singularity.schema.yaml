@@ -105,6 +105,17 @@ properties:
       required:
         - container
 
+  fusioncatcher:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/fusioncatcher:1\.33$
+      required:
+        - container
+    
   gatk_cnv_call_copy_ratio_segments:
     type: object
     properties:
@@ -380,6 +391,7 @@ required:
   - config_manta_t
   - fastp_pe
   - fastqc
+  - fusioncatcher
   - gatk_cnv_call_copy_ratio_segments
   - gatk_cnv_collect_allelic_counts
   - gatk_cnv_collect_read_counts
