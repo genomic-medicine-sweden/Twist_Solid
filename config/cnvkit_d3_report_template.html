@@ -207,23 +207,7 @@
                 .attr(
                     "transform",
                     (d, i) => `translate(${i === 0 ? 0 : d3.sum(panelWidths.slice(0, i))}, 0)`
-                )
-                .on("mouseenter", (e, d) => {
-                    panels.selectAll(".bg-rect").attr("fill", "#FFF");
-                    d3.select(e.target).select(".bg-rect").attr("fill", "#DDD");
-                })
-                .on("mouseout", e => {
-                    if (e.target.classList.contains("bg-rect") &&
-                            !e.relatedTarget.classList.contains("point") &&
-                            !e.relatedTarget.classList.contains("segment") &&
-                            !e.relatedTarget.classList.contains("baseline") &&
-                            !e.relatedTarget.classList.contains("chromosome-plot")) {
-                        d3.select(e.target).attr("fill", "#FFF");
-                    }
-                })
-                .on("click", (e, d) => {
-                    chromosomeView.update(d);
-                });
+                );
 
             // Panel backgrounds
             panels.append("rect")
@@ -275,6 +259,42 @@
                 })
                 .attr("stroke", "orange")
                 .attr("stroke-width", 2);
+
+            // Clip path to create inner stroke
+            panels.append("clipPath")
+                .attr("id", (d, i) => `panel-overlay-${i}-clip`)
+                .append("rect")
+                .attr("width", (d, i) => panelWidths[i])
+                .attr("height", panelHeight);
+
+            panels.append("rect")
+                .attr("class", "panel-overlay")
+                .attr("width", (d, i) => panelWidths[i])
+                .attr("height", panelHeight)
+                .attr("clip-path", (d, i) => `url(#panel-overlay-${i}-clip)`)
+                .attr("fill", "#000")
+                .attr("fill-opacity", 0)
+                .attr("stroke", "forestgreen")
+                .attr("stroke-width", (d, i) => i === 0 ? 6 : 0)
+                .on("mouseenter", (e, d) => {
+                    panels.selectAll(".panel-overlay")
+                        .attr("fill-opacity", 0);
+                    d3.select(e.target)
+                        .attr("fill-opacity", 0.2);
+                })
+                .on("mouseout", e => {
+                    d3.select(e.target)
+                        .attr("fill-opacity", 0);
+                })
+                .on("click", (e, d) => {
+                    chromosomeView.update(d);
+                    panels.selectAll(".panel-overlay")
+                        .classed("selected", true)
+                        .attr("stroke-width", 0);
+                    d3.select(e.target)
+                        .classed("selected", false)
+                        .attr("stroke-width", 6);
+                });
 
             // Y axis
             svg.append("g")
