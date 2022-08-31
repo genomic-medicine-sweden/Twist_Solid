@@ -76,7 +76,7 @@
 
             const plotRegions = function(regionData) {
                 let points = regions.selectAll(".point")
-                    .data(regionData);
+                    .data(regionData, d => [d.start, d.end, d.log2]);
 
                 points.enter()
                     .append("circle")
@@ -102,7 +102,7 @@
 
             const plotSegments = function(segmentData) {
                 let lineSegments = segments.selectAll(".segment")
-                    .data(segmentData);
+                    .data(segmentData, d => [d.start, d.end]);
 
                 lineSegments.enter()
                     .append("path")
@@ -172,9 +172,6 @@
                     );
             }
 
-            plotRegions(data.regions);
-            plotSegments(data.segments);
-            plotGenes();
             let startPos = 0;
             let endPos = 0;
             let zoomStarted = false;
@@ -290,6 +287,8 @@
                 plotSegments(data.segments);
                 plotGenes();
             }
+
+            update(data);
 
             return {
                 update: update
