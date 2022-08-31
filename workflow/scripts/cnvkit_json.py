@@ -58,6 +58,19 @@ def parse_cnr(cnr_filename):
     return cnr_dict
 
 
+def parse_bed(bed_filename):
+    bed = defaultdict(list)
+    with open(bed_filename) as f:
+        for line in f:
+            chrom, start, end, gene = line.strip().split()
+            bed[chrom].append(dict(
+                start=int(start),
+                end=int(end),
+                gene=gene,
+            ))
+    return bed
+
+
 def parse_fai(fai_filename):
     chroms = dict()
     with open(fai_filename) as f:
@@ -67,7 +80,7 @@ def parse_fai(fai_filename):
     return chroms
 
 
-def to_json(cns, cnr, chroms):
+def to_json(cns, cnr, chroms, amp, loh):
     cnvkit_list = []
     for chrom, length in chroms.items():
         cnvkit_list.append(dict(
@@ -75,7 +88,8 @@ def to_json(cns, cnr, chroms):
             label=chrom,
             length=length,
             segments=cns.get(chrom, []),
-            regions=cnr.get(chrom, [])
+            regions=cnr.get(chrom, []),
+            genes=amp.get(chrom, []) + loh.get(chrom, [])
         ))
 
     return json.dumps(cnvkit_list)
@@ -85,13 +99,17 @@ def main():
     cns_filename = snakemake.input.cns
     cnr_filename = snakemake.input.cnr
     fai_filename = snakemake.input.fai
+    amp_filename = snakemake.input.amp_bed
+    loh_filename = snakemake.input.loh_bed
     json_filename = snakemake.output.json
 
     cns = parse_cns(cns_filename)
     cnr = parse_cnr(cnr_filename)
     chroms = parse_fai(fai_filename)
+    amp = parse_bed(amp_filename)
+    loh = parse_bed(loh_filename)
 
-    cnvkit_json = to_json(cns, cnr, chroms)
+    cnvkit_json = to_json(cns, cnr, chroms, amp, loh)
     with open(json_filename, "w") as f:
         f.write(cnvkit_json)
 

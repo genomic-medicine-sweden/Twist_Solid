@@ -2,7 +2,9 @@ rule cnvkit_json:
     input:
         cns="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
         cnr="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
-        fai=config["reference"]["fai"]
+        fai=config["reference"]["fai"],
+        amp_bed=config["annotate_cnv"]["cnv_amp_genes"],
+        loh_bed=config["annotate_cnv"]["cnv_loh_genes"]
     output:
         json="cnv_sv/cnvkit_report/{sample}_{type}_cnvkit.json"
     script:

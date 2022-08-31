@@ -128,8 +128,53 @@
                         `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`);
             }
 
+            const plotGenes = function() {
+                let genes = plotArea.selectAll(".gene")
+                    .data(data.genes, d => d.gene)
+                    .join(
+                        enter => {
+                            let gene_group = enter.append("g")
+                                .attr("class", "gene");
+                            gene_group.append("text")
+                                .attr("class", "gene-label")
+                                .text(d => d.gene)
+                                .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
+                                .attr("y", yScale.range()[0] + 0.02 * (yScale.range()[1] - yScale.range()[0]))
+                                .attr("text-anchor", "middle")
+                                .style("font-size", "0.8rem");
+                            gene_group.append("rect")
+                                .attr("class", "gene-marker")
+                                .attr("x", d => xScale(d.start))
+                                .attr("width", d => xScale(d.end - d.start))
+                                .attr("height", height - margin.top - margin.bottom)
+                                .transition()
+                                .attr("fill", "#333")
+                                .attr("fill-opacity", 0.05)
+                                .attr("stroke", "#000")
+                                .attr("stroke-width", 0.5)
+                                .style("pointer-events", "none");
+                            return gene_group;
+                        }, update => {
+                            update.selectAll(".gene-label")
+                                .transition()
+                                .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
+                                .attr("y", yScale.range()[0] + 0.02 * (yScale.range()[1] - yScale.range()[0]));
+                            update.selectAll(".gene-marker")
+                                .transition()
+                                .attr("x", d => xScale(d.start))
+                                .attr("width", d => xScale(d.end) - xScale(d.start));
+                            return update;
+                        }, exit => exit
+                            .transition()
+                            .attr("fill-opacity", 0)
+                            .attr("stroke-opacity", 0)
+                            .remove()
+                    );
+            }
+
             plotRegions(data.regions);
             plotSegments(data.segments);
+            plotGenes();
             let startPos = 0;
             let endPos = 0;
             let zoomStarted = false;
@@ -203,6 +248,7 @@
                         .call(xAxis);
                     plotRegions(zoomRegions);
                     plotSegments(zoomSegments);
+                    plotGenes();
                 });
 
             svg.append("g")
@@ -242,6 +288,7 @@
                 svg.select(".x-label").text(data.label);
                 plotRegions(data.regions);
                 plotSegments(data.segments);
+                plotGenes();
             }
 
             return {
