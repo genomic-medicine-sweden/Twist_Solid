@@ -2638,7 +2638,7 @@ cnvkit_scatter:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
 config_manta_t:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/manta:1.6.0"
 
 exon_skipping:
   design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"

@@ -13,7 +13,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            docker://hydragenetics/bcbio-vc:0\.2\.6$
     required:
       - container
 
@@ -35,7 +35,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/cnvkit:0\.9\.9$
+            docker://hydragenetics/cnvkit:0\.9\.9$
     required:
       - container
 
@@ -46,7 +46,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/cnvkit:0\.9\.9$
+            docker://hydragenetics/cnvkit:0\.9\.9$
     required:
       - container
 
@@ -57,7 +57,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/cnvkit:0\.9\.9$
+            docker://hydragenetics/cnvkit:0\.9\.9$
     required:
       - container
 
@@ -68,7 +68,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/cnvkit:0\.9\.9$
+            docker://hydragenetics/cnvkit:0\.9\.9$
     required:
       - container
 
@@ -79,7 +79,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/manta:v1\.6\.0$
+            docker://hydragenetics/manta:1\.6\.0$
     required:
       - container
 
@@ -178,7 +178,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/manta:v1\.6\.0$
+            docker://hydragenetics/manta:1\.6\.0$
       required:
         - container
 
