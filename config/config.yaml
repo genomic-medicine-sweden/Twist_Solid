@@ -2578,17 +2578,17 @@ reference:
 
 
 arriba:
-  assembly: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
-  blacklist: "/data/ref_data/arriba/arriba_v2.3.0/database/blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz"
+  assembly: "/data/ref_genomes/GRCh38/hydra/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fna"
+  blacklist: "/data/ref_data/arriba/arriba_v2.3.0/database/blacklist_hg38_GRCh38_v2.3.0.tsv.gz"
   container: "docker://hydragenetics/arriba:2.3.0"
-  gtf: "/data/ref_genomes/hg19/gtf/hg19.refGene.gtf"
-  extra: "-p /data/ref_data/arriba/arriba_v2.3.0/database/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3 -k /data/ref_data/arriba/arriba_v2.3.0/database/known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz"
+  gtf: "/data/ref_genomes/GRCh38/gtf/hg38.refGene.gtf.gz"
+  extra: "-p /data/ref_data/arriba/arriba_v2.3.0/database/protein_domains_hg38_GRCh38_v2.3.0.gff3 -k /data/ref_data/arriba/arriba_v2.3.0/database/known_fusions_hg38_GRCh38_v2.3.0.tsv.gz"
 
 arriba_draw_fusion:
   container: "docker://hydragenetics/arriba:2.3.0"
-  cytobands: "/data/ref_data/arriba/arriba_v2.3.0/database/cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv"
-  gtf: "/data/ref_genomes/hg19/gtf/hg19.refGene.gtf"
-  protein_domains: "/data/ref_data/arriba/arriba_v2.3.0/database/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3"
+  cytobands: "/data/ref_data/arriba/arriba_v2.3.0/database/cytobands_hg38_GRCh38_v2.3.0.tsv"
+  gtf: "/data/ref_genomes/GRCh38/gtf/hg38.refGene.gtf.gz"
+  protein_domains: "/data/ref_data/arriba/arriba_v2.3.0/database/protein_domains_hg38_GRCh38_v2.3.0.gff3"
 
 add_multi_snv_in_codon:
   af_limit: 0.00
@@ -2693,7 +2693,7 @@ gatk_mutect2_merge_stats:
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
   genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion_w_pool2.hg19.csv"
-  fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
+  fasta: "/data/ref_genomes/GRCh38/hydra/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fna"
 
 hotspot_annotation:
   hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
@@ -2793,12 +2793,12 @@ samtools_merge_bam:
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
-  genome_index: "/data/ref_data/star/v2.7.10a_hg19/"
-  extra: "--quantMode GeneCounts --sjdbGTFfile /data/ref_genomes/hg19/gtf/hg19.refGene.gtf --outSAMtype BAM SortedByCoordinate --chimSegmentMin 10 --chimOutType WithinBAM SoftClip --chimJunctionOverhangMin 10 --chimScoreMin 1 --chimScoreDropMax 30 --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --alignSJstitchMismatchNmax 5 -1 5 5 --chimSegmentReadGapMax 3"
+  genome_index: "/data/ref_data/star/v2.7.10a_hg38/"
+  extra: "--quantMode GeneCounts --sjdbGTFfile /data/ref_genomes/GRCh38/gtf/hg38.refGene.gtf.gz --outSAMtype BAM SortedByCoordinate --chimSegmentMin 10 --chimOutType WithinBAM SoftClip --chimJunctionOverhangMin 10 --chimScoreMin 1 --chimScoreDropMax 30 --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --alignSJstitchMismatchNmax 5 -1 5 5 --chimSegmentReadGapMax 3"
 
 star_fusion:
   container: "docker://trinityctat/starfusion:1.10.1"
-  genome_path: "/data/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/"
+  genome_path: "/data/ref_data/star-fusion/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/"
   extra: "--examine_coding_effect"
 
 svdb_merge:
