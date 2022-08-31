@@ -2666,7 +2666,7 @@ gatk_cnv_call_copy_ratio_segments:
 
 gatk_cnv_collect_allelic_counts:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
-  SNP_interval: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/gnomad_SNP_0.001_target.annotated.interval_list"
+  SNP_interval: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/gnomad_SNP_0.001_target.annotated.hg38.interval_list"
 
 gatk_cnv_collect_read_counts:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
