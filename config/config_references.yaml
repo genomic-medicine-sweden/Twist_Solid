@@ -1,6 +1,6 @@
 resources: "config/resources_references.yaml"
-#samples: "samples_references.tsv"
-#units: "units_references.tsv"
+samples: "samples_references.tsv"
+units: "units_references.tsv"
 
 default_container: "docker://hydragenetics/common:0.1.8"
 
