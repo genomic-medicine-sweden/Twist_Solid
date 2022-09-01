@@ -8,14 +8,14 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
-# include: "rules/bcftools.smk"
-# include: "rules/cnv_tsv_report.smk"
-# include: "rules/exon_skipping.smk"
-# include: "rules/hotspot_report.smk"
-# include: "rules/house_keeping_gene_coverage.smk"
+include: "rules/bcftools.smk"
+include: "rules/cnv_tsv_report.smk"
+include: "rules/exon_skipping.smk"
+include: "rules/hotspot_report.smk"
+include: "rules/house_keeping_gene_coverage.smk"
 include: "rules/result_files.smk"
-# include: "rules/report_gene_fuse.smk"
-# include: "rules/report_fusions.smk"
+include: "rules/report_gene_fuse.smk"
+include: "rules/report_fusions.smk"
 
 
 rule all:

@@ -2692,7 +2692,7 @@ gatk_mutect2_merge_stats:
 
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
-  genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion_w_pool2.hg19.csv"
+  genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion_w_pool2.hg38.csv"
   fasta: "/data/ref_genomes/GRCh38/hydra/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fna"
 
 hotspot_annotation:

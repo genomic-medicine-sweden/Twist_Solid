@@ -156,18 +156,18 @@ def compile_result_file_list():
         for unit_type in get_unit_types(units, sample)
         if unit_type != "R"
     ]
-    # output_files += [
-    #     "results/dna/cnv/%s_%s.manta_tumorSV.vcf.gz" % (sample, unit_type)
-    #     for sample in get_samples(samples)
-    #     for unit_type in get_unit_types(units, sample)
-    #     if unit_type == "T"
-    # ]
-    # input_files += [
-    #     "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
-    #     for sample in get_samples(samples)
-    #     for unit_type in get_unit_types(units, sample)
-    #     if unit_type == "T"
-    # ]
+    output_files += [
+        "results/dna/cnv/%s_%s.manta_tumorSV.vcf.gz" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "T"
+    ]
+    input_files += [
+        "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type == "T"
+    ]
     # output_files += [
     #     "results/dna/optitype/%s_%s.hla_type_result.tsv" % (sample, t)
     #     for sample in get_samples(samples)
