@@ -70,25 +70,25 @@ def compile_result_file_list():
         {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna", ".bam"]},
         {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna", ".bam.bai"]},
         {"in": ["snv_indels/bcbio_variation_recall_ensemble", ".ensembled.vcf.gz"], "out": ["results/dna/vcf", ".merged.vcf.gz"]},
-        # {
-        #     "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
-        #     "out": ["results/dna/vcf", ".annotated.vcf.gz"],
-        # },
-        # {
-        #     "in": ["annotation/background_annotation", ".background_annotation.include.exon.filter.snv_soft_filter.vcf"],
-        #     "out": ["results/dna/vcf", ".annotated.exon_only.filter.soft_filter.vcf"],
-        # },
-        # {
-        #     "in": ["annotation/background_annotation", ".background_annotation.include.exon.filter.snv_hard_filter.vcf"],
-        #     "out": ["results/dna/vcf", ".annotated.exon_only.filter.hard_filter.vcf"],
-        # },
-        # {
-        #     "in": [
-        #         "annotation/add_multi_snv_in_codon",
-        #         ".background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf",
-        #     ],
-        #     "out": ["results/dna/vcf", ".annotated.exon_only.filter.hard_filter.codon_snv.vcf"],
-        # },
+        {
+            "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
+            "out": ["results/dna/vcf", ".annotated.vcf.gz"],
+        },
+        {
+            "in": ["annotation/background_annotation", ".background_annotation.include.exon.filter.snv_soft_filter.vcf"],
+            "out": ["results/dna/vcf", ".annotated.exon_only.filter.soft_filter.vcf"],
+        },
+        {
+            "in": ["annotation/background_annotation", ".background_annotation.include.exon.filter.snv_hard_filter.vcf"],
+            "out": ["results/dna/vcf", ".annotated.exon_only.filter.hard_filter.vcf"],
+        },
+        {
+            "in": [
+                "annotation/add_multi_snv_in_codon",
+                ".background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf",
+            ],
+            "out": ["results/dna/vcf", ".annotated.exon_only.filter.hard_filter.codon_snv.vcf"],
+        },
         {
             "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
             "out": ["results/dna/qc", ".duplication_metrics.txt"],
@@ -105,18 +105,18 @@ def compile_result_file_list():
         {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
         {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["gvcf_dna", ".mosdepth.g.vcf.gz"]},
         # {"in": ["qc/hotspot_report", ".output.tsv"], "out": ["results/dna/qc", ".coverage_and_mutations.tsv"]},
-        # {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
-        # {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
-        # {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ["results/dna/hrd", ".hrd_score.txt"]},
-        # {"in": ["fusions/gene_fuse", "_gene_fuse_fusions.txt"], "out": ["results/dna/fusions", ".gene_fuse_fusions.txt"]},
-        # {"in": ["fusions/report_gene_fuse", ".gene_fuse_report.tsv"], "out": ["results/dna/fusions", ".gene_fuse_report.tsv"]},
-        # {"in": ["cnv_sv/cnvkit_call", ".loh.cns"], "out": ["results/dna/cnv", ".cnvkit.loh.cns"]},
-        # {
-        #     "in": ["cnv_sv/gatk_cnv_call_copy_ratio_segments", ".clean.calledCNVs.seg"],
-        #     "out": ["results/dna/cnv", ".gatk_cnv.seg"],
-        # },
-        # {"in": ["cnv_sv/cnvkit_scatter", ".png"], "out": ["results/dna/cnv", ".cnvkit.scatter.png"]},
-        # {"in": ["cnv_sv/cnvkit_diagram", ".pdf"], "out": ["results/dna/cnv", ".cnvkit.diagram.pdf"]},
+        {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
+        {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
+        {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ["results/dna/hrd", ".hrd_score.txt"]},
+        {"in": ["fusions/gene_fuse", "_gene_fuse_fusions.txt"], "out": ["results/dna/fusions", ".gene_fuse_fusions.txt"]},
+        {"in": ["fusions/report_gene_fuse", ".gene_fuse_report.tsv"], "out": ["results/dna/fusions", ".gene_fuse_report.tsv"]},
+        {"in": ["cnv_sv/cnvkit_call", ".loh.cns"], "out": ["results/dna/cnv", ".cnvkit.loh.cns"]},
+        {
+            "in": ["cnv_sv/gatk_cnv_call_copy_ratio_segments", ".clean.calledCNVs.seg"],
+            "out": ["results/dna/cnv", ".gatk_cnv.seg"],
+        },
+        {"in": ["cnv_sv/cnvkit_scatter", ".png"], "out": ["results/dna/cnv", ".cnvkit.scatter.png"]},
+        {"in": ["cnv_sv/cnvkit_diagram", ".pdf"], "out": ["results/dna/cnv", ".cnvkit.diagram.pdf"]},
         # {"in": ["cnv_sv/svdb_query", ".svdb_query.vcf"], "out": ["results/dna/cnv", ".svdb_query.vcf"]},
         # {
         #     "in": ["cnv_sv/svdb_query", ".svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf"],
