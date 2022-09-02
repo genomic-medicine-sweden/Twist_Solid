@@ -36,11 +36,8 @@
                 left: 50,
             };
 
-            let leftBound = 0;
-            let rightBound = data.length;
-
             const xScale = d3.scaleLinear()
-                .domain([leftBound, rightBound])
+                .domain([0, data.length])
                 .range([0, width-margin.left-margin.right]);
 
             const yScale = d3.scaleLinear()
@@ -173,80 +170,58 @@
                     );
             }
 
-            let startPos = 0;
-            let endPos = 0;
-            let zoomStarted = false;
             plotArea.append("g")
                 .attr("class", "zoom-layer")
                 .append("rect")
                 .attr("width", width - margin.left - margin.right)
                 .attr("height", height - margin.top - margin.bottom)
                 .attr("fill", "transparent")
-                .on("mousedown", e => {
-                    zoomStarted = true;
-                    startPos = d3.pointer(e)[0];
-                    endPos = startPos;
-                    leftBound = xScale.invert(startPos);
-                    rightBound = xScale.invert(startPos);
-                    d3.select(".zoom-layer")
-                        .append("rect")
-                        .attr("class", "zoom-region")
-                        .attr("x", startPos)
-                        .attr("height", height - margin.top - margin.bottom)
-                        .attr("width", 0)
-                        .attr("fill", "#DDD")
-                        .attr("fill-opacity", 0.3)
-                        .style("pointer-events", "none");
-                })
-                .on("mousemove", e => {
-                    if (!zoomStarted) {
-                        return;
-                    }
-                    endPos = d3.pointer(e)[0];
-                    if (startPos < endPos) {
-                        // Moving left to right
-                        d3.select(".zoom-region")
-                            .attr("width", endPos - startPos);
-                    } else {
-                        // Moving right to left
-                        d3.select(".zoom-region").remove();
-                        d3.select(".zoom-layer").append("rect")
+                .call(d3.drag()
+                    .on("start", (e) => {
+                        d3.select(".zoom-layer")
+                            .append("rect")
                             .attr("class", "zoom-region")
-                            .attr("x", endPos)
-                            .attr("height", height - margin.top - margin.bottom)
-                            .attr("width", startPos - endPos)
-                            .attr("fill", "#DDD")
-                            .attr("fill-opacity", 0.3)
-                            .style("pointer-events", "none");
-                    }
-                })
-                .on("mouseup", e => {
-                    zoomStarted = false;
-                    d3.selectAll(".zoom-region").remove();
-                    if (startPos === endPos) {
-                        // Reset zoom
+                            .attr("pointer-events", "none")
+                            .attr("x", e.x)
+                            .attr("width", 0)
+                            .attr("height", height - margin.bottom - margin.top)
+                            .attr("stroke-width", 0)
+                            .attr("fill", "#333")
+                            .attr("fill-opacity", 0.1);
+                    })
+                    .on("drag", (e) => {
+                        let leftBound = Math.min(e.x, e.subject.x);
+                        let width = Math.abs(Math.max(0, e.x) - e.subject.x);
+                        if (leftBound + width > xScale.range()[1]) {
+                            width = xScale.range()[1] - leftBound;
+                        }
+                        d3.select(".zoom-region")
+                            .attr("x", Math.max(0, Math.min(e.x, e.subject.x)))
+                            .attr("width", width)
+                    })
+                    .on("end", (e) => {
+                        d3.select(".zoom-region").remove();
+                        let xMin = Math.min(e.x, e.subject.x);
+                        let xMax = Math.max(e.x, e.subject.x);
+                        if (xMax - xMin < 3) {
+                            return;
+                        }
+                        xScale
+                            .domain([xScale.invert(xMin), xScale.invert(xMax)]);
+                        svg.transition()
+                            .select(".x-axis")
+                            .duration(500)
+                            .call(xAxis);
+                        plotRegions(data.regions);
+                        plotSegments(data.segments);
+                        plotGenes();
+                    }))
+                .on("click", e => {
+                    let [xMin, xMax] = xScale.domain();
+                    if (xMax - xMin !== data.length) {
+                        // Only reset if something actually changed
                         update(data);
-                        return;
                     }
-                    rightBound = xScale.invert(d3.pointer(e)[0]);
-                    if (leftBound > rightBound) {
-                        [leftBound, rightBound] = [rightBound, leftBound];
-                    }
-                    xScale.domain([leftBound, rightBound]);
-                    let zoomRegions = data.regions.filter(d =>
-                        (d.start > leftBound && d.end < rightBound)
-                    );
-                    let zoomSegments = data.segments.filter(d =>
-                        (d.start > leftBound && d.start < rightBound) || // start within, or
-                        (d.end < rightBound && d.end > leftBound) || // end within, or
-                        (d.start < leftBound && d.end > rightBound) // covers whole
-                    );
-                    svg.transition().select(".x-axis")
-                        .duration(500)
-                        .call(xAxis);
-                    plotRegions(zoomRegions);
-                    plotSegments(zoomSegments);
-                    plotGenes();
                 });
 
             svg.append("g")
