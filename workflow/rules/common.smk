@@ -117,7 +117,7 @@ def compile_result_file_list():
         },
         {"in": ["cnv_sv/cnvkit_scatter", ".png"], "out": ["results/dna/cnv", ".cnvkit.scatter.png"]},
         {"in": ["cnv_sv/cnvkit_diagram", ".pdf"], "out": ["results/dna/cnv", ".cnvkit.diagram.pdf"]},
-        # {"in": ["cnv_sv/svdb_query", ".svdb_query.vcf"], "out": ["results/dna/cnv", ".svdb_query.vcf"]},
+        {"in": ["cnv_sv/svdb_query", ".svdb_query.vcf"], "out": ["results/dna/cnv", ".svdb_query.vcf"]},
         # {
         #     "in": ["cnv_sv/svdb_query", ".svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf"],
         #     "out": ["results/dna/cnv", ".cnv_hard_filter_amp.vcf"],
