@@ -416,7 +416,7 @@
                 .attr("transform", (d, i) => `translate(${panelWidths[i]/2},${panelHeight+margin.top}) rotate(-90)`)
                 .text((d, i) => d.label)
                 .attr("text-anchor", "end")
-                .attr("dominant-baseline", "auto")
+                .attr("dominant-baseline", "central")
                 .style("font-size", "0.8rem");
 
             svg.append("text")
