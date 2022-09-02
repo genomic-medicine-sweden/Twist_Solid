@@ -132,7 +132,8 @@
                     .join(
                         enter => {
                             let gene_group = enter.append("g")
-                                .attr("class", "gene");
+                                .attr("class", "gene")
+                                .attr("clip-path", "url(#plot-area-clip)")
                             gene_group.append("text")
                                 .attr("class", "gene-label")
                                 .text(d => d.gene)
