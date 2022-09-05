@@ -2696,16 +2696,16 @@ gene_fuse:
   fasta: "/data/ref_genomes/GRCh38/hydra/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fna"
 
 hotspot_annotation:
-  hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
-  chr_translation_file: "config/hotspot_report.chr.translation.hg19"
+  hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups_hg38.csv"
+  chr_translation_file: "config/hotspot_report.chr.translation.hg38"
 
 hotspot_info:
-  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
+  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups_hg38.csv"
 
 hotspot_report:
-  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
+  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups_hg38.csv"
   report_config: "config/hotspot_report.yaml"
-  chr_translation_file: "config/hotspot_report.chr.translation.hg19"
+  chr_translation_file: "config/hotspot_report.chr.translation.hg38"
   levels:
     - [300, "ok", "yes"]
     - [30, "low", "yes"]
