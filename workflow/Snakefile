@@ -60,8 +60,7 @@ use rule * from prealignment as prealignment_*
 
 module alignment:
     snakefile:
-        # github("hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.2.0")
-        github("hydra-genetics/alignment", path="workflow/Snakefile", tag="wildcards2")
+        github("hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.2.0")
     config:
         config
 
