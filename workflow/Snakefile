@@ -60,7 +60,8 @@ use rule * from prealignment as prealignment_*
 
 module alignment:
     snakefile:
-        github("hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.2.0")
+        # github("hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.2.0")
+        github("hydra-genetics/alignment", path="workflow/Snakefile", tag="wildcards2")
     config:
         config
 
@@ -73,6 +74,13 @@ use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
         "fusions/star_fusion/{path_file}.out.bam",
     output:
         temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
+    log:
+        "fusions/star_fusion/{path_file}.bam.sort.log",
+    benchmark:
+        repeat(
+            "fusions/star_fusion/{path_file}.bam.sort.benchmark.tsv",
+            config.get("samtools_sort", {}).get("benchmark_repeats", 1),
+        )
 
 
 module snv_indels:
