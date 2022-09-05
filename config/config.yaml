@@ -247,7 +247,7 @@ star:
   extra: "--quantMode GeneCounts --sjdbGTFfile /data/ref_genomes/hg19/gtf/hg19.refGene.gtf --outSAMtype BAM SortedByCoordinate --chimSegmentMin 10 --chimOutType WithinBAM SoftClip --chimJunctionOverhangMin 10 --chimScoreMin 1 --chimScoreDropMax 30 --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --alignSJstitchMismatchNmax 5 -1 5 5 --chimSegmentReadGapMax 3"
 
 star_fusion:
-  container: "docker://trinityctat/starfusion:1.10.1"
+  container: "docker://hydragenetics/star-fusion:1.10.1"
   genome_path: "/data/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/"
   extra: "--examine_coding_effect"
 
