@@ -313,6 +313,17 @@ properties:
             hydragenetics/picard:2\.25\.0$
       required:
         - container
+        
+  star_fusion:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/star-fusion:1\.10\.1$
+      required:
+        - container
 
   svdb_merge:
     type: object
