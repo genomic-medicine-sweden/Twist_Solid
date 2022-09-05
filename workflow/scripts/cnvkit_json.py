@@ -1,6 +1,6 @@
 from collections import defaultdict
+import cyvcf2
 import json
-import sys
 
 
 def parse_cns(cns_filename):
@@ -32,6 +32,18 @@ def parse_cns(cns_filename):
             ))
 
     return cns_dict
+
+
+def get_vaf(vcf_filename):
+    vafs = defaultdict(list)
+    vcf = cyvcf2.VCF(vcf_filename)
+    for variant in vcf:
+        vafs[variant.CHROM].append(dict(
+            pos=variant.POS,
+            vaf=variant.INFO.get("AF", None)
+        ))
+    return vafs
+
 
 def parse_cnr(cnr_filename):
     cnr_dict = defaultdict(list)
@@ -80,7 +92,7 @@ def parse_fai(fai_filename):
     return chroms
 
 
-def to_json(cns, cnr, chroms, amp, loh):
+def to_json(cns, cnr, chroms, amp, loh, vaf):
     cnvkit_list = []
     for chrom, length in chroms.items():
         cnvkit_list.append(dict(
@@ -89,7 +101,8 @@ def to_json(cns, cnr, chroms, amp, loh):
             length=length,
             segments=cns.get(chrom, []),
             regions=cnr.get(chrom, []),
-            genes=amp.get(chrom, []) + loh.get(chrom, [])
+            genes=amp.get(chrom, []) + loh.get(chrom, []),
+            vaf=vaf.get(chrom, []),
         ))
 
     return json.dumps(cnvkit_list)
@@ -98,6 +111,7 @@ def to_json(cns, cnr, chroms, amp, loh):
 def main():
     cns_filename = snakemake.input.cns
     cnr_filename = snakemake.input.cnr
+    vcf_filename = snakemake.input.vcf
     fai_filename = snakemake.input.fai
     amp_filename = snakemake.input.amp_bed
     loh_filename = snakemake.input.loh_bed
@@ -108,8 +122,9 @@ def main():
     chroms = parse_fai(fai_filename)
     amp = parse_bed(amp_filename)
     loh = parse_bed(loh_filename)
+    vaf = get_vaf(vcf_filename)
 
-    cnvkit_json = to_json(cns, cnr, chroms, amp, loh)
+    cnvkit_json = to_json(cns, cnr, chroms, amp, loh, vaf)
     with open(json_filename, "w") as f:
         f.write(cnvkit_json)
 
