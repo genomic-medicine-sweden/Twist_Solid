@@ -2,6 +2,8 @@ resources: "config/resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
+#hydra_local_path: "PATH_TO_REPO"
+
 default_container: "docker://hydragenetics/common:0.1.8"
 
 trimmer_software: "fastp_pe"
