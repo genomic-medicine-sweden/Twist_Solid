@@ -27,14 +27,16 @@
 
         const plotSingleChromosome = function(plotData) {
             let data = plotData;
-            const height = 200;
+            const height = 400;
             const width = 800;
             const margin = {
                 top: 10,
                 right: 30,
                 bottom: 40,
                 left: 50,
+                between: 40,
             };
+            const plotHeight = (height - margin.top - margin.between - margin.bottom) / 2;
 
             const xScale = d3.scaleLinear()
                 .domain([0, data.length])
@@ -42,7 +44,11 @@
 
             const yScale = d3.scaleLinear()
                 .domain(d3.extent(data.regions, d => d.log2))
-                .range([height-margin.top-margin.bottom, 0]);
+                .range([plotHeight, 0]);
+
+            const yScaleVAF = d3.scaleLinear()
+                .domain([0, 1])
+                .range([plotHeight, 0])
 
             const xAxis = g => g
                 .call(d3.axisBottom(xScale).ticks(5));
@@ -50,26 +56,36 @@
             const yAxis = g => g
                 .call(d3.axisLeft(yScale).ticks(4));
 
+            const yAxisVAF = g => g
+                .call(d3.axisLeft(yScaleVAF).ticks(5))
+
             const svg = d3.select("#single-chromosome")
                 .attr("preserveAspectRatio", "xMinYMin meet")
                 .attr("viewBox", [0, 0, width, height])
-                .attr("style", "max-width: 100%; height: auto; max-height: 300px; height: intrinsic;");
-
-            const plotArea = svg.append("g")
-                .attr("transform", `translate(${margin.left},${margin.top})`)
-                .attr("class", "plot-area");
+                .attr("style", "max-width: 100%; height: auto; max-height: 500px; height: intrinsic;");
 
             // Clip path for plot area
-            plotArea.append("clipPath")
+            svg.append("clipPath")
                 .attr("id", "plot-area-clip")
                 .append("rect")
                 .attr("width", width - margin.left - margin.right)
                 .attr("height", height - margin.top - margin.bottom);
 
-            const regions = plotArea.append("g")
+            const plotArea = svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`)
+                .attr("class", "plot-area")
+                .attr("clip-path", "url(#plot-area-clip)");
+
+            const lrArea = plotArea.append("g")
+                .attr("id", "lr-plot");
+            const vafArea = plotArea.append("g")
+                .attr("id", "vaf-plot")
+                .attr("transform", `translate(0, ${plotHeight + margin.between})`)
+
+            const regions = lrArea.append("g")
                 .attr("class", "regions");
 
-            const segments = plotArea.append("g")
+            const segments = lrArea.append("g")
                 .attr("class", "segments");
 
             const plotRegions = function(regionData) {
@@ -82,7 +98,6 @@
                     .attr("cx", d => xScale(d.start))
                     .attr("cy", d => yScale(d.log2))
                     .attr("r", 2)
-                    .attr("clip-path", "url(#plot-area-clip)")
                     .attr("fill", "#333")
                     .attr("fill-opacity", 0)
                     .transition()
@@ -105,7 +120,6 @@
                 lineSegments.enter()
                     .append("path")
                     .attr("class", "segment")
-                    .attr("clip-path", "url(#plot-area-clip)")
                     .attr("d", d =>
                         `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`)
                     .attr("stroke", "orange")
@@ -127,19 +141,20 @@
             }
 
             const plotGenes = function() {
-                let genes = plotArea.selectAll(".gene")
+                plotArea.selectAll(".gene")
                     .data(data.genes, d => d.gene)
                     .join(
                         enter => {
                             let gene_group = enter.append("g")
+                                // .attr("transform", `translate(${margin.left}, ${margin.top})`)
                                 .attr("class", "gene")
-                                .attr("clip-path", "url(#plot-area-clip)")
                             gene_group.append("text")
                                 .attr("class", "gene-label")
                                 .text(d => d.gene)
                                 .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
-                                .attr("y", yScale.range()[0] + 0.02 * (yScale.range()[1] - yScale.range()[0]))
+                                .attr("y", plotHeight + margin.between / 2)
                                 .attr("text-anchor", "middle")
+                                .attr("dominant-baseline", "central")
                                 .style("font-size", "0.8rem");
                             gene_group.append("rect")
                                 .attr("class", "gene-marker")
@@ -151,13 +166,12 @@
                                 .attr("fill-opacity", 0.05)
                                 .attr("stroke", "#000")
                                 .attr("stroke-width", 0.5)
-                                .style("pointer-events", "none");
+                                .attr("pointer-events", "none");
                             return gene_group;
                         }, update => {
                             update.selectAll(".gene-label")
                                 .transition()
                                 .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
-                                .attr("y", yScale.range()[0] + 0.02 * (yScale.range()[1] - yScale.range()[0]));
                             update.selectAll(".gene-marker")
                                 .transition()
                                 .attr("x", d => xScale(d.start))
@@ -171,7 +185,26 @@
                     );
             }
 
-            plotArea.append("g")
+            const plotVAF = function() {
+                vafArea.selectAll(".point")
+                    .data(data.vaf, d => d.pos)
+                    .join(
+                        enter => enter.append("circle")
+                            .attr("class", "point")
+                            .attr("cx", d => xScale(d.pos))
+                            .attr("cy", d => yScaleVAF(d.vaf))
+                            .attr("r", 2)
+                            .attr("fill", "#333")
+                            .attr("fill-opacity", 0.3),
+                        update => update
+                            .call(update => update.transition()
+                                .attr("cx", d => xScale(d.pos))),
+                        exit => exit.remove(),
+                    )
+            };
+
+            svg.append("g")
+                .attr("transform", `translate(${margin.left}, ${margin.top})`)
                 .attr("class", "zoom-layer")
                 .append("rect")
                 .attr("width", width - margin.left - margin.right)
@@ -214,6 +247,7 @@
                             .duration(500)
                             .call(xAxis);
                         plotRegions(data.regions);
+                        plotVAF();
                         plotSegments(data.segments);
                         plotGenes();
                     }))
@@ -226,13 +260,17 @@
                 });
 
             svg.append("g")
-                .attr("transform", `translate(${margin.left},${height-margin.bottom})`)
+                .attr("transform", `translate(${margin.left},${height - margin.bottom})`)
                 .attr("class", "x-axis")
                 .call(xAxis);
             svg.append("g")
                 .attr("transform", `translate(${margin.left},${margin.top})`)
                 .attr("class", "y-axis")
                 .call(yAxis);
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top + plotHeight + margin.between})`)
+                .attr("class", "y-axis")
+                .call(yAxisVAF);
 
             // Labels
             svg.append("text")
@@ -243,8 +281,15 @@
                 .style("font-size", "0.8rem");
 
             svg.append("text")
-                .attr("transform", `translate(0,${margin.top+(height-margin.bottom)/2}) rotate(-90)`)
+                .attr("transform", `translate(0,${margin.top+plotHeight/2}) rotate(-90)`)
                 .text("log2 ratio")
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "text-before-edge")
+                .style("font-size", "0.9rem");
+
+            svg.append("text")
+                .attr("transform", `translate(0,${height-margin.bottom-plotHeight/2}) rotate(-90)`)
+                .text("VAF")
                 .attr("text-anchor", "middle")
                 .attr("dominant-baseline", "text-before-edge")
                 .style("font-size", "0.9rem");
@@ -261,6 +306,7 @@
                     .call(yAxis);
                 svg.select(".x-label").text(data.label);
                 plotRegions(data.regions);
+                plotVAF();
                 plotSegments(data.segments);
                 plotGenes();
             }
@@ -274,70 +320,77 @@
 
         const plotAllChromosomes = function() {
             const totalLength = d3.sum(cnvData.map(d => d.length));
-            const height = 250;
+            const height = 400;
             const width = 800;
-            const panelPadding = 0;
             const margin = {
                 top: 10,
                 right: 30,
                 bottom: 60,
                 left: 50,
+                between: 10,
             };
-            const panelWidths = cnvData.map(d => (width - margin.left - margin.right) * d.length / totalLength - panelPadding);
-            const panelHeight = height - margin.top - margin.bottom;
+            const panelWidths = cnvData.map(d => (width - margin.left - margin.right) * d.length / totalLength);
+            const panelHeight = (height - margin.top - margin.bottom - margin.between) / 2;
 
             const xScales = cnvData.map((d, i) => d3.scaleLinear()
-                    .domain([0, d.length])
-                    .range([0, panelWidths[i]]));
-
-            const xAxis = (g, i) => g
-                    .attr("transform", `translate(0,${panelHeight})`)
-                    .call(d3.axisBottom(xScales[i]).ticks(5));
-
-            const yAxis = g => g
-                .call(d3.axisLeft(yScale).ticks(4));
+                .domain([0, d.length])
+                .range([0, panelWidths[i]]));
 
             const yScale = d3.scaleLinear()
                 .domain(d3.extent(d3.merge(cnvData.map(d => d.regions)), d => d.log2))
                 .range([panelHeight, 0]);
 
+            const yScaleVAF = d3.scaleLinear()
+                .domain([0, 1])
+                .range([panelHeight, 0]);
+
+            const yAxis = g => g
+                .call(d3.axisLeft(yScale).ticks(4));
+
+            const yAxisVAF = g => g
+                .call(d3.axisLeft(yScaleVAF).ticks(4));
+
             const svg = d3.select("svg#all-chromosomes")
                 .attr("preserveAspectRatio", "xMinYMin meet")
                 .attr("viewBox", [0, 0, width, height])
-                .attr("style", "max-width: 100%; max-height: 400px; height: auto;");
+                .attr("style", "max-width: 100%; max-height: 500px; height: auto;");
 
-            const panels = svg.append("g")
-                .attr("transform", `translate(${margin.left},${margin.top})`)
-                .selectAll(".chromosome-plot")
-                .data(cnvData)
-                .enter()
-                .append("g")
-                .attr("data-index", (d, i) => i)
-                .attr("class", "chromosome-plot")
-                .attr(
-                    "transform",
-                    (d, i) => `translate(${i === 0 ? 0 : d3.sum(panelWidths.slice(0, i))}, 0)`
-                );
+            const plotArea = svg.append("g")
+                .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-            // Panel backgrounds
-            panels.append("rect")
-                .attr("class", "bg-rect")
-                .attr("width", (d, i) => panelWidths[i])
-                .attr("height", panelHeight)
-                .attr("fill", "#FFF")
-                .attr("stroke", "#333");
+            const lrArea = plotArea.append("g")
+                .attr("class", "genome-view-area");
+            const vafArea = plotArea.append("g")
+                .attr("class", "genome-view-area")
+                .attr("transform", `translate(0,${panelHeight+margin.between})`);
 
-            // Baseline
-            panels.append("line")
-                .attr("class", "baseline")
-                .attr("transform", `translate(0,${yScale(0)})`)
-                .attr("x2", (d, i, g) => panelWidths[g[i].parentNode.dataset.index])
-                .attr("stroke", "#000")
-                .attr("stroke-opacity", 0.3)
-                .attr("stroke-dasharray", 4)
+            const addPanels = function(g) {
+                const panels = g.selectAll(".chromosome-panel")
+                    .data(cnvData)
+                    .join("g")
+                        .attr("data-index", (d, i) => i)
+                        .attr("class", "chromosome-panel")
+                        .attr(
+                            "transform",
+                            (d, i) => `translate(${i === 0 ? 0 : d3.sum(panelWidths.slice(0, i))}, 0)`
+                        );
+
+                // Panel backgrounds
+                panels.append("rect")
+                    .attr("class", "bg-rect")
+                    .attr("width", (d, i) => panelWidths[i])
+                    .attr("height", panelHeight)
+                    .attr("fill", "#FFF")
+                    .attr("stroke", "#333");
+
+                return panels;
+            }
+
+            const lrPanels = addPanels(lrArea);
+            const vafPanels = addPanels(vafArea);
 
             // Regions
-            panels.append("g")
+            lrPanels.append("g")
                 .attr("class", "regions")
                 .attr("data-index", (d, i) => i)
                 .selectAll(".point")
@@ -353,7 +406,7 @@
                 .attr("fill-opacity", 0.3);
 
             // Segments
-            panels.append("g")
+            lrPanels.append("g")
                 .attr("class", "segments")
                 .attr("data-index", (d, i) => i)
                 .selectAll(".segment")
@@ -370,50 +423,76 @@
                 .attr("stroke", "orange")
                 .attr("stroke-width", 2);
 
+            // VAF
+            vafPanels.append("g")
+                .attr("class", "vaf")
+                .attr("data-index", (d, i) => i)
+                .selectAll(".point")
+                .data(d => d.vaf.filter((v, i) => i % 3 === 0))
+                .join("circle")
+                    .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.pos))
+                    .attr("cy", d => yScaleVAF(d.vaf))
+                    .attr("r", 2)
+                    .attr("fill", "#333")
+                    .attr("fill-opacity", 0.3);
+
             // Clip path to create inner stroke
-            panels.append("clipPath")
-                .attr("id", (d, i) => `panel-overlay-${i}-clip`)
-                .append("rect")
-                .attr("width", (d, i) => panelWidths[i])
-                .attr("height", panelHeight);
+            const overlayClip = d3.selectAll(".genome-view-area").append("g");
+            overlayClip.selectAll(".panel-overlay-clip")
+                .data(panelWidths)
+                .join("clipPath")
+                    .attr("class", "panel-overlay-clip")
+                    .attr("id", (d, i) => `panel-${i}-overlay-clip`)
+                    .append("rect")
+                    .attr("width", d => d)
+                    .attr("height", panelHeight);
 
-            panels.append("rect")
-                .attr("class", "panel-overlay")
-                .attr("width", (d, i) => panelWidths[i])
-                .attr("height", panelHeight)
-                .attr("clip-path", (d, i) => `url(#panel-overlay-${i}-clip)`)
-                .attr("fill", "#000")
-                .attr("fill-opacity", 0)
-                .attr("stroke", "forestgreen")
-                .attr("stroke-width", (d, i) => i === 0 ? 6 : 0)
-                .on("mouseenter", (e, d) => {
-                    panels.selectAll(".panel-overlay")
-                        .attr("fill-opacity", 0);
-                    d3.select(e.target)
-                        .attr("fill-opacity", 0.2);
-                })
-                .on("mouseout", e => {
-                    d3.select(e.target)
-                        .attr("fill-opacity", 0);
-                })
-                .on("click", (e, d) => {
-                    chromosomeView.update(d);
-                    panels.selectAll(".panel-overlay")
-                        .classed("selected", true)
-                        .attr("stroke-width", 0);
-                    d3.select(e.target)
-                        .classed("selected", false)
-                        .attr("stroke-width", 6);
-                });
+            const overlays = d3.selectAll(".genome-view-area").append("g");
+            overlays.selectAll(".panel-overlay")
+                .data(panelWidths)
+                .join("rect")
+                    .attr("class", (d, i) => `panel-overlay panel-${i}-overlay`)
+                    .attr("transform", (d, i) => `translate(${i === 0 ? 0 : d3.sum(panelWidths.slice(0, i))}, 0)`)
+                    .attr("data-index", (d, i) => i)
+                    .attr("width", d => d)
+                    .attr("height", panelHeight)
+                    .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
+                    .attr("fill", "#000")
+                    .attr("fill-opacity", 0)
+                    .attr("stroke", "forestgreen")
+                    .attr("stroke-width", (d, i) => i === 0 ? 6 : 0)
+                    .on("mouseenter", e => {
+                        plotArea.selectAll(".panel-overlay")
+                            .attr("fill-opacity", 0);
+                        d3.selectAll(`.panel-${e.target.dataset.index}-overlay`)
+                            .attr("fill-opacity", 0.2);
+                    })
+                    .on("mouseout", e => {
+                        d3.selectAll(`.panel-${e.target.dataset.index}-overlay`)
+                            .attr("fill-opacity", 0);
+                    })
+                    .on("click", (e, d, i) => {
+                        chromosomeView.update(cnvData[e.target.dataset.index]);
+                        plotArea.selectAll(".panel-overlay")
+                            .classed("selected", false)
+                            .attr("stroke-width", 0);
+                        d3.selectAll(`.panel-${e.target.dataset.index}-overlay`)
+                            .classed("selected", true)
+                            .attr("stroke-width", 6);
+                    });
 
-            // Y axis
+            // Y axes
             svg.append("g")
                 .attr("transform", `translate(${margin.left}, ${margin.top})`)
                 .call(yAxis);
 
+            svg.append("g")
+                .attr("transform", `translate(${margin.left}, ${margin.top+panelHeight+margin.between})`)
+                .call(yAxisVAF);
+
             // Labels
-            panels.append("text")
-                .attr("transform", (d, i) => `translate(${panelWidths[i]/2},${panelHeight+margin.top}) rotate(-90)`)
+            vafPanels.append("text")
+                .attr("transform", (d, i) => `translate(${panelWidths[i]/2},${panelHeight+10}) rotate(-90)`)
                 .text((d, i) => d.label)
                 .attr("text-anchor", "end")
                 .attr("dominant-baseline", "central")
@@ -422,6 +501,13 @@
             svg.append("text")
                 .attr("transform", `translate(0,${margin.top+panelHeight/2}) rotate(-90)`)
                 .text("log2 ratio")
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "text-before-edge")
+                .style("font-size", "0.9rem");
+
+            svg.append("text")
+                .attr("transform", `translate(0,${margin.top+margin.between+3*panelHeight/2}) rotate(-90)`)
+                .text("VAF")
                 .attr("text-anchor", "middle")
                 .attr("dominant-baseline", "text-before-edge")
                 .style("font-size", "0.9rem");
