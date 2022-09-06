@@ -66,7 +66,7 @@ columns:
     from: 'hotspot'
     field: 'COMMENT'
     order: 11
-  Min_read_depth300:
+  Min_read_depth00:
     from: 'function'
     name: "get_read_level"
     variables:
