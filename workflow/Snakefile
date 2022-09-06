@@ -48,16 +48,9 @@ ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_a
 ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
 
 
-import os
-def get_module_snake_file(config, repo, path, tag):
-    if 'hydra_local_path' in config:
-        return gitfile(os.path.join(config['hydra_local_path'], repo), path=path, tag=tag)
-    else:
-        return github(repo, path=path, tag=tag)
-    
 module prealignment:
     snakefile:
-        get_module_snake_file(config, "hydra-genetics/prealignment", path="workflow/Snakefile", tag="v0.3.1")
+        get_module_snakefile(config, "hydra-genetics/prealignment", path="workflow/Snakefile", tag="v0.3.1")
     config:
         config
 
@@ -67,7 +60,7 @@ use rule * from prealignment as prealignment_*
 
 module alignment:
     snakefile:
-        get_module_snake_file(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.2.0")
+        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.2.0")
     config:
         config
 
@@ -84,7 +77,7 @@ use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
 
 module snv_indels:
     snakefile:
-        get_module_snake_file(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.2.0")
+        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.2.0")
     config:
         config
 
@@ -94,7 +87,7 @@ use rule * from snv_indels as snv_indels_*
 
 module annotation:
     snakefile:
-        get_module_snake_file(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="ad68059")
+        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="ad68059")
     config:
         config
 
@@ -104,7 +97,7 @@ use rule * from annotation as annotation_*
 
 module filtering:
     snakefile:
-        get_module_snake_file(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag="b7f4dc3")
+        get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag="b7f4dc3")
     config:
         config
 
@@ -114,7 +107,7 @@ use rule * from filtering as filtering_*
 
 module qc:
     snakefile:
-        get_module_snake_file(config, "hydra-genetics/qc", path="workflow/Snakefile", tag="cd029ff")
+        get_module_snakefile(config, "hydra-genetics/qc", path="workflow/Snakefile", tag="cd029ff")
     config:
         config
 
@@ -191,7 +184,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 module biomarker:
     snakefile:
-        get_module_snake_file(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="aa89042")
+        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="aa89042")
     config:
         config
 
@@ -201,7 +194,7 @@ use rule * from biomarker as biomarker_*
 
 module fusions:
     snakefile:
-        get_module_snake_file(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="12f8354")
+        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="12f8354")
     config:
         config
 
@@ -219,7 +212,7 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        get_module_snake_file(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="5738dd8")
+        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="5738dd8")
     config:
         config
 
@@ -242,7 +235,7 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
 
 module misc:
     snakefile:
-        github("hydra-genetics/misc", path="workflow/Snakefile", tag="f8706d4")
+        get_module_snakefile(config, "hydra-genetics/misc", path="workflow/Snakefile", tag="f8706d4")
     config:
         config
 
