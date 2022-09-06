@@ -157,7 +157,7 @@ hotspot_report:
   report_config: "config/hotspot_report.yaml"
   chr_translation_file: "config/hotspot_report.chr.translation.hg19"
   levels:
-    - [300, "ok", "yes"]
+    - [200, "ok", "yes"]
     - [30, "low", "yes"]
     - [0, "low", "not analyzable"]
 
