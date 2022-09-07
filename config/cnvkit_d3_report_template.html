@@ -25,6 +25,24 @@
     <script>
         const cnvData = {{ json }}
 
+        const getTextDimensions = function(text, fontSize) {
+            let div = document.createElement("div");
+
+            div.innerText = text;
+            div.style.position = "absolute";
+            div.style.float = "left";
+            div.style.fontSize = fontSize;
+            div.style.whiteSpace = "nowrap";
+            div.style.visibility = "hidden";
+
+            document.body.append(div);
+            let width = div.clientWidth;
+            let height = div.clientHeight;
+            div.remove();
+
+            return [width, height];
+        }
+
         const plotChromosomeView = function(plotData) {
             let data = plotData;
             const height = 400;
@@ -146,16 +164,7 @@
                     .join(
                         enter => {
                             let gene_group = enter.append("g")
-                                // .attr("transform", `translate(${margin.left}, ${margin.top})`)
                                 .attr("class", "gene")
-                            gene_group.append("text")
-                                .attr("class", "gene-label")
-                                .text(d => d.gene)
-                                .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
-                                .attr("y", plotHeight + margin.between / 2)
-                                .attr("text-anchor", "middle")
-                                .attr("dominant-baseline", "central")
-                                .style("font-size", "0.8rem");
                             gene_group.append("rect")
                                 .attr("class", "gene-marker")
                                 .attr("x", d => xScale(d.start))
@@ -167,11 +176,39 @@
                                 .attr("stroke", "#000")
                                 .attr("stroke-width", 0.5)
                                 .attr("pointer-events", "none");
+                            gene_group.append("rect")
+                                .attr("class", "gene-label-background")
+                                .attr("x", d => {
+                                    let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                    return xScale(d.start + (d.end - d.start) / 2) - labelWidth / 2 - 5;
+                                })
+                                .attr("y", d => {
+                                    let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                    return plotHeight + margin.between / 2 - labelHeight / 2 - 2;
+                                })
+                                .attr("width", d => getTextDimensions(d.gene, "0.8rem")[0] + 10)
+                                .attr("height", d => getTextDimensions(d.gene, "0.8rem")[1] + 4)
+                                .attr("fill", "#EEE")
+                                .attr("rx", 4);
+                            gene_group.append("text")
+                                .attr("class", "gene-label")
+                                .text(d => d.gene)
+                                .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
+                                .attr("y", plotHeight + margin.between / 2)
+                                .attr("text-anchor", "middle")
+                                .attr("dominant-baseline", "central")
+                                .style("font-size", "0.8rem");
                             return gene_group;
                         }, update => {
                             update.selectAll(".gene-label")
                                 .transition()
-                                .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
+                                .attr("x", d => xScale(d.start + (d.end - d.start) / 2));
+                            update.selectAll(".gene-label-background")
+                                .transition()
+                                .attr("x", d => {
+                                    let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                    return xScale(d.start + (d.end - d.start) / 2) - labelWidth / 2 - 5;
+                                });
                             update.selectAll(".gene-marker")
                                 .transition()
                                 .attr("x", d => xScale(d.start))

@@ -7,17 +7,55 @@ rule cnvkit_json:
         amp_bed=config["annotate_cnv"]["cnv_amp_genes"],
         loh_bed=config["annotate_cnv"]["cnv_loh_genes"]
     output:
-        json="cnv_sv/cnvkit_report/{sample}_{type}_cnvkit.json"
+        json=temp("cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json")
+    log:
+        "cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json.log"
+    benchmark:
+        repeat(
+            "cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json.benchmark.tsv",
+            config.get("cnvkit_json", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("cnvkit_json", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("cnvkit_json", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("cnvkit_json", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("cnvkit_json", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnvkit_json", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_json", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("cnvkit_json", {}).get("container", config["default_container"])
     conda:
         "../envs/cnvkit_json.yaml"
+    message:
+        "{rule}: Create a JSON representation of the cnvkit results: {output.json}"
     script:
         "../scripts/cnvkit_json.py"
 
 rule cnvkit_html_report:
     input:
-        json="cnv_sv/cnvkit_report/{sample}_{type}_cnvkit.json",
+        json="cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json",
         template=config.get("cnvkit_html_report", {}).get("template", "")
     output:
-        html="cnv_sv/cnvkit_report/{sample}_{type}_cnvkit.html"
+        html=temp("cnv_sv/cnvkit_report/{sample}_{type}_cnvkit.html")
+    log:
+        "cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.html.log"
+    benchmark:
+        repeat(
+            "cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json.benchmark.tsv",
+            config.get("cnvkit_html_report", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("cnvkit_html_report", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("cnvkit_html_report", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("cnvkit_html_report", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("cnvkit_html_report", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnvkit_html_report", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_html_report", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("cnvkit_html_report", {}).get("container", config["default_container"])
+    conda:
+        "../env/cnvkit_html_report.yaml"
+    message:
+        "{rule}: Generate an interactive HTML report: {output.html}"
     script:
         "../scripts/cnvkit_html_report.py"
