@@ -374,7 +374,7 @@
                 .range([0, panelWidths[i]]));
 
             const yScale = d3.scaleLinear()
-                .domain(d3.extent(d3.merge(cnvData.map(d => d.regions)), d => d.log2))
+                .domain([-2, 2])
                 .range([panelHeight, 0]);
 
             const yScaleVAF = d3.scaleLinear()
@@ -429,6 +429,7 @@
             // Regions
             lrPanels.append("g")
                 .attr("class", "regions")
+                .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
                 .attr("data-index", (d, i) => i)
                 .selectAll(".point")
                 // Only plot every fifth point for performance
@@ -445,6 +446,7 @@
             // Segments
             lrPanels.append("g")
                 .attr("class", "segments")
+                .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
                 .attr("data-index", (d, i) => i)
                 .selectAll(".segment")
                 // Only draw segments that will actually be visible
@@ -463,6 +465,7 @@
             // VAF
             vafPanels.append("g")
                 .attr("class", "vaf")
+                .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
                 .attr("data-index", (d, i) => i)
                 .selectAll(".point")
                 .data(d => d.vaf)
