@@ -107,55 +107,54 @@
                 .attr("class", "segments");
 
             const plotRegions = function(regionData) {
-                let points = regions.selectAll(".point")
-                    .data(regionData, d => [d.start, d.end, d.log2]);
-
-                points.enter()
-                    .append("circle")
-                    .attr("class", "point")
-                    .attr("cx", d => xScale(d.start))
-                    .attr("cy", d => yScale(d.log2))
-                    .attr("r", 2)
-                    .attr("fill", "#333")
-                    .attr("fill-opacity", 0)
-                    .transition()
-                    .duration(500)
-                    .attr("fill-opacity", 0.3);
-                points.transition()
-                    .duration(500)
-                    .attr("cx", d => xScale(d.start))
-                    .attr("cy", d => yScale(d.log2));
-                points.exit()
-                    .transition()
-                    .attr("fill-opacity", 0)
-                    .remove();
+                regions.selectAll(".point")
+                    .data(regionData, d => [d.start, d.end, d.log2])
+                    .join(
+                        enter => enter
+                            .append("circle")
+                            .attr("class", "point")
+                            .attr("cx", d => xScale(d.start))
+                            .attr("cy", d => yScale(d.log2))
+                            .attr("r", 2)
+                            .attr("fill", "#333")
+                            .attr("fill-opacity", 0)
+                            .transition()
+                            .duration(500)
+                            .attr("fill-opacity", 0.3),
+                        update => update
+                            .transition()
+                            .attr("cx", d => xScale(d.start)),
+                        exit => exit
+                            .transition()
+                            .attr("fill-opacity", 0)
+                            .remove()
+                    );
             }
 
             const plotSegments = function(segmentData) {
-                let lineSegments = segments.selectAll(".segment")
-                    .data(segmentData, d => [d.start, d.end]);
-
-                lineSegments.enter()
-                    .append("path")
-                    .attr("class", "segment")
-                    .attr("d", d =>
-                        `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`)
-                    .attr("stroke", "orange")
-                    .attr("stroke-width", 2)
-                    .attr("stroke-opacity", 0)
-                    .transition()
-                    .duration(500)
-                    .attr("stroke-opacity", 1)
-
-                lineSegments.exit()
-                    .transition()
-                    .attr("stroke-opacity", 0)
-                    .remove();
-
-                lineSegments.transition()
-                    .duration(500)
-                    .attr("d", d =>
-                        `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`);
+                segments.selectAll(".segment")
+                    .data(segmentData, d => [d.start, d.end])
+                    .join(
+                        enter => enter
+                            .append("path")
+                            .attr("class", "segment")
+                            .attr("d", d =>
+                                `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`)
+                            .attr("stroke", "orange")
+                            .attr("stroke-width", 2)
+                            .attr("stroke-opacity", 0)
+                            .transition()
+                            .duration(500)
+                            .attr("stroke-opacity", 1),
+                        update => update
+                            .transition()
+                            .attr("d", d =>
+                                `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`),
+                        exit => exit
+                            .transition()
+                            .attr("stroke-opacity", 0)
+                            .remove()
+                    );
             }
 
             const plotGenes = function() {
@@ -434,14 +433,13 @@
                 .selectAll(".point")
                 // Only plot every fifth point for performance
                 .data(d => d.regions.filter((r, i) => i % 5 === 0))
-                .enter()
-                .append("circle")
-                .attr("class", "point")
-                .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.start))
-                .attr("cy", d => yScale(d.log2))
-                .attr("r", 2)
-                .attr("fill", "#333")
-                .attr("fill-opacity", 0.3);
+                .join("circle")
+                    .attr("class", "point")
+                    .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.start))
+                    .attr("cy", d => yScale(d.log2))
+                    .attr("r", 2)
+                    .attr("fill", "#333")
+                    .attr("fill-opacity", 0.3);
 
             // Segments
             lrPanels.append("g")
@@ -451,16 +449,15 @@
                 .selectAll(".segment")
                 // Only draw segments that will actually be visible
                 .data(d => d.segments.filter(s => s.end - s.start > totalLength/width))
-                .enter()
-                .append("path")
-                .attr("class", "segment")
-                .attr("d", (d, i, g) => {
-                    let j = g[i].parentNode.dataset.index;
-                    let xScale = xScales[j];
-                    return `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`;
-                })
-                .attr("stroke", "orange")
-                .attr("stroke-width", 2);
+                .join("path")
+                    .attr("class", "segment")
+                    .attr("d", (d, i, g) => {
+                        let j = g[i].parentNode.dataset.index;
+                        let xScale = xScales[j];
+                        return `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`;
+                    })
+                    .attr("stroke", "orange")
+                    .attr("stroke-width", 2);
 
             // VAF
             vafPanels.append("g")
