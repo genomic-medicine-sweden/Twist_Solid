@@ -465,7 +465,7 @@
                 .attr("class", "vaf")
                 .attr("data-index", (d, i) => i)
                 .selectAll(".point")
-                .data(d => d.vaf.filter((v, i) => i % 3 === 0))
+                .data(d => d.vaf)
                 .join("circle")
                     .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.pos))
                     .attr("cy", d => yScaleVAF(d.vaf))
