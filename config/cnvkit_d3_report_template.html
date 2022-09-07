@@ -12,20 +12,20 @@
     <section>
         <h2>Chromosome view</h2>
         <p>Click and drag to zoom. Click the plot to reset zoom.</p>
-        <svg id="single-chromosome"></svg>
+        <svg id="chromosome-view"></svg>
     </section>
 
     <section>
         <h2>Genome view</h2>
         <p>Click a chromosome to visualise it above.</p>
-        <svg id="all-chromosomes"></svg>
+        <svg id="genome-view"></svg>
     </section>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
         const cnvData = {{ json }}
 
-        const plotSingleChromosome = function(plotData) {
+        const plotChromosomeView = function(plotData) {
             let data = plotData;
             const height = 400;
             const width = 800;
@@ -59,7 +59,7 @@
             const yAxisVAF = g => g
                 .call(d3.axisLeft(yScaleVAF).ticks(5))
 
-            const svg = d3.select("#single-chromosome")
+            const svg = d3.select("#chromosome-view")
                 .attr("preserveAspectRatio", "xMinYMin meet")
                 .attr("viewBox", [0, 0, width, height])
                 .attr("style", "max-width: 100%; height: auto; max-height: 500px; height: intrinsic;");
@@ -318,7 +318,7 @@
             }
         }
 
-        const plotAllChromosomes = function() {
+        const plotGenomeView = function() {
             const totalLength = d3.sum(cnvData.map(d => d.length));
             const height = 400;
             const width = 800;
@@ -350,7 +350,7 @@
             const yAxisVAF = g => g
                 .call(d3.axisLeft(yScaleVAF).ticks(4));
 
-            const svg = d3.select("svg#all-chromosomes")
+            const svg = d3.select("#genome-view")
                 .attr("preserveAspectRatio", "xMinYMin meet")
                 .attr("viewBox", [0, 0, width, height])
                 .attr("style", "max-width: 100%; max-height: 500px; height: auto;");
@@ -513,8 +513,8 @@
                 .style("font-size", "0.9rem");
         };
 
-        const chromosomeView = plotSingleChromosome(cnvData[0]);
-        plotAllChromosomes();
+        const chromosomeView = plotChromosomeView(cnvData[0]);
+        plotGenomeView();
     </script>
 </body>
 </html>
