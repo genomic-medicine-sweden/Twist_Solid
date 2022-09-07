@@ -54,7 +54,7 @@ rule cnvkit_html_report:
     container:
         config.get("cnvkit_html_report", {}).get("container", config["default_container"])
     conda:
-        "../env/cnvkit_html_report.yaml"
+        "../envs/cnvkit_html_report.yaml"
     message:
         "{rule}: Generate an interactive HTML report: {output.html}"
     script:
