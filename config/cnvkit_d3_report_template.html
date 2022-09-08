@@ -271,8 +271,8 @@
                     })
                     .on("end", (e) => {
                         d3.select(".zoom-region").remove();
-                        let xMin = Math.min(e.x, e.subject.x);
-                        let xMax = Math.max(e.x, e.subject.x);
+                        let xMin = Math.max(0, Math.min(e.x, e.subject.x));
+                        let xMax = Math.min(xScale.range()[1], Math.max(e.x, e.subject.x));
                         if (xMax - xMin < 3) {
                             return;
                         }
