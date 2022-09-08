@@ -9,7 +9,18 @@ def parse_cns(cns_filename):
         # skip header
         next(f)
         for line in f:
-            chrom, start, end, gene, log2, depth, probes, weight, ci_lo, ci_hi = line.strip().split()
+            (
+                chrom,
+                start,
+                end,
+                gene,
+                log2,
+                depth,
+                probes,
+                weight,
+                ci_lo,
+                ci_hi,
+            ) = line.strip().split()
             start = int(start)
             end = int(end)
             genes = list(set(map(lambda x: x.split("_")[0], gene.strip().split(","))))
@@ -20,16 +31,18 @@ def parse_cns(cns_filename):
             ci_lo = float(ci_lo)
             ci_hi = float(ci_hi)
 
-            cns_dict[chrom].append(dict(
-                start=start,
-                end=end,
-                genes=genes,
-                depth=depth,
-                log2=log2,
-                weight=weight,
-                ci_lo=ci_lo,
-                ci_hi=ci_hi
-            ))
+            cns_dict[chrom].append(
+                dict(
+                    start=start,
+                    end=end,
+                    genes=genes,
+                    depth=depth,
+                    log2=log2,
+                    weight=weight,
+                    ci_lo=ci_lo,
+                    ci_hi=ci_hi,
+                )
+            )
 
     return cns_dict
 
@@ -38,10 +51,9 @@ def get_vaf(vcf_filename):
     vafs = defaultdict(list)
     vcf = cyvcf2.VCF(vcf_filename)
     for variant in vcf:
-        vafs[variant.CHROM].append(dict(
-            pos=variant.POS,
-            vaf=variant.INFO.get("AF", None)
-        ))
+        vafs[variant.CHROM].append(
+            dict(pos=variant.POS, vaf=variant.INFO.get("AF", None))
+        )
     return vafs
 
 
@@ -58,14 +70,16 @@ def parse_cnr(cnr_filename):
             log2 = float(log2)
             weight = float(weight)
 
-            cnr_dict[chrom].append(dict(
-                gene=gene,
-                start=start,
-                end=end,
-                depth=depth,
-                log2=log2,
-                weight=weight
-            ))
+            cnr_dict[chrom].append(
+                dict(
+                    gene=gene,
+                    start=start,
+                    end=end,
+                    depth=depth,
+                    log2=log2,
+                    weight=weight,
+                )
+            )
 
     return cnr_dict
 
@@ -75,11 +89,13 @@ def parse_bed(bed_filename):
     with open(bed_filename) as f:
         for line in f:
             chrom, start, end, gene = line.strip().split()
-            bed[chrom].append(dict(
-                start=int(start),
-                end=int(end),
-                gene=gene,
-            ))
+            bed[chrom].append(
+                dict(
+                    start=int(start),
+                    end=int(end),
+                    gene=gene,
+                )
+            )
     return bed
 
 
@@ -95,17 +111,19 @@ def parse_fai(fai_filename):
 def to_json(cns, cnr, chroms, amp, loh, vaf, skip=None):
     cnvkit_list = []
     for chrom, length in chroms.items():
-        if not skip is None and chrom in skip:
+        if skip is not None and chrom in skip:
             continue
-        cnvkit_list.append(dict(
-            chromosome=chrom,
-            label=chrom,
-            length=length,
-            segments=cns.get(chrom, []),
-            regions=cnr.get(chrom, []),
-            genes=amp.get(chrom, []) + loh.get(chrom, []),
-            vaf=vaf.get(chrom, []),
-        ))
+        cnvkit_list.append(
+            dict(
+                chromosome=chrom,
+                label=chrom,
+                length=length,
+                segments=cns.get(chrom, []),
+                regions=cnr.get(chrom, []),
+                genes=amp.get(chrom, []) + loh.get(chrom, []),
+                vaf=vaf.get(chrom, []),
+            )
+        )
 
     return json.dumps(cnvkit_list)
 
