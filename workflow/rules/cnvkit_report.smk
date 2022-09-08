@@ -7,11 +7,11 @@ rule cnvkit_json:
         amp_bed=config.get("annotate_cnv", {}).get("cnv_amp_genes", []),
         loh_bed=config.get("annotate_cnv", {}).get("cnv_loh_genes", []),
     output:
-        json=temp("cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json")
+        json=temp("cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json"),
     params:
-        skip_chromosomes=config.get("reference", {}).get("skip_chrs", None)
+        skip_chromosomes=config.get("reference", {}).get("skip_chrs", None),
     log:
-        "cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json.log"
+        "cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json.log",
     benchmark:
         repeat(
             "cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json.benchmark.tsv",
@@ -33,14 +33,15 @@ rule cnvkit_json:
     script:
         "../scripts/cnvkit_json.py"
 
+
 rule cnvkit_html_report:
     input:
         json="cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json",
-        template=config.get("cnvkit_html_report", {}).get("template", "")
+        template=config.get("cnvkit_html_report", {}).get("template", ""),
     output:
         html=temp("cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.html"),
     log:
-        "cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.html.log"
+        "cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.html.log",
     benchmark:
         repeat(
             "cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json.benchmark.tsv",
