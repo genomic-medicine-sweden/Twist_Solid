@@ -8,6 +8,8 @@ rule cnvkit_json:
         loh_bed=config["annotate_cnv"]["cnv_loh_genes"]
     output:
         json=temp("cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json")
+    params:
+        skip_chromosomes=config.get("reference", {}).get("skip_chrs", None)
     log:
         "cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json.log"
     benchmark:

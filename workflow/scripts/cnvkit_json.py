@@ -92,9 +92,11 @@ def parse_fai(fai_filename):
     return chroms
 
 
-def to_json(cns, cnr, chroms, amp, loh, vaf):
+def to_json(cns, cnr, chroms, amp, loh, vaf, skip=None):
     cnvkit_list = []
     for chrom, length in chroms.items():
+        if not skip is None and chrom in skip:
+            continue
         cnvkit_list.append(dict(
             chromosome=chrom,
             label=chrom,
@@ -117,6 +119,8 @@ def main():
     loh_filename = snakemake.input.loh_bed
     json_filename = snakemake.output.json
 
+    skip_chromosomes = snakemake.params.skip_chromosomes
+
     cns = parse_cns(cns_filename)
     cnr = parse_cnr(cnr_filename)
     chroms = parse_fai(fai_filename)
@@ -124,7 +128,7 @@ def main():
     loh = parse_bed(loh_filename)
     vaf = get_vaf(vcf_filename)
 
-    cnvkit_json = to_json(cns, cnr, chroms, amp, loh, vaf)
+    cnvkit_json = to_json(cns, cnr, chroms, amp, loh, vaf, skip=skip_chromosomes)
     with open(json_filename, "w") as f:
         f.write(cnvkit_json)
 
