@@ -124,8 +124,12 @@ def main():
     cns = parse_cns(cns_filename)
     cnr = parse_cnr(cnr_filename)
     chroms = parse_fai(fai_filename)
-    amp = parse_bed(amp_filename)
-    loh = parse_bed(loh_filename)
+    amp = {}
+    if len(amp_filename) > 0:
+        amp = parse_bed(amp_filename)
+    loh = {}
+    if len(loh_filename) > 0:
+        loh = parse_bed(loh_filename)
     vaf = get_vaf(vcf_filename)
 
     cnvkit_json = to_json(cns, cnr, chroms, amp, loh, vaf, skip=skip_chromosomes)
