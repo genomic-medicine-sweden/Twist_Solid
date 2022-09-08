@@ -12,7 +12,7 @@ def parse_cns(cns_filename):
             chrom, start, end, gene, log2, depth, probes, weight, ci_lo, ci_hi = line.strip().split()
             start = int(start)
             end = int(end)
-            genes = list(map(lambda x: x.split("_")[0], gene.strip().split(",")))
+            genes = list(set(map(lambda x: x.split("_")[0], gene.strip().split(","))))
             log2 = float(log2)
             depth = float(depth)
             probes = int(probes)
