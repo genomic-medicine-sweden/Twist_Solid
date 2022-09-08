@@ -65,6 +65,9 @@ cnvkit_call:
 cnvkit_diagram:
   container: "docker://marrip/cnvkit:0.9.9"
 
+cnvkit_html_report:
+  template: "../../config/cnvkit_d3_report_template.html"
+
 cnvkit_scatter:
   container: "docker://marrip/cnvkit:0.9.9"
 
