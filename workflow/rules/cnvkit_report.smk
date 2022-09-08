@@ -38,7 +38,7 @@ rule cnvkit_html_report:
         json="cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json",
         template=config.get("cnvkit_html_report", {}).get("template", "")
     output:
-        html=temp("cnv_sv/cnvkit_report/{sample}_{type}_cnvkit.html")
+        html=temp("cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.html"),
     log:
         "cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.html.log"
     benchmark:
