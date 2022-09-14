@@ -3,7 +3,7 @@ rule cnvkit_json:
         amp_bed=config.get("annotate_cnv", {}).get("cnv_amp_genes", []),
         cnr="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
         cns="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
-        fai=config["reference"]["fai"],
+        fai=config.get("reference").get("fai"),
         loh_bed=config.get("annotate_cnv", {}).get("cnv_loh_genes", []),
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
     output:
