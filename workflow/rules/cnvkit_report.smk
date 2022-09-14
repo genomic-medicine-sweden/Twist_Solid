@@ -1,11 +1,11 @@
 rule cnvkit_json:
     input:
-        cns="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
-        cnr="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
-        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
-        fai=config["reference"]["fai"],
         amp_bed=config.get("annotate_cnv", {}).get("cnv_amp_genes", []),
+        cnr="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
+        cns="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+        fai=config["reference"]["fai"],
         loh_bed=config.get("annotate_cnv", {}).get("cnv_loh_genes", []),
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
     output:
         json=temp("cnv_sv/cnvkit_report/{sample}_{type}.cnvkit.json"),
     params:
