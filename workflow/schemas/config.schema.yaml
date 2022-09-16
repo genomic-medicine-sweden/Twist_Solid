@@ -65,6 +65,15 @@ properties:
     required:
       - normal_reference
 
+  cnvkit_html_report:
+    type: object
+    properties:
+      template:
+        type: string
+        description: path to HTML report template
+    required:
+      - template
+
   exon_skipping:
     type: object
     properties:
@@ -317,6 +326,7 @@ required:
   - default_container
   - bcbio_variation_recall_ensemble
   - cnvkit_batch
+  - cnvkit_html_report
   - filter_vcf
   - gatk_cnv_collect_allelic_counts
   - gatk_cnv_denoise_read_counts
