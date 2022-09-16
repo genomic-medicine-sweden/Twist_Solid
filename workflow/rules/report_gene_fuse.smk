@@ -10,6 +10,7 @@ rule report_gene_fuse:
     output:
         report=temp("fusions/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv"),
     params:
+        filter_fusions=config.get("report_gene_fuse", {}).get("filter_fusions", ""),
         min_unique_reads=config.get("report_gene_fuse", {}).get("min_unique_reads", 6),
     log:
         "fusions/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv.log",

@@ -235,6 +235,7 @@ report_fusions:
   star_fusion_low_support_inframe: 6
 
 report_gene_fuse:
+  filter_fusions: "reference/filter_fusions.csv"
   min_unique_reads: 6
 
 star:

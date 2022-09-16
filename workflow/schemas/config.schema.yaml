@@ -292,9 +292,14 @@ properties:
     description: report results from genefuse
     type: object
     properties:
+      filter_fusions:
+        type: string
+        description: file specifying fusions that should be filtered completely (0 in column 2) or have higher limit (>0 in column 2)
       min_unique_reads:
         type: integer
         description: lower limit of uniquely supporting reads to report fusion
+      required:
+        - min_unique_reads
 
   trimmer_software:
     description: trimmer software that should be used
