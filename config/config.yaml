@@ -136,8 +136,8 @@ gatk_cnv_model_segments:
 
 gatk_get_pileup_summaries:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
-  sites: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf"
-  variants: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf"
+  sites: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf.gz"
+  variants: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf.gz"
 
 gatk_mutect2:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
