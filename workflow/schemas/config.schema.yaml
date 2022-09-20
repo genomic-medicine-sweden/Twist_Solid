@@ -101,13 +101,26 @@ properties:
     required:
       - germline
 
-
   filter_cnv:
       type: object
       properties:
         cnv_amp_genes:
           type: string
           description: Gene annotated bed files with genes to be included.
+
+  gatk_calculate_contamination:
+    type: object
+    description: parameters for gatk_calculate_contamination
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   gatk_cnv_collect_allelic_counts:
     type: object
@@ -126,6 +139,26 @@ properties:
         description: path to normal reference panel for gatk DenoiseReadCounts
     required:
       - normal_reference
+
+  gatk_get_pileup_summaries:
+    type: object
+    description: parameters for gatk_get_pileup_summaries
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      sites:
+        type: string
+        description: sites to pileup (eg small_exac_common.vcf from GnomAD)
+      variants:
+        type: string
+        description: varaints to pileup (eg small_exac_common.vcf from GnomAD, usually same as sites)
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   gene_fuse:
     type: object
