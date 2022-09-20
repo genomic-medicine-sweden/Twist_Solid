@@ -86,6 +86,7 @@ cnvkit_scatter:
 
 config_manta_t:
   container: "docker://hydragenetics/manta:1.6.0"
+  extra: "--exome --callRegions /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz"
 
 cnv_tsv_report:
   del_1p19q_cn_limit: 1.4
