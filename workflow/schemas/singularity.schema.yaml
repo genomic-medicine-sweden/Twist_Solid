@@ -115,7 +115,18 @@ properties:
             hydragenetics/fusioncatcher:1\.33$
       required:
         - container
-    
+
+  gatk_calculate_contamination:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$
+      required:
+        - container
+
   gatk_cnv_call_copy_ratio_segments:
     type: object
     properties:
@@ -161,6 +172,17 @@ properties:
         - container
 
   gatk_cnv_model_segments:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$
+      required:
+        - container
+
+  gatk_get_pileup_summaries:
     type: object
     properties:
       container:
@@ -313,7 +335,7 @@ properties:
             hydragenetics/picard:2\.25\.0$
       required:
         - container
-        
+
   star_fusion:
     type: object
     properties:
