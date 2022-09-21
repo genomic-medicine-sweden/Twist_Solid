@@ -15,6 +15,22 @@ custom_content:
     - samtools
     - picard
 
+custom_data:
+  contamination_table:
+    file_format: "tsv"
+    section_name: "Contamination"
+    description: "This data comes from files acommpanied by a mutliqc_config_dna.yaml file for configuration"
+    plot_type: "qc-stats"
+    pconfig:
+      - col_1:
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+sp:
+  contamination_table:
+    fn: "*.contamination.table.tsv"
+
 table_columns_visible:
   Picard:
     PCT_PF_READS_ALIGNED: True
