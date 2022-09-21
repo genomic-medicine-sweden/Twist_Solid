@@ -61,8 +61,8 @@ wildcard_constraints:
 
 def compile_result_file_list():
     dna_files = [
-        #{"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna", ".bam"]},
-        #{"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna", ".bam.bai"]},
+        # {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna", ".bam"]},
+        # {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna", ".bam.bai"]},
         {
             "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
             "out": ["results/dna/vcf", ".annotated.vcf.gz"],

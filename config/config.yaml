@@ -200,7 +200,7 @@ multiqc:
         - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
         - "qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt"
         - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
-        - "qc/gatk_calculate_contamination{sample}_{type}.contamination.table_mqc.tsv"
+        - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table_mqc.tsv"
     RNA:
       config: "config/multiqc_config_rna.yaml"
       included_unit_types: ["R"]
