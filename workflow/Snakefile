@@ -41,9 +41,6 @@ ruleorder: annotation_tabix_vcf > snv_indels_tabix
 ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
 ruleorder: annotation_annotate_cnv > misc_bgzip
 ruleorder: annotation_annotate_cnv > snv_indels_bgzip
-ruleorder: filtering_bcftools_filter_include_region > annotation_bgzip_vcf
-ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
-ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
 ruleorder: qc_samtools_stats_rna > qc_samtools_stats
 ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
 ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics

@@ -68,19 +68,19 @@ def compile_result_file_list():
             "out": ["results/dna/vcf", ".annotated.vcf.gz"],
         },
         {
-            "in": ["annotation/background_annotation", ".background_annotation.include.exon.filter.snv_soft_filter.vcf"],
-            "out": ["results/dna/vcf", ".annotated.exon_only.filter.soft_filter.vcf"],
+            "in": ["annotation/background_annotation", ".background_annotation.filter.snv_soft_filter.vcf"],
+            "out": ["results/dna/vcf", ".annotated.filter.soft_filter.vcf"],
         },
         {
-            "in": ["annotation/background_annotation", ".background_annotation.include.exon.filter.snv_hard_filter.vcf"],
-            "out": ["results/dna/vcf", ".annotated.exon_only.filter.hard_filter.vcf"],
+            "in": ["annotation/background_annotation", ".background_annotation.filter.snv_hard_filter.vcf"],
+            "out": ["results/dna/vcf", ".annotated.filter.hard_filter.vcf"],
         },
         {
             "in": [
                 "annotation/add_multi_snv_in_codon",
-                ".background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf",
+                ".background_annotation.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf",
             ],
-            "out": ["results/dna/vcf", ".annotated.exon_only.filter.hard_filter.codon_snv.vcf"],
+            "out": ["results/dna/vcf", ".annotated.filter.hard_filter.codon_snv.vcf"],
         },
         {
             "in": ["qc/picard_collect_duplication_metrics", ".duplication_metrics.txt"],
