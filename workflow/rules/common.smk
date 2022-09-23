@@ -100,7 +100,7 @@ def compile_result_file_list():
         {"in": ["qc/hotspot_report", ".output.tsv"], "out": ["results/dna/qc", ".coverage_and_mutations.tsv"]},
         {
             "in": ["qc/gatk_calculate_contamination", ".contamination.table.tsv"],
-            "out": ["results/dna/qc", ".contamination.table.tsv"]
+            "out": ["results/dna/qc", ".contamination.table.tsv"],
         },
         {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
         {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
