@@ -23,7 +23,7 @@ custom_data:
     pconfig:
       - contamination:
           min: 0
-          max: 0.2
+          max: 0.1
           scale: "RdYlGn-rev"
 sp:
   contamination_table:
