@@ -27,7 +27,7 @@ custom_data:
           scale: "RdYlGn-rev"
 sp:
   contamination_table:
-    fn: "*.contamination.table.tsv"
+    fn: "*.contamination.table"
 
 table_columns_visible:
   Picard:

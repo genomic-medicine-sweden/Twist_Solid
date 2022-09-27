@@ -61,8 +61,8 @@ wildcard_constraints:
 
 def compile_result_file_list():
     dna_files = [
-        # {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna", ".bam"]},
-        # {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna", ".bam.bai"]},
+        {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna", ".bam"]},
+        {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna", ".bam.bai"]},
         {
             "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
             "out": ["results/dna/vcf", ".annotated.vcf.gz"],
@@ -98,10 +98,7 @@ def compile_result_file_list():
         {"in": ["qc/samtools_stats", ".samtools-stats.txt"], "out": ["results/dna/qc", ".samtools-stats.txt"]},
         {"in": ["qc/add_mosdepth_coverage_to_gvcf", ".mosdepth.g.vcf.gz"], "out": ["gvcf_dna", ".mosdepth.g.vcf.gz"]},
         {"in": ["qc/hotspot_report", ".output.tsv"], "out": ["results/dna/qc", ".coverage_and_mutations.tsv"]},
-        {
-            "in": ["qc/gatk_calculate_contamination", ".contamination.table.tsv"],
-            "out": ["results/dna/qc", ".contamination.table.tsv"],
-        },
+        {"in": ["qc/gatk_calculate_contamination", ".contamination.table"], "out": ["results/dna/qc", ".contamination.table"]},
         {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
         {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
         {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ["results/dna/hrd", ".hrd_score.txt"]},
