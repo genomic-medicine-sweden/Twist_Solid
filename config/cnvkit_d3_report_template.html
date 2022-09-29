@@ -9,6 +9,20 @@
 <body>
     <h1>CNV report</h1>
 
+    <fieldset>
+        <legend>CNV dataset</legend>
+
+        <div>
+            <input type="radio" id="dataset-cnvkit" name="dataset" value="cnvkit" checked>
+            <label for="dataset-cnvkit">cnvkit</label>
+        </div>
+
+        <div>
+            <input type="radio" id="dataset-gatk" name="dataset" value="gatk">
+            <label for="dataset-gatk">GATK</label>
+        </div>
+    </fieldset>
+
     <section>
         <h2>Genome view</h2>
         <p>Click a chromosome to visualise it below.</p>
@@ -43,7 +57,11 @@
             return [width, height];
         }
 
-        const plotChromosomeView = function(plotData) {
+        const getActiveDataset = () => {
+            return d3.select("input[name=dataset]:checked").node().value;
+        }
+
+        const plotChromosomeView = function(plotData, activeDataset) {
             let data = plotData;
             const height = 400;
             const width = 800;
@@ -61,7 +79,7 @@
                 .range([0, width-margin.left-margin.right]);
 
             const yScale = d3.scaleLinear()
-                .domain(d3.extent(data.regions, d => d.log2))
+                .domain(d3.extent(data[`${activeDataset}_ratios`], d => d.log2))
                 .range([plotHeight, 0]);
 
             const yScaleVAF = d3.scaleLinear()
@@ -282,16 +300,16 @@
                             .select(".x-axis")
                             .duration(500)
                             .call(xAxis);
-                        plotRegions(data.regions);
+                        plotRegions(data[`${activeDataset}_ratios`]);
                         plotVAF();
-                        plotSegments(data.segments);
+                        plotSegments(data[`${activeDataset}_segments`]);
                         plotGenes();
                     }))
                 .on("click", e => {
                     let [xMin, xMax] = xScale.domain();
                     if (xMax - xMin !== data.length) {
                         // Only reset if something actually changed
-                        update(data);
+                        update(data, getActiveDataset());
                     }
                 });
 
@@ -330,10 +348,10 @@
                 .attr("dominant-baseline", "text-before-edge")
                 .style("font-size", "0.9rem");
 
-            const update = function(plotData) {
+            const update = function(plotData, activeDataset) {
                 data = plotData;
                 xScale.domain([0, data.length]);
-                yScale.domain(d3.extent(data.regions, d => d.log2));
+                yScale.domain(d3.extent(data[`${activeDataset}_ratios`], d => d.log2));
                 svg.transition().select(".x-axis")
                     .duration(500)
                     .call(xAxis);
@@ -341,20 +359,20 @@
                     .duration(500)
                     .call(yAxis);
                 svg.select(".x-label").text(data.label);
-                plotRegions(data.regions);
+                plotRegions(data[`${activeDataset}_ratios`]);
                 plotVAF();
-                plotSegments(data.segments);
+                plotSegments(data[`${activeDataset}_segments`]);
                 plotGenes();
             }
 
-            update(data);
+            update(data, activeDataset);
 
             return {
                 update: update
             }
         }
 
-        const plotGenomeView = function() {
+        const plotGenomeView = activeDataset => {
             const totalLength = d3.sum(cnvData.map(d => d.length));
             const height = 400;
             const width = 800;
@@ -425,39 +443,62 @@
             const lrPanels = addPanels(lrArea);
             const vafPanels = addPanels(vafArea);
 
-            // Regions
-            lrPanels.append("g")
+            const ratioPanels = lrPanels.append("g")
                 .attr("class", "regions")
                 .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
-                .attr("data-index", (d, i) => i)
-                .selectAll(".point")
-                // Only plot every fifth point for performance
-                .data(d => d.regions.filter((r, i) => i % 5 === 0))
-                .join("circle")
-                    .attr("class", "point")
-                    .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.start))
-                    .attr("cy", d => yScale(d.log2))
-                    .attr("r", 2)
-                    .attr("fill", "#333")
-                    .attr("fill-opacity", 0.3);
+                .attr("data-index", (d, i) => i);
 
-            // Segments
-            lrPanels.append("g")
+            const segmentPanels = lrPanels.append("g")
                 .attr("class", "segments")
                 .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
-                .attr("data-index", (d, i) => i)
-                .selectAll(".segment")
-                // Only draw segments that will actually be visible
-                .data(d => d.segments.filter(s => s.end - s.start > totalLength/width))
-                .join("path")
-                    .attr("class", "segment")
-                    .attr("d", (d, i, g) => {
-                        let j = g[i].parentNode.dataset.index;
-                        let xScale = xScales[j];
-                        return `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`;
-                    })
-                    .attr("stroke", "orange")
-                    .attr("stroke-width", 2);
+                .attr("data-index", (d, i) => i);
+
+            const plotRegions = activeDataset => {
+                ratioPanels
+                    .selectAll(".point")
+                    // Only plot every fifth point for performance
+                    .data(d => d[`${activeDataset}_ratios`].filter((r, i) => i % 5 === 0), d => d.start)
+                    .join(
+                        enter => enter
+                            .append("circle")
+                            .attr("class", "point")
+                            .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.start))
+                            .attr("cy", d => yScale(d.log2))
+                            .attr("r", 2)
+                            .attr("fill", "#333")
+                            .attr("fill-opacity", 0.3),
+                        update => update
+                            .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.start))
+                            .attr("cy", d => yScale(d.log2)),
+                        exit => exit.remove()
+                    );
+            };
+
+            const plotSegments = activeDataset => {
+                segmentPanels
+                    .selectAll(".segment")
+                    // Only draw segments that will actually be visible
+                    .data(d => d[`${activeDataset}_segments`].filter(s => s.end - s.start > totalLength/width), d => [d.start, d.end, d.log2])
+                    .join(
+                        enter => enter
+                            .append("path")
+                            .attr("class", "segment")
+                            .attr("d", (d, i, g) => {
+                                let j = g[i].parentNode.dataset.index;
+                                let xScale = xScales[j];
+                                return `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`;
+                            })
+                            .attr("stroke", "orange")
+                            .attr("stroke-width", 2),
+                        update => update
+                            .attr("d", (d, i, g) => {
+                                let j = g[i].parentNode.dataset.index;
+                                let xScale = xScales[j];
+                                return `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`;
+                            }),
+                        exit => exit.remove(),
+                    );
+            };
 
             // VAF
             vafPanels.append("g")
@@ -509,7 +550,7 @@
                             .attr("fill-opacity", 0);
                     })
                     .on("click", (e, d, i) => {
-                        chromosomeView.update(cnvData[e.target.dataset.index]);
+                        chromosomeView.update(cnvData[e.target.dataset.index], getActiveDataset());
                         plotArea.selectAll(".panel-overlay")
                             .classed("selected", false)
                             .attr("stroke-width", 0);
@@ -548,10 +589,31 @@
                 .attr("text-anchor", "middle")
                 .attr("dominant-baseline", "text-before-edge")
                 .style("font-size", "0.9rem");
+
+            const update = activeDataset => {
+                plotRegions(activeDataset);
+                plotSegments(activeDataset);
+            };
+
+            update(activeDataset);
+
+            return {
+                update: update,
+            };
         };
 
-        const chromosomeView = plotChromosomeView(cnvData[0]);
-        plotGenomeView();
+        let activeDataset = getActiveDataset();
+
+        const chromosomeView = plotChromosomeView(cnvData[0], activeDataset);
+        const genomeView = plotGenomeView(activeDataset);
+
+        d3.selectAll("input[name=dataset]").on("change", e => {
+            activeDataset = e.target.value;
+            console.log(`set data: ${activeDataset}`);
+            chromosomeView.update(cnvData[0], activeDataset);
+            genomeView.update(activeDataset);
+        });
+
     </script>
 </body>
 </html>
