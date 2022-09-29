@@ -348,9 +348,12 @@
                 .attr("dominant-baseline", "text-before-edge")
                 .style("font-size", "0.9rem");
 
-            const update = function(plotData, activeDataset) {
+            const update = function(plotData, activeDataset, xMin, xMax) {
                 data = plotData;
                 xScale.domain([0, data.length]);
+                if (xMin && xMax) {
+                    xScale.domain([xMin, xMax]);
+                }
                 yScale.domain(d3.extent(data[`${activeDataset}_ratios`], d => d.log2));
                 svg.transition().select(".x-axis")
                     .duration(500)
@@ -363,12 +366,17 @@
                 plotVAF();
                 plotSegments(data[`${activeDataset}_segments`]);
                 plotGenes();
-            }
+            };
+
+            const getZoomRange = () => {
+                return xScale.domain();
+            };
 
             update(data, activeDataset);
 
             return {
-                update: update
+                update: update,
+                getZoomRange: getZoomRange,
             }
         }
 
@@ -638,7 +646,8 @@
 
         d3.selectAll("input[name=dataset]").on("change", e => {
             activeDataset = e.target.value;
-            chromosomeView.update(cnvData[genomeView.getSelectedChromosome()], activeDataset);
+            let [xMin, xMax] = chromosomeView.getZoomRange();
+            chromosomeView.update(cnvData[genomeView.getSelectedChromosome()], activeDataset, xMin, xMax);
             genomeView.update(activeDataset);
         });
 
