@@ -549,6 +549,7 @@
                     .attr("width", d => d)
                     .attr("height", panelHeight);
 
+            let selectedChromosomeIndex = 0;
             const overlays = d3.selectAll(".genome-view-area").append("g");
             overlays.selectAll(".panel-overlay")
                 .data(panelWidths)
@@ -574,7 +575,8 @@
                             .attr("fill-opacity", 0);
                     })
                     .on("click", (e, d, i) => {
-                        chromosomeView.update(cnvData[e.target.dataset.index], getActiveDataset());
+                        selectedChromosomeIndex = e.target.dataset.index;
+                        chromosomeView.update(cnvData[selectedChromosomeIndex], getActiveDataset());
                         plotArea.selectAll(".panel-overlay")
                             .classed("selected", false)
                             .attr("stroke-width", 0);
@@ -619,10 +621,13 @@
                 plotSegments(activeDataset);
             };
 
+            const getSelectedChromosome = () => selectedChromosomeIndex;
+
             update(activeDataset);
 
             return {
                 update: update,
+                getSelectedChromosome: getSelectedChromosome,
             };
         };
 
@@ -633,8 +638,7 @@
 
         d3.selectAll("input[name=dataset]").on("change", e => {
             activeDataset = e.target.value;
-            console.log(`set data: ${activeDataset}`);
-            chromosomeView.update(cnvData[0], activeDataset);
+            chromosomeView.update(cnvData[genomeView.getSelectedChromosome()], activeDataset);
             genomeView.update(activeDataset);
         });
 
