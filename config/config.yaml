@@ -78,8 +78,8 @@ cnvkit_call:
 cnvkit_diagram:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
-cnvkit_html_report:
-  template: "config/cnvkit_d3_report_template.html"
+cnv_html_report:
+  template: "config/cnv_report_template.html"
 
 cnvkit_scatter:
   container: "docker://hydragenetics/cnvkit:0.9.9"

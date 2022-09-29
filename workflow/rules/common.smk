@@ -109,7 +109,7 @@ def compile_result_file_list():
             "in": ["cnv_sv/gatk_cnv_call_copy_ratio_segments", ".clean.calledCNVs.seg"],
             "out": ["results/dna/cnv", ".gatk_cnv.seg"],
         },
-        {"in": ["cnv_sv/cnvkit_report", ".cnvkit.html"], "out": ["results/dna/cnv", ".cnvkit.html"]},
+        {"in": ["cnv_sv/cnv_html_report", ".cnv.html"], "out": ["results/dna/cnv", ".cnv.html"]},
         {"in": ["cnv_sv/cnvkit_scatter", ".png"], "out": ["results/dna/cnv", ".cnvkit.scatter.png"]},
         {"in": ["cnv_sv/cnvkit_diagram", ".pdf"], "out": ["results/dna/cnv", ".cnvkit.diagram.pdf"]},
         {"in": ["cnv_sv/svdb_query", ".svdb_query.vcf"], "out": ["results/dna/cnv", ".svdb_query.vcf"]},
