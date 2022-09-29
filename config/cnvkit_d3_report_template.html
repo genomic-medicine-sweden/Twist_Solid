@@ -390,8 +390,9 @@
                 .domain([0, d.length])
                 .range([0, panelWidths[i]]));
 
+            const yScaleRange = 2;
             const yScale = d3.scaleLinear()
-                .domain([-2, 2])
+                .domain([-yScaleRange, yScaleRange])
                 .range([panelHeight, 0]);
 
             const yScaleVAF = d3.scaleLinear()
@@ -463,14 +464,23 @@
                             .append("circle")
                             .attr("class", "point")
                             .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.start))
-                            .attr("cy", d => yScale(d.log2))
+                            .attr("cy", yScale(-yScaleRange - 0.2))
                             .attr("r", 2)
                             .attr("fill", "#333")
-                            .attr("fill-opacity", 0.3),
+                            .attr("fill-opacity", 0.3)
+                            .call(enter => enter
+                                .transition()
+                                .attr("cy", d => yScale(d.log2))
+                            ),
                         update => update
-                            .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.start))
-                            .attr("cy", d => yScale(d.log2)),
-                        exit => exit.remove()
+                            .call(update => update
+                                .transition()
+                                .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.start))
+                                .attr("cy", d => yScale(d.log2))
+                            ),
+                        exit => exit.transition()
+                            .attr("cy", yScale(yScaleRange + 0.2))
+                            .remove()
                     );
             };
 
@@ -486,17 +496,31 @@
                             .attr("d", (d, i, g) => {
                                 let j = g[i].parentNode.dataset.index;
                                 let xScale = xScales[j];
-                                return `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`;
+                                return `M${xScale(d.start)} ${yScale(-yScaleRange - 0.2)} L ${xScale(d.end)} ${yScale(-yScaleRange - 0.2)}`;
                             })
                             .attr("stroke", "orange")
-                            .attr("stroke-width", 2),
+                            .attr("stroke-width", 2)
+                            .call(enter => enter
+                                .transition()
+                                .attr("d", (d, i, g) => {
+                                    let j = g[i].parentNode.dataset.index;
+                                    let xScale = xScales[j];
+                                    return `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`;
+                                })
+                            ),
                         update => update
                             .attr("d", (d, i, g) => {
                                 let j = g[i].parentNode.dataset.index;
                                 let xScale = xScales[j];
                                 return `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`;
                             }),
-                        exit => exit.remove(),
+                        exit => exit.transition()
+                            .attr("d", (d, i, g) => {
+                                let j = g[i].parentNode.dataset.index;
+                                let xScale = xScales[j];
+                                return `M${xScale(d.start)} ${yScale(yScaleRange + 0.2)} L ${xScale(d.end)} ${yScale(yScaleRange + 0.2)}`;
+                            })
+                            .remove(),
                     );
             };
 
