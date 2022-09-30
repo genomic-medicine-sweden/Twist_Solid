@@ -3,9 +3,9 @@ import cyvcf2
 import json
 
 
-def parse_cns(cns_filename):
+def parse_cns(cnvkit_segments_filename):
     cns_dict = defaultdict(list)
-    with open(cns_filename) as f:
+    with open(cnvkit_segments_filename) as f:
         # skip header
         next(f)
         for line in f:
@@ -47,19 +47,45 @@ def parse_cns(cns_filename):
     return cns_dict
 
 
+def parse_gatk_segments(gatk_segments_filename):
+    segment_dict = defaultdict(list)
+    with open(gatk_segments_filename) as f:
+        for line in f:
+            if line.startswith("@") or line.startswith("CONTIG"):
+                continue
+            (
+                chrom,
+                start,
+                end,
+                n_points,
+                log2,
+            ) = line.strip().split()
+            start = int(start)
+            end = int(end)
+            n_points = int(n_points)
+            log2 = float(log2)
+
+            segment_dict[chrom].append(
+                dict(
+                    start=start,
+                    end=end,
+                    log2=log2,
+                )
+            )
+    return segment_dict
+
+
 def get_vaf(vcf_filename):
     vafs = defaultdict(list)
     vcf = cyvcf2.VCF(vcf_filename)
     for variant in vcf:
-        vafs[variant.CHROM].append(
-            dict(pos=variant.POS, vaf=variant.INFO.get("AF", None))
-        )
+        vafs[variant.CHROM].append(dict(pos=variant.POS, vaf=variant.INFO.get("AF", None)))
     return vafs
 
 
-def parse_cnr(cnr_filename):
+def parse_cnr(cnvkit_ratios_filename):
     cnr_dict = defaultdict(list)
-    with open(cnr_filename) as f:
+    with open(cnvkit_ratios_filename) as f:
         # skip header
         next(f)
         for line in f:
@@ -82,6 +108,34 @@ def parse_cnr(cnr_filename):
             )
 
     return cnr_dict
+
+
+def parse_gatk_ratios(gatk_ratios_filename):
+    ratio_dict = defaultdict(list)
+    with open(gatk_ratios_filename) as f:
+        for line in f:
+            # skip header
+            if line.startswith("@") or line.startswith("CONTIG"):
+                continue
+            (
+                chrom,
+                start,
+                end,
+                log2,
+            ) = line.strip().split()
+            start = int(start)
+            end = int(end)
+            log2 = float(log2)
+
+            ratio_dict[chrom].append(
+                dict(
+                    start=start,
+                    end=end,
+                    log2=log2,
+                )
+            )
+
+    return ratio_dict
 
 
 def parse_bed(bed_filename):
@@ -108,7 +162,7 @@ def parse_fai(fai_filename):
     return chroms
 
 
-def to_json(cns, cnr, chroms, amp, loh, vaf, skip=None):
+def to_json(cnvkit_segments, cnvkit_ratios, gatk_segments, gatk_ratios, chroms, amp, loh, vaf, skip=None):
     cnvkit_list = []
     for chrom, length in chroms.items():
         if skip is not None and chrom in skip:
@@ -118,8 +172,10 @@ def to_json(cns, cnr, chroms, amp, loh, vaf, skip=None):
                 chromosome=chrom,
                 label=chrom,
                 length=length,
-                segments=cns.get(chrom, []),
-                regions=cnr.get(chrom, []),
+                cnvkit_segments=cnvkit_segments.get(chrom, []),
+                cnvkit_ratios=cnvkit_ratios.get(chrom, []),
+                gatk_segments=gatk_segments.get(chrom, []),
+                gatk_ratios=gatk_ratios.get(chrom, []),
                 genes=amp.get(chrom, []) + loh.get(chrom, []),
                 vaf=vaf.get(chrom, []),
             )
@@ -129,8 +185,10 @@ def to_json(cns, cnr, chroms, amp, loh, vaf, skip=None):
 
 
 def main():
-    cns_filename = snakemake.input.cns
-    cnr_filename = snakemake.input.cnr
+    cnvkit_segments_filename = snakemake.input.cns
+    cnvkit_ratios_filename = snakemake.input.cnr
+    gatk_segments_filename = snakemake.input.gatk_segments
+    gatk_ratios_filename = snakemake.input.gatk_ratios
     vcf_filename = snakemake.input.vcf
     fai_filename = snakemake.input.fai
     amp_filename = snakemake.input.amp_bed
@@ -139,8 +197,10 @@ def main():
 
     skip_chromosomes = snakemake.params.skip_chromosomes
 
-    cns = parse_cns(cns_filename)
-    cnr = parse_cnr(cnr_filename)
+    cnvkit_segments = parse_cns(cnvkit_segments_filename)
+    cnvkit_ratios = parse_cnr(cnvkit_ratios_filename)
+    gatk_segments = parse_gatk_segments(gatk_segments_filename)
+    gatk_ratios = parse_gatk_ratios(gatk_ratios_filename)
     chroms = parse_fai(fai_filename)
     amp = {}
     if len(amp_filename) > 0:
@@ -150,7 +210,17 @@ def main():
         loh = parse_bed(loh_filename)
     vaf = get_vaf(vcf_filename)
 
-    cnvkit_json = to_json(cns, cnr, chroms, amp, loh, vaf, skip=skip_chromosomes)
+    cnvkit_json = to_json(
+        cnvkit_segments,
+        cnvkit_ratios,
+        gatk_segments,
+        gatk_ratios,
+        chroms,
+        amp,
+        loh,
+        vaf,
+        skip=skip_chromosomes,
+    )
     with open(json_filename, "w") as f:
         f.write(cnvkit_json)
 
