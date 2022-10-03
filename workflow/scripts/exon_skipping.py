@@ -12,8 +12,8 @@ pos_dict = {}
 for line in bed_file:
     lline = line.strip().split("\t")
     chrom = lline[0]
-    start_pos = int(lline[1])+1
-    end_pos = int(lline[2])
+    start_pos = int(lline[1])
+    end_pos = int(lline[2])+1
     key1 = chrom + "_" + str(start_pos)
     key2 = chrom + "_" + str(end_pos)
     region = lline[3]
@@ -37,11 +37,11 @@ unnormal_junction = {}
 for line in junction_file:
     lline = line.strip().split("\t")
     chrom = lline[0]
-    start_pos = int(lline[1])-1
-    end_pos = int(lline[2])+1
+    start_pos = int(lline[1])
+    end_pos = int(lline[2])
     nr_reads = int(lline[6])
-    key1 = "chr" + chrom + "_" + str(start_pos)
-    key2 = "chr" + chrom + "_" + str(end_pos)
+    key1 = chrom + "_" + str(start_pos)
+    key2 = chrom + "_" + str(end_pos)
     if key1 not in pos_dict:
         continue
     i_start = 100
