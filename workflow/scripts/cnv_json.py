@@ -23,24 +23,13 @@ def parse_cns(cnvkit_segments_filename):
             ) = line.strip().split()
             start = int(start)
             end = int(end)
-            genes = list(set(map(lambda x: x.split("_")[0], gene.strip().split(","))))
             log2 = float(log2)
-            depth = float(depth)
-            probes = int(probes)
-            weight = float(weight)
-            ci_lo = float(ci_lo)
-            ci_hi = float(ci_hi)
 
             cns_dict[chrom].append(
                 dict(
                     start=start,
                     end=end,
-                    genes=genes,
-                    depth=depth,
                     log2=log2,
-                    weight=weight,
-                    ci_lo=ci_lo,
-                    ci_hi=ci_hi,
                 )
             )
 
@@ -62,7 +51,6 @@ def parse_gatk_segments(gatk_segments_filename):
             ) = line.strip().split()
             start = int(start)
             end = int(end)
-            n_points = int(n_points)
             log2 = float(log2)
 
             segment_dict[chrom].append(
@@ -92,18 +80,13 @@ def parse_cnr(cnvkit_ratios_filename):
             chrom, start, end, gene, depth, log2, weight = line.strip().split()
             start = int(start)
             end = int(end)
-            depth = float(depth)
             log2 = float(log2)
-            weight = float(weight)
 
             cnr_dict[chrom].append(
                 dict(
-                    gene=gene,
                     start=start,
                     end=end,
-                    depth=depth,
                     log2=log2,
-                    weight=weight,
                 )
             )
 
