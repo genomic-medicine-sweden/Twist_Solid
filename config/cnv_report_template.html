@@ -35,6 +35,14 @@
         .right {
             text-align: right;
         }
+
+        .panel-overlay {
+            stroke-width: 0;
+        }
+
+        .panel-overlay.selected {
+            stroke-width: 6;
+        }
     </style>
 </head>
 <body>
@@ -596,11 +604,20 @@
                     .attr("height", panelHeight);
 
             let selectedChromosomeIndex = 0;
+            const selectChromosome = chromosome => {
+                selectedChromosomeIndex = cnvData.findIndex(d => d.chromosome === chromosome);
+                plotArea.selectAll(".panel-overlay")
+                    .classed("selected", false);
+                plotArea.selectAll(`.panel-${selectedChromosomeIndex}-overlay`)
+                    .classed("selected", true);
+                chromosomeView.update(cnvData[selectedChromosomeIndex], activeDataset);
+            }
+
             const overlays = d3.selectAll(".genome-view-area").append("g");
             overlays.selectAll(".panel-overlay")
                 .data(panelWidths)
                 .join("rect")
-                    .attr("class", (d, i) => `panel-overlay panel-${i}-overlay`)
+                    .attr("class", (d, i) => `panel-overlay panel-${i}-overlay${i === 0 ? " selected" : ""}`)
                     .attr("transform", (d, i) => `translate(${i === 0 ? 0 : d3.sum(panelWidths.slice(0, i))}, 0)`)
                     .attr("data-index", (d, i) => i)
                     .attr("width", d => d)
@@ -609,7 +626,6 @@
                     .attr("fill", "#000")
                     .attr("fill-opacity", 0)
                     .attr("stroke", "forestgreen")
-                    .attr("stroke-width", (d, i) => i === 0 ? 6 : 0)
                     .on("mouseenter", e => {
                         plotArea.selectAll(".panel-overlay")
                             .attr("fill-opacity", 0);
@@ -620,16 +636,7 @@
                         d3.selectAll(`.panel-${e.target.dataset.index}-overlay`)
                             .attr("fill-opacity", 0);
                     })
-                    .on("click", (e, d, i) => {
-                        selectedChromosomeIndex = e.target.dataset.index;
-                        chromosomeView.update(cnvData[selectedChromosomeIndex], getActiveDataset());
-                        plotArea.selectAll(".panel-overlay")
-                            .classed("selected", false)
-                            .attr("stroke-width", 0);
-                        d3.selectAll(`.panel-${e.target.dataset.index}-overlay`)
-                            .classed("selected", true)
-                            .attr("stroke-width", 6);
-                    });
+                    .on("click", (e, d, i) => selectChromosome(cnvData[e.target.dataset.index].chromosome));
 
             // Y axes
             svg.append("g")
@@ -674,6 +681,7 @@
             return {
                 update: update,
                 getSelectedChromosome: getSelectedChromosome,
+                selectChromosome: selectChromosome,
             };
         };
 
