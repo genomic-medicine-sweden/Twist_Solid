@@ -685,21 +685,56 @@
 
             let tableData = null;
 
-            const getAlignment = col => {
+            const getColumnDef = col => {
                 switch (col) {
-                    case "chromosome":
-                    case "genes":
-                        return "left";
+                    // Integers
+                    case "start":
+                    case "length":
+                    case "end":
+                        return {
+                            class: "right",
+                            format: x => x.toLocaleString(undefined, {}),
+                        };
 
+                    // Floating point, allow for missing numbers
+                    case "copyNumber":
+                    case "corrCopyNumber":
+                    case "cn":
+                        return {
+                            class: "right",
+                            format: x => {
+                                if (x) {
+                                    return x.toLocaleString(
+                                        undefined,
+                                        { minimumFractionDigits: 2 }
+                                    );
+                                }
+                                return "NA";
+                            }
+                        };
+
+                    // Strings
+                    case "caller":
+                    case "chromosome":
+                    case "gene":
+                    case "type":
                     default:
-                        return "right";
+                        return {
+                            class: "left",
+                            format: x => x,
+                        }
                 }
             }
 
             const update = dataset => {
                 tableData = cnvData
-                    .map(d => d[`${dataset}_segments`]
-                        .map(di => {return {chromosome: d.chromosome, ...di}}))
+                    .map(d => d["cnvs"]
+                        .filter(v => v.caller == dataset)
+                        .map(di => {
+                            const allCols = {chromosome: d.chromosome, ...di};
+                            const {caller, ...cols} = allCols;
+                            return cols;
+                        }))
                     .flat();
 
                 tableHeader
@@ -707,7 +742,7 @@
                     .data(Object.keys(tableData[0]), d => d)
                     .join("th")
                         .text(d => d)
-                        .attr("class", getAlignment);
+                        .attr("class", d => getColumnDef(d).class);
 
                 tableBody
                     .selectAll("tr")
@@ -715,16 +750,16 @@
                     .join("tr")
                         .attr("data-chromosome", d => d.chromosome)
                         .attr("data-start", d => d.start)
-                        .attr("data-end", d => d.end)
+                        .attr("data-length", d => d.length)
                         .on("click", e => {
                             const dataset = e.target.parentElement.dataset;
-                            console.log(`${dataset.chromosome}:${dataset.start}-${dataset.end}`);
+                            console.log(`${dataset.chromosome}:${dataset.start}`);
                         })
                         .selectAll("td")
                         .data(d => Object.entries(d))
                         .join("td")
-                            .text(([key, value]) => value)
-                            .attr("class", ([key, value]) => getAlignment(key));
+                            .text(([key, value]) => getColumnDef(key).format(value))
+                            .attr("class", ([key, value]) => getColumnDef(key).class);
             }
 
             const getData = () => tableData;

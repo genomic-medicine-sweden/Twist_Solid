@@ -1,5 +1,6 @@
 from collections import defaultdict
 import cyvcf2
+import functools
 import json
 
 
@@ -34,6 +35,37 @@ def parse_cns(cnvkit_segments_filename):
             )
 
     return cns_dict
+
+
+def parse_svdb_vcf(vcf_filename):
+    vcf = cyvcf2.VCF(vcf_filename)
+    cnvs = defaultdict(list)
+
+    for variant in vcf:
+        genes = variant.INFO.get("genes", "")
+        variant_type = variant.ALT
+
+        assert len(variant_type) == 1
+        variant_type = variant_type[0].strip("<>")
+        if variant_type == "COPY_NORMAL":
+            continue
+
+        caller = variant.INFO.get("CALLER")
+        if "gatk" in caller:
+            caller = "gatk"
+
+        cnvs[variant.CHROM].append(
+            {
+                "start": variant.POS,
+                "length": variant.INFO.get("SVLEN"),
+                "type": variant_type,
+                "gene": variant.INFO.get("Genes"),
+                "caller": caller,
+                "cn": variant.INFO.get("CORR_CN"),
+            }
+        )
+
+    return cnvs
 
 
 def parse_gatk_segments(gatk_segments_filename):
@@ -145,7 +177,18 @@ def parse_fai(fai_filename):
     return chroms
 
 
-def to_json(cnvkit_segments, cnvkit_ratios, gatk_segments, gatk_ratios, chroms, amp, loh, vaf, skip=None):
+def to_json(
+    cnvkit_segments,
+    cnvkit_ratios,
+    gatk_segments,
+    gatk_ratios,
+    chroms,
+    amp,
+    loh,
+    vaf,
+    cnvs,
+    skip=None,
+):
     cnvkit_list = []
     for chrom, length in chroms.items():
         if skip is not None and chrom in skip:
@@ -155,6 +198,7 @@ def to_json(cnvkit_segments, cnvkit_ratios, gatk_segments, gatk_ratios, chroms, 
                 chromosome=chrom,
                 label=chrom,
                 length=length,
+                cnvs=cnvs.get(chrom, []),
                 cnvkit_segments=cnvkit_segments.get(chrom, []),
                 cnvkit_ratios=cnvkit_ratios.get(chrom, []),
                 gatk_segments=gatk_segments.get(chrom, []),
@@ -167,12 +211,20 @@ def to_json(cnvkit_segments, cnvkit_ratios, gatk_segments, gatk_ratios, chroms, 
     return json.dumps(cnvkit_list)
 
 
+def merge_chrom_dicts(d1, d2):
+    res = {}
+    for k in set(list(d1.keys()) + list(d2.keys())):
+        res[k] = d1.get(k, []) + d2.get(k, [])
+    return res
+
+
 def main():
     cnvkit_segments_filename = snakemake.input.cns
     cnvkit_ratios_filename = snakemake.input.cnr
     gatk_segments_filename = snakemake.input.gatk_segments
     gatk_ratios_filename = snakemake.input.gatk_ratios
-    vcf_filename = snakemake.input.vcf
+    svdb_vcfs = snakemake.input.svdb_vcfs
+    vcf_filename = snakemake.input.germline_vcf
     fai_filename = snakemake.input.fai
     amp_filename = snakemake.input.amp_bed
     loh_filename = snakemake.input.loh_bed
@@ -193,6 +245,9 @@ def main():
         loh = parse_bed(loh_filename)
     vaf = get_vaf(vcf_filename)
 
+    cnv_lists = map(parse_svdb_vcf, svdb_vcfs)
+    reported_cnvs = functools.reduce(merge_chrom_dicts, cnv_lists)
+
     cnvkit_json = to_json(
         cnvkit_segments,
         cnvkit_ratios,
@@ -202,6 +257,7 @@ def main():
         amp,
         loh,
         vaf,
+        reported_cnvs,
         skip=skip_chromosomes,
     )
     with open(json_filename, "w") as f:
