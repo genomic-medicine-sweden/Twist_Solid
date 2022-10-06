@@ -189,6 +189,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
     wildcard_constraints:
         type="R",
 
+
 # scarhrd branch
 module biomarker:
     snakefile:
