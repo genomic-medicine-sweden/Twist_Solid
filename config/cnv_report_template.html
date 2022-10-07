@@ -186,14 +186,16 @@
                             .attr("r", 2)
                             .attr("fill", "#333")
                             .attr("fill-opacity", 0)
-                            .transition()
-                            .duration(500)
-                            .attr("fill-opacity", 0.3),
+                            .call(enter => enter.transition()
+                                .duration(500)
+                                .attr("fill-opacity", 0.3)
+                            ),
                         update => update
-                            .transition()
-                            .attr("cx", d => xScale(d.start)),
-                        exit => exit
-                            .transition()
+                            .attr("fill-opacity", 0.3)
+                            .call(update => update.transition()
+                                .attr("cx", d => xScale(d.start))
+                            ),
+                        exit => exit.transition()
                             .attr("fill-opacity", 0)
                             .remove()
                     );
@@ -211,15 +213,16 @@
                             .attr("stroke", "orange")
                             .attr("stroke-width", 2)
                             .attr("stroke-opacity", 0)
-                            .transition()
-                            .duration(500)
-                            .attr("stroke-opacity", 1),
+                            .call(enter => enter.transition()
+                                .attr("stroke-opacity", 1)
+                            ),
                         update => update
-                            .transition()
-                            .attr("d", d =>
-                                `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`),
-                        exit => exit
-                            .transition()
+                            .attr("stroke-opacity", 1)
+                            .call(update => update.transition()
+                                .attr("d", d =>
+                                    `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`)
+                            ),
+                        exit => exit.transition()
                             .attr("stroke-opacity", 0)
                             .remove()
                     );
@@ -237,12 +240,14 @@
                                 .attr("x", d => xScale(d.start))
                                 .attr("width", d => xScale(d.end - d.start))
                                 .attr("height", height - margin.top - margin.bottom)
-                                .transition()
-                                .attr("fill", "#333")
-                                .attr("fill-opacity", 0.05)
                                 .attr("stroke", "#000")
                                 .attr("stroke-width", 0.5)
-                                .attr("pointer-events", "none");
+                                .attr("fill", "#333")
+                                .attr("fill-opacity", 0)
+                                .attr("pointer-events", "none")
+                                .call(enter => enter.transition()
+                                    .attr("fill-opacity", 0.05)
+                                );
                             gene_group.append("rect")
                                 .attr("class", "gene-label-background")
                                 .attr("x", d => {
@@ -268,21 +273,24 @@
                             return gene_group;
                         }, update => {
                             update.selectAll(".gene-label")
-                                .transition()
-                                .attr("x", d => xScale(d.start + (d.end - d.start) / 2));
+                                .call(update => update.transition()
+                                    .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
+                                );
                             update.selectAll(".gene-label-background")
-                                .transition()
-                                .attr("x", d => {
-                                    let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
-                                    return xScale(d.start + (d.end - d.start) / 2) - labelWidth / 2 - 5;
-                                });
+                                .call(update => update.transition()
+                                    .attr("x", d => {
+                                        let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                        return xScale(d.start + (d.end - d.start) / 2) - labelWidth / 2 - 5;
+                                    })
+                                );
                             update.selectAll(".gene-marker")
-                                .transition()
-                                .attr("x", d => xScale(d.start))
-                                .attr("width", d => xScale(d.end) - xScale(d.start));
+                                .attr("fill-opacity", 0.05)
+                                .call(update => update.transition()
+                                    .attr("x", d => xScale(d.start))
+                                    .attr("width", d => xScale(d.end) - xScale(d.start))
+                                );
                             return update;
-                        }, exit => exit
-                            .transition()
+                        }, exit => exit.transition()
                             .attr("fill-opacity", 0)
                             .attr("stroke-opacity", 0)
                             .remove()
