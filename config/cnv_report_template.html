@@ -270,7 +270,7 @@
                             gene_group.append("rect")
                                 .attr("class", "gene-marker")
                                 .attr("x", d => xScale(d.start))
-                                .attr("width", d => xScale(d.end - d.start))
+                                .attr("width", d => xScale(d.end) - xScale(d.start))
                                 .attr("height", height - margin.top - margin.bottom)
                                 .attr("stroke", "#000")
                                 .attr("stroke-width", 0.5)
