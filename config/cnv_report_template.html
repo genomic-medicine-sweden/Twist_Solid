@@ -36,6 +36,10 @@
             text-align: right;
         }
 
+        .view-region-link {
+            cursor: pointer;
+        }
+
         .panel-overlay {
             stroke-width: 0;
         }
@@ -398,7 +402,7 @@
                 data = plotData;
                 xScale.domain([0, data.length]);
                 if (xMin && xMax) {
-                    xScale.domain([xMin, xMax]);
+                    xScale.domain([Math.max(xMin, 0), Math.min(xMax, data.length)]);
                 }
                 yScale.domain(d3.extent(data[`${activeDataset}_ratios`], d => d.log2));
                 svg.transition().select(".x-axis")
@@ -721,6 +725,12 @@
                             }
                         };
 
+                    case "view":
+                        return {
+                            class: "view-region-link",
+                            format: x => x,
+                        };
+
                     // Strings
                     case "caller":
                     case "chromosome":
@@ -730,7 +740,7 @@
                         return {
                             class: "left",
                             format: x => x,
-                        }
+                        };
                 }
             }
 
@@ -739,7 +749,7 @@
                     .map(d => d["cnvs"]
                         .filter(v => v.caller == dataset)
                         .map(di => {
-                            const allCols = {chromosome: d.chromosome, ...di};
+                            const allCols = {view: "🔍", chromosome: d.chromosome, ...di};
                             const {caller, ...cols} = allCols;
                             return cols;
                         }))
@@ -759,15 +769,21 @@
                         .attr("data-chromosome", d => d.chromosome)
                         .attr("data-start", d => d.start)
                         .attr("data-length", d => d.length)
-                        .on("click", e => {
-                            const dataset = e.target.parentElement.dataset;
-                            console.log(`${dataset.chromosome}:${dataset.start}`);
-                        })
                         .selectAll("td")
                         .data(d => Object.entries(d))
                         .join("td")
                             .text(([key, value]) => getColumnDef(key).format(value))
                             .attr("class", ([key, value]) => getColumnDef(key).class);
+
+                tableBody.selectAll(".view-region-link")
+                    .on("click", e => {
+                        const dataset = e.target.parentElement.dataset;
+                        zoomToRegion(
+                            dataset.chromosome,
+                            Number(dataset.start),
+                            Number(dataset.start) + Number(dataset.length)
+                        );
+                    });
             }
 
             const getData = () => tableData;
@@ -779,6 +795,17 @@
                 update: update,
             };
         };
+
+        const zoomToRegion = (chromosome, start, end, padding = 0.05) => {
+            genomeView.selectChromosome(chromosome)
+            let bpPadding = (end - start) * padding;
+            chromosomeView.update(
+                cnvData[genomeView.getSelectedChromosome()],
+                activeDataset,
+                start - bpPadding,
+                end + bpPadding
+            );
+        }
 
         let activeDataset = getActiveDataset();
 
