@@ -5,9 +5,17 @@ rule cnv_json:
         cns="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
         gatk_ratios="cnv_sv/gatk_cnv_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv",
         gatk_segments="cnv_sv/gatk_cnv_model_segments/{sample}_{type}.clean.cr.seg",
+        germline_vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
         fai=config.get("reference").get("fai"),
         loh_bed=config.get("annotate_cnv", {}).get("cnv_loh_genes", []),
-        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+        svdb_vcfs=[
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf.gz",
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_loh_genes.filter.cnv_hard_filter_loh.vcf.gz",
+        ],
+        svdb_tbis=[
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf.gz.tbi",
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_loh_genes.filter.cnv_hard_filter_loh.vcf.gz.tbi",
+        ],
     output:
         json=temp("cnv_sv/cnv_html_report/{sample}_{type}.cnv.json"),
     params:
