@@ -799,6 +799,10 @@
                         }))
                     .flat();
 
+                if (tableData.length === 0) {
+                    tableData = [{"No data to display": []}];
+                }
+
                 tableHeader
                     .selectAll("th")
                     .data(Object.keys(tableData[0]), d => d)
