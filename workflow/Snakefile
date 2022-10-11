@@ -190,9 +190,10 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
         type="R",
 
 
+# scarhrd branch
 module biomarker:
     snakefile:
-        github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="aa89042")
+        github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="4d25c3b")
     config:
         config
 

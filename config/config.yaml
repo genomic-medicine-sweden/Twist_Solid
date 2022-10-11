@@ -253,6 +253,11 @@ report_gene_fuse:
 samtools_merge_bam:
   extra: "-c"
 
+scarhrd:
+  container: "docker://hydragenetics/scarhrd:20200825"
+  reference_name: "grch37"
+  seqz: FALSE
+
 star:
   container: "docker://hydragenetics/star:2.7.10a"
   genome_index: "/data/ref_data/star/v2.7.10a_hg19/"
