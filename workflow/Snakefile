@@ -233,7 +233,7 @@ module cnv_sv:
 
 use rule * from cnv_sv as cnv_sv_*
 
-rule cnvkit_batch:
+
 use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
@@ -254,22 +254,24 @@ use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
             config.get("cnvkit_batch_hrd", {}).get("benchmark_repeats", 1),
         )
 
+
 use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
     input:
         segment="cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
     output:
-        segment=temp("cnv_sv/cnvkit_batch_hrd/{sample}_{type}.loh.cns"),
+        segment=temp("cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns"),
     params:
         TC=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
-        extra=config.get("cnvkit_batch_hrd", {}).get("extra", ""),
+        extra=config.get("cnvkit_call_hrd", {}).get("extra", ""),
     log:
-        "cnv_sv/cnvkit_batch_hrd/{sample}_{type}.loh.cns.log",
+        "cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns.log",
     benchmark:
         repeat(
-            "cnv_sv/cnvkit_batch_hrd/{sample}_{type}.loh.cns.benchmark.tsv",
-            config.get("cnvkit_batch_hrd", {}).get("benchmark_repeats", 1),
+            "cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns.benchmark.tsv",
+            config.get("cnvkit_call_hrd", {}).get("benchmark_repeats", 1),
         )
+
 
 use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:
     input:
