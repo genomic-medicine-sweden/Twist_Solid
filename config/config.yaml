@@ -71,6 +71,11 @@ cnvkit_batch:
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_nextseq_36.cnn"
   method: "hybrid"
 
+cnvkit_batch_hrd:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+  normal_reference_hrd: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_nextseq_27_HRD.cnn"
+  method: "hybrid"
+
 cnvkit_call:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 

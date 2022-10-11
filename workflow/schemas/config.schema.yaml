@@ -65,6 +65,18 @@ properties:
     required:
       - normal_reference
 
+  cnvkit_batch_hrd:
+    type: object
+    properties:
+      method:
+        type: string
+        description: One of three methods (wgs, amplicon, hybrid) to use for cnvkit_batch_hrd
+      normal_reference_hrd:
+        type: string
+        description: path to normal reference panel for cnvkit_batch_hrd
+    required:
+      - normal_reference_hrd
+
   cnv_html_report:
     type: object
     properties:

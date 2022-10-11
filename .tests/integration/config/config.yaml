@@ -55,24 +55,29 @@ bcftools_id_snps:
   snps_bed: "DATA/ID_SNPs.bed"
 
 cnvkit_batch:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
   normal_reference: "DATA/design.PoN.cnn"
   method: "hybrid"
 
+cnvkit_batch_hrd:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+  normal_reference_hrd: "DATA/design.PoN.cnn"
+  method: "hybrid"
+
 cnvkit_call:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnvkit_diagram:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnv_html_report:
   template: "../../config/cnv_report_template.html"
 
 cnvkit_scatter:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 config_manta_t:
-  container: "docker://marrip/manta:v1.6.0"
+  container: "docker://hydragenetics/manta:1.6.0"
 
 exon_skipping:
   design_bed: "reference/Twist_RNA_Design5.annotated.bed"
@@ -159,7 +164,7 @@ hotspot_report:
     - [0, "low", "not analyzable"]
 
 manta_run_workflow_t:
-  container: "docker://marrip/manta:v1.6.0"
+  container: "docker://hydragenetics/manta:1.6.0"
 
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"
