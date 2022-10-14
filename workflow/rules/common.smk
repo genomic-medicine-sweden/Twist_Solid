@@ -106,7 +106,7 @@ def compile_result_file_list():
         {"in": ["fusions/report_gene_fuse", ".gene_fuse_report.tsv"], "out": ["results/dna/fusions", ".gene_fuse_report.tsv"]},
         {"in": ["cnv_sv/cnvkit_call", ".loh.cns"], "out": ["results/dna/cnv", ".cnvkit.loh.cns"]},
         {
-            "in": ["cnv_sv/gatk_cnv_call_copy_ratio_segments", ".clean.calledCNVs.seg"],
+            "in": ["cnv_sv/gatk_call_copy_ratio_segments", ".clean.calledCNVs.seg"],
             "out": ["results/dna/cnv", ".gatk_cnv.seg"],
         },
         {"in": ["cnv_sv/cnv_html_report", ".cnv.html"], "out": ["results/dna/cnv", ".cnv.html"]},

@@ -190,10 +190,9 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
         type="R",
 
 
-# scarhrd branch
 module biomarker:
     snakefile:
-        github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="4d25c3b")
+        github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="7bd038f")
     config:
         config
 
@@ -262,7 +261,7 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
     output:
         segment=temp("cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns"),
     params:
-        TC=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
+        tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
         extra=config.get("cnvkit_call_hrd", {}).get("extra", ""),
     log:
         "cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns.log",

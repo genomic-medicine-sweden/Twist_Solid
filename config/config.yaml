@@ -122,21 +122,21 @@ fusioncatcher:
 gatk_calculate_contamination:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
-gatk_cnv_call_copy_ratio_segments:
+gatk_call_copy_ratio_segments:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
-gatk_cnv_collect_allelic_counts:
+gatk_collect_allelic_counts:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
   SNP_interval: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/gnomad_SNP_0.001_target.annotated.interval_list"
 
-gatk_cnv_collect_read_counts:
+gatk_collect_read_counts:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
-gatk_cnv_denoise_read_counts:
+gatk_denoise_read_counts:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/gatk_cnv_nextseq_36.hdf5"
 
-gatk_cnv_model_segments:
+gatk_model_segments:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
 gatk_get_pileup_summaries:

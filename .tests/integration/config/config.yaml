@@ -105,21 +105,21 @@ fusioncatcher:
 gatk_calculate_contamination:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
-gatk_cnv_call_copy_ratio_segments:
+gatk_call_copy_ratio_segments:
   container: "docker://gmsuppsala/somatic:develop"
 
-gatk_cnv_collect_allelic_counts:
+gatk_collect_allelic_counts:
   container: "docker://gmsuppsala/somatic:develop"
   SNP_interval: "DATA/gnomad_SNP_0.001_target.annotated.interval_list"
 
-gatk_cnv_collect_read_counts:
+gatk_collect_read_counts:
   container: "docker://gmsuppsala/somatic:develop"
 
-gatk_cnv_denoise_read_counts:
+gatk_denoise_read_counts:
   container: "docker://gmsuppsala/somatic:develop"
   normal_reference: "DATA/gatk_cnv_nextseq_36.hdf5"
 
-gatk_cnv_model_segments:
+gatk_model_segments:
   container: "docker://gmsuppsala/somatic:develop"
 
 gatk_get_pileup_summaries:
@@ -254,6 +254,11 @@ report_gene_fuse:
   filter_fusions: "reference/filter_fusions.csv"
   min_unique_reads: 6
 
+scarhrd:
+  container: "docker://hydragenetics/scarhrd:20200825"
+  reference_name: "grch37"
+  seqz: FALSE
+
 star:
   container: "docker://hydragenetics/star:2.7.10a"
   genome_index: "reference_star_fusion/star_idx/"
@@ -267,7 +272,7 @@ svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
   cnv_callers:
     - "cnvkit"
-    - "gatk_cnv"
+    - "gatk"
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.6.0"
