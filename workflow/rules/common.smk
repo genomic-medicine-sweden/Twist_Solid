@@ -101,7 +101,6 @@ def compile_result_file_list():
         {"in": ["qc/gatk_calculate_contamination", ".contamination.table"], "out": ["results/dna/qc", ".contamination.table"]},
         {"in": ["biomarker/msisensor_pro", ""], "out": ["results/dna/msi", ".msisensor_pro.score.tsv"]},
         {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
-        {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ["results/dna/hrd", ".hrd_score.txt"]},
         {"in": ["biomarker/scarhrd", ".scarhrd_cnvkit_score.txt"], "out": ["results/dna/hrd", ".scarhrd_cnvkit_score.txt"]},
         {"in": ["fusions/gene_fuse", "_gene_fuse_fusions.txt"], "out": ["results/dna/fusions", ".gene_fuse_fusions.txt"]},
         {"in": ["fusions/report_gene_fuse", ".gene_fuse_report.tsv"], "out": ["results/dna/fusions", ".gene_fuse_report.tsv"]},
