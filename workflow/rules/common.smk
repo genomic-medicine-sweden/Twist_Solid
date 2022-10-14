@@ -103,7 +103,6 @@ def compile_result_file_list():
         {"in": ["biomarker/tmb", ".TMB.txt"], "out": ["results/dna/tmb", ".TMB.txt"]},
         {"in": ["biomarker/hrd", ".hrd_score.txt"], "out": ["results/dna/hrd", ".hrd_score.txt"]},
         {"in": ["biomarker/scarhrd", ".scarhrd_cnvkit_score.txt"], "out": ["results/dna/hrd", ".scarhrd_cnvkit_score.txt"]},
-        {"in": ["biomarker/scarhrd", ".scarhrd_gatk_cnv_score.txt"], "out": ["results/dna/hrd", ".scarhrd_gatk_cnv_score.txt"]},
         {"in": ["fusions/gene_fuse", "_gene_fuse_fusions.txt"], "out": ["results/dna/fusions", ".gene_fuse_fusions.txt"]},
         {"in": ["fusions/report_gene_fuse", ".gene_fuse_report.tsv"], "out": ["results/dna/fusions", ".gene_fuse_report.tsv"]},
         {"in": ["cnv_sv/cnvkit_call", ".loh.cns"], "out": ["results/dna/cnv", ".cnvkit.loh.cns"]},
