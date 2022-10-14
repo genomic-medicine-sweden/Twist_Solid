@@ -1,0 +1,2 @@
+sample	type	machine	platform	flowcell	lane	barcode	fastq1	fastq2	adapter
+VAL2022	T	NDX550220	NextSeq	H3YF3BGXK	L001	GAGACGAT+ACCGGTTA	/beegfs-storage/projects/wp1/ngs/GMS560/VAL2022_R1.fastq.gz	/beegfs-storage/projects/wp1/ngs/GMS560/VAL2022_R2.fastq.gz	AGATCGGAAGAGCACACGTCTGAACTCCAGTCA,AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
