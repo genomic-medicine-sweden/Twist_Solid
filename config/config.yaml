@@ -277,7 +277,7 @@ svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
   cnv_callers:
     - "cnvkit"
-    - "gatk_cnv"
+    - "gatk"
   extra: "--pass_only" #Just merge the two vcf-files without merging regions
 
 svdb_query:
