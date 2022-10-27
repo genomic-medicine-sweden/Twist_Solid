@@ -65,6 +65,18 @@ properties:
     required:
       - normal_reference
 
+  cnvkit_batch_hrd:
+    type: object
+    properties:
+      method:
+        type: string
+        description: One of three methods (wgs, amplicon, hybrid) to use for cnvkit_batch_hrd
+      normal_reference_hrd:
+        type: string
+        description: path to normal reference panel for cnvkit_batch_hrd
+    required:
+      - normal_reference_hrd
+
   cnv_html_report:
     type: object
     properties:
@@ -122,7 +134,7 @@ properties:
         type: string
         description: parameters that should be forwarded
 
-  gatk_cnv_collect_allelic_counts:
+  gatk_collect_allelic_counts:
     type: object
     properties:
       SNP_interval:
@@ -131,7 +143,7 @@ properties:
     required:
       - SNP_interval
 
-  gatk_cnv_denoise_read_counts:
+  gatk_denoise_read_counts:
     type: object
     properties:
       normal_reference:
@@ -366,8 +378,8 @@ required:
   - cnvkit_batch
   - cnv_html_report
   - filter_vcf
-  - gatk_cnv_collect_allelic_counts
-  - gatk_cnv_denoise_read_counts
+  - gatk_collect_allelic_counts
+  - gatk_denoise_read_counts
   - gene_fuse
   - hotspot_annotation
   - hotspot_info

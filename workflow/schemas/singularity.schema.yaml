@@ -129,7 +129,7 @@ properties:
       required:
         - container
 
-  gatk_cnv_call_copy_ratio_segments:
+  gatk_call_copy_ratio_segments:
     type: object
     properties:
       container:
@@ -140,7 +140,7 @@ properties:
       required:
         - container
 
-  gatk_cnv_collect_allelic_counts:
+  gatk_collect_allelic_counts:
     type: object
     properties:
       container:
@@ -151,7 +151,7 @@ properties:
       required:
         - container
 
-  gatk_cnv_collect_read_counts:
+  gatk_collect_read_counts:
     type: object
     properties:
       container:
@@ -162,7 +162,7 @@ properties:
       required:
         - container
 
-  gatk_cnv_denoise_read_counts:
+  gatk_denoise_read_counts:
     type: object
     properties:
       container:
@@ -173,7 +173,7 @@ properties:
       required:
         - container
 
-  gatk_cnv_model_segments:
+  gatk_model_segments:
     type: object
     properties:
       container:
@@ -427,11 +427,11 @@ required:
   - fastp_pe
   - fastqc
   - fusioncatcher
-  - gatk_cnv_call_copy_ratio_segments
-  - gatk_cnv_collect_allelic_counts
-  - gatk_cnv_collect_read_counts
-  - gatk_cnv_denoise_read_counts
-  - gatk_cnv_model_segments
+  - gatk_call_copy_ratio_segments
+  - gatk_collect_allelic_counts
+  - gatk_collect_read_counts
+  - gatk_denoise_read_counts
+  - gatk_model_segments
   - gene_fuse
   - manta_run_workflow_t
   - mosdepth_bed
