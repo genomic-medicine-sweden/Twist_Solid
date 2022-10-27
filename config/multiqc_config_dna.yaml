@@ -9,6 +9,7 @@ extra_fn_clean_exts: ##from this until end
 
 custom_content:
   order:
+    - qc-stats
     - fastqc
     - fastp
     - samtools
