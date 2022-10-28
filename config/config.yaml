@@ -64,7 +64,7 @@ bwa_mem:
   sa: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.sa"
 
 bwa_mem_merge:
-  extra: "-c"
+  extra: "-c -p"
 
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"
@@ -256,7 +256,7 @@ report_gene_fuse:
   min_unique_reads: 6
 
 samtools_merge_bam:
-  extra: "-c"
+  extra: "-c -p"
 
 scarhrd:
   container: "docker://hydragenetics/scarhrd:20200825"
