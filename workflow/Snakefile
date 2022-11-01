@@ -115,7 +115,7 @@ use rule * from filtering as filtering_*
 
 module qc:
     snakefile:
-        github("hydra-genetics/qc", path="workflow/Snakefile", tag="72f026f")
+        github("hydra-genetics/qc", path="workflow/Snakefile", tag="225b642")
     config:
         config
 
