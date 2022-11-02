@@ -74,17 +74,6 @@ properties:
     required:
       - container
 
-  config_manta_t:
-    type: object
-    properties:
-      container:
-        type: string
-        description: name or path to a default docker/singularity container
-        pattern: >-
-            hydragenetics/manta:1\.6\.0$
-    required:
-      - container
-
   fastp_pe:
     type: object
     properties:
@@ -205,6 +194,17 @@ properties:
             hydragenetics/genefuse:0\.6\.1$
       required:
         - container
+
+  manta_config_t:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/manta:1\.6\.0$
+    required:
+      - container
 
   manta_run_workflow_t:
     type: object
