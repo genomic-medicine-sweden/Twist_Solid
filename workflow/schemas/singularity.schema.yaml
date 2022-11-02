@@ -423,7 +423,6 @@ required:
   - cnvkit_call
   - cnvkit_diagram
   - cnvkit_scatter
-  - config_manta_t
   - fastp_pe
   - fastqc
   - fusioncatcher
@@ -433,6 +432,7 @@ required:
   - gatk_denoise_read_counts
   - gatk_model_segments
   - gene_fuse
+  - manta_config_t
   - manta_run_workflow_t
   - mosdepth_bed
   - msisensor_pro
