@@ -5,7 +5,7 @@ results/dna/fusions/VAL2022_T.gene_fuse_report.tsv	9ef48a445eaeb8ceb2f15847e142d
 results/dna/msi/VAL2022_T.msisensor_pro.score.tsv	d60f0e5b61503d86c5a7ff82893609c1
 results/dna/qc/multiqc_DNA.html	d18ee4445916768f9f0f2f3a37817899
 results/dna/hrd/VAL2022_T.hrd_score.txt	8dc27f3061b03145c1b88732b8d355df
-results/dna/cnv/VAL2022_T.manta_tumorSV.vcf.gz	4adf3f1bfb34652a5f77482d4a44cf72
+results/dna/cnv/VAL2022_T.manta_tumorSV.vcf.gz	6907ea0c8cfe837dea3999e9aa04c806
 results/dna/qc/VAL2022_T.insert_size_metrics.txt	e0e354ef710a189bbb910cc2558d1431
 results/dna/qc/VAL2022_T.contamination.table	c1d8fc1cdb993dda50a430028277c37b
 results/dna/qc/VAL2022_T.samtools-stats.txt	fcdedb544ce58edf94d76a0bc36171e3
