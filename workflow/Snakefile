@@ -10,9 +10,12 @@ __license__ = "GPL-3"
 include: "rules/common.smk"
 include: "rules/bcftools.smk"
 include: "rules/cnv_tsv_report.smk"
+include: "rules/cnv_html_report.smk"
 include: "rules/exon_skipping.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/house_keeping_gene_coverage.smk"
+include: "rules/result_files.smk"
+include: "rules/report_gene_fuse.smk"
 include: "rules/report_fusions.smk"
 
 
@@ -71,6 +74,13 @@ use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
         "fusions/star_fusion/{path_file}.out.bam",
     output:
         temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
+    log:
+        "fusions/star_fusion/{path_file}.bam.sort.log",
+    benchmark:
+        repeat(
+            "fusions/star_fusion/{path_file}.bam.sort.benchmark.tsv",
+            config.get("samtools_sort", {}).get("benchmark_repeats", 1),
+        )
 
 
 module snv_indels:
@@ -85,7 +95,7 @@ use rule * from snv_indels as snv_indels_*
 
 module annotation:
     snakefile:
-        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="89177fe")
+        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="ad68059")
     config:
         config
 
@@ -95,7 +105,7 @@ use rule * from annotation as annotation_*
 
 module filtering:
     snakefile:
-        github("hydra-genetics/filtering", path="workflow/Snakefile", tag="8877717")
+        github("hydra-genetics/filtering", path="workflow/Snakefile", tag="b7f4dc3")
     config:
         config
 
@@ -105,7 +115,7 @@ use rule * from filtering as filtering_*
 
 module qc:
     snakefile:
-        github("hydra-genetics/qc", path="workflow/Snakefile", tag="cd029ff")
+        github("hydra-genetics/qc", path="workflow/Snakefile", tag="225b642")
     config:
         config
 
@@ -182,7 +192,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 module biomarker:
     snakefile:
-        github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="aa89042")
+        github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="7bd038f")
     config:
         config
 
@@ -190,9 +200,14 @@ module biomarker:
 use rule * from biomarker as biomarker_*
 
 
+use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
+    input:
+        seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns",
+
+
 module fusions:
     snakefile:
-        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="bedaebf")
+        github("hydra-genetics/fusions", path="workflow/Snakefile", tag="12f8354")
     config:
         config
 
@@ -210,12 +225,51 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="5738dd8")
+        github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.1.0")
     config:
         config
 
 
 use rule * from cnv_sv as cnv_sv_*
+
+
+use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        cnv_reference=config.get("cnvkit_batch_hrd", {}).get("normal_reference_hrd", ""),
+    output:
+        regions=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cnr"),
+        segments=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cns"),
+        segments_called=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.call.cns"),
+        bins=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.bintest.cns"),
+        target_coverage=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.targetcoverage.cnn"),
+        antitarget_coverage=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
+    log:
+        "cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.log",
+    benchmark:
+        repeat(
+            "cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.benchmark.hrd.tsv",
+            config.get("cnvkit_batch_hrd", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
+    input:
+        segment="cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cns",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+    output:
+        segment=temp("cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns"),
+    params:
+        tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
+        extra=config.get("cnvkit_call_hrd", {}).get("extra", ""),
+    log:
+        "cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns.log",
+    benchmark:
+        repeat(
+            "cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns.benchmark.tsv",
+            config.get("cnvkit_call_hrd", {}).get("benchmark_repeats", 1),
+        )
 
 
 use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:

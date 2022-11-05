@@ -49,6 +49,12 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      del_1p19q_cn_limit:
+        type: number
+        description: Upper limit of copy number to be included in calculation of del_1p19q_chr_arm_fraction
+      del_1p19q_chr_arm_fraction:
+        type: number
+        description: Fraction of the chromosome arms that needs to be deleted
 
   cnvkit_batch:
     type: object
@@ -61,6 +67,27 @@ properties:
         description: path to normal reference panel for cnvkit_batch
     required:
       - normal_reference
+
+  cnvkit_batch_hrd:
+    type: object
+    properties:
+      method:
+        type: string
+        description: One of three methods (wgs, amplicon, hybrid) to use for cnvkit_batch_hrd
+      normal_reference_hrd:
+        type: string
+        description: path to normal reference panel for cnvkit_batch_hrd
+    required:
+      - normal_reference_hrd
+
+  cnv_html_report:
+    type: object
+    properties:
+      template:
+        type: string
+        description: path to HTML report template
+    required:
+      - template
 
   exon_skipping:
     type: object
@@ -89,7 +116,6 @@ properties:
     required:
       - germline
 
-
   filter_cnv:
       type: object
       properties:
@@ -97,7 +123,21 @@ properties:
           type: string
           description: Gene annotated bed files with genes to be included.
 
-  gatk_cnv_collect_allelic_counts:
+  gatk_calculate_contamination:
+    type: object
+    description: parameters for gatk_calculate_contamination
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  gatk_collect_allelic_counts:
     type: object
     properties:
       SNP_interval:
@@ -106,7 +146,7 @@ properties:
     required:
       - SNP_interval
 
-  gatk_cnv_denoise_read_counts:
+  gatk_denoise_read_counts:
     type: object
     properties:
       normal_reference:
@@ -114,6 +154,26 @@ properties:
         description: path to normal reference panel for gatk DenoiseReadCounts
     required:
       - normal_reference
+
+  gatk_get_pileup_summaries:
+    type: object
+    description: parameters for gatk_get_pileup_summaries
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      sites:
+        type: string
+        description: sites to pileup (eg small_exac_common.vcf from GnomAD)
+      variants:
+        type: string
+        description: varaints to pileup (eg small_exac_common.vcf from GnomAD, usually same as sites)
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   gene_fuse:
     type: object
@@ -285,6 +345,19 @@ properties:
         type: integer
         description: lower limit of supporting reads to flag filter fusion that are inframe
 
+  report_gene_fuse:
+    description: report results from genefuse
+    type: object
+    properties:
+      filter_fusions:
+        type: string
+        description: file specifying fusions that should be filtered completely (0 in column 2) or have higher limit (>0 in column 2)
+      min_unique_reads:
+        type: integer
+        description: lower limit of uniquely supporting reads to report fusion
+      required:
+        - min_unique_reads
+
   trimmer_software:
     description: trimmer software that should be used
     pattern: "^(fastp_pe|None)$"
@@ -307,9 +380,10 @@ required:
   - default_container
   - bcbio_variation_recall_ensemble
   - cnvkit_batch
+  - cnv_html_report
   - filter_vcf
-  - gatk_cnv_collect_allelic_counts
-  - gatk_cnv_denoise_read_counts
+  - gatk_collect_allelic_counts
+  - gatk_denoise_read_counts
   - gene_fuse
   - hotspot_annotation
   - hotspot_info
@@ -317,5 +391,6 @@ required:
   - msisensor_pro
   - multiqc
   - reference
+  - report_gene_fuse
   - trimmer_software
   - vep

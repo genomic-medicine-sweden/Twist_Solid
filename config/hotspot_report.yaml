@@ -8,7 +8,9 @@ columns:
   sample:
     visible: 0
   Gene:
-    from: 'merge'
+    from: 'select'
+    items: "[0]"
+    else: "[1:]"
     divider: ';'
     elements:
       hotspot:
@@ -28,12 +30,10 @@ columns:
     from: 'hotspot'
     field: 'EXON'
     order: 6
-  Exon_VEP:
-    from: 'vep'
-    field: 'EXON'
-    format: ['replace', '/', ',']
   AA_change:
-    from: 'merge'
+    from: 'select'
+    items: "[0]"
+    else: "[1:]"
     divider: ';'
     elements:
       hotspot:
@@ -44,7 +44,9 @@ columns:
         field: 'HGVSp'
     order: 7
   CDS_change:
-    from: 'merge'
+    from: 'select'
+    items: '[0]'
+    else: '[1:]'
     divider: ';'
     elements:
       hotspot:
@@ -64,29 +66,28 @@ columns:
     from: 'hotspot'
     field: 'COMMENT'
     order: 11
-  Analyzable:
-    from: 'function'
-    name: "get_read_level"
-    variables:
-      - levels
-      - depth
-    column: 1
-    order: 12
-  Min_read_depth300:
+  Min_read_depth200:
     from: 'function'
     name: "get_read_level"
     variables:
       - levels
       - depth
     column: 0
-    order: 13
+    order: 12
   gvcf_depth:
-    order: 14
+    order: 13
     field: 'DP_mosdepth'
   ref:
-    order: 15
+    order: 14
   alt:
-     order: 16
+     order: 15
+  DP:
+    from: 'function'
+    name: 'get_annotation_data_info'
+    variables:
+      - var
+      - 'DP'
+    order: 16
   ref_depth:
     order: 17
   alt_depth:
@@ -142,3 +143,34 @@ columns:
       - 'var'
       - 'Artifact'
     order: 26
+  Other_AA_change:
+    from: 'select'
+    items: "[1:]"
+    condition:
+      items: "[0]"
+      empty: False
+    divider: ';'
+    elements:
+      hotspot:
+        from: 'hotspot'
+        field: 'AA_MUTATION_SYNTAX'
+      vep:
+        from: 'vep'
+        field: 'HGVSp'
+    order: 27
+  Other_CDS_change:
+    from: 'select'
+    items: '[1:]'
+    condition: 
+      items: '[0]'
+      empty: False
+    divider: ';'
+    elements:
+      hotspot:
+        from: 'hotspot'
+        field: 'CDS_MUTATION_SYNTAX'
+      vep:
+        from: 'vep'
+        field: 'HGVSc'
+    order: 28
+

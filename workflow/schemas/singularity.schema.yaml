@@ -5,6 +5,8 @@ properties:
   default_container:
     type: string
     description: name or path to a default docker/singularity container
+    pattern: >-
+        hydragenetics/common:0\.1\.9$
 
   bcbio_variation_recall_ensemble:
     type: object
@@ -13,7 +15,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/bcbio-vc:0\.2\.6$
     required:
       - container
 
@@ -35,7 +37,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/cnvkit:0\.9\.9$
+            hydragenetics/cnvkit:0\.9\.9$
     required:
       - container
 
@@ -46,7 +48,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/cnvkit:0\.9\.9$
+            hydragenetics/cnvkit:0\.9\.9$
     required:
       - container
 
@@ -57,7 +59,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/cnvkit:0\.9\.9$
+            hydragenetics/cnvkit:0\.9\.9$
     required:
       - container
 
@@ -68,18 +70,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/cnvkit:0\.9\.9$
-    required:
-      - container
-
-  config_manta_t:
-    type: object
-    properties:
-      container:
-        type: string
-        description: name or path to a default docker/singularity container
-        pattern: >-
-            marrip/manta:v1\.6\.0$
+            hydragenetics/cnvkit:0\.9\.9$
     required:
       - container
 
@@ -105,69 +96,91 @@ properties:
       required:
         - container
 
-  freebayes:
+  fusioncatcher:
     type: object
     properties:
       container:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/fusioncatcher:1\.33$
       required:
         - container
 
-  gatk_cnv_call_copy_ratio_segments:
+  gatk_calculate_contamination:
     type: object
     properties:
       container:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/gatk4:4\.1\.9\.0$
       required:
         - container
 
-  gatk_cnv_collect_allelic_counts:
+  gatk_call_copy_ratio_segments:
     type: object
     properties:
       container:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/gatk4:4\.1\.9\.0$
       required:
         - container
 
-  gatk_cnv_collect_read_counts:
+  gatk_collect_allelic_counts:
     type: object
     properties:
       container:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/gatk4:4\.1\.9\.0$
       required:
         - container
 
-  gatk_cnv_denoise_read_counts:
+  gatk_collect_read_counts:
     type: object
     properties:
       container:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/gatk4:4\.1\.9\.0$
       required:
         - container
 
-  gatk_cnv_model_segments:
+  gatk_denoise_read_counts:
     type: object
     properties:
       container:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/gatk4:4\.1\.9\.0$
+      required:
+        - container
+
+  gatk_model_segments:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$
+      required:
+        - container
+
+  gatk_get_pileup_summaries:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$
       required:
         - container
 
@@ -182,6 +195,17 @@ properties:
       required:
         - container
 
+  manta_config_t:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/manta:1\.6\.0$
+    required:
+      - container
+
   manta_run_workflow_t:
     type: object
     properties:
@@ -189,7 +213,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            marrip/manta:v1\.6\.0$
+            hydragenetics/manta:1\.6\.0$
       required:
         - container
 
@@ -314,6 +338,17 @@ properties:
       required:
         - container
 
+  star_fusion:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/star-fusion:1\.10\.1$
+      required:
+        - container
+
   svdb_merge:
     type: object
     properties:
@@ -343,7 +378,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            gmsuppsala/somatic:develop$
+            hydragenetics/vardict:1\.8\.3$
     required:
       - container
 
@@ -388,16 +423,16 @@ required:
   - cnvkit_call
   - cnvkit_diagram
   - cnvkit_scatter
-  - config_manta_t
   - fastp_pe
   - fastqc
-  - freebayes
-  - gatk_cnv_call_copy_ratio_segments
-  - gatk_cnv_collect_allelic_counts
-  - gatk_cnv_collect_read_counts
-  - gatk_cnv_denoise_read_counts
-  - gatk_cnv_model_segments
+  - fusioncatcher
+  - gatk_call_copy_ratio_segments
+  - gatk_collect_allelic_counts
+  - gatk_collect_read_counts
+  - gatk_denoise_read_counts
+  - gatk_model_segments
   - gene_fuse
+  - manta_config_t
   - manta_run_workflow_t
   - mosdepth_bed
   - msisensor_pro

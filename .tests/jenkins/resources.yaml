@@ -1,9 +1,13 @@
 default_resources:
   threads: 1
   time: "12:00:00"
-  mem_mb: 1900
-  mem_per_cpu: 1900
-  partition: core
+  mem_mb: 3800
+  mem_per_cpu: 3800
+  partition: "core"
+
+arriba:
+ mem_mb: 30000
+ threads: 8
 
 bwa_mem:
   mem_mb: 15200
@@ -12,13 +16,17 @@ bwa_mem:
   time: "8:00:00"
 
 fastp_pe:
-  threads: 5
+  threads: 1
 
 vep:
   threads: 8
 
 fastqc:
   threads: 2
+
+fusioncatcher:
+  threads: 8
+  mem_mb: 30000
 
 manta_run_workflow_t:
   threads: 8
@@ -38,5 +46,15 @@ gene_fuse:
   time: "8:00:00"
 
 vardict:
-  threads: 8
+  threads: 2
   time: "16:00:00"
+  mem_mb: 3800
+
+star:
+  threads: 8
+  mem_mb: 30000
+
+star_fusion:
+  threads: 8
+  mem_mb: 30000
+           

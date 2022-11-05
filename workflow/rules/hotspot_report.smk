@@ -10,8 +10,8 @@ __license__ = "GPL-3"
 rule hotspot_report:
     input:
         hotspots=config["hotspot_report"]["hotspot_mutations"],
-        vcf="annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz",
-        vcf_index="annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz.tbi",
+        vcf="annotation/add_multi_snv_in_codon/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf.gz",
+        vcf_index="annotation/add_multi_snv_in_codon/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf.gz.tbi",
         gvcf="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz",
         gvcf_index="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz.tbi",
     output:
@@ -30,11 +30,11 @@ rule hotspot_report:
         )
     threads: config.get("hotspot_report", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("hotspot_report", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("hotspot_report", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("hotspot_report", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("hotspot_report", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("hotspot_report", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("hotspot_report", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("hotspot_report", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("hotspot_report", {}).get("container", config["default_container"])
     conda:
