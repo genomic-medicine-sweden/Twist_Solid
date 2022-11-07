@@ -63,6 +63,8 @@ def compile_result_file_list():
     dna_files = [
         {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna", ".bam"]},
         {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna", ".bam.bai"]},
+        {"in": ["snv_indels/gatk_mutect2", ".bam"], "out": ["bam_dna/mutect2_indel_bam", ".bam"]},
+        {"in": ["snv_indels/gatk_mutect2", ".bam.bai"], "out": ["bam_dna/mutect2_indel_bam", ".bam.bai"]},
         {
             "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
             "out": ["results/dna/vcf", ".annotated.vcf.gz"],
@@ -104,6 +106,22 @@ def compile_result_file_list():
         {"in": ["biomarker/scarhrd", ".scarhrd_cnvkit_score.txt"], "out": ["results/dna/hrd", ".scarhrd_cnvkit_score.txt"]},
         {"in": ["fusions/gene_fuse", "_gene_fuse_fusions.txt"], "out": ["results/dna/fusions", ".gene_fuse_fusions.txt"]},
         {"in": ["fusions/report_gene_fuse", ".gene_fuse_report.tsv"], "out": ["results/dna/fusions", ".gene_fuse_report.tsv"]},
+    ]
+    output_files = [
+        "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
+        for file_info in dna_files
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type != "R"
+    ]
+    input_files = [
+        "%s/%s_%s%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
+        for file_info in dna_files
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type != "R"
+    ]
+    dna_files2 = [
         {"in": ["cnv_sv/cnvkit_call", ".loh.cns"], "out": ["results/dna/cnv", ".cnvkit.loh.cns"]},
         {
             "in": ["cnv_sv/gatk_call_copy_ratio_segments", ".clean.calledCNVs.seg"],
@@ -124,7 +142,7 @@ def compile_result_file_list():
         {"in": ["cnv_sv/svdb_query", ".cnv_report.tsv"], "out": ["results/dna/cnv", ".cnv_report.tsv"]},
     ]
     output_files = [
-        "%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, file_info["out"][1])
+        "%s/%s_%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, sample, unit_type, file_info["out"][1])
         for file_info in dna_files
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
