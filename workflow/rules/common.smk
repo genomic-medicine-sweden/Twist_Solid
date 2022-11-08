@@ -14,6 +14,7 @@ from snakemake.utils import min_version
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
+from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics import min_version as hydra_min_version
 
 hydra_min_version("0.14.1")
@@ -143,14 +144,14 @@ def compile_result_file_list():
     ]
     output_files = [
         "%s/%s_%s/%s_%s%s" % (file_info["out"][0], sample, unit_type, sample, unit_type, file_info["out"][1])
-        for file_info in dna_files
+        for file_info in dna_files2
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type != "R"
     ]
     input_files = [
         "%s/%s_%s%s" % (file_info["in"][0], sample, unit_type, file_info["in"][1])
-        for file_info in dna_files
+        for file_info in dna_files2
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         if unit_type != "R"
