@@ -85,7 +85,7 @@ use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
 use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutect2 with:
     input:
         bams=expand(
-            "snv_indels/gatk_mutect2/{{sample}}_{{type}}_{chr}.bam",
+            "snv_indels/gatk_mutect2/{{sample}}_{{type}}_{chr}.unfiltered.bam",
             chr=extract_chr(
                 "%s.fai" % (config.get("reference", {}).get("fasta", "")),
                 filter_out=config.get("reference", {}).get("skip_chrs", []),
