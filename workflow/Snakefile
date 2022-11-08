@@ -92,14 +92,14 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutec
             ),
         ),
     output:
-        bam=temp("snv_indels/gatk_mutect2/{sample}_{type}.bam_unsorted"),
+        bam=temp("snv_indels/gatk_mutect2_merge/{sample}_{type}.bam_unsorted"),
     params:
         extra=config.get("alignment_samtools_merge_bam_mutect2", {}).get("extra", ""),
     log:
-        "snv_indels/gatk_mutect2/{sample}_{type}.bam_unsorted.log",
+        "snv_indels/gatk_mutect2_merge/{sample}_{type}.bam_unsorted.log",
     benchmark:
         repeat(
-            "snv_indels/gatk_mutect2/{sample}_{type}.bam_unsorted.benchmark.tsv",
+            "snv_indels/gatk_mutect2_merge/{sample}_{type}.bam_unsorted.benchmark.tsv",
             config.get("alignment_samtools_merge_bam_mutect2", {}).get("benchmark_repeats", 1),
         )
 

@@ -69,8 +69,8 @@ def compile_result_file_list():
     dna_files = [
         {"in": ["alignment/samtools_merge_bam", ".bam"], "out": ["bam_dna", ".bam"]},
         {"in": ["alignment/samtools_merge_bam", ".bam.bai"], "out": ["bam_dna", ".bam.bai"]},
-        {"in": ["snv_indels/gatk_mutect2", ".bam"], "out": ["bam_dna/mutect2_indel_bam", ".bam"]},
-        {"in": ["snv_indels/gatk_mutect2", ".bam.bai"], "out": ["bam_dna/mutect2_indel_bam", ".bam.bai"]},
+        {"in": ["snv_indels/gatk_mutect2_merge", ".bam"], "out": ["bam_dna/mutect2_indel_bam", ".bam"]},
+        {"in": ["snv_indels/gatk_mutect2_merge", ".bam.bai"], "out": ["bam_dna/mutect2_indel_bam", ".bam.bai"]},
         {
             "in": ["annotation/background_annotation", ".background_annotation.vcf.gz"],
             "out": ["results/dna/vcf", ".annotated.vcf.gz"],
