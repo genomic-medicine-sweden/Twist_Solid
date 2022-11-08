@@ -97,12 +97,14 @@ def generate_copy_code(workflow, output_json):
             partition = config.get("_copy", {}).get("partition", config["default_resources"]["partition"])
             threads = config.get("_copy", {}).get("threads", config["default_resources"]["threads"])
             time = config.get("_copy", {}).get("time", config["default_resources"]["time"])
+            copy_container = config.get("_copy", {}).get("container", config["default_container"])
             result_file = os.path.basename(output_file)
             code += f'@workflow.rule(name="{rule_name}")\n'
             code += f'@workflow.input("{input_file}")\n'
             code += f'@workflow.output("{output_file}")\n'
             code += f'@workflow.log("logs/{rule_name}_{result_file}.log")\n'
-            code += f'@workflow.container(None)\n'
+            code += f'@workflow.container("{copy_container}")\n'
+            code += f'@workflow.conda("../env/copy_result.yaml")\n'
             code += f'@workflow.resources(time = "{time}", threads = {threads}, mem_mb = {mem_mb}, mem_per_cpu = {mem_per_cpu}, partition = "{partition}")\n'
             code += '@workflow.shellcmd("cp {input} {output}")\n\n'
             code += "@workflow.run\n"
