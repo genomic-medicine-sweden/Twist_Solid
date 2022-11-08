@@ -11,6 +11,9 @@ properties:
   resources:
     type: string
     description: Path to resources.yaml file
+  output:
+    type: string
+    description: json file with information about which files should be saved and where
   default_container:
     type: string
     description: name or path to a default docker/singularity container
@@ -373,6 +376,7 @@ required:
   - samples
   - units
   - resources
+  - output
   - default_container
   - bcbio_variation_recall_ensemble
   - cnvkit_batch

@@ -1,7 +1,7 @@
 resources: "config/resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
-
+output: "config/output_list.json"
 default_container: "docker://hydragenetics/common:0.1.9"
 
 trimmer_software: "fastp_pe"
