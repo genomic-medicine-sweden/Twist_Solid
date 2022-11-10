@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +7,53 @@
     <title>CNV report</title>
 
     <style>
+        .container {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .plot-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .plot-container fieldset {
+            width: 20em;
+            order: -1;
+        }
+
+        .table-container {
+            min-width: 35em;
+            max-width: 50em;
+        }
+
+        @media (min-width: 1200px) {
+            .app-container {
+                flex-direction: row;
+            }
+
+            .plot-container {
+                min-width: 48%;
+            }
+
+            .table-container {
+                max-width: 40em;
+            }
+
+            .chromosome-view {
+                order: 1;
+            }
+
+            .genome-view {
+                order: 2;
+            }
+        }
+
         body {
             font-family: helvetica, arial, sans-serif;
         }
@@ -83,48 +129,60 @@
         .panel-overlay.selected {
             stroke-width: 6;
         }
+
+
+
     </style>
 </head>
 <body>
-    <h1>CNV report</h1>
+    <div class="container">
+        <h1>CNV report</h1>
 
-    <fieldset>
-        <legend>CNV dataset</legend>
+        <div class="app-container">
+            <div class="plot-container">
+                <fieldset>
+                    <legend>CNV dataset</legend>
 
-        <div>
-            <input type="radio" id="dataset-cnvkit" name="dataset" value="cnvkit" checked>
-            <label for="dataset-cnvkit">cnvkit</label>
+                    <div>
+                        <input type="radio" id="dataset-cnvkit" name="dataset" value="cnvkit" checked>
+                        <label for="dataset-cnvkit">cnvkit</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="dataset-gatk" name="dataset" value="gatk">
+                        <label for="dataset-gatk">GATK</label>
+                    </div>
+                </fieldset>
+
+                <section class="genome-view">
+                    <h2>Genome view</h2>
+                    <p>Click a chromosome to visualise it below.</p>
+                    <svg id="genome-view"></svg>
+                </section>
+
+                <section class="chromosome-view">
+                    <h2>Chromosome view</h2>
+                    <p>Click and drag to zoom. Click the plot to reset zoom.</p>
+                    <svg id="chromosome-view"></svg>
+                </section>
+            </div>
+
+            <div class="table-container">
+                <section>
+                    <h2>Results table</h2>
+                    <p>Click the magnifying glass to zoom in on the region in question.</p>
+                    <table id="cnv-table">
+
+                    </table>
+                </section>
+            </div>
         </div>
-
-        <div>
-            <input type="radio" id="dataset-gatk" name="dataset" value="gatk">
-            <label for="dataset-gatk">GATK</label>
-        </div>
-    </fieldset>
-
-    <section>
-        <h2>Genome view</h2>
-        <p>Click a chromosome to visualise it below.</p>
-        <svg id="genome-view"></svg>
-    </section>
-
-    <section>
-        <h2>Chromosome view</h2>
-        <p>Click and drag to zoom. Click the plot to reset zoom.</p>
-        <svg id="chromosome-view"></svg>
-    </section>
-
-    <section>
-        <h2>Results table</h2>
-        <table id="cnv-table">
-
-        </table>
-    </section>
-
+    </div>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
         const cnvData = {{ json }}
-
+    </script>
+    <script>
         const getTextDimensions = function(text, fontSize) {
             let div = document.createElement("div");
 
@@ -869,6 +927,9 @@
             resultsTable.update(activeDataset);
         });
 
+
+
+
     </script>
 </body>
-</html>
+<html>
