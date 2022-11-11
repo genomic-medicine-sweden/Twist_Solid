@@ -498,6 +498,7 @@
 
             svg.append("text")
                 .attr("transform", `translate(0,${margin.top+plotHeight/2}) rotate(-90)`)
+                .attr("class", "y-label")
                 .text("log2 ratio")
                 .attr("text-anchor", "middle")
                 .attr("dominant-baseline", "text-before-edge")
@@ -505,6 +506,7 @@
 
             svg.append("text")
                 .attr("transform", `translate(0,${height-margin.bottom-plotHeight/2}) rotate(-90)`)
+                .attr("class", "y-label")
                 .text("VAF")
                 .attr("text-anchor", "middle")
                 .attr("dominant-baseline", "text-before-edge")
@@ -757,15 +759,18 @@
             // Y axes
             svg.append("g")
                 .attr("transform", `translate(${margin.left}, ${margin.top})`)
+                .attr("class", "y-axis")
                 .call(yAxis);
 
             svg.append("g")
                 .attr("transform", `translate(${margin.left}, ${margin.top+panelHeight+margin.between})`)
+                .attr("class", "y-axis")
                 .call(yAxisVAF);
 
             // Labels
             vafPanels.append("text")
                 .attr("transform", (d, i) => `translate(${panelWidths[i]/2},${panelHeight+10}) rotate(-90)`)
+                .attr("class", "x-label")
                 .text((d, i) => d.label)
                 .attr("text-anchor", "end")
                 .attr("dominant-baseline", "central")
@@ -773,6 +778,7 @@
 
             svg.append("text")
                 .attr("transform", `translate(0,${margin.top+panelHeight/2}) rotate(-90)`)
+                .attr("class", "y-label")
                 .text("log2 ratio")
                 .attr("text-anchor", "middle")
                 .attr("dominant-baseline", "text-before-edge")
@@ -780,6 +786,7 @@
 
             svg.append("text")
                 .attr("transform", `translate(0,${margin.top+margin.between+3*panelHeight/2}) rotate(-90)`)
+                .attr("class", "y-label")
                 .text("VAF")
                 .attr("text-anchor", "middle")
                 .attr("dominant-baseline", "text-before-edge")
