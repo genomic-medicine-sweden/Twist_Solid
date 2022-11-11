@@ -26,6 +26,10 @@
             flex-direction: column;
         }
 
+            .plot-container .gene-label {
+                font-size: 0.8rem
+            }
+
         .plot-container fieldset {
             width: 20em;
             order: -1;
@@ -36,13 +40,72 @@
             max-width: 50em;
         }
 
-        @media (min-width: 1200px) {
+        svg .panel-overlay {
+            stroke: forestgreen;
+        }
+
+        svg .segment {
+            stroke: orange;
+        }
+
+        /* Narrow view */
+        @media (max-width: 600px) {
+            .plot-container .x-label, .plot-container .y-label {
+                font-size: 1rem;
+            }
+
+            .plot-container .x-axis, .plot-container .y-axis {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Wide view */
+        @media (min-width: 1600px) {
             .app-container {
                 flex-direction: row;
             }
 
             .plot-container {
                 min-width: 48%;
+            }
+
+            .plot-container .x-label, .plot-container .y-label {
+                font-size: 1rem;
+            }
+
+            .plot-container .x-axis, .plot-container .y-axis {
+                font-size: 0.9rem;
+            }
+
+            .table-container {
+                max-width: 40em;
+            }
+
+            .chromosome-view {
+                order: 1;
+            }
+
+            .genome-view {
+                order: 2;
+            }
+        }
+
+        /* Normal view */
+        @media (min-width: 1200px) and (width < 1600px) {
+            .app-container {
+                flex-direction: row;
+            }
+
+            .plot-container {
+                min-width: 48%;
+            }
+
+            .plot-container .x-label, .plot-container .y-label {
+                font-size: 1.1rem;
+            }
+
+            .plot-container .x-axis, .plot-container .y-axis {
+                font-size: 1rem;
             }
 
             .table-container {
@@ -66,6 +129,7 @@
             table-layout: fixed;
             width: 100%;
             border-collapse: collapse;
+            font-size: 0.9rem;
         }
 
         th, td {
@@ -372,8 +436,7 @@
                                 .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
                                 .attr("y", plotHeight + margin.between / 2)
                                 .attr("text-anchor", "middle")
-                                .attr("dominant-baseline", "central")
-                                .style("font-size", "0.8rem");
+                                .attr("dominant-baseline", "central");
                             return gene_group;
                         }, update => {
                             update.selectAll(".gene-label")
@@ -493,24 +556,21 @@
                 .attr("transform", `translate(${width/2},${height})`)
                 .attr("class", "x-label")
                 .text(data.label)
-                .attr("text-anchor", "middle")
-                .style("font-size", "0.8rem");
+                .attr("text-anchor", "middle");
 
             svg.append("text")
                 .attr("transform", `translate(0,${margin.top+plotHeight/2}) rotate(-90)`)
                 .attr("class", "y-label")
                 .text("log2 ratio")
                 .attr("text-anchor", "middle")
-                .attr("dominant-baseline", "text-before-edge")
-                .style("font-size", "0.9rem");
+                .attr("dominant-baseline", "text-before-edge");
 
             svg.append("text")
                 .attr("transform", `translate(0,${height-margin.bottom-plotHeight/2}) rotate(-90)`)
                 .attr("class", "y-label")
                 .text("VAF")
                 .attr("text-anchor", "middle")
-                .attr("dominant-baseline", "text-before-edge")
-                .style("font-size", "0.9rem");
+                .attr("dominant-baseline", "text-before-edge");
 
             const update = function(plotData, activeDataset, xMin, xMax) {
                 data = plotData;
@@ -773,24 +833,21 @@
                 .attr("class", "x-label")
                 .text((d, i) => d.label)
                 .attr("text-anchor", "end")
-                .attr("dominant-baseline", "central")
-                .style("font-size", "0.8rem");
+                .attr("dominant-baseline", "central");
 
             svg.append("text")
                 .attr("transform", `translate(0,${margin.top+panelHeight/2}) rotate(-90)`)
                 .attr("class", "y-label")
                 .text("log2 ratio")
                 .attr("text-anchor", "middle")
-                .attr("dominant-baseline", "text-before-edge")
-                .style("font-size", "0.9rem");
+                .attr("dominant-baseline", "text-before-edge");
 
             svg.append("text")
                 .attr("transform", `translate(0,${margin.top+margin.between+3*panelHeight/2}) rotate(-90)`)
                 .attr("class", "y-label")
                 .text("VAF")
                 .attr("text-anchor", "middle")
-                .attr("dominant-baseline", "text-before-edge")
-                .style("font-size", "0.9rem");
+                .attr("dominant-baseline", "text-before-edge");
 
             const update = activeDataset => {
                 plotRegions(activeDataset);
