@@ -1,4 +1,10 @@
 from jinja2 import Template
+import pathlib
+import time
+
+
+def get_sample_name(filename):
+    return pathlib.Path(filename).name.split(".")[0]
 
 
 def create_report(template_filename, json_filename):
@@ -8,7 +14,12 @@ def create_report(template_filename, json_filename):
     with open(json_filename) as f:
         json_string = f.read()
 
-    return template.render(dict(json=json_string))
+    return template.render(
+        dict(
+            json=json_string,
+            metadata=dict(date=time.strftime("%Y-%m-%d %H:%M", time.localtime()), sample=get_sample_name(json_filename)),
+        )
+    )
 
 
 def main():

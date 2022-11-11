@@ -12,6 +12,10 @@
             margin: 0 auto;
         }
 
+            header {
+                margin: 3em 0;
+            }
+
         .app-container {
             display: flex;
             flex-direction: column;
@@ -136,7 +140,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>CNV report</h1>
+        <header>
+            <h1>CNV report</h1>
+            <ul>
+                <li>Sample: {{ metadata.sample }}</li>
+                <li>Date: <time>{{ metadata.date }}</time></li>
+            </ul>
+        </header>
 
         <div class="app-container">
             <div class="plot-container">
