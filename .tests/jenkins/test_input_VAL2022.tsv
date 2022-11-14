@@ -13,7 +13,7 @@ results/dna/vcf/vardict_VAL2022_T.vcf.gz	330c1cde2dacf7cd5aa2f931c9dc15f2
 results/dna/qc/VAL2022_T.duplication_metrics.txt	31611542aafb4495560e062cac828f08
 results/dna/cnv/VAL2022_T.svdb_query.vcf	3688d30d4347e9c7c75972c163fcb4dc
 results/dna/qc/VAL2022_T.HsMetrics.txt	9f5f6df116e9ee8a0322a23ed563495d
-results/dna/fusions/VAL2022_T.gene_fuse_fusions.txt	23a64615a7fa080f970084d968f0a4bb
+results/dna/fusions/VAL2022_T.gene_fuse_fusions.txt	3134815819728c33b0fc49f0258304c7
 results/dna/cnv/VAL2022_T.cnv.html	20ef5abc2b8ee12a509ee764b57c2d04
 results/dna/qc/VAL2022_T.alignment_summary_metrics.txt	6c99476824c691ca10e75382ed9bb059
 results/dna/vcf/VAL2022_T.annotated.vcf.gz	87fafc9bed71c439a50daf0f624fadcf
