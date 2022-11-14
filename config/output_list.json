@@ -28,7 +28,7 @@
   "results/rna/id_snps/{sample}_{type}.id_snps.vcf": {"name": "_result_id_snp_vcf", "file": "snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf", "types": ["R"]},
   "results/rna/fusion/{sample}_{type}.star-fusion.fusion_predictions.tsv": {"name": "_result_star_fusion_prediction_tsv", "file": "fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv", "types": ["R"]},
   "bam_rna/{sample}_{type}.star_fusion.bam": {"name": "_result_star_fusion_bam", "file": "fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam", "types": ["R"]},
-  "results/rna/fusion{sample}_{type}.fusioncatcher.fusion_predictions.txt": {"name": "_result_fusioncatcher_prediction_tsv", "file": "fusions/fusioncatcher/{sample}_{type}/final-list_candidate-fusion-genes.hg19.txt", "types": ["R"]},
+  "results/rna/fusion/{sample}_{type}.fusioncatcher.fusion_predictions.txt": {"name": "_result_fusioncatcher_prediction_tsv", "file": "fusions/fusioncatcher/{sample}_{type}/final-list_candidate-fusion-genes.hg19.txt", "types": ["R"]},
   "results/rna/qc/multiqc_RNA.html": {"name": "_result_multiqc_rna_html", "file": "qc/multiqc/multiqc_RNA.html", "types": ["R"]},
   "results/dna/qc/multiqc_DNA.html": {"name": "_result_multiqc_dna_html", "file": "qc/multiqc/multiqc_DNA.html", "types": ["T", "N"]},
   "results/dna/qc/{sample}_{type}.contamination.table": {"name": "_result_contamination_table", "file": "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table" ,"types": ["T", "N"]},

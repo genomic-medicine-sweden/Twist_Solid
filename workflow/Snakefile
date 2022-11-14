@@ -116,7 +116,7 @@ use rule * from snv_indels as snv_indels_*
 
 module annotation:
     snakefile:
-        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.1.2")
+        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.2.0")
     config:
         config
 
@@ -308,7 +308,7 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
 
 module misc:
     snakefile:
-        github("hydra-genetics/misc", path="workflow/Snakefile", tag="f8706d4")
+        github("hydra-genetics/misc", path="workflow/Snakefile", tag="v0.2.0")
     config:
         config
 
