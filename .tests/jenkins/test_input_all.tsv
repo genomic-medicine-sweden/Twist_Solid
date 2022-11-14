@@ -1,7 +1,7 @@
 file	checksum
 results/dna/qc/VAL2022_T.coverage_and_mutations.tsv	cd24d21b8cef3d5fc7e397754e2529c1
-results/dna/fusions/HD827_T.gene_fuse_report.tsv	7f232130ea29ddc82ba2dbaedde19325
-results/dna/fusions/HD832_T.gene_fuse_report.tsv	ffcc1c99d7e189be19247ff8eb4b0b31
+results/dna/fusions/HD827_T.gene_fuse_report.tsv	9ef48a445eaeb8ceb2f15847e142d931
+results/dna/fusions/HD832_T.gene_fuse_report.tsv	9ef48a445eaeb8ceb2f15847e142d931
 results/dna/cnv/HD827_T.cnvkit.scatter.png	784ed27224a9e75cf6d122f134cef2a2
 results/dna/vcf/VAL2022_T.annotated.vcf.gz	87fafc9bed71c439a50daf0f624fadcf
 results/dna/hrd/HD827_T.hrd_score.txt	91fad7c0e1772e400a50b210772614a0
@@ -58,7 +58,7 @@ results/dna/cnv/HD827_T.cnvkit.loh.cns	7fe70d03cf8be7a40abb8a2e9496754d
 results/dna/cnv/HD827_T.manta_tumorSV.vcf.gz	9ec122c334eea78ee29a31df7f63ef5f
 results/dna/tmb/NA12878_T.TMB.txt	4bac7783188c465ae787e322d73e128a
 results/dna/vcf/NA12878_T.annotated.exon_only.filter.hard_filter.codon_snv.vcf	8e322ef671153ed9679d3f220e02c550
-results/dna/fusions/NA12878_T.gene_fuse_report.tsv	7f232130ea29ddc82ba2dbaedde19325
+results/dna/fusions/NA12878_T.gene_fuse_report.tsv	9ef48a445eaeb8ceb2f15847e142d931
 results/dna/qc/VAL2022_T.samtools-stats.txt	fcdedb544ce58edf94d76a0bc36171e3
 results/dna/vcf/HD827_T.annotated.exon_only.filter.hard_filter.vcf	7faa327d5ac8dbca0ec8793eb411fcd5
 results/dna/cnv/HD827_T.cnv_report.tsv	22584b6dbfcaf37751b899408a51f6a5
