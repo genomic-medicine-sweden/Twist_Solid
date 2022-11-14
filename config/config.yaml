@@ -252,7 +252,7 @@ report_fusions:
   star_fusion_low_support_inframe: 6
 
 report_gene_fuse:
-  filter_fusions: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/filter_fusions.csv"
+  filter_fusions: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/filter_fusions_20221114.csv"
   min_unique_reads: 6
 
 samtools_merge_bam:
