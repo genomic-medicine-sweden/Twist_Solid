@@ -42,28 +42,36 @@ def parse_svdb_vcf(vcf_filename):
     cnvs = defaultdict(list)
 
     for variant in vcf:
-        genes = variant.INFO.get("genes", "")
+        if len(variant.INFO.get("Genes", "")) == 0:
+            continue
+        genes = variant.INFO["Genes"].split(",")
+        if len(genes) == 0:
+            continue
+
         variant_type = variant.ALT
 
         assert len(variant_type) == 1
         variant_type = variant_type[0].strip("<>")
-        if variant_type == "COPY_NORMAL":
-            continue
 
         caller = variant.INFO.get("CALLER")
         if "gatk" in caller:
             caller = "gatk"
 
-        cnvs[variant.CHROM].append(
-            {
-                "start": variant.POS,
-                "length": variant.INFO.get("SVLEN"),
-                "type": variant_type,
-                "gene": variant.INFO.get("Genes"),
-                "caller": caller,
-                "cn": variant.INFO.get("CORR_CN"),
-            }
-        )
+        for g in genes:
+            for v in cnvs[g]:
+                if variant.CHROM == v["chromosome"] and variant.INFO.get("SVLEN") == v["length"] and caller == v["caller"]:
+                    break
+            else:
+                cnvs[g].append(
+                    dict(
+                        chromosome=variant.CHROM,
+                        start=variant.POS,
+                        type=variant_type,
+                        length=variant.INFO.get("SVLEN"),
+                        caller=caller,
+                        cn=variant.INFO.get("CORR_CN"),
+                    )
+                )
 
     return cnvs
 
@@ -218,12 +226,48 @@ def merge_chrom_dicts(d1, d2):
     return res
 
 
+def merge_cnvs(unfiltered_cnvs, filtered_cnvs, n_callers=2):
+    cnv_union = defaultdict(list)
+
+    for (cnv_dict, unfiltered_cnv_dict) in zip(filtered_cnvs, unfiltered_cnvs):
+        for g, cnv_list in cnv_dict.items():
+            callers = set([c["caller"] for c in cnv_list])
+            for cnv in cnv_list:
+                cnv_union[cnv["chromosome"]].append(
+                    dict(
+                        gene=g,
+                        start=cnv["start"],
+                        length=cnv["length"],
+                        caller=cnv["caller"],
+                        type=cnv["type"],
+                        cn=cnv["cn"],
+                    )
+                )
+            if len(callers) < n_callers:
+                # Results for at least one caller is missing
+                for raw_cnv in unfiltered_cnv_dict[g]:
+                    if not raw_cnv in cnv_list:
+                        cnv_union[raw_cnv["chromosome"]].append(
+                            dict(
+                                gene=g,
+                                start=raw_cnv["start"],
+                                length=raw_cnv["length"],
+                                caller=raw_cnv["caller"],
+                                type=raw_cnv["type"],
+                                cn=raw_cnv["cn"],
+                            )
+                        )
+
+    return cnv_union
+
+
 def main():
     cnvkit_segments_filename = snakemake.input.cns
     cnvkit_ratios_filename = snakemake.input.cnr
     gatk_segments_filename = snakemake.input.gatk_segments
     gatk_ratios_filename = snakemake.input.gatk_ratios
     svdb_vcfs = snakemake.input.svdb_vcfs
+    svdb_filtered_vcfs = snakemake.input.svdb_filtered_vcfs
     vcf_filename = snakemake.input.germline_vcf
     fai_filename = snakemake.input.fai
     amp_filename = snakemake.input.amp_bed
@@ -245,8 +289,9 @@ def main():
         loh = parse_bed(loh_filename)
     vaf = get_vaf(vcf_filename)
 
-    cnv_lists = map(parse_svdb_vcf, svdb_vcfs)
-    reported_cnvs = functools.reduce(merge_chrom_dicts, cnv_lists)
+    unfiltered_cnvs = list(map(parse_svdb_vcf, svdb_vcfs))
+    filtered_cnvs = list(map(parse_svdb_vcf, svdb_filtered_vcfs))
+    reported_cnvs = merge_cnvs(unfiltered_cnvs, filtered_cnvs)
 
     cnvkit_json = to_json(
         cnvkit_segments,

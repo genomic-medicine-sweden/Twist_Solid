@@ -8,6 +8,7 @@
 
     <style>
         .container {
+            position: relative;
             width: 90%;
             margin: 0 auto;
         }
@@ -125,6 +126,35 @@
             font-family: helvetica, arial, sans-serif;
         }
 
+        .copy-number-tooltip {
+            display: block;
+            position: absolute;
+            pointer-events: none;
+            background-color: white;
+            border: 1px solid black;
+            width: 20em;
+        }
+
+        .copy-number-tooltip.hidden {
+            display: none;
+        }
+
+        .copy-number-tooltip tbody tr:nth-child(2n) {
+            background-color: #F2F7FD;
+        }
+
+        .copy-number-tooltip th:nth-child(1) {
+            width: 25%;
+        }
+
+        .copy-number-tooltip th:nth-child(2) {
+            width: 50%;
+        }
+
+        .copy-number-tooltip th:nth-child(3) {
+            width: 25%;
+        }
+
         table {
             table-layout: fixed;
             width: 100%;
@@ -141,31 +171,31 @@
             text-align: left;
         }
 
-        th:nth-child(1) {
+        #cnv-table th:nth-child(1) {
             width: 5%;
         }
 
-        th:nth-child(2) {
+        #cnv-table th:nth-child(2) {
             width: 15%;
         }
 
-        th:nth-child(3) {
+        #cnv-table th:nth-child(3) {
             width: 15%;
         }
 
-        th:nth-child(4) {
+        #cnv-table th:nth-child(4) {
             width: 15%;
         }
 
-        th:nth-child(5) {
+        #cnv-table th:nth-child(5) {
             width: 20%;
         }
 
-        th:nth-child(6) {
+        #cnv-table th:nth-child(6) {
             width: 20%;
         }
 
-        th:nth-child(7) {
+        #cnv-table th:nth-child(7) {
             width: 10%;
         }
 
@@ -176,6 +206,10 @@
 
         tbody tr:nth-child(2n) {
             background-color: #F5F5F5;
+        }
+
+        tbody tr:hover {
+            background-color: #ADD9FF;
         }
 
         .left {
@@ -244,7 +278,10 @@
             <div class="table-container">
                 <section>
                     <h2>Results table</h2>
-                    <p>Click the magnifying glass to zoom in on the region in question.</p>
+                    <p>
+                        Click the magnifying glass to zoom in on the region in question.
+                        Hover over the copy number to see what results other callers got for this gene.
+                    </p>
                     <table id="cnv-table">
 
                     </table>
@@ -889,7 +926,7 @@
                     case "corrCopyNumber":
                     case "cn":
                         return {
-                            class: "right",
+                            class: "right tooltip-trigger",
                             format: x => {
                                 if (x) {
                                     return x.toLocaleString(
@@ -907,17 +944,59 @@
                             format: x => x,
                         };
 
+                    case "type":
+                        return {
+                            class: "left",
+                            format: x => x,
+                        };
+
                     // Strings
                     case "caller":
                     case "chromosome":
                     case "gene":
-                    case "type":
                     default:
                         return {
                             class: "left",
                             format: x => x,
                         };
                 }
+            }
+
+            const tooltip = d3.select(".container")
+                .append("div")
+                .attr("class", "copy-number-tooltip hidden")
+                .call(d => d.append("table")
+                    .call(t => t.append("thead")
+                        .append("tr")
+                        .selectAll("th")
+                        .data(["caller", "type", "cn"])
+                        .join("th")
+                            .text(d => d))
+                    .call(t => t.append("tbody")));
+
+            const copyNumberTooltip = (data, x, y) => {
+                tooltip
+                    .classed("hidden", false);
+                tooltip
+                    .select("tbody")
+                    .selectAll("tr")
+                    .data(data)
+                    .join("tr")
+                        .selectAll("td")
+                        .data(d => Object.entries(d))
+                        .join("td")
+                            .text(d => getColumnDef(d[0]).format(d[1]));
+            }
+
+            const showCopyNumberTooltip = (e) => {
+                const tableRow = e.target.parentNode.dataset.index;
+                const others = tableData[tableRow].others;
+
+                copyNumberTooltip(others);
+            }
+
+            const hideCopyNumberTooltip = (e) => {
+                tooltip.classed("hidden", true);
             }
 
             const update = dataset => {
@@ -935,9 +1014,20 @@
                     tableData = [{"No data to display": []}];
                 }
 
+                // Find the corresponding copy numbers from the other caller(s)
+                for (cnv of tableData) {
+                    cnv.others = cnvData
+                        .map(d => d.cnvs
+                            .filter(di => cnv.chromosome === d.chromosome && di.caller !== dataset && di.gene === cnv.gene)
+                            .map(v => {
+                                return {caller: v.caller, type: v.type, cn: v.cn};
+                            })
+                        ).flat();
+                }
+
                 tableHeader
                     .selectAll("th")
-                    .data(Object.keys(tableData[0]), d => d)
+                    .data(Object.keys(tableData[0]).filter(k => k !== "others"), d => d)
                     .join("th")
                         .text(d => d)
                         .attr("class", d => getColumnDef(d).class);
@@ -949,11 +1039,12 @@
                         .attr("data-chromosome", d => d.chromosome)
                         .attr("data-start", d => d.start)
                         .attr("data-length", d => d.length)
+                        .attr("data-index", (_, i) => i)
                         .selectAll("td")
-                        .data(d => Object.entries(d))
+                        .data(d => Object.entries(d).filter(([k, _]) => k !== "others"))
                         .join("td")
                             .text(([key, value]) => getColumnDef(key).format(value))
-                            .attr("class", ([key, value]) => getColumnDef(key).class);
+                            .attr("class", ([key, _]) => getColumnDef(key).class);
 
                 tableBody.selectAll(".view-region-link")
                     .on("click", e => {
@@ -963,6 +1054,18 @@
                             Number(dataset.start),
                             Number(dataset.start) + Number(dataset.length)
                         );
+                    });
+
+                tableBody.selectAll(".tooltip-trigger")
+                    .on("mouseenter", showCopyNumberTooltip)
+                    .on("mouseout", hideCopyNumberTooltip)
+                    .on("mousemove", e => {
+                        const dims = tooltip.node().getBoundingClientRect();
+                        const offset = d3.select(".container").node().getBoundingClientRect().y;
+                        const maxHeight = document.documentElement.clientHeight - offset - dims.height;
+                        tooltip
+                            .style("top", `${Math.min(e.layerY, maxHeight)}px`)
+                            .style("left", `${e.layerX - dims.width - 20}px`);
                     });
             }
 

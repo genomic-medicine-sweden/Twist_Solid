@@ -9,10 +9,18 @@ rule cnv_json:
         fai=config.get("reference").get("fai"),
         loh_bed=config.get("annotate_cnv", {}).get("cnv_loh_genes", []),
         svdb_vcfs=[
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz",
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_loh_genes.vcf.gz",
+        ],
+        svdb_tbis=[
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz.tbi",
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_loh_genes.vcf.gz.tbi",
+        ],
+        svdb_filtered_vcfs=[
             "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf.gz",
             "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_loh_genes.filter.cnv_hard_filter_loh.vcf.gz",
         ],
-        svdb_tbis=[
+        svdb_filtered_tbis=[
             "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf.gz.tbi",
             "cnv_sv/svdb_query/{sample}_{type}.svdb_query.annotate_cnv.cnv_loh_genes.filter.cnv_hard_filter_loh.vcf.gz.tbi",
         ],
