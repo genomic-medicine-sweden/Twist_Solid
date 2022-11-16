@@ -5,6 +5,8 @@ properties:
   default_container:
     type: string
     description: name or path to a default docker/singularity container
+    pattern: >-
+        hydragenetics/common:0\.1\.9$
 
   bcbio_variation_recall_ensemble:
     type: object
@@ -72,17 +74,6 @@ properties:
     required:
       - container
 
-  config_manta_t:
-    type: object
-    properties:
-      container:
-        type: string
-        description: name or path to a default docker/singularity container
-        pattern: >-
-            hydragenetics/manta:1\.6\.0$
-    required:
-      - container
-
   fastp_pe:
     type: object
     properties:
@@ -115,8 +106,8 @@ properties:
             hydragenetics/fusioncatcher:1\.33$
       required:
         - container
-    
-  gatk_cnv_call_copy_ratio_segments:
+
+  gatk_calculate_contamination:
     type: object
     properties:
       container:
@@ -127,7 +118,7 @@ properties:
       required:
         - container
 
-  gatk_cnv_collect_allelic_counts:
+  gatk_call_copy_ratio_segments:
     type: object
     properties:
       container:
@@ -138,7 +129,7 @@ properties:
       required:
         - container
 
-  gatk_cnv_collect_read_counts:
+  gatk_collect_allelic_counts:
     type: object
     properties:
       container:
@@ -149,7 +140,7 @@ properties:
       required:
         - container
 
-  gatk_cnv_denoise_read_counts:
+  gatk_collect_read_counts:
     type: object
     properties:
       container:
@@ -160,7 +151,29 @@ properties:
       required:
         - container
 
-  gatk_cnv_model_segments:
+  gatk_denoise_read_counts:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$
+      required:
+        - container
+
+  gatk_model_segments:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$
+      required:
+        - container
+
+  gatk_get_pileup_summaries:
     type: object
     properties:
       container:
@@ -181,6 +194,17 @@ properties:
             hydragenetics/genefuse:0\.6\.1$
       required:
         - container
+
+  manta_config_t:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/manta:1\.6\.0$
+    required:
+      - container
 
   manta_run_workflow_t:
     type: object
@@ -313,7 +337,7 @@ properties:
             hydragenetics/picard:2\.25\.0$
       required:
         - container
-        
+
   star_fusion:
     type: object
     properties:
@@ -399,16 +423,16 @@ required:
   - cnvkit_call
   - cnvkit_diagram
   - cnvkit_scatter
-  - config_manta_t
   - fastp_pe
   - fastqc
   - fusioncatcher
-  - gatk_cnv_call_copy_ratio_segments
-  - gatk_cnv_collect_allelic_counts
-  - gatk_cnv_collect_read_counts
-  - gatk_cnv_denoise_read_counts
-  - gatk_cnv_model_segments
+  - gatk_call_copy_ratio_segments
+  - gatk_collect_allelic_counts
+  - gatk_collect_read_counts
+  - gatk_denoise_read_counts
+  - gatk_model_segments
   - gene_fuse
+  - manta_config_t
   - manta_run_workflow_t
   - mosdepth_bed
   - msisensor_pro

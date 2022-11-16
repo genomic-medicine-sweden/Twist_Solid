@@ -1,8 +1,9 @@
 samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
+output: ".././../config/output_list.json"
 
-default_container: "docker://hydragenetics/common:0.1.5"
+default_container: "docker://hydragenetics/common:0.1.9"
 
 annotate_cnv:
   cnv_amp_genes: "reference/cnv_amp_genes.bed"
@@ -55,21 +56,29 @@ bcftools_id_snps:
   snps_bed: "DATA/ID_SNPs.bed"
 
 cnvkit_batch:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
   normal_reference: "DATA/design.PoN.cnn"
   method: "hybrid"
 
+cnvkit_batch_hrd:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+  normal_reference_hrd: "DATA/design.PoN.cnn"
+  method: "hybrid"
+
 cnvkit_call:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnvkit_diagram:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
+cnv_html_report:
+  template: "../../config/cnv_report_template.html"
 
 cnvkit_scatter:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 config_manta_t:
-  container: "docker://marrip/manta:v1.6.0"
+  container: "docker://hydragenetics/manta:1.6.0"
 
 exon_skipping:
   design_bed: "reference/Twist_RNA_Design5.annotated.bed"
@@ -94,22 +103,30 @@ fusioncatcher:
   container: "docker://hydragenetics/fusioncatcher:1.33"
   genome_path: "reference/human_v102/"
 
-gatk_cnv_call_copy_ratio_segments:
-  container: "docker://gmsuppsala/somatic:develop"
+gatk_calculate_contamination:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
 
-gatk_cnv_collect_allelic_counts:
-  container: "docker://gmsuppsala/somatic:develop"
+gatk_call_copy_ratio_segments:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_collect_allelic_counts:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
   SNP_interval: "DATA/gnomad_SNP_0.001_target.annotated.interval_list"
 
-gatk_cnv_collect_read_counts:
-  container: "docker://gmsuppsala/somatic:develop"
+gatk_collect_read_counts:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
 
-gatk_cnv_denoise_read_counts:
+gatk_denoise_read_counts:
   container: "docker://gmsuppsala/somatic:develop"
   normal_reference: "DATA/gatk_cnv_nextseq_36.hdf5"
 
-gatk_cnv_model_segments:
-  container: "docker://gmsuppsala/somatic:develop"
+gatk_model_segments:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_get_pileup_summaries:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+  sites: "DATA/chr1_small_exac_common_3.hg19.vcf"
+  variants: "DATA/chr1_small_exac_common_3.hg19.vcf"
 
 gatk_mutect2:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
@@ -148,7 +165,7 @@ hotspot_report:
     - [0, "low", "not analyzable"]
 
 manta_run_workflow_t:
-  container: "docker://marrip/manta:v1.6.0"
+  container: "docker://hydragenetics/manta:1.6.0"
 
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"
@@ -235,7 +252,13 @@ report_fusions:
   star_fusion_low_support_inframe: 6
 
 report_gene_fuse:
+  filter_fusions: "reference/filter_fusions.csv"
   min_unique_reads: 6
+
+scarhrd:
+  container: "docker://hydragenetics/scarhrd:20200825"
+  reference_name: "grch37"
+  seqz: FALSE
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
@@ -250,7 +273,7 @@ svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
   cnv_callers:
     - "cnvkit"
-    - "gatk_cnv"
+    - "gatk"
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.6.0"

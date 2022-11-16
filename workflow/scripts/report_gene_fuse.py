@@ -1,12 +1,23 @@
 
 fusions = open(snakemake.input.fusions)
+filter_fusions = open(snakemake.params.filter_fusions)
 report = open(snakemake.output.report, "w")
 min_unique_reads = snakemake.params.min_unique_reads
 
 report.write("Gene1\tGene2\tNr_unique_reads\tGene_region1\tBreak_point1\tTranscript1\tGene_region2\tBreak_point2\tTranscript2\n")
 
-FP_gene_pairs = ["NPM1_ALK", "CLTC_NTRK3", "MASH2_ALK"]
-Noisy_genes_pairs = {"LMNA_EZR": 7, "ABL1_STRN": 7, "EZR_ALK": 8, "RSPO2_BRAF": 8, "MASH2_HIP1": 7}
+FP_gene_pairs = []
+Noisy_genes_pairs = {}
+
+for line in filter_fusions:
+    columns = line.strip().split("\t")
+    fusion = columns[0]
+    reads = int(columns[1])
+    if reads == 0:
+        FP_gene_pairs.append(fusion)
+    else:
+        Noisy_genes_pairs[fusion] = reads
+
 
 for line in fusions:
     if line[:8] != "#Fusion:":

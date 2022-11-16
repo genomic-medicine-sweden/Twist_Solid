@@ -4,7 +4,8 @@ units: "units.tsv"
 
 #hydra_local_path: "PATH_TO_REPO"
 
-default_container: "docker://hydragenetics/common:0.1.8"
+output: "config/output_list.json"
+default_container: "docker://hydragenetics/common:0.1.9"
 
 trimmer_software: "fastp_pe"
 
@@ -15,8 +16,8 @@ reference:
   fasta_rna: "/data/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
   dict: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
   fai: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fai"
-  design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed"
-  design_intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.Exon_only.interval_list"
+  design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.210608.bed"
+  design_intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.interval_list"
   design_intervals_gatk_cnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
   design_bed_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"
   design_intervals_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.interval_list"
@@ -52,8 +53,7 @@ bcbio_variation_recall_ensemble:
     - gatk_mutect2
 
 bcftools_filter_include_region:
-  nocnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.noCNV.210608.bed"
-  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.210608.bed"
+  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.bed"
 
 bcftools_id_snps:
   snps_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/ID_SNPs.bed"
@@ -67,11 +67,16 @@ bwa_mem:
   sa: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.sa"
 
 bwa_mem_merge:
-  extra: "-c"
+  extra: "-c -p"
 
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_nextseq_36.cnn"
+  method: "hybrid"
+
+cnvkit_batch_hrd:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+  normal_reference_hrd: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_nextseq_27_HRD.cnn"
   method: "hybrid"
 
 cnvkit_call:
@@ -80,15 +85,15 @@ cnvkit_call:
 cnvkit_diagram:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
+cnv_html_report:
+  template: "config/cnv_report_template.html"
+
 cnvkit_scatter:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
-config_manta_t:
-  container: "docker://hydragenetics/manta:1.6.0"
-
 cnv_tsv_report:
   del_1p19q_cn_limit: 1.4
-  del_1p19q_chr_arm_fraction: 0.5
+  del_1p19q_chr_arm_fraction: 0.3
 
 exon_skipping:
   design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"
@@ -110,25 +115,32 @@ filter_vcf:
 
 fusioncatcher:
   container: "docker://hydragenetics/fusioncatcher:1.33"
-  #container: "docker://hydragenetics/fusioncatcher:1.33"
   genome_path: "/data/ref_data/fusioncatcher/human_v102/human_v102/"
 
-gatk_cnv_call_copy_ratio_segments:
+gatk_calculate_contamination:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
-gatk_cnv_collect_allelic_counts:
+gatk_call_copy_ratio_segments:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_collect_allelic_counts:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
   SNP_interval: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/gnomad_SNP_0.001_target.annotated.interval_list"
 
-gatk_cnv_collect_read_counts:
+gatk_collect_read_counts:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
-gatk_cnv_denoise_read_counts:
+gatk_denoise_read_counts:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/gatk_cnv_nextseq_36.hdf5"
 
-gatk_cnv_model_segments:
+gatk_model_segments:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_get_pileup_summaries:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+  sites: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf.gz"
+  variants: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf.gz"
 
 gatk_mutect2:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
@@ -144,7 +156,7 @@ gatk_mutect2_merge_stats:
 
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
-  genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion_w_pool2.hg19.csv"
+  genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion_w_pool2.hg19.221109.csv"
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
 
 hotspot_annotation:
@@ -159,9 +171,13 @@ hotspot_report:
   report_config: "config/hotspot_report.yaml"
   chr_translation_file: "config/hotspot_report.chr.translation.hg19"
   levels:
-    - [300, "ok", "yes"]
+    - [200, "ok", "yes"]
     - [30, "low", "yes"]
     - [0, "low", "not analyzable"]
+
+manta_config_t:
+  container: "docker://hydragenetics/manta:1.6.0"
+  extra: "--exome --callRegions /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz"
 
 manta_run_workflow_t:
   container: "docker://hydragenetics/manta:1.6.0"
@@ -191,6 +207,7 @@ multiqc:
         - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
         - "qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt"
         - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
+        - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
     RNA:
       config: "config/multiqc_config_rna.yaml"
       included_unit_types: ["R"]
@@ -238,10 +255,16 @@ report_fusions:
   star_fusion_low_support_inframe: 6
 
 report_gene_fuse:
+  filter_fusions: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/filter_fusions_20221114.csv"
   min_unique_reads: 6
 
 samtools_merge_bam:
-  extra: "-c"
+  extra: "-c -p"
+
+scarhrd:
+  container: "docker://hydragenetics/scarhrd:20200825"
+  reference_name: "grch37"
+  seqz: FALSE
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
@@ -257,7 +280,7 @@ svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
   cnv_callers:
     - "cnvkit"
-    - "gatk_cnv"
+    - "gatk"
   extra: "--pass_only" #Just merge the two vcf-files without merging regions
 
 svdb_query:

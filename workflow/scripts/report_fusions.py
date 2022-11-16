@@ -101,7 +101,7 @@ for line in input_arriba:
         for region in annotation_genes[gene2]:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
-    output_fusions.write(f"Arriba\t{gene1}\t{gene}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}")
+    output_fusions.write(f"Arriba\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}")
     output_fusions.write(f"\t{breakpoint2}\t{coverage1}\t{coverage2}\t{total_split_reads}\t{discordant_mates}\n")
 
 

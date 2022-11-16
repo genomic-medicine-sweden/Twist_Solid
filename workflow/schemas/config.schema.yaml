@@ -11,6 +11,9 @@ properties:
   resources:
     type: string
     description: Path to resources.yaml file
+  output:
+    type: string
+    description: json file with information about which files should be saved and where
   default_container:
     type: string
     description: name or path to a default docker/singularity container
@@ -65,6 +68,27 @@ properties:
     required:
       - normal_reference
 
+  cnvkit_batch_hrd:
+    type: object
+    properties:
+      method:
+        type: string
+        description: One of three methods (wgs, amplicon, hybrid) to use for cnvkit_batch_hrd
+      normal_reference_hrd:
+        type: string
+        description: path to normal reference panel for cnvkit_batch_hrd
+    required:
+      - normal_reference_hrd
+
+  cnv_html_report:
+    type: object
+    properties:
+      template:
+        type: string
+        description: path to HTML report template
+    required:
+      - template
+
   exon_skipping:
     type: object
     properties:
@@ -92,7 +116,6 @@ properties:
     required:
       - germline
 
-
   filter_cnv:
       type: object
       properties:
@@ -100,7 +123,21 @@ properties:
           type: string
           description: Gene annotated bed files with genes to be included.
 
-  gatk_cnv_collect_allelic_counts:
+  gatk_calculate_contamination:
+    type: object
+    description: parameters for gatk_calculate_contamination
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  gatk_collect_allelic_counts:
     type: object
     properties:
       SNP_interval:
@@ -109,7 +146,7 @@ properties:
     required:
       - SNP_interval
 
-  gatk_cnv_denoise_read_counts:
+  gatk_denoise_read_counts:
     type: object
     properties:
       normal_reference:
@@ -117,6 +154,26 @@ properties:
         description: path to normal reference panel for gatk DenoiseReadCounts
     required:
       - normal_reference
+
+  gatk_get_pileup_summaries:
+    type: object
+    description: parameters for gatk_get_pileup_summaries
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      sites:
+        type: string
+        description: sites to pileup (eg small_exac_common.vcf from GnomAD)
+      variants:
+        type: string
+        description: varaints to pileup (eg small_exac_common.vcf from GnomAD, usually same as sites)
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   gene_fuse:
     type: object
@@ -296,9 +353,14 @@ properties:
     description: report results from genefuse
     type: object
     properties:
+      filter_fusions:
+        type: string
+        description: file specifying fusions that should be filtered completely (0 in column 2) or have higher limit (>0 in column 2)
       min_unique_reads:
         type: integer
         description: lower limit of uniquely supporting reads to report fusion
+      required:
+        - min_unique_reads
 
   trimmer_software:
     description: trimmer software that should be used
@@ -318,12 +380,14 @@ required:
   - samples
   - units
   - resources
+  - output
   - default_container
   - bcbio_variation_recall_ensemble
   - cnvkit_batch
+  - cnv_html_report
   - filter_vcf
-  - gatk_cnv_collect_allelic_counts
-  - gatk_cnv_denoise_read_counts
+  - gatk_collect_allelic_counts
+  - gatk_denoise_read_counts
   - gene_fuse
   - hotspot_annotation
   - hotspot_info
