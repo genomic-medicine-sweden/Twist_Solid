@@ -27,11 +27,11 @@ rule hotspot_info:
         "qc/hotspot_info/{sample}_{type}.log",
     threads: config.get("hotspot_info", {}).get("threads", config["default_resources"]["threads"])
     resources:
+        threads=config.get("hotspot_info", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("hotspot_info", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("hotspot_info", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("hotspot_info", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("hotspot_info", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("hotspot_info", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("hotspot_info", {}).get("time", config["default_resources"]["time"]),
     benchmark:
         repeat(
             "qc/hotspot_info/{sample}_{type}.fastq.gz.fastp_trimming.benchmark.tsv",
