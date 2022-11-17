@@ -116,7 +116,7 @@ use rule * from snv_indels as snv_indels_*
 
 module annotation:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="d73f84c")
+        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.2.0")
     config:
         config
 
