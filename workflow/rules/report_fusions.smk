@@ -28,11 +28,11 @@ rule report_fusions:
         "qc/report_fusions/{sample}_{type}.fusion_report.tsv.log",
     threads: config.get("report_fusions", {}).get("threads", config["default_resources"]["threads"])
     resources:
+        threads=config.get("report_fusions", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("report_fusions", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("report_fusions", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("report_fusions", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("report_fusions", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("report_fusions", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("report_fusions", {}).get("time", config["default_resources"]["time"]),
     benchmark:
         repeat(
             "qc/report_fusions/{sample}_{type}.fusion_report.tsv.benchmark.tsv",
