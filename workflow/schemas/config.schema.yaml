@@ -11,16 +11,390 @@ properties:
   resources:
     type: string
     description: Path to resources.yaml file
-  trimmer_software:
+  output:
     type: string
-  alignment_software:
-    type: string
+    description: json file with information about which files should be saved and where
   default_container:
     type: string
     description: name or path to a default docker/singularity container
 
-  required:
-    - samples
-    - units
-    - resources
-    - default_container
+  bcbio_variation_recall_ensemble:
+    type: object
+    properties:
+      callers:
+        type: array
+        description: list of callers that are included in the ensemble vcf in sort order
+        items:
+          type: string
+      sort_order:
+        type: string
+        description: sort order
+
+  bcftools_id_snps:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for msisensor_pro
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      snps_bed:
+        type: string
+        description: path to bed file the id SNPs
+
+  cnv_tsv_report:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      del_1p19q_cn_limit:
+        type: number
+        description: Upper limit of copy number to be included in calculation of del_1p19q_chr_arm_fraction
+      del_1p19q_chr_arm_fraction:
+        type: number
+        description: Fraction of the chromosome arms that needs to be deleted
+
+  cnvkit_batch:
+    type: object
+    properties:
+      method:
+        type: string
+        description: One of three methods (wgs, amplicon, hybrid) to use for cnvkit_batch
+      normal_reference:
+        type: string
+        description: path to normal reference panel for cnvkit_batch
+    required:
+      - normal_reference
+
+  cnvkit_batch_hrd:
+    type: object
+    properties:
+      method:
+        type: string
+        description: One of three methods (wgs, amplicon, hybrid) to use for cnvkit_batch_hrd
+      normal_reference_hrd:
+        type: string
+        description: path to normal reference panel for cnvkit_batch_hrd
+    required:
+      - normal_reference_hrd
+
+  cnv_html_report:
+    type: object
+    properties:
+      template:
+        type: string
+        description: path to HTML report template
+    required:
+      - template
+
+  exon_skipping:
+    type: object
+    properties:
+      design_bed:
+        type: string
+        description: path to design bed file
+    required:
+      - design_bed
+
+  filter_vcf:
+    type: object
+    properties:
+      snv_soft_filter:
+        type: string
+        description: Config file specifying which soft filters should be applied on snv_indels.
+      snv_hard_filter:
+        type: string
+        description: Config file specifying which hard filters should be applied on snv_indels.
+      cnv_hard_filter_amp:
+        type: string
+        description: Config file specifying which hard filters should be applied on cnvs with amplifications.
+      germline:
+        type: string
+        description: Config file specifying which hard filters should be applied to obtain a germline vcf.
+    required:
+      - germline
+
+  filter_cnv:
+      type: object
+      properties:
+        cnv_amp_genes:
+          type: string
+          description: Gene annotated bed files with genes to be included.
+
+  gatk_calculate_contamination:
+    type: object
+    description: parameters for gatk_calculate_contamination
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  gatk_collect_allelic_counts:
+    type: object
+    properties:
+      SNP_interval:
+        type: string
+        description: picard interval file for the germline SNPs
+    required:
+      - SNP_interval
+
+  gatk_denoise_read_counts:
+    type: object
+    properties:
+      normal_reference:
+        type: string
+        description: path to normal reference panel for gatk DenoiseReadCounts
+    required:
+      - normal_reference
+
+  gatk_get_pileup_summaries:
+    type: object
+    description: parameters for gatk_get_pileup_summaries
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      sites:
+        type: string
+        description: sites to pileup (eg small_exac_common.vcf from GnomAD)
+      variants:
+        type: string
+        description: varaints to pileup (eg small_exac_common.vcf from GnomAD, usually same as sites)
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  gene_fuse:
+    type: object
+    properties:
+      genes:
+        type: string
+        description: path to gene files used by gene_fuse
+      required:
+        - genes
+
+  house_keeping_gene_coverage:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for hotspot_annotation
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  hotspot_annotation:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for hotspot_annotation
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      hotspots:
+        type: string
+        description: Hotspot file
+      chr_translation_file:
+        type: string
+        description: Chromosome translation file (NCXXXX to chrXX)
+    required:
+      - hotspots
+
+  hotspot_report:
+    type: object
+    properties:
+      hotspot_mutations:
+        type: string
+        description: path for file with hotspot definitions
+      report_config:
+        type: string
+        description: path for file with defining which field should be extracted from annotation
+      chr_translation_file:
+        type: string
+        description: file used to translate chr to NC id. Format, a tab seperate file with column chr and NC
+      levels:
+        type: array
+        items:
+          type: array
+          items:
+            - type: number
+              description: depth above this value
+            - type: "string"
+              description: depth level status, ex ok or low
+            - type: "string"
+              description: depth status ok, not analyzable
+          additionalItems: false
+          minItems: 3
+          maxItems: 3
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for msisensor_pro
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to msisensor_pro
+    required:
+      - hotspot_mutations
+      - report_config
+      - chr_translation_file
+      - levels
+
+  hydra_local_path:
+    type: string
+    description: path to a folder that contains hydra-genetics modules. Setting this variable will make the pipeline use local git repos instead of the once located on github.
+
+  msisensor_pro:
+    type: object
+    properties:
+      PoN:
+        type: string
+        description: path to panel of normals
+    required:
+      - PoN
+
+  multiqc:
+    type: object
+    properties:
+      reports:
+        type: object
+    required:
+      - reports
+
+  reference:
+    type: object
+    description: reference files
+    properties:
+      artifacts:
+        type: string
+        description: artifact file
+      background:
+        type: string
+        description: background file
+      design_bed:
+        type: string
+        description: path to panel design bed file
+      design_intervals_gatk_cnv:
+        type: string
+        description: path to the preprocessed design interval file (generated by gatk_cnv_panel_of_normal rules in the references module)
+      design_intervals:
+        type: string
+        description: picard style bed file for design regions
+      fasta:
+        type: string
+        description: fasta reference file
+      dict:
+        type: string
+        description: fasta reference dict file
+      fai:
+        type: string
+        description: fasta reference fai file
+      skip_chrs:
+        type: array
+        items:
+            type: string
+        description: list of chromosomes that should be skipped, used when determining which chr bam files will be merged
+    required:
+      - artifacts
+      - background
+      - fasta
+      - fai
+      - design_bed
+      - design_intervals_gatk_cnv
+      - design_intervals
+      - dict
+
+  report_fusions:
+    description: gather results from different fusion callers into one report
+    type: object
+    properties:
+      annotation_bed:
+        type: string
+        description: extra bed for annotation of partner gene exons
+      fusioncather_flag_low_support:
+        type: integer
+        description: lower limit of supporting reads to flag for low support
+      fusioncather_low_support:
+        type: integer
+        description: lower limit of supporting reads to filter fusion
+      fusioncather_low_support_fp_genes:
+        type: integer
+        description: lower limit of supporting reads to filter fusion in common fp genes
+      fusioncather_low_support_inframe:
+        type: integer
+        description: lower limit of supporting reads to filter fusion that are inframe
+      star_fusion_flag_low_support:
+        type: integer
+        description: lower limit of supporting reads to filter fusion
+      star_fusion_low_support:
+        type: integer
+        description: lower limit of supporting reads to filter fusion
+      star_fusion_low_support_fp_genes:
+        type: integer
+        description: lower limit of supporting reads to flag filter fusion in common fp genes
+      star_fusion_low_support_inframe:
+        type: integer
+        description: lower limit of supporting reads to flag filter fusion that are inframe
+
+  report_gene_fuse:
+    description: report results from genefuse
+    type: object
+    properties:
+      filter_fusions:
+        type: string
+        description: file specifying fusions that should be filtered completely (0 in column 2) or have higher limit (>0 in column 2)
+      min_unique_reads:
+        type: integer
+        description: lower limit of uniquely supporting reads to report fusion
+      required:
+        - min_unique_reads
+
+  trimmer_software:
+    description: trimmer software that should be used
+    pattern: "^(fastp_pe|None)$"
+    type: string
+
+  vep:
+    type: object
+    properties:
+      vep_cache:
+        type: string
+        description: path to vep cache directory
+      required:
+        - vep_cache
+
+required:
+  - samples
+  - units
+  - resources
+  - output
+  - default_container
+  - bcbio_variation_recall_ensemble
+  - cnvkit_batch
+  - cnv_html_report
+  - filter_vcf
+  - gatk_collect_allelic_counts
+  - gatk_denoise_read_counts
+  - gene_fuse
+  - hotspot_annotation
+  - hotspot_info
+  - hotspot_report
+  - msisensor_pro
+  - multiqc
+  - reference
+  - report_gene_fuse
+  - trimmer_software
+  - vep

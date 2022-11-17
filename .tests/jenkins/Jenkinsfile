@@ -1,0 +1,90 @@
+def isPullRequest = false
+
+pipeline {
+  agent { label 'marvin-clone' }
+  stages {
+    stage('First stage') {
+      steps {
+        script {
+          isPullRequest = env.CHANGE_ID != null
+        }
+        sh 'printenv'
+      }
+    }
+    stage('VAL2022') {
+      when {
+          anyOf {
+                 expression { isPullRequest == false && env.BRANCH_NAME == 'develop' }
+          }
+      }
+      steps {
+        sshagent(['jenkins']) {
+          sh '''#!/bin/bash
+                virtualenv venv -p python3.8
+                source venv/bin/activate
+                pip install -r requirements.txt
+                mkdir -p VAL2022/slurm_out
+                cp -r config VAL2022/
+                cp .tests/jenkins/units_VAL2022.tsv VAL2022/units.tsv
+                cp .tests/jenkins/samples_VAL2022.tsv VAL2022/samples.tsv
+                cp .tests/jenkins/resources.yaml VAL2022/config/resources.yaml
+                cp .tests/jenkins/test_input_VAL2022.tsv VAL2022/test_input.tsv
+
+                module load singularity
+                module load slurm-drmaa
+                cd VAL2022
+                snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfile config/config.yaml -w 60
+                git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
+                module load nextflow
+                nextflow run validation_workflow/validate_result.nf
+             '''
+         }
+       }
+    }
+    stage('ALL') {
+      when {
+          anyOf {
+                 expression { isPullRequest == false && env.BRANCH_NAME == 'master' }
+          }
+      }
+      steps {
+        sshagent(['jenkins']) {
+          sh '''#!/bin/bash
+              virtualenv venv -p python3.8
+              source venv/bin/activate
+              pip install -r requirements.txt
+              mkdir -p ALL/slurm_out
+              cp -r config ALL/
+              cp .tests/jenkins/units_all.tsv ALL/units.tsv
+              cp .tests/jenkins/samples_all.tsv ALL/samples.tsv
+              cp .tests/jenkins/resources.yaml ALL/config/resources.yaml
+              cp .tests/jenkins/test_input_all.tsv ALL/test_input.tsv
+
+              module load singularity
+              module load slurm-drmaa
+              cd ALL
+              snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfile config/config.yaml -w 60
+              git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
+              module load nextflow
+              nextflow run validation_workflow/validate_result.nf
+             '''
+         }
+       }
+    }
+  }
+  post {
+    always {
+      cleanWs(cleanWhenSuccess: true, cleanWhenFailure: false)
+
+      dir("${env.WORKSPACE}@tmp") {
+        deleteDir()
+      }
+      dir("${env.WORKSPACE}@script") {
+        deleteDir()
+      }
+      dir("${env.WORKSPACE}@script@tmp") {
+        deleteDir()
+      }
+    }
+  }
+}

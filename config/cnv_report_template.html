@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=1080, initial-scale=1.0">
+    <title>CNV report</title>
+
+    <style>
+        body {
+            font-family: helvetica, arial, sans-serif;
+        }
+
+        table {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.6rem 0.5rem 0.1rem 0.5rem;
+        }
+
+        th {
+            border-bottom: 1px solid #333;
+            text-align: left;
+        }
+
+        th:nth-child(1) {
+            width: 5%;
+        }
+
+        th:nth-child(2) {
+            width: 15%;
+        }
+
+        th:nth-child(3) {
+            width: 15%;
+        }
+
+        th:nth-child(4) {
+            width: 15%;
+        }
+
+        th:nth-child(5) {
+            width: 20%;
+        }
+
+        th:nth-child(6) {
+            width: 20%;
+        }
+
+        th:nth-child(7) {
+            width: 10%;
+        }
+
+        thead {
+            background-color: #DDD;
+            border-bottom: 1px solid #333;
+        }
+
+        tbody tr:nth-child(2n) {
+            background-color: #F5F5F5;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .view-region-link {
+            cursor: pointer;
+        }
+
+        .panel-overlay {
+            stroke-width: 0;
+        }
+
+        .panel-overlay.selected {
+            stroke-width: 6;
+        }
+    </style>
+</head>
+<body>
+    <h1>CNV report</h1>
+
+    <fieldset>
+        <legend>CNV dataset</legend>
+
+        <div>
+            <input type="radio" id="dataset-cnvkit" name="dataset" value="cnvkit" checked>
+            <label for="dataset-cnvkit">cnvkit</label>
+        </div>
+
+        <div>
+            <input type="radio" id="dataset-gatk" name="dataset" value="gatk">
+            <label for="dataset-gatk">GATK</label>
+        </div>
+    </fieldset>
+
+    <section>
+        <h2>Genome view</h2>
+        <p>Click a chromosome to visualise it below.</p>
+        <svg id="genome-view"></svg>
+    </section>
+
+    <section>
+        <h2>Chromosome view</h2>
+        <p>Click and drag to zoom. Click the plot to reset zoom.</p>
+        <svg id="chromosome-view"></svg>
+    </section>
+
+    <section>
+        <h2>Results table</h2>
+        <table id="cnv-table">
+
+        </table>
+    </section>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        const cnvData = {{ json }}
+
+        const getTextDimensions = function(text, fontSize) {
+            let div = document.createElement("div");
+
+            div.innerText = text;
+            div.style.position = "absolute";
+            div.style.float = "left";
+            div.style.fontSize = fontSize;
+            div.style.whiteSpace = "nowrap";
+            div.style.visibility = "hidden";
+
+            document.body.append(div);
+            let width = div.clientWidth;
+            let height = div.clientHeight;
+            div.remove();
+
+            return [width, height];
+        }
+
+        const getActiveDataset = () => {
+            return d3.select("input[name=dataset]:checked").node().value;
+        }
+
+        const plotChromosomeView = function(plotData, activeDataset) {
+            let data = plotData;
+            const height = 400;
+            const width = 800;
+            const margin = {
+                top: 10,
+                right: 30,
+                bottom: 40,
+                left: 50,
+                between: 40,
+            };
+            const plotHeight = (height - margin.top - margin.between - margin.bottom) / 2;
+
+            const xScale = d3.scaleLinear()
+                .domain([0, data.length])
+                .range([0, width-margin.left-margin.right]);
+
+            const yScale = d3.scaleLinear()
+                .domain(d3.extent(data[`${activeDataset}_ratios`], d => d.log2))
+                .range([plotHeight, 0]);
+
+            const yScaleVAF = d3.scaleLinear()
+                .domain([0, 1])
+                .range([plotHeight, 0])
+
+            const xAxis = g => g
+                .call(d3.axisBottom(xScale).ticks(5));
+
+            const yAxis = g => g
+                .call(d3.axisLeft(yScale).ticks(4));
+
+            const yAxisVAF = g => g
+                .call(d3.axisLeft(yScaleVAF).ticks(5))
+
+            const svg = d3.select("#chromosome-view")
+                .attr("preserveAspectRatio", "xMinYMin meet")
+                .attr("viewBox", [0, 0, width, height])
+                .attr("style", "max-width: 100%; height: auto; max-height: 500px; height: intrinsic;");
+
+            // Clip path for plot area
+            svg.append("clipPath")
+                .attr("id", "plot-area-clip")
+                .append("rect")
+                .attr("width", width - margin.left - margin.right)
+                .attr("height", height - margin.top - margin.bottom);
+
+            const plotArea = svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`)
+                .attr("class", "plot-area")
+                .attr("clip-path", "url(#plot-area-clip)");
+
+            const lrArea = plotArea.append("g")
+                .attr("id", "lr-plot");
+            const vafArea = plotArea.append("g")
+                .attr("id", "vaf-plot")
+                .attr("transform", `translate(0, ${plotHeight + margin.between})`)
+
+            const regions = lrArea.append("g")
+                .attr("class", "regions");
+
+            const segments = lrArea.append("g")
+                .attr("class", "segments");
+
+            const plotRegions = function(regionData) {
+                regions.selectAll(".point")
+                    .data(regionData, d => [d.start, d.end, d.log2])
+                    .join(
+                        enter => enter
+                            .append("circle")
+                            .attr("class", "point")
+                            .attr("cx", d => xScale(d.start))
+                            .attr("cy", d => yScale(d.log2))
+                            .attr("r", 2)
+                            .attr("fill", "#333")
+                            .attr("fill-opacity", 0)
+                            .call(enter => enter.transition()
+                                .duration(500)
+                                .attr("fill-opacity", 0.3)
+                            ),
+                        update => update
+                            .attr("fill-opacity", 0.3)
+                            .call(update => update.transition()
+                                .attr("cx", d => xScale(d.start))
+                            ),
+                        exit => exit.transition()
+                            .attr("fill-opacity", 0)
+                            .remove()
+                    );
+            }
+
+            const plotSegments = function(segmentData) {
+                segments.selectAll(".segment")
+                    .data(segmentData, d => [d.start, d.end])
+                    .join(
+                        enter => enter
+                            .append("path")
+                            .attr("class", "segment")
+                            .attr("d", d =>
+                                `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`)
+                            .attr("stroke", "orange")
+                            .attr("stroke-width", 2)
+                            .attr("stroke-opacity", 0)
+                            .call(enter => enter.transition()
+                                .attr("stroke-opacity", 1)
+                            ),
+                        update => update
+                            .attr("stroke-opacity", 1)
+                            .call(update => update.transition()
+                                .attr("d", d =>
+                                    `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`)
+                            ),
+                        exit => exit.transition()
+                            .attr("stroke-opacity", 0)
+                            .remove()
+                    );
+            }
+
+            const plotGenes = function() {
+                plotArea.selectAll(".gene")
+                    .data(data.genes, d => d.gene)
+                    .join(
+                        enter => {
+                            let gene_group = enter.append("g")
+                                .attr("class", "gene")
+                            gene_group.append("rect")
+                                .attr("class", "gene-marker")
+                                .attr("x", d => xScale(d.start))
+                                .attr("width", d => xScale(d.end) - xScale(d.start))
+                                .attr("height", height - margin.top - margin.bottom)
+                                .attr("stroke", "#000")
+                                .attr("stroke-width", 0.5)
+                                .attr("fill", "#333")
+                                .attr("fill-opacity", 0)
+                                .attr("pointer-events", "none")
+                                .call(enter => enter.transition()
+                                    .attr("fill-opacity", 0.05)
+                                );
+                            gene_group.append("rect")
+                                .attr("class", "gene-label-background")
+                                .attr("x", d => {
+                                    let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                    return xScale(d.start + (d.end - d.start) / 2) - labelWidth / 2 - 5;
+                                })
+                                .attr("y", d => {
+                                    let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                    return plotHeight + margin.between / 2 - labelHeight / 2 - 2;
+                                })
+                                .attr("width", d => getTextDimensions(d.gene, "0.8rem")[0] + 10)
+                                .attr("height", d => getTextDimensions(d.gene, "0.8rem")[1] + 4)
+                                .attr("fill", "#EEE")
+                                .attr("rx", 4);
+                            gene_group.append("text")
+                                .attr("class", "gene-label")
+                                .text(d => d.gene)
+                                .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
+                                .attr("y", plotHeight + margin.between / 2)
+                                .attr("text-anchor", "middle")
+                                .attr("dominant-baseline", "central")
+                                .style("font-size", "0.8rem");
+                            return gene_group;
+                        }, update => {
+                            update.selectAll(".gene-label")
+                                .call(update => update.transition()
+                                    .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
+                                );
+                            update.selectAll(".gene-label-background")
+                                .call(update => update.transition()
+                                    .attr("x", d => {
+                                        let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                        return xScale(d.start + (d.end - d.start) / 2) - labelWidth / 2 - 5;
+                                    })
+                                );
+                            update.selectAll(".gene-marker")
+                                .attr("fill-opacity", 0.05)
+                                .call(update => update.transition()
+                                    .attr("x", d => xScale(d.start))
+                                    .attr("width", d => xScale(d.end) - xScale(d.start))
+                                );
+                            return update;
+                        }, exit => exit.transition()
+                            .attr("fill-opacity", 0)
+                            .attr("stroke-opacity", 0)
+                            .remove()
+                    );
+            }
+
+            const plotVAF = function() {
+                vafArea.selectAll(".point")
+                    .data(data.vaf, d => d.pos)
+                    .join(
+                        enter => enter.append("circle")
+                            .attr("class", "point")
+                            .attr("cx", d => xScale(d.pos))
+                            .attr("cy", d => yScaleVAF(d.vaf))
+                            .attr("r", 2)
+                            .attr("fill", "#333")
+                            .attr("fill-opacity", 0.3),
+                        update => update
+                            .call(update => update.transition()
+                                .attr("cx", d => xScale(d.pos))),
+                        exit => exit.remove(),
+                    )
+            };
+
+            svg.append("g")
+                .attr("transform", `translate(${margin.left}, ${margin.top})`)
+                .attr("class", "zoom-layer")
+                .append("rect")
+                .attr("width", width - margin.left - margin.right)
+                .attr("height", height - margin.top - margin.bottom)
+                .attr("fill", "transparent")
+                .call(d3.drag()
+                    .on("start", (e) => {
+                        d3.select(".zoom-layer")
+                            .append("rect")
+                            .attr("class", "zoom-region")
+                            .attr("pointer-events", "none")
+                            .attr("x", e.x)
+                            .attr("width", 0)
+                            .attr("height", height - margin.bottom - margin.top)
+                            .attr("stroke-width", 0)
+                            .attr("fill", "#333")
+                            .attr("fill-opacity", 0.1);
+                    })
+                    .on("drag", (e) => {
+                        let leftBound = Math.min(e.x, e.subject.x);
+                        let width = Math.abs(Math.max(0, e.x) - e.subject.x);
+                        if (leftBound + width > xScale.range()[1]) {
+                            width = xScale.range()[1] - leftBound;
+                        }
+                        d3.select(".zoom-region")
+                            .attr("x", Math.max(0, Math.min(e.x, e.subject.x)))
+                            .attr("width", width)
+                    })
+                    .on("end", (e) => {
+                        d3.select(".zoom-region").remove();
+                        let xMin = Math.max(0, Math.min(e.x, e.subject.x));
+                        let xMax = Math.min(xScale.range()[1], Math.max(e.x, e.subject.x));
+                        if (xMax - xMin < 3) {
+                            return;
+                        }
+                        xScale
+                            .domain([xScale.invert(xMin), xScale.invert(xMax)]);
+                        svg.transition()
+                            .select(".x-axis")
+                            .duration(500)
+                            .call(xAxis);
+                        plotRegions(data[`${activeDataset}_ratios`]);
+                        plotVAF();
+                        plotSegments(data[`${activeDataset}_segments`]);
+                        plotGenes();
+                    }))
+                .on("click", e => {
+                    let [xMin, xMax] = xScale.domain();
+                    if (xMax - xMin !== data.length) {
+                        // Only reset if something actually changed
+                        update(data, getActiveDataset());
+                    }
+                });
+
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},${height - margin.bottom})`)
+                .attr("class", "x-axis")
+                .call(xAxis);
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`)
+                .attr("class", "y-axis")
+                .call(yAxis);
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top + plotHeight + margin.between})`)
+                .attr("class", "y-axis")
+                .call(yAxisVAF);
+
+            // Labels
+            svg.append("text")
+                .attr("transform", `translate(${width/2},${height})`)
+                .attr("class", "x-label")
+                .text(data.label)
+                .attr("text-anchor", "middle")
+                .style("font-size", "0.8rem");
+
+            svg.append("text")
+                .attr("transform", `translate(0,${margin.top+plotHeight/2}) rotate(-90)`)
+                .text("log2 ratio")
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "text-before-edge")
+                .style("font-size", "0.9rem");
+
+            svg.append("text")
+                .attr("transform", `translate(0,${height-margin.bottom-plotHeight/2}) rotate(-90)`)
+                .text("VAF")
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "text-before-edge")
+                .style("font-size", "0.9rem");
+
+            const update = function(plotData, activeDataset, xMin, xMax) {
+                data = plotData;
+                xScale.domain([0, data.length]);
+                if (xMin && xMax) {
+                    xScale.domain([Math.max(xMin, 0), Math.min(xMax, data.length)]);
+                }
+                yScale.domain(d3.extent(data[`${activeDataset}_ratios`], d => d.log2));
+                svg.transition().select(".x-axis")
+                    .duration(500)
+                    .call(xAxis);
+                svg.transition().select(".y-axis")
+                    .duration(500)
+                    .call(yAxis);
+                svg.select(".x-label").text(data.label);
+                plotRegions(data[`${activeDataset}_ratios`]);
+                plotVAF();
+                plotSegments(data[`${activeDataset}_segments`]);
+                plotGenes();
+            };
+
+            const getZoomRange = () => {
+                return xScale.domain();
+            };
+
+            update(data, activeDataset);
+
+            return {
+                update: update,
+                getZoomRange: getZoomRange,
+            }
+        }
+
+        const plotGenomeView = activeDataset => {
+            const totalLength = d3.sum(cnvData.map(d => d.length));
+            const height = 400;
+            const width = 800;
+            const margin = {
+                top: 10,
+                right: 30,
+                bottom: 60,
+                left: 50,
+                between: 10,
+            };
+            const panelWidths = cnvData.map(d => (width - margin.left - margin.right) * d.length / totalLength);
+            const panelHeight = (height - margin.top - margin.bottom - margin.between) / 2;
+
+            const xScales = cnvData.map((d, i) => d3.scaleLinear()
+                .domain([0, d.length])
+                .range([0, panelWidths[i]]));
+
+            const yScaleRange = 2;
+            const yScale = d3.scaleLinear()
+                .domain([-yScaleRange, yScaleRange])
+                .range([panelHeight, 0]);
+
+            const yScaleVAF = d3.scaleLinear()
+                .domain([0, 1])
+                .range([panelHeight, 0]);
+
+            const yAxis = g => g
+                .call(d3.axisLeft(yScale).ticks(4));
+
+            const yAxisVAF = g => g
+                .call(d3.axisLeft(yScaleVAF).ticks(4));
+
+            const svg = d3.select("#genome-view")
+                .attr("preserveAspectRatio", "xMinYMin meet")
+                .attr("viewBox", [0, 0, width, height])
+                .attr("style", "max-width: 100%; max-height: 500px; height: auto;");
+
+            const plotArea = svg.append("g")
+                .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+            const lrArea = plotArea.append("g")
+                .attr("class", "genome-view-area");
+            const vafArea = plotArea.append("g")
+                .attr("class", "genome-view-area")
+                .attr("transform", `translate(0,${panelHeight+margin.between})`);
+
+            const addPanels = function(g) {
+                const panels = g.selectAll(".chromosome-panel")
+                    .data(cnvData)
+                    .join("g")
+                        .attr("data-index", (d, i) => i)
+                        .attr("class", "chromosome-panel")
+                        .attr(
+                            "transform",
+                            (d, i) => `translate(${i === 0 ? 0 : d3.sum(panelWidths.slice(0, i))}, 0)`
+                        );
+
+                // Panel backgrounds
+                panels.append("rect")
+                    .attr("class", "bg-rect")
+                    .attr("width", (d, i) => panelWidths[i])
+                    .attr("height", panelHeight)
+                    .attr("fill", "#FFF")
+                    .attr("stroke", "#333");
+
+                return panels;
+            }
+
+            const lrPanels = addPanels(lrArea);
+            const vafPanels = addPanels(vafArea);
+
+            const ratioPanels = lrPanels.append("g")
+                .attr("class", "regions")
+                .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
+                .attr("data-index", (d, i) => i);
+
+            const segmentPanels = lrPanels.append("g")
+                .attr("class", "segments")
+                .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
+                .attr("data-index", (d, i) => i);
+
+            const plotRegions = activeDataset => {
+                ratioPanels
+                    .selectAll(".point")
+                    // Only plot every fifth point for performance
+                    .data(d => d[`${activeDataset}_ratios`].filter((r, i) => i % 5 === 0), d => d.start)
+                    .join(
+                        enter => enter
+                            .append("circle")
+                            .attr("class", "point")
+                            .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.start))
+                            .attr("cy", yScale(-yScaleRange - 0.2))
+                            .attr("r", 2)
+                            .attr("fill", "#333")
+                            .attr("fill-opacity", 0.3)
+                            .call(enter => enter
+                                .transition()
+                                .attr("cy", d => yScale(d.log2))
+                            ),
+                        update => update
+                            .call(update => update
+                                .transition()
+                                .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.start))
+                                .attr("cy", d => yScale(d.log2))
+                            ),
+                        exit => exit.transition()
+                            .attr("cy", yScale(yScaleRange + 0.2))
+                            .remove()
+                    );
+            };
+
+            const plotSegments = activeDataset => {
+                segmentPanels
+                    .selectAll(".segment")
+                    // Only draw segments that will actually be visible
+                    .data(d => d[`${activeDataset}_segments`].filter(s => s.end - s.start > totalLength/width), d => [d.start, d.end, d.log2])
+                    .join(
+                        enter => enter
+                            .append("path")
+                            .attr("class", "segment")
+                            .attr("d", (d, i, g) => {
+                                let j = g[i].parentNode.dataset.index;
+                                let xScale = xScales[j];
+                                return `M${xScale(d.start)} ${yScale(-yScaleRange - 0.2)} L ${xScale(d.end)} ${yScale(-yScaleRange - 0.2)}`;
+                            })
+                            .attr("stroke", "orange")
+                            .attr("stroke-width", 2)
+                            .call(enter => enter
+                                .transition()
+                                .attr("d", (d, i, g) => {
+                                    let j = g[i].parentNode.dataset.index;
+                                    let xScale = xScales[j];
+                                    return `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`;
+                                })
+                            ),
+                        update => update
+                            .attr("d", (d, i, g) => {
+                                let j = g[i].parentNode.dataset.index;
+                                let xScale = xScales[j];
+                                return `M${xScale(d.start)} ${yScale(d.log2)} L ${xScale(d.end)} ${yScale(d.log2)}`;
+                            }),
+                        exit => exit.transition()
+                            .attr("d", (d, i, g) => {
+                                let j = g[i].parentNode.dataset.index;
+                                let xScale = xScales[j];
+                                return `M${xScale(d.start)} ${yScale(yScaleRange + 0.2)} L ${xScale(d.end)} ${yScale(yScaleRange + 0.2)}`;
+                            })
+                            .remove(),
+                    );
+            };
+
+            // VAF
+            vafPanels.append("g")
+                .attr("class", "vaf")
+                .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
+                .attr("data-index", (d, i) => i)
+                .selectAll(".point")
+                .data(d => d.vaf)
+                .join("circle")
+                    .attr("cx", (d, i, g) => xScales[g[i].parentNode.dataset.index](d.pos))
+                    .attr("cy", d => yScaleVAF(d.vaf))
+                    .attr("r", 2)
+                    .attr("fill", "#333")
+                    .attr("fill-opacity", 0.3);
+
+            // Clip path to create inner stroke
+            const overlayClip = d3.selectAll(".genome-view-area").append("g");
+            overlayClip.selectAll(".panel-overlay-clip")
+                .data(panelWidths)
+                .join("clipPath")
+                    .attr("class", "panel-overlay-clip")
+                    .attr("id", (d, i) => `panel-${i}-overlay-clip`)
+                    .append("rect")
+                    .attr("width", d => d)
+                    .attr("height", panelHeight);
+
+            let selectedChromosomeIndex = 0;
+            const selectChromosome = chromosome => {
+                selectedChromosomeIndex = cnvData.findIndex(d => d.chromosome === chromosome);
+                plotArea.selectAll(".panel-overlay")
+                    .classed("selected", false);
+                plotArea.selectAll(`.panel-${selectedChromosomeIndex}-overlay`)
+                    .classed("selected", true);
+                chromosomeView.update(cnvData[selectedChromosomeIndex], activeDataset);
+            }
+
+            const overlays = d3.selectAll(".genome-view-area").append("g");
+            overlays.selectAll(".panel-overlay")
+                .data(panelWidths)
+                .join("rect")
+                    .attr("class", (d, i) => `panel-overlay panel-${i}-overlay${i === 0 ? " selected" : ""}`)
+                    .attr("transform", (d, i) => `translate(${i === 0 ? 0 : d3.sum(panelWidths.slice(0, i))}, 0)`)
+                    .attr("data-index", (d, i) => i)
+                    .attr("width", d => d)
+                    .attr("height", panelHeight)
+                    .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
+                    .attr("fill", "#000")
+                    .attr("fill-opacity", 0)
+                    .attr("stroke", "forestgreen")
+                    .on("mouseenter", e => {
+                        plotArea.selectAll(".panel-overlay")
+                            .attr("fill-opacity", 0);
+                        d3.selectAll(`.panel-${e.target.dataset.index}-overlay`)
+                            .attr("fill-opacity", 0.2);
+                    })
+                    .on("mouseout", e => {
+                        d3.selectAll(`.panel-${e.target.dataset.index}-overlay`)
+                            .attr("fill-opacity", 0);
+                    })
+                    .on("click", (e, d, i) => selectChromosome(cnvData[e.target.dataset.index].chromosome));
+
+            // Y axes
+            svg.append("g")
+                .attr("transform", `translate(${margin.left}, ${margin.top})`)
+                .call(yAxis);
+
+            svg.append("g")
+                .attr("transform", `translate(${margin.left}, ${margin.top+panelHeight+margin.between})`)
+                .call(yAxisVAF);
+
+            // Labels
+            vafPanels.append("text")
+                .attr("transform", (d, i) => `translate(${panelWidths[i]/2},${panelHeight+10}) rotate(-90)`)
+                .text((d, i) => d.label)
+                .attr("text-anchor", "end")
+                .attr("dominant-baseline", "central")
+                .style("font-size", "0.8rem");
+
+            svg.append("text")
+                .attr("transform", `translate(0,${margin.top+panelHeight/2}) rotate(-90)`)
+                .text("log2 ratio")
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "text-before-edge")
+                .style("font-size", "0.9rem");
+
+            svg.append("text")
+                .attr("transform", `translate(0,${margin.top+margin.between+3*panelHeight/2}) rotate(-90)`)
+                .text("VAF")
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "text-before-edge")
+                .style("font-size", "0.9rem");
+
+            const update = activeDataset => {
+                plotRegions(activeDataset);
+                plotSegments(activeDataset);
+            };
+
+            const getSelectedChromosome = () => selectedChromosomeIndex;
+
+            update(activeDataset);
+
+            return {
+                update: update,
+                getSelectedChromosome: getSelectedChromosome,
+                selectChromosome: selectChromosome,
+            };
+        };
+
+        const populateTable = (dataset) => {
+            const table = d3.select("#cnv-table");
+
+            const tableHeader = table.append("thead").append("tr");
+            const tableBody = table.append("tbody");
+
+            let tableData = null;
+
+            const getColumnDef = col => {
+                switch (col) {
+                    // Integers
+                    case "start":
+                    case "length":
+                    case "end":
+                        return {
+                            class: "right",
+                            format: x => x.toLocaleString(undefined, {}),
+                        };
+
+                    // Floating point, allow for missing numbers
+                    case "copyNumber":
+                    case "corrCopyNumber":
+                    case "cn":
+                        return {
+                            class: "right",
+                            format: x => {
+                                if (x) {
+                                    return x.toLocaleString(
+                                        undefined,
+                                        { minimumFractionDigits: 2 }
+                                    );
+                                }
+                                return "NA";
+                            }
+                        };
+
+                    case "view":
+                        return {
+                            class: "view-region-link",
+                            format: x => x,
+                        };
+
+                    // Strings
+                    case "caller":
+                    case "chromosome":
+                    case "gene":
+                    case "type":
+                    default:
+                        return {
+                            class: "left",
+                            format: x => x,
+                        };
+                }
+            }
+
+            const update = dataset => {
+                tableData = cnvData
+                    .map(d => d["cnvs"]
+                        .filter(v => v.caller == dataset)
+                        .map(di => {
+                            const allCols = {view: "🔍", chromosome: d.chromosome, ...di};
+                            const {caller, ...cols} = allCols;
+                            return cols;
+                        }))
+                    .flat();
+
+                if (tableData.length === 0) {
+                    tableData = [{"No data to display": []}];
+                }
+
+                tableHeader
+                    .selectAll("th")
+                    .data(Object.keys(tableData[0]), d => d)
+                    .join("th")
+                        .text(d => d)
+                        .attr("class", d => getColumnDef(d).class);
+
+                tableBody
+                    .selectAll("tr")
+                    .data(tableData)
+                    .join("tr")
+                        .attr("data-chromosome", d => d.chromosome)
+                        .attr("data-start", d => d.start)
+                        .attr("data-length", d => d.length)
+                        .selectAll("td")
+                        .data(d => Object.entries(d))
+                        .join("td")
+                            .text(([key, value]) => getColumnDef(key).format(value))
+                            .attr("class", ([key, value]) => getColumnDef(key).class);
+
+                tableBody.selectAll(".view-region-link")
+                    .on("click", e => {
+                        const dataset = e.target.parentElement.dataset;
+                        zoomToRegion(
+                            dataset.chromosome,
+                            Number(dataset.start),
+                            Number(dataset.start) + Number(dataset.length)
+                        );
+                    });
+            }
+
+            const getData = () => tableData;
+
+            update(dataset);
+
+            return {
+                getData: getData,
+                update: update,
+            };
+        };
+
+        const zoomToRegion = (chromosome, start, end, padding = 0.05) => {
+            genomeView.selectChromosome(chromosome)
+            let bpPadding = (end - start) * padding;
+            chromosomeView.update(
+                cnvData[genomeView.getSelectedChromosome()],
+                activeDataset,
+                start - bpPadding,
+                end + bpPadding
+            );
+        }
+
+        let activeDataset = getActiveDataset();
+
+        const chromosomeView = plotChromosomeView(cnvData[0], activeDataset);
+        const genomeView = plotGenomeView(activeDataset);
+        const resultsTable = populateTable(activeDataset);
+
+        d3.selectAll("input[name=dataset]").on("change", e => {
+            activeDataset = e.target.value;
+            let [xMin, xMax] = chromosomeView.getZoomRange();
+            chromosomeView.update(cnvData[genomeView.getSelectedChromosome()], activeDataset, xMin, xMax);
+            genomeView.update(activeDataset);
+            resultsTable.update(activeDataset);
+        });
+
+    </script>
+</body>
+</html>

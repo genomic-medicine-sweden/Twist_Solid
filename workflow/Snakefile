@@ -8,64 +8,312 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
-include: "rules/result_files.smk"
+include: "rules/bcftools.smk"
+include: "rules/cnv_tsv_report.smk"
+include: "rules/cnv_html_report.smk"
+include: "rules/exon_skipping.smk"
+include: "rules/hotspot_report.smk"
+include: "rules/house_keeping_gene_coverage.smk"
+include: "rules/report_gene_fuse.smk"
+include: "rules/report_fusions.smk"
+
 
 rule all:
     input:
         unpack(compile_output_list),
 
-report: "report/workflow.rst"
+
+ruleorder: prealignment_fastp_pe > misc_bgzip
+ruleorder: snv_indels_tabix > annotation_tabix_vcf > misc_tabix
+ruleorder: snv_indels_gatk_mutect2 > misc_tabix
+ruleorder: snv_indels_gatk_mutect2_gvcf > alignment_samtools_sort
+ruleorder: snv_indels_gatk_mutect2_gvcf > misc_tabix
+ruleorder: snv_indels_gatk_mutect2_gvcf > misc_bgzip
+ruleorder: snv_indels_bgzip > misc_bgzip
+ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
+ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
+ruleorder: annotation_bgzip_vcf > misc_bgzip
+ruleorder: annotation_tabix_vcf > misc_tabix
+ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
+ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
+ruleorder: annotation_tabix_vcf > snv_indels_tabix
+ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
+ruleorder: annotation_annotate_cnv > misc_bgzip
+ruleorder: annotation_annotate_cnv > snv_indels_bgzip
+ruleorder: filtering_bcftools_filter_include_region > annotation_bgzip_vcf
+ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
+ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
+ruleorder: qc_samtools_stats_rna > qc_samtools_stats
+ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
+ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
+
 
 module prealignment:
-   snakefile: github("hydra-genetics/prealignment", path="workflow/Snakefile", tag="develop")
-   config: config
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/prealignment", path="workflow/Snakefile", tag="v0.5.0")
+    config:
+        config
+
 
 use rule * from prealignment as prealignment_*
 
+
 module alignment:
-   snakefile: github("hydra-genetics/alignment", path="workflow/Snakefile", tag="develop")
-   config: config
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.3.0")
+    config:
+        config
+
 
 use rule * from alignment as alignment_*
 
+
+use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
+    input:
+        "fusions/star_fusion/{path_file}.out.bam",
+    output:
+        temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
+    log:
+        "fusions/star_fusion/{path_file}.bam.sort.log",
+    benchmark:
+        repeat(
+            "fusions/star_fusion/{path_file}.bam.sort.benchmark.tsv",
+            config.get("samtools_sort", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutect2 with:
+    input:
+        bams=expand(
+            "snv_indels/gatk_mutect2/{{sample}}_{{type}}_{chr}.unfiltered.bam",
+            chr=extract_chr(
+                "%s.fai" % (config.get("reference", {}).get("fasta", "")),
+                filter_out=config.get("reference", {}).get("skip_chrs", []),
+            ),
+        ),
+    output:
+        bam=temp("snv_indels/gatk_mutect2_merge/{sample}_{type}.bam_unsorted"),
+    params:
+        extra=config.get("alignment_samtools_merge_bam_mutect2", {}).get("extra", ""),
+    log:
+        "snv_indels/gatk_mutect2_merge/{sample}_{type}.bam_unsorted.log",
+    benchmark:
+        repeat(
+            "snv_indels/gatk_mutect2_merge/{sample}_{type}.bam_unsorted.benchmark.tsv",
+            config.get("alignment_samtools_merge_bam_mutect2", {}).get("benchmark_repeats", 1),
+        )
+
+
 module snv_indels:
-   snakefile: github("hydra-genetics/snv_indels", path="workflow/Snakefile", tag="develop")
-   config: config
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.3.0")
+    config:
+        config
+
 
 use rule * from snv_indels as snv_indels_*
 
+
 module annotation:
-   snakefile: github("hydra-genetics/annotation", path="workflow/Snakefile", tag="develop")
-   config: config
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.2.0")
+    config:
+        config
+
 
 use rule * from annotation as annotation_*
 
+
 module filtering:
-   snakefile: github("hydra-genetics/filtering", path="workflow/Snakefile", tag="develop")
-   config: config
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag="v0.1.0")
+    config:
+        config
+
 
 use rule * from filtering as filtering_*
 
+
 module qc:
-   snakefile: github("hydra-genetics/qc", path="workflow/Snakefile", tag="develop")
-   config: config
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/qc", path="workflow/Snakefile", tag="v0.2.0")
+    config:
+        config
+
 
 use rule * from qc as qc_*
 
+
+use rule mosdepth from qc as qc_mosdepth with:
+    input:
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        bed=config.get("reference", {}).get("design_bed_rna", ""),
+
+
+use rule samtools_stats from qc as qc_samtools_stats with:
+    wildcard_constraints:
+        type="T|N",
+
+
+use rule samtools_stats from qc as qc_samtools_stats_rna with:
+    input:
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+    params:
+        extra="%s -t %s"
+        % (
+            config.get("samtools_stats", {}).get("extra", ""),
+            config.get("reference", {}).get("design_bed_rna", ""),
+        ),
+    wildcard_constraints:
+        type="R",
+
+
+use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics with:
+    wildcard_constraints:
+        type="T|N",
+
+
+use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics_rna with:
+    params:
+        extra="%s %s"
+        % (
+            config.get("picard_collect_hs_metrics", {}).get("extra", ""),
+            "VALIDATION_STRINGENCY=LENIENT",
+        ),
+    input:
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        bait_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
+        reference=config.get("reference", {}).get("fasta_rna", ""),
+        target_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
+    wildcard_constraints:
+        type="R",
+
+
+use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics with:
+    wildcard_constraints:
+        type="T|N",
+
+
+use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics_rna with:
+    params:
+        extra="%s %s"
+        % (
+            config.get("picard_collect_alignment_summary_metrics", {}).get("extra", ""),
+            "VALIDATION_STRINGENCY=LENIENT",
+        ),
+    input:
+        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        ref=config.get("reference", {}).get("fasta_rna", ""),
+    wildcard_constraints:
+        type="R",
+
+
 module biomarker:
-   snakefile: github("hydra-genetics/biomarker", path="workflow/Snakefile", tag="develop")
-   config: config
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.1.0")
+    config:
+        config
+
 
 use rule * from biomarker as biomarker_*
 
+
+use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
+    input:
+        seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns",
+
+
 module fusions:
-   snakefile: github("hydra-genetics/fusions", path="workflow/Snakefile", tag="develop")
-   config: config
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="12f8354")
+    config:
+        config
+
 
 use rule * from fusions as fusions_*
 
+
+use rule star_fusion from fusions as fusions_star_fusion with:
+    output:
+        bam=temp("fusions/star_fusion/{sample}_{type}/Aligned.out.bam"),
+        fusions=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv"),
+        fusions_abridged=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.coding_effect.tsv"),
+        sj=temp("fusions/star_fusion/{sample}_{type}/SJ.out.tab"),
+
+
 module cnv_sv:
-   snakefile: github("hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="develop")
-   config: config
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.1.0")
+    config:
+        config
+
 
 use rule * from cnv_sv as cnv_sv_*
+
+
+use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        cnv_reference=config.get("cnvkit_batch_hrd", {}).get("normal_reference_hrd", ""),
+    output:
+        regions=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cnr"),
+        segments=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cns"),
+        segments_called=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.call.cns"),
+        bins=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.bintest.cns"),
+        target_coverage=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.targetcoverage.cnn"),
+        antitarget_coverage=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
+    log:
+        "cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.log",
+    benchmark:
+        repeat(
+            "cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.benchmark.hrd.tsv",
+            config.get("cnvkit_batch_hrd", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
+    input:
+        segment="cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cns",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+    output:
+        segment=temp("cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns"),
+    params:
+        tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
+        extra=config.get("cnvkit_call_hrd", {}).get("extra", ""),
+    log:
+        "cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns.log",
+    benchmark:
+        repeat(
+            "cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns.benchmark.tsv",
+            config.get("cnvkit_call_hrd", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:
+    input:
+        segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+
+
+use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
+    input:
+        segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+        segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+
+
+module misc:
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/misc", path="workflow/Snakefile", tag="v0.2.0")
+    config:
+        config
+
+
+use rule tabix from misc as misc_tabix
+
+
+use rule bgzip from misc as misc_bgzip

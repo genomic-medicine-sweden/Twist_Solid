@@ -1,0 +1,27 @@
+name: Lint
+
+on:
+  push:
+    branches:
+     - develop
+     - master
+  pull_request:
+    branches:
+     - develop
+     - master
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: Linting
+        uses: snakemake/snakemake-github-action@v1.24.0
+        with:
+          directory: ".tests/integration"
+          snakefile: "workflow/Snakefile"
+          args: "--lint --configfiles .tests/integration/config/config.yaml"
+          stagein: "pip install -r requirements.txt"
