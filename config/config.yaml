@@ -1,6 +1,9 @@
 resources: "config/resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
+
+#hydra_local_path: "PATH_TO_REPO"
+
 output: "config/output_list.json"
 default_container: "docker://hydragenetics/common:0.1.9"
 

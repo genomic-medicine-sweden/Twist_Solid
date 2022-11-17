@@ -12,13 +12,14 @@ import pandas as pd
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
+from hydra_genetics.utils.misc import get_module_snakefile
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics import min_version as hydra_min_version
 
-hydra_min_version("0.14.1")
+hydra_min_version("0.15.0")
 
 min_version("7.13.0")
 
