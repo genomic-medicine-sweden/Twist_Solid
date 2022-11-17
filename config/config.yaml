@@ -243,6 +243,17 @@ picard_collect_insert_size_metrics:
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
+purecn:
+  container: "docker://hydragenetics/purecn:2.2.0"
+  genome: "hg19"
+  segmentation_method: "GATK4"
+  fun_segmentation: "Hclust"
+  interval_padding: 100
+
+purecn_coverage:
+  container: "docker://hydragenetics/purecn:2.2.0"
+  intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.210608.interval_list"
+
 report_fusions:
   annotation_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_fusionpartners.bed"
   fusioncather_flag_low_support: 15

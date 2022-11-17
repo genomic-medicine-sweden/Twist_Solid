@@ -162,7 +162,7 @@ properties:
       required:
         - container
 
-  gatk_model_segments:
+  gatk_get_pileup_summaries:
     type: object
     properties:
       container:
@@ -173,7 +173,29 @@ properties:
       required:
         - container
 
-  gatk_get_pileup_summaries:
+  gatk_mutect2:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$
+      required:
+        - container
+
+  gatk_mutect2_gvcf:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$
+      required:
+        - container
+
+  gatk_model_segments:
     type: object
     properties:
       container:
@@ -250,28 +272,6 @@ properties:
       required:
         - container
 
-  gatk_mutect2:
-    type: object
-    properties:
-      container:
-        type: string
-        description: name or path to a default docker/singularity container
-        pattern: >-
-            hydragenetics/gatk4:4\.1\.9\.0$
-      required:
-        - container
-
-  gatk_mutect2_gvcf:
-    type: object
-    properties:
-      container:
-        type: string
-        description: name or path to a default docker/singularity container
-        pattern: >-
-            hydragenetics/gatk4:4\.1\.9\.0$
-      required:
-        - container
-
   optitype:
     type: object
     properties:
@@ -335,6 +335,28 @@ properties:
         description: name or path to a default docker/singularity container
         pattern: >-
             hydragenetics/picard:2\.25\.0$
+      required:
+        - container
+
+  purecn:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/purecn:2\.2\.0$
+      required:
+        - container
+
+  purecn_coverage:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/purecn:2\.2\.0$
       required:
         - container
 
@@ -430,6 +452,8 @@ required:
   - gatk_collect_allelic_counts
   - gatk_collect_read_counts
   - gatk_denoise_read_counts
+  - gatk_mutect2
+  - gatk_mutect2_gvcf
   - gatk_model_segments
   - gene_fuse
   - manta_config_t
@@ -437,14 +461,14 @@ required:
   - mosdepth_bed
   - msisensor_pro
   - multiqc
-  - gatk_mutect2
-  - gatk_mutect2_gvcf
   - optitype
   - picard_collect_alignment_summary_metrics
   - picard_collect_hs_metrics
   - picard_collect_duplication_metrics
   - picard_collect_insert_size_metrics
   - picard_mark_duplicates
+  - purecn
+  - purecn_coverage
   - svdb_merge
   - svdb_query
   - vardict
