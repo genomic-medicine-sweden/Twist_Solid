@@ -12,14 +12,12 @@ import pandas as pd
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
-from hydra_genetics.utils.misc import get_module_snakefile
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
-from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics import min_version as hydra_min_version
 
-hydra_min_version("0.15.0")
+hydra_min_version("0.14.1")
 
 min_version("7.13.0")
 
@@ -85,6 +83,36 @@ def get_flowcell(units, wildcards):
     if len(flowcells) > 1:
         raise ValueError("Sample type combination from different sequence flowcells")
     return flowcells.pop()
+
+
+def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
+    inputs = {k: v for k, v in config.get("purecn", {}).items() if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]}
+    segmentation_method = config.get("purecn", {}).get("segmentation_method", "")
+    if segmentation_method == "internal":
+        inputs.update(
+            {
+                "tumor": f"cnv_sv/purecn_coverage/{wildcards.sample}_T_coverage_loess.txt.gz",
+                "intervals": config.get("purecn", {}).get("intervals"),
+                "normaldb": config.get("purecn", {}).get("normaldb"),
+            }
+        )
+    elif segmentation_method == "GATK4":
+        inputs.update(
+            {
+                "tumor": f"cnv_sv/gatk_collect_read_counts/{wildcards.sample}_T.counts.hdf5",
+                "seg_file": f"cnv_sv/gatk_model_segments/{wildcards.sample}_T.clean.modelFinal.seg",
+                "log_ratio_file": f"cnv_sv/gatk_denoise_read_counts/{wildcards.sample}_T.clean.denoisedCR.tsv",
+            }
+        )
+    elif segmentation_method == "cnvkit":
+        inputs.update(
+            {
+                "tumor": f"cnv_sv/cnvkit_batch/{wildcards.sample}/{wildcards.sample}_T.cnr",
+                "seg_file": f"cnv_sv/cnvkit_export_seg/{wildcards.sample}_T.seg",
+            }
+        )
+
+    return inputs
 
 
 def generate_copy_code(workflow, output_json):
