@@ -94,7 +94,7 @@ use rule * from snv_indels as snv_indels_*
 
 module annotation:
     snakefile:
-        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="08fe2f9")
+        github("hydra-genetics/annotation", path="workflow/Snakefile", tag="6659ca3")
     config:
         config
 
