@@ -121,10 +121,10 @@ use rule gatk_mutect2 from snv_indels as snv_indels_gatk_mutect2_purecn with:
         fasta=config.get("reference", {}).get("fasta", ""),
         bed="/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.210608.bed",
     output:
-        stats=temp("snv_indels/gatk_mutect2/{sample}_{type}.merged.softfiltered.vcf.gz.stats"),
-        vcf=temp("snv_indels/gatk_mutect2/{sample}_{type}.merged.softfiltered.vcf.gz"),
-        tbi=temp("snv_indels/gatk_mutect2/{sample}_{type}.merged.softfiltered.vcf.gz.tbi"),
-        f1f2=temp("snv_indels/gatk_mutect2/{sample}_{type}.merged.softfiltered.f1r2.tar.gz"),
+        stats=temp("snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.vcf.gz.stats"),
+        vcf=temp("snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.vcf.gz"),
+        tbi=temp("snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.vcf.gz.tbi"),
+        f1f2=temp("snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.f1r2.tar.gz"),
     params:
         extra="--genotype-germline-sites true --genotype-pon-sites true --interval-padding 75 --max-mnp-distance 0 --germline-resource /data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf.gz",
     log:
@@ -274,6 +274,11 @@ module cnv_sv:
 
 use rule * from cnv_sv as cnv_sv_*
 
+use rule purecn from cnv_sv as cnv_sv_purecn with:
+    input:
+        unpack(get_purecn_inputs),
+        vcf="snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.vcf.gz",
+        tbi="snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.vcf.gz.tbi",
 
 use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
     input:
