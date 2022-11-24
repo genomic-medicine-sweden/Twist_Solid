@@ -27,7 +27,7 @@
             flex-direction: column;
         }
 
-            .plot-container .gene-label {
+            .plot-container .annotation-label {
                 font-size: 0.8rem
             }
 
@@ -252,13 +252,12 @@
                     <legend>CNV dataset</legend>
 
                     <div>
-                        <input type="radio" id="dataset-cnvkit" name="dataset" value="cnvkit" checked>
+                        <input type="radio" id="dataset-cnvkit" name="dataset" value="0" checked>
                         <label for="dataset-cnvkit">cnvkit</label>
                     </div>
-
                     <div>
-                        <input type="radio" id="dataset-gatk" name="dataset" value="gatk">
-                        <label for="dataset-gatk">GATK</label>
+                        <input type="radio" id="dataset-gatk_cnv" name="dataset" value="1">
+                        <label for="dataset-gatk_cnv">GATK</label>
                     </div>
                 </fieldset>
 
@@ -312,11 +311,11 @@
             return [width, height];
         }
 
-        const getActiveDataset = () => {
-            return d3.select("input[name=dataset]:checked").node().value;
+        const getActiveCaller = () => {
+            return +d3.select("input[name=dataset]:checked").node().value;
         }
 
-        const plotChromosomeView = function(plotData, activeDataset) {
+        const plotChromosomeView = function(plotData) {
             let data = plotData;
             const height = 400;
             const width = 800;
@@ -334,7 +333,7 @@
                 .range([0, width-margin.left-margin.right]);
 
             const yScale = d3.scaleLinear()
-                .domain(d3.extent(data[`${activeDataset}_ratios`], d => d.log2))
+                .domain(d3.extent(data.callers[getActiveCaller()].ratios, d => d.log2))
                 .range([plotHeight, 0]);
 
             const yScaleVAF = d3.scaleLinear()
@@ -433,15 +432,15 @@
                     );
             }
 
-            const plotGenes = function() {
-                plotArea.selectAll(".gene")
-                    .data(data.genes, d => d.gene)
+            const plotAnnotations = function() {
+                plotArea.selectAll(".annotation")
+                    .data(data.annotations, d => d.name)
                     .join(
                         enter => {
-                            let gene_group = enter.append("g")
-                                .attr("class", "gene")
-                            gene_group.append("rect")
-                                .attr("class", "gene-marker")
+                            let annotation_group = enter.append("g")
+                                .attr("class", "annotation")
+                            annotation_group.append("rect")
+                                .attr("class", "annotation-marker")
                                 .attr("x", d => xScale(d.start))
                                 .attr("width", d => xScale(d.end) - xScale(d.start))
                                 .attr("height", height - margin.top - margin.bottom)
@@ -453,41 +452,41 @@
                                 .call(enter => enter.transition()
                                     .attr("fill-opacity", 0.05)
                                 );
-                            gene_group.append("rect")
-                                .attr("class", "gene-label-background")
+                            annotation_group.append("rect")
+                                .attr("class", "annotation-label-background")
                                 .attr("x", d => {
-                                    let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                    let [labelWidth, labelHeight] = getTextDimensions(d.name, "0.8rem");
                                     return xScale(d.start + (d.end - d.start) / 2) - labelWidth / 2 - 5;
                                 })
                                 .attr("y", d => {
-                                    let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                    let [labelWidth, labelHeight] = getTextDimensions(d.name, "0.8rem");
                                     return plotHeight + margin.between / 2 - labelHeight / 2 - 2;
                                 })
-                                .attr("width", d => getTextDimensions(d.gene, "0.8rem")[0] + 10)
-                                .attr("height", d => getTextDimensions(d.gene, "0.8rem")[1] + 4)
+                                .attr("width", d => getTextDimensions(d.name, "0.8rem")[0] + 10)
+                                .attr("height", d => getTextDimensions(d.name, "0.8rem")[1] + 4)
                                 .attr("fill", "#EEE")
                                 .attr("rx", 4);
-                            gene_group.append("text")
-                                .attr("class", "gene-label")
-                                .text(d => d.gene)
+                            annotation_group.append("text")
+                                .attr("class", "annotation-label")
+                                .text(d => d.name)
                                 .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
                                 .attr("y", plotHeight + margin.between / 2)
                                 .attr("text-anchor", "middle")
                                 .attr("dominant-baseline", "central");
-                            return gene_group;
+                            return annotation_group;
                         }, update => {
-                            update.selectAll(".gene-label")
+                            update.selectAll(".annotation-label")
                                 .call(update => update.transition()
                                     .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
                                 );
-                            update.selectAll(".gene-label-background")
+                            update.selectAll(".annotation-label-background")
                                 .call(update => update.transition()
                                     .attr("x", d => {
-                                        let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                        let [labelWidth, labelHeight] = getTextDimensions(d.name, "0.8rem");
                                         return xScale(d.start + (d.end - d.start) / 2) - labelWidth / 2 - 5;
                                     })
                                 );
-                            update.selectAll(".gene-marker")
+                            update.selectAll(".annotation-marker")
                                 .attr("fill-opacity", 0.05)
                                 .call(update => update.transition()
                                     .attr("x", d => xScale(d.start))
@@ -562,16 +561,17 @@
                             .select(".x-axis")
                             .duration(500)
                             .call(xAxis);
-                        plotRegions(data[`${activeDataset}_ratios`]);
+                        const callerIndex = getActiveCaller();
+                        plotRegions(data.callers[callerIndex].ratios);
                         plotVAF();
-                        plotSegments(data[`${activeDataset}_segments`]);
-                        plotGenes();
+                        plotSegments(data.callers[callerIndex].segments);
+                        plotAnnotations();
                     }))
                 .on("click", e => {
                     let [xMin, xMax] = xScale.domain();
                     if (xMax - xMin !== data.length) {
                         // Only reset if something actually changed
-                        update(data, getActiveDataset());
+                        update(data, getActiveCaller());
                     }
                 });
 
@@ -609,13 +609,14 @@
                 .attr("text-anchor", "middle")
                 .attr("dominant-baseline", "text-before-edge");
 
-            const update = function(plotData, activeDataset, xMin, xMax) {
+            const update = function(plotData, xMin, xMax) {
                 data = plotData;
+                const callerIndex = getActiveCaller();
                 xScale.domain([0, data.length]);
                 if (xMin && xMax) {
                     xScale.domain([Math.max(xMin, 0), Math.min(xMax, data.length)]);
                 }
-                yScale.domain(d3.extent(data[`${activeDataset}_ratios`], d => d.log2));
+                yScale.domain(d3.extent(data.callers[callerIndex].ratios, d => d.log2));
                 svg.transition().select(".x-axis")
                     .duration(500)
                     .call(xAxis);
@@ -623,17 +624,17 @@
                     .duration(500)
                     .call(yAxis);
                 svg.select(".x-label").text(data.label);
-                plotRegions(data[`${activeDataset}_ratios`]);
+                plotRegions(data.callers[callerIndex].ratios);
                 plotVAF();
-                plotSegments(data[`${activeDataset}_segments`]);
-                plotGenes();
+                plotSegments(data.callers[callerIndex].segments);
+                plotAnnotations();
             };
 
             const getZoomRange = () => {
                 return xScale.domain();
             };
 
-            update(data, activeDataset);
+            update(data, getActiveCaller());
 
             return {
                 update: update,
@@ -641,7 +642,7 @@
             }
         }
 
-        const plotGenomeView = activeDataset => {
+        const plotGenomeView = () => {
             const totalLength = d3.sum(cnvData.map(d => d.length));
             const height = 400;
             const width = 800;
@@ -723,11 +724,11 @@
                 .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
                 .attr("data-index", (d, i) => i);
 
-            const plotRegions = activeDataset => {
+            const plotRegions = () => {
                 ratioPanels
                     .selectAll(".point")
                     // Only plot every fifth point for performance
-                    .data(d => d[`${activeDataset}_ratios`].filter((r, i) => i % 5 === 0), d => d.start)
+                    .data(d => d.callers[getActiveCaller()].ratios.filter((r, i) => i % 5 === 0), d => d.start)
                     .join(
                         enter => enter
                             .append("circle")
@@ -753,11 +754,11 @@
                     );
             };
 
-            const plotSegments = activeDataset => {
+            const plotSegments = () => {
                 segmentPanels
                     .selectAll(".segment")
                     // Only draw segments that will actually be visible
-                    .data(d => d[`${activeDataset}_segments`].filter(s => s.end - s.start > totalLength/width), d => [d.start, d.end, d.log2])
+                    .data(d => d.callers[getActiveCaller()].segments.filter(s => s.end - s.start > totalLength/width), d => [d.start, d.end, d.log2])
                     .join(
                         enter => enter
                             .append("path")
@@ -825,7 +826,7 @@
                     .classed("selected", false);
                 plotArea.selectAll(`.panel-${selectedChromosomeIndex}-overlay`)
                     .classed("selected", true);
-                chromosomeView.update(cnvData[selectedChromosomeIndex], activeDataset);
+                chromosomeView.update(cnvData[selectedChromosomeIndex]);
             }
 
             const overlays = d3.selectAll(".genome-view-area").append("g");
@@ -886,14 +887,14 @@
                 .attr("text-anchor", "middle")
                 .attr("dominant-baseline", "text-before-edge");
 
-            const update = activeDataset => {
-                plotRegions(activeDataset);
-                plotSegments(activeDataset);
+            const update = () => {
+                plotRegions();
+                plotSegments();
             };
 
             const getSelectedChromosome = () => selectedChromosomeIndex;
 
-            update(activeDataset);
+            update();
 
             return {
                 update: update,
@@ -902,7 +903,7 @@
             };
         };
 
-        const populateTable = (dataset) => {
+        const populateTable = () => {
             const table = d3.select("#cnv-table");
 
             const tableHeader = table.append("thead").append("tr");
@@ -999,10 +1000,10 @@
                 tooltip.classed("hidden", true);
             }
 
-            const update = dataset => {
+            const update = () => {
+                const callerIndex = getActiveCaller();
                 tableData = cnvData
-                    .map(d => d["cnvs"]
-                        .filter(v => v.caller == dataset)
+                    .map(d => d.callers[callerIndex].cnvs
                         .map(di => {
                             const allCols = {view: "🔍", chromosome: d.chromosome, ...di};
                             const {caller, ...cols} = allCols;
@@ -1016,13 +1017,19 @@
 
                 // Find the corresponding copy numbers from the other caller(s)
                 for (cnv of tableData) {
-                    cnv.others = cnvData
-                        .map(d => d.cnvs
-                            .filter(di => cnv.chromosome === d.chromosome && di.caller !== dataset && di.gene === cnv.gene)
-                            .map(v => {
-                                return {caller: v.caller, type: v.type, cn: v.cn};
+                    // Same chromosome
+                    let chromData = cnvData.filter(d => d.chromosome === cnv.chromosome);
+                    // ... different caller
+                    let callerData = chromData[0].callers.filter((_d, i) => i !== callerIndex)
+                    // ... same gene
+                    let otherCnvs = callerData.map(
+                        d => d.cnvs
+                            .filter(c => cnv.genes.filter(g => c.genes.includes(g)).length > 0)
+                            .map(c => {
+                                return {caller: d.name, type: c.type, cn: c.cn}
                             })
-                        ).flat();
+                    ).flat();
+                    cnv.others = otherCnvs;
                 }
 
                 tableHeader
@@ -1071,7 +1078,7 @@
 
             const getData = () => tableData;
 
-            update(dataset);
+            update();
 
             return {
                 getData: getData,
@@ -1084,24 +1091,20 @@
             let bpPadding = (end - start) * padding;
             chromosomeView.update(
                 cnvData[genomeView.getSelectedChromosome()],
-                activeDataset,
                 start - bpPadding,
                 end + bpPadding
             );
         }
 
-        let activeDataset = getActiveDataset();
-
-        const chromosomeView = plotChromosomeView(cnvData[0], activeDataset);
-        const genomeView = plotGenomeView(activeDataset);
-        const resultsTable = populateTable(activeDataset);
+        const chromosomeView = plotChromosomeView(cnvData[0]);
+        const genomeView = plotGenomeView();
+        const resultsTable = populateTable();
 
         d3.selectAll("input[name=dataset]").on("change", e => {
-            activeDataset = e.target.value;
             let [xMin, xMax] = chromosomeView.getZoomRange();
-            chromosomeView.update(cnvData[genomeView.getSelectedChromosome()], activeDataset, xMin, xMax);
-            genomeView.update(activeDataset);
-            resultsTable.update(activeDataset);
+            chromosomeView.update(cnvData[genomeView.getSelectedChromosome()], xMin, xMax);
+            genomeView.update();
+            resultsTable.update();
         });
 
 
