@@ -54,6 +54,10 @@ def get_svdb_cnvs(vcf_filename, skip=None):
 
 def merge_cnv_dicts(dicts, vaf, annotations, chromosomes, svdb_cnvs):
     callers = list(map(lambda x: x["caller"], dicts))
+    caller_labels = dict(
+        cnvkit="cnvkit",
+        gatk_cnv="GATK CNV",
+    )
     cnvs = {}
     for chrom, chrom_length in chromosomes:
         cnvs[chrom] = dict(
@@ -62,7 +66,7 @@ def merge_cnv_dicts(dicts, vaf, annotations, chromosomes, svdb_cnvs):
             length=chrom_length,
             vaf=[],
             annotations=[],
-            callers={c: dict(name=c, ratios=[], segments=[], cnvs=[]) for c in callers},
+            callers={c: dict(name=c, label=caller_labels.get(c, c), ratios=[], segments=[], cnvs=[]) for c in callers},
         )
 
     for a in annotations:

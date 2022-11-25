@@ -248,17 +248,8 @@
 
         <div class="app-container">
             <div class="plot-container">
-                <fieldset>
+                <fieldset id="dataset-picker">
                     <legend>CNV dataset</legend>
-
-                    <div>
-                        <input type="radio" id="dataset-cnvkit" name="dataset" value="0" checked>
-                        <label for="dataset-cnvkit">cnvkit</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="dataset-gatk_cnv" name="dataset" value="1">
-                        <label for="dataset-gatk_cnv">GATK</label>
-                    </div>
                 </fieldset>
 
                 <section class="genome-view">
@@ -1085,6 +1076,27 @@
                 update: update,
             };
         };
+
+        // Populate dataset picker
+        d3.select("#dataset-picker")
+            .selectAll("div")
+            .data(cnvData[0].callers)
+            .join("div")
+                .call(e => {
+                    e.append("input")
+                        .attr("type", "radio")
+                        .property("checked", (_, i) => i === 0)
+                        .attr("value", (_, i) => i)
+                        .attr("id", d => `dataset-${d.name}`)
+                        .attr("name", "dataset")
+                    return e;
+                })
+                .call(e => {
+                    e.append("label")
+                        .attr("for", d => `dataset-${d.name}`)
+                        .text(d => d.label)
+                    return e;
+                });
 
         const zoomToRegion = (chromosome, start, end, padding = 0.05) => {
             genomeView.selectChromosome(chromosome)
