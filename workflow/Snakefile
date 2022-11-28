@@ -25,6 +25,7 @@ rule all:
 
 ruleorder: prealignment_fastp_pe > misc_bgzip
 ruleorder: snv_indels_tabix > annotation_tabix_vcf > misc_tabix
+ruleorder: snv_indels_gatk_mutect2_purecn > snv_indels_tabix > misc_tabix
 ruleorder: snv_indels_gatk_mutect2 > misc_tabix
 ruleorder: snv_indels_gatk_mutect2_gvcf > alignment_samtools_sort
 ruleorder: snv_indels_gatk_mutect2_gvcf > misc_tabix
@@ -274,11 +275,13 @@ module cnv_sv:
 
 use rule * from cnv_sv as cnv_sv_*
 
+
 use rule purecn from cnv_sv as cnv_sv_purecn with:
     input:
         unpack(get_purecn_inputs),
         vcf="snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.vcf.gz",
         tbi="snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.vcf.gz.tbi",
+
 
 use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
     input:
