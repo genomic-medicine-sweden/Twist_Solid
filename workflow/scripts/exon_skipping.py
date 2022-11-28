@@ -1,6 +1,4 @@
 
-import sys
-
 bed_file = open(snakemake.input.bed)
 junction_file = open(snakemake.input.junction)
 result_file = open(snakemake.output.result, "w")

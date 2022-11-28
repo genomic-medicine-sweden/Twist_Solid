@@ -253,6 +253,10 @@ properties:
       - chr_translation_file
       - levels
 
+  hydra_local_path:
+    type: string
+    description: path to a folder that contains hydra-genetics modules. Setting this variable will make the pipeline use local git repos instead of the once located on github.
+
   msisensor_pro:
     type: object
     properties:

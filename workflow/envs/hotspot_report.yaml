@@ -4,4 +4,4 @@ channels:
   - defaults
 dependencies:
   - pip:
-    - hydra-genetics==0.14.1
+    - hydra-genetics==0.15.0
