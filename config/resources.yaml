@@ -1,8 +1,8 @@
 default_resources:
   threads: 1
   time: "4:00:00"
-  mem_mb: 3072
-  mem_per_cpu: 3072
+  mem_mb: 6144
+  mem_per_cpu: 6144
   partition: "core"
 
 arriba:
@@ -19,6 +19,8 @@ bwa_mem:
 
 fastp_pe:
   threads: 5
+  mem_mb: 30720
+  mem_per_cpu: 6144
 
 fusioncatcher:
   threads: 10
@@ -29,13 +31,19 @@ fusioncatcher:
 vep:
   threads: 5
   time: "6:00:00"
+  mem_mb: 30720
+  mem_per_cpu: 6144
 
 fastqc:
   threads: 2
+  mem_mb: 12288
+  mem_per_cpu: 6144
 
 manta_run_workflow_t:
   threads: 4
   time: "8:00:00"
+  mem_mb: 24576
+  mem_per_cpu: 6144
 
 gatk_mutect2_gvcf:
   time: "8:00:00"
@@ -46,6 +54,8 @@ gatk_mutect2:
 gene_fuse:
   threads: 6
   time: "8:00:00"
+  mem_mb: 36864
+  mem_per_cpu: 6144
 
 vardict:
   time: "48:00:00"
