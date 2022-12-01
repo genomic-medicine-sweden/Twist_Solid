@@ -381,19 +381,9 @@
                 .attr("class", "guides");
 
             const plotGuides = function() {
-                let [yMin, yMax] = yScale.domain();
-                let guideLoc = null;
-                if (yMax - yMin <= 3.5) {
-                    // Every 0.5
-                    guideLoc = d3.range(Math.ceil(yMin * 2) / 2, Math.round(yMax * 2) / 2, 0.5);
-                } else {
-                    // Every 1
-                    guideLoc = d3.range(Math.ceil(yMin), Math.round(yMax), 1);
-                }
-
                 lrGuides
                     .selectAll(".guide")
-                    .data(guideLoc)
+                    .data(yScale.ticks(4))
                     .join(
                         enter => enter.append("line")
                             .attr("x1", xScale(0))
