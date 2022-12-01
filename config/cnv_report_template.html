@@ -447,6 +447,7 @@
                             .attr("fill-opacity", 0.3)
                             .call(update => update.transition()
                                 .attr("cx", d => xScale(d.start))
+                                .attr("cy", d => yScale(d.log2))
                             ),
                         exit => exit.transition()
                             .attr("fill-opacity", 0)
@@ -604,17 +605,7 @@
                         if (xMax - xMin < 3) {
                             return;
                         }
-                        xScale
-                            .domain([xScale.invert(xMin), xScale.invert(xMax)]);
-                        svg.transition()
-                            .select(".x-axis")
-                            .duration(500)
-                            .call(xAxis);
-                        const callerIndex = getActiveCaller();
-                        plotRegions(data.callers[callerIndex].ratios);
-                        plotVAF();
-                        plotSegments(data.callers[callerIndex].segments);
-                        plotAnnotations();
+                        zoomToRegion(data.chromosome, xScale.invert(xMin), xScale.invert(xMax), 0);
                     }))
                 .on("click", e => {
                     let [xMin, xMax] = xScale.domain();
@@ -664,8 +655,18 @@
                 xScale.domain([0, data.length]);
                 if (xMin && xMax) {
                     xScale.domain([Math.max(xMin, 0), Math.min(xMax, data.length)]);
+                    const yMin = data.callers[callerIndex].ratios
+                        .filter(d => d.start > xMin && d.start < xMax)
+                        .map(d => d.log2)
+                        .reduce((a, d) => d < a ? d : a);
+                    const yMax = data.callers[callerIndex].ratios
+                        .filter(d => d.start > xMin && d.start < xMax)
+                        .map(d => d.log2)
+                        .reduce((a, d) => d > a ? d : a);
+                    yScale.domain([yMin, yMax]);
+                } else {
+                    yScale.domain(d3.extent(data.callers[callerIndex].ratios, d => d.log2));
                 }
-                yScale.domain(d3.extent(data.callers[callerIndex].ratios, d => d.log2));
                 svg.transition().select(".x-axis")
                     .duration(500)
                     .call(xAxis);
@@ -871,7 +872,11 @@
 
             let selectedChromosomeIndex = 0;
             const selectChromosome = chromosome => {
+                previousChromosomeIndex = selectedChromosomeIndex;
                 selectedChromosomeIndex = cnvData.findIndex(d => d.chromosome === chromosome);
+                if (previousChromosomeIndex === selectedChromosomeIndex) {
+                    return;
+                }
                 plotArea.selectAll(".panel-overlay")
                     .classed("selected", false);
                 plotArea.selectAll(`.panel-${selectedChromosomeIndex}-overlay`)
