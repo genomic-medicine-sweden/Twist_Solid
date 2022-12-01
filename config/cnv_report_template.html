@@ -49,6 +49,12 @@
             stroke: orange;
         }
 
+        svg .guide {
+            opacity: 0.3;
+            stroke: black;
+            stroke-width: 0.3;
+        }
+
         /* Narrow view */
         @media (max-width: 600px) {
             .plot-container .x-label, .plot-container .y-label {
@@ -369,6 +375,58 @@
             const segments = lrArea.append("g")
                 .attr("class", "segments");
 
+            const lrGuides = lrArea.append("g")
+                .attr("class", "guides");
+            const vafGuides = vafArea.append("g")
+                .attr("class", "guides");
+
+            const plotGuides = function() {
+                let [yMin, yMax] = yScale.domain();
+                let guideLoc = null;
+                if (yMax - yMin <= 3.5) {
+                    // Every 0.5
+                    guideLoc = d3.range(Math.ceil(yMin * 2) / 2, Math.round(yMax * 2) / 2, 0.5);
+                } else {
+                    // Every 1
+                    guideLoc = d3.range(Math.ceil(yMin), Math.round(yMax), 1);
+                }
+
+                lrGuides
+                    .selectAll(".guide")
+                    .data(guideLoc)
+                    .join(
+                        enter => enter.append("line")
+                            .attr("x1", xScale(0))
+                            .attr("x2", xScale(data.length))
+                            .attr("y1", d => yScale(d))
+                            .attr("y2", d => yScale(d))
+                            .attr("class", "guide"),
+                        update => update
+                            .call(update => update.transition()
+                                .attr("y1", d => yScale(d))
+                                .attr("y2", d => yScale(d))
+                            ),
+                        exit => exit.remove());
+
+                vafGuides
+                    .selectAll(".guide")
+                    .data([0.5])
+                    .join(
+                        enter => enter.append("line")
+                            .attr("x1", xScale(0))
+                            .attr("x2", xScale(data.length))
+                            .attr("y1", yScaleVAF)
+                            .attr("y2", yScaleVAF)
+                            .attr("class", "guide"),
+                        update => update
+                            .call(update => update.transition()
+                                .attr("y1", yScaleVAF)
+                                .attr("y2", yScaleVAF)
+                            ),
+                        exit => exit.remove()
+                    );
+            }
+
             const plotRegions = function(regionData) {
                 regions.selectAll(".point")
                     .data(regionData, d => [d.start, d.end, d.log2])
@@ -615,6 +673,7 @@
                     .duration(500)
                     .call(yAxis);
                 svg.select(".x-label").text(data.label);
+                plotGuides();
                 plotRegions(data.callers[callerIndex].ratios);
                 plotVAF();
                 plotSegments(data.callers[callerIndex].segments);
