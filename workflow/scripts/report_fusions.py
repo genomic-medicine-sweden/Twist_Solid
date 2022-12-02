@@ -103,7 +103,8 @@ for line in input_arriba:
                 exon2 = region[3]
     total_supporting_reads = total_split_reads + discordant_mates
     output_fusions.write(f"Arriba\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}")
-    output_fusions.write(f"\t{breakpoint2}\t{coverage1}\t{coverage2}\t{total_split_reads}\t{discordant_mates}\t{total_supporting_reads}\n")
+    output_fusions.write(f"\t{breakpoint2}\t{coverage1}\t{coverage2}\t{total_split_reads}\t{discordant_mates}")
+    output_fusions.write(f"\t{total_supporting_reads}\n")
 
 
 # Star-fusions
