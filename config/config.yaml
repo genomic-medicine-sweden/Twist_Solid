@@ -90,6 +90,9 @@ cnvkit_call:
 cnvkit_diagram:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
+cnvkit_export_seg:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
 cnv_html_report:
   template: "config/cnv_report_template.html"
 
