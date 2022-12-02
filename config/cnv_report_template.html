@@ -49,7 +49,7 @@
             stroke: orange;
         }
 
-        svg .guide {
+        svg .gridline {
             opacity: 0.3;
             stroke: black;
             stroke-width: 0.3;
@@ -375,14 +375,14 @@
             const segments = lrArea.append("g")
                 .attr("class", "segments");
 
-            const lrGuides = lrArea.append("g")
-                .attr("class", "guides");
-            const vafGuides = vafArea.append("g")
-                .attr("class", "guides");
+            const lrGrid = lrArea.append("g")
+                .attr("class", "grid");
+            const vafGrid = vafArea.append("g")
+                .attr("class", "grid");
 
-            const plotGuides = function() {
-                lrGuides
-                    .selectAll(".guide")
+            const plotGrid = function() {
+                lrGrid
+                    .selectAll(".gridline")
                     .data(yScale.ticks(4))
                     .join(
                         enter => enter.append("line")
@@ -390,7 +390,7 @@
                             .attr("x2", xScale(data.length))
                             .attr("y1", d => yScale(d))
                             .attr("y2", d => yScale(d))
-                            .attr("class", "guide"),
+                            .attr("class", "gridline"),
                         update => update
                             .call(update => update.transition()
                                 .attr("y1", d => yScale(d))
@@ -398,8 +398,8 @@
                             ),
                         exit => exit.remove());
 
-                vafGuides
-                    .selectAll(".guide")
+                vafGrid
+                    .selectAll(".gridline")
                     .data([0.5])
                     .join(
                         enter => enter.append("line")
@@ -407,7 +407,7 @@
                             .attr("x2", xScale(data.length))
                             .attr("y1", yScaleVAF)
                             .attr("y2", yScaleVAF)
-                            .attr("class", "guide"),
+                            .attr("class", "gridline"),
                         update => update
                             .call(update => update.transition()
                                 .attr("y1", yScaleVAF)
@@ -664,7 +664,7 @@
                     .duration(500)
                     .call(yAxis);
                 svg.select(".x-label").text(data.label);
-                plotGuides();
+                plotGrid();
                 plotRegions(data.callers[callerIndex].ratios);
                 plotVAF();
                 plotSegments(data.callers[callerIndex].segments);
