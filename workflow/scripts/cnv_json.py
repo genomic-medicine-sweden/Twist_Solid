@@ -71,7 +71,7 @@ def cnv_parser(file_format, header=True, skip=0, comment="#"):
                 args = [lines] + list(args[1:])
                 return func(*args, **kwargs)
             finally:
-                if not f is None:
+                if f is not None:
                     f.close()
 
         PARSERS[caller][filetype] = wrapper

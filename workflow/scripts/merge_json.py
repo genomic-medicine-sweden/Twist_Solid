@@ -7,7 +7,7 @@ def parse_fai(filename, skip=None):
     with open(filename) as f:
         for line in f:
             chrom, length = line.strip().split()[:2]
-            if not skip is None and chrom in skip:
+            if skip is not None and chrom in skip:
                 continue
             yield chrom, int(length)
 
@@ -16,7 +16,7 @@ def parse_annotation_bed(filename, skip=None):
     with open(filename) as f:
         for line in f:
             chrom, start, end, name = line.strip().split()[:4]
-            if not skip is None and chrom in skip:
+            if skip is not None and chrom in skip:
                 continue
             yield chrom, int(start), int(end), name
 
@@ -24,7 +24,7 @@ def parse_annotation_bed(filename, skip=None):
 def get_vaf(vcf_filename, skip=None):
     vcf = cyvcf2.VCF(vcf_filename)
     for variant in vcf:
-        if not skip is None and variant.CHROM in skip:
+        if skip is not None and variant.CHROM in skip:
             continue
         yield variant.CHROM, variant.POS, variant.INFO.get("AF", None)
 
@@ -33,7 +33,7 @@ def get_svdb_cnvs(vcf_filename, skip=None):
     cnvs = defaultdict(list)
     vcf = cyvcf2.VCF(vcf_filename)
     for variant in vcf:
-        if not skip is None and variant.CHROM in skip:
+        if skip is not None and variant.CHROM in skip:
             continue
         caller = variant.INFO.get("CALLER")
         genes = variant.INFO.get("Genes")
