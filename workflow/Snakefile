@@ -115,30 +115,9 @@ module snv_indels:
 use rule * from snv_indels as snv_indels_*
 
 
-use rule gatk_mutect2 from snv_indels as snv_indels_gatk_mutect2_purecn with:
-    input:
-        map="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        fasta=config.get("reference", {}).get("fasta", ""),
-        bed="/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.210608.bed",
-    output:
-        stats=temp("snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.vcf.gz.stats"),
-        vcf=temp("snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.vcf.gz"),
-        tbi=temp("snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.vcf.gz.tbi"),
-        f1f2=temp("snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.f1r2.tar.gz"),
-    params:
-        extra="--genotype-germline-sites true --genotype-pon-sites true --interval-padding 75 --max-mnp-distance 0 --germline-resource /data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf.gz",
-    log:
-        "snv_indels/gatk_mutect2/{sample}_{type}.merged.softfiltered.vcf.gz.log",
-    benchmark:
-        repeat(
-            "snv_indels/gatk_mutect2/{sample}_{type}.merged.softfiltered.vcf.gz.benchmark.tsv",
-            config.get("gatk_mutect2", {}).get("benchmark_repeats", 1),
-        )
-
 module annotation:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.2.0")
+        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="d2da4d1")
     config:
         config
 
@@ -268,19 +247,12 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="08c76ff")
+        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="bb7e5dd")
     config:
         config
 
 
 use rule * from cnv_sv as cnv_sv_*
-
-
-use rule purecn from cnv_sv as cnv_sv_purecn with:
-    input:
-        unpack(get_purecn_inputs),
-        vcf="snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.vcf.gz",
-        tbi="snv_indels/gatk_mutect2/{sample}_{type}.purecn.softfiltered.vcf.gz.tbi",
 
 
 use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
