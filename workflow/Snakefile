@@ -25,7 +25,6 @@ rule all:
 
 ruleorder: prealignment_fastp_pe > misc_bgzip
 ruleorder: snv_indels_tabix > annotation_tabix_vcf > misc_tabix
-ruleorder: snv_indels_gatk_mutect2_purecn > snv_indels_tabix > misc_tabix
 ruleorder: snv_indels_gatk_mutect2 > misc_tabix
 ruleorder: snv_indels_gatk_mutect2_gvcf > alignment_samtools_sort
 ruleorder: snv_indels_gatk_mutect2_gvcf > misc_tabix
@@ -247,7 +246,7 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="bb7e5dd")
+        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="186f07b")
     config:
         config
 
