@@ -13,14 +13,16 @@ output_files = [
     "references/create_background_file/background_panel.tsv",
     "references/create_artifact_file/artifact_panel.tsv",
     "references/svdb_export/svdb_cnv.vcf",
+    "references/purecn_normal_db/normal_db.rds",
 ]
 output_files = [
-    "results/cnvkit.PoN.cnn",
-    "results/gatk_cnv_panel_of_normal.hdf5",
-    "results/Msisensor_pro_reference.list_baseline",
-    "results/background_panel.tsv",
-    "results/artifact_panel.tsv",
-    "results/svdb_cnv.vcf",
+    # "results/cnvkit.PoN.cnn",
+    # "results/gatk_cnv_panel_of_normal.hdf5",
+    # "results/Msisensor_pro_reference.list_baseline",
+    # "results/background_panel.tsv",
+    # "results/artifact_panel.tsv",
+    # "results/svdb_cnv.vcf",
+    "results/purecn_normal_db.rds",
 ]
 
 
@@ -74,5 +76,14 @@ rule copy_svdb_cnv:
         "references/svdb_export/svdb_cnv.vcf",
     output:
         "results/svdb_cnv.vcf",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_purecn:
+    input:
+        "references/purecn_normal_db/normal_db.rds",
+    output:
+        "results/purecn_normal_db.rds",
     shell:
         "cp {input} {output}"
