@@ -39,12 +39,12 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt, del_1p19q_cn, del_
                 if cn < del_1p19q_cn and chr == "chr1" and start >= del_1p19q["1p"][0] and start <= del_1p19q["1p"][1]:
                     if callers == "cnvkit":
                         del_1p19q["1p_cnvkit"] += end - start + 1
-                    elif callers == "gatk_cnv":
+                    elif callers == "gatk":
                         del_1p19q["1p_gatkcnv"] += end - start + 1
                 if cn < del_1p19q_cn and chr == "chr19" and start >= del_1p19q["19q"][0] and start <= del_1p19q["19q"][1]:
                     if callers == "cnvkit":
                         del_1p19q["19q_cnvkit"] += end - start + 1
-                    elif callers == "gatk_cnv":
+                    elif callers == "gatk":
                         del_1p19q["19q_gatkcnv"] += end - start + 1
                 if genes is not None:
                     for gene in genes.split(","):
