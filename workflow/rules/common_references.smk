@@ -47,11 +47,12 @@ wildcard_constraints:
 
 def compile_output_list(wildcards: snakemake.io.Wildcards):
     output_files = [
-        "results/cnvkit.PoN.cnn",
-        "results/gatk_cnv_panel_of_normal.hdf5",
-        "results/Msisensor_pro_reference.list_baseline",
-        "results/background_panel.tsv",
-        "results/artifact_panel.tsv",
-        "results/svdb_cnv.vcf",
+        #"results/cnvkit.PoN.cnn",
+        #"results/gatk_cnv_panel_of_normal.hdf5",
+        #"results/Msisensor_pro_reference.list_baseline",
+        #"results/background_panel.tsv",
+        #"results/artifact_panel.tsv",
+        #"results/svdb_cnv.vcf",
+        "references/purecn_normal_db/normal_db.rds",
     ]
     return output_files

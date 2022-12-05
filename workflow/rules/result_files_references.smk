@@ -16,12 +16,12 @@ output_files = [
     "references/purecn_normal_db/normal_db.rds",
 ]
 output_files = [
-    # "results/cnvkit.PoN.cnn",
-    # "results/gatk_cnv_panel_of_normal.hdf5",
-    # "results/Msisensor_pro_reference.list_baseline",
-    # "results/background_panel.tsv",
-    # "results/artifact_panel.tsv",
-    # "results/svdb_cnv.vcf",
+    "results/cnvkit.PoN.cnn",
+    "results/gatk_cnv_panel_of_normal.hdf5",
+    "results/Msisensor_pro_reference.list_baseline",
+    "results/background_panel.tsv",
+    "results/artifact_panel.tsv",
+    "results/svdb_cnv.vcf",
     "results/purecn_normal_db.rds",
 ]
 
