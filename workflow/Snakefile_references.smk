@@ -18,12 +18,19 @@ rule all:
 
 module references:
     snakefile:
-        github("hydra-genetics/references", path="workflow/Snakefile", tag="0cc80e2")
+        github("hydra-genetics/references", path="workflow/Snakefile", tag="80d2a70")
     config:
         config
 
 
 use rule * from references as references_*
+
+
+module misc:
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/misc", path="workflow/Snakefile", tag="v0.2.0")
+    config:
+        config
 
 
 use rule tabix from misc as misc_tabix
