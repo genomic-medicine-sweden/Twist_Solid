@@ -91,8 +91,8 @@ def get_cnv_ratio_file(wildcards):
     caller = wildcards.get("caller", "")
     if caller == "cnvkit":
         return "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr".format(**wildcards)
-    elif caller == "gatk_cnv":
-        return "cnv_sv/gatk_cnv_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv".format(**wildcards)
+    elif caller == "gatk":
+        return "cnv_sv/gatk_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv".format(**wildcards)
     else:
         raise NotImplementedError(f"not implemented for caller {caller}")
 
@@ -101,8 +101,8 @@ def get_cnv_segment_file(wildcards):
     caller = wildcards.get("caller", "")
     if caller == "cnvkit":
         return "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns".format(**wildcards)
-    elif caller == "gatk_cnv":
-        return "cnv_sv/gatk_cnv_model_segments/{sample}_{type}.clean.cr.seg".format(**wildcards)
+    elif caller == "gatk":
+        return "cnv_sv/gatk_model_segments/{sample}_{type}.clean.cr.seg".format(**wildcards)
     else:
         raise NotImplementedError(f"not implemented for caller {caller}")
 

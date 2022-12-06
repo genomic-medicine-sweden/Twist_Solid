@@ -56,7 +56,7 @@ def merge_cnv_dicts(dicts, vaf, annotations, chromosomes, svdb_cnvs):
     callers = list(map(lambda x: x["caller"], dicts))
     caller_labels = dict(
         cnvkit="cnvkit",
-        gatk_cnv="GATK CNV",
+        gatk="GATK",
     )
     cnvs = {}
     for chrom, chrom_length in chromosomes:

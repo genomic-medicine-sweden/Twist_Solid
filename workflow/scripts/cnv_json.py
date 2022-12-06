@@ -110,7 +110,7 @@ def parse_cnvkit_segments(file):
 
 
 @cnv_parser("tsv", header=True, comment="@")
-def parse_gatk_cnv_ratios(file):
+def parse_gatk_ratios(file):
     ratios = []
     for line in file:
         ratios.append(
@@ -125,7 +125,7 @@ def parse_gatk_cnv_ratios(file):
 
 
 @cnv_parser("tsv", header=True, comment="@")
-def parse_gatk_cnv_segments(file):
+def parse_gatk_segments(file):
     segments = []
     for line in file:
         segments.append(

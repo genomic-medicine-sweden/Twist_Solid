@@ -7,7 +7,7 @@ TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPT_DIR = os.path.abspath(os.path.join(TEST_DIR, "../../workflow/scripts"))
 sys.path.insert(0, SCRIPT_DIR)
 
-import cnv_to_json
+import cnv_json
 
 
 gatk_ratios = [
@@ -37,10 +37,10 @@ cnvkit_segments = [
 
 
 def test_parse_gatk_ratios(tmp_path):
-    f = tmp_path / "gatk_cnv_ratios.txt"
+    f = tmp_path / "gatk_ratios.txt"
     f.write_text("".join(gatk_ratios))
 
-    ratios = cnv_to_json.PARSERS["gatk_cnv"]["ratios"](f)
+    ratios = cnv_json.PARSERS["gatk"]["ratios"](f)
 
     assert ratios[0]["chromosome"] == "chr1"
     assert ratios[0]["start"] == 1
@@ -52,7 +52,7 @@ def test_parse_cnvkit_ratios(tmp_path):
     f = tmp_path / "cnvkit_ratios.txt"
     f.write_text("".join(cnvkit_ratios))
 
-    ratios = cnv_to_json.PARSERS["cnvkit"]["ratios"](f)
+    ratios = cnv_json.PARSERS["cnvkit"]["ratios"](f)
 
     assert ratios[0]["chromosome"] == "chr1"
     assert ratios[0]["start"] == 150500
@@ -64,7 +64,7 @@ def test_parse_cnvkit_segments(tmp_path):
     f = tmp_path / "cnvkit_segments.txt"
     f.write_text("".join(cnvkit_segments))
 
-    ratios = cnv_to_json.PARSERS["cnvkit"]["segments"](f)
+    ratios = cnv_json.PARSERS["cnvkit"]["segments"](f)
 
     assert ratios[0]["chromosome"] == "chr1"
     assert ratios[0]["start"] == 150500
@@ -72,16 +72,16 @@ def test_parse_cnvkit_segments(tmp_path):
     assert ratios[0]["log2"] == pytest.approx(-0.168018)
 
 
-def test_cnv_to_json(tmp_path):
+def test_cnv_json(tmp_path):
     ratio_file = tmp_path / "cnvkit_ratios.txt"
     ratio_file.write_text("".join(cnvkit_ratios))
     segment_file = tmp_path / "cnvkit_segments.txt"
     segment_file.write_text("".join(cnvkit_segments))
 
-    ratios = cnv_to_json.PARSERS["cnvkit"]["ratios"](ratio_file)
-    segments = cnv_to_json.PARSERS["cnvkit"]["segments"](segment_file)
+    ratios = cnv_json.PARSERS["cnvkit"]["ratios"](ratio_file)
+    segments = cnv_json.PARSERS["cnvkit"]["segments"](segment_file)
 
-    json_str = cnv_to_json.to_json("cnvkit", ratios, segments)
+    json_str = cnv_json.to_json("cnvkit", ratios, segments)
     json_dict = json.loads(json_str)
 
     assert "caller" in json_dict
