@@ -54,6 +54,7 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
         "results/background_panel.tsv",
         "results/artifact_panel.tsv",
         "results/svdb_cnv.vcf",
-        "references/purecn_normal_db/output/normalDB_hg19.rds",
+        "results/normalDB_hg19.rds",
+        "results/mapping_bias_nextseq_27_hg19.rds",
     ]
     return output_files
