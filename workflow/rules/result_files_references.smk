@@ -69,6 +69,7 @@ rule copy_purecn1:
     shell:
         "cp {input} {output}"
 
+
 rule copy_purecn2:
     input:
         "references/purecn_normal_db/output/mapping_bias_hg19.rds",
