@@ -13,7 +13,7 @@ output_files = [
     "references/create_background_file/background_panel.tsv",
     "references/create_artifact_file/artifact_panel.tsv",
     "references/svdb_export/svdb_cnv.vcf",
-    "references/purecn_normal_db/output/mapping_bias_hg19.rds",
+    "references/purecn_normal_db/output/normalDB_hg19.rds",
 ]
 output_files = [
     "results/cnvkit.PoN.cnn",
@@ -82,7 +82,7 @@ rule copy_svdb_cnv:
 
 rule copy_purecn:
     input:
-        "references/purecn_normal_db/output/mapping_bias_hg19.rds",
+        "references/purecn_normal_db/output/normalDB_hg19.rds",
     output:
         "results/purecn_normal_db.rds",
     shell:
