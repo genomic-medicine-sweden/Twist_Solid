@@ -18,7 +18,7 @@ rule all:
 
 module references:
     snakefile:
-        github("hydra-genetics/references", path="workflow/Snakefile", tag="e656676")
+        github("hydra-genetics/references", path="workflow/Snakefile", tag="cb28561")
     config:
         config
 
