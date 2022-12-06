@@ -87,34 +87,24 @@ def get_flowcell(units, wildcards):
     return flowcells.pop()
 
 
-def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
-    inputs = {k: v for k, v in config.get("purecn", {}).items() if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]}
-    segmentation_method = config.get("purecn", {}).get("segmentation_method", "")
-    if segmentation_method == "internal":
-        inputs.update(
-            {
-                "tumor": f"cnv_sv/purecn_coverage/{wildcards.sample}_T_coverage_loess.txt.gz",
-                "intervals": config.get("purecn", {}).get("intervals"),
-                "normaldb": config.get("purecn", {}).get("normaldb"),
-            }
-        )
-    elif segmentation_method == "GATK4":
-        inputs.update(
-            {
-                "tumor": f"cnv_sv/gatk_collect_read_counts/{wildcards.sample}_T.counts.hdf5",
-                "seg_file": f"cnv_sv/gatk_model_segments/{wildcards.sample}_T.clean.modelFinal.seg",
-                "log_ratio_file": f"cnv_sv/gatk_denoise_read_counts/{wildcards.sample}_T.clean.denoisedCR.tsv",
-            }
-        )
-    elif segmentation_method == "cnvkit":
-        inputs.update(
-            {
-                "tumor": f"cnv_sv/cnvkit_batch/{wildcards.sample}/{wildcards.sample}_T.cnr",
-                "seg_file": f"cnv_sv/cnvkit_export_seg/{wildcards.sample}_T.seg",
-            }
-        )
+def get_cnv_ratio_file(wildcards):
+    caller = wildcards.get("caller", "")
+    if caller == "cnvkit":
+        return "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr".format(**wildcards)
+    elif caller == "gatk":
+        return "cnv_sv/gatk_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv".format(**wildcards)
+    else:
+        raise NotImplementedError(f"not implemented for caller {caller}")
 
-    return inputs
+
+def get_cnv_segment_file(wildcards):
+    caller = wildcards.get("caller", "")
+    if caller == "cnvkit":
+        return "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns".format(**wildcards)
+    elif caller == "gatk":
+        return "cnv_sv/gatk_model_segments/{sample}_{type}.clean.cr.seg".format(**wildcards)
+    else:
+        raise NotImplementedError(f"not implemented for caller {caller}")
 
 
 def generate_copy_code(workflow, output_json):
