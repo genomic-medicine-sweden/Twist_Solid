@@ -257,7 +257,7 @@ purecn:
   segmentation_method: "cnvkit"
   fun_segmentation: "Hclust"
   interval_padding: 100
-  extra: "--normaldb /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/normalDB_twist-gms-st_hg19.rds --mapping-bias-file /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/mapping_bias_twist-gms-st_hg19.rds"
+  extra: "--mapping-bias-file /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/mapping_bias_nextseq_27_hg19.rds"
 
 purecn_coverage:
   container: "docker://hydragenetics/purecn:2.2.0"
