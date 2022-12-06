@@ -7,7 +7,7 @@ TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPT_DIR = os.path.abspath(os.path.join(TEST_DIR, "../../workflow/scripts"))
 sys.path.insert(0, SCRIPT_DIR)
 
-import cnv_json
+import cnv_json  # noqa
 
 
 gatk_ratios = [
@@ -29,10 +29,13 @@ cnvkit_ratios = [
 
 cnvkit_segments = [
     "chromosome\tstart\tend\tgene\tlog2\tdepth\tprobes\tweight\tci_lo\tci_hi\n",
-    "chr1\t150500\t61370310\tHES5_Exon2_NM_001010926.4,HES5_Exon1_NM_001010926.4\t-0.168018\t876.26\t862\t825.95\t-0.171634\t-0.163029\n",
+    "chr1\t150500\t61370310\tHES5_Exon2_NM_001010926.4,HES5_Exon1_NM_001010926.4\t-0.168018\t"
+    "876.26\t862\t825.95\t-0.171634\t-0.163029\n",
     "chr1\t61370310\t62653728\t-\t4.3806\t22.4843\t8\t7.83195\t4.25645\t4.47999\n",
-    "chr1\t62653728\t121635711\tJAK1_Exon26_NM_001320923.1,JAK1_Exon25_NM_001320923.1\t-0.0693903\t485.77\t564\t539.866\t-0.07\t48381\t-0.0629965\n",
-    "chr1\t142388707\t188892112\tMCL1_Exon2_NM_182763.2,MCL1_Exon3_NM_001197320.1\t0.0677003\t584.127\t456\t435.344\t0.0627169\t0.0738394\n",
+    "chr1\t62653728\t121635711\tJAK1_Exon26_NM_001320923.1,JAK1_Exon25_NM_001320923.1\t-0.0693903\t"
+    "485.77\t564\t539.866\t-0.07\t48381\t-0.0629965\n",
+    "chr1\t142388707\t188892112\tMCL1_Exon2_NM_182763.2,MCL1_Exon3_NM_001197320.1\t0.0677003\t"
+    "584.127\t456\t435.344\t0.0627169\t0.0738394\n",
 ]
 
 
