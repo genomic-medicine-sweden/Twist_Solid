@@ -50,9 +50,9 @@
         }
 
         svg .gridline {
-            opacity: 0.3;
+            opacity: 0.25;
             stroke: black;
-            stroke-width: 0.3;
+            stroke-width: 0.3px;
         }
 
         /* Narrow view */
@@ -341,7 +341,7 @@
                 .call(d3.axisBottom(xScale).ticks(5));
 
             const yAxis = g => g
-                .call(d3.axisLeft(yScale).ticks(4));
+                .call(d3.axisLeft(yScale).ticks(8).tickFormat((y, i) => i % 2 == 0 ? y : ""));
 
             const yAxisVAF = g => g
                 .call(d3.axisLeft(yScaleVAF).ticks(5))
@@ -383,7 +383,7 @@
             const plotGrid = function() {
                 lrGrid
                     .selectAll(".gridline")
-                    .data(yScale.ticks(4))
+                    .data(yScale.ticks())
                     .join(
                         enter => enter.append("line")
                             .attr("x1", xScale(0))
@@ -400,7 +400,7 @@
 
                 vafGrid
                     .selectAll(".gridline")
-                    .data([0.5])
+                    .data(yScaleVAF.ticks())
                     .join(
                         enter => enter.append("line")
                             .attr("x1", xScale(0))
@@ -711,10 +711,10 @@
                 .range([panelHeight, 0]);
 
             const yAxis = g => g
-                .call(d3.axisLeft(yScale).ticks(4));
+                .call(d3.axisLeft(yScale).ticks(5));
 
             const yAxisVAF = g => g
-                .call(d3.axisLeft(yScaleVAF).ticks(4));
+                .call(d3.axisLeft(yScaleVAF).ticks(5));
 
             const svg = d3.select("#genome-view")
                 .attr("preserveAspectRatio", "xMinYMin meet")
