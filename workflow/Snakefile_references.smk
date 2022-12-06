@@ -18,7 +18,7 @@ rule all:
 
 module references:
     snakefile:
-        github("hydra-genetics/references", path="workflow/Snakefile", tag="23ac8d3")
+        github("hydra-genetics/references", path="workflow/Snakefile", tag="e656676")
     config:
         config
 
@@ -34,3 +34,6 @@ module misc:
 
 
 use rule tabix from misc as misc_tabix
+
+
+use rule bgzip from misc as misc_bgzip
