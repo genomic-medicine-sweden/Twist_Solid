@@ -39,7 +39,13 @@ for line in junction_file:
     end_pos = int(lline[2])
     nr_reads = int(lline[6])
     key1 = chrom + "_" + str(start_pos)
+    key1_1 = chrom + "_" + str(start_pos-1)
+    key1_2 = chrom + "_" + str(start_pos+1)
     key2 = chrom + "_" + str(end_pos)
+    if key1 not in pos_dict:
+        key1 = key1_1
+    if key1 not in pos_dict:
+        key1 = key1_2
     if key1 not in pos_dict:
         continue
     i_start = 100
