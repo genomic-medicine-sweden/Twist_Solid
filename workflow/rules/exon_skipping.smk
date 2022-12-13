@@ -7,7 +7,7 @@ __license__ = "GPL-3"
 rule exon_skipping:
     input:
         bed=config.get("exon_skipping", {}).get("design_bed", ""),
-        junction="fusions/star_fusion/{sample}_{type}/SJ.out.tab",
+        junction="alignment/star/{sample}_{type}.SJ.out.tab",
     output:
         result=temp("fusions/exon_skipping/{sample}_{type}.results.tsv"),
     log:
