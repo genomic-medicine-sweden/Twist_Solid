@@ -40,21 +40,9 @@ for line in junction_file:
     end_pos = int(lline[2])
     nr_reads = int(lline[6])
     key1 = chrom + "_" + str(start_pos)
-    key1_1 = chrom + "_" + str(start_pos-1)
-    key1_2 = chrom + "_" + str(start_pos+1)
     key2 = chrom + "_" + str(end_pos)
-    key2_1 = chrom + "_" + str(end_pos-1)
-    key2_2 = chrom + "_" + str(end_pos+1)
-    if key1 not in pos_dict:
-        key1 = key1_1
-    if key1 not in pos_dict:
-        key1 = key1_2
     if key1 not in pos_dict:
         continue
-    if key2_1 in pos_dict:
-        key2 = key2_1
-    if key2_2 in pos_dict:
-        key2 = key2_2
     i_start = 100
     i_end = 100
     i_start_name = ""
