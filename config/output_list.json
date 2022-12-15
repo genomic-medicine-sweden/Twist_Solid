@@ -17,7 +17,7 @@
   "results/dna/cnv/{sample}_{type}/{sample}_{type}.cnv_report.tsv": {"name": "_result_cnv_report_tsv", "file": "cnv_sv/svdb_query/{sample}_{type}.cnv_report.tsv", "types": ["T", "N"]},
   "results/dna/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz": {"name": "_result_manta_vcf", "file": "cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz", "types": ["T"]},
   "results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.purity.csv": {"name": "_result_purecn", "file": "cnv_sv/purecn/{sample}_{type}.csv", "types": ["T"]},
-  "results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.purity.txt": {"name": "_result_purecn", "file": "cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt", "types": ["T"]},
+  "results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.purity.txt": {"name": "_result_purecn_purity_file", "file": "cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt", "types": ["T"]},
   "results/dna/fusions/{sample}_{type}.gene_fuse_report.tsv": {"name": "_result_gene_fuse_report", "file": "fusions/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv", "types": ["T", "N"]},
   "results/dna/fusions/{sample}_{type}.gene_fuse_fusions.txt": {"name": "_result_gene_fuse_fusions_txt", "file": "fusions/gene_fuse/{sample}_{type}_gene_fuse_fusions.txt", "types": ["T", "N"]},
   "results/dna/hrd/{sample}_{type}.scarhrd_cnvkit_score.txt": {"name": "_result_hrd_score_txt", "file": "biomarker/scarhrd/{sample}_{type}.scarhrd_cnvkit_score.txt", "types": ["T", "N"]},
