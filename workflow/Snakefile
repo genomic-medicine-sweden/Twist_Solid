@@ -246,7 +246,7 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="994fa78")
+        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="f6072d2")
     config:
         config
 
