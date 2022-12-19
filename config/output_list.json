@@ -27,7 +27,6 @@
   "results/dna/hrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt": {"name": "_result_hrd_score_txt2", "file": "biomarker/scarhrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt", "types": ["T", "N"]},
   "results/rna/fusion/{sample}_{type}.arriba.fusions.tsv": {"name": "_result_arriba_fusion_tsv", "file": "fusions/arriba/{sample}_{type}.fusions.tsv", "types": ["R"]},
   "results/rna/fusion/{sample}_{type}.arriba.fusions.pdf": {"name": "_result_arriba_fusion_pdf", "file": "fusions/arriba_draw_fusion/{sample}_{type}.pdf", "types": ["R"]},
-  "results/rna/fusion/{sample}_{type}.fusion_report.tsv": {"name": "_result_fusion_report_tsv", "file": "fusions/report_fusions/{sample}_{type}.fusion_report.tsv", "types": ["R"]},
   "results/rna/fusion/{sample}_{type}.exon_skipping.tsv": {"name": "_result_fusion_exon_skipping_tsv", "file": "fusions/exon_skipping/{sample}_{type}.results.tsv", "types": ["R"]},
   "results/rna/fusion/{sample}_{type}.star-fusion.fusion_predictions.tsv": {"name": "_result_star_fusion_prediction_tsv", "file": "fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv", "types": ["R"]},
   "results/rna/fusion/{sample}_{type}.fusioncatcher.fusion_predictions.txt": {"name": "_result_fusioncatcher_prediction_tsv", "file": "fusions/fusioncatcher/{sample}_{type}/final-list_candidate-fusion-genes.hg19.txt", "types": ["R"]},
