@@ -139,6 +139,20 @@ def get_vcfs_for_merge_json(wildcards):
     return vcf_dict[wildcards.tc_method]
 
 
+def get_tc2(wildcards):
+    tc_method = wildcards.tc_method
+    if tc_method == "pathology":
+        return get_sample(samples, wildcards)["tumor_content"]
+    else:
+        tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        if not os.path.exists(tc_file):
+            return -1
+        else:
+            with open(tc_file, "r") as f:
+                tc = f.read()
+            return tc
+
+
 def generate_copy_code(workflow, output_json):
     code = ""
     for result, values in output_json.items():

@@ -213,7 +213,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 module biomarker:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.1.0")
+        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="21da923")
     config:
         config
 
@@ -223,7 +223,7 @@ use rule * from biomarker as biomarker_*
 
 use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
     input:
-        seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns",
+        seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns",
 
 
 module fusions:
@@ -246,20 +246,12 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="900ec85")
+        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="d772cb2")
     config:
         config
 
 
 use rule * from cnv_sv as cnv_sv_*
-
-
-# use rule svdb_merge from cnv_sv as cnv_sv_svdb_merge2 with:
-#     input:
-#         #vcfs=get_vcfs_for_svdb_merge2,
-#         vcfs=["cnv_sv/cnvkit_vcf/{sample}_{type}.no_tc.vcf", "cnv_sv/gatk_vcf/{sample}_{type}.no_tc.vcf"],
-# #    wildcard_constraints:
-# #        tc_method="purecn"
 
 
 use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
@@ -288,15 +280,15 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
         segment="cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
     output:
-        segment=temp("cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns"),
+        segment=temp("cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns"),
     params:
-        tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
+        tc=get_tc2,
         extra=config.get("cnvkit_call_hrd", {}).get("extra", ""),
     log:
-        "cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns.log",
+        "cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns.log",
     benchmark:
         repeat(
-            "cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns.benchmark.tsv",
+            "cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns.benchmark.tsv",
             config.get("cnvkit_call_hrd", {}).get("benchmark_repeats", 1),
         )
 
