@@ -278,9 +278,15 @@ star_fusion:
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
-  cnv_callers:
-    - "cnvkit"
-    - "gatk"
+  tc_method:
+    - name: purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
+    - name: pathology
+      cnv_caller:
+        - cnvkit
+        - gatk
   extra: "--pass_only" #Just merge the two vcf-files without merging regions
 
 svdb_query:

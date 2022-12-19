@@ -3,12 +3,12 @@ rule cnv_json:
         ratios=get_cnv_ratio_file,
         segments=get_cnv_segment_file,
     output:
-        json=temp("cnv_sv/cnv_html_report/{sample}_{type}.{caller}.json"),
+        json=temp("cnv_sv/cnv_html_report/{sample}_{type}.{caller}.{tc_method}.json"),
     log:
-        "cnv_sv/cnv_html_report/{sample}_{type}.{caller}.cnv_json.log",
+        "cnv_sv/cnv_html_report/{sample}_{type}.{caller}.{tc_method}.cnv_json.log",
     benchmark:
         repeat(
-            "cnv_sv/cnv_html_report/{sample}_{type}.{caller}.cnv_json.benchmark.tsv",
+            "cnv_sv/cnv_html_report/{sample}_{type}.{caller}.{tc_method}.cnv_json.benchmark.tsv",
             config.get("merge_json", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("cnv_json", {}).get("threads", config["default_resources"]["threads"])
@@ -33,23 +33,17 @@ rule merge_json:
         annotation_bed=list(config.get("annotate_cnv", {}).values()),
         fai=config.get("reference", {}).get("fai", ""),
         germline_vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
-        json=expand(
-            "cnv_sv/cnv_html_report/{{sample}}_{{type}}.{caller}.json",
-            caller=config.get("svdb_merge", {}).get("cnv_callers", []),
-        ),
-        svdb_vcfs=expand(
-            "cnv_sv/svdb_query/{{sample}}_{{type}}.svdb_query.annotate_cnv.{tag}.vcf",
-            tag=list(config.get("annotate_cnv", {}).keys()),
-        ),
+        json=get_json_for_merge_json,
+        svdb_vcfs=get_vcfs_for_merge_json,
     output:
-        json=temp("cnv_sv/cnv_html_report/{sample}_{type}.merged.json"),
+        json=temp("cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.merged.json"),
     params:
         skip_chromosomes=config.get("reference", {}).get("skip_chrs", None),
     log:
-        "cnv_sv/cnv_html_report/{sample}_{type}.merge_json.log",
+        "cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.merge_json.log",
     benchmark:
         repeat(
-            "cnv_sv/cnv_html_report/{sample}_{type}.merge_json.benchmark.tsv",
+            "cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.merge_json.benchmark.tsv",
             config.get("merge_json", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("merge_json", {}).get("threads", config["default_resources"]["threads"])
@@ -71,15 +65,15 @@ rule merge_json:
 
 rule cnv_html_report:
     input:
-        json="cnv_sv/cnv_html_report/{sample}_{type}.merged.json",
+        json="cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.merged.json",
         template=config.get("cnv_html_report", {}).get("template", ""),
     output:
-        html=temp("cnv_sv/cnv_html_report/{sample}_{type}.cnv.html"),
+        html=temp("cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.cnv.html"),
     log:
-        "cnv_sv/cnv_html_report/{sample}_{type}.cnv.html.log",
+        "cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.cnv.html.log",
     benchmark:
         repeat(
-            "cnv_sv/cnv_html_report/{sample}_{type}.cnv.json.benchmark.tsv",
+            "cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.cnv.json.benchmark.tsv",
             config.get("cnv_html_report", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("cnv_html_report", {}).get("threads", config["default_resources"]["threads"])
