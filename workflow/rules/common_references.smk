@@ -10,6 +10,7 @@ import pandas as pd
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
+from hydra_genetics.utils.misc import get_module_snakefile
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
@@ -53,5 +54,7 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
         "results/background_panel.tsv",
         "results/artifact_panel.tsv",
         "results/svdb_cnv.vcf",
+        "results/normalDB_hg19.rds",
+        "results/mapping_bias_nextseq_27_hg19.rds",
     ]
     return output_files
