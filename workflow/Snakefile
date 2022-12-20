@@ -246,7 +246,7 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="d772cb2")
+        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="28bdbe4")
     config:
         config
 
@@ -279,6 +279,7 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
     input:
         segment="cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+        tc_file=get_tc_file2,
     output:
         segment=temp("cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns"),
     params:

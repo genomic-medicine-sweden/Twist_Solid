@@ -153,6 +153,14 @@ def get_tc2(wildcards):
             return tc
 
 
+def get_tc_file2(wildcards):
+    tc_method = wildcards.tc_method
+    if tc_method == "pathology":
+        return "samples.tsv"
+    else:
+        return tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+
+
 def generate_copy_code(workflow, output_json):
     code = ""
     for result, values in output_json.items():
