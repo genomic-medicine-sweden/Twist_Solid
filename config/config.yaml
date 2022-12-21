@@ -43,8 +43,8 @@ add_multi_snv_in_codon:
 
 annotate_cnv:
   cnv_amp_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed"
-  cnv_loh_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_uppsala_genes.bed"
-  # cnv_loh_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_genes.bed"
+  # cnv_loh_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_uppsala_genes.bed"
+  cnv_loh_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_genes.bed"
 
 bcbio_variation_recall_ensemble:
   container: "docker://hydragenetics/bcbio-vc:0.2.6"
@@ -59,6 +59,9 @@ bcftools_annotate:
 
 bcftools_filter_include_region:
   exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.bed"
+
+bcftools_filter_exclude_region:
+  blacklist: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnvkit_germline_blacklist_20221221.bed"
 
 bcftools_id_snps:
   snps_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/ID_SNPs.bed"
