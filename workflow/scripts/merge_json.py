@@ -29,13 +29,15 @@ def get_vaf(vcf_filename, skip=None):
         yield variant.CHROM, variant.POS, variant.INFO.get("AF", None)
 
 
-def get_svdb_cnvs(vcf_filename, skip=None):
+def get_cnvs(vcf_filename, skip=None):
     cnvs = defaultdict(list)
     vcf = cyvcf2.VCF(vcf_filename)
     for variant in vcf:
         if skip is not None and variant.CHROM in skip:
             continue
         caller = variant.INFO.get("CALLER")
+        if caller is None:
+            raise KeyError("could not find caller information for variant, has the vcf been annotated?")
         genes = variant.INFO.get("Genes")
         if genes is None:
             continue
@@ -129,7 +131,7 @@ def main():
     fasta_index_file = snakemake.input["fai"]
     germline_vcf = snakemake.input["germline_vcf"]
     json_files = snakemake.input["json"]
-    svdb_vcf_files = snakemake.input["svdb_vcfs"]
+    cnv_vcf_files = snakemake.input["cnv_vcfs"]
 
     output_file = snakemake.output["json"]
 
@@ -146,14 +148,14 @@ def main():
     for filename in annotation_beds:
         annotations.append(parse_annotation_bed(filename, skip_chromosomes))
 
-    svdb_cnvs = []
-    for filename in svdb_vcf_files:
+    cnv_vcfs = []
+    for filename in cnv_vcf_files:
         # Parse VCF file and get annotated, called CNVs. If there are none,
         # create an empty list for each caller. In this case, no table will
         # be presented in the final report.
-        svdb_cnvs.append(get_svdb_cnvs(filename, skip_chromosomes))
+        cnv_vcfs.append(get_cnvs(filename, skip_chromosomes))
 
-    cnvs = merge_cnv_dicts(cnv_dicts, vaf, annotations, fai, svdb_cnvs)
+    cnvs = merge_cnv_dicts(cnv_dicts, vaf, annotations, fai, cnv_vcfs)
 
     with open(output_file, "w") as f:
         print(json.dumps(cnvs), file=f)
