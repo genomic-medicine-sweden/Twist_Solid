@@ -37,6 +37,7 @@ bcftools_filter_include_region:
 bcftools_filter_exclude_region:
   exon: "DATA/design.noexon1.bed"
   nocnv: "DATA/design.noexon1.bed"
+  blacklist: "DATA/cnvkit_germline_blacklist_20221221.bed"
 
 bcbio_variation_recall_ensemble:
   container: "docker://gmsuppsala/somatic:develop"
