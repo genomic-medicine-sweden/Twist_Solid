@@ -260,7 +260,7 @@ purecn:
   interval_padding: 100
   segmentation_method: "internal"
   fun_segmentation: "PSCBS"
-  extra: "--min-ploidy 1.5 --max-ploidy 2.5 --model betabin --mapping-bias-file /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/mapping_bias_nextseq_27_hg19.rds"
+  extra: "--model betabin --mapping-bias-file /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/mapping_bias_nextseq_27_hg19.rds"
   normaldb: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/normalDB_nextseq_27_hg19.rds"
   intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
 
