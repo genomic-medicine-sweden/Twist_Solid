@@ -8,7 +8,7 @@ def fix_AD(vcf_in, vcf_out):
                 header = False
             continue
         columns = line.strip().split("\t")
-        FORMAT = column[8].split(":")
+        FORMAT = columns[8].split(":")
         AD_index = 0
         AF_index = 0
         DP_index = 0
