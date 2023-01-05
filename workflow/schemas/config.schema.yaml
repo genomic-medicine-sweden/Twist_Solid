@@ -123,6 +123,14 @@ properties:
           type: string
           description: Gene annotated bed files with genes to be included.
 
+  fix_vcf_ad_for_qci:
+    type: object
+    description: parameters for fix_vcf_ad_for_qci
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+
   gatk_calculate_contamination:
     type: object
     description: parameters for gatk_calculate_contamination
