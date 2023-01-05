@@ -56,7 +56,7 @@
         }
 
         /* Narrow view */
-        @media (max-width: 600px) {
+        @media screen and (max-width: 600px) {
             .plot-container .x-label, .plot-container .y-label {
                 font-size: 1rem;
             }
@@ -67,7 +67,7 @@
         }
 
         /* Wide view */
-        @media (min-width: 1600px) {
+        @media screen and (min-width: 1600px) {
             .app-container {
                 flex-direction: row;
             }
@@ -98,7 +98,7 @@
         }
 
         /* Normal view */
-        @media (min-width: 1200px) and (width < 1600px) {
+        @media screen and (min-width: 1200px) and (width < 1600px) {
             .app-container {
                 flex-direction: row;
             }
@@ -238,6 +238,29 @@
             stroke-width: 6;
         }
 
+        /* Print layout */
+        @media print {
+            header {
+                margin: 0;
+            }
+
+            .plot-container, .app-container {
+                display: block;
+            }
+
+            .no-print {
+                display: none
+            }
+
+            .plot-section {
+                break-inside: avoid;
+            }
+
+            .table-container {
+                break-before: page;
+            }
+        }
+
 
 
     </style>
@@ -258,15 +281,15 @@
                     <legend>CNV dataset</legend>
                 </fieldset>
 
-                <section class="genome-view">
+                <section class="genome-view plot-section">
                     <h2>Genome view</h2>
-                    <p>Click a chromosome to visualise it below.</p>
+                    <p class="no-print">Click a chromosome to visualise it below.</p>
                     <svg id="genome-view"></svg>
                 </section>
 
-                <section class="chromosome-view">
+                <section class="chromosome-view plot-section">
                     <h2>Chromosome view</h2>
-                    <p>Click and drag to zoom. Click the plot to reset zoom.</p>
+                    <p class="no-print">Click and drag to zoom. Click the plot to reset zoom.</p>
                     <svg id="chromosome-view"></svg>
                 </section>
             </div>
@@ -274,7 +297,7 @@
             <div class="table-container">
                 <section>
                     <h2>Results table</h2>
-                    <p>
+                    <p class="no-print">
                         Click the magnifying glass to zoom in on the region in question.
                         Hover over the copy number to see what results other callers got for this gene.
                     </p>
