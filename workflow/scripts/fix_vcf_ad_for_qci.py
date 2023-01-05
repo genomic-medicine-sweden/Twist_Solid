@@ -70,8 +70,9 @@ def fix_AD(vcf_in, vcf_out):
             i += 1
         vcf_out.write("\n")
     vcf_out.close()
+    vcf_in.close()
 
 
-vcf_in = snakemake.input.vcf
-vcf_out = snakemake.output.vcf
+vcf_in = open(snakemake.input.vcf)
+vcf_out = open(snakemake.output.vcf, "w")
 fix_AD(vcf_in, vcf_out)
