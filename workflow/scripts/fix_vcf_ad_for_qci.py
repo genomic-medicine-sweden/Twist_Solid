@@ -1,9 +1,29 @@
 
-def fix_AD(vcf_in, vcf_out):
+from pysam import VariantFile
+import logging
+
+
+def fix_AD(vcf_in_filename, vcf_out_filename):
+
+    log = logging.getLogger()
+
+    """Add header info that the AD field is modified"""
+    vcf_in = VariantFile(vcf_in_filename)
+    new_header = vcf_in.header
+    new_header.add_meta(
+        "QCI",
+        "OBS! The AD field is modified in such a way that when QCI calculates the allele frequency it corresponds to the AF field"
+    )
+    vcf_out = VariantFile(vcf_out_filename, 'w', header=new_header)
+    vcf_out.close()
+    vcf_in.close()
+
+    vcf_out = open(vcf_out_filename, "a")
+    vcf_in = open(vcf_in_filename)
+
     header = True
     for line in vcf_in:
         if header:
-            vcf_out.write(line)
             if line[:6] == "#CHROM":
                 header = False
             continue
@@ -41,7 +61,7 @@ def fix_AD(vcf_in, vcf_out):
             AD2[1] = int(round(AF * DP, 0))
         AF2_AD = AD2[1] / (AD2[0] + AD2[1])
         if abs(AF2_AD - AF) > 0.01:
-            print("AD and AF are to different!", AF, AF2_AD, line)
+            log.info(f"Warning: AF and AD are to different!\nAF: {AF}\nAD_AF: {AF2_AD}\nVariant line:\n{line}")
         A1 = AD2[0]
         A2 = AD2[1]
         AD2 = f"{A1},{A2}"
@@ -73,6 +93,6 @@ def fix_AD(vcf_in, vcf_out):
     vcf_in.close()
 
 
-vcf_in = open(snakemake.input.vcf)
-vcf_out = open(snakemake.output.vcf, "w")
+vcf_in = snakemake.input.vcf
+vcf_out = snakemake.output.vcf
 fix_AD(vcf_in, vcf_out)
