@@ -22,14 +22,6 @@ arriba_draw_fusion:
   gtf: "reference/WASH7P.gtf"
   protein_domains: "reference/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3"
 
-bwa_mem:
-  container: "docker://hydragenetics/bwa_mem:0.7.17"
-  amb: "reference/WASH7P.fna.amb"
-  ann: "reference/WASH7P.fna.ann"
-  bwt: "reference/WASH7P.fna.bwt"
-  pac: "reference/WASH7P.fna.pac"
-  sa: "reference/WASH7P.fna.sa"
-
 bcftools_filter_include_region:
   exon: "DATA/design.noexon1.bed"
   nocnv: "DATA/design.noexon1.bed"
@@ -37,6 +29,7 @@ bcftools_filter_include_region:
 bcftools_filter_exclude_region:
   exon: "DATA/design.noexon1.bed"
   nocnv: "DATA/design.noexon1.bed"
+  blacklist: "DATA/cnvkit_germline_blacklist_20221221.bed"
 
 bcbio_variation_recall_ensemble:
   container: "docker://hydragenetics/bcbio-vc:0.2.6"
@@ -44,16 +37,16 @@ bcbio_variation_recall_ensemble:
     - vardict
     - gatk_mutect2
 
-bcftools_filter_include_region:
-  exon: "DATA/design.noexon1.bed"
-  nocnv: "DATA/design.noexon1.bed"
-
-bcftools_filter_exclude_region:
-  exon: "DATA/design.noexon1.bed"
-  nocnv: "DATA/design.noexon1.bed"
-
 bcftools_id_snps:
   snps_bed: "DATA/ID_SNPs.bed"
+
+bwa_mem:
+  container: "docker://hydragenetics/bwa_mem:0.7.17"
+  amb: "reference/WASH7P.fna.amb"
+  ann: "reference/WASH7P.fna.ann"
+  bwt: "reference/WASH7P.fna.bwt"
+  pac: "reference/WASH7P.fna.pac"
+  sa: "reference/WASH7P.fna.sa"
 
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"
@@ -285,9 +278,15 @@ star_fusion:
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
-  cnv_callers:
-    - "cnvkit"
-    - "gatk"
+  tc_method:
+    - name: purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
+    - name: pathology
+      cnv_caller:
+        - cnvkit
+        - gatk
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.6.0"
