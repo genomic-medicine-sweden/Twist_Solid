@@ -128,7 +128,7 @@ def get_filtered_cnv_vcfs_for_merge_json(wildcards):
     for t in tags:
         cnv_vcfs.append(
             f"cnv_sv/svdb_query/{wildcards.sample}_{wildcards.type}.{wildcards.tc_method}.svdb_query."
-            f"annotate_cnv.{t['annotation']}.filter.{t['filter']}.vcf"
+            f"annotate_cnv.{t['annotation']}.filter.{t['filter']}.vcf.gz"
         )
     return sorted(cnv_vcfs)
 
@@ -139,7 +139,7 @@ def get_unfiltered_cnv_vcfs_for_merge_json(wildcards):
     for t in tags:
         cnv_vcfs.append(
             f"cnv_sv/svdb_query/{wildcards.sample}_{wildcards.type}.{wildcards.tc_method}.svdb_query."
-            f"annotate_cnv.{t['annotation']}.vcf"
+            f"annotate_cnv.{t['annotation']}.vcf.gz"
         )
     return sorted(cnv_vcfs)
 
