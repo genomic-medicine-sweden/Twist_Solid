@@ -129,28 +129,23 @@ def merge_cnv_dicts(dicts, vaf, annotations, chromosomes, filtered_cnvs, unfilte
 
             added_cnvs = set()
 
-            print(chrom, first_caller, rest_callers)
-            # Use the first caller in the list as the reference. It shouldn't
-            # matter which one I start with.
             for cnv1 in cnvdict[first_caller]:
                 keep = False
 
                 if cnv1 in f_cnvs[chrom][first_caller]:
                     keep = True
 
-                cnv_set = [cnv1]
+                cnv_group = [cnv1]
                 for caller2 in rest_callers:
                     for cnv2 in cnvdict[caller2]:
-                        if cnv2 in f_cnvs[chrom][caller2]:
-                            keep = True
-
                         if cnv1.overlaps(cnv2):
-                            cnv_set.append(cnv2)
+                            if cnv2 in f_cnvs[chrom][caller2]:
+                                keep = True
+
+                            cnv_group.append(cnv2)
 
                 if keep:
-                    # At least one of the variants in the set is part of the
-                    # filtered variants.
-                    for c in cnv_set:
+                    for c in cnv_group:
                         if c in added_cnvs:
                             continue
                         cnvs[c.chromosome]["callers"][c.caller]["cnvs"].append(
