@@ -28,32 +28,14 @@ rule cnv_json:
         "../scripts/cnv_json.py"
 
 
-def get_filtered_cnv_vcfs(wildcards):
-    cnv_vcfs = []
-    spec = config.get("cnv_html_report", {}).get("cnv_vcf", [])
-    for s in spec:
-        path = "cnv_sv/svdb_query/{{sample}}_{{type}}.svdb_query.annotate_cnv.{annotation}.filter.{filter}.vcf".format(**s)
-        cnv_vcfs.append(path)
-    return cnv_vcfs
-
-
-def get_cnv_vcfs(wildcards):
-    cnv_vcfs = []
-    spec = config.get("cnv_html_report", {}).get("cnv_vcf", [])
-    for s in spec:
-        path = "cnv_sv/svdb_query/{{sample}}_{{type}}.svdb_query.annotate_cnv.{annotation}.vcf".format(**s)
-        cnv_vcfs.append(path)
-    return cnv_vcfs
-
-
 rule merge_json:
     input:
         annotation_bed=list(config.get("annotate_cnv", {}).values()),
         fai=config.get("reference", {}).get("fai", ""),
         germline_vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
         json=get_json_for_merge_json,
-        cnv_vcfs=get_cnv_vcfs,
-        filtered_cnv_vcfs=get_filtered_cnv_vcfs,
+        cnv_vcfs=get_unfiltered_cnv_vcfs_for_merge_json,
+        filtered_cnv_vcfs=get_filtered_cnv_vcfs_for_merge_json,
     output:
         json=temp("cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.merged.json"),
     params:
