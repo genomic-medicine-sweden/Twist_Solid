@@ -125,26 +125,22 @@ def get_json_for_merge_json(wildcards):
 def get_filtered_cnv_vcfs_for_merge_json(wildcards):
     cnv_vcfs = []
     tags = config.get("cnv_html_report", {}).get("cnv_vcf", [])
-    for v in config.get("svdb_merge", {}).get("tc_method", {}):
-        tc_method = v["name"]
-        for t in tags:
-            cnv_vcfs.append(
-                f"cnv_sv/svdb_query/{wildcards.sample}_{wildcards.type}.{wildcards.tc_method}.svdb_query."
-                f"annotate_cnv.{t['annotation']}.filter.{t['filter']}.vcf"
-            )
+    for t in tags:
+        cnv_vcfs.append(
+            f"cnv_sv/svdb_query/{wildcards.sample}_{wildcards.type}.{wildcards.tc_method}.svdb_query."
+            f"annotate_cnv.{t['annotation']}.filter.{t['filter']}.vcf"
+        )
     return sorted(cnv_vcfs)
 
 
 def get_unfiltered_cnv_vcfs_for_merge_json(wildcards):
     cnv_vcfs = []
     tags = config.get("cnv_html_report", {}).get("cnv_vcf", [])
-    for v in config.get("svdb_merge", {}).get("tc_method", {}):
-        tc_method = v["name"]
-        for t in tags:
-            cnv_vcfs.append(
-                f"cnv_sv/svdb_query/{wildcards.sample}_{wildcards.type}.{wildcards.tc_method}.svdb_query."
-                f"annotate_cnv.{t['annotation']}.vcf"
-            )
+    for t in tags:
+        cnv_vcfs.append(
+            f"cnv_sv/svdb_query/{wildcards.sample}_{wildcards.type}.{wildcards.tc_method}.svdb_query."
+            f"annotate_cnv.{t['annotation']}.vcf"
+        )
     return sorted(cnv_vcfs)
 
 
