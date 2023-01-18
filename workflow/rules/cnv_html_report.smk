@@ -70,6 +70,8 @@ rule cnv_html_report:
         template=config.get("cnv_html_report", {}).get("template", ""),
     output:
         html=temp("cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.cnv.html"),
+    params:
+        show_table=len(config.get("cnv_html_report", {}).get("cnv_vcf", [])) > 0,
     log:
         "cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.cnv.html.log",
     benchmark:
