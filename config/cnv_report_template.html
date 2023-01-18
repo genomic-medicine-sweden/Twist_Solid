@@ -1002,7 +1002,7 @@
                         return {
                             class: "right tooltip-trigger",
                             format: x => {
-                                if (x) {
+                                if (x !== null) {
                                     return x.toLocaleString(
                                         undefined,
                                         { minimumFractionDigits: 2 }
