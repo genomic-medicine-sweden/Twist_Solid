@@ -780,6 +780,13 @@
             const lrPanels = addPanels(lrArea);
             const vafPanels = addPanels(vafArea);
 
+            const lrGrid = lrPanels.append("g")
+                .attr("class", "grid")
+                .attr("data-index", (d, i) => i);
+            const vafGrid = vafPanels.append("g")
+                .attr("class", "grid")
+                .attr("data-index", (d, i) => i);
+
             const ratioPanels = lrPanels.append("g")
                 .attr("class", "regions")
                 .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
@@ -859,6 +866,26 @@
                             .remove(),
                     );
             };
+
+            // Log ratio grid lines
+            lrGrid.selectAll(".gridline")
+                .data(yScale.ticks())
+                .join("line")
+                    .attr("x1", (d, i, g) => xScales[g[i].parentNode.dataset.index].range()[0])
+                    .attr("x2", (d, i, g) => xScales[g[i].parentNode.dataset.index].range()[1])
+                    .attr("y1", d => yScale(d))
+                    .attr("y2", d => yScale(d))
+                    .attr("class", "gridline");
+
+            // VAF grid lines
+            vafGrid.selectAll(".gridline")
+                .data(yScaleVAF.ticks())
+                .join("line")
+                    .attr("x1", (d, i, g) => xScales[g[i].parentNode.dataset.index].range()[0])
+                    .attr("x2", (d, i, g) => xScales[g[i].parentNode.dataset.index].range()[1])
+                    .attr("y1", d => yScaleVAF(d))
+                    .attr("y2", d => yScaleVAF(d))
+                    .attr("class", "gridline");
 
             // VAF
             vafPanels.append("g")
