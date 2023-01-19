@@ -97,7 +97,12 @@ cnvkit_export_seg:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnv_html_report:
-  template: "config/cnv_report_template.html"
+  cnv_vcf:
+    - annotation: cnv_loh_genes
+      filter: cnv_hard_filter_loh
+    - annotation: cnv_amp_genes
+      filter: cnv_hard_filter_amp
+  template: config/cnv_report_template.html
 
 cnvkit_scatter:
   container: "docker://hydragenetics/cnvkit:0.9.9"

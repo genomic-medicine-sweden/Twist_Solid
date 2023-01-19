@@ -32,9 +32,10 @@ rule merge_json:
     input:
         annotation_bed=list(config.get("annotate_cnv", {}).values()),
         fai=config.get("reference", {}).get("fai", ""),
-        germline_vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+        germline_vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
         json=get_json_for_merge_json,
-        svdb_vcfs=get_vcfs_for_merge_json,
+        cnv_vcfs=get_unfiltered_cnv_vcfs_for_merge_json,
+        filtered_cnv_vcfs=get_filtered_cnv_vcfs_for_merge_json,
     output:
         json=temp("cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.merged.json"),
     params:
@@ -69,6 +70,8 @@ rule cnv_html_report:
         template=config.get("cnv_html_report", {}).get("template", ""),
     output:
         html=temp("cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.cnv.html"),
+    params:
+        show_table=len(config.get("cnv_html_report", {}).get("cnv_vcf", [])) > 0,
     log:
         "cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.cnv.html.log",
     benchmark:

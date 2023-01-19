@@ -294,6 +294,7 @@
                 </section>
             </div>
 
+            {% if metadata.show_table %}
             <div class="table-container">
                 <section>
                     <h2>Results table</h2>
@@ -306,6 +307,7 @@
                     </table>
                 </section>
             </div>
+            {% endif %}
         </div>
     </div>
     <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -973,6 +975,9 @@
 
         const populateTable = () => {
             const table = d3.select("#cnv-table");
+            if (table.empty()) {
+                return null;
+            }
 
             const tableHeader = table.append("thead").append("tr");
             const tableBody = table.append("tbody");
@@ -997,7 +1002,7 @@
                         return {
                             class: "right tooltip-trigger",
                             format: x => {
-                                if (x) {
+                                if (x !== null) {
                                     return x.toLocaleString(
                                         undefined,
                                         { minimumFractionDigits: 2 }
@@ -1193,7 +1198,9 @@
             let [xMin, xMax] = chromosomeView.getZoomRange();
             chromosomeView.update(cnvData[genomeView.getSelectedChromosome()], xMin, xMax);
             genomeView.update();
-            resultsTable.update();
+            if (resultsTable) {
+                resultsTable.update();
+            }
         });
 
 
