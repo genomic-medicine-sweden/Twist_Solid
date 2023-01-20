@@ -43,6 +43,28 @@ properties:
         type: string
         description: path to bed file the id SNPs
 
+  call_small_cnv_deletions:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      regions_file:
+        type: string
+        description: File with genes, gene regions with surrounding cnv-probes and the actual gene region
+      window_size:
+        type: integer
+        description: Number of data points included in the sliding window
+      region_max_size:
+        type: integer
+        description: Max number of data points included in the deletion
+      min_nr_stdev_diff:
+        type: number
+        description: Min number of standard deviations between the deletion and surrounding data points
+      min_log_odds_diff:
+        type: number
+        description: Min size difference between the deletion and surrounding data points
+
   cnv_tsv_report:
     type: object
     properties:
