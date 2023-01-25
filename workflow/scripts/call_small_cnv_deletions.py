@@ -26,7 +26,7 @@ def read_cnv_data(cnv_file_name, sample_name, region):
     return probe_data, gene_probe_index
 
 
-def find_max_probe_diff(probe_data):
+def find_max_probe_diff(probe_data, window_size):
     probe_len = len(probe_data)
     i = 0
     j = i + 1 + window_size
@@ -54,20 +54,20 @@ def find_max_probe_diff(probe_data):
     return k_max_index, k_min_index
 
 
-def filter_deletions(max_probe_diff_index, min_probe_diff_index, probe_data, gene_probe_index, region, deletions):
-    deletions.write(
-        "Gene(s)\tLog2_ratio_diff\tMedian_L2R_deletion\tMedian_L2R_surrounding\tNumber_of_data_points\tNumber_of_stdev\n"
-    )
+def filter_deletions(
+        max_probe_diff_index, min_probe_diff_index, probe_data, gene_probe_index, region, deletions, region_max_size, window_size,
+        min_log_odds_diff, min_nr_stdev_diff
+):
     # Filter amplifications
     if max_probe_diff_index >= min_probe_diff_index:
-        return
+        return "Amplification"
     # Filter large deletions (captured by other tools)
     if min_probe_diff_index - max_probe_diff_index >= region_max_size:
-        return
+        return "Too_large"
     # Filter deletions without start or end breakpoint
     probe_len = len(probe_data)
     if max_probe_diff_index == 0 or min_probe_diff_index + window_size + 1 == probe_len:
-        return
+        return "No_end"
     # Filter deletions not in the actual gene of interest
     in_gene = False
     k = max_probe_diff_index + window_size + 1
@@ -77,15 +77,11 @@ def filter_deletions(max_probe_diff_index, min_probe_diff_index, probe_data, gen
             break
         k += 1
     if not in_gene:
-        return
+        return "Not_in_gene"
     # Filter too short deletions
     low_probes = probe_data[max_probe_diff_index + window_size + 1:min_probe_diff_index + window_size]
     if len(low_probes) < window_size:
-        return
-    # Filter deletions with too few probes outside outside the deletion
-    high_probes = probe_data[:max_probe_diff_index + window_size] + probe_data[min_probe_diff_index + window_size + 1:]
-    if len(high_probes) < 4:
-        return
+        return "Too_small"
     # Calculate high probes window averages
     high_probes_window_averages = []
     k = 0
@@ -100,19 +96,26 @@ def filter_deletions(max_probe_diff_index, min_probe_diff_index, probe_data, gen
     median_low = statistics.median(low_probes)
     median_high = statistics.median(high_probes_window_averages)
     stdev_high = statistics.stdev(high_probes_window_averages)
+    if stdev_high == 0:
+        stdev_high = 0.01
+    # Deletion must have negative median log odds ration
+    if median_low > 0:
+        return "Not_deletion"
     # Filter based on difference in log odds ration between high and low median (min_log_odds_diff)
     if median_high - median_low < min_log_odds_diff:
-        return
+        return "Low_abs_diff"
     # Filter based on the number of standard deviation between the high and low median (min_nr_stdev_diff)
     if median_low > median_high - stdev_high * min_nr_stdev_diff:
-        return
+        return "Low_nr_std_diff"
     median_diff = median_low - median_high
-    nr_std_diff = median_diff / stdev_high
+    nr_std_diff = abs(median_diff) / stdev_high
     deletions.write(f"{region[5]}\t{median_diff}\t{median_low}\t{median_high}\t{len(low_probes)}\t{nr_std_diff}\n")
+    return "Unfiltered"
 
 
 def read_regions_data(regions_file):
     next(regions_file)
+    regions = []
     for line in regions_file:
         columns = line.strip().split("\t")
         gene_name = columns[0]
@@ -130,10 +133,17 @@ def call_small_cnv_deletions(
 ):
     regions = read_regions_data(regions_file)
     sample_name = cnv_file_name.split("/")[1].split("_")[0]
+    deletions.write(
+        "Gene(s)\tLog2_ratio_diff\tMedian_L2R_deletion\tMedian_L2R_surrounding\tNumber_of_data_points\tNumber_of_stdev\n"
+    )
     for region in regions:
         probe_data, gene_probe_index = read_cnv_data(cnv_file_name, sample_name, region)
-        max_probe_diff_index, min_probe_diff_index = find_max_probe_diff(probe_data)
-        filter_deletions(max_probe_diff_index, min_probe_diff_index, probe_data, gene_probe_index, region, deletions)
+        max_probe_diff_index, min_probe_diff_index = find_max_probe_diff(probe_data, window_size)
+        filter = filter_deletions(
+            max_probe_diff_index, min_probe_diff_index, probe_data, gene_probe_index, region, deletions, region_max_size,
+            window_size, min_log_odds_diff, min_nr_stdev_diff,
+        )
+    return filter
 
 
 if __name__ == "__main__":
