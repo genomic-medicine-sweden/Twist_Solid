@@ -1,28 +1,31 @@
 
 import statistics
+import logging
+
+log = logging.getLogger()
 
 
 def read_cnv_data(cnv_file_name, sample_name, region):
     probe_data = []
     gene_probe_index = []
-    cnv_file = open(cnv_file_name)
-    header = True
-    i = 0
-    for line in cnv_file:
-        if header:
-            if line.find("CONTIG") != -1:
-                header = False
-            continue
-        columns = line.strip().split("\t")
-        chrom = columns[0]
-        start = int(columns[1])
-        end = int(columns[2])
-        log2_copy_ratio = float(columns[3])
-        if chrom == region[0] and ((start >= region[1] and start <= region[2]) or (end >= region[1] and end <= region[2])):
-            probe_data.append(log2_copy_ratio)
-            if chrom == region[0] and ((start >= region[3] and start <= region[4]) or (end >= region[3] and end <= region[4])):
-                gene_probe_index.append(i)
-            i += 1
+    with open(cnv_file_name) as cnv_file:
+        header = True
+        i = 0
+        for line in cnv_file:
+            if header:
+                if line.find("CONTIG") != -1:
+                    header = False
+                continue
+            columns = line.strip().split("\t")
+            chrom = columns[0]
+            start = int(columns[1])
+            end = int(columns[2])
+            log2_copy_ratio = float(columns[3])
+            if chrom == region[0] and ((start >= region[1] and start <= region[2]) or (end >= region[1] and end <= region[2])):
+                probe_data.append(log2_copy_ratio)
+                if chrom == region[0] and ((start >= region[3] and start <= region[4]) or (end >= region[3] and end <= region[4])):
+                    gene_probe_index.append(i)
+                i += 1
     return probe_data, gene_probe_index
 
 
@@ -66,7 +69,7 @@ def filter_deletions(
         return "Too_large"
     # Filter deletions without start or end breakpoint
     probe_len = len(probe_data)
-    if max_probe_diff_index == 0 or min_probe_diff_index + window_size + 1 == probe_len:
+    if max_probe_diff_index - window_size <= 0 or min_probe_diff_index + window_size + 1 == probe_len:
         return "No_end"
     # Filter deletions not in the actual gene of interest
     in_gene = False
@@ -85,13 +88,17 @@ def filter_deletions(
     # Calculate high probes window averages
     high_probes_window_averages = []
     k = 0
-    while k + window_size < max_probe_diff_index + window_size:
+    while k + window_size < max_probe_diff_index:
         high_probes_window_averages.append(sum(probe_data[k:k+window_size]) / window_size)
         k += 1
-    k = min_probe_diff_index + window_size + 2
+    k = min_probe_diff_index + len(low_probes) + 1
     while k + window_size < len(probe_data):
         high_probes_window_averages.append(sum(probe_data[k:k+window_size]) / window_size)
         k += 1
+    # Filter deletions with too few data points outside to calculate median and standard deviations
+    print(len(high_probes_window_averages), high_probes_window_averages)
+    if len(high_probes_window_averages) < 4:
+        return "Too_few_outside"
     # Calculate high and low medians and stdev for high probes window averages
     median_low = statistics.median(low_probes)
     median_high = statistics.median(high_probes_window_averages)
@@ -138,6 +145,9 @@ def call_small_cnv_deletions(
     )
     for region in regions:
         probe_data, gene_probe_index = read_cnv_data(cnv_file_name, sample_name, region)
+        # Warning about to small region
+        if len(probe_data) < window_size * 3 + 2 + 3:
+            log.info(f"Too few data points for region: {region}")
         max_probe_diff_index, min_probe_diff_index = find_max_probe_diff(probe_data, window_size)
         filter = filter_deletions(
             max_probe_diff_index, min_probe_diff_index, probe_data, gene_probe_index, region, deletions, region_max_size,
