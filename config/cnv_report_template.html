@@ -132,6 +132,10 @@
             font-family: helvetica, arial, sans-serif;
         }
 
+        .data-range-warning {
+            color: orange;
+        }
+
         .copy-number-tooltip {
             display: block;
             position: absolute;
@@ -139,10 +143,6 @@
             background-color: white;
             border: 1px solid black;
             width: 20em;
-        }
-
-        .copy-number-tooltip.hidden {
-            display: none;
         }
 
         .copy-number-tooltip tbody tr:nth-child(2n) {
@@ -238,6 +238,10 @@
             stroke-width: 6;
         }
 
+        .hidden {
+            display: none !important;
+        }
+
         /* Print layout */
         @media print {
             header {
@@ -293,6 +297,7 @@
                     <div class="no-print">
                         <input type="checkbox" id="chromosome-fit-to-data">
                         <label for="chromosome-fit-to-data">Zoom to data extent</label>
+                        <i class="data-range-warning fa-solid fa-triangle-exclamation" title="There are data points outside the current range"></i>
                     </div>
                     <svg id="chromosome-view"></svg>
                 </section>
@@ -314,6 +319,7 @@
             {% endif %}
         </div>
     </div>
+    <script src="https://kit.fontawesome.com/0a9e116953.js" crossorigin="anonymous"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
         const cnvData = {{ json }}
@@ -674,26 +680,30 @@
                 xScale.domain([0, data.length]);
                 if (xMin && xMax) {
                     xScale.domain([Math.max(xMin, 0), Math.min(xMax, data.length)]);
+                    const yMin = data.callers[callerIndex].ratios
+                        .filter(d => d.start > xMin && d.start < xMax)
+                        .map(d => d.log2)
+                        .reduce((a, d) => d < a ? d : a);
+                    const yMax = data.callers[callerIndex].ratios
+                        .filter(d => d.start > xMin && d.start < xMax)
+                        .map(d => d.log2)
+                        .reduce((a, d) => d > a ? d : a);
                     if (fitToData) {
-                        const yMin = data.callers[callerIndex].ratios
-                            .filter(d => d.start > xMin && d.start < xMax)
-                            .map(d => d.log2)
-                            .reduce((a, d) => d < a ? d : a);
-                        const yMax = data.callers[callerIndex].ratios
-                            .filter(d => d.start > xMin && d.start < xMax)
-                            .map(d => d.log2)
-                            .reduce((a, d) => d > a ? d : a);
+                        d3.selectAll(".data-range-warning").classed("hidden", true);
                         const padding = (yMax - yMin) * 0.05;
                         yScale.domain([yMin - padding, yMax + padding]);
                     } else {
+                        d3.selectAll(".data-range-warning").classed("hidden", !(yMin < -2 || yMax > 2));
                         yScale.domain([-2, 2]);
                     }
                 } else {
+                    const [yMin, yMax] = d3.extent(data.callers[callerIndex].ratios, d => d.log2);
                     if (fitToData) {
-                        const [yMin, yMax] = d3.extent(data.callers[callerIndex].ratios, d => d.log2);
+                        d3.selectAll(".data-range-warning").classed("hidden", true);
                         const padding = (yMax - yMin) * 0.05;
                         yScale.domain([yMin - padding, yMax + padding]);
                     } else {
+                        d3.selectAll(".data-range-warning").classed("hidden", !(yMin < -2 || yMax > 2));
                         yScale.domain([-2, 2]);
                     }
                 }
