@@ -289,7 +289,11 @@
 
                 <section class="chromosome-view plot-section">
                     <h2>Chromosome view</h2>
-                    <p class="no-print">Click and drag to zoom. Click the plot to reset zoom.</p>
+                    <p class="no-print">Click and drag to zoom along x-axis. Click the plot to reset zoom.</p>
+                    <div class="no-print">
+                        <input type="checkbox" id="chromosome-fit-to-data">
+                        <label for="chromosome-fit-to-data">Zoom to data extent</label>
+                    </div>
                     <svg id="chromosome-view"></svg>
                 </section>
             </div>
@@ -355,7 +359,6 @@
                 .range([0, width-margin.left-margin.right]);
 
             const yScale = d3.scaleLinear()
-                .domain(d3.extent(data.callers[getActiveCaller()].ratios, d => d.log2))
                 .range([plotHeight, 0]);
 
             const yScaleVAF = d3.scaleLinear()
@@ -376,20 +379,20 @@
                 .attr("viewBox", [0, 0, width, height])
                 .attr("style", "max-width: 100%; height: auto; max-height: 500px; height: intrinsic;");
 
-            // Clip path for plot area
+            // Clip path for log ratios
             svg.append("clipPath")
-                .attr("id", "plot-area-clip")
+                .attr("id", "lr-area-clip")
                 .append("rect")
                 .attr("width", width - margin.left - margin.right)
-                .attr("height", height - margin.top - margin.bottom);
+                .attr("height", plotHeight);
 
             const plotArea = svg.append("g")
                 .attr("transform", `translate(${margin.left},${margin.top})`)
-                .attr("class", "plot-area")
-                .attr("clip-path", "url(#plot-area-clip)");
+                .attr("class", "plot-area");
 
             const lrArea = plotArea.append("g")
-                .attr("id", "lr-plot");
+                .attr("id", "lr-plot")
+                .attr("clip-path", "url(#lr-area-clip)");
             const vafArea = plotArea.append("g")
                 .attr("id", "vaf-plot")
                 .attr("transform", `translate(0, ${plotHeight + margin.between})`)
@@ -667,20 +670,32 @@
             const update = function(plotData, xMin, xMax) {
                 data = plotData;
                 const callerIndex = getActiveCaller();
+                const fitToData = d3.select("#chromosome-fit-to-data").node().checked;
                 xScale.domain([0, data.length]);
                 if (xMin && xMax) {
                     xScale.domain([Math.max(xMin, 0), Math.min(xMax, data.length)]);
-                    const yMin = data.callers[callerIndex].ratios
-                        .filter(d => d.start > xMin && d.start < xMax)
-                        .map(d => d.log2)
-                        .reduce((a, d) => d < a ? d : a);
-                    const yMax = data.callers[callerIndex].ratios
-                        .filter(d => d.start > xMin && d.start < xMax)
-                        .map(d => d.log2)
-                        .reduce((a, d) => d > a ? d : a);
-                    yScale.domain([yMin, yMax]);
+                    if (fitToData) {
+                        const yMin = data.callers[callerIndex].ratios
+                            .filter(d => d.start > xMin && d.start < xMax)
+                            .map(d => d.log2)
+                            .reduce((a, d) => d < a ? d : a);
+                        const yMax = data.callers[callerIndex].ratios
+                            .filter(d => d.start > xMin && d.start < xMax)
+                            .map(d => d.log2)
+                            .reduce((a, d) => d > a ? d : a);
+                        const padding = (yMax - yMin) * 0.05;
+                        yScale.domain([yMin - padding, yMax + padding]);
+                    } else {
+                        yScale.domain([-2, 2]);
+                    }
                 } else {
-                    yScale.domain(d3.extent(data.callers[callerIndex].ratios, d => d.log2));
+                    if (fitToData) {
+                        const [yMin, yMax] = d3.extent(data.callers[callerIndex].ratios, d => d.log2);
+                        const padding = (yMax - yMin) * 0.05;
+                        yScale.domain([yMin - padding, yMax + padding]);
+                    } else {
+                        yScale.domain([-2, 2]);
+                    }
                 }
                 svg.transition().select(".x-axis")
                     .duration(500)
@@ -700,7 +715,7 @@
                 return xScale.domain();
             };
 
-            update(data, getActiveCaller());
+            update(data);
 
             return {
                 update: update,
@@ -1220,6 +1235,11 @@
         const chromosomeView = plotChromosomeView(cnvData[0]);
         const genomeView = plotGenomeView();
         const resultsTable = populateTable();
+
+        d3.select("#chromosome-fit-to-data").on("change", e => {
+            let [xMin, xMax] = chromosomeView.getZoomRange();
+            chromosomeView.update(cnvData[genomeView.getSelectedChromosome()], xMin, xMax);
+        });
 
         d3.selectAll("input[name=dataset]").on("change", e => {
             let [xMin, xMax] = chromosomeView.getZoomRange();
