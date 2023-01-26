@@ -23,7 +23,10 @@ def read_cnv_data(cnv_file_name, sample_name, region):
             log2_copy_ratio = float(columns[3])
             if chrom == region[0] and ((start >= region[1] and start <= region[2]) or (end >= region[1] and end <= region[2])):
                 probe_data.append(log2_copy_ratio)
-                if chrom == region[0] and ((start >= region[3] and start <= region[4]) or (end >= region[3] and end <= region[4])):
+                if (
+                    chrom == region[0] and
+                    ((start >= region[3] and start <= region[4]) or (end >= region[3] and end <= region[4]))
+                ):
                     gene_probe_index.append(i)
                 i += 1
     return probe_data, gene_probe_index
@@ -73,6 +76,7 @@ def filter_deletions(
         return "No_end"
     # Filter deletions not in the actual gene of interest
     in_gene = False
+    # Adding one extra to allow the breakpoint to not be included
     k = max_probe_diff_index + window_size + 1
     while k < min_probe_diff_index + window_size:
         if k in gene_probe_index:
@@ -146,7 +150,8 @@ def call_small_cnv_deletions(
     for region in regions:
         probe_data, gene_probe_index = read_cnv_data(cnv_file_name, sample_name, region)
         # Warning about to small region
-        if len(probe_data) < window_size * 3 + 2 + 3:
+        # 1 window for deletions and one window plus 3 for high probes (for statistics) plus 2 spaces between windows)
+        if len(probe_data) < window_size * 2 + 3 + 2:
             log.info(f"Too few data points for region: {region}")
         max_probe_diff_index, min_probe_diff_index = find_max_probe_diff(probe_data, window_size)
         filter = filter_deletions(
