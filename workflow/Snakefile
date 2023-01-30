@@ -9,6 +9,7 @@ __license__ = "GPL-3"
 
 include: "rules/common.smk"
 include: "rules/bcftools.smk"
+include: "rules/call_small_cnv_deletions.smk"
 include: "rules/cnv_tsv_report.smk"
 include: "rules/cnv_html_report.smk"
 include: "rules/exon_skipping.smk"
