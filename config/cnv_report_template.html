@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,14 +7,165 @@
     <title>CNV report</title>
 
     <style>
+        .container {
+            position: relative;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+            header {
+                margin: 3em 0;
+            }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .plot-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .plot-container .annotation-label {
+                font-size: 0.8rem
+            }
+
+        .plot-container fieldset {
+            width: 20em;
+            order: -1;
+        }
+
+        .table-container {
+            min-width: 35em;
+            max-width: 50em;
+        }
+
+        svg .panel-overlay {
+            stroke: forestgreen;
+        }
+
+        svg .segment {
+            stroke: orange;
+        }
+
+        svg .gridline {
+            opacity: 0.25;
+            stroke: black;
+            stroke-width: 0.3px;
+        }
+
+        /* Narrow view */
+        @media screen and (max-width: 600px) {
+            .plot-container .x-label, .plot-container .y-label {
+                font-size: 1rem;
+            }
+
+            .plot-container .x-axis, .plot-container .y-axis {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Wide view */
+        @media screen and (min-width: 1600px) {
+            .app-container {
+                flex-direction: row;
+            }
+
+            .plot-container {
+                min-width: 48%;
+            }
+
+            .plot-container .x-label, .plot-container .y-label {
+                font-size: 1rem;
+            }
+
+            .plot-container .x-axis, .plot-container .y-axis {
+                font-size: 0.9rem;
+            }
+
+            .table-container {
+                max-width: 40em;
+            }
+
+            .chromosome-view {
+                order: 1;
+            }
+
+            .genome-view {
+                order: 2;
+            }
+        }
+
+        /* Normal view */
+        @media screen and (min-width: 1200px) and (width < 1600px) {
+            .app-container {
+                flex-direction: row;
+            }
+
+            .plot-container {
+                min-width: 48%;
+            }
+
+            .plot-container .x-label, .plot-container .y-label {
+                font-size: 1.1rem;
+            }
+
+            .plot-container .x-axis, .plot-container .y-axis {
+                font-size: 1rem;
+            }
+
+            .table-container {
+                max-width: 40em;
+            }
+
+            .chromosome-view {
+                order: 1;
+            }
+
+            .genome-view {
+                order: 2;
+            }
+        }
+
         body {
             font-family: helvetica, arial, sans-serif;
+        }
+
+        .data-range-warning {
+            color: orange;
+        }
+
+        .copy-number-tooltip {
+            display: block;
+            position: absolute;
+            pointer-events: none;
+            background-color: white;
+            border: 1px solid black;
+            width: 20em;
+        }
+
+        .copy-number-tooltip tbody tr:nth-child(2n) {
+            background-color: #F2F7FD;
+        }
+
+        .copy-number-tooltip th:nth-child(1) {
+            width: 25%;
+        }
+
+        .copy-number-tooltip th:nth-child(2) {
+            width: 50%;
+        }
+
+        .copy-number-tooltip th:nth-child(3) {
+            width: 25%;
         }
 
         table {
             table-layout: fixed;
             width: 100%;
             border-collapse: collapse;
+            font-size: 0.9rem;
         }
 
         th, td {
@@ -27,31 +177,31 @@
             text-align: left;
         }
 
-        th:nth-child(1) {
+        #cnv-table th:nth-child(1) {
             width: 5%;
         }
 
-        th:nth-child(2) {
+        #cnv-table th:nth-child(2) {
             width: 15%;
         }
 
-        th:nth-child(3) {
+        #cnv-table th:nth-child(3) {
             width: 15%;
         }
 
-        th:nth-child(4) {
+        #cnv-table th:nth-child(4) {
             width: 15%;
         }
 
-        th:nth-child(5) {
+        #cnv-table th:nth-child(5) {
             width: 20%;
         }
 
-        th:nth-child(6) {
+        #cnv-table th:nth-child(6) {
             width: 20%;
         }
 
-        th:nth-child(7) {
+        #cnv-table th:nth-child(7) {
             width: 10%;
         }
 
@@ -62,6 +212,10 @@
 
         tbody tr:nth-child(2n) {
             background-color: #F5F5F5;
+        }
+
+        tbody tr:hover {
+            background-color: #ADD9FF;
         }
 
         .left {
@@ -83,48 +237,94 @@
         .panel-overlay.selected {
             stroke-width: 6;
         }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Print layout */
+        @media print {
+            header {
+                margin: 0;
+            }
+
+            .plot-container, .app-container {
+                display: block;
+            }
+
+            .no-print {
+                display: none
+            }
+
+            .plot-section {
+                break-inside: avoid;
+            }
+
+            .table-container {
+                break-before: page;
+            }
+        }
+
+
+
     </style>
 </head>
 <body>
-    <h1>CNV report</h1>
+    <div class="container">
+        <header>
+            <h1>CNV report</h1>
+            <ul>
+                <li>Sample: {{ metadata.sample }}</li>
+                <li>Date: <time>{{ metadata.date }}</time></li>
+            </ul>
+        </header>
 
-    <fieldset>
-        <legend>CNV dataset</legend>
+        <div class="app-container">
+            <div class="plot-container">
+                <fieldset id="dataset-picker">
+                    <legend>CNV dataset</legend>
+                </fieldset>
 
-        <div>
-            <input type="radio" id="dataset-cnvkit" name="dataset" value="cnvkit" checked>
-            <label for="dataset-cnvkit">cnvkit</label>
+                <section class="genome-view plot-section">
+                    <h2>Genome view</h2>
+                    <p class="no-print">Click a chromosome to visualise it below.</p>
+                    <svg id="genome-view"></svg>
+                </section>
+
+                <section class="chromosome-view plot-section">
+                    <h2>Chromosome view</h2>
+                    <p class="no-print">Click and drag to zoom along x-axis. Click the plot to reset zoom.</p>
+                    <div class="no-print">
+                        <input type="checkbox" id="chromosome-fit-to-data">
+                        <label for="chromosome-fit-to-data">Zoom to data extent</label>
+                        <i class="data-range-warning fa-solid fa-triangle-exclamation" title="There are data points outside the current range"></i>
+                    </div>
+                    <svg id="chromosome-view"></svg>
+                </section>
+            </div>
+
+            {% if metadata.show_table %}
+            <div class="table-container">
+                <section>
+                    <h2>Results table</h2>
+                    <p class="no-print">
+                        Click the magnifying glass to zoom in on the region in question.
+                        Hover over the copy number to see what results other callers got for this gene.
+                    </p>
+                    <table id="cnv-table">
+
+                    </table>
+                </section>
+            </div>
+            {% endif %}
         </div>
-
-        <div>
-            <input type="radio" id="dataset-gatk" name="dataset" value="gatk">
-            <label for="dataset-gatk">GATK</label>
-        </div>
-    </fieldset>
-
-    <section>
-        <h2>Genome view</h2>
-        <p>Click a chromosome to visualise it below.</p>
-        <svg id="genome-view"></svg>
-    </section>
-
-    <section>
-        <h2>Chromosome view</h2>
-        <p>Click and drag to zoom. Click the plot to reset zoom.</p>
-        <svg id="chromosome-view"></svg>
-    </section>
-
-    <section>
-        <h2>Results table</h2>
-        <table id="cnv-table">
-
-        </table>
-    </section>
-
+    </div>
+    <script src="https://kit.fontawesome.com/0a9e116953.js" crossorigin="anonymous"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
         const cnvData = {{ json }}
-
+    </script>
+    <script>
         const getTextDimensions = function(text, fontSize) {
             let div = document.createElement("div");
 
@@ -143,11 +343,11 @@
             return [width, height];
         }
 
-        const getActiveDataset = () => {
-            return d3.select("input[name=dataset]:checked").node().value;
+        const getActiveCaller = () => {
+            return +d3.select("input[name=dataset]:checked").node().value;
         }
 
-        const plotChromosomeView = function(plotData, activeDataset) {
+        const plotChromosomeView = function(plotData) {
             let data = plotData;
             const height = 400;
             const width = 800;
@@ -155,7 +355,7 @@
                 top: 10,
                 right: 30,
                 bottom: 40,
-                left: 50,
+                left: 60,
                 between: 40,
             };
             const plotHeight = (height - margin.top - margin.between - margin.bottom) / 2;
@@ -165,7 +365,6 @@
                 .range([0, width-margin.left-margin.right]);
 
             const yScale = d3.scaleLinear()
-                .domain(d3.extent(data[`${activeDataset}_ratios`], d => d.log2))
                 .range([plotHeight, 0]);
 
             const yScaleVAF = d3.scaleLinear()
@@ -176,7 +375,7 @@
                 .call(d3.axisBottom(xScale).ticks(5));
 
             const yAxis = g => g
-                .call(d3.axisLeft(yScale).ticks(4));
+                .call(d3.axisLeft(yScale).ticks(8).tickFormat((y, i) => i % 2 == 0 ? y : ""));
 
             const yAxisVAF = g => g
                 .call(d3.axisLeft(yScaleVAF).ticks(5))
@@ -186,20 +385,20 @@
                 .attr("viewBox", [0, 0, width, height])
                 .attr("style", "max-width: 100%; height: auto; max-height: 500px; height: intrinsic;");
 
-            // Clip path for plot area
+            // Clip path for log ratios
             svg.append("clipPath")
-                .attr("id", "plot-area-clip")
+                .attr("id", "lr-area-clip")
                 .append("rect")
                 .attr("width", width - margin.left - margin.right)
-                .attr("height", height - margin.top - margin.bottom);
+                .attr("height", plotHeight);
 
             const plotArea = svg.append("g")
                 .attr("transform", `translate(${margin.left},${margin.top})`)
-                .attr("class", "plot-area")
-                .attr("clip-path", "url(#plot-area-clip)");
+                .attr("class", "plot-area");
 
             const lrArea = plotArea.append("g")
-                .attr("id", "lr-plot");
+                .attr("id", "lr-plot")
+                .attr("clip-path", "url(#lr-area-clip)");
             const vafArea = plotArea.append("g")
                 .attr("id", "vaf-plot")
                 .attr("transform", `translate(0, ${plotHeight + margin.between})`)
@@ -209,6 +408,48 @@
 
             const segments = lrArea.append("g")
                 .attr("class", "segments");
+
+            const lrGrid = lrArea.append("g")
+                .attr("class", "grid");
+            const vafGrid = vafArea.append("g")
+                .attr("class", "grid");
+
+            const plotGrid = function() {
+                lrGrid
+                    .selectAll(".gridline")
+                    .data(yScale.ticks())
+                    .join(
+                        enter => enter.append("line")
+                            .attr("x1", xScale(0))
+                            .attr("x2", xScale(data.length))
+                            .attr("y1", d => yScale(d))
+                            .attr("y2", d => yScale(d))
+                            .attr("class", "gridline"),
+                        update => update
+                            .call(update => update.transition()
+                                .attr("y1", d => yScale(d))
+                                .attr("y2", d => yScale(d))
+                            ),
+                        exit => exit.remove());
+
+                vafGrid
+                    .selectAll(".gridline")
+                    .data(yScaleVAF.ticks())
+                    .join(
+                        enter => enter.append("line")
+                            .attr("x1", xScale(0))
+                            .attr("x2", xScale(data.length))
+                            .attr("y1", yScaleVAF)
+                            .attr("y2", yScaleVAF)
+                            .attr("class", "gridline"),
+                        update => update
+                            .call(update => update.transition()
+                                .attr("y1", yScaleVAF)
+                                .attr("y2", yScaleVAF)
+                            ),
+                        exit => exit.remove()
+                    );
+            }
 
             const plotRegions = function(regionData) {
                 regions.selectAll(".point")
@@ -230,6 +471,7 @@
                             .attr("fill-opacity", 0.3)
                             .call(update => update.transition()
                                 .attr("cx", d => xScale(d.start))
+                                .attr("cy", d => yScale(d.log2))
                             ),
                         exit => exit.transition()
                             .attr("fill-opacity", 0)
@@ -264,15 +506,15 @@
                     );
             }
 
-            const plotGenes = function() {
-                plotArea.selectAll(".gene")
-                    .data(data.genes, d => d.gene)
+            const plotAnnotations = function() {
+                plotArea.selectAll(".annotation")
+                    .data(data.annotations, d => d.name)
                     .join(
                         enter => {
-                            let gene_group = enter.append("g")
-                                .attr("class", "gene")
-                            gene_group.append("rect")
-                                .attr("class", "gene-marker")
+                            let annotation_group = enter.append("g")
+                                .attr("class", "annotation")
+                            annotation_group.append("rect")
+                                .attr("class", "annotation-marker")
                                 .attr("x", d => xScale(d.start))
                                 .attr("width", d => xScale(d.end) - xScale(d.start))
                                 .attr("height", height - margin.top - margin.bottom)
@@ -284,42 +526,41 @@
                                 .call(enter => enter.transition()
                                     .attr("fill-opacity", 0.05)
                                 );
-                            gene_group.append("rect")
-                                .attr("class", "gene-label-background")
+                            annotation_group.append("rect")
+                                .attr("class", "annotation-label-background")
                                 .attr("x", d => {
-                                    let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                    let [labelWidth, labelHeight] = getTextDimensions(d.name, "0.8rem");
                                     return xScale(d.start + (d.end - d.start) / 2) - labelWidth / 2 - 5;
                                 })
                                 .attr("y", d => {
-                                    let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                    let [labelWidth, labelHeight] = getTextDimensions(d.name, "0.8rem");
                                     return plotHeight + margin.between / 2 - labelHeight / 2 - 2;
                                 })
-                                .attr("width", d => getTextDimensions(d.gene, "0.8rem")[0] + 10)
-                                .attr("height", d => getTextDimensions(d.gene, "0.8rem")[1] + 4)
+                                .attr("width", d => getTextDimensions(d.name, "0.8rem")[0] + 10)
+                                .attr("height", d => getTextDimensions(d.name, "0.8rem")[1] + 4)
                                 .attr("fill", "#EEE")
                                 .attr("rx", 4);
-                            gene_group.append("text")
-                                .attr("class", "gene-label")
-                                .text(d => d.gene)
+                            annotation_group.append("text")
+                                .attr("class", "annotation-label")
+                                .text(d => d.name)
                                 .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
                                 .attr("y", plotHeight + margin.between / 2)
                                 .attr("text-anchor", "middle")
-                                .attr("dominant-baseline", "central")
-                                .style("font-size", "0.8rem");
-                            return gene_group;
+                                .attr("dominant-baseline", "central");
+                            return annotation_group;
                         }, update => {
-                            update.selectAll(".gene-label")
+                            update.selectAll(".annotation-label")
                                 .call(update => update.transition()
                                     .attr("x", d => xScale(d.start + (d.end - d.start) / 2))
                                 );
-                            update.selectAll(".gene-label-background")
+                            update.selectAll(".annotation-label-background")
                                 .call(update => update.transition()
                                     .attr("x", d => {
-                                        let [labelWidth, labelHeight] = getTextDimensions(d.gene, "0.8rem");
+                                        let [labelWidth, labelHeight] = getTextDimensions(d.name, "0.8rem");
                                         return xScale(d.start + (d.end - d.start) / 2) - labelWidth / 2 - 5;
                                     })
                                 );
-                            update.selectAll(".gene-marker")
+                            update.selectAll(".annotation-marker")
                                 .attr("fill-opacity", 0.05)
                                 .call(update => update.transition()
                                     .attr("x", d => xScale(d.start))
@@ -388,22 +629,13 @@
                         if (xMax - xMin < 3) {
                             return;
                         }
-                        xScale
-                            .domain([xScale.invert(xMin), xScale.invert(xMax)]);
-                        svg.transition()
-                            .select(".x-axis")
-                            .duration(500)
-                            .call(xAxis);
-                        plotRegions(data[`${activeDataset}_ratios`]);
-                        plotVAF();
-                        plotSegments(data[`${activeDataset}_segments`]);
-                        plotGenes();
+                        zoomToRegion(data.chromosome, xScale.invert(xMin), xScale.invert(xMax), 0);
                     }))
                 .on("click", e => {
                     let [xMin, xMax] = xScale.domain();
                     if (xMax - xMin !== data.length) {
                         // Only reset if something actually changed
-                        update(data, getActiveDataset());
+                        update(data, getActiveCaller());
                     }
                 });
 
@@ -425,30 +657,56 @@
                 .attr("transform", `translate(${width/2},${height})`)
                 .attr("class", "x-label")
                 .text(data.label)
-                .attr("text-anchor", "middle")
-                .style("font-size", "0.8rem");
+                .attr("text-anchor", "middle");
 
             svg.append("text")
                 .attr("transform", `translate(0,${margin.top+plotHeight/2}) rotate(-90)`)
+                .attr("class", "y-label")
                 .text("log2 ratio")
                 .attr("text-anchor", "middle")
-                .attr("dominant-baseline", "text-before-edge")
-                .style("font-size", "0.9rem");
+                .attr("dominant-baseline", "text-before-edge");
 
             svg.append("text")
                 .attr("transform", `translate(0,${height-margin.bottom-plotHeight/2}) rotate(-90)`)
+                .attr("class", "y-label")
                 .text("VAF")
                 .attr("text-anchor", "middle")
-                .attr("dominant-baseline", "text-before-edge")
-                .style("font-size", "0.9rem");
+                .attr("dominant-baseline", "text-before-edge");
 
-            const update = function(plotData, activeDataset, xMin, xMax) {
+            const update = function(plotData, xMin, xMax) {
                 data = plotData;
+                const callerIndex = getActiveCaller();
+                const fitToData = d3.select("#chromosome-fit-to-data").node().checked;
                 xScale.domain([0, data.length]);
                 if (xMin && xMax) {
                     xScale.domain([Math.max(xMin, 0), Math.min(xMax, data.length)]);
+                    const yMin = data.callers[callerIndex].ratios
+                        .filter(d => d.start > xMin && d.start < xMax)
+                        .map(d => d.log2)
+                        .reduce((a, d) => d < a ? d : a);
+                    const yMax = data.callers[callerIndex].ratios
+                        .filter(d => d.start > xMin && d.start < xMax)
+                        .map(d => d.log2)
+                        .reduce((a, d) => d > a ? d : a);
+                    if (fitToData) {
+                        d3.selectAll(".data-range-warning").classed("hidden", true);
+                        const padding = (yMax - yMin) * 0.05;
+                        yScale.domain([yMin - padding, yMax + padding]);
+                    } else {
+                        d3.selectAll(".data-range-warning").classed("hidden", !(yMin < -2 || yMax > 2));
+                        yScale.domain([-2, 2]);
+                    }
+                } else {
+                    const [yMin, yMax] = d3.extent(data.callers[callerIndex].ratios, d => d.log2);
+                    if (fitToData) {
+                        d3.selectAll(".data-range-warning").classed("hidden", true);
+                        const padding = (yMax - yMin) * 0.05;
+                        yScale.domain([yMin - padding, yMax + padding]);
+                    } else {
+                        d3.selectAll(".data-range-warning").classed("hidden", !(yMin < -2 || yMax > 2));
+                        yScale.domain([-2, 2]);
+                    }
                 }
-                yScale.domain(d3.extent(data[`${activeDataset}_ratios`], d => d.log2));
                 svg.transition().select(".x-axis")
                     .duration(500)
                     .call(xAxis);
@@ -456,17 +714,18 @@
                     .duration(500)
                     .call(yAxis);
                 svg.select(".x-label").text(data.label);
-                plotRegions(data[`${activeDataset}_ratios`]);
+                plotGrid();
+                plotRegions(data.callers[callerIndex].ratios);
                 plotVAF();
-                plotSegments(data[`${activeDataset}_segments`]);
-                plotGenes();
+                plotSegments(data.callers[callerIndex].segments);
+                plotAnnotations();
             };
 
             const getZoomRange = () => {
                 return xScale.domain();
             };
 
-            update(data, activeDataset);
+            update(data);
 
             return {
                 update: update,
@@ -474,7 +733,7 @@
             }
         }
 
-        const plotGenomeView = activeDataset => {
+        const plotGenomeView = () => {
             const totalLength = d3.sum(cnvData.map(d => d.length));
             const height = 400;
             const width = 800;
@@ -482,8 +741,8 @@
                 top: 10,
                 right: 30,
                 bottom: 60,
-                left: 50,
-                between: 10,
+                left: 60,
+                between: 20,
             };
             const panelWidths = cnvData.map(d => (width - margin.left - margin.right) * d.length / totalLength);
             const panelHeight = (height - margin.top - margin.bottom - margin.between) / 2;
@@ -502,10 +761,10 @@
                 .range([panelHeight, 0]);
 
             const yAxis = g => g
-                .call(d3.axisLeft(yScale).ticks(4));
+                .call(d3.axisLeft(yScale).ticks(5));
 
             const yAxisVAF = g => g
-                .call(d3.axisLeft(yScaleVAF).ticks(4));
+                .call(d3.axisLeft(yScaleVAF).ticks(5));
 
             const svg = d3.select("#genome-view")
                 .attr("preserveAspectRatio", "xMinYMin meet")
@@ -546,6 +805,13 @@
             const lrPanels = addPanels(lrArea);
             const vafPanels = addPanels(vafArea);
 
+            const lrGrid = lrPanels.append("g")
+                .attr("class", "grid")
+                .attr("data-index", (d, i) => i);
+            const vafGrid = vafPanels.append("g")
+                .attr("class", "grid")
+                .attr("data-index", (d, i) => i);
+
             const ratioPanels = lrPanels.append("g")
                 .attr("class", "regions")
                 .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
@@ -556,11 +822,11 @@
                 .attr("clip-path", (d, i) => `url(#panel-${i}-overlay-clip)`)
                 .attr("data-index", (d, i) => i);
 
-            const plotRegions = activeDataset => {
+            const plotRegions = () => {
                 ratioPanels
                     .selectAll(".point")
                     // Only plot every fifth point for performance
-                    .data(d => d[`${activeDataset}_ratios`].filter((r, i) => i % 5 === 0), d => d.start)
+                    .data(d => d.callers[getActiveCaller()].ratios.filter((r, i) => i % 5 === 0), d => d.start)
                     .join(
                         enter => enter
                             .append("circle")
@@ -586,11 +852,11 @@
                     );
             };
 
-            const plotSegments = activeDataset => {
+            const plotSegments = () => {
                 segmentPanels
                     .selectAll(".segment")
                     // Only draw segments that will actually be visible
-                    .data(d => d[`${activeDataset}_segments`].filter(s => s.end - s.start > totalLength/width), d => [d.start, d.end, d.log2])
+                    .data(d => d.callers[getActiveCaller()].segments.filter(s => s.end - s.start > totalLength/width), d => [d.start, d.end, d.log2])
                     .join(
                         enter => enter
                             .append("path")
@@ -626,6 +892,26 @@
                     );
             };
 
+            // Log ratio grid lines
+            lrGrid.selectAll(".gridline")
+                .data(yScale.ticks())
+                .join("line")
+                    .attr("x1", (d, i, g) => xScales[g[i].parentNode.dataset.index].range()[0])
+                    .attr("x2", (d, i, g) => xScales[g[i].parentNode.dataset.index].range()[1])
+                    .attr("y1", d => yScale(d))
+                    .attr("y2", d => yScale(d))
+                    .attr("class", "gridline");
+
+            // VAF grid lines
+            vafGrid.selectAll(".gridline")
+                .data(yScaleVAF.ticks())
+                .join("line")
+                    .attr("x1", (d, i, g) => xScales[g[i].parentNode.dataset.index].range()[0])
+                    .attr("x2", (d, i, g) => xScales[g[i].parentNode.dataset.index].range()[1])
+                    .attr("y1", d => yScaleVAF(d))
+                    .attr("y2", d => yScaleVAF(d))
+                    .attr("class", "gridline");
+
             // VAF
             vafPanels.append("g")
                 .attr("class", "vaf")
@@ -653,12 +939,16 @@
 
             let selectedChromosomeIndex = 0;
             const selectChromosome = chromosome => {
+                previousChromosomeIndex = selectedChromosomeIndex;
                 selectedChromosomeIndex = cnvData.findIndex(d => d.chromosome === chromosome);
+                if (previousChromosomeIndex === selectedChromosomeIndex) {
+                    return;
+                }
                 plotArea.selectAll(".panel-overlay")
                     .classed("selected", false);
                 plotArea.selectAll(`.panel-${selectedChromosomeIndex}-overlay`)
                     .classed("selected", true);
-                chromosomeView.update(cnvData[selectedChromosomeIndex], activeDataset);
+                chromosomeView.update(cnvData[selectedChromosomeIndex]);
             }
 
             const overlays = d3.selectAll(".genome-view-area").append("g");
@@ -689,42 +979,44 @@
             // Y axes
             svg.append("g")
                 .attr("transform", `translate(${margin.left}, ${margin.top})`)
+                .attr("class", "y-axis")
                 .call(yAxis);
 
             svg.append("g")
                 .attr("transform", `translate(${margin.left}, ${margin.top+panelHeight+margin.between})`)
+                .attr("class", "y-axis")
                 .call(yAxisVAF);
 
             // Labels
             vafPanels.append("text")
                 .attr("transform", (d, i) => `translate(${panelWidths[i]/2},${panelHeight+10}) rotate(-90)`)
+                .attr("class", "x-label")
                 .text((d, i) => d.label)
                 .attr("text-anchor", "end")
-                .attr("dominant-baseline", "central")
-                .style("font-size", "0.8rem");
+                .attr("dominant-baseline", "central");
 
             svg.append("text")
                 .attr("transform", `translate(0,${margin.top+panelHeight/2}) rotate(-90)`)
+                .attr("class", "y-label")
                 .text("log2 ratio")
                 .attr("text-anchor", "middle")
-                .attr("dominant-baseline", "text-before-edge")
-                .style("font-size", "0.9rem");
+                .attr("dominant-baseline", "text-before-edge");
 
             svg.append("text")
                 .attr("transform", `translate(0,${margin.top+margin.between+3*panelHeight/2}) rotate(-90)`)
+                .attr("class", "y-label")
                 .text("VAF")
                 .attr("text-anchor", "middle")
-                .attr("dominant-baseline", "text-before-edge")
-                .style("font-size", "0.9rem");
+                .attr("dominant-baseline", "text-before-edge");
 
-            const update = activeDataset => {
-                plotRegions(activeDataset);
-                plotSegments(activeDataset);
+            const update = () => {
+                plotRegions();
+                plotSegments();
             };
 
             const getSelectedChromosome = () => selectedChromosomeIndex;
 
-            update(activeDataset);
+            update();
 
             return {
                 update: update,
@@ -733,8 +1025,11 @@
             };
         };
 
-        const populateTable = (dataset) => {
+        const populateTable = () => {
             const table = d3.select("#cnv-table");
+            if (table.empty()) {
+                return null;
+            }
 
             const tableHeader = table.append("thead").append("tr");
             const tableBody = table.append("tbody");
@@ -757,9 +1052,9 @@
                     case "corrCopyNumber":
                     case "cn":
                         return {
-                            class: "right",
+                            class: "right tooltip-trigger",
                             format: x => {
-                                if (x) {
+                                if (x !== null) {
                                     return x.toLocaleString(
                                         undefined,
                                         { minimumFractionDigits: 2 }
@@ -775,11 +1070,16 @@
                             format: x => x,
                         };
 
+                    case "type":
+                        return {
+                            class: "left",
+                            format: x => x,
+                        };
+
                     // Strings
                     case "caller":
                     case "chromosome":
                     case "gene":
-                    case "type":
                     default:
                         return {
                             class: "left",
@@ -788,10 +1088,47 @@
                 }
             }
 
-            const update = dataset => {
+            const tooltip = d3.select(".container")
+                .append("div")
+                .attr("class", "copy-number-tooltip hidden")
+                .call(d => d.append("table")
+                    .call(t => t.append("thead")
+                        .append("tr")
+                        .selectAll("th")
+                        .data(["caller", "type", "cn"])
+                        .join("th")
+                            .text(d => d))
+                    .call(t => t.append("tbody")));
+
+            const copyNumberTooltip = (data, x, y) => {
+                tooltip
+                    .classed("hidden", false);
+                tooltip
+                    .select("tbody")
+                    .selectAll("tr")
+                    .data(data)
+                    .join("tr")
+                        .selectAll("td")
+                        .data(d => Object.entries(d))
+                        .join("td")
+                            .text(d => getColumnDef(d[0]).format(d[1]));
+            }
+
+            const showCopyNumberTooltip = (e) => {
+                const tableRow = e.target.parentNode.dataset.index;
+                const others = tableData[tableRow].others;
+
+                copyNumberTooltip(others);
+            }
+
+            const hideCopyNumberTooltip = (e) => {
+                tooltip.classed("hidden", true);
+            }
+
+            const update = () => {
+                const callerIndex = getActiveCaller();
                 tableData = cnvData
-                    .map(d => d["cnvs"]
-                        .filter(v => v.caller == dataset)
+                    .map(d => d.callers[callerIndex].cnvs
                         .map(di => {
                             const allCols = {view: "🔍", chromosome: d.chromosome, ...di};
                             const {caller, ...cols} = allCols;
@@ -803,9 +1140,26 @@
                     tableData = [{"No data to display": []}];
                 }
 
+                // Find the corresponding copy numbers from the other caller(s)
+                for (cnv of tableData) {
+                    // Same chromosome
+                    let chromData = cnvData.filter(d => d.chromosome === cnv.chromosome);
+                    // ... different caller
+                    let callerData = chromData[0].callers.filter((_d, i) => i !== callerIndex)
+                    // ... same gene
+                    let otherCnvs = callerData.map(
+                        d => d.cnvs
+                            .filter(c => cnv.genes.filter(g => c.genes.includes(g)).length > 0)
+                            .map(c => {
+                                return {caller: d.name, type: c.type, cn: c.cn}
+                            })
+                    ).flat();
+                    cnv.others = otherCnvs;
+                }
+
                 tableHeader
                     .selectAll("th")
-                    .data(Object.keys(tableData[0]), d => d)
+                    .data(Object.keys(tableData[0]).filter(k => k !== "others"), d => d)
                     .join("th")
                         .text(d => d)
                         .attr("class", d => getColumnDef(d).class);
@@ -817,11 +1171,12 @@
                         .attr("data-chromosome", d => d.chromosome)
                         .attr("data-start", d => d.start)
                         .attr("data-length", d => d.length)
+                        .attr("data-index", (_, i) => i)
                         .selectAll("td")
-                        .data(d => Object.entries(d))
+                        .data(d => Object.entries(d).filter(([k, _]) => k !== "others"))
                         .join("td")
                             .text(([key, value]) => getColumnDef(key).format(value))
-                            .attr("class", ([key, value]) => getColumnDef(key).class);
+                            .attr("class", ([key, _]) => getColumnDef(key).class);
 
                 tableBody.selectAll(".view-region-link")
                     .on("click", e => {
@@ -832,11 +1187,23 @@
                             Number(dataset.start) + Number(dataset.length)
                         );
                     });
+
+                tableBody.selectAll(".tooltip-trigger")
+                    .on("mouseenter", showCopyNumberTooltip)
+                    .on("mouseout", hideCopyNumberTooltip)
+                    .on("mousemove", e => {
+                        const dims = tooltip.node().getBoundingClientRect();
+                        const offset = d3.select(".container").node().getBoundingClientRect().y;
+                        const maxHeight = document.documentElement.clientHeight - offset - dims.height;
+                        tooltip
+                            .style("top", `${Math.min(e.layerY, maxHeight)}px`)
+                            .style("left", `${e.layerX - dims.width - 20}px`);
+                    });
             }
 
             const getData = () => tableData;
 
-            update(dataset);
+            update();
 
             return {
                 getData: getData,
@@ -844,31 +1211,58 @@
             };
         };
 
+        // Populate dataset picker
+        d3.select("#dataset-picker")
+            .selectAll("div")
+            .data(cnvData[0].callers)
+            .join("div")
+                .call(e => {
+                    e.append("input")
+                        .attr("type", "radio")
+                        .property("checked", (_, i) => i === 0)
+                        .attr("value", (_, i) => i)
+                        .attr("id", d => `dataset-${d.name}`)
+                        .attr("name", "dataset")
+                    return e;
+                })
+                .call(e => {
+                    e.append("label")
+                        .attr("for", d => `dataset-${d.name}`)
+                        .text(d => d.label)
+                    return e;
+                });
+
         const zoomToRegion = (chromosome, start, end, padding = 0.05) => {
             genomeView.selectChromosome(chromosome)
             let bpPadding = (end - start) * padding;
             chromosomeView.update(
                 cnvData[genomeView.getSelectedChromosome()],
-                activeDataset,
                 start - bpPadding,
                 end + bpPadding
             );
         }
 
-        let activeDataset = getActiveDataset();
+        const chromosomeView = plotChromosomeView(cnvData[0]);
+        const genomeView = plotGenomeView();
+        const resultsTable = populateTable();
 
-        const chromosomeView = plotChromosomeView(cnvData[0], activeDataset);
-        const genomeView = plotGenomeView(activeDataset);
-        const resultsTable = populateTable(activeDataset);
+        d3.select("#chromosome-fit-to-data").on("change", e => {
+            let [xMin, xMax] = chromosomeView.getZoomRange();
+            chromosomeView.update(cnvData[genomeView.getSelectedChromosome()], xMin, xMax);
+        });
 
         d3.selectAll("input[name=dataset]").on("change", e => {
-            activeDataset = e.target.value;
             let [xMin, xMax] = chromosomeView.getZoomRange();
-            chromosomeView.update(cnvData[genomeView.getSelectedChromosome()], activeDataset, xMin, xMax);
-            genomeView.update(activeDataset);
-            resultsTable.update(activeDataset);
+            chromosomeView.update(cnvData[genomeView.getSelectedChromosome()], xMin, xMax);
+            genomeView.update();
+            if (resultsTable) {
+                resultsTable.update();
+            }
         });
+
+
+
 
     </script>
 </body>
-</html>
+<html>
