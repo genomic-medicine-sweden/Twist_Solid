@@ -77,6 +77,13 @@ bwa_mem:
 bwa_mem_merge:
   extra: "-c -p"
 
+call_small_cnv_deletions:
+  regions_file: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_deletion_genes.tsv"
+  window_size: 4
+  region_max_size: 30
+  min_nr_stdev_diff: 2.5
+  min_log_odds_diff: 0.3
+
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_nextseq_36.cnn"
