@@ -70,10 +70,6 @@ def filter_deletions(
     # Filter large deletions (captured by other tools)
     if min_probe_diff_index - max_probe_diff_index >= region_max_size:
         return "Too_large"
-    # Filter deletions without start or end breakpoint
-    probe_len = len(probe_data)
-    if max_probe_diff_index - window_size <= 0 or min_probe_diff_index + window_size + 1 == probe_len:
-        return "No_end"
     # Filter deletions not in the actual gene of interest
     in_gene = False
     # Adding one extra to allow the breakpoint to not be included

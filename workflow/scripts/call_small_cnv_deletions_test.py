@@ -88,18 +88,6 @@ class TestUnitUtils(unittest.TestCase):
         out_deletions.close()
         regions_file.close()
 
-        # Filter 3 (Filter deletions without start or end breakpoint)
-        cnv_data = ".tests/units/gatk_cnv/HD832.HES45_T.filter3.tsv"
-        regions_file = open(".tests/integration/DATA/cnv_deletion_genes.tsv")
-        out_deletions = open(os.path.join(self.tempdir, "HD832.HES45_T.deletions.tsv"), "w")
-        filter = call_small_cnv_deletions(
-            cnv_data, regions_file, out_deletions, self.window_size, self.region_max_size, self.min_nr_stdev_diff,
-            self.min_log_odds_diff,
-        )
-        self._test_call_small_cnv_deletions_filter("No_end", filter)
-        out_deletions.close()
-        regions_file.close()
-
         # Filter 4 (Filter deletions not in the actual gene of interest)
         cnv_data = ".tests/units/gatk_cnv/HD832.HES45_T.filter4.tsv"
         regions_file = open(".tests/integration/DATA/cnv_deletion_genes.tsv")
