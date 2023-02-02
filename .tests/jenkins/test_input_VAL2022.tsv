@@ -1,5 +1,4 @@
 file	checksum
-bam_dna/mutect2_indel_bam/VAL2022_T.bam	e520e45fc5e5284c0d605833604deeae
 bam_dna/VAL2022_T.bam	655ae941c5cbf1224036769ab7e5221d
 results/dna/cnv/VAL2022_T/VAL2022_T.deletions.tsv	063a8d156537ad31598bf45482bd272c
 results/dna/cnv/VAL2022_T/VAL2022_T.manta_tumorSV.vcf.gz	6907ea0c8cfe837dea3999e9aa04c806
