@@ -7,7 +7,6 @@ bam_dna/mutect2_indel_bam/NA12878_T.bam	85260d43c202e884eb0bc42d39b66cba
 bam_dna/mutect2_indel_bam/VAL2022_T.bam	5b7d61961bce0d1cba21b4dd67ed37c7
 bam_dna/NA12878_T.bam	c0660a1800ae4d83846cf889afd420e6
 bam_dna/VAL2022_T.bam	655ae941c5cbf1224036769ab7e5221d
-results/dna/cnv/HD827_T/HD827_T.cnvkit.scatter.png	0f27cdeaf938ce9d7bf442931adba0ee
 results/dna/cnv/HD827_T/HD827_T.deletions.tsv	063a8d156537ad31598bf45482bd272c
 results/dna/cnv/HD827_T/HD827_T.manta_tumorSV.vcf.gz	e29abf2c24120cd652bdf6c50b7aab12
 results/dna/cnv/HD827_T/HD827_T.pathology.cnv_report.tsv	587322dba1f575e74844203420e457be
@@ -15,7 +14,6 @@ results/dna/cnv/HD827_T/HD827_T.pathology.svdb_query.vcf	2411b38c2361e8ce78f8a92
 results/dna/cnv/HD827_T/HD827_T.purecn.cnv_report.tsv	ee4b45d6609af3b4457982af6b14719f
 results/dna/cnv/HD827_T/HD827_T.purecn.svdb_query.vcf	321ae59ac581591b54c1a84c1d24c628
 results/dna/cnv/HD827_T/HD827_T.purecn.tc.txt	18cd9fa87084c6932c6100347ab9aec9
-results/dna/cnv/HD832_T/HD832_T.cnvkit.scatter.png	a6b46251753c2dddbef8ebb1da2f1d85
 results/dna/cnv/HD832_T/HD832_T.deletions.tsv	063a8d156537ad31598bf45482bd272c
 results/dna/cnv/HD832_T/HD832_T.manta_tumorSV.vcf.gz	7883b18b87db697f6f4eb0c51fc36ec9
 results/dna/cnv/HD832_T/HD832_T.pathology.cnv_report.tsv	62c539cdafeae4484bca0c97056b1c89
@@ -23,7 +21,6 @@ results/dna/cnv/HD832_T/HD832_T.pathology.svdb_query.vcf	15bae0bd0bee9c88e72d435
 results/dna/cnv/HD832_T/HD832_T.purecn.cnv_report.tsv	5be835e500ec34d983f009ad85b3da01
 results/dna/cnv/HD832_T/HD832_T.purecn.svdb_query.vcf	2898484c97d59eb70507fd32100fd205
 results/dna/cnv/HD832_T/HD832_T.purecn.tc.txt	b58b49c5aa4ea08361e8b658ba214faa
-results/dna/cnv/NA12878_T/NA12878_T.cnvkit.scatter.png	a761c2075eede0a72681538adbf3a87b
 results/dna/cnv/NA12878_T/NA12878_T.deletions.tsv	063a8d156537ad31598bf45482bd272c
 results/dna/cnv/NA12878_T/NA12878_T.manta_tumorSV.vcf.gz	d75c1d6d0c2373b358a640bf8d9f8293
 results/dna/cnv/NA12878_T/NA12878_T.pathology.cnv_report.tsv	05786f3438d670a38f89afb65aebc41e
@@ -31,7 +28,6 @@ results/dna/cnv/NA12878_T/NA12878_T.pathology.svdb_query.vcf	be475558f212b7621f4
 results/dna/cnv/NA12878_T/NA12878_T.purecn.cnv_report.tsv	5acdaeb4c3e9d2f81449334f0560e9fd
 results/dna/cnv/NA12878_T/NA12878_T.purecn.svdb_query.vcf	c75c26641905a0cb183191a17b30298e
 results/dna/cnv/NA12878_T/NA12878_T.purecn.tc.txt	5215168f88b83cb127d078dcf751b4b6
-results/dna/cnv/VAL2022_T/VAL2022_T.cnvkit.scatter.png	bc16487e152773d0ed84b29f163a7159
 results/dna/cnv/VAL2022_T/VAL2022_T.deletions.tsv	063a8d156537ad31598bf45482bd272c
 results/dna/cnv/VAL2022_T/VAL2022_T.manta_tumorSV.vcf.gz	6907ea0c8cfe837dea3999e9aa04c806
 results/dna/cnv/VAL2022_T/VAL2022_T.pathology.cnv_report.tsv	79eeac62531f437d1f9b74716454cea6
