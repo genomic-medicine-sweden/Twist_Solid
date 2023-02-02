@@ -1,10 +1,6 @@
 file	checksum
 bam_dna/HD827_T.bam	f65bc8326afe2847296ea704dcb2b714
 bam_dna/HD832_T.bam	49d6f90d484bec095c36e3c201062e09
-bam_dna/mutect2_indel_bam/HD827_T.bam	b411925da39d8c36d746569b8756175e
-bam_dna/mutect2_indel_bam/HD832_T.bam	04f5d1f3f5836bfb34a561befb1cb12f
-bam_dna/mutect2_indel_bam/NA12878_T.bam	85260d43c202e884eb0bc42d39b66cba
-bam_dna/mutect2_indel_bam/VAL2022_T.bam	5b7d61961bce0d1cba21b4dd67ed37c7
 bam_dna/NA12878_T.bam	c0660a1800ae4d83846cf889afd420e6
 bam_dna/VAL2022_T.bam	655ae941c5cbf1224036769ab7e5221d
 results/dna/cnv/HD827_T/HD827_T.deletions.tsv	063a8d156537ad31598bf45482bd272c
