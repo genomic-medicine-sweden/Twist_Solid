@@ -9,9 +9,11 @@ __license__ = "GPL-3"
 
 include: "rules/common.smk"
 include: "rules/bcftools.smk"
+include: "rules/call_small_cnv_deletions.smk"
 include: "rules/cnv_tsv_report.smk"
 include: "rules/cnv_html_report.smk"
 include: "rules/exon_skipping.smk"
+include: "rules/fix_vcf_ad_for_qci.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/house_keeping_gene_coverage.smk"
 include: "rules/report_gene_fuse.smk"
@@ -50,7 +52,7 @@ ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
 
 module prealignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/prealignment", path="workflow/Snakefile", tag="v0.5.0")
+        get_module_snakefile(config, "hydra-genetics/prealignment", path="workflow/Snakefile", tag="v1.0.0")
     config:
         config
 
@@ -60,7 +62,7 @@ use rule * from prealignment as prealignment_*
 
 module alignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.3.0")
+        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.3.1")
     config:
         config
 
@@ -116,7 +118,7 @@ use rule * from snv_indels as snv_indels_*
 
 module annotation:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.2.0")
+        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.3.0")
     config:
         config
 
@@ -136,7 +138,7 @@ use rule * from filtering as filtering_*
 
 module qc:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/qc", path="workflow/Snakefile", tag="v0.2.0")
+        get_module_snakefile(config, "hydra-genetics/qc", path="workflow/Snakefile", tag="v0.3.0")
     config:
         config
 
@@ -213,7 +215,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 module biomarker:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.1.0")
+        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.2.0")
     config:
         config
 
@@ -223,12 +225,12 @@ use rule * from biomarker as biomarker_*
 
 use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
     input:
-        seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns",
+        seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns",
 
 
 module fusions:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="12f8354")
+        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="c6e4d13")
     config:
         config
 
@@ -246,7 +248,7 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.2.0")
+        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.3.1")
     config:
         config
 
@@ -278,17 +280,18 @@ use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
 use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
     input:
         segment="cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cns",
-        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
+        tc_file=cnv_sv.get_tc_file,
     output:
-        segment=temp("cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns"),
+        segment=temp("cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns"),
     params:
-        tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
+        tc=cnv_sv.get_tc,
         extra=config.get("cnvkit_call_hrd", {}).get("extra", ""),
     log:
-        "cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns.log",
+        "cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns.log",
     benchmark:
         repeat(
-            "cnv_sv/cnvkit_call_hrd/{sample}_{type}.loh.cns.benchmark.tsv",
+            "cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns.benchmark.tsv",
             config.get("cnvkit_call_hrd", {}).get("benchmark_repeats", 1),
         )
 
@@ -296,14 +299,15 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
 use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:
     input:
         segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
-        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
+        tc_file=cnv_sv.get_tc_file,
 
 
 use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
     input:
         segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
         segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
-        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
 
 
 module misc:

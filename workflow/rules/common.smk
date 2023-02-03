@@ -87,6 +87,63 @@ def get_flowcell(units, wildcards):
     return flowcells.pop()
 
 
+def get_cnv_ratio_file(wildcards):
+    caller = wildcards.get("caller", "")
+    if caller == "cnvkit":
+        return "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr".format(**wildcards)
+    elif caller == "gatk":
+        return "cnv_sv/gatk_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv".format(**wildcards)
+    else:
+        raise NotImplementedError(f"not implemented for caller {caller}")
+
+
+def get_cnv_segment_file(wildcards):
+    caller = wildcards.get("caller", "")
+    if caller == "cnvkit":
+        return "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns".format(**wildcards)
+    elif caller == "gatk":
+        return "cnv_sv/gatk_model_segments/{sample}_{type}.clean.cr.seg".format(**wildcards)
+    else:
+        raise NotImplementedError(f"not implemented for caller {caller}")
+
+
+def get_json_for_merge_json(wildcards):
+    json_dict = {}
+    for v in config.get("svdb_merge", {}).get("tc_method"):
+        tc_method = v["name"]
+        callers = v["cnv_caller"]
+        for caller in callers:
+            if tc_method in json_dict:
+                json_dict[tc_method].append(
+                    f"cnv_sv/cnv_html_report/{wildcards.sample}_{wildcards.type}.{caller}.{tc_method}.json"
+                )
+            else:
+                json_dict[tc_method] = [f"cnv_sv/cnv_html_report/{wildcards.sample}_{wildcards.type}.{caller}.{tc_method}.json"]
+    return json_dict[wildcards.tc_method]
+
+
+def get_filtered_cnv_vcfs_for_merge_json(wildcards):
+    cnv_vcfs = []
+    tags = config.get("cnv_html_report", {}).get("cnv_vcf", [])
+    for t in tags:
+        cnv_vcfs.append(
+            f"cnv_sv/svdb_query/{wildcards.sample}_{wildcards.type}.{wildcards.tc_method}.svdb_query."
+            f"annotate_cnv.{t['annotation']}.filter.{t['filter']}.vcf.gz"
+        )
+    return sorted(cnv_vcfs)
+
+
+def get_unfiltered_cnv_vcfs_for_merge_json(wildcards):
+    cnv_vcfs = []
+    tags = config.get("cnv_html_report", {}).get("cnv_vcf", [])
+    for t in tags:
+        cnv_vcfs.append(
+            f"cnv_sv/svdb_query/{wildcards.sample}_{wildcards.type}.{wildcards.tc_method}.svdb_query."
+            f"annotate_cnv.{t['annotation']}.vcf.gz"
+        )
+    return sorted(cnv_vcfs)
+
+
 def generate_copy_code(workflow, output_json):
     code = ""
     for result, values in output_json.items():
@@ -94,8 +151,8 @@ def generate_copy_code(workflow, output_json):
             input_file = values["file"]
             output_file = result
             rule_name = values["name"]
-            mem_mb = config.get('_copy', {}).get("mem_mb", config["default_resources"]["mem_mb"])
-            mem_per_cpu = config.get('_copy', {}).get("mem_mb", config["default_resources"]["mem_mb"])
+            mem_mb = config.get("_copy", {}).get("mem_mb", config["default_resources"]["mem_mb"])
+            mem_per_cpu = config.get("_copy", {}).get("mem_mb", config["default_resources"]["mem_mb"])
             partition = config.get("_copy", {}).get("partition", config["default_resources"]["partition"])
             threads = config.get("_copy", {}).get("threads", config["default_resources"]["threads"])
             time = config.get("_copy", {}).get("time", config["default_resources"]["time"])

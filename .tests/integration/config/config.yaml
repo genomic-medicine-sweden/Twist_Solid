@@ -22,6 +22,24 @@ arriba_draw_fusion:
   gtf: "reference/WASH7P.gtf"
   protein_domains: "reference/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3"
 
+bcftools_filter_include_region:
+  exon: "DATA/design.noexon1.bed"
+  nocnv: "DATA/design.noexon1.bed"
+
+bcftools_filter_exclude_region:
+  exon: "DATA/design.noexon1.bed"
+  nocnv: "DATA/design.noexon1.bed"
+  blacklist: "DATA/cnvkit_germline_blacklist_20221221.bed"
+
+bcbio_variation_recall_ensemble:
+  container: "docker://hydragenetics/bcbio-vc:0.2.6"
+  callers:
+    - vardict
+    - gatk_mutect2
+
+bcftools_id_snps:
+  snps_bed: "DATA/ID_SNPs.bed"
+
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
   amb: "reference/WASH7P.fna.amb"
@@ -30,30 +48,12 @@ bwa_mem:
   pac: "reference/WASH7P.fna.pac"
   sa: "reference/WASH7P.fna.sa"
 
-bcftools_filter_include_region:
-  exon: "DATA/design.noexon1.bed"
-  nocnv: "DATA/design.noexon1.bed"
-
-bcftools_filter_exclude_region:
-  exon: "DATA/design.noexon1.bed"
-  nocnv: "DATA/design.noexon1.bed"
-
-bcbio_variation_recall_ensemble:
-  container: "docker://gmsuppsala/somatic:develop"
-  callers:
-    - vardict
-    - gatk_mutect2
-
-bcftools_filter_include_region:
-  exon: "DATA/design.noexon1.bed"
-  nocnv: "DATA/design.noexon1.bed"
-
-bcftools_filter_exclude_region:
-  exon: "DATA/design.noexon1.bed"
-  nocnv: "DATA/design.noexon1.bed"
-
-bcftools_id_snps:
-  snps_bed: "DATA/ID_SNPs.bed"
+call_small_cnv_deletions:
+  regions_file: "DATA/cnv_deletion_genes.tsv"
+  window_size: 4
+  region_max_size: 30
+  min_nr_stdev_diff: 2.5
+  min_log_odds_diff: 0.3
 
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"
@@ -117,7 +117,7 @@ gatk_collect_read_counts:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
 gatk_denoise_read_counts:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
   normal_reference: "DATA/gatk_cnv_nextseq_36.hdf5"
 
 gatk_model_segments:
@@ -163,6 +163,9 @@ hotspot_report:
     - [300, "ok", "yes"]
     - [30, "low", "yes"]
     - [0, "low", "not analyzable"]
+
+manta_config_t:
+  container: "docker://hydragenetics/manta:1.6.0"
 
 manta_run_workflow_t:
   container: "docker://hydragenetics/manta:1.6.0"
@@ -227,6 +230,17 @@ picard_collect_insert_size_metrics:
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
+purecn:
+  container: "docker://hydragenetics/purecn:2.2.0"
+  genome: "hg19"
+  segmentation_method: "GATK4"
+  fun_segmentation: "Hclust"
+  interval_padding: 100
+
+purecn_coverage:
+  container: "docker://hydragenetics/purecn:2.2.0"
+  intervals: "reference/purecn_dummy_intervals.txt"
+
 reference:
   artifacts: "DATA/artifact_panel_normal.tsv"
   background: "DATA/artifact_panel_normal.tsv"
@@ -265,15 +279,21 @@ star:
   genome_index: "reference_star_fusion/star_idx/"
 
 star_fusion:
-  container: "docker://trinityctat/starfusion:1.10.1"
+  container: "docker://hydragenetics/star-fusion:1.10.1"
   genome_path: "reference_star_fusion/"
   extra: "--examine_coding_effect"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
-  cnv_callers:
-    - "cnvkit"
-    - "gatk"
+  tc_method:
+    - name: purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
+    - name: pathology
+      cnv_caller:
+        - cnvkit
+        - gatk
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.6.0"
@@ -281,7 +301,7 @@ svdb_query:
 trimmer_software: "fastp_pe"
 
 vardict:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/vardict:1.8.3"
   bed_columns: "-c 1 -S 2 -E 3 -g 4"
   allele_frequency_threshold: "0.01"
 

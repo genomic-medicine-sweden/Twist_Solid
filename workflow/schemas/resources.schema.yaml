@@ -28,9 +28,49 @@ properties:
       - mem_per_cpu
       - partition
 
+  call_small_cnv_deletions:
+    type: object
+    description: resource definitions for calling small deletions in cnv data
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
   cnv_tsv_report:
     type: object
     description: resource definitions for generating a cnv report
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  fix_vcf_ad_for_qci:
+    type: object
+    description: resource definitions for fix_vcf_ad_for_qci
     properties:
       mem_mb:
         type: integer

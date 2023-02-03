@@ -6,23 +6,6 @@ __copyright__ = "Copyright 2021, Jonas A"
 __email__ = "jonas.almlof@igp.uu.se"
 __license__ = "GPL-3"
 
-output_files = [
-    "references/cnvkit_build_normal_reference/cnvkit.PoN.cnn",
-    "references/create_read_count_panel_of_normals/gatk_cnv_panel_of_normal.hdf5",
-    "references/msisensor_pro_baseline/Msisensor_pro_reference.list_baseline",
-    "references/create_background_file/background_panel.tsv",
-    "references/create_artifact_file/artifact_panel.tsv",
-    "references/svdb_export/svdb_cnv.vcf",
-]
-output_files = [
-    "results/cnvkit.PoN.cnn",
-    "results/gatk_cnv_panel_of_normal.hdf5",
-    "results/Msisensor_pro_reference.list_baseline",
-    "results/background_panel.tsv",
-    "results/artifact_panel.tsv",
-    "results/svdb_cnv.vcf",
-]
-
 
 rule copy_cnvkit:
     input:
@@ -74,5 +57,23 @@ rule copy_svdb_cnv:
         "references/svdb_export/svdb_cnv.vcf",
     output:
         "results/svdb_cnv.vcf",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_purecn1:
+    input:
+        "references/purecn_normal_db/output/normalDB_hg19.rds",
+    output:
+        "results/purecn_normal_db.rds",
+    shell:
+        "cp {input} {output}"
+
+
+rule copy_purecn2:
+    input:
+        "references/purecn_normal_db/output/mapping_bias_hg19.rds",
+    output:
+        "results/mapping_bias_hg19.rds",
     shell:
         "cp {input} {output}"

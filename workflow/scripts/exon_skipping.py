@@ -4,6 +4,7 @@ junction_file = open(snakemake.input.junction)
 result_file = open(snakemake.output.result, "w")
 
 report_genes = ["MET", "EGFR"]
+FP_exon = ["EGFR_NM_001346897.2_exon_23", "MET_NM_001127500.3_exon_4"]
 
 gene_dict = {}
 pos_dict = {}
@@ -100,7 +101,7 @@ for unnormal_key in unnormal_junction:
     else:
         continue
     fraction_skipped_reads = nr_unnormal_reads / float(nr_unnormal_reads + nr_normal_reads)
-    if fraction_skipped_reads > 0.1 and nr_unnormal_reads > 100:
+    if fraction_skipped_reads > 0.1 and nr_unnormal_reads > 100 and end_exon_name not in FP_exon:
         result_file.write(
             gene + "\t" + start_exon_name + "\t" + end_exon_name + "\t" + str(nr_unnormal_reads) +
             "\t" + str(nr_normal_reads) + "\t" + str(fraction_skipped_reads) + "\n"

@@ -5,7 +5,7 @@ filters:
     soft_filter: "False"
   ad:
     description: "Hard filter variants with few observations (AD lower than 50)"
-    expression: "(FORMAT:AD:1 < 50)"
+    expression: "(FORMAT:AD:1 < 50 or FORMAT:AD:0 < 50)"
     soft_filter: "False"
   snp_type:
     description: "Hard filter variants that are not SNVs"

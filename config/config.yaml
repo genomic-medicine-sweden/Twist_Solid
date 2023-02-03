@@ -43,8 +43,8 @@ add_multi_snv_in_codon:
 
 annotate_cnv:
   cnv_amp_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed"
-  cnv_loh_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_uppsala_genes.bed"
-  # cnv_loh_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_genes.bed"
+  # cnv_loh_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_uppsala_genes.bed"
+  cnv_loh_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_genes.bed"
 
 bcbio_variation_recall_ensemble:
   container: "docker://hydragenetics/bcbio-vc:0.2.6"
@@ -52,8 +52,16 @@ bcbio_variation_recall_ensemble:
     - vardict
     - gatk_mutect2
 
+bcftools_annotate:
+  annotation_db: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf.gz"
+  output_type: "z"
+  annotation_string: "-m DB"
+
 bcftools_filter_include_region:
   exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.bed"
+
+bcftools_filter_exclude_region:
+  blacklist: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnvkit_germline_blacklist_20221221.bed"
 
 bcftools_id_snps:
   snps_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/ID_SNPs.bed"
@@ -68,6 +76,13 @@ bwa_mem:
 
 bwa_mem_merge:
   extra: "-c -p"
+
+call_small_cnv_deletions:
+  regions_file: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_deletion_genes.tsv"
+  window_size: 4
+  region_max_size: 30
+  min_nr_stdev_diff: 2.5
+  min_log_odds_diff: 0.3
 
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"
@@ -85,8 +100,16 @@ cnvkit_call:
 cnvkit_diagram:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
+cnvkit_export_seg:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
 cnv_html_report:
-  template: "config/cnv_report_template.html"
+  cnv_vcf:
+    - annotation: cnv_loh_genes
+      filter: cnv_hard_filter_loh
+    - annotation: cnv_amp_genes
+      filter: cnv_hard_filter_amp
+  template: config/cnv_report_template.html
 
 cnvkit_scatter:
   container: "docker://hydragenetics/cnvkit:0.9.9"
@@ -156,7 +179,7 @@ gatk_mutect2_merge_stats:
 
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
-  genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion_w_pool2.hg19.221109.csv"
+  genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion_w_pool2.hg19.221117.csv"
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
 
 hotspot_annotation:
@@ -243,6 +266,20 @@ picard_collect_insert_size_metrics:
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
+purecn:
+  container: "docker://hydragenetics/purecn:2.2.0"
+  genome: "hg19"
+  interval_padding: 100
+  segmentation_method: "internal"
+  fun_segmentation: "PSCBS"
+  extra: "--model betabin --mapping-bias-file /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/mapping_bias_nextseq_27_hg19.rds"
+  normaldb: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/normalDB_nextseq_27_hg19.rds"
+  intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
+
+purecn_coverage:
+  container: "docker://hydragenetics/purecn:2.2.0"
+  intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
+
 report_fusions:
   annotation_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_fusionpartners.bed"
   fusioncather_flag_low_support: 15
@@ -278,9 +315,15 @@ star_fusion:
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
-  cnv_callers:
-    - "cnvkit"
-    - "gatk"
+  tc_method:
+    - name: purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
+    - name: pathology
+      cnv_caller:
+        - cnvkit
+        - gatk
   extra: "--pass_only" #Just merge the two vcf-files without merging regions
 
 svdb_query:
