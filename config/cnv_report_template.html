@@ -1138,23 +1138,23 @@
 
                 if (tableData.length === 0) {
                     tableData = [{"No data to display": []}];
-                }
-
-                // Find the corresponding copy numbers from the other caller(s)
-                for (cnv of tableData) {
-                    // Same chromosome
-                    let chromData = cnvData.filter(d => d.chromosome === cnv.chromosome);
-                    // ... different caller
-                    let callerData = chromData[0].callers.filter((_d, i) => i !== callerIndex)
-                    // ... same gene
-                    let otherCnvs = callerData.map(
-                        d => d.cnvs
-                            .filter(c => cnv.genes.filter(g => c.genes.includes(g)).length > 0)
-                            .map(c => {
-                                return {caller: d.name, type: c.type, cn: c.cn}
-                            })
-                    ).flat();
-                    cnv.others = otherCnvs;
+                } else {
+                    // Find the corresponding copy numbers from the other caller(s)
+                    for (cnv of tableData) {
+                        // Same chromosome
+                        let chromData = cnvData.filter(d => d.chromosome === cnv.chromosome);
+                        // ... different caller
+                        let callerData = chromData[0].callers.filter((_d, i) => i !== callerIndex)
+                        // ... same gene
+                        let otherCnvs = callerData.map(
+                            d => d.cnvs
+                                .filter(c => cnv.genes.filter(g => c.genes.includes(g)).length > 0)
+                                .map(c => {
+                                    return {caller: d.name, type: c.type, cn: c.cn}
+                                })
+                        ).flat();
+                        cnv.others = otherCnvs;
+                    }
                 }
 
                 tableHeader
