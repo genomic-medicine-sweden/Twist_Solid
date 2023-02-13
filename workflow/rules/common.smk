@@ -133,6 +133,19 @@ def get_filtered_cnv_vcfs_for_merge_json(wildcards):
     return sorted(cnv_vcfs)
 
 
+def get_tc(wildcards):
+    tc_method = wildcards.tc_method
+    if tc_method == "pathology":
+        return get_sample(samples, wildcards)["tumor_content"]
+    else:
+        tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        if not os.path.exists(tc_file):
+            return -1
+        else:
+            with open(tc_file) as f:
+                return f.read()
+
+
 def get_unfiltered_cnv_vcfs_for_merge_json(wildcards):
     cnv_vcfs = []
     tags = config.get("cnv_html_report", {}).get("cnv_vcf", [])
