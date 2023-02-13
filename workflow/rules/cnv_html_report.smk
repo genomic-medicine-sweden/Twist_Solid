@@ -72,6 +72,8 @@ rule cnv_html_report:
         html=temp("cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.cnv.html"),
     params:
         show_table=len(config.get("cnv_html_report", {}).get("cnv_vcf", [])) > 0,
+        tc=get_tc,
+        tc_method=lambda wildcards: wildcards.tc_method,
     log:
         "cnv_sv/cnv_html_report/{sample}_{type}.{tc_method}.cnv.html.log",
     benchmark:
