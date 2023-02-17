@@ -1,0 +1,23 @@
+site_name: Twist Solid
+nav:
+  - Introduction: index.md
+  - Overview: overview.md
+  - Running the pipeline: running.md
+  - Pipeline setup and cofiguration: setup.md
+  - DNA Pipeline:
+    - Prealignment: dna_prealignment.md
+    - Alignment: dna_alignment.md
+    - SNV and INDELs: dna_snv_indels.md
+    - CNVs: dna_cnvs.md
+    - Fusions: dna_fusions.md
+    - Biomarkers: dna_biomarkers.md
+    - QC: dna_qc.md
+  - RNA Pipeline:
+    - Fusions: rna_fusions.md
+    - Exon skipping: rna_exon_skipping.md
+    - ID-SNPs: rna_id_snps.md
+    - QC: rna_qc.md
+  - Reference files: references.md
+
+theme: readthedocs
+extra_css: [extra.css]
