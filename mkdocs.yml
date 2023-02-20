@@ -4,6 +4,7 @@ nav:
   - Overview: overview.md
   - Running the pipeline: running.md
   - Pipeline setup and cofiguration: setup.md
+  - Reference files: references.md
   - DNA Pipeline:
     - Prealignment: dna_prealignment.md
     - Alignment: dna_alignment.md
@@ -17,7 +18,6 @@ nav:
     - Exon skipping: rna_exon_skipping.md
     - ID-SNPs: rna_id_snps.md
     - QC: rna_qc.md
-  - Reference files: references.md
 
 theme: readthedocs
 extra_css: [extra.css]

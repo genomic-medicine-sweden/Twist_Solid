@@ -123,7 +123,7 @@ Example annotation for one variant added to a vcf file in the INFO field:
 Annotated vcfs are hard filtered first by removing regions outside exons and then filtered by a number of filtering criteria described below. See the [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/) for additional information. A soft filtered version of the exonic regions is also provided for development and other investigations.
 
 ### Extract exonic regions
-Use **bcftools filter** v1.15 to extract variants overlapping exonic regions (including 20 bp padding) defined in a bed file which is a sub bed file of the general design bed file.
+Use **[bcftools filter -R](https://samtools.github.io/bcftools/bcftools.html)** v1.15 to extract variants overlapping exonic regions (including 20 bp padding) defined in a bed file which is a sub bed file of the general design bed file.
 
 **References**
 

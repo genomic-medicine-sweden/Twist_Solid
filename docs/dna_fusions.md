@@ -1,10 +1,36 @@
 # Fusion calling in DNA
 See the [fusions hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for fusion calling.
 
-**Result files**
+**Result file**
 
 * `results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv`
 
 ## Fusions calling using GeneFuse
+DNA fusion calling is performed by **GeneFuse** v0.6.1 on fastq-files. It uses a gene transcript target file to limit the number of targets to analyse.
+
+**References**
+
+* Fasta reference genome
+* Gene transcript file with genomic positions for all exons include in the analysis
 
 ## Filtering and report
+The output from GeneFuse is filtered and then reported into a fusion report using an **in-house script**. The following filter criteria is used:
+
+* Fusions must have at least 6 unique supporting reads.
+* Very noisy fusion pairs found in almost all samples (defined in `filter_fusions_20230214.csv`) are removed:
+    - NPM1::ALK
+    - CLTC::NTRK3
+    - MSH2_ALK
+    - MSH2_HIP1
+* Noisy fusion pairs found in some samples (defined in `filter_fusions_20230214.csv`) are filtered individually on the number of uniquely supporting reads:
+    - LMNA::EZR 9
+    - ABL1::STRN 7
+    - EZR::ALK 8
+    - RSPO2::BRAF 8
+    - LMNA::HIP1 12
+    - NPM1::BICC1 11
+    - RSPO2::ERG 13
+
+**Result file**
+
+* `results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv`
