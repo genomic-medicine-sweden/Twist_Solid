@@ -6,12 +6,19 @@ See the [fusions hydra-genetics module](https://snv_indels.readthedocs.io/en/lat
 * `results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv`
 
 ## Fusions calling using GeneFuse
-DNA fusion calling is performed by **GeneFuse** v0.6.1 on fastq-files. It uses a gene transcript target file to limit the number of targets to analyse.
+DNA fusion calling is performed by **[GeneFuse](https://github.com/OpenGene/GeneFuse)** v0.6.1 on fastq-files. It uses a gene transcript target file to limit the number of targets to analyse.
 
 **References**
 
 * Fasta reference genome
 * Gene transcript file with genomic positions for all exons include in the analysis
+
+**Resources**
+
+* threads: 6
+* time: "8:00:00"
+* mem_mb: 36864
+* mem_per_cpu: 6144
 
 ## Filtering and report
 The output from GeneFuse is filtered and then reported into a fusion report using an **in-house script**. The following filter criteria is used:

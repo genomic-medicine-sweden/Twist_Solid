@@ -5,10 +5,11 @@ See the [snv_indels hydra-genetics module](https://snv_indels.readthedocs.io/en/
 
 * `results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.vcf`
 * `results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf`
+* `bam_dna/mutect2_indel_bam/{sample}_{type}.bam`
 
 
 ## SNV and INDEL calling
-Small variants are called with **GATK Mutect2** v4.1.9.0 and **Vardict** v1.8.3.
+Small variants are called with **[GATK Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2)** v4.1.9.0 and **[Vardict](https://github.com/AstraZeneca-NGS/VarDict)** v1.8.3.
 
 ### GATK Mutect2 variant calling
 SNVs and INDELs are called by Mutect2 on individual chromosome bamfiles.
@@ -23,19 +24,19 @@ SNVs and INDELs are called by Mutect2 on individual chromosome bamfiles.
 * time: "48:00:00"
 
 ### GATK Mutect2 merging
-The stats file from GATK Mutect2 calling are merge with **GATK MergeMutectStats** v4.1.9.0 and the vcf files are merged with **bcftools concat** v1.15.
+The stats file from GATK Mutect2 calling are merge with **[GATK MergeMutectStats](https://gatk.broadinstitute.org/hc/en-us/articles/360035531132--How-to-Call-somatic-mutations-using-GATK4-Mutect2)** v4.1.9.0 and the vcf files are merged with **bcftools concat** v1.15.
 
 ### GATK Mutect2 vcf soft filtering
-Merged Mutect2 vcf files are softfiltered with **GATK FilterMutectCalls** v4.1.9.0 which puts filter flags in the vcf FILTER column.
+Merged Mutect2 vcf files are softfiltered with **[GATK FilterMutectCalls](https://gatk.broadinstitute.org/hc/en-us/articles/360035531132--How-to-Call-somatic-mutations-using-GATK4-Mutect2)** v4.1.9.0 which puts filter flags in the vcf FILTER column.
 
 ### GATK Mutect2 vcf hard filtering
-Hardfilter Mutect2 vcf files based on the FILTER flags. Keep only variants flagged as:
+Hardfilter Mutect2 vcf files based on the FILTER flags using an **in-house script**. Keep only variants flagged as:
 
 * PASS
 * multiallelic
 
 ### Vardict variant calling
-SNVs and INDELs are called by Vardict on individual chromosome bamfiles.
+SNVs and INDELs are called by **[Vardict](https://github.com/AstraZeneca-NGS/VarDict)** on individual chromosome bamfiles.
 
 **References**
 
@@ -53,13 +54,13 @@ SNVs and INDELs are called by Vardict on individual chromosome bamfiles.
 * time: "48:00:00"
 
 ### Vardict vcf merging
-The Vardict vcf files from individual chromosomes are merged with **bcftools concat** v1.15.
+The Vardict vcf files from individual chromosomes are merged with **[bcftools concat](https://samtools.github.io/bcftools/bcftools.html#concat)** v1.15.
 
 ## Variant vcf decomposition and normalization
-Variants called by Vardict and Mutect2 are decomposed by **vt decompose** follwed by **vt decompose_blocksub** v2015.11.10. The vcf files are then normalized by **vt normalize** v2015.11.10.
+Variants called by Vardict and Mutect2 are decomposed by **[vt decompose](https://genome.sph.umich.edu/wiki/Vt#Decompose)** follwed by **[vt decompose_blocksub](https://genome.sph.umich.edu/wiki/Vt#Decompose_biallelic_block_substitutions)** v2015.11.10. The vcf files are then normalized by **[vt normalize](https://genome.sph.umich.edu/wiki/Vt#Normalization)** v2015.11.10.
 
 ## Variant ensemble
-Variant vcf files from the two callers are ensembled into one vcf file using **bcbio-variation-recall ensemble** v0.2.6. All variants from both caller are retained. When both callers call the same variant the INFO and FORMAT data is taken from the Vardict vcf file.
+Variant vcf files from the two callers are ensembled into one vcf file using **[bcbio-variation-recall ensemble](https://github.com/bcbio/bcbio.variation.recall)** v0.2.6. All variants from both caller are retained. When both callers call the same variant the INFO and FORMAT data is taken from the Vardict vcf file.
 
 **Options**
 
@@ -70,7 +71,7 @@ Variant vcf files from the two callers are ensembled into one vcf file using **b
 The ensembled vcf file is annotated firstly using VEP, followed by artifact annotation and background annotation. See the [annotation hydra-genetics module](https://annotation.readthedocs.io/en/latest/) for additional information.
 
 ### VEP
-The ensembled vcf file is annotated using **VEP** v105. VEP adds a pletora of information for each variant which is specified by the configuration flags listed below. Of note are --pick which picks only one representative transcript for each variant, --af_gnomad which adds germline information, and --cache which uses a local copy of the databases for better performance. See [VEP options](https://www.ensembl.org/info/docs/tools/vep/script/vep_options.html) for more information.
+The ensembled vcf file is annotated using **[VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)** v105. VEP adds a pletora of information for each variant which is specified by the configuration flags listed below. Of note are --pick which picks only one representative transcript for each variant, --af_gnomad which adds germline information, and --cache which uses a local copy of the databases for better performance. See [VEP options](https://www.ensembl.org/info/docs/tools/vep/script/vep_options.html) for more information.
 
 **References**
 
@@ -108,7 +109,7 @@ Annotate clinically important variants in the vcf file using an **in-house scrip
 * Hotspot positions file
 
 ### Background SNV annotation
-In positions with high background noise it can be hard to distinguish low MAF variants. The background level for all SNVs is therefor added in the vcf file. The background annotation is performed using an **in-house script**. It is based on a panel of normal with position specific alternative alleles frequencies obtained from genome VCF files created by **GATK Mutect2** v4.1.9.0. See [references](references.md) for more information on how the Panel of Normal was created.  
+In positions with high background noise it can be hard to distinguish low MAF variants. The background level for all SNVs is therefor added in the vcf file. The background annotation is performed using an **in-house script**. It is based on a panel of normal with position specific alternative alleles frequencies obtained from genome VCF files created by **[GATK Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2)** v4.1.9.0. See [references](references.md) for more information on how the Panel of Normal was created.  
 
 Example annotation for one variant added to a vcf file in the INFO field:
 
@@ -153,3 +154,10 @@ Two or more variants affecting the same codon can have different clinical implic
 The clinical interpretation tool QCI calculates allele frequency from the AD FORMAT field instead of using the AF FORMAT field supplied by the callers. This has shown to be wrong especially for INDELs. The AD field is therefore corrected so that the allele frequency based on the AD field corresponds to the AF field. This correction of the vcf file is performed by an **in-house script**.
 
 **Result file**: `results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf`
+
+## GATK Mutect2 variant bam file
+When **[GATK Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2)** finds INDEL candidates it realignes reads in this regions and outputs a realigned bam-file covering these INDEL regions. This makes it possible to inspect INDELs called by Mutect2 in IGV. As Mutect2 runs on individual chromosomes these bam-files are then merged, sorted and indexed before.
+
+**Result file**
+
+* `bam_dna/mutect2_indel_bam/{sample}_{type}.bam`

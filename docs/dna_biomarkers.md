@@ -9,7 +9,7 @@ See the [biomarkers hydra-genetics module](https://snv_indels.readthedocs.io/en/
 * `results/dna/hrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt`
 
 ## Tumor mutational burden (TMB)
-TMB is a measure of the frequency of somatic mutations and is usually measured as mutations per megabase. The size of design of the exons is approximately 1.55Mb. However, by validating the TMB for GMS560 against Foundation One and TSO500 TMB the effective design size is adjusted to 0.98Mb. The TMB is calculated using an **in-house script** which counts the number of nsSNVs and divide by the adjusted design size. Variants must fulfill the following criteria to be counted:
+TMB is a measure of the frequency of somatic mutations and is usually measured as mutations per megabase. The size of design of the exons is approximately 1.55Mb. However, by validating the TMB for GMS560 against Foundation One and TSO500 TMB the effective design size is adjusted to 0.98Mb. This is based on the slope (1.02) of the correlation between TSO500 data and the number of variants in the TMB analysis. The TMB is calculated using an **in-house script** which counts the number of nsSNVs and divide by the adjusted design size. Variants must fulfill the following criteria to be counted:
 
 * filter_nr_observations: 1 - Max seen once in panel of normal samples
 * dp_limit: 100 - Minimum read depth of 100
@@ -40,7 +40,7 @@ To determine MSS or MSI status of the samples the percentage of sites that have 
 
 ## Homologous recombination deficiency (HRD) - in development
 **OBS! The Homologous recombination deficiency score is still under development**  
-A homologous recombination deficiency score is calculated using **scarhrd** v20200825 using cnvkit segmentation files as input. The cnvkit panel of normal for HRD is created from a design file where the extra CNV-probes were removed as coverage in these regions tended to be more affected in low quality samples. The segmentation is sensitive to the estimated purity. Therefore, a score based on both the pathology and purecn estimated tumor content is reported. The cutoff for HRD is still to be determined but is somewhere around 50 which is slightly higher than the Myriad HRD score cutoff of 42.
+A homologous recombination deficiency score is calculated using **[scarHRD](https://github.com/sztup/scarHRD)** v20200825 using cnvkit segmentation files as input. The cnvkit panel of normal for HRD is created from a design file where the extra CNV-probes were removed as coverage in these regions tended to be more affected in low quality samples. The segmentation is sensitive to the estimated purity. Therefore, a score based on both the pathology and purecn estimated tumor content is reported. The cutoff for HRD is still to be determined but is somewhere around 50 which is slightly higher than the Myriad HRD score cutoff of 42.
 
 **Reference for cnvkit**
 
