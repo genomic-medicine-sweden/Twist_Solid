@@ -2,7 +2,7 @@
 See the [prealignment hydra-genetics module](https://prealignment.readthedocs.io/en/latest/) documentation for more details on the softwares.
 
 ## Trimming
-Trimming of fastq files is performed by **fastp** v0.20.1.  
+Trimming of fastq files is performed by **[fastp](https://github.com/OpenGene/fastp)** v0.20.1.  
 
 **Resources**  
 

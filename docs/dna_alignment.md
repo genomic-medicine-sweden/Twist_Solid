@@ -7,7 +7,7 @@ See the [alignment hydra-genetics module](https://alignment.readthedocs.io/en/la
 * `bam_dna/{sample}_{type}.bam.bai`
 
 ## Alignment
-Alignment of fastq files into bam files is performed by **bwa-mem** v0.7.17. The non-merged fastq files are aligned to speed up alignment and make it possible to analyze qc for lanes separately. Bamfile are then directly sorted by **samtools sort** v1.15.
+Alignment of fastq files into bam files is performed by **[bwa-mem](https://github.com/lh3/bwa)** v0.7.17. The non-merged fastq files are aligned to speed up alignment and make it possible to analyze qc for lanes separately. Bamfile are then directly sorted by **[samtools sort](http://www.htslib.org/doc/samtools-sort.html)** v1.15.
 
 **References**
 
@@ -41,13 +41,13 @@ where the individual read groups are defined below:
 * time: "8:00:00"
 
 ## Bam splitting
-The bam files are split into chromosome files for faster performance in downstream analysis. Split files are used by markduplicates and SNV/INDEL calling. Splitting is performed by **samtools view** v1.15.
+The bam files are split into chromosome files for faster performance in downstream analysis. Split files are used by markduplicates and SNV/INDEL calling. Splitting is performed by **[samtools view](http://www.htslib.org/doc/samtools-view.html)** v1.15.
 
 ## Mark duplicates
-Flagging duplicated reads are performed on individual chromosome bam files by **picard MarkDuplicates** v2.25.0.
+Flagging duplicated reads are performed on individual chromosome bam files by **[picard MarkDuplicates](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)** v2.25.0.
 
 ## Merging
-Merging of deduplicated bam files belonging to the same sample are performed by **samtools merge** v1.15.
+Merging of deduplicated bam files belonging to the same sample are performed by **[samtools merge](http://www.htslib.org/doc/samtools-merge.html)** v1.15.
 
 **Options**
 
@@ -55,7 +55,7 @@ Merging of deduplicated bam files belonging to the same sample are performed by 
 * -p - use the @PG ID of the first file
 
 ## Sorting
-Merged bamfile are sorted by **samtools sort** v1.15.
+Merged bamfile are sorted by **[samtools sort](http://www.htslib.org/doc/samtools-sort.html)** v1.15.
 
 ## Bam indexing
-Bamfile indexing is performed by **samtools index** v1.15.
+Bamfile indexing is performed by **[samtools index](http://www.htslib.org/doc/samtools-index.html)** v1.15.
