@@ -14,6 +14,7 @@ A MultiQC html report is generated using **[MultiQC](https://github.com/ewels/Mu
 
 * `config/multiqc_config_dna.yaml` - Config of the general statistics table
 * `config/config.yaml` - Configuration of input files to MultiQC in the config file
+
 ```yaml
 multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
