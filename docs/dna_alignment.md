@@ -6,7 +6,7 @@ See the [alignment hydra-genetics module](https://alignment.readthedocs.io/en/la
 * `bam_dna/{sample}_{type}.bam`
 * `bam_dna/{sample}_{type}.bam.bai`
 
-## Alignment
+## Alignment with BWA-mem
 Alignment of fastq files into bam files is performed by **[bwa-mem](https://github.com/lh3/bwa)** v0.7.17. The non-merged fastq files are aligned to speed up alignment and make it possible to analyze qc for lanes separately. Bamfile are then directly sorted by **[samtools sort](http://www.htslib.org/doc/samtools-sort.html)** v1.15.
 
 **References**

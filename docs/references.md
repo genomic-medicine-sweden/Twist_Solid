@@ -40,7 +40,7 @@ wget https://github.com/suhrig/arriba/releases/download/v2.3.0/arriba_v2.3.0.tar
 wget https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/genes/hg19.refGene.gtf.gz
 ```
 
-### Star
+### Star genome index
 ```bash
 singularity exec docker://hydragenetics/star:2.7.10a STAR --runThreadN 8 --runMode genomeGenerate --genomeDir star_index --genomeFastaFiles Human_genome.fasta
 ```
