@@ -1097,6 +1097,23 @@
                 }
             }
 
+            const getColumnLabel = col => {
+                const columns = {
+                    view: "View",
+                    caller: "Caller",
+                    chromosome: "Chr",
+                    genes: "Genes",
+                    start: "Start",
+                    end: "End",
+                    length: "Length",
+                    type: "Type",
+                    cn: "CN",
+                    baf: "BAF",
+                };
+
+                return columns[col];
+            };
+
             const tooltip = d3.select(".container")
                 .append("div")
                 .attr("class", "copy-number-tooltip hidden")
@@ -1106,7 +1123,7 @@
                         .selectAll("th")
                         .data(["caller", "type", "cn"])
                         .join("th")
-                            .text(d => d))
+                            .text(getColumnLabel))
                     .call(t => t.append("tbody")));
 
             const copyNumberTooltip = (data, x, y) => {
@@ -1170,7 +1187,7 @@
                     .selectAll("th")
                     .data(Object.keys(tableData[0]).filter(k => k !== "others"), d => d)
                     .join("th")
-                        .text(d => d)
+                        .text(getColumnLabel)
                         .attr("class", d => getColumnDef(d).class);
 
                 tableBody
