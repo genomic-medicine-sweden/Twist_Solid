@@ -118,7 +118,7 @@ protein_domains: `protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` - (see [refere
 * `results/rna/fusion/{sample}_{type}.fusioncatcher.fusion_predictions.txt`
 
 ## Fusion filtering and report
-Fusion candidates from the three fusions callers are collected and filtered with different filtering options for each caller by an **in-house script**. The remaining fusion calls are then reported in a excel friendly tsv file. Fusions are filtered based on the number of reads cover the breakpoint. However, read pairs spanning the breakpoint are also reported together with total supporting reads as well as other annotations. The settings for respective caller are presented below:
+Fusion candidates from the three fusions callers are collected and filtered with different filtering options for each caller by the in-house script [report_fusions.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/report_fusions.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/report_fusions.smk)). The remaining fusion calls are then reported in a excel friendly tsv file. Fusions are filtered based on the number of reads cover the breakpoint. However, read pairs spanning the breakpoint are also reported together with total supporting reads as well as other annotations. The settings for respective caller are presented below:
 
 * General
     - Filter fusion when both genes are outside of design

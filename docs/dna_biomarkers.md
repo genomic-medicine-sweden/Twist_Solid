@@ -9,7 +9,7 @@ See the [biomarkers hydra-genetics module](https://snv_indels.readthedocs.io/en/
 * `results/dna/hrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt`
 
 ## Tumor mutational burden (TMB)
-TMB is a measure of the frequency of somatic mutations and is usually measured as mutations per megabase. The size of design of the exons is approximately 1.55Mb. However, by validating the TMB for GMS560 against Foundation One and TSO500 TMB the effective design size is adjusted to 0.98Mb. This is based on the slope (1.02) of the correlation between TSO500 data and the number of variants in the TMB analysis. The TMB is calculated using an **in-house script** which counts the number of nsSNVs and divide by the adjusted design size. Variants must fulfill the following criteria to be counted:
+TMB is a measure of the frequency of somatic mutations and is usually measured as mutations per megabase. The size of design of the exons is approximately 1.55Mb. However, by validating the TMB for GMS560 against Foundation One and TSO500 TMB the effective design size is adjusted to 0.98Mb. This is based on the slope (1.02) of the correlation between TSO500 data and the number of variants in the TMB analysis. The TMB is calculated using the in-house script **[tmb.py](https://github.com/hydra-genetics/biomarker/blob/develop/workflow/scripts/tmb.py)** ([rule](https://github.com/hydra-genetics/biomarker/blob/develop/workflow/rules/tmb.smk))  which counts the number of nsSNVs and divide by the adjusted design size. Variants must fulfill the following criteria to be counted:
 
 * filter_nr_observations: 1 - Max seen once in panel of normal samples
 * dp_limit: 100 - Minimum read depth of 100

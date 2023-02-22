@@ -30,7 +30,7 @@ The stats file from GATK Mutect2 calling are merge with **[GATK MergeMutectStats
 Merged Mutect2 vcf files are softfiltered with **[GATK FilterMutectCalls](https://gatk.broadinstitute.org/hc/en-us/articles/360035531132--How-to-Call-somatic-mutations-using-GATK4-Mutect2)** v4.1.9.0 which puts filter flags in the vcf FILTER column.
 
 ### GATK Mutect2 vcf hard filtering
-Hardfilter Mutect2 vcf files based on the FILTER flags using an **in-house script**. Keep only variants flagged as:
+Hardfilter Mutect2 vcf files based on the FILTER flags using the in-house script [mutect_pass_filter.py](https://github.com/hydra-genetics/snv_indels/blob/develop/workflow/scripts/mutect2_pass_filter.py) ([rule](https://github.com/hydra-genetics/snv_indels/blob/develop/workflow/rules/mutect2_pass_filter.smk)). Keep only variants flagged as:
 
 * PASS
 * multiallelic
@@ -89,7 +89,7 @@ The ensembled vcf file is annotated using **[VEP](https://www.ensembl.org/info/d
 * mem_per_cpu: 6144
 
 ### Artifact annotation
-Identifying artifacts is crucial in a Tumor-only FFPE pipeline such as the GMS560 Twist Solid pipeline. The artifact annotation is performed using an **in-house script**. The annotation is based on variants called in a number of normal FFPE samples sequenced using the same panel and on the same sequencing machine type as the analysed tumor samples. See [references](references.md) for more information on how the Panel of Normal was created.  
+Identifying artifacts is crucial in a Tumor-only FFPE pipeline such as the GMS560 Twist Solid pipeline. The artifact annotation is performed using the in-house script [artifact_annotation.py](https://github.com/hydra-genetics/annotation/blob/develop/workflow/scripts/artifact_annotation.py) ([rule](https://github.com/hydra-genetics/annotation/blob/develop/workflow/rules/artifact_annotation.smk)). The annotation is based on variants called in a number of normal FFPE samples sequenced using the same panel and on the same sequencing machine type as the analysed tumor samples. See [references](references.md) for more information on how the Panel of Normal was created.  
 
 Example annotation for one variant added to a vcf file in the INFO field:
 
@@ -102,14 +102,14 @@ Example annotation for one variant added to a vcf file in the INFO field:
 * Panel of Normal with position specific artifact information for each caller and variant type
 
 ### Hotspot annotation
-Annotate clinically important variants in the vcf file using an **in-house script** and a hotspot list.
+Annotate clinically important variants in the vcf file using the in-house script [add_hotspot_annotation.py](https://github.com/hydra-genetics/annotation/blob/develop/workflow/scripts/add_hotspot_information.py) ([rule](https://github.com/hydra-genetics/annotation/blob/develop/workflow/rules/hotspot_annotation.smk)) and a hotspot list.
 
 **Reference**
 
 * Hotspot positions file
 
 ### Background SNV annotation
-In positions with high background noise it can be hard to distinguish low MAF variants. The background level for all SNVs is therefor added in the vcf file. The background annotation is performed using an **in-house script**. It is based on a panel of normal with position specific alternative alleles frequencies obtained from genome VCF files created by **[GATK Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2)** v4.1.9.0. See [references](references.md) for more information on how the Panel of Normal was created.  
+In positions with high background noise it can be hard to distinguish low MAF variants. The background level for all SNVs is therefor added in the vcf file. The background annotation is performed using the in-house script [background_annotation.py](https://github.com/hydra-genetics/annotation/blob/develop/workflow/scripts/background_annotation.py) ([rule](https://github.com/hydra-genetics/annotation/blob/develop/workflow/rules/background_annotation.smk)). It is based on a panel of normal with position specific alternative alleles frequencies obtained from genome VCF files created by **[GATK Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2)** v4.1.9.0. See [references](references.md) for more information on how the Panel of Normal was created.  
 
 Example annotation for one variant added to a vcf file in the INFO field:
 
@@ -141,7 +141,7 @@ The exonic vcf files are filtered using the **hydra-genetics filtering** functio
 * variant observations - Filter variants with fewer than 20 supporting reads except for variants in hotsports and in the TERT gene which only need 10 and 4 supporting reads respectively
 
 ## Combine SNVs in the same codon
-Two or more variants affecting the same codon can have different clinical implications when considered individually compared to in combination. This is because the combined variant could end up coding for a different amino acid then the when only looking at the variant individually. Variants within the same codon are therefore combined and added to the vcf file using an **in-house script**. Codon information is based on the VEP annotation. Annotation information is taken from the variant with the highest allele frequency. After adding the combined variants the vcf is sorted and annotated again.
+Two or more variants affecting the same codon can have different clinical implications when considered individually compared to in combination. This is because the combined variant could end up coding for a different amino acid then the when only looking at the variant individually. Variants within the same codon are therefore combined and added to the vcf file using the in-house script [add_multi_snv_in_codon.py](https://github.com/hydra-genetics/annotation/blob/develop/workflow/scripts/add_multi_snv_in_codon.py) ([rule](https://github.com/hydra-genetics/annotation/blob/develop/workflow/rules/add_multi_snv_in_codon.smk)). Codon information is based on the VEP annotation. Annotation information is taken from the variant with the highest allele frequency. After adding the combined variants the vcf is sorted and annotated again.
 
 **Options**
 
@@ -151,7 +151,7 @@ Two or more variants affecting the same codon can have different clinical implic
 **Result file**: `results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.vcf`
 
 ## QCI AF correction of vcf
-The clinical interpretation tool QCI calculates allele frequency from the AD FORMAT field instead of using the AF FORMAT field supplied by the callers. This has shown to be wrong especially for INDELs. The AD field is therefore corrected so that the allele frequency based on the AD field corresponds to the AF field. This correction of the vcf file is performed by an **in-house script**.
+The clinical interpretation tool QCI calculates allele frequency from the AD FORMAT field instead of using the AF FORMAT field supplied by the callers. This has shown to be wrong especially for INDELs. The AD field is therefore corrected so that the allele frequency based on the AD field corresponds to the AF field. This correction of the vcf file is performed by an the in-house script [fix_vcf_ad_for_qci.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/fix_vcf_ad_for_qci.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/fix_vcf_ad_for_qci.smk)).
 
 **Result file**: `results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf`
 

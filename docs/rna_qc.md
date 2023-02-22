@@ -62,7 +62,7 @@ multiqc:
 * --fast-mode - Fast coverage calculations
 
 ## House keeping gene coverage
-House keeping gene coverage is reported by an **in-house script** that in turn uses **[Samtools depth](http://www.htslib.org/doc/samtools-depth.html)** to calculate the coverage. The RNA design bed file is used to define the regions that the coverage should be calculated in. The house keeping genes are listed below:
+House keeping gene coverage is reported by the in-house script [house_keeping_gene_coverage.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/house_keeping_gene_coverage.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/house_keeping_gene_coverage.smk)) that in turn uses **[Samtools depth](http://www.htslib.org/doc/samtools-depth.html)** to calculate the coverage. The RNA design bed file is used to define the regions that the coverage should be calculated in. The house keeping genes are listed below:
 
 * House keeping genes:
     - GAPDH, GUSB, OAZ1, POLR2A
