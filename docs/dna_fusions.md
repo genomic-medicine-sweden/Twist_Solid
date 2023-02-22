@@ -21,7 +21,7 @@ DNA fusion calling is performed by **[GeneFuse](https://github.com/OpenGene/Gene
 * mem_per_cpu: 6144
 
 ## Filtering and report
-The output from GeneFuse is filtered and then reported into a fusion report using an **in-house script**. The following filter criteria is used:
+The output from GeneFuse is filtered and then reported into a fusion report using the in-house script [report_gene_fuse.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/report_gene_fuse.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/report_gene_fuse.smk)). The following filter criteria is used:
 
 * Fusions must have at least 6 unique supporting reads.
 * Very noisy fusion pairs found in almost all samples (defined in `filter_fusions_20230214.csv`) are removed:

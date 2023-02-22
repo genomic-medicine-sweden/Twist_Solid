@@ -73,7 +73,7 @@ Using **[GATK Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/3600375
 * `gvcf_dna/{sample}_{type}.mosdepth.g.vcf.gz`
 
 ## Coverage and mutations
-This excel-friendly report produced by a **in-house script** contains coverage in all clinical relevant positions defined in a "hotspot"-file and flags positions with low coverage. It also collects information on the filtered variants from the vcf file. The coverage flag is configured by the levels option, included columns are configured in `hotspot_report.yaml` and chromosome id translation is done by `hotspot_report.chr.translation.hg19`
+This excel-friendly report produced by the in-house script [hotspot_report.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/hotspot_report.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/hotspot_report.smk)) contains coverage in all clinical relevant positions defined in a "hotspot"-file and flags positions with low coverage. It also collects information on the filtered variants from the vcf file. The coverage flag is configured by the levels option, included columns are configured in `hotspot_report.yaml` and chromosome id translation is done by `hotspot_report.chr.translation.hg19`
 
 **References**
 
