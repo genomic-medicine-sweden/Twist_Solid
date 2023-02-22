@@ -38,7 +38,7 @@
 
         .table-container {
             min-width: 35em;
-            max-width: 50em;
+            max-width: 60em;
         }
 
         svg .panel-overlay {
@@ -85,7 +85,7 @@
             }
 
             .table-container {
-                max-width: 40em;
+                max-width: 60em;
             }
 
             .chromosome-view {
@@ -116,7 +116,7 @@
             }
 
             .table-container {
-                max-width: 40em;
+                max-width: 50em;
             }
 
             .chromosome-view {
@@ -202,6 +202,10 @@
         }
 
         #cnv-table th:nth-child(7) {
+            width: 10%;
+        }
+
+        #cnv-table th:nth-child(8) {
             width: 10%;
         }
 
@@ -311,6 +315,9 @@
                     <p class="no-print">
                         Click the magnifying glass to zoom in on the region in question.
                         Hover over the copy number to see what results other callers got for this gene.
+                    </p>
+                    <p>
+                        BAF values outside the range 0&ndash;1 might indicate that the tumor cell content is underestimated.
                     </p>
                     <table id="cnv-table">
 
@@ -1051,11 +1058,12 @@
                     // Floating point, allow for missing numbers
                     case "copyNumber":
                     case "corrCopyNumber":
+                    case "baf":
                     case "cn":
                         return {
                             class: "right tooltip-trigger",
                             format: x => {
-                                if (x !== null) {
+                                if (x !== null && !isNaN(x)) {
                                     return x.toLocaleString(
                                         undefined,
                                         { minimumFractionDigits: 2 }

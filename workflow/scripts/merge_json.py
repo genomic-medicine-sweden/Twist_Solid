@@ -14,6 +14,7 @@ class CNV:
     length: int
     type: str
     copy_number: float
+    baf: float
 
     def end(self):
         return self.start + self.length - 1
@@ -80,6 +81,7 @@ def get_cnvs(vcf_filename, skip=None):
             variant.INFO.get("SVLEN"),
             variant.INFO.get("SVTYPE"),
             variant.INFO.get("CORR_CN"),
+            variant.INFO.get("BAF"),
         )
         cnvs[variant.CHROM][caller].append(cnv)
     return cnvs
@@ -149,7 +151,7 @@ def merge_cnv_dicts(dicts, vaf, annotations, chromosomes, filtered_cnvs, unfilte
                         if c in added_cnvs:
                             continue
                         cnvs[c.chromosome]["callers"][c.caller]["cnvs"].append(
-                            dict(genes=c.genes, start=c.start, length=c.length, type=c.type, cn=c.copy_number)
+                            dict(genes=c.genes, start=c.start, length=c.length, type=c.type, cn=c.copy_number, baf=c.baf)
                         )
                         added_cnvs.add(c)
 
