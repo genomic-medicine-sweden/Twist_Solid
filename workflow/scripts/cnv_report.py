@@ -5,7 +5,7 @@ from hydra_genetics.utils.io import utils
 log = logging.getLogger()
 
 
-def create_tsv_report(input_vcfs, input_org_vcfs, in_tsv, output_txt, del_1p19q_cn, del_1p19q_chr_arm_fraction, TC):
+def create_tsv_report(input_vcfs, input_org_vcfs, input_tsv, output_txt, del_1p19q_cn, del_1p19q_chr_arm_fraction, TC):
     gene_all_dict = {}
     first_vcf = True
     nr_writes = 0
