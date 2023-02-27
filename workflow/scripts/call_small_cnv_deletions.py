@@ -116,7 +116,8 @@ def filter_deletions(
         return "Low_nr_std_diff"
     median_diff = median_low - median_high
     nr_std_diff = abs(median_diff) / stdev_high
-    deletions.write(f"{region[5]}\t{median_diff}\t{median_low}\t{median_high}\t{len(low_probes)}\t{nr_std_diff}\n")
+    deletions.write(f"{region[5]}\t{region[0]}\t{region[3]}\t{region[4]}")
+    deletions.write(f"\t{median_diff}\t{median_low}\t{median_high}\t{len(low_probes)}\t{nr_std_diff}\n")
     return "Unfiltered"
 
 
@@ -140,9 +141,8 @@ def call_small_cnv_deletions(
 ):
     regions = read_regions_data(regions_file)
     sample_name = cnv_file_name.split("/")[1].split("_")[0]
-    deletions.write(
-        "Gene(s)\tLog2_ratio_diff\tMedian_L2R_deletion\tMedian_L2R_surrounding\tNumber_of_data_points\tNumber_of_stdev\n"
-    )
+    deletions.write("Gene(s)\tChromosome\tGene_start\tGene_end\tLog2_ratio_diff\tMedian_L2R_deletion\t")
+    deletions.write("Median_L2R_surrounding\tNumber_of_data_points\tNumber_of_stdev\n")
     for region in regions:
         probe_data, gene_probe_index = read_cnv_data(cnv_file_name, sample_name, region)
         # Warning about to small region

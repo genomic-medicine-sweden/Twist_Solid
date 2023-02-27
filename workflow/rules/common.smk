@@ -146,6 +146,14 @@ def get_tc(wildcards):
                 return f.read()
 
 
+def get_tc_file(wildcards):
+    tc_method = wildcards.tc_method
+    if tc_method == "pathology":
+        return "samples.tsv"
+    else:
+        return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+
+
 def get_unfiltered_cnv_vcfs_for_merge_json(wildcards):
     cnv_vcfs = []
     tags = config.get("cnv_html_report", {}).get("cnv_vcf", [])
