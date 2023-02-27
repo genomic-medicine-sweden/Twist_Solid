@@ -131,7 +131,7 @@ def create_tsv_report(input_vcfs, input_org_vcfs, input_tsv, output_txt, del_1p1
         log.info(f"Processed {counter} variants")
 
         deletions = open(input_tsv)
-        deletions.next()
+        next(deletions)
         for deletion in deletions:
             columns = deletion.strip().split("\t")
             samples = sample_name
