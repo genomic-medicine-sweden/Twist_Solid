@@ -2,12 +2,12 @@ resources: "config/resources_references.yaml"
 samples: "samples_references.tsv"
 units: "units_references.tsv"
 
-default_container: "docker://hydragenetics/common:0.1.8"
+default_container: "docker://hydragenetics/common:0.1.9"
 
 reference:
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
   dict: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
-  design_bedfile: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed"
+  design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed"
   mappability: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/access-5k-mappable.hg19.bed"
 
 
@@ -47,6 +47,9 @@ svdb_export:
 purecn_coverage:
   container: "docker://hydragenetics/purecn:2.2.0"
   intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
+
+purecn_coverage_list:
+  container: "docker://hydragenetics/purecn:2.2.0"
 
 purecn_normal_db:
   container: "docker://hydragenetics/purecn:2.2.0"

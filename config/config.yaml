@@ -16,7 +16,7 @@ reference:
   fasta_rna: "/data/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
   dict: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
   fai: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fai"
-  design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.210608.bed"
+  design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.230222.bed"
   design_intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.interval_list"
   design_intervals_gatk_cnv: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
   design_bed_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"
@@ -58,7 +58,7 @@ bcftools_annotate:
   annotation_string: "-m DB"
 
 bcftools_filter_include_region:
-  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.bed"
+  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.bed"
 
 bcftools_filter_exclude_region:
   blacklist: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnvkit_germline_blacklist_20221221.bed"
@@ -292,7 +292,7 @@ report_fusions:
   star_fusion_low_support_inframe: 6
 
 report_gene_fuse:
-  filter_fusions: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/filter_fusions_20221114.csv"
+  filter_fusions: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/filter_fusions_20230214.csv"
   min_unique_reads: 6
 
 samtools_merge_bam:

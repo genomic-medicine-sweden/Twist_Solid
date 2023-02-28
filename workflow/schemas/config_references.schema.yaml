@@ -65,7 +65,7 @@ properties:
         type: string
         description: picard style bed file for design regions
     required:
-      - design_bedfile
+      - design_bed
 
 required:
   - samples
