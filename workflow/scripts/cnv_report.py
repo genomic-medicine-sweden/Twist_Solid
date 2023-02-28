@@ -141,7 +141,7 @@ def create_tsv_report(input_vcfs, input_org_vcfs, input_tsv, output_txt, del_1p1
             end = columns[3]
             callers = "small_deletion"
             AF = "NA"
-            log_odds_ratio = float(deletion[2])
+            log_odds_ratio = float(columns[4])
             cn = 2*pow(2, float(log_odds_ratio))
             ccn = cn
             if TC > 0.0:
@@ -156,5 +156,5 @@ if __name__ == "__main__":
     out_tsv = snakemake.output.tsv
     del_1p19q_cn = snakemake.params.del_1p19q_cn_limit
     del_1p19q_chr_arm_fraction = snakemake.params.del_1p19q_chr_arm_fraction
-    TC = snakemake.params.tc
+    TC = float(snakemake.params.tc)
     create_tsv_report(in_vcfs, in_org_vcfs, in_tsv, out_tsv, del_1p19q_cn, del_1p19q_chr_arm_fraction, TC)
