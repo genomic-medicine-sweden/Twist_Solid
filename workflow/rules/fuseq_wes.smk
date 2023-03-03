@@ -38,12 +38,12 @@ rule fuseq_wes:
     container:
         config.get("fuseq_wes", {}).get("container", config["default_container"])
     conda:
-        "../envs/samtools.yaml"
+        "../envs/fuseq_wes.yaml"
     message:
         "{rule}: call dna fusion into {output.final_fusions} using bam file {input.bam}"
     shell:
-        "sh -c \" . /venv/bin/activate && "
-        "python3 fuseq_wes.py "
+        "sh -c \""
+        "fuseq_wes.py "
         "--bam {input.bam} "
         "--gtf {input.ref_json} "
         "--mapq-filter "
