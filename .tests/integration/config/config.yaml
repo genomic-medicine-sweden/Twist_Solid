@@ -99,6 +99,13 @@ filter_vcf:
 freebayes:
   container: "docker://gmsuppsala/somatic:develop"
 
+fuseq_wes:
+  container: "docker://hydragenetics/fuseq_wes:1.0.0"
+  ref_json: "reference/Mitelman_fusiondb.RData"
+  gtfSqlite: "reference/ensmbl_paralogs_grch37.RData"
+  fusiondbFn: "reference/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json"
+  paralogdb: "reference/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite"
+
 fusioncatcher:
   container: "docker://hydragenetics/fusioncatcher:1.33"
   genome_path: "reference/human_v102/"

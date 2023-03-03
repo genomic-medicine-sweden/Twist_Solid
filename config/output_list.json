@@ -33,6 +33,7 @@
   "results/rna/additional_files/fusion/{sample}_{type}.star-fusion.fusion_predictions.tsv": {"name": "_result_star_fusion_prediction_tsv", "file": "fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv", "types": ["R"]},
   "results/rna/additional_files/fusion/{sample}_{type}.fusioncatcher.fusion_predictions.txt": {"name": "_result_fusioncatcher_prediction_tsv", "file": "fusions/fusioncatcher/{sample}_{type}/final-list_candidate-fusion-genes.hg19.txt", "types": ["R"]},
   "results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv": {"name": "_result_gene_fuse_report", "file": "fusions/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv", "types": ["T", "N"]},
+  "results/dna/fusion/{sample}_{type}.fuseq_wes.fusion.txt": {"name": "_result_fuseq_wes", "file": "fusions/fuseq_wes/{sample}_{type}/FuSeq_WES_FusionFinal.txt", "types": ["T", "N"]},
   "results/dna/additional_files/fusion/{sample}_{type}.gene_fuse_fusions.txt": {"name": "_result_gene_fuse_fusions_txt", "file": "fusions/gene_fuse/{sample}_{type}_gene_fuse_fusions.txt", "types": ["T", "N"]},
   "results/rna/id_snps/{sample}_{type}.id_snps.vcf": {"name": "_result_id_snp_vcf", "file": "snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf", "types": ["R"]},
   "results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.cnvkit.scatter.png": {"name": "_result_cnvkit_scatter_png", "file": "cnv_sv/cnvkit_scatter/{sample}_{type}.png", "types": ["T", "N"]},
