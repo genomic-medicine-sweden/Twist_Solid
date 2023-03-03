@@ -18,7 +18,7 @@ rule fuseq_wes:
         fusion_split_read_info=temp("fusions/fuseq_wes/{sample}_{type}/splitReadInfo.txt"),
         mate_pair1=temp("fusions/fuseq_wes/{sample}_{type}/FuSeq_WES_MR_fge.txt"),
         mate_pair2=temp("fusions/fuseq_wes/{sample}_{type}/FuSeq_WES_MR_fge_fdb.txt"),
-        output_dir=temp(directory("{sample}_{type}")),
+        output_dir=temp(directory("fusions/fuseq_wes/{sample}_{type}")),
         split_read1=temp("fusions/fuseq_wes/{sample}_{type}/FuSeq_WES_SR_fge.txt"),
         split_read2=temp("fusions/fuseq_wes/{sample}_{type}/FuSeq_WES_SR_fge_fdb.txt"),
     log:
