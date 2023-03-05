@@ -10,7 +10,7 @@ rule fuseq_wes:
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         ref_json=config.get("fuseq_wes", {}).get("ref_json", ""),
         gtfSqlite=config.get("fuseq_wes", {}).get("gtfSqlite", ""),
-        fusiondbFn=config.get("fuseq_wes", {}).get("fusiondbFn", ""),
+        fusiondb=config.get("fuseq_wes", {}).get("fusiondb", ""),
         paralogdb=config.get("fuseq_wes", {}).get("paralogdb", ""),
     output:
         final_fusions=temp("fusions/fuseq_wes/{sample}_{type}/FuSeq_WES_FusionFinal.txt"),
@@ -51,6 +51,6 @@ rule fuseq_wes:
         "process_fuseq_wes.R "
         "in={output.output_dir} "
         "sqlite={input.gtfSqlite} "
-        "fusiondbFn={input.fusiondbFn} "
+        "fusiondb={input.fusiondb} "
         "paralogdb={input.paralogdb} "
         "out={output.output_dir}\" &> {log}"

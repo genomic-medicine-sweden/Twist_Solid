@@ -103,7 +103,7 @@ fuseq_wes:
   container: "docker://hydragenetics/fuseq_wes:1.0.0"
   ref_json: "reference/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json"
   gtfSqlite: "reference/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite"
-  fusiondbFn: "reference/Mitelman_fusiondb.RData"
+  fusiondb: "reference/Mitelman_fusiondb.RData"
   paralogdb: "reference/ensmbl_paralogs_grch37.RData"
 
 fusioncatcher:
