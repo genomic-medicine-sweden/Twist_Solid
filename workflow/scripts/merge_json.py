@@ -129,31 +129,44 @@ def merge_cnv_dicts(dicts, vaf, annotations, chromosomes, filtered_cnvs, unfilte
             first_caller = callers[0]
             rest_callers = callers[1:]
 
+            # Keep track of added CNVs on a chromosome to avoid duplicates
             added_cnvs = set()
 
             for cnv1 in cnvdict[first_caller]:
-                keep = False
+                pass_filter = False
 
                 if cnv1 in f_cnvs[chrom][first_caller]:
-                    keep = True
+                    # The CNV is part of the filtered set, so all overlapping
+                    # CNVs should pass the filter.
+                    pass_filter = True
 
                 cnv_group = [cnv1]
                 for caller2 in rest_callers:
                     for cnv2 in cnvdict[caller2]:
                         if cnv1.overlaps(cnv2):
-                            if cnv2 in f_cnvs[chrom][caller2]:
-                                keep = True
-
+                            # Add overlapping CNVs from other callers
                             cnv_group.append(cnv2)
 
-                if keep:
-                    for c in cnv_group:
-                        if c in added_cnvs:
-                            continue
-                        cnvs[c.chromosome]["callers"][c.caller]["cnvs"].append(
-                            dict(genes=c.genes, start=c.start, length=c.length, type=c.type, cn=c.copy_number, baf=c.baf)
+                            if cnv2 in f_cnvs[chrom][caller2]:
+                                # If the overlapping CNV is part of the filtered
+                                # set, the whole group should pass the filter.
+                                pass_filter = True
+
+                for c in cnv_group:
+                    if c in added_cnvs:
+                        continue
+                    cnvs[c.chromosome]["callers"][c.caller]["cnvs"].append(
+                        dict(
+                            genes=c.genes,
+                            start=c.start,
+                            length=c.length,
+                            type=c.type,
+                            cn=c.copy_number,
+                            baf=c.baf,
+                            passed_filter=pass_filter,
                         )
-                        added_cnvs.add(c)
+                    )
+                    added_cnvs.add(c)
 
     for d in dicts:
         for r in d["ratios"]:
