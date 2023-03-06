@@ -319,6 +319,12 @@
                     <p>
                         BAF values outside the range 0&ndash;1 might indicate that the tumor cell content is underestimated.
                     </p>
+                    <p>
+                        Note that variants labelled as COPY_NORMAL can be present in the filtered table.
+                        This indicates that there is a variant covering the same gene that has been called by a different caller.
+                    </p>
+                    <input type="checkbox" id="table-filter-toggle" checked />
+                    <label for="table-filter-toggle" title="Apply predefined filters to the table">Filter table</label>
                     <table id="cnv-table">
 
                     </table>
@@ -1041,6 +1047,7 @@
 
             const tableHeader = table.append("thead").append("tr");
             const tableBody = table.append("tbody");
+            let applyFilter = d3.select("#table-filter-toggle").node().checked;
 
             let tableData = null;
 
@@ -1111,7 +1118,11 @@
                     baf: "BAF",
                 };
 
-                return columns[col];
+                if (columns[col]) {
+                    return columns[col];
+                }
+
+                return col;
             };
 
             const tooltip = d3.select(".container")
@@ -1155,9 +1166,11 @@
                 const callerIndex = getActiveCaller();
                 tableData = cnvData
                     .map(d => d.callers[callerIndex].cnvs
+                        .filter(di => !applyFilter || (applyFilter && di.passed_filter))
                         .map(di => {
                             const allCols = {view: "🔍", chromosome: d.chromosome, ...di};
-                            const {caller, ...cols} = allCols;
+                            // Don't display caller and filter status in table
+                            const {caller, passed_filter, ...cols} = allCols;
                             return cols;
                         }))
                     .flat();
@@ -1226,6 +1239,11 @@
                             .style("left", `${e.layerX - dims.width - 20}px`);
                     });
             }
+
+            d3.select("#table-filter-toggle").on("change", (event) => {
+                applyFilter = event.target.checked;
+                update();
+            });
 
             const getData = () => tableData;
 
