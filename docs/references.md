@@ -196,7 +196,7 @@ These are design files and other pipeline specific only available to download fr
 * CNVkit
     - `cnvkit_germline_blacklist_20221221.bed` - list of regions excluded from the germline vcf file
 * GATK CNV
-    - `gnomad_SNP_0.001_target.annotated.interval_list` - Bed file with SNPs over 0.1% global population frequency in GnomAD
+    - `gnomad_SNP_0.001_target.annotated.interval_list` - Bed file with CNV backbone SNPs which are selected from GnomAD with over 0.1% global population frequency
 * Small CNV deletions
     - `cnv_deletion_genes.tsv` - File defining gene and its surrounding regions used for small CNV deletion. Same deletion genes as in the CNV deletion reports
 * Report RNA fusions
