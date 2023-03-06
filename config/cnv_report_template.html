@@ -393,6 +393,13 @@
                 .attr("viewBox", [0, 0, width, height])
                 .attr("style", "max-width: 100%; height: auto; max-height: 500px; height: intrinsic;");
 
+            // Clip path for annotations
+            svg.append("clipPath")
+                .attr("id", "annotation-clip")
+                .append("rect")
+                .attr("width", width - margin.left - margin.right)
+                .attr("height", 2 * plotHeight + margin.between);
+
             // Clip path for log ratios
             svg.append("clipPath")
                 .attr("id", "lr-area-clip")
@@ -409,6 +416,7 @@
                 .attr("clip-path", "url(#lr-area-clip)");
             const vafArea = plotArea.append("g")
                 .attr("id", "vaf-plot")
+                .attr("clip-path", "url(#lr-area-clip)")
                 .attr("transform", `translate(0, ${plotHeight + margin.between})`)
 
             const regions = lrArea.append("g")
@@ -516,11 +524,12 @@
 
             const plotAnnotations = function() {
                 plotArea.selectAll(".annotation")
+                    .attr("clip-path", "url(#annotation-clip)")
                     .data(data.annotations, d => d.name)
                     .join(
                         enter => {
                             let annotation_group = enter.append("g")
-                                .attr("class", "annotation")
+                                .attr("class", "annotation");
                             annotation_group.append("rect")
                                 .attr("class", "annotation-marker")
                                 .attr("x", d => xScale(d.start))
