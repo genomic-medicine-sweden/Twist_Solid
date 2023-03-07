@@ -15,10 +15,12 @@ DNA fusion calling is performed by **[GeneFuse](https://github.com/OpenGene/Gene
 
 **Resources**
 
-* threads: 6
-* time: "8:00:00"
-* mem_mb: 36864
-* mem_per_cpu: 6144
+| **Options** | **Value** |
+|-------------|-|
+| mem_mb | 36864 |
+| mem_per_cpu | 6144 |
+| threads | 6 |
+| time | "8:00:00" |
 
 ## Filtering and report
 The output from GeneFuse is filtered and then reported into a fusion report using the in-house script [report_gene_fuse.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/report_gene_fuse.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/report_gene_fuse.smk)). The following filter criteria is used:

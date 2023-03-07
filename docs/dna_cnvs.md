@@ -14,7 +14,7 @@ See the [cnv hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/
 CNVs are called using both CNVkit and GATK CNV, followed by merging and annotation by SVDB and finally filtered and visualized into an html report. Additionally, smaller CNV deletions are called in specific genes using an in-house script.
 
 ### CNVkit
-CNV segmentation is performed by **[CNVkit](https://cnvkit.readthedocs.io/en/stable/)** v0.9.9 on BWA-mem aligned and merged bam-files. CNVkit uses a panel of normal (see [references](dna_references.md) on how the PoN was created) and a germline filtered vcf file. To call the final CNVs the program uses the estimated tumor purity, which can be from pathologists estimates or from purecn estimates.  
+CNV segmentation is performed by **[CNVkit](https://cnvkit.readthedocs.io/en/stable/)** v0.9.9 on BWA-mem aligned and merged bam-files. CNVkit uses a panel of normal (see [references](references.md) on how the PoN was created) and a germline filtered vcf file. To call the final CNVs the program uses the estimated tumor purity, which can be from pathologists estimates or from purecn estimates.  
 The following steps are in included in the CNVkit calling:
 
 **CNVkit batch** (Make segmentation)
@@ -31,7 +31,7 @@ The following steps are in included in the CNVkit calling:
 **CNVkit scatter** (Scatterplot of segmentation and BAF)
 
 ### GATK CNV
-CNV segmentation is performed by **[GATK CNV](https://gatk.broadinstitute.org/hc/en-us/articles/360035535892-Somatic-copy-number-variant-discovery-CNVs-)** v4.1.9.0 on BWA-mem aligned and merged bam-files. GATK CNV uses a panel of normal (see [references](dna_references.md) on how the PoN was created) and a precompiled germline vcf file. GATK do not use the estimated tumor purity so the copy number levels are instead adjusted when the segmentation is coverted to vcf file.
+CNV segmentation is performed by **[GATK CNV](https://gatk.broadinstitute.org/hc/en-us/articles/360035535892-Somatic-copy-number-variant-discovery-CNVs-)** v4.1.9.0 on BWA-mem aligned and merged bam-files. GATK CNV uses a panel of normal (see [references](references.md) on how the PoN was created) and a precompiled germline vcf file. GATK do not use the estimated tumor purity so the copy number levels are instead adjusted when the segmentation is coverted to vcf file.
 The following steps are in included in the GATK CNV calling:
 
 **gatk CollectReadCounts** (Coverage)
@@ -116,7 +116,7 @@ SVDB --query
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
-| db_string | --db `SVDB_panel_of_normal.vcf` | Use a SVDB panel of normal to annotate the frequency of overlapping regions with at least 60 % <br/> overlap and at max 10000 bases from the breakpoints (see [references](dna_references.md) on how the PoN was created) |
+| db_string | --db `SVDB_panel_of_normal.vcf` | Use a SVDB panel of normal to annotate the frequency of overlapping regions with at least 60 % <br/> overlap and at max 10000 bases from the breakpoints (see [references](references.md) on how the PoN was created) |
 | db_string | --out_frq Twist_AF | frequency annotation name in the INFO field |
 | db_string | --out_occ Twist_OCC | occurrence annotation name in the INFO field |
 
@@ -218,7 +218,7 @@ The germline vcf file are filtered using the **[hydra-genetics filtering](https:
 The purity of the samples is estimated in the lab by a pathologist and sometimes the estimation is incorrect. To obtain an alternative estimation we use **[PureCN](https://github.com/lima1/PureCN)** v2.2.0.
 
 ### PureCN coverage
-PureCN calculates the coverage in 25kb windows of the BWA-mem aligned and merged bam files and normalizes these against a panel of normal (see [references](dna_references.md) on how the PoN was created).
+PureCN calculates the coverage in 25kb windows of the BWA-mem aligned and merged bam files and normalizes these against a panel of normal (see [references](references.md) on how the PoN was created).
 
 **Software settings**
 
@@ -227,7 +227,7 @@ PureCN calculates the coverage in 25kb windows of the BWA-mem aligned and merged
 | intervals | `targets_window_intervals.txt` | panel of normal |
 
 ### PureCN purity estimation
-Based on the coverage and a vcf file from Mutect2 PureCN make its own segmentation with the additional help of a normal db created from a panel of normal (see [references](dna_references.md) on how the PoN was created). The germline SNPs allele frequency in combination with the called copy numbers is then used to search for the optimal purity and ploidity combination. The optimal values are determined by looking for the best fit between the germline SNPs allele frequency and integer copy numbers.
+Based on the coverage and a vcf file from Mutect2 PureCN make its own segmentation with the additional help of a normal db created from a panel of normal (see [references](references.md) on how the PoN was created). The germline SNPs allele frequency in combination with the called copy numbers is then used to search for the optimal purity and ploidity combination. The optimal values are determined by looking for the best fit between the germline SNPs allele frequency and integer copy numbers.
 
 **Software settings**
 
@@ -255,10 +255,10 @@ Based on the coverage and a vcf file from Mutect2 PureCN make its own segmentati
 
 | **Options** | **Value** |
 |-------------|-|
-| threads | 4 |
-| time | "8:00:00" |
 | mem_mb | 24576 |
 | mem_per_cpu | 6144 |
+| time | "8:00:00" |
+| threads | 4 |
 
 **Result file**
 

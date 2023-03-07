@@ -5,6 +5,6 @@ Exon skipping cannot be called by the fusion callers as they only search for fus
 
 * annotated RNA design bed
 
-**Result files**
+**Result file**
 
 * `results/rna/fusion/{sample}_{type}.exon_skipping.tsv`

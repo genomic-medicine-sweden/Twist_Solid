@@ -21,24 +21,30 @@ The @RG read tag is set using the following options:
 ```
 where the individual read groups are defined below:
 
-* ID: sample_type.lane.barcode
-* SM: sample_type
-* PL: platform
-* PU: flowcell.lane.barcode
-* LB: sample_type
+| **RG tag** | **Value** |
+|-------------|-|
+| ID | sample_type.lane.barcode |
+| SM | sample_type |
+| PL | platform |
+| PU | flowcell.lane.barcode |
+| LB | sample_type |
 
-**Options**
+**Software settings**
 
-* sorting=samtools - use samtools to sort the bam files
-* sort_order=coordinate - use coordinate sorting
-* -@ 10 - use 10 threads for sorting
+| **Options** | **Value** | **Description** |
+|-------------|-|-|
+| sorting | samtools | use samtools to sort the bam files |
+| sort_order | coordinate | use coordinate sorting |
+| sort_extra | -@ 10 | use 10 threads for sorting |
 
-**Resources**  
+**Resources**
 
-* mem_mb: 61440
-* mem_per_cpu: 6144
-* threads: 10
-* time: "8:00:00"
+| **Options** | **Value** |
+|-------------|-|
+| mem_mb | 61440 |
+| mem_per_cpu | 6144 |
+| threads | 10 |
+| time | "8:00:00" |
 
 ## Bam splitting
 The bam files are split into chromosome files for faster performance in downstream analysis. Split files are used by markduplicates and SNV/INDEL calling. Splitting is performed by **[samtools view](http://www.htslib.org/doc/samtools-view.html)** v1.15.
@@ -49,10 +55,12 @@ Flagging duplicated reads are performed on individual chromosome bam files by **
 ## Merging
 Merging of deduplicated bam files belonging to the same sample are performed by **[samtools merge](http://www.htslib.org/doc/samtools-merge.html)** v1.15.
 
-**Options**
+**Software settings**
 
-* -c - emit only one indentical @RG headers
-* -p - use the @PG ID of the first file
+| **Options** | **Value** | **Description** |
+|-------------|-|-|
+| extra | -c | emit only one identical @RG headers |
+| extra | -p | use the @PG ID of the first file |
 
 ## Sorting
 Merged bamfile are sorted by **[samtools sort](http://www.htslib.org/doc/samtools-sort.html)** v1.15.

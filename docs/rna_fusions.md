@@ -20,20 +20,22 @@ Merged fastq files are aligned with [Star](https://github.com/alexdobin/STAR) v2
 
 * Star genome index - (see [references](references.md#star-genome-index))
 
-**Options** (Recommended options by Arriba)
+**Software settings** (Recommended options by Arriba)
 
-* --quantMode GeneCounts
-* --sjdbGTFfile `hg19.refGene.gtf` - (see [references](references.md#arriba-230))
-* --outSAMtype BAM SortedByCoordinate
-* --chimSegmentMin 10
-* --chimOutType WithinBAM SoftClip
-* --chimJunctionOverhangMin 10
-* --chimScoreMin 1
-* --chimScoreDropMax 30
-* --chimScoreJunctionNonGTAG 0
-* --chimScoreSeparation 1
-* --alignSJstitchMismatchNmax 5 -1 5 5
-* --chimSegmentReadGapMax 3
+| **Filter** | **Value** |
+|-------------|-|
+| --quantMode | GeneCounts
+| --sjdbGTFfile | `hg19.refGene.gtf` - (see [references](references.md#arriba-230)) |
+| --outSAMtype | BAM SortedByCoordinate |
+| --chimSegmentMin | 10 |
+| --chimOutType | WithinBAM SoftClip |
+| --chimJunctionOverhangMin | 10 |
+| --chimScoreMin | 1 |
+| --chimScoreDropMax | 30 |
+| --chimScoreJunctionNonGTAG | 0 |
+| --chimScoreSeparation | 1 |
+| --alignSJstitchMismatchNmax | 5 -1 5 5 |
+| --chimSegmentReadGapMax | 3 |
 
 **Resources**
 
