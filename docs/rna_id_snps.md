@@ -6,16 +6,20 @@ The RNA design includes a number of probes covering SNPs that can be used to che
 * ID SNP bed file: `ID_SNPs.bed`
 * RNA fasta reference genome from Star-Fusion: `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa` - (see [references](references.md#star-fusion))
 
-**Options bcftools mpileup (hard coded)**
+**Software settings for bcftools mpileup (hard coded)**
 
-* -O u - Output uncompressed BCF file (piped to bcftools call)
-* -d 1000000 - max read depth to consider
+| **Option** | **Description** |
+|-------------|-|
+| -O u | Output uncompressed BCF file (piped to bcftools call) |
+| -d 1000000 | max read depth to consider |
 
-**Options bcftools call (hard coded)**
+**Software settings for bcftools call (hard coded)**
 
-* --skip-variants indels - only look at SNPs
-* -m - multiallelic caller
-* -O v - Output uncompressed vcf file (piped to bcftools call)
+| **Option** | **Description** |
+|-------------|-|
+| --skip-variants indels | only look at SNPs |
+| -m | multiallelic caller |
+| -O v | Output uncompressed vcf file (piped to bcftools call) |
 
 **Result file**
 

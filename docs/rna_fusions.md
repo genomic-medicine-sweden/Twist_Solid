@@ -39,10 +39,12 @@ Merged fastq files are aligned with [Star](https://github.com/alexdobin/STAR) v2
 
 **Resources**
 
-* threads: 5
-* time: "8:00:00"
-* mem_mb: 30720
-* mem_per_cpu: 6144
+| **Options** | **Value** |
+|-------------|-|
+| mem_mb | 30720 |
+| mem_per_cpu | 6144 |
+| threads | 5 |
+| time | "8:00:00" |
 
 ### Fusion calling with Arriba
 Star aligned bam-files are used for fusion calling with [Arriba](https://github.com/suhrig/arriba) v2.3.0.
@@ -50,17 +52,24 @@ Star aligned bam-files are used for fusion calling with [Arriba](https://github.
 **References**
 
 * assembly: fasta reference genome
-* blacklist: `blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` - (see [references](references.md#arriba-230))
-* gtf: `hg19.refGene.gtf` - (see [references](references.md#arriba-230))
-* -p `protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` - (see [references](references.md#arriba-230))
-* -k `known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` - (see [references](references.md#arriba-230))
+
+**Software settings**
+
+| **Options** | **Value** | **Description** |
+|-------------|-|-|
+| blacklist | `blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` | (see [references](references.md#arriba-230)) |
+| gtf | `hg19.refGene.gtf` | (see [references](references.md#arriba-230)) |
+| extra | -p `protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` | (see [references](references.md#arriba-230)) |
+| extra | -k `known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` | (see [references](references.md#arriba-230)) |
 
 **Resources**
 
-* threads: 5
-* time: "8:00:00"
-* mem_mb: 30720
-* mem_per_cpu: 6144
+| **Options** | **Value** |
+|-------------|-|
+| mem_mb | 30720 |
+| mem_per_cpu | 6144 |
+| threads | 5 |
+| time | "8:00:00" |
 
 **Result file**
 
@@ -69,11 +78,13 @@ Star aligned bam-files are used for fusion calling with [Arriba](https://github.
 ### Fusion images
 Arriba produces a pdf file containing a figure for every fusion called with a schematic presentation of the exons involved, breakpoints, coverage and directions of the fusion partners in the fusion.
 
-**References**
+**Software settings**
 
-cytobands: `cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv` - (see [references](references.md#arriba-230))
-gtf: `hg19.refGene.gtf` - (see [references](references.md#arriba-230))
-protein_domains: `protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` - (see [references](references.md#arriba-230))
+| **Options** | **Value** | **Description** |
+|-------------|-|-|
+| cytobands | `cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv` | (see [references](references.md#arriba-230)) |
+| gtf | `hg19.refGene.gtf` | (see [references](references.md#arriba-230)) |
+| protein_domains | `protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` | (see [references](references.md#arriba-230)) |
 
 **Result file**
 
@@ -82,20 +93,21 @@ protein_domains: `protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` - (see [refere
 ## Star-Fusion
 [Star-Fusion](https://github.com/STAR-Fusion/STAR-Fusion) v1.10.1 uses Star to align merged fastq files but do so internally.
 
-**References**
+**Software settings**
 
-* genome_path: `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/` - (see [references](references.md#star-fusion))
-
-**Options**
-
-* extra: "--examine_coding_effect"
+| **Options** | **Value** | **Description** |
+|-------------|-|-|
+| genome_path: | `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/` | (see [references](references.md#star-fusion)) |
+| extra | --examine_coding_effect | Add annotation regarding if the fusion is in-frame or not |
 
 **Resources**
 
-* threads: 5
-* time: "8:00:00"
-* mem_mb: 30720
-* mem_per_cpu: 6144
+| **Options** | **Value** |
+|-------------|-|
+| mem_mb | 30720 |
+| mem_per_cpu | 6144 |
+| threads | 5 |
+| time | "8:00:00" |
 
 **Result file**
 
@@ -104,16 +116,20 @@ protein_domains: `protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` - (see [refere
 ## Fusioncatcher
 [Fusioncatcher](https://github.com/ndaniel/fusioncatcher) v1.33 together with reference file package version 102 is used to call fusion from merged fastq files.
 
-**References**
+**Software settings**
 
-* genome_path: `human_v102/`  - (see [references](references.md#fusioncather-v102))
+| **Options** | **Value** | **Description** |
+|-------------|-|-|
+| genome_path | `human_v102/` | (see [references](references.md#fusioncather-v102)) |
 
 **Resources**
 
-* threads: 10
-* time: "16:00:00"
-* mem_mb: 61440
-* mem_per_cpu: 6144
+| **Options** | **Value** |
+|-------------|-|
+| mem_mb | 61440 |
+| mem_per_cpu | 6144 |
+| threads | 10 |
+| time | "16:00:00" |
 
 **Result file**
 
@@ -122,21 +138,20 @@ protein_domains: `protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` - (see [refere
 ## Fusion filtering and report
 Fusion candidates from the three fusions callers are collected and filtered with different filtering options for each caller by the in-house script [report_fusions.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/report_fusions.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/report_fusions.smk)). The remaining fusion calls are then reported in a excel friendly tsv file. Fusions are filtered based on the number of reads cover the breakpoint. However, read pairs spanning the breakpoint are also reported together with total supporting reads as well as other annotations. The settings for respective caller are presented below:
 
-* General
-    - Filter fusion when both genes are outside of design
-* Arriba
-    - No filters
-    - Use Arriba confidence to flag low confidence calls
-* Star-Fusion
-    - star_fusion_flag_low_support: 15 - Flags low support when split reads < 15
-    - star_fusion_low_support: 2 - Filters inframe fusions with split read support <= 2
-    - star_fusion_low_support_inframe: 6 - Filters non-inframe fusions with split read support <= 6
-    - star_fusion_low_support_fp_genes: 20 - Filters fusions with split read support < 20 if in list of noisy fusions or housekeeping genes (see below)
-* Fusioncatcher
-    - fusioncather_flag_low_support: 15 - Flags low support when split reads < 15
-    - fusioncather_low_support: 3 - Filters inframe fusions with split read support <= 3
-    - fusioncather_low_support_inframe: 6 - Filters non-inframe fusions with split read support <= 6
-    - fusioncather_low_support_fp_genes: 20 - Filters fusions with split read support < 20 if in list of noisy fusions or housekeeping genes (see below)
+**Filter settings**
+
+| **Caller** | **Option** | **Value** | **Description** |
+|-------------|-|-|-|
+| All callers | | | Filter fusion when both genes are outside of design |
+| Arriba | | | No filters, use Arriba confidence to flag low confidence calls |
+| Star-Fusion | star_fusion_flag_low_support | 15 | Flags low support when split reads < 15 |
+| | star_fusion_low_support | 2 | Filters inframe fusions with split read support <= 2 |
+| |  star_fusion_low_support_inframe | 6 | Filters non-inframe fusions with split read support <= 6 |
+| |  star_fusion_low_support_fp_genes | 20 | Filters fusions with split read support < 20 if in list of noisy fusions or housekeeping genes (see below) |
+| Fusioncatcher | fusioncather_flag_low_support | 15 | Flags low support when split reads < 15 |
+| | fusioncather_low_support | 3 | Filters inframe fusions with split read support <= 3 |
+| | fusioncather_low_support_inframe | 6 | Filters non-inframe fusions with split read support <= 6 |
+| | fusioncather_low_support_fp_genes | 20 | Filters fusions with split read support < 20 if in list of noisy fusions or housekeeping genes (see below) |
 
 In the validation samples the MAML2 gene was falsely called frequently together with a number of different fusion partner genes. These gene combinations as well as the housekeeping have more stringent filtering criteria. The genes affected are listed below:
 
@@ -144,9 +159,11 @@ In the validation samples the MAML2 gene was falsely called frequently together 
     - FRMPD3, NCOA6, ATXN3, SRP14, KMT2D, CHD1, NFAT5, FOXP2, NUMBL, GLG1, VEZF1, AAK1, NCOR2
 * House keeping genes (GAPDH, GUSB, OAZ1, POLR2A)
 
-**References**
+**Software settings**
 
-* annotation_bed: `Twist_RNA_fusionpartners.bed` - Optional file for annotation of fusion partners
+| **Options** | **Value** | **Description** |
+|-------------|-|-|
+| annotation_bed | `Twist_RNA_fusionpartners.bed` | Optional file for annotation of fusion partners |
 
 **Result file**
 
