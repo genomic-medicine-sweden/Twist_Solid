@@ -1,5 +1,5 @@
 # Overview of the pipeline
-Here is a brief overview of the entire pipeline. For details see subsections and the (hydra-genetics)[https://github.com/hydra-genetics/hydra-genetics] documentation.
+Here is a brief overview of the entire pipeline. For details see subsections and the [hydra-genetics](https://github.com/hydra-genetics/hydra-genetics) documentation.
 
 ## DNA
 1. **Input files**: fastq

@@ -18,6 +18,29 @@ nav:
     - Exon skipping: rna_exon_skipping.md
     - ID-SNPs: rna_id_snps.md
     - QC: rna_qc.md
+  - Project Info:
+    - Changelog: changelog.md
+    - Citations: citations.md
+    - Contributing: contributing.md
+    - Credits: credits.md
+    - Frequently Asked Questions: faq.md
+    - License: license.md
+    - More Resources: more_resources.md
+
 
 theme: readthedocs
 extra_css: [extra.css]
+markdown_extensions:
+  - abbr
+  - pymdownx.snippets:
+      auto_append:
+        - includes/abbreviations.md
+      base_path: ["docs"]
+plugins:
+  - search
+  - mkdocs-simple-hooks:
+      hooks:
+        on_pre_build: "docs.hooks:copy_changelog_and_license"
+#  - schema_reader:
+#      include:
+#        - "./workflow/schemas"
