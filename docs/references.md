@@ -87,8 +87,8 @@ snakemake --profile profiles/uppsala_ref/ -s workflow/Snakefile_references.smk
 
 **units.tsv**
 
-column header: bam
-column data: path to merged bam files
+* column header: bam
+* column data: path to merged bam files
 
 **References**
 
@@ -100,8 +100,8 @@ column data: path to merged bam files
 
 **units.tsv**
 
-column header: bam
-column data: path to merged bam files
+* column header: bam
+* column data: path to merged bam files
 
 **References**
 
@@ -113,8 +113,8 @@ column data: path to merged bam files
 
 **units.tsv**
 
-column header: bam
-column data: path to merged bam files
+* column header: bam
+* column data: path to merged bam files
 
 **References**
 
@@ -129,8 +129,8 @@ column data: path to merged bam files
 
 **units.tsv**
 
-column header: cnv_vcf
-column data: svdb merged cnv vcf files
+* column header: cnv_vcf
+* column data: svdb merged cnv vcf files
 
 **Options**
 
@@ -140,23 +140,23 @@ column data: svdb merged cnv vcf files
 
 **units.tsv**
 
-column header: vcf
-column data: unfiltered merged vcf files
+* column header: vcf
+* column data: unfiltered merged vcf files
 
 ### Background
 
 **units.tsv**
 
-column header: vcf
-column data: unfiltered merged vcf files
+* column header: vcf
+* column data: unfiltered merged vcf files
 
 **Options**
 
-min_dp - Min read depth to be included (default: 500)
-max_af - Max allele frequency to be included (default: 0.015)
+* min_dp - Min read depth to be included (default: 500)
+* max_af - Max allele frequency to be included (default: 0.015)
 
 ## PureCN
-**OBS!** PureCN uses Mutect2 filtered vcf files (not hard filtered). This is not the same as the other PoNs that use ensembled vcf files.
+**OBS!** The best way to run PureCN is still to be determined. At present PureCN uses Mutect2 filtered vcf files (not hard filtered). This is not the same as the other PoNs that use ensembled vcf files.
 
 ### Target interval file
 Target interval file for hg19 with 25000 in target bin size also including of target regions.
@@ -168,14 +168,14 @@ singularity docker://hydragenetics/purecn:2.2.0 Rscript $PURECN/IntervalFile.R -
 
 **units.tsv**
 
-column header: bam
-column data: path to merged bam files
-column header: vcf
-column data: unfiltered GATK vcf files
+* column header: bam
+* column data: path to merged bam files
+* column header: vcf
+* column data: unfiltered GATK vcf files
 
 **Reference**
 
-Target interval file
+* Target interval file
 
 ## Pipeline specific files
 These are design files and other pipeline specific only available to download from the Uppsala Owncloud solution.
