@@ -1,20 +1,43 @@
 # Running the pipeline
 
+## Requirements
+Recommended hardware:
+
+- CPU:
+- Memory:
+- Storage:
+
+**Note**: Running the pipeline with less resources may work, but has not been tested.
+
+Software:
+
+- [python](https://www.python.org/), version 3.9 or newer 
+- [pip3](https://pypi.org/project/pip/)
+- [virtuelenv](https://docs.python.org/3/library/venv.html)
+- [singularity](https://docs.sylabs.io/guides/3.5/user-guide/introduction.html)
+
+Nice to have:
+
+- DRMAA compatible scheduler
+
 ## Installation
+A list of releases of the Twist Solid pipeline can be found at: [Releases](https://github.com/genomic-medicine-sweden/Twist_Solid/releases).
+
 ### Clone the Twist Solid git repo
 ```bash
-git clone https://github.com/genomic-medicine-sweden/Twist_Solid.git
+VERSION="v0.4.0"
+git clone --branch ${VERSION} https://github.com/genomic-medicine-sweden/Twist_Solid.git
 ```
 
 ### Create python environment
 To run the Twist Solid pipeline a python virtual environment is needed.
-Create a new [python environment](https://docs.python.org/3/library/venv.html):
 ```bash
+# Create a new virtual environment
 python3 -m venv /path/to/new/virtual/environment
 ```
 
-### Install hydra-genetics
-Activate the virtual environment and install hydra-genetics tools and other requirements specified in `requirements.txt`.
+### Install pipeline requirements
+Activate the virtual environment and install pipeline requirements specified in `requirements.txt`.
 ```bash
 cd path/to/Twist_Solid/git/clone/
 source /path/to/new/virtual/environment/bin/activate
@@ -22,11 +45,8 @@ pip install -r requirements.txt
 pip install hydra_genetics
 ```
 
-## Dependencies
-The pipeline assumes that Snakemake and support for Singularity containers are installed.
-
 ## Input sample files
-The pipeline uses sample input files (`samples.tsv` and `units.tsv`) with information regarding sample information, sequencing meta information as well as the location of the fastq-files. Using the python virtual environment created above it is possible to generate these files automatically using [hydra-genetics create-input-files](https://hydra-genetics.readthedocs.io/en/latest/create_sample_files/):
+The pipeline uses sample input files (`samples.tsv` and `units.tsv`) with information regarding sample information, sequencing meta information as well as the location of the fastq-files. Specification for the input files can be found at [Twist Solid schemas](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/schemas/). Using the python virtual environment created above it is possible to generate these files automatically using [hydra-genetics create-input-files](https://hydra-genetics.readthedocs.io/en/latest/create_sample_files/):
 ```bash
 hydra-genetics create-input-files -d path/to/fastq-files/
 ```

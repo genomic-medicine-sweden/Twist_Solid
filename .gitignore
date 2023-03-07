@@ -9,3 +9,7 @@
 *.swp
 
 venv
+
+docs/changelog.md
+docs/license.md
+site/
