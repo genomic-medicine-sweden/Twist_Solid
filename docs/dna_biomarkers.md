@@ -32,7 +32,7 @@ To determine MSS or MSI status of the samples the percentage of sites that have 
 
 **Reference**
 
-* Panel of normal for MSIsensor-pro (see [references](dna_references.md) on how the PoN was created)
+* Panel of normal for MSIsensor-pro (see [references](references.md) on how the PoN was created)
 
 **Result file**
 
@@ -44,7 +44,7 @@ A homologous recombination deficiency score is calculated using **[scarHRD](http
 
 **Reference for cnvkit**
 
-* Panel of normals created by cnvkit with extra CNV-probes removed (see [references](dna_references.md) on how the PoN was created)
+* Panel of normals created by cnvkit with extra CNV-probes removed (see [references](references.md) on how the PoN was created)
 
 **Options**
 

@@ -10,10 +10,10 @@ See the [qc hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/)
 ## MultiQC
 A MultiQC html report is generated using **[MultiQC](https://github.com/ewels/MultiQC)** v1.11. The report starts with a general statistics table showing the most important QC-values followed by additional QC data and diagrams. The qc data is generated using FastQC, samtools, picard, and GATK.
 
-**Options**
+**Software configuration**
 
-* `config/multiqc_config_dna.yaml` - Config of the general statistics table
-* `config/config.yaml` - Configuration of input files to MultiQC in the config file
+* `config/multiqc_config_dna.yaml`: Config of the general statistics table
+* `config/config.yaml`: Configuration of input files to MultiQC in the config file:
 
 ```yaml
 multiqc:
@@ -38,9 +38,11 @@ multiqc:
 
 **Resources**
 
-* threads: 2
-* mem_mb: 12288
-* mem_per_cpu: 6144
+| **Options** | **Value** |
+|-------------|-|
+| mem_mb | 12288 |
+| mem_per_cpu | 6144 |
+| threads | 2 |
 
 ## Samtools
 **[Samtools stats](http://www.htslib.org/doc/samtools-stats.html)** v1.15 is run on BWA-mem aligned and merged bam files.
@@ -66,7 +68,11 @@ Using **[GATK Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/3600375
 
 **Resources for Mutect2**
 
-* time: "48:00:00"
+| **Options** | **Value** |
+|-------------|-|
+| mem_mb | 12288 |
+| mem_per_cpu | 6144 |
+| time | "48:00:00" |
 
 **Result file**
 
@@ -79,7 +85,7 @@ This excel-friendly report produced by the in-house script [hotspot_report.py](h
 
 * File with clinical relevant positions
 
-**Options**
+**Software configuration**
 ```yaml
 report_config: "config/hotspot_report.yaml"
 chr_translation_file: "config/hotspot_report.chr.translation.hg19"
