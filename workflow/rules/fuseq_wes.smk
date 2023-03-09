@@ -12,6 +12,7 @@ rule fuseq_wes:
         gtfSqlite=config.get("fuseq_wes", {}).get("gtfSqlite", ""),
         fusiondb=config.get("fuseq_wes", {}).get("fusiondb", ""),
         paralogdb=config.get("fuseq_wes", {}).get("paralogdb", ""),
+        params=config.get("fuseq_wes", {}).get("params", ""),
     output:
         final_fusions=temp("fusions/fuseq_wes/{sample}_{type}/FuSeq_WES_FusionFinal.txt"),
         fusion_reads=temp("fusions/fuseq_wes/{sample}_{type}/feq_ALL.txt"),
@@ -53,4 +54,5 @@ rule fuseq_wes:
         "sqlite={input.gtfSqlite} "
         "fusiondb={input.fusiondb} "
         "paralogdb={input.paralogdb} "
+        "paramsFn={input.params} "
         "out={output.output_dir}\" &> {log}"
