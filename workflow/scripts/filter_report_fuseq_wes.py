@@ -26,6 +26,7 @@ def get_report_genes(gene_white_list):
     report_genes = []
     for gene in gene_white_list:
         report_genes.append(gene.strip())
+    return report_genes
 
 
 def filter_report_fusion(sample, fusion_breakpoint_dict, report_genes, fusion_file, min_support, filter_on_fusiondb, out_file):
