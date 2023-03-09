@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     sample = snakemake.input.breakpoint.split("/")[-2].split(".")[0]
     fusion_breakpoint_dict = get_breakpoints(open(snakemake.input.breakpoint), sample)
-    report_genes = get_report_genes(open(snakemake.input.gene_white_list))
+    report_genes = get_report_genes(open(snakemake.params.gene_white_list))
     filter_report_fusion(
         sample,
         fusion_breakpoint_dict,
