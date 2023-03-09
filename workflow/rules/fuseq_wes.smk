@@ -43,7 +43,7 @@ rule fuseq_wes:
     message:
         "{rule}: call dna fusion into {output.final_fusions} using bam file {input.bam}"
     shell:
-        "sh -c \""
+        'sh -c "'
         "fuseq_wes.py "
         "--bam {input.bam} "
         "--gtf {input.ref_json} "
@@ -55,4 +55,38 @@ rule fuseq_wes:
         "fusiondb={input.fusiondb} "
         "paralogdb={input.paralogdb} "
         "paramsFn={input.params} "
-        "out={output.output_dir}\" &> {log}"
+        'out={output.output_dir}" &> {log}'
+
+
+rule filter_report_fuseq_wes:
+    input:
+        fusions="fusions/fuseq_wes/{sample}_{type}/FuSeq_WES_FusionFinal.txt",
+        breakpoint="fusions/fuseq_wes/{sample}_{type}/FuSeq_WES_SR_fge.txt",
+    output:
+        fusions=temp("fusions/filter_fuseq_wes/{sample}_{type}.fuseq_wes.report.csv"),
+    params:
+        min_support=config.get("filter_fuseq_wes", {}).get("min_support", ""),
+        gene_white_list=config.get("filter_fuseq_wes", {}).get("gene_white_list", ""),
+        filter_on_fusiondb=config.get("filter_fuseq_wes", {}).get("filter_on_fusiondb", ""),
+    log:
+        "fusions/filter_fuseq_wes/{sample}_{type}.fuseq_wes.report.csv.log",
+    benchmark:
+        repeat(
+            "fusions/filter_fuseq_wes/{sample}_{type}.fuseq_wes.report.csv.benchmark.tsv",
+            config.get("filter_fuseq_wes", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("filter_fuseq_wes", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("filter_fuseq_wes", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("filter_fuseq_wes", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("filter_fuseq_wes", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("filter_fuseq_wes", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("filter_fuseq_wes", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("filter_fuseq_wes", {}).get("container", config["default_container"])
+    conda:
+        "../envs/fuseq_wes.yaml"
+    message:
+        "{rule}: filter dna fuseq_wes fusions into {output.fusions}"
+    script:
+        "../scripts/filter_report_fuseq_wes.py"

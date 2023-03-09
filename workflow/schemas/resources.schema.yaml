@@ -68,6 +68,26 @@ properties:
         type: integer
         description:  number of threads to be available
 
+  filter_fuseq_wes:
+    type: object
+    description: resource definitions for filtering fuseq_wes output and generate a report
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
   fix_vcf_ad_for_qci:
     type: object
     description: resource definitions for fix_vcf_ad_for_qci
@@ -88,9 +108,29 @@ properties:
         type: integer
         description:  number of threads to be available
 
+  fuseq_wes:
+    type: object
+    description: resource definitions for running fuseq_wes
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
   report_gene_fuse:
     type: object
-    description: resource definitions for generating a gene fuse report
+    description: resource definitions for generating a genefuse report
     properties:
       mem_mb:
         type: integer
