@@ -30,7 +30,7 @@ def get_report_genes(gene_white_list):
 
 
 def filter_report_fusion(sample, fusion_breakpoint_dict, report_genes, fusion_file, min_support, filter_on_fusiondb, out_file):
-    out_file.write("sample\tfusion\tbreak_point1\tbreak_point2\tsupport\tsplit_reads\tmate_pairs\tparalog\n")
+    out_file.write("fusion\tbreak_point1\tbreak_point2\tparalog\tsplit_reads\tmate_pairs\ttotal_support\n")
     nr_report_genes = len(report_genes)
     next(fusion_file)
     for fusion in fusion_file:
@@ -57,8 +57,8 @@ def filter_report_fusion(sample, fusion_breakpoint_dict, report_genes, fusion_fi
             break_point1 = break_points[0]
             break_point2 = break_points[1]
             out_file.write(
-                f"{sample}\t{fusion_name}\t{break_point1}\t{break_point2}\t"
-                f"{support}\t{SR_support}\t{MR_support}\t{paralog}\n"
+                f"{fusion_name}\t{break_point1}\t{break_point2}\t{paralog}\t"
+                f"{SR_support}\t{MR_support}\t{support}\n"
             )
     out_file.close()
 
