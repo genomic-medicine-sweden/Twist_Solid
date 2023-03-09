@@ -239,10 +239,6 @@ module fusions:
 use rule * from fusions as fusions_*
 
 
-use rule fuseq_wes with:
-    priority: 50
-
-
 use rule star_fusion from fusions as fusions_star_fusion with:
     output:
         bam=temp("fusions/star_fusion/{sample}_{type}/Aligned.out.bam"),

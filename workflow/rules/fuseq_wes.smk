@@ -29,6 +29,7 @@ rule fuseq_wes:
             "fusions/fuseq_wes/{sample}_{type}/FuSeq_WES_FusionFinal.txt.benchmark.tsv",
             config.get("fuseq_wes", {}).get("benchmark_repeats", 1),
         )
+    priority: 50
     threads: config.get("fuseq_wes", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("fuseq_wes", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
