@@ -239,6 +239,10 @@ module fusions:
 use rule * from fusions as fusions_*
 
 
+use rule fuseq_wes with:
+    priority: 50
+
+
 use rule star_fusion from fusions as fusions_star_fusion with:
     output:
         bam=temp("fusions/star_fusion/{sample}_{type}/Aligned.out.bam"),
@@ -255,6 +259,14 @@ module cnv_sv:
 
 
 use rule * from cnv_sv as cnv_sv_*
+
+
+use rule manta_config_t from cnv_sv as cnv_sv_manta_config_t with:
+    priority: 40
+
+
+use rule manta_run_workflow_t from cnv_sv as cnv_sv_manta_run_workflow_t with:
+    priority: 40
 
 
 use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
