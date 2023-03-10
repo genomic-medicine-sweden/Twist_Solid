@@ -88,7 +88,7 @@ def annotate_fusion(filtered_fusions, input_gtf):
     for gtf in input_gtf:
         columns = gtf.strip().split("\t")
         type = columns[2]
-        if type != "exon":
+        if type != "CDS":
             continue
         gene_name = columns[8].split("gene_id \"")[1].split("\";")[0]
         if gene_name in gene_dict:
@@ -96,10 +96,15 @@ def annotate_fusion(filtered_fusions, input_gtf):
             pos = (int(columns[3]) + int(columns[4])) / 2
             if chrom in chr_pos_dict:
                 for bp in chr_pos_dict[chrom]:
-                    distance = abs(bp[0] - pos)
+                    direction = columns[6]
+                    if direction == "-":
+                        distance = pos - bp[0]
+                    else:
+                        distance = bp[0] - pos
+                    if distance < 0:
+                        distance = 100000
                     transcript_id = columns[8].split("transcript_id \"")[1].split("\";")[0]
                     exon_number = int(columns[8].split("exon_number \"")[1].split("\";")[0])
-                    direction = columns[5]
                     if distance < bp[3]:
                         bp[3] = distance
                         bp[4] = exon_number
@@ -110,7 +115,7 @@ def annotate_fusion(filtered_fusions, input_gtf):
         for bp in chr_pos_dict[chrom]:
             transcript_id = bp[5]
             if bp[6] == "-":
-                exon_number = transcript_exon_max[transcript_id] - bp[4]
+                exon_number = transcript_exon_max[transcript_id] - bp[4] + 1
             else:
                 exon_number = bp[4]
             filtered_fusions[bp[1]][bp[2]] = f"exon {exon_number} in {transcript_id}"
