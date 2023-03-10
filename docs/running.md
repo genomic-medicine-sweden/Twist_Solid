@@ -24,25 +24,41 @@
 A list of releases of the Twist Solid pipeline can be found at: [Releases](https://github.com/genomic-medicine-sweden/Twist_Solid/releases).
 
 ### Clone the Twist Solid git repo
+We recommend that the repository is cloned to your working directory. 
 ```bash
+# Set up a working directory path
+WORKING_DIRECTORY="/path_working_to_directory"
+```
+
+Fetch pipeline
+```bash
+# Set version
 VERSION="v0.4.0"
-git clone --branch ${VERSION} https://github.com/genomic-medicine-sweden/Twist_Solid.git
+
+WORKING_DIRECTORY="/path_working_to_directory"
+
+# Clone selected version
+git clone --branch ${VERSION} https://github.com/genomic-medicine-sweden/Twist_Solid.git ${WORKING_DIRECTORY}
 ```
 
 ### Create python environment
 To run the Twist Solid pipeline a python virtual environment is needed.
 ```bash
 # Create a new virtual environment
-python3 -m venv /path/to/new/virtual/environment
+python3 -m venv ${WORKING_DIRECTORY}/virtual/environment
 ```
 
 ### Install pipeline requirements
 Activate the virtual environment and install pipeline requirements specified in `requirements.txt`.
 ```bash
-cd path/to/Twist_Solid/git/clone/
-source /path/to/new/virtual/environment/bin/activate
+# Enter working directory
+cd ${WORKING_DIRECTORY}
+
+# Activate python environment
+source environment/bin/activate
+
+# Install requirements
 pip install -r requirements.txt
-pip install hydra_genetics
 ```
 
 ## Input sample files
@@ -55,8 +71,9 @@ hydra-genetics create-input-files -d path/to/fastq-files/
 Using the activated python virtual environment created above, this is a basic command for running the pipeline:
 ```bash
 snakemake --profile profiles/ -s workflow/Snakefile
-```
+```  
 The are many additional [snakemake running options](https://snakemake.readthedocs.io/en/stable/executing/cli.html#) some of which is listed below. However, options that are always used should be put in the [profile](https://hydra-genetics.readthedocs.io/en/latest/profile/).
 
 * --notemp - Saves all intermediate files. Good for development and testing different options.
 * --until <rule> - Runs only rules dependent on the specified rule.
+<br />
