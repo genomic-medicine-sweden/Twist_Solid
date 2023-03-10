@@ -55,7 +55,7 @@ rule fuseq_wes:
         "sqlite={input.gtfSqlite} "
         "fusiondb={input.fusiondb} "
         "paralogdb={input.paralogdb} "
-        "paramsFn={input.params} "
+        "params={input.params} "
         'out={output.output_dir}" &> {log}'
 
 

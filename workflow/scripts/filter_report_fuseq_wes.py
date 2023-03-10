@@ -98,12 +98,14 @@ def annotate_fusion(filtered_fusions, input_gtf):
                 for bp in chr_pos_dict[chrom]:
                     direction = columns[6]
                     if direction == "-":
-                        distance = pos - bp[0]
-                    else:
                         distance = bp[0] - pos
+                    else:
+                        distance = pos - bp[0]
                     if distance < 0:
                         distance = 100000
                     transcript_id = columns[8].split("transcript_id \"")[1].split("\";")[0]
+                    if transcript_id == "NM_001353765":
+                        continue
                     exon_number = int(columns[8].split("exon_number \"")[1].split("\";")[0])
                     if distance < bp[3]:
                         bp[3] = distance
