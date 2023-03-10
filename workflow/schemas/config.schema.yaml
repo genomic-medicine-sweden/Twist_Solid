@@ -174,9 +174,13 @@ properties:
       filter_on_fusiondb:
         type: boolean
         description: If True, only include fusions that are present in the Mitelman fusion database.
+      gtf:
+        type: string
+        description: Path to gtf annotation file
     required:
       - min_support
       - filter_on_fusiondb
+      - gtf
 
   fix_vcf_ad_for_qci:
     type: object

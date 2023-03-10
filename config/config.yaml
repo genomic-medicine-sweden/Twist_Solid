@@ -140,6 +140,7 @@ filter_fuseq_wes:
   min_support: 30
   gene_white_list: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/fuseq_wes/fuseq_wes_gene_white_list.txt"
   filter_on_fusiondb: True
+  gtf: "/data/ref_genomes/hg19/gtf/hg19.refGene.gtf"
 
 fuseq_wes:
   container: "docker://hydragenetics/fuseq_wes:1.0.0"

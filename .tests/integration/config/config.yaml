@@ -100,6 +100,7 @@ filter_fuseq_wes:
   min_support: 30
   gene_white_list: "reference/fuseq_wes_gene_white_list.txt"
   filter_on_fusiondb: True
+  gtf: "reference/hg19.refGene.gtf"
 
 fuseq_wes:
   container: "docker://hydragenetics/fuseq_wes:1.0.0"

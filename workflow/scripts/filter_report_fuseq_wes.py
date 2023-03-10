@@ -29,9 +29,9 @@ def get_report_genes(gene_white_list):
     return report_genes
 
 
-def filter_report_fusion(sample, fusion_breakpoint_dict, report_genes, fusion_file, min_support, filter_on_fusiondb, out_file):
-    out_file.write("fusion\tbreak_point1\tbreak_point2\tparalog\tsplit_reads\tmate_pairs\ttotal_support\n")
+def filter_fusion(sample, fusion_breakpoint_dict, report_genes, fusion_file, min_support, filter_on_fusiondb):
     nr_report_genes = len(report_genes)
+    filtered_fusions = []
     next(fusion_file)
     for fusion in fusion_file:
         columns = fusion.strip().split("\t")
@@ -50,16 +50,76 @@ def filter_report_fusion(sample, fusion_breakpoint_dict, report_genes, fusion_fi
         paralog = columns[12]
         if fusiondb == 1 or filter_on_fusiondb is False:
             break_points = ["", ""]
-            if fusion_name in fusion_breakpoint_dict:
-                break_points = fusion_breakpoint_dict[fusion_name]
-            if reverse_fusion_name in fusion_breakpoint_dict:
-                break_points = fusion_breakpoint_dict[reverse_fusion_name]
-            break_point1 = break_points[0]
-            break_point2 = break_points[1]
-            out_file.write(
-                f"{fusion_name}\t{break_point1}\t{break_point2}\t{paralog}\t"
-                f"{SR_support}\t{MR_support}\t{support}\n"
-            )
+            if SR_support > 0:
+                if fusion_name in fusion_breakpoint_dict:
+                    break_points = fusion_breakpoint_dict[fusion_name]
+                if reverse_fusion_name in fusion_breakpoint_dict:
+                    break_points = fusion_breakpoint_dict[reverse_fusion_name]
+                break_point1 = break_points[0]
+                break_point2 = break_points[1]
+            filtered_fusions.append([fusion_name, break_point1, "", break_point2, "", paralog, SR_support, MR_support, support])
+    return filtered_fusions
+
+
+def annotate_fusion(filtered_fusions, input_gtf):
+    annotated_fusions = []
+    gene_dict = {}
+    chr_pos_dict = {}
+    i = 0
+    for fusion in filtered_fusions:
+        if not (fusion[1] == "" or fusion[3] == ""):
+            gene1 = fusion[0].split("--")[0]
+            gene2 = fusion[0].split("--")[1]
+            gene_dict[gene1] = ""
+            gene_dict[gene2] = ""
+            bp1_chrom = fusion[1].split(":")[0]
+            bp1_pos = (int(fusion[1].split(":")[1].split("-")[0]) + int(fusion[1].split(":")[1].split("-")[1])) / 2
+            bp2_chrom = fusion[3].split(":")[0]
+            bp2_pos = (int(fusion[3].split(":")[1].split("-")[0]) + int(fusion[3].split(":")[1].split("-")[1])) / 2
+            if bp1_chrom in chr_pos_dict:
+                chr_pos_dict[bp1_chrom].append([bp1_pos, i, 2, 100000, ""])
+            else:
+                chr_pos_dict[bp1_chrom] = [bp1_pos, i, 2, 100000, ""]
+            if bp2_chrom in chr_pos_dict:
+                chr_pos_dict[bp2_chrom].append([bp2_pos, i, 4, 100000, ""])
+            else:
+                chr_pos_dict[bp2_chrom] = [bp2_pos, i, 4, 100000, ""]
+        i += 1
+    for gtf in input_gtf:
+        columns = gtf.strip().split("\t")
+        type = columns[2]
+        if type != "exon":
+            continue
+        gene_name = columns[8].split("gene_id \"")[1].split("\";")
+        if gene_name in gene_dict:
+            chrom = column[0]
+            pos = (int(column[3]) + int(column[4])) / 2
+            if chrom in chr_pos_dict:
+                for bp in chr_pos_dict[chrom]:
+                    distance = abs(bp[0] - pos)
+                    if distance < bp[3]:
+                        transcript_id = columns[8].split("transcript_id \"")[1].split("\";")
+                        exon_number = columns[8].split("exon_number \"")[1].split("\";")
+                        bp[3] = distance
+                        bp[4] = f"exon {exon_number} in {transcript_id}"
+    for chrom in chr_pos_dict:
+        for bp in chr_pos_dict[chrom]:
+            annotated_fusions[bp[1]][bp[2]] = bp[4]
+
+    return annotated_fusions
+
+
+def write_fusions(annotated_filtered_fusions, out_file):
+    out_file.write("fusion\tbreak_point1\texon1\tbreak_point2\texon2\tparalog\tsplit_reads\tmate_pairs\ttotal_support\n")
+    for data in annotated_filtered_fusions:
+        first = True
+        for d in data:
+            if first:
+                out_file.write(f"{d}")
+                first = False
+            else:
+                out_file.write(f"\t{d}")
+        out_file.write(f"\n")
     out_file.close()
 
 
@@ -69,12 +129,13 @@ if __name__ == "__main__":
     sample = snakemake.input.breakpoint.split("/")[-2].split(".")[0]
     fusion_breakpoint_dict = get_breakpoints(open(snakemake.input.breakpoint), sample)
     report_genes = get_report_genes(open(snakemake.params.gene_white_list))
-    filter_report_fusion(
+    filtered_fusions = filter_fusion(
         sample,
         fusion_breakpoint_dict,
         report_genes,
         open(snakemake.input.fusions),
         snakemake.params.min_support,
         snakemake.params.filter_on_fusiondb,
-        open(snakemake.output.fusions, "w")
     )
+    annotated_filtered_fusions = annotate_fusion(filtered_fusions, open(snakemake.params.gtf))
+    write_fusions(annotated_filtered_fusions, open(snakemake.output.fusion, "w"))
