@@ -39,3 +39,5 @@ Here is a brief overview of the entire pipeline. For details see subsections and
   6.1 QC measures from Samtools, Picard, FastQC, Mosdepth  
   6.2 MultiQC hmtl report  
   6.3 House keeping gene coverage  
+
+  <br />
