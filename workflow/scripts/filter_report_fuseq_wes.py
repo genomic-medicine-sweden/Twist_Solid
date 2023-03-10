@@ -62,9 +62,9 @@ def filter_fusion(sample, fusion_breakpoint_dict, report_genes, fusion_file, min
 
 
 def annotate_fusion(filtered_fusions, input_gtf):
-    annotated_fusions = []
     gene_dict = {}
     chr_pos_dict = {}
+    transcript_exon_max = {}
     i = 0
     for fusion in filtered_fusions:
         if not (fusion[1] == "" or fusion[3] == ""):
@@ -77,36 +77,44 @@ def annotate_fusion(filtered_fusions, input_gtf):
             bp2_chrom = fusion[3].split(":")[0]
             bp2_pos = (int(fusion[3].split(":")[1].split("-")[0]) + int(fusion[3].split(":")[1].split("-")[1])) / 2
             if bp1_chrom in chr_pos_dict:
-                chr_pos_dict[bp1_chrom].append([bp1_pos, i, 2, 100000, ""])
+                chr_pos_dict[bp1_chrom].append([bp1_pos, i, 2, 100000, 0, "", ""])
             else:
-                chr_pos_dict[bp1_chrom] = [bp1_pos, i, 2, 100000, ""]
+                chr_pos_dict[bp1_chrom] = [[bp1_pos, i, 2, 100000, 0, "", ""]]
             if bp2_chrom in chr_pos_dict:
-                chr_pos_dict[bp2_chrom].append([bp2_pos, i, 4, 100000, ""])
+                chr_pos_dict[bp2_chrom].append([bp2_pos, i, 4, 100000, 0, "", ""])
             else:
-                chr_pos_dict[bp2_chrom] = [bp2_pos, i, 4, 100000, ""]
+                chr_pos_dict[bp2_chrom] = [[bp2_pos, i, 4, 100000, 0, "", ""]]
         i += 1
     for gtf in input_gtf:
         columns = gtf.strip().split("\t")
         type = columns[2]
         if type != "exon":
             continue
-        gene_name = columns[8].split("gene_id \"")[1].split("\";")
+        gene_name = columns[8].split("gene_id \"")[1].split("\";")[0]
         if gene_name in gene_dict:
-            chrom = column[0]
-            pos = (int(column[3]) + int(column[4])) / 2
+            chrom = columns[0]
+            pos = (int(columns[3]) + int(columns[4])) / 2
             if chrom in chr_pos_dict:
                 for bp in chr_pos_dict[chrom]:
                     distance = abs(bp[0] - pos)
+                    transcript_id = columns[8].split("transcript_id \"")[1].split("\";")[0]
+                    exon_number = int(columns[8].split("exon_number \"")[1].split("\";")[0])
+                    direction = columns[5]
                     if distance < bp[3]:
-                        transcript_id = columns[8].split("transcript_id \"")[1].split("\";")
-                        exon_number = columns[8].split("exon_number \"")[1].split("\";")
                         bp[3] = distance
-                        bp[4] = f"exon {exon_number} in {transcript_id}"
+                        bp[4] = exon_number
+                        bp[5] = transcript_id
+                        bp[6] = direction
+                    transcript_exon_max[transcript_id] = exon_number
     for chrom in chr_pos_dict:
         for bp in chr_pos_dict[chrom]:
-            annotated_fusions[bp[1]][bp[2]] = bp[4]
-
-    return annotated_fusions
+            transcript_id = bp[5]
+            if bp[6] == "-":
+                exon_number = transcript_exon_max[transcript_id] - bp[4]
+            else:
+                exon_number = bp[4]
+            filtered_fusions[bp[1]][bp[2]] = f"exon {exon_number} in {transcript_id}"
+    return filtered_fusions
 
 
 def write_fusions(annotated_filtered_fusions, out_file):
@@ -138,4 +146,4 @@ if __name__ == "__main__":
         snakemake.params.filter_on_fusiondb,
     )
     annotated_filtered_fusions = annotate_fusion(filtered_fusions, open(snakemake.params.gtf))
-    write_fusions(annotated_filtered_fusions, open(snakemake.output.fusion, "w"))
+    write_fusions(annotated_filtered_fusions, open(snakemake.output.fusions, "w"))
