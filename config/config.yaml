@@ -136,6 +136,20 @@ filter_vcf:
   cnv_hard_filter_loh: "config/config_hard_filter_cnv_loh.yaml"
   germline: "config/config_hard_filter_germline.yaml"
 
+filter_fuseq_wes:
+  min_support: 30
+  gene_white_list: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/fuseq_wes/fuseq_wes_gene_white_list.txt"
+  filter_on_fusiondb: True
+  gtf: "/data/ref_genomes/hg19/gtf/hg19.refGene.gtf"
+
+fuseq_wes:
+  container: "docker://hydragenetics/fuseq_wes:1.0.0"
+  ref_json: "/data/ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json"
+  gtfSqlite: "/data/ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite"
+  fusiondb: "/data/ref_data/fuseq_wes/Mitelman_fusiondb.RData"
+  paralogdb: "/data/ref_data/fuseq_wes/ensmbl_paralogs_grch37.RData"
+  params: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/fuseq_wes/fuseq_params.txt"
+
 fusioncatcher:
   container: "docker://hydragenetics/fusioncatcher:1.33"
   genome_path: "/data/ref_data/fusioncatcher/human_v102/human_v102/"
