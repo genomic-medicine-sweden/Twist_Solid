@@ -50,6 +50,8 @@ def filter_fusion(sample, fusion_breakpoint_dict, report_genes, fusion_file, min
         paralog = columns[12]
         if fusiondb == 1 or filter_on_fusiondb is False:
             break_points = ["", ""]
+            break_point1 = ""
+            break_point2 = ""
             if SR_support > 0:
                 if fusion_name in fusion_breakpoint_dict:
                     break_points = fusion_breakpoint_dict[fusion_name]
