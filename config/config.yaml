@@ -139,6 +139,7 @@ filter_vcf:
 filter_fuseq_wes:
   min_support: 30
   gene_white_list: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/fuseq_wes/fuseq_wes_gene_white_list.txt"
+  transcript_black_list: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/fuseq_wes/fuseq_wes_transcript_black_list.txt"
   filter_on_fusiondb: True
   gtf: "/data/ref_genomes/hg19/gtf/hg19.refGene.gtf"
 
