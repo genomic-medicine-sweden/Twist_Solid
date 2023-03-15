@@ -131,22 +131,21 @@ def create_tsv_report(input_vcfs, input_org_vcfs, input_tsv, output_txt, del_1p1
         log.info(f"Processed {counter} variants")
 
         deletions = open(input_tsv)
-        next(deletions)
+        header_list = next(deletions).split("\t")
         for deletion in deletions:
-            columns = deletion.strip().split("\t")
-            samples = sample_name
-            gene = columns[0]
-            chr = columns[1]
-            start = columns[2]
-            end = columns[3]
+            columns = {k: v for k, v in zip(header_list, deletion.strip().split("\t"))}
+            gene = columns['Gene(s)']
+            chr = columns['Chromosome']
+            start = columns['Gene_start']
+            end = columns['Gene_end']
             callers = "small_deletion"
             AF = "NA"
-            log_odds_ratio = float(columns[4])
+            log_odds_ratio = float(columns['Log2_ratio_diff'])
             cn = 2*pow(2, float(log_odds_ratio))
             ccn = cn
             if TC > 0.0:
                 ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
-            writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
+            writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
 
 
 if __name__ == "__main__":
