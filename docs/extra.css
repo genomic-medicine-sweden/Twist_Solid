@@ -23,5 +23,13 @@ p {
 * {
   margin-bottom: 0px  !important;
 }
-
 thread { width:100%; min-width: 100%; }
+table {
+  width: 100%;
+}
+table td {
+  width: 1px;
+}
+table td:last-child {
+  width: 100%;
+}
