@@ -89,6 +89,20 @@ fastp_pe:
 fastqc:
   container: "docker://hydragenetics/fastqc:0.11.9"
 
+filter_fuseq_wes:
+  min_support: 30
+  gene_white_list: "reference/fuseq_wes_gene_white_list.txt"
+  filter_on_fusiondb: True
+  gtf: "reference/hg19.refGene.gtf"
+
+fuseq_wes:
+  container: "docker://hydragenetics/fuseq_wes:1.0.0"
+  ref_json: "reference/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json"
+  gtfSqlite: "reference/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite"
+  fusiondb: "reference/Mitelman_fusiondb.RData"
+  paralogdb: "reference/ensmbl_paralogs_grch37.RData"
+  params: "reference/fuseq_params.txt"
+
 filter_vcf:
   snv_soft_filter: "../../config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "../../config/config_hard_filter_uppsala.yaml"

@@ -1,6 +1,3 @@
-# vim: syntax=python tabstop=4 expandtab
-# coding: utf-8
-
 __author__ = "Jonas A"
 __copyright__ = "Copyright 2021, Jonas A"
 __email__ = "jonas.almlof@igp.uu.se"
@@ -230,12 +227,16 @@ use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
 
 module fusions:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="c6e4d13")
+        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="7edfaf1")
     config:
         config
 
 
 use rule * from fusions as fusions_*
+
+
+use rule fuseq_wes from fusions as fusions_fuseq_wes with:
+    priority: 50
 
 
 use rule star_fusion from fusions as fusions_star_fusion with:
@@ -254,6 +255,14 @@ module cnv_sv:
 
 
 use rule * from cnv_sv as cnv_sv_*
+
+
+use rule manta_config_t from cnv_sv as cnv_sv_manta_config_t with:
+    priority: 40
+
+
+use rule manta_run_workflow_t from cnv_sv as cnv_sv_manta_run_workflow_t with:
+    priority: 40
 
 
 use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
