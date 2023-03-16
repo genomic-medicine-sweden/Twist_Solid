@@ -359,9 +359,10 @@ tmb:
 
 vardict:
   container: "docker://hydragenetics/vardict:1.8.3"
-  bed_columns: "-c 1 -S 2 -E 3 -g 4"
   allele_frequency_threshold: "0.01"
-
+  bed_columns: "-c 1 -S 2 -E 3 -g 4"
+  extra: "-Q 1"
+  
 vep:
   container: "docker://hydragenetics/vep:105"
   vep_cache:  "/data/ref_genomes/VEP/"
