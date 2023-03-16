@@ -1,19 +1,22 @@
 # Fusion calling in DNA
-See the [fusions hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for fusion calling.
+See the [fusions hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for fusion calling. Default hydra-genetics settings/resources are used if no configuration is specfied.
 
-**Result file**
+## Pipeline output files:
 
 * `results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv`
 
 ## Fusions calling using GeneFuse
 DNA fusion calling is performed by **[GeneFuse](https://github.com/OpenGene/GeneFuse)** v0.6.1 on fastq-files. It uses a gene transcript target file to limit the number of targets to analyse.
 
+### Configuration
+
 **References**
 
 * Fasta reference genome
-* Gene transcript file with genomic positions for all exons include in the analysis
+* Gene transcript file with genomic positions for all exons include in the analysis  
 
-**Resources**
+<br />
+**Cluster resources**
 
 | **Options** | **Value** |
 |-------------|-|
@@ -40,6 +43,8 @@ The output from GeneFuse is filtered and then reported into a fusion report usin
     - NPM1::BICC1 11
     - RSPO2::ERG 13
 
-**Result file**
+### Result file
 
 * `results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv`
+
+<br />

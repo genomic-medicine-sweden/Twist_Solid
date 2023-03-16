@@ -1,9 +1,9 @@
 # Fusions in RNA
-See the [fusions hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for fusion calling.
+See the [fusions hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for fusion calling.  Default hydra-genetics settings/resources are used if no configuration is specfied.
 
 Fusion calling is performed using three different fusion callers; [Arriba](https://github.com/suhrig/arriba), [Star-Fusion](https://github.com/STAR-Fusion/STAR-Fusion) and [fusioncatcher](https://github.com/ndaniel/fusioncatcher). Both Arriba and Star-Fusion uses the [Star](https://github.com/alexdobin/STAR) for alignment but with different settings while fusioncatcher uses its own aligner. After fusion calling the fusions are filtered depending on software and then merged into a fusion report.
 
-**Result files**
+## Pipeline output files:
 
 * `results/rna/fusion/{sample}_{type}.fusion_report.tsv`
 * `results/rna/fusion/{sample}_{type}.arriba.fusions.tsv`
@@ -16,10 +16,13 @@ Fusion calling is performed using three different fusion callers; [Arriba](https
 ### Alignment with STAR
 Merged fastq files are aligned with [Star](https://github.com/alexdobin/STAR) v2.7.10a before fusion calling.
 
+
+### Configuration
 **References**
 
 * Star genome index - (see [references](references.md#star-genome-index))
 
+<br />
 **Software settings** (Recommended options by Arriba)
 
 | **Filter** | **Value** |
@@ -37,7 +40,8 @@ Merged fastq files are aligned with [Star](https://github.com/alexdobin/STAR) v2
 | --alignSJstitchMismatchNmax | 5 -1 5 5 |
 | --chimSegmentReadGapMax | 3 |
 
-**Resources**
+<br />
+**Cluster resources**
 
 | **Options** | **Value** |
 |-------------|-|
@@ -49,10 +53,12 @@ Merged fastq files are aligned with [Star](https://github.com/alexdobin/STAR) v2
 ### Fusion calling with Arriba
 Star aligned bam-files are used for fusion calling with [Arriba](https://github.com/suhrig/arriba) v2.3.0.
 
+### Configuration
 **References**
 
 * assembly: fasta reference genome
 
+<br />
 **Software settings**
 
 | **Options** | **Value** | **Description** |
@@ -62,7 +68,8 @@ Star aligned bam-files are used for fusion calling with [Arriba](https://github.
 | extra | -p `protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` | (see [references](references.md#arriba-230)) |
 | extra | -k `known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` | (see [references](references.md#arriba-230)) |
 
-**Resources**
+<br />
+**Cluster resources**
 
 | **Options** | **Value** |
 |-------------|-|
@@ -71,13 +78,14 @@ Star aligned bam-files are used for fusion calling with [Arriba](https://github.
 | threads | 5 |
 | time | "8:00:00" |
 
-**Result file**
+### Result file
 
 * `results/rna/fusion/{sample}_{type}.arriba.fusions.tsv`
 
 ### Fusion images
 Arriba produces a pdf file containing a figure for every fusion called with a schematic presentation of the exons involved, breakpoints, coverage and directions of the fusion partners in the fusion.
 
+### Configuration
 **Software settings**
 
 | **Options** | **Value** | **Description** |
@@ -86,13 +94,14 @@ Arriba produces a pdf file containing a figure for every fusion called with a sc
 | gtf | `hg19.refGene.gtf` | (see [references](references.md#arriba-230)) |
 | protein_domains | `protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` | (see [references](references.md#arriba-230)) |
 
-**Result file**
+### Result file
 
 * `results/rna/fusion/{sample}_{type}.arriba.fusions.pdf`
 
 ## Star-Fusion
 [Star-Fusion](https://github.com/STAR-Fusion/STAR-Fusion) v1.10.1 uses Star to align merged fastq files but do so internally.
 
+### Configuration
 **Software settings**
 
 | **Options** | **Value** | **Description** |
@@ -100,7 +109,8 @@ Arriba produces a pdf file containing a figure for every fusion called with a sc
 | genome_path: | `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/` | (see [references](references.md#star-fusion)) |
 | extra | --examine_coding_effect | Add annotation regarding if the fusion is in-frame or not |
 
-**Resources**
+<br />
+**Cluster resources**
 
 | **Options** | **Value** |
 |-------------|-|
@@ -109,20 +119,22 @@ Arriba produces a pdf file containing a figure for every fusion called with a sc
 | threads | 5 |
 | time | "8:00:00" |
 
-**Result file**
+### Result file
 
 * `results/rna/fusion/{sample}_{type}.star-fusion.fusion_predictions.tsv`
 
 ## Fusioncatcher
 [Fusioncatcher](https://github.com/ndaniel/fusioncatcher) v1.33 together with reference file package version 102 is used to call fusion from merged fastq files.
 
+### Configuration
 **Software settings**
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
 | genome_path | `human_v102/` | (see [references](references.md#fusioncather-v102)) |
 
-**Resources**
+<br />
+**Cluster resources**
 
 | **Options** | **Value** |
 |-------------|-|
@@ -131,14 +143,14 @@ Arriba produces a pdf file containing a figure for every fusion called with a sc
 | threads | 10 |
 | time | "16:00:00" |
 
-**Result file**
+### Result file
 
 * `results/rna/fusion/{sample}_{type}.fusioncatcher.fusion_predictions.txt`
 
 ## Fusion filtering and report
 Fusion candidates from the three fusions callers are collected and filtered with different filtering options for each caller by the in-house script [report_fusions.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/report_fusions.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/report_fusions.smk)). The remaining fusion calls are then reported in a excel friendly tsv file. Fusions are filtered based on the number of reads cover the breakpoint. However, read pairs spanning the breakpoint are also reported together with total supporting reads as well as other annotations. The settings for respective caller are presented below:
 
-**Filter settings**
+### Filter settings
 
 | **Caller** | **Option** | **Value** | **Description** |
 |-------------|-|-|-|
@@ -159,12 +171,15 @@ In the validation samples the MAML2 gene was falsely called frequently together 
     - FRMPD3, NCOA6, ATXN3, SRP14, KMT2D, CHD1, NFAT5, FOXP2, NUMBL, GLG1, VEZF1, AAK1, NCOR2
 * House keeping genes (GAPDH, GUSB, OAZ1, POLR2A)
 
+### Configuration
 **Software settings**
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
 | annotation_bed | `Twist_RNA_fusionpartners.bed` | Optional file for annotation of fusion partners |
 
-**Result file**
+### Result file
 
 * `results/rna/fusion/{sample}_{type}.fusion_report.tsv`
+
+<br />

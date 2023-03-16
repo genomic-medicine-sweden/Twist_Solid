@@ -1,7 +1,8 @@
 # QC
-See the [qc hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for the quality control.
+See the [qc hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for the quality control. Default hydra-genetics settings/resources are used if no configuration is specfied.
 
-**Result files**
+
+## Pipeline output files:
 
 * `results/rna/qc/multiqc_RNA.html`
 * `results/rna/qc/{sample}_{type}.house_keeping_gene_coverage.tsv`
@@ -9,11 +10,13 @@ See the [qc hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/)
 ## MultiQC
 A MultiQC html report is generated using **[MultiQC](https://github.com/ewels/MultiQC)** v1.11. The report starts with a general statistics table showing the most important QC-values followed by additional QC data and diagrams. The qc data is generated using FastQC, mosdepth, samtools, and picard.
 
-**Software config**
+### Configuration
+**Software settings**
 
-* `config/config.yaml` - Configuration of input files to MultiQC in the config file
+* `multiqc: reports: RNA: qc_files` - configuration of input files to MultiQC in the config file
 
 ```yaml
+# config.yaml
 multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
   reports:
@@ -34,7 +37,8 @@ multiqc:
 ## FastQC
 **[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)** v0.11.9 is run on the raw fastq-files.
 
-**Resources**
+### Configuration
+**Cluster resources**
 
 | **Options** | **Value** |
 |-------------|-|
@@ -54,10 +58,12 @@ multiqc:
 ## Mosdepth
 **[Mosdepth](https://github.com/brentp/mosdepth)** v0.3.2 is run on Star aligned bam files (from Star-fusion) together with a design bed file to gather coverage statistics both globally and locally per region.
 
+### Configuration
 **References**
 
 * RNA design bed
 
+<br />
 **Software settings**
 
 | **Options** | **Value** | **Description** |
@@ -71,18 +77,20 @@ House keeping gene coverage is reported by the in-house script [house_keeping_ge
 * House keeping genes:
     - GAPDH, GUSB, OAZ1, POLR2A
 
+### Configuration
 **Software settings for samtools (hard coded)**
 
-| **Options** | | **Description** |
-|-------------|-|
-| -d 5000000 | Max read depth |
-| -a | Report all positions even it is 0 coverage (for correct average calculations) |
-| -r {region} | Gene exon region to analyse |
+| **Options** | **Value** | **Description** |
+|-------------|-|-|
+| -d | 5000000 | Max read depth |
+| -a | |Report all positions even it is 0 coverage (for correct average calculations) |
+| -r | {region} | Gene exon region to analyse |
 
+<br />
 **References**
 
 * RNA design bed
 
-**Result file**
+### Result file
 
 * `results/rna/qc/{sample}_{type}.house_keeping_gene_coverage.tsv`
