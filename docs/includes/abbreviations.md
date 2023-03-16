@@ -8,8 +8,10 @@
 *[CNVs]: Copy number variations
 *[FFPE]: Formalin-fixed paraffin-embedded
 *[GMS]: Genomic Medicine Sweden
+*[HLA]: Human leukocyte antigen
 *[HRD]: Homologous recombination deficiency
 *[MSI]: Microsatellite instability 
+*[PoN]: Panel of normal
 *[QC]: Quality control
 *[RNA]: Ribonucleic acid
 *[SNV]: Single nucleotide variation

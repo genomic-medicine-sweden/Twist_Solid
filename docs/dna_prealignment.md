@@ -1,8 +1,14 @@
 # Prealignment
-See the [prealignment hydra-genetics module](https://prealignment.readthedocs.io/en/latest/) documentation for more details on the softwares.
+See the [prealignment hydra-genetics module](https://prealignment.readthedocs.io/en/latest/) documentation for more details on the softwares. Default hydra-genetics settings/resources are used if no configuration is specfied.
+
+## Pipeline output files:
+Only temporary intermediate files created.
 
 ## Trimming
 Trimming of fastq files is performed by **[fastp](https://github.com/OpenGene/fastp)** v0.20.1.  
+
+### Configuration
+
 
 **Resources**
 
@@ -14,3 +20,5 @@ Trimming of fastq files is performed by **[fastp](https://github.com/OpenGene/fa
 
 ## Merging
 Merging of fastq files belonging to the same sample are performed by simply concatenating the files with **cat**.
+
+<br />
