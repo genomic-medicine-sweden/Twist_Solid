@@ -16,3 +16,12 @@ p {
 * {
   margin-bottom: 0px  !important;
 }
+table {
+  width: 100%;
+}
+table td {
+  width: 1px;
+}
+table td:last-child {
+  width: 100%;
+}
