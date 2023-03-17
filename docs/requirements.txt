@@ -4,3 +4,4 @@ mkdocs==1.4.2
 pymdown-extensions==9.10
 mkdocs-schema-reader==0.11.1
 mkdocs-simple-hooks==0.1.5
+mdx_spanner==0.0.5
