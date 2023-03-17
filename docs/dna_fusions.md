@@ -1,6 +1,9 @@
 # Fusion calling in DNA
 See the [fusions hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for fusion calling. Default hydra-genetics settings/resources are used if no configuration is specfied.
 
+<br />
+![dag plot](images/fusions.png)
+
 ## Pipeline output files:
 
 * `results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv`
