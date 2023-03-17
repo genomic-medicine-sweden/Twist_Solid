@@ -1,12 +1,12 @@
 site_name: Twist Solid
 nav:
   - Overview:
-      - Introduction: index.md
-      - Pipeline overview: overview.md
-      - Result files: result_files.md
-      - Running the pipeline: running.md
-      - Pipeline setup and cofiguration: setup.md
-      - Reference files: references.md
+    - Introduction: index.md
+    - Pipeline overview: overview.md
+    - Result files: result_files.md
+    - Running the pipeline: running.md
+    - Pipeline setup and cofiguration: setup.md
+    - Reference files: references.md
   - DNA Pipeline:
     - Prealignment: dna_prealignment.md
     - Alignment: dna_alignment.md
