@@ -5,7 +5,7 @@ There are a number of main files that governs how the pipeline is executed liste
 * common.smk
 * config.yaml
 * resources.yaml
-* profile yaml
+* profile/uppsala/config.yaml
 * samples.tsv and units.tsv
 
 There is more general information about the content of these files in hydra-genetics documentation in [code standards](https://hydra-genetics.readthedocs.io/en/latest/standards/), [config](https://hydra-genetics.readthedocs.io/en/latest/config/) and [Snakefile](https://hydra-genetics.readthedocs.io/en/latest/import/).
