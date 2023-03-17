@@ -35,8 +35,6 @@ Fetch pipeline
 # Set version
 VERSION="v0.4.0"
 
-WORKING_DIRECTORY="/path_working_to_directory"
-
 # Clone selected version
 git clone --branch ${VERSION} https://github.com/genomic-medicine-sweden/Twist_Solid.git ${WORKING_DIRECTORY}
 ```
@@ -44,6 +42,9 @@ git clone --branch ${VERSION} https://github.com/genomic-medicine-sweden/Twist_S
 ### Create python environment
 To run the Twist Solid pipeline a python virtual environment is needed.
 ```bash
+# Enter working directory
+cd ${WORKING_DIRECTORY}
+
 # Create a new virtual environment
 python3 -m venv ${WORKING_DIRECTORY}/virtual/environment
 ```
@@ -72,8 +73,13 @@ Using the activated python virtual environment created above, this is a basic co
 ```bash
 snakemake --profile profiles/ -s workflow/Snakefile
 ```  
+<br />
 The are many additional [snakemake running options](https://snakemake.readthedocs.io/en/stable/executing/cli.html#) some of which is listed below. However, options that are always used should be put in the [profile](https://hydra-genetics.readthedocs.io/en/latest/profile/).
 
 * --notemp - Saves all intermediate files. Good for development and testing different options.
 * --until <rule> - Runs only rules dependent on the specified rule.
+
+<br />
+**Note:** Remember to have singularity and drmaa available on the system where the pipeline will be run.
+
 <br />

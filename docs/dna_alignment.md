@@ -1,6 +1,9 @@
 # Alignment
 See the [alignment hydra-genetics module](https://alignment.readthedocs.io/en/latest/) documentation for more details on the softwares. Default hydra-genetics settings/resources are used if no configuration is specfied.
 
+<br />
+![dag plot](images/alignment.png)
+
 ## Pipeline output files:
 
 * `bam_dna/{sample}_{type}.bam`
