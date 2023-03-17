@@ -1,7 +1,7 @@
 # SNV and INDEL calling, annotation and filtering
-See the [snv_indels hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for variant calling, [annotation hydra-genetics module](https://annotation.readthedocs.io/en/latest/) for annotation and [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/) for filtering.
+See the [snv_indels hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for variant calling, [annotation hydra-genetics module](https://annotation.readthedocs.io/en/latest/) for annotation and [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/) for filtering.Default hydra-genetics settings/resources are used if no configuration is specfied.
 
-**Result files**
+## Pipeline output files:
 
 * `results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.vcf`
 * `results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf`
@@ -14,12 +14,15 @@ Small variants are called with **[GATK Mutect2](https://gatk.broadinstitute.org/
 ### GATK Mutect2 variant calling
 SNVs and INDELs are called by Mutect2 on individual chromosome bamfiles.
 
-**References**
+### Configuration
+
+**Reference files**
 
 * reference fasta genome
 * design bed region file (split by bed_split rule into chromosome chunks)
 
-**Resources**
+<br />
+**Cluster resources**
 
 | **Options** | **Value** |
 |-------------|-|
@@ -40,11 +43,13 @@ Hardfilter Mutect2 vcf files based on the FILTER flags using the in-house script
 ### Vardict variant calling
 SNVs and INDELs are called by **[Vardict](https://github.com/AstraZeneca-NGS/VarDict)** on individual chromosome bamfiles.
 
+### Configuration
 **References**
 
 * reference fasta genome
 * design bed region file (split by bed_split rule into chromosome chunks)
 
+<br />
 **Software settings**
 
 | **Options** | **Value** | **Description** |
@@ -53,7 +58,8 @@ SNVs and INDELs are called by **[Vardict](https://github.com/AstraZeneca-NGS/Var
 | extra | -Q 1 | remove reads with 0 mapping quality |
 | allele_frequency_threshold | 0.01 | minimal reported allele frequency |
 
-**Resources**
+<br />
+**Cluster resources**
 
 | **Options** | **Value** |
 |-------------|-|
@@ -68,6 +74,8 @@ Variants called by Vardict and Mutect2 are decomposed by **[vt decompose](https:
 ## Variant ensemble
 Variant vcf files from the two callers are ensembled into one vcf file using **[bcbio-variation-recall ensemble](https://github.com/bcbio/bcbio.variation.recall)** v0.2.6. All variants from both caller are retained. When both callers call the same variant the INFO and FORMAT data is taken from the Vardict vcf file.
 
+### Configuration
+
 **Software settings**
 
 | **Options** | **Value** | **Description** |
@@ -81,11 +89,14 @@ The ensembled vcf file is annotated firstly using VEP, followed by artifact anno
 ### VEP
 The ensembled vcf file is annotated using **[VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)** v105. VEP adds a pletora of information for each variant which is specified by the configuration flags listed below. Of note are --pick which picks only one representative transcript for each variant, --af_gnomad which adds germline information, and --cache which uses a local copy of the databases for better performance. See [VEP options](https://www.ensembl.org/info/docs/tools/vep/script/vep_options.html) for more information.
 
+#### Configuration
+
 **References**
 
 * VEP cache including all databases adapted for reference genome GRCh37 and VEP version 105
 * Fasta reference genome
 
+<br />
 **Software settings**
 
 | **Options** | **Value** |
@@ -94,6 +105,7 @@ The ensembled vcf file is annotated using **[VEP](https://www.ensembl.org/info/d
 | mode | --offline --cache |
 | extra | --assembly GRCh37 --check_existing --pick --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class |
 
+<br />
 **Resources**
 
 | **Options** | **Value** |
@@ -112,12 +124,16 @@ Example annotation for one variant added to a vcf file in the INFO field:
 * ArtifactMedian=0.29,0.25 - Median MAF of the calls
 * ArtifactNrSD=0.58,0.56 - Number of standard deviation between the median allele frequency in the PoN and the call in the variant
 
+#### Configuration
+
 **References**
 
 * Panel of Normal with position specific artifact information for each caller and variant type
 
 ### Hotspot annotation
 Annotate clinically important variants in the vcf file using the in-house script [add_hotspot_annotation.py](https://github.com/hydra-genetics/annotation/blob/develop/workflow/scripts/add_hotspot_information.py) ([rule](https://github.com/hydra-genetics/annotation/blob/develop/workflow/rules/hotspot_annotation.smk)) and a hotspot list.
+
+#### Configuration
 
 **Reference**
 
@@ -131,6 +147,8 @@ Example annotation for one variant added to a vcf file in the INFO field:
 * PanelMedian=0.0013 - Median fraction of alternative alleles
 * PositionNrSD=12.17 - Number of standard deviation between the Median fraction in the PoN and allele frequency of the call in the variant
 
+#### Configuration
+
 **References**
 
 * Panel of Normal with position specific background information
@@ -139,14 +157,19 @@ Example annotation for one variant added to a vcf file in the INFO field:
 Annotated vcfs are hard filtered first by removing regions outside exons and then filtered by a number of filtering criteria described below. See the [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/) for additional information. A soft filtered version of the exonic regions is also provided for development and other investigations.
 
 ### Extract exonic regions
-Use **[bcftools filter -R](https://samtools.github.io/bcftools/bcftools.html)** v1.15 to extract variants overlapping exonic regions (including 20 bp padding) defined in a bed file which is a sub bed file of the general design bed file.
+Use **[bcftools filter -R](https://samtools.github.io/bcftools/bcftools.html)** v1.15 to extract variants overlapping exonic regions (including 20 bp padding) defined in a bed file which is a sub bed file of the general design bed file.  
+
+<br />
+#### Configuration
 
 **References**
 
-* Bed file with exonic regions including 20 bp padding
+Bed file with exonic regions including 20 bp padding
 
 ### Hard filter vcf
 The exonic vcf files are filtered using the **hydra-genetics filtering** functionality included in v0.15.0. The filters are specified in the config file `config_hard_filter_uppsala.yaml` and consists of the following filters:
+
+#### Configuration
 
 **Software settings**
 
@@ -162,6 +185,8 @@ The exonic vcf files are filtered using the **hydra-genetics filtering** functio
 ## Combine SNVs in the same codon
 Two or more variants affecting the same codon can have different clinical implications when considered individually compared to in combination. This is because the combined variant could end up coding for a different amino acid then the when only looking at the variant individually. Variants within the same codon are therefore combined and added to the vcf file using the in-house script [add_multi_snv_in_codon.py](https://github.com/hydra-genetics/annotation/blob/develop/workflow/scripts/add_multi_snv_in_codon.py) ([rule](https://github.com/hydra-genetics/annotation/blob/develop/workflow/rules/add_multi_snv_in_codon.smk)). Codon information is based on the VEP annotation. Annotation information is taken from the variant with the highest allele frequency. After adding the combined variants the vcf is sorted and annotated again.
 
+### Configuration
+
 **Software settings**
 
 | **Options** | **Value** | **Description** |
@@ -169,20 +194,22 @@ Two or more variants affecting the same codon can have different clinical implic
 | af_limit | 0.00 | No lower limit for allele frequency |
 | artifact_limit | 10000 | Allow any number of observations (10000) in the PoN as they are already filtered |
 
-**Result file**
+### Result file
 
-* `results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.vcf`
+`results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.vcf`
 
 ## QCI AF correction of vcf
 The clinical interpretation tool QCI calculates allele frequency from the AD FORMAT field instead of using the AF FORMAT field supplied by the callers. This has shown to be wrong especially for INDELs. The AD field is therefore corrected so that the allele frequency based on the AD field corresponds to the AF field. This correction of the vcf file is performed by an the in-house script [fix_vcf_ad_for_qci.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/fix_vcf_ad_for_qci.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/fix_vcf_ad_for_qci.smk)).
 
-**Result file**
+### Result file
 
-* `results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf`
+`results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf`
 
 ## GATK Mutect2 variant bam file
 When **[GATK Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2)** finds INDEL candidates it realignes reads in this regions and outputs a realigned bam-file covering these INDEL regions. This makes it possible to inspect INDELs called by Mutect2 in IGV. As Mutect2 runs on individual chromosomes these bam-files are then merged, sorted and indexed before.
 
-**Result file**
+### Result file
 
-* `bam_dna/mutect2_indel_bam/{sample}_{type}.bam`
+`bam_dna/mutect2_indel_bam/{sample}_{type}.bam`
+
+<br />

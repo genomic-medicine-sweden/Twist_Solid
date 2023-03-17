@@ -1,7 +1,7 @@
 # QC
-See the [qc hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for the quality control.
+See the [qc hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for the quality control. Default hydra-genetics settings/resources are used if no configuration is specfied.
 
-**Result files**
+## Pipeline output files:
 
 * `results/dna/qc/multiqc_DNA.html`
 * `results/dna/qc/{sample}_{type}.coverage_and_mutations.tsv`
@@ -10,12 +10,14 @@ See the [qc hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/)
 ## MultiQC
 A MultiQC html report is generated using **[MultiQC](https://github.com/ewels/MultiQC)** v1.11. The report starts with a general statistics table showing the most important QC-values followed by additional QC data and diagrams. The qc data is generated using FastQC, samtools, picard, and GATK.
 
-**Software configuration**
+### Configuration
+**Software settings**
 
-* `config/multiqc_config_dna.yaml`: Config of the general statistics table
-* `config/config.yaml`: Configuration of input files to MultiQC in the config file:
+* `multiqc: reports: DNA: config`: Config of the general statistics table
+* `qc_files`: Configuration of input files to MultiQC in the config file:
 
 ```yaml
+# config.yaml
 multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
   reports:
@@ -36,7 +38,8 @@ multiqc:
 ## FastQC
 **[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)** v0.11.9 is run on the raw fastq-files.
 
-**Resources**
+### Configuration
+**Cluster resources**
 
 | **Options** | **Value** |
 |-------------|-|
@@ -61,12 +64,14 @@ Cross-sample contamination is estimated using **[GATK](https://gatk.broadinstitu
 ## Genome vcf
 Using **[GATK Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2)** v4.1.9.0 it is possible to make a vcf with alternative allele information for all positions in the design bed. As in the ordinary variant calling the individual chromosome bamfiles are used and then the vcf-files are merged. Additionally, the coverage of all positions are calculated using **[mosdepth](https://github.com/brentp/mosdepth)** v0.3.2 and then added to the final vcf file.
 
+### Configuration
 **References**
 
 * reference fasta genome
 * design bed region file (split by bed_split rule into chromosome chunks)
 
-**Resources for Mutect2**
+<br />
+**Cluster resources for Mutect2**
 
 | **Options** | **Value** |
 |-------------|-|
@@ -74,18 +79,20 @@ Using **[GATK Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/3600375
 | mem_per_cpu | 6144 |
 | time | "48:00:00" |
 
-**Result file**
+### Result file
 
 * `gvcf_dna/{sample}_{type}.mosdepth.g.vcf.gz`
 
 ## Coverage and mutations
 This excel-friendly report produced by the in-house script [hotspot_report.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/hotspot_report.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/hotspot_report.smk)) contains coverage in all clinical relevant positions defined in a "hotspot"-file and flags positions with low coverage. It also collects information on the filtered variants from the vcf file. The coverage flag is configured by the levels option, included columns are configured in `hotspot_report.yaml` and chromosome id translation is done by `hotspot_report.chr.translation.hg19`
 
+### Configuration
 **References**
 
 * File with clinical relevant positions
 
-**Software configuration**
+<br />
+**Software settings**
 ```yaml
 report_config: "config/hotspot_report.yaml"
 chr_translation_file: "config/hotspot_report.chr.translation.hg19"
@@ -95,6 +102,8 @@ levels:
   - [0, "low", "not analyzable"]
 ```
 
-**Result file**
+### Result file
 
 * `results/dna/qc/{sample}_{type}.coverage_and_mutations.tsv`
+
+<br />
