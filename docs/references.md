@@ -159,7 +159,7 @@ The `units.tsv` file needs to be adapted depending which panel of normals are cr
 
 | Header | Data | Description |
 |-|-|-|
-| bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline |
+| bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline from normal FFPE samples |
 
 **Reference files**
 
@@ -173,7 +173,7 @@ The `units.tsv` file needs to be adapted depending which panel of normals are cr
 
 | Header | Data | Description |
 |-|-|-|
-| bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline |
+| bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline from normal FFPE samples |
 
 **Reference files**
 
@@ -187,7 +187,7 @@ The `units.tsv` file needs to be adapted depending which panel of normals are cr
 
 | Header | Data | Description |
 |-|-|-|
-| bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline |
+| bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline from normal FFPE samples |
 
 **Reference files**
 
@@ -206,7 +206,7 @@ The `units.tsv` file needs to be adapted depending which panel of normals are cr
 
 | Header | Data | Description |
 |-|-|-|
-| cnv_vcf | `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.svdb_query.vcf` | SVDB merged CNV vcf files created as output of the Twist Solid pipeline |
+| cnv_vcf | `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.svdb_query.vcf` | SVDB merged CNV vcf files created as output of the <br />Twist Solid pipeline from both normal and <br />tumor FFPE samples |
 
 **Software settings**
 
@@ -220,7 +220,7 @@ The `units.tsv` file needs to be adapted depending which panel of normals are cr
 
 | Header | Data | Description |
 |-|-|-|
-| vcf | `results/dna/additional_files/vcf/{sample}_{type}.annotated.vcf.gz` | Unfiltered and merged vcf files created as output of the Twist Solid pipeline |
+| vcf | `results/dna/additional_files/vcf/{sample}_{type}.annotated.vcf.gz` | Unfiltered and merged vcf files created as output of the Twist Solid pipeline <br />from normal FFPE samples |
 
 ### Background
 
@@ -228,7 +228,7 @@ The `units.tsv` file needs to be adapted depending which panel of normals are cr
 
 | Header | Data | Description |
 |-|-|-|
-| vcf | `results/dna/additional_files/vcf/{sample}_{type}.annotated.vcf.gz` | Unfiltered and merged vcf files created as output of the Twist Solid pipeline |
+| vcf | `results/dna/additional_files/vcf/{sample}_{type}.annotated.vcf.gz` | Unfiltered and merged vcf files created as output of the Twist Solid pipeline <br />from normal FFPE samples |
 
 **Software settings**
 
@@ -252,14 +252,14 @@ singularity docker://hydragenetics/purecn:2.2.0 Rscript $PURECN/IntervalFile.R -
 
 | Header | Data | Description |
 |-|-|-|
-| bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline |
-| vcf | `results/dna/additional_files/vcf/gatk_mutect2_{sample}_{type}.vcf.gz` | Mutect2 softfiltered vcf files created as output of the Twist Solid pipeline |
+| bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline from <br />normal FFPE samples |
+| vcf | `results/dna/additional_files/vcf/gatk_mutect2_{sample}_{type}.vcf.gz` | Mutect2 softfiltered vcf files created as output of the Twist Solid pipeline <br />from normal FFPE samples |
 
 **Software settings**
 
 | Options | Value | Description |
 |-|-|-|
-| intervals | Target interval file | File created by the commands described above |
+| intervals | Target interval file | File created by the command described above |
 
 ## Pipeline specific files
 These are design files and other pipeline specific only available to download from the Uppsala Owncloud solution.
