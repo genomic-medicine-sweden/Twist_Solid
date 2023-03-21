@@ -63,4 +63,20 @@ default-resources: [threads=1, time="04:00:00", partition="low", mem_mb="3074", 
 ## samples.tsv and units.tsv
 The `samples.tsv` and `units.tsv` are input files that must be generated before running the pipeline and should in general be located in the base folder of the analysis folder even if this can be set in the config.yaml. See further [running the pipeline](running.md) and [create input files](https://hydra-genetics.readthedocs.io/en/latest/create_sample_files/).
 
+### Example samples.tsv
+
+| sample | tumor_content |
+|-|-|
+| NA12878	| 0.5	|
+| NA12879	| 0	|
+| NA12880	| 1	| # Tumor_content is not used for RNA samples
+
+### Example units.tsv
+
+| sample | type | machine | platform | flowcell | lane | barcode | fastq1 | fastq2 | adapter |
+|-|-|-|-|-|-|-|-|-|-|
+| NA12878	| T	| NDX550407_RUO	| NextSeq	| HKTG2BGXG	| L001 | ACGGAACA+ACGAGAAC | fastq/NA12878_fastq1.fastq.gz | fastq/NA12878_fastq2.fastq.gz | ACGT,ACGT |
+| NA12879	| N	| NDX550407_RUO	| NextSeq	| HKTG2BGXG	| L001 | TCGGAACT+TCGAGAAT | fastq/NA12879_fastq1.fastq.gz | fastq/NA12879_fastq2.fastq.gz | ACGT,ACGT |
+| NA12880	| R	| NDX550407_RUO	| NextSeq	| HKTG2BGXG	| L002 | GCGGAACG+GCGAGAAG | fastq/NA12880_fastq1.fastq.gz | fastq/NA12880_fastq2.fastq.gz | ACGT,ACGT |
+
 <br />
