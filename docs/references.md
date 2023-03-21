@@ -5,62 +5,62 @@ The following reference files, panel of normals and design files are need to run
 
 | Rule | Config name | File |
 |-|-|-|
-| reference | background | `background_panel_nextseq_noUmea_27_dp500_af015.tsv` |
-| | artifacts | `artifact_panel_nextseq_36.tsv` |
-| | fasta | `hg19.with.mt.fasta` |
+| reference | <div id="background_db"> background </div> | `background_panel_nextseq_noUmea_27_dp500_af015.tsv` |
+| | <div id="artifact_db"> artifacts </div> | `artifact_panel_nextseq_36.tsv` |
+| | <div id="reference_fasta">fasta</div> | `hg19.with.mt.fasta` |
 | | fasta_rna | `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa` |
 | | dict | `hg19.with.mt.dict` |
 | | fai | `hg19.with.mt.fai` |
-| | design_bed | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.210608.bed` |
+| | <div id="design_bed">design_bed</div> | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.210608.bed` |
 | | design_intervals | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.interval_list` |
 | | design_intervals_gatk_cnv | `pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list` |
-| | design_bed_rna | `Twist_RNA_Design5.annotated.bed` |
+| | <div id="design_bed_rna">design_bed_rna</div> | `Twist_RNA_Design5.annotated.bed` |
 |_ _| design_intervals_rna | `Twist_RNA_Design5.annotated.interval_list` |
-| arriba | assembly | `hg19.with.mt.fasta` |
-| | blacklist | `arriba/arriba_v2.3.0/database/blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` |
-| | gtf | `hg19.refGene.gtf` |
-| | extra | `arriba/arriba_v2.3.0/database/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` |
-|_ _| extra | `arriba/arriba_v2.3.0/database/known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` |
-| arriba_draw_fusion | cytobands | `arriba/arriba_v2.3.0/database/cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv` |
-| | gtf | `hg19/gtf/hg19.refGene.gtf` |
-|_ _| protein_domains | `arriba/arriba_v2.3.0/database/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` |
-| annotate_cnv | cnv_amp_genes | `cnv_amp_genes.bed` |
-|_ _| cnv_loh_genes | `cnv_loh_genes.bed` |
+| <div id="arriba_reference">arriba</div> | assembly | `hg19.with.mt.fasta` |
+| | <div id="arriba_blacklist">blacklist</div> | `arriba/arriba_v2.3.0/database/blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` |
+| | <div id="arriba_gtf">gtf</div> | `hg19.refGene.gtf` |
+| | <div id="arriba_extra_gff3_">extra</div> | `arriba/arriba_v2.3.0/database/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` |
+|_ _| <div id="arriba_extra_tsv">extra | `arriba/arriba_v2.3.0/database/known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` |
+| <div id="arriba_draw_fusion_cytobands">arriba_draw_fusion</div> | cytobands | `arriba/arriba_v2.3.0/database/cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv` |
+| | <div id="arriba_draw_fusion_gtf">gtf</div> | `hg19/gtf/hg19.refGene.gtf` |
+|_ _| <div id="arriba_draw_fusion_protein_domains">protein_domains</div> | `arriba/arriba_v2.3.0/database/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` |
+| <div id="cnv_amp_genes">annotate_cnv</div> | cnv_amp_genes | `cnv_amp_genes.bed` |
+|_ _| <div id="cnv_loh_genes">cnv_loh_genes</div> | `cnv_loh_genes.bed` |
 | bcftools_annotate | annotation_db | `small_exac_common_3.hg19.vcf.gz` |
-| bcftools_filter_include_region | exon | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.bed` |
-| bcftools_filter_exclude_region | blacklist | `cnvkit_germline_blacklist_20221221.bed` |
-| bcftools_id_snps | snps_bed | `ID_SNPs.bed` |
-| bwa_mem | amb | `hg19.with.mt.amb` |
+| <div id="bcftools_filter">bcftools_filter_include_region</div> | exon | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.bed` |
+| <div id="bcftools_filter_exclude_region">bcftools_filter_exclude_region</div> | blacklist | `cnvkit_germline_blacklist_20221221.bed` |
+| <div id="bcftools_id_snps">bcftools_id_snps</div> | snps_bed | `ID_SNPs.bed` |
+| <div id="bwa_me_ref">bwa_mem | amb </div> | `hg19.with.mt.amb` |
 | | ann | `hg19.with.mt.ann` |
 | | bwt | `hg19.with.mt.bwt` |
 | | pac | `hg19.with.mt.pac` |
 |_ _| sa | `hg19.with.mt.sa` |
-| call_small_cnv_deletions | regions_file | `cnv_deletion_genes.tsv` |
+| <div id="call_small_cnv_deletions">call_small_cnv_deletions</div> | regions_file | `cnv_deletion_genes.tsv` |
 | cnvkit_batch | normal_reference | `cnvkit_nextseq_36.cnn` |
-| cnvkit_batch_hrd | normal_reference_hrd | `cnvkit_nextseq_27_HRD.cnn` |
-| exon_skipping | design_bed | `Twist_RNA_Design5.annotated.bed` |
-| fusioncatcher | genome_path | `human_v102/` |
+| <div id="normal_reference_hrd">cnvkit_batch_hrd</div> | normal_reference_hrd | `cnvkit_nextseq_27_HRD.cnn` |
+| <div id="exon_skipping">exon_skipping</div> | design_bed | `Twist_RNA_Design5.annotated.bed` |
+| <div id="fusioncatcher">fusioncatcher</div> | genome_path | `human_v102/` |
 | gatk_collect_allelic_counts | SNP_interval | `gnomad_SNP_0.001_target.annotated.interval_list` |
 | gatk_denoise_read_counts | normal_reference | `gatk_cnv_nextseq_36.hdf5` |
 | gatk_get_pileup_summaries | sites | `small_exac_common_3.hg19.vcf.gz` |
 |_ _| variants | `small_exac_common_3.hg19.vcf.gz` |
-| gene_fuse | genes | `GMS560_fusion_w_pool2.hg19.221117.csv` |
-|_ _| fasta | `hg19.with.mt.fasta` |
-| hotspot_annotation | hotspots | `Hotspots_combined_regions_nodups.csv` |
-| hotspot_report | hotspot_mutations | `Hotspots_combined_regions_nodups.csv` |
-| manta_config_t | extra | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz` |
-| msisensor_pro | PoN | `Msisensor_pro_reference_nextseq_36.list_baseline` |
-| purecn | extra | `mapping_bias_nextseq_27_hg19.rds` |
-| | normaldb | `normalDB_nextseq_27_hg19.rds` |
-|_ _| intervals | `targets_twist-gms-st_hg19_25000_intervals.txt` |
-| purecn_coverage | intervals | `targets_twist-gms-st_hg19_25000_intervals.txt` |
-| report_fusions | annotation_bed | `Twist_RNA_fusionpartners.bed` |
-| report_gene_fuse | filter_fusions | `filter_fusions_20221114.csv` |
-| star | genome_index | `v2.7.10a_hg19/` |
-|_ _| extra | `hg19.refGene.gtf` |
-| star_fusion | genome_path | `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/` |
+| <div id="genefuse_transcripts">gene_fuse | genes | `GMS560_fusion_w_pool2.hg19.221117.csv` |
+|_ _| <div id="genefuse_fasta">fasta</div> | `hg19.with.mt.fasta` |
+| <div id="hotspot_file">hotspot_annotation</div> | hotspots | `Hotspots_combined_regions_nodups.csv` |
+| <div id="hotspot_report">hotspot_report</div> | hotspot_mutations | `Hotspots_combined_regions_nodups.csv` |
+| <div id="manta_design_bed">manta_config_t</div> | extra | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz` |
+| <div id="msisensor_pro_pon">msisensor_pro</div> | PoN | `Msisensor_pro_reference_nextseq_36.list_baseline` |
+| <div id="purecn_estimation_mapping_pon">purecn</div> | extra | `mapping_bias_nextseq_27_hg19.rds` |
+| | <div id="purecn_estimation_normaldb">normaldb</div> | `normalDB_nextseq_27_hg19.rds` |
+|_ _| <div id="purecn_estimation_intervals">intervals</div> | `targets_twist-gms-st_hg19_25000_intervals.txt` |
+| <div id="purecn_coverage_intervals">purecn_coverage</div> | intervals | `targets_twist-gms-st_hg19_25000_intervals.txt` |
+| <div id="report_fusions">report_fusions</div> | annotation_bed | `Twist_RNA_fusionpartners.bed` |
+| <div id="genefuse_filter_fusions">report_gene_fuse</div> | filter_fusions | `filter_fusions_20221114.csv` |
+| <div id="star_genome_index">star</div> | genome_index | `v2.7.10a_hg19/` |
+|_ _| <div id="star_genome_extra">extra</div> | `hg19.refGene.gtf` |
+| <div id="star_fusion">star_fusion</div> | genome_path | `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/` |
 | svdb_query | db_string | `all_TN_292_svdb_0.8_20220505.vcf` |
-| vep | vep_cache | `VEP/` |
+| <div id="vep_cache">vep</div> | vep_cache | `VEP/` |
 
 ## Downloadable reference files
 
