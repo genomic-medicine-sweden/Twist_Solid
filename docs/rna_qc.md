@@ -61,7 +61,7 @@ multiqc:
 ### Configuration
 **References**
 
-* RNA design bed
+* [RNA design bed](references.md#design_bed_rna)
 
 <br />
 **Software settings**
@@ -89,7 +89,7 @@ House keeping gene coverage is reported by the in-house script [house_keeping_ge
 <br />
 **References**
 
-* RNA design bed
+* [RNA design bed](references.md#design_bed_rna)
 
 ### Result file
 

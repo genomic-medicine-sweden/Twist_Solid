@@ -126,17 +126,21 @@ SVDB --query
 | db_string | --out_occ Twist_OCC | occurrence annotation name in the INFO field |
 
 ## CNV gene annotation
-CNV regions that overlap with clinically relevant genes for amplifications (`cnv_amp_genes.bed`) and deletions (`cnv_loh_genes.bed`) are annotated separately and put into two different files by the in-house script [annotate_cnv.py](https://github.com/hydra-genetics/annotation/blob/develop/workflow/scripts/annotate_cnv.py) ([rule](https://github.com/hydra-genetics/annotation/blob/develop/workflow/rules/annotate_cnv.smk)). The relevant genes are annotated in the INFO field with the "Genes" tag.
+CNV regions that overlap with clinically relevant genes for amplifications ([`cnv_amp_genes.bed`](references.md#cnv_amp_genes)) and deletions ([`cnv_loh_genes.bed`](references.md#cnv_loh_genes)) are annotated separately and put into two different files by the in-house script [annotate_cnv.py](https://github.com/hydra-genetics/annotation/blob/develop/workflow/scripts/annotate_cnv.py) ([rule](https://github.com/hydra-genetics/annotation/blob/develop/workflow/rules/annotate_cnv.smk)). The relevant genes are annotated in the INFO field with the "Genes" tag.
 
 <br />
-**Amplification genes**
 
-MTOR, NTRK1, MYCN, ALK, FGFR3, PDGFRA, KIT, FGFR4, EGFR, CDK6, MET, BRAF, FGFR1, MYC, CDKN2A, NTRK2, PTEN, FGFR2, KRAS, CDK4, NTRK3, ERBB2, AR
-
+**Amplicifcation genes**
+<table>
+ <tr><td>MTOR</td><td>NTRK1</td><td>MYCN</td><td>ALK</td><td>FGFR3</td><td>PDGFRA</td><td>KIT</td><td>FGFR4</td><td>EGFR</td><td>CDK6</td><td>MET</td><td>BRAF</td></tr>
+ <tr><td>FGFR1</td><td>MYC</td><td>CDKN2A</td><td>NTRK2</td><td>PTEN</td><td>FGFR2</td><td>KRAS</td><td>CDK4</td><td>NTRK3</td><td>ERBB2</td><td colspan="2">AR</td><tr>
+</table>
 <br />
 **Deletion genes**
-
-BAP1, FAT1, CHD1, MCPH1, CDKN2A, CDKN2B, TSC1, PTEN, ATM, BRCA2, RB1, SPRED1, TSC2, PALB2, CDH1, FANCA, TP53, NF1, BRCA1, RAD51C
+<table>
+ <tr><td>BAP1</td><td>FAT1</td><td>CHD1</td><td>MCPH1</td><td>CDKN2A</td><td>CDKN2B</td><td>TSC1</td><td>PTEN</td><td>ATM</td><td>BRCA2</td><td>RB1</td><td>SPRED1</td></tr>
+ <tr><td>TSC2</td><td>PALB2</td><td>CDH1</td><td>FANCA</td><td>TP53</td><td>NF1</td><td>BRCA1</td><td>RAD51C</td><td colspan="4" /><tr>
+ </table>
 
 ## CNV filtering
 Filtering the CNV amplifications and deletions are performed by the [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/).
@@ -156,7 +160,7 @@ Genes and filtering criteria specified in `config_hard_filter_cnv_loh.yaml` are 
 * Filter cnvs not annotated in the INFO:Genes tag
 
 ## CNV report
-A combined report in tsv format is generated based on the filtered vcf files by the in-house script [cnv_report.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/cnv_report.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/cnv_tsv_report.smk)). The script also looks for 1p19q deletions and add that to the report using the following options:
+A combined report in tsv format is generated based on the filtered vcf files by the in-house script [cnv_report.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/cnv_report.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/cnv_tsv_report.smk)). The script also looks for 1p19q deletions and add that to the report.
 
 ### Configuration
 **Software settings**
@@ -200,7 +204,7 @@ CNVkit and GATK CNV sometimes miss small deletions where only a number of exons 
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
-| regions_file | `cnv_deletion_genes.tsv` | Genes and surrounding regions to call small CNVs in |
+| regions_file | [`cnv_deletion_genes.tsv`](references.md#call_small_cnv_deletions) | Genes and surrounding regions to call small CNVs in |
 | window_size | 4 | Sliding window size of data points which governs the minimum size that can be found |
 | region_max_size | 30 | Max size of the region in the form of number of data points |
 | min_log_odds_diff | 0.3 | Min difference in copy numbers between deletion and the rest of the |
@@ -219,7 +223,7 @@ Use **[bcftools filter -T](https://samtools.github.io/bcftools/bcftools.html)** 
 ### Configuration
 **References**
 
-* Bed file with blacklisted regions
+* [Bed file](references.md#bcftools_filter_exclude_region) with blacklisted regions
 
 ### Filter vcf
 The germline vcf file are filtered using the **[hydra-genetics filtering](https://filtering.readthedocs.io/en/latest/)** functionality included in v0.15.0. 
@@ -243,7 +247,7 @@ PureCN calculates the coverage in 25kb windows of the BWA-mem aligned and merged
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
-| intervals | `targets_window_intervals.txt` | panel of normal |
+| intervals | [`targets_window_intervals.txt`](references.md#purecn_coverage_intervals) | panel of normal |
 
 ### PureCN purity estimation
 Based on the coverage and a vcf file from Mutect2 PureCN make its own segmentation with the additional help of a normal db created from a panel of normal (see [references](references.md) on how the PoN was created). The germline SNPs allele frequency in combination with the called copy numbers is then used to search for the optimal purity and ploidity combination. The optimal values are determined by looking for the best fit between the germline SNPs allele frequency and integer copy numbers.
@@ -259,8 +263,9 @@ Based on the coverage and a vcf file from Mutect2 PureCN make its own segmentati
 | segmentation_method | "internal" | Use PureCNs own segmentation (CNVkit segmentation can for example also be used) |
 | fun_segmentation | "PSCBS" | Segmentation function |
 | extra | --model betabin | Recommended for more than 10-15 normal samples |
-| extra | --mapping-bias-file `mapping_bias.rds` | Panel of normal for PureCN |
-| normaldb | `normalDB.rds` | Panel of normal for PureCN |
+| extra | --mapping-bias-file [`mapping_bias.rds`](references.md#purecn_estimation_mapping_pon) | Panel of normal for PureCN |
+| normaldb | [`normalDB.rds`](references.md#purecn_estimation_normaldb) | Panel of normal for PureCN |
+| intervals | [`targets_window_intervals.txt`](references.md#purecn_estimation_intervals) | panel of normal |
 
 ## Manta
 **Manta** v1.6.0 is used to call larger INDELs and other structural variant events. However the results are only reported and not used in any clinical anaylsis.
@@ -272,7 +277,7 @@ Based on the coverage and a vcf file from Mutect2 PureCN make its own segmentati
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
 | extra | --exome | use exome mode as this is not WGS data |
-| extra | --callRegions `design_bed_file.bed` | only make call in the designed region |
+| extra | --callRegions [`design_bed_file.bed`](references.md#manta_design_bed) | only make call in the designed region |
 
 <br />
 **Cluster resources**

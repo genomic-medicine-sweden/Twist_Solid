@@ -4,8 +4,8 @@ The RNA design includes a number of probes covering SNPs that can be used to che
 ## Configuration
 **References**
 
-* ID SNP bed file: `ID_SNPs.bed`
-* RNA fasta reference genome from Star-Fusion: `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa` - (see [references](references.md#star-fusion))
+* ID SNP bed file: [`ID_SNPs.bed`](references.md#bcftools_id_snps)
+* [RNA fasta](references.md#star_fusion) reference genome from Star-Fusion: `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa` - (see [references](references.md#star-fusion))
 
 <br />
 **Software settings for bcftools mpileup (hard coded)**

@@ -10,10 +10,14 @@
 *[GMS]: Genomic Medicine Sweden
 *[HLA]: Human leukocyte antigen
 *[HRD]: Homologous recombination deficiency
+*[MAF]: Minor allele frequency
 *[MSI]: Microsatellite instability
+*[MSS]: Microsatellite stable 
 *[PoN]: Panel of normal
 *[QC]: Quality control
 *[RNA]: Ribonucleic acid
+*[sSNVs]: Synonymous single nucleotide variations
+*[nsSNVs]: Non-synonymous single nucleotide variations
 *[SNV]: Single nucleotide variation
 *[SNVs]: Single nucleotide variations
 *[INDEL]: Insertion and deletion
