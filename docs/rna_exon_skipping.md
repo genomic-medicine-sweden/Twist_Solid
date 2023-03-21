@@ -4,7 +4,7 @@ Exon skipping cannot be called by the fusion callers as they only search for fus
 ## Configuration
 **References**
 
-* Annotated RNA design bed
+* [Annotated RNA design bed](references.md#exon_skipping)
 
 ## Result file
 

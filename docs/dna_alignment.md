@@ -33,7 +33,7 @@ where the individual read groups are defined below:
 
 **Reference files**  
 
-- bwa reference genome indexes  
+- [bwa reference genome indexes](references.md#bwa_me_ref) 
 
 <br />
 **Software settings**

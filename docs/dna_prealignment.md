@@ -5,7 +5,7 @@ See the [prealignment hydra-genetics module](https://prealignment.readthedocs.io
 ![dag plot](images/prealignment.png)
 
 ## Pipeline output files:
-Only temporary intermediate files created.
+Only temporary intermediate files are created.
 
 ## Trimming
 Trimming of fastq files is performed by **[fastp](https://github.com/OpenGene/fastp)** v0.20.1.  

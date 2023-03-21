@@ -53,9 +53,9 @@ multiqc:
 ## Picard
 **[Picard](https://broadinstitute.github.io/picard/)** v2.25.0 is run on BWA-mem aligned and merged bam files collecting a number of metrics. The metrics calculated are listed below:
 
-* **picard CollectAlignmentSummaryMetrics** - using a fasta reference genome file
+* **picard CollectAlignmentSummaryMetrics** - using a [fasta reference genome](references.md#reference_fasta) file
 * **picard CollectDuplicationMetrics**
-* **picard CollectHsMetrics** - using a fasta reference genome file, a design bed file, and with the option COVERAGE_CAP=5000
+* **picard CollectHsMetrics** - using a fasta [fasta reference genome](references.md#reference_fasta) file, a [design bed](references.md#design_bed) file, and with the option COVERAGE_CAP=5000
 * **picard CollectInsertSizeMetrics**
 
 ## GATK
@@ -67,8 +67,8 @@ Using **[GATK Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/3600375
 ### Configuration
 **References**
 
-* reference fasta genome
-* design bed region file (split by bed_split rule into chromosome chunks)
+* [fasta reference genome](references.md#reference_fasta)
+* [design bed](references.md#design_bed) region file (split by bed_split rule into chromosome chunks)
 
 <br />
 **Cluster resources for Mutect2**
@@ -89,7 +89,7 @@ This excel-friendly report produced by the in-house script [hotspot_report.py](h
 ### Configuration
 **References**
 
-* File with clinical relevant positions
+* [File](references.md#hotspot_report) with clinical relevant positions
 
 <br />
 **Software settings**

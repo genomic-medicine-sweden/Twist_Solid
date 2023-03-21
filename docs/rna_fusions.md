@@ -20,7 +20,7 @@ Merged fastq files are aligned with [Star](https://github.com/alexdobin/STAR) v2
 ### Configuration
 **References**
 
-* Star genome index - (see [references](references.md#star-genome-index))
+* [Star genome index](references.md#star_genome_index) - (see [references](references.md#star-genome-index))
 
 <br />
 **Software settings** (Recommended options by Arriba)
@@ -28,7 +28,7 @@ Merged fastq files are aligned with [Star](https://github.com/alexdobin/STAR) v2
 | **Filter** | **Value** |
 |-------------|-|
 | --quantMode | GeneCounts
-| --sjdbGTFfile | `hg19.refGene.gtf` - (see [references](references.md#arriba-230)) |
+| --sjdbGTFfile | [`hg19.refGene.gtf`](references.md#star_genome_extra) - (see [references](references.md#arriba-v230)) |
 | --outSAMtype | BAM SortedByCoordinate |
 | --chimSegmentMin | 10 |
 | --chimOutType | WithinBAM SoftClip |
@@ -56,17 +56,17 @@ Star aligned bam-files are used for fusion calling with [Arriba](https://github.
 ### Configuration
 **References**
 
-* assembly: fasta reference genome
+* assembly: [fasta reference genome](references.md#arriba_reference)
 
 <br />
 **Software settings**
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
-| blacklist | `blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` | (see [references](references.md#arriba-230)) |
-| gtf | `hg19.refGene.gtf` | (see [references](references.md#arriba-230)) |
-| extra | -p `protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` | (see [references](references.md#arriba-230)) |
-| extra | -k `known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` | (see [references](references.md#arriba-230)) |
+| blacklist | [`blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz`](references.md#arriba_blacklist) | (see [references](references.md#arriba-230)) |
+| gtf | [`hg19.refGene.gtf`](references.md#arriba_gtf) | (see [references](references.md#arriba-230)) |
+| extra | -p [`protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3`](references.md#arriba_extra_gff3_) | (see [references](references.md#arriba-230)) |
+| extra | -k [`known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz`](references.md#arriba_extra_tsv) | (see [references](references.md#arriba-230)) |
 
 <br />
 **Cluster resources**
@@ -90,9 +90,9 @@ Arriba produces a pdf file containing a figure for every fusion called with a sc
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
-| cytobands | `cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv` | (see [references](references.md#arriba-230)) |
-| gtf | `hg19.refGene.gtf` | (see [references](references.md#arriba-230)) |
-| protein_domains | `protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` | (see [references](references.md#arriba-230)) |
+| cytobands | [`cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv`](references.md#arriba_draw_fusion_cytobands) | (see [references](references.md#arriba-230)) |
+| gtf | [`hg19.refGene.gtf`](references.md#arriba_draw_fusion_gtf) | (see [references](references.md#arriba-230)) |
+| protein_domains | [`protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3`](references.md#arriba_draw_fusion_protein_domains) | (see [references](references.md#arriba-230)) |
 
 ### Result file
 
@@ -131,7 +131,7 @@ Arriba produces a pdf file containing a figure for every fusion called with a sc
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
-| genome_path | `human_v102/` | (see [references](references.md#fusioncather-v102)) |
+| genome_path | [`human_v102/`](references.md#fusioncatcher) | (see [references](references.md#fusioncather-v102)) |
 
 <br />
 **Cluster resources**
@@ -176,7 +176,7 @@ In the validation samples the MAML2 gene was falsely called frequently together 
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
-| annotation_bed | `Twist_RNA_fusionpartners.bed` | Optional file for annotation of fusion partners |
+| annotation_bed | [`Twist_RNA_fusionpartners.bed`](references.md#report_fusions) | Optional file for annotation of fusion partners |
 
 ### Result file
 

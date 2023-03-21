@@ -15,15 +15,16 @@ TMB is a measure of the frequency of somatic mutations and is usually measured a
 **Software settings**
 
 | **Options** | **Value** | **Description** |
-| filter_nr_observations | 1 | Max seen once in panel of normal samples
-| dp_limit | 100 | Minimum read depth of 100
-| vd_limit | 10 | Minimum 10 observations of variant allele
-| af_lower_limit | 0.05 | Minimum 5% allele frequency
-| af_upper_limit | 0.45 | Maximum 45% allele frequency
-| gnomad_limit | 0.0001 | Germline filter of 0.01% population frequency
-| db1000g_limit | 0.0001 | Germline filter of 0.01% population frequency
-| background_sd_limit | 5 | At least 5 standard deviation above background
-| nssnv_tmb_correction | 1.02 | Variant size times correction factor (correction factor = 1 / adjusted design size)
+|-|-|-|
+| filter_nr_observations | 1 | Max seen once in panel of normal samples |
+| dp_limit | 100 | Minimum read depth of 100 |
+| vd_limit | 10 | Minimum 10 observations of variant allele |
+| af_lower_limit | 0.05 | Minimum 5% allele frequency |
+| af_upper_limit | 0.45 | Maximum 45% allele frequency |
+| gnomad_limit | 0.0001 | Germline filter of 0.01% population frequency |
+| db1000g_limit | 0.0001 | Germline filter of 0.01% population frequency |
+| background_sd_limit | 5 | At least 5 standard deviation above background |
+| nssnv_tmb_correction | 1.02 | Variant size times correction factor (correction factor = 1 / adjusted design size) |
 
 The main result is the TMB calculated using nsSNV only. However, TMB calculated using both nsSNVs and sSNVs are also provided as well as all the variants passing all filters.
 
@@ -37,7 +38,7 @@ To determine MSS or MSI status of the samples the percentage of sites that have 
 ### Configuration
 **Reference**
 
-* Panel of normal for MSIsensor-pro (see [references](references.md) on how the PoN was created)
+* [Panel of normal](references.md#msisensor_pro_pon) for MSIsensor-pro (see [references](references.md) on how the PoN was created)
 
 ### Result file
 
@@ -51,11 +52,12 @@ A homologous recombination deficiency score is calculated using **[scarHRD](http
 
 **Reference for cnvkit**
 
-* Panel of normals created by cnvkit with extra CNV-probes removed (see [references](references.md) on how the PoN was created)
+* [Panel of normals](references.md#normal_reference_hrd) created by cnvkit with extra CNV-probes removed (see [references](references.md) on how the PoN was created)
 
 **Software settings**
 
 | **Options** | **Value** | **Description** |
+|-|-|-|
 | reference_name | "grch37" | Reference genome |
 | seqz | FALSE | Do not use seqz |
 
