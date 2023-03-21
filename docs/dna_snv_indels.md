@@ -1,5 +1,8 @@
 # SNV and INDEL calling, annotation and filtering
-See the [snv_indels hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for variant calling, [annotation hydra-genetics module](https://annotation.readthedocs.io/en/latest/) for annotation and [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/) for filtering.Default hydra-genetics settings/resources are used if no configuration is specfied.
+See the [snv_indels hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for variant calling, [annotation hydra-genetics module](https://annotation.readthedocs.io/en/latest/) for annotation and [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/) for filtering. Default hydra-genetics settings/resources are used if no configuration is specfied.
+
+<br />
+![dag plot](images/snv.png)
 
 ## Pipeline output files:
 
@@ -29,7 +32,7 @@ SNVs and INDELs are called by Mutect2 on individual chromosome bamfiles.
 | time | "48:00:00" |
 
 ### GATK Mutect2 merging
-The stats file from GATK Mutect2 calling are merge with **[GATK MergeMutectStats](https://gatk.broadinstitute.org/hc/en-us/articles/360035531132--How-to-Call-somatic-mutations-using-GATK4-Mutect2)** v4.1.9.0 and the vcf files are merged with **bcftools concat** v1.15.
+The stats file from GATK Mutect2 calling are merge with **[GATK MergeMutectStats](https://gatk.broadinstitute.org/hc/en-us/articles/360035531132--How-to-Call-somatic-mutations-using-GATK4-Mutect2)** v4.1.9.0 and the vcf files are merged with **[bcftools concat](https://samtools.github.io/bcftools/bcftools.html#concat)** v1.15.
 
 ### GATK Mutect2 vcf soft filtering
 Merged Mutect2 vcf files are softfiltered with **[GATK FilterMutectCalls](https://gatk.broadinstitute.org/hc/en-us/articles/360035531132--How-to-Call-somatic-mutations-using-GATK4-Mutect2)** v4.1.9.0 which puts filter flags in the vcf FILTER column.

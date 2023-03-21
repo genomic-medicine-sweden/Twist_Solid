@@ -1,0 +1,38 @@
+digraph snakemake_dag {
+    rankdir=LR;
+    graph[bgcolor=white, margin=0];
+    node[shape=box, style=rounded, fontname=sans,                 fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+	0[label = "gatk_mutect2", color = "0.19 0.6 0.85", style="rounded"];
+	8[label = "bed_split", color = "0.22 0.6 0.85", style="rounded"];
+	9[label = "bcbio_variation_recall_ensemble", color = "0.12 0.6 0.85", style="rounded"];
+	11[label = "vt_decompose/normalize", color = "0.50 0.6 0.85", style="rounded"];
+	14[label = "fix_af", color = "0.47 0.6 0.85", style="rounded"];
+	15[label = "bcftools_concat", color = "0.12 0.6 0.85", style="rounded"];
+	16[label = "vardict", color = "0.51 0.6 0.85", style="rounded"];
+	18[label = "mutect2_pass_filter", color = "0.46 0.6 0.85", style="rounded"];
+	19[label = "gatk_mutect2_filter", color = "0.62 0.6 0.85", style="rounded"];
+	20[label = "gatk_mutect2_merge_stats", color = "0.27 0.6 0.85", style="rounded"];
+        30[label = "DESIGN BED", color = "0.0 0.0 0.0", style="dotted"];
+        31[label = "BAM", color = "0.0 0.0 0.0", style="dotted"];
+        32[label = "bcftools_concat", color = "0.12 0.6 0.85", style="rounded"];
+        33[label = "fix_af", color = "0.47 0.6 0.85", style="rounded"];
+       	34[label = "vt_decompose/normalize", color = "0.50 0.6 0.85", style="rounded"];
+	30 -> 8
+	31 -> 16
+	31 -> 0
+	8 -> 0
+	15 -> 19
+	14 -> 11
+	16 -> 32
+	32 -> 33
+	33 -> 34
+	0 -> 15
+	8 -> 16
+	19 -> 18
+	18 -> 14
+	20 -> 19
+	0 -> 20
+	11 -> 9
+	34 -> 9
+}            
