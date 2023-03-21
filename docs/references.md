@@ -151,10 +151,11 @@ snakemake --profile profiles/uppsala_ref/ -s workflow/Snakefile_references.smk
 
 **units.tsv**
 
-* column header: bam
-* column data: path to merged bam files
+| Header | Data | Description |
+|-|-|-|
+| bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline |
 
-**References**
+**Reference files**
 
 * design bedfile
 * fasta genome reference
@@ -164,10 +165,11 @@ snakemake --profile profiles/uppsala_ref/ -s workflow/Snakefile_references.smk
 
 **units.tsv**
 
-* column header: bam
-* column data: path to merged bam files
+| Header | Data | Description |
+|-|-|-|
+| bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline |
 
-**References**
+**Reference files**
 
 * design bedfile
 * fasta reference genome
@@ -177,47 +179,57 @@ snakemake --profile profiles/uppsala_ref/ -s workflow/Snakefile_references.smk
 
 **units.tsv**
 
-* column header: bam
-* column data: path to merged bam files
+| Header | Data | Description |
+|-|-|-|
+| bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline |
 
-**References**
+**Reference files**
 
 * design bedfile
 * fasta reference genome
 
-**Options**
+**Software settings**
 
--c 50 - minimal coverage, recommended for WES: 20; WGS: 15
+| Options | Value | Description |
+|-|-|-|
+| extra | -c 50 | minimal coverage, recommended for WES: 20; WGS: 15 |
 
 ### SVDB
 
 **units.tsv**
 
-* column header: cnv_vcf
-* column data: svdb merged cnv vcf files
+| Header | Data | Description |
+|-|-|-|
+| cnv_vcf | `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.svdb_query.vcf` | SVDB merged CNV vcf files created as output of the Twist Solid pipeline |
 
-**Options**
+**Software settings**
 
---overlap - Overlap used to cluster variants (default 0.8), Use "extra" parameter to set this in config
+| Options | Value | Description |
+|-|-|-|
+| extra | --overlap 0.8 | Overlap used to cluster variants (default 0.8) |
 
 ### Artifacts
 
 **units.tsv**
 
-* column header: vcf
-* column data: unfiltered merged vcf files
+| Header | Data | Description |
+|-|-|-|
+| vcf | `results/dna/additional_files/vcf/{sample}_{type}.annotated.vcf.gz` | Unfiltered and merged vcf files created as output of the Twist Solid pipeline |
 
 ### Background
 
 **units.tsv**
 
-* column header: vcf
-* column data: unfiltered merged vcf files
+| Header | Data | Description |
+|-|-|-|
+| vcf | `results/dna/additional_files/vcf/{sample}_{type}.annotated.vcf.gz` | Unfiltered and merged vcf files created as output of the Twist Solid pipeline |
 
-**Options**
+**Software settings**
 
-* min_dp - Min read depth to be included (default: 500)
-* max_af - Max allele frequency to be included (default: 0.015)
+| Options | Value | Description |
+|-|-|-|
+| min_dp | 500 | Min read depth to be included (default: 500) |
+| max_af | 0.015 | Max allele frequency to be included (default: 0.015) |
 
 ### PureCN
 **OBS!** The best way to run PureCN is still to be determined. At present PureCN uses Mutect2 filtered vcf files (not hard filtered). This is not the same as the other PoNs that use ensembled vcf files.
@@ -232,36 +244,33 @@ singularity docker://hydragenetics/purecn:2.2.0 Rscript $PURECN/IntervalFile.R -
 
 **units.tsv**
 
-* column header: bam
-* column data: path to merged bam files
-* column header: vcf
-* column data: unfiltered GATK vcf files
+| Header | Data | Description |
+|-|-|-|
+| bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline |
+| vcf | `results/dna/additional_files/vcf/gatk_mutect2_{sample}_{type}.vcf.gz` | Mutect2 softfiltered vcf files created as output of the Twist Solid pipeline |
 
-**Reference**
+**Software settings**
 
-* Target interval file
+| Options | Value | Description |
+|-|-|-|
+| intervals | Target interval file | File created by the commands described above |
 
 ## Pipeline specific files
 These are design files and other pipeline specific only available to download from the Uppsala Owncloud solution.
 
-* Design files
-    - `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.210608.bed` - design bed
-    - `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.bed` - design bed file containing only exons
-    - `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.interval_list` - design interval file containing only exons
-    - `pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list` - design interval file used in GATK CNV PoN creation (must be identical)
-    - `Twist_RNA_Design5.annotated.bed` - RNA design bed
-    - `Twist_RNA_Design5.annotated.interval_list` - RNA design interval file
-    - `ID_SNPs.bed` - List of RNA ID SNPs
-* Hotspots (annotation of vcfs and mutation qc report)
-    - `Hotspots_combined_regions_nodups.csv` - Positions, transcript information, etc on clinically relevant regions
-* GeneFuse
-    - `GMS560_fusion_w_pool2.hg19.221117.csv` - Genes and its exonic positions included in fusion calling
-    - `filter_fusions_20221114.csv` - Filtering criteria for false positive prone fusion partners
-* CNVkit
-    - `cnvkit_germline_blacklist_20221221.bed` - list of regions excluded from the germline vcf file
-* GATK CNV
-    - `gnomad_SNP_0.001_target.annotated.interval_list` - Bed file with CNV backbone SNPs which are selected from GnomAD with over 0.1% global population frequency
-* Small CNV deletions
-    - `cnv_deletion_genes.tsv` - File defining gene and its surrounding regions used for small CNV deletion. Same deletion genes as in the CNV deletion reports
-* Report RNA fusions
-    - `Twist_RNA_fusionpartners.bed` - Bed file used for annotation of fusion partner exons
+| File type | File | Description |
+|-|-|-|
+| Design files | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes`<br />`.reannotated.210608.bed` | Design bed |
+| | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes`<br />`.MUC6_31_rm.exon_only.reannotated.210608.bed` | Design bed file containing only exons |
+| | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes`<br />`.MUC6_31_rm.exon_only.reannotated.210608.interval_list` | Design interval file containing only exons |
+| | `pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met`<br />`.annotated.bed.preprocessed.interval_list` | Design interval file used in GATK CNV PoN creation |
+| | `Twist_RNA_Design5.annotated.bed` | RNA design bed |
+| | `Twist_RNA_Design5.annotated.interval_list` | RNA design interval file |
+|_ _| `ID_SNPs.bed` | List of RNA ID SNPs |
+| Hotspots | `Hotspots_combined_regions_nodups.csv` | Positions, transcript information, etc on clinically relevant regions |
+| GeneFuse | `GMS560_fusion_w_pool2.hg19.221117.csv` | Genes and its exonic positions included in fusion calling |
+| | `filter_fusions_20221114.csv` | Filtering criteria for false positive prone fusion partners |
+| CNVkit | `cnvkit_germline_blacklist_20221221.bed` | List of regions excluded from the germline vcf file |
+| GATK CNV | `gnomad_SNP_0.001_target.annotated.interval_list` | Bed file with CNV backbone SNPs which are selected from <br />GnomAD with over 0.1% global population frequency |
+| Small CNV deletions | `cnv_deletion_genes.tsv` | File defining gene and its surrounding regions used for <br />small CNV deletion. Same deletion genes as in the <br />CNV deletion reports |
+| Report RNA fusions | `Twist_RNA_fusionpartners.bed` | Bed file used for annotation of fusion partner exons |
