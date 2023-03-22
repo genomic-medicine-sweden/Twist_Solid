@@ -1,0 +1,351 @@
+digraph snakemake_dag {
+    graph[bgcolor=white, margin=0];
+    node[shape=box, style=rounded, fontname=sans,                 fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+	0[label = "all", color = "0.47 0.6 0.85", style="rounded"];
+	1[label = "_result_manta_vcf", color = "0.04 0.6 0.85", style="rounded"];
+	2[label = "cnv_sv_manta_run_workflow_t", color = "0.53 0.6 0.85", style="rounded"];
+	3[label = "alignment_samtools_sort", color = "0.45 0.6 0.85", style="rounded"];
+	4[label = "alignment_samtools_merge_bam", color = "0.31 0.6 0.85", style="rounded"];
+	5[label = "alignment_picard_mark_duplicates", color = "0.40 0.6 0.85", style="rounded"];
+	6[label = "alignment_samtools_extract_reads", color = "0.08 0.6 0.85", style="rounded"];
+	7[label = "alignment_bwa_mem_merge", color = "0.02 0.6 0.85", style="rounded"];
+	8[label = "alignment_bwa_mem", color = "0.30 0.6 0.85", style="rounded"];
+	9[label = "prealignment_fastp_pe", color = "0.52 0.6 0.85", style="rounded"];
+	10[label = "alignment_samtools_index", color = "0.56 0.6 0.85", style="rounded"];
+	11[label = "cnv_sv_manta_config_t", color = "0.32 0.6 0.85", style="rounded"];
+	12[label = "_result_qci_vcf", color = "0.04 0.6 0.85", style="rounded"];
+	13[label = "fix_vcf_ad_for_qci", color = "0.60 0.6 0.85", style="rounded"];
+	14[label = "annotation_vep", color = "0.30 0.6 0.85", style="rounded"];
+	15[label = "annotation_tabix_vcf", color = "0.02 0.6 0.85", style="rounded"];
+	16[label = "annotation_bgzip_vcf", color = "0.51 0.6 0.85", style="rounded"];
+	17[label = "annotation_sort_vcf", color = "0.21 0.6 0.85", style="rounded"];
+	18[label = "annotation_add_multi_snv_in_codon", color = "0.65 0.6 0.85", style="rounded"];
+	19[label = "filtering_filter_vcf", color = "0.61 0.6 0.85", style="rounded"];
+	20[label = "filtering_bcftools_filter_include_region", color = "0.33 0.6 0.85", style="rounded"];
+	21[label = "annotation_background_annotation", color = "0.55 0.6 0.85", style="rounded"];
+	22[label = "annotation_hotspot_annotation", color = "0.64 0.6 0.85", style="rounded"];
+	23[label = "annotation_artifact_annotation", color = "0.65 0.6 0.85", style="rounded"];
+	24[label = "snv_indels_tabix", color = "0.37 0.6 0.85", style="rounded"];
+	25[label = "snv_indels_bcbio_variation_recall_ensemble", color = "0.51 0.6 0.85", style="rounded"];
+	26[label = "snv_indels_bcftools_sort", color = "0.16 0.6 0.85", style="rounded"];
+	27[label = "snv_indels_vt_normalize", color = "0.07 0.6 0.85", style="rounded"];
+	28[label = "snv_indels_vt_decompose", color = "0.40 0.6 0.85", style="rounded"];
+	29[label = "snv_indels_bgzip", color = "0.66 0.6 0.85", style="rounded"];
+	30[label = "snv_indels_fix_af", color = "0.34 0.6 0.85", style="rounded"];
+	31[label = "snv_indels_bcftools_concat", color = "0.53 0.6 0.85", style="rounded"];
+	32[label = "snv_indels_vardict", color = "0.05 0.6 0.85", style="rounded"];
+	33[label = "snv_indels_bed_split", color = "0.47 0.6 0.85", style="rounded"];
+	34[label = "snv_indels_mutect2_pass_filter", color = "0.14 0.6 0.85", style="rounded"];
+	35[label = "snv_indels_gatk_mutect2_filter", color = "0.45 0.6 0.85", style="rounded"];
+	36[label = "snv_indels_gatk_mutect2", color = "0.32 0.6 0.85", style="rounded"];
+	37[label = "snv_indels_gatk_mutect2_merge_stats", color = "0.57 0.6 0.85", style="rounded"];
+	38[label = "_result_caller_vcf", color = "0.15 0.6 0.85", style="rounded"];
+	39[label = "_result_call_small_cnv_deletions", color = "0.23 0.6 0.85", style="rounded"];
+	40[label = "call_small_cnv_deletions", color = "0.10 0.6 0.85", style="rounded"];
+	41[label = "cnv_sv_gatk_denoise_read_counts", color = "0.36 0.6 0.85", style="rounded"];
+	42[label = "cnv_sv_gatk_collect_read_counts", color = "0.21 0.6 0.85", style="rounded"];
+	43[label = "_result_cnv_report_tsv1", color = "0.48 0.6 0.85", style="rounded"];
+	44[label = "cnv_tsv_report", color = "0.42 0.6 0.85", style="rounded"];
+	45[label = "annotation_annotate_cnv", color = "0.47 0.6 0.85", style="rounded"];
+	46[label = "cnv_sv_svdb_query", color = "0.44 0.6 0.85", style="rounded"];
+	47[label = "cnv_sv_svdb_merge", color = "0.25 0.6 0.85", style="rounded"];
+	48[label = "cnv_sv_cnvkit_vcf", color = "0.17 0.6 0.85", style="rounded"];
+	49[label = "cnv_sv_cnvkit_call", color = "0.23 0.6 0.85", style="rounded"];
+	50[label = "cnv_sv_cnvkit_batch", color = "0.59 0.6 0.85", style="rounded"];
+	51[label = "filtering_bcftools_filter_exclude_region", color = "0.37 0.6 0.85", style="rounded"];
+	52[label = "cnv_sv_purecn_purity_file", color = "0.28 0.6 0.85", style="rounded"];
+	53[label = "cnv_sv_purecn", color = "0.43 0.6 0.85", style="rounded"];
+	54[label = "cnv_sv_purecn_coverage", color = "0.41 0.6 0.85", style="rounded"];
+	55[label = "annotation_bcftools_annotate", color = "0.36 0.6 0.85", style="rounded"];
+	56[label = "cnv_sv_gatk_to_vcf", color = "0.18 0.6 0.85", style="rounded"];
+	57[label = "cnv_sv_gatk_model_segments", color = "0.63 0.6 0.85", style="rounded"];
+	58[label = "cnv_sv_gatk_collect_allelic_counts", color = "0.62 0.6 0.85", style="rounded"];
+	59[label = "_result_mutect2_indel_bam", color = "0.31 0.6 0.85", style="rounded"];
+	60[label = "alignment_samtools_merge_bam_mutect2", color = "0.58 0.6 0.85", style="rounded"];
+	61[label = "_result_samtool_stats", color = "0.56 0.6 0.85", style="rounded"];
+	62[label = "qc_samtools_stats", color = "0.66 0.6 0.85", style="rounded"];
+	63[label = "_result_svdb_query_vcf1", color = "0.62 0.6 0.85", style="rounded"];
+	64[label = "_result_hotspot_tsv", color = "0.50 0.6 0.85", style="rounded"];
+	65[label = "hotspot_report", color = "0.00 0.6 0.85", style="rounded"];
+	66[label = "annotation_add_mosdepth_coverage_to_gvcf", color = "0.09 0.6 0.85", style="rounded"];
+	67[label = "qc_mosdepth_bed", color = "0.15 0.6 0.85", style="rounded"];
+	68[label = "snv_indels_gatk_mutect2_gvcf", color = "0.31 0.6 0.85", style="rounded"];
+	69[label = "_result_purecn_tc", color = "0.03 0.6 0.85", style="rounded"];
+	70[label = "_result_multiqc_dna_html", color = "0.02 0.6 0.85", style="rounded"];
+	71[label = "qc_multiqc", color = "0.12 0.6 0.85", style="rounded"];
+	72[label = "qc_picard_collect_hs_metrics", color = "0.27 0.6 0.85", style="rounded"];
+	73[label = "qc_picard_collect_insert_size_metrics", color = "0.19 0.6 0.85", style="rounded"];
+	74[label = "qc_gatk_calculate_contamination", color = "0.07 0.6 0.85", style="rounded"];
+	75[label = "qc_gatk_get_pileup_summaries", color = "0.43 0.6 0.85", style="rounded"];
+	76[label = "qc_fastqc", color = "0.22 0.6 0.85", style="rounded"];
+	77[label = "qc_picard_collect_alignment_summary_metrics", color = "0.26 0.6 0.85", style="rounded"];
+	78[label = "qc_picard_collect_duplication_metrics", color = "0.42 0.6 0.85", style="rounded"];
+	79[label = "_result_bam", color = "0.27 0.6 0.85", style="rounded"];
+	80[label = "_result_cnvkit_diagram_pdf", color = "0.25 0.6 0.85", style="rounded"];
+	81[label = "cnv_sv_cnvkit_diagram", color = "0.06 0.6 0.85", style="rounded"];
+	82[label = "_result_exon_soft_vcf", color = "0.39 0.6 0.85", style="rounded"];
+	83[label = "_result_svdb_query_vcf2", color = "0.04 0.6 0.85", style="rounded"];
+	84[label = "_result_exon_hard_vcf", color = "0.00 0.6 0.85", style="rounded"];
+	85[label = "_result_alignment_summary_metrics", color = "0.61 0.6 0.85", style="rounded"];
+	86[label = "_result_conv_snv_vcf", color = "0.54 0.6 0.85", style="rounded"];
+	87[label = "_result_hsmetrics", color = "0.16 0.6 0.85", style="rounded"];
+	88[label = "_result_cnv_html1", color = "0.33 0.6 0.85", style="rounded"];
+	89[label = "cnv_html_report", color = "0.34 0.6 0.85", style="rounded"];
+	90[label = "merge_json", color = "0.54 0.6 0.85", style="rounded"];
+	91[label = "cnv_json", color = "0.63 0.6 0.85", style="rounded"];
+	92[label = "_result_tmb_txt", color = "0.48 0.6 0.85", style="rounded"];
+	93[label = "biomarker_tmb", color = "0.46 0.6 0.85", style="rounded"];
+	94[label = "_result_cnvkit_scatter_png", color = "0.19 0.6 0.85", style="rounded"];
+	95[label = "cnv_sv_cnvkit_scatter", color = "0.66 0.6 0.85", style="rounded"];
+	96[label = "_result_msi_sensor_pro_tsv", color = "0.27 0.6 0.85", style="rounded"];
+	97[label = "biomarker_msisensor_pro", color = "0.46 0.6 0.85", style="rounded"];
+	98[label = "_result_insert_metrics", color = "0.01 0.6 0.85", style="rounded"];
+	99[label = "_result_gene_fuse_report", color = "0.08 0.6 0.85", style="rounded"];
+	100[label = "report_gene_fuse", color = "0.10 0.6 0.85", style="rounded"];
+	101[label = "fusions_gene_fuse", color = "0.24 0.6 0.85", style="rounded"];
+	102[label = "prealignment_merged", color = "0.25 0.6 0.85", style="rounded"];
+	103[label = "_result_cnv_html2", color = "0.21 0.6 0.85", style="rounded"];
+	104[label = "_result_mosdepth_g_vcf", color = "0.32 0.6 0.85", style="rounded"];
+	105[label = "_result_gene_fuse_fusions_txt", color = "0.09 0.6 0.85", style="rounded"];
+	106[label = "_result_duplication_metrics", color = "0.43 0.6 0.85", style="rounded"];
+	107[label = "_result_cnv_report_tsv2", color = "0.35 0.6 0.85", style="rounded"];
+	108[label = "_result_hrd_score_txt1", color = "0.01 0.6 0.85", style="rounded"];
+	109[label = "biomarker_fix_scarhrd_output", color = "0.13 0.6 0.85", style="rounded"];
+	110[label = "biomarker_scarhrd", color = "0.38 0.6 0.85", style="rounded"];
+	111[label = "biomarker_cnvkit2scarhrd", color = "0.60 0.6 0.85", style="rounded"];
+	112[label = "cnv_sv_cnvkit_call_hrd", color = "0.20 0.6 0.85", style="rounded"];
+	113[label = "cnv_sv_cnvkit_batch_hrd", color = "0.24 0.6 0.85", style="rounded"];
+	114[label = "_result_hrd_score_txt2", color = "0.39 0.6 0.85", style="rounded"];
+	115[label = "_result_contamination_table", color = "0.39 0.6 0.85", style="rounded"];
+	116[label = "_result_annotated_vcf", color = "0.07 0.6 0.85", style="rounded"];
+	117[label = "cnv_sv_purecn_copy_output", color = "0.13 0.6 0.85", style="rounded"];
+	84 -> 0
+	87 -> 0
+	98 -> 0
+	43 -> 0
+	92 -> 0
+	108 -> 0
+	70 -> 0
+	107 -> 0
+	64 -> 0
+	69 -> 0
+	83 -> 0
+	1 -> 0
+	12 -> 0
+	94 -> 0
+	103 -> 0
+	116 -> 0
+	39 -> 0
+	99 -> 0
+	86 -> 0
+	105 -> 0
+	80 -> 0
+	10 -> 0
+	61 -> 0
+	114 -> 0
+	115 -> 0
+	82 -> 0
+	96 -> 0
+	79 -> 0
+	85 -> 0
+	63 -> 0
+	106 -> 0
+	59 -> 0
+	38 -> 0
+	104 -> 0
+	88 -> 0
+	2 -> 1
+	11 -> 2
+	10 -> 2
+	3 -> 2
+	4 -> 3
+	60 -> 3
+	7 -> 3
+	5 -> 4
+	6 -> 5
+	10 -> 6
+	3 -> 6
+	8 -> 7
+	9 -> 8
+	59 -> 10
+	5 -> 10
+	79 -> 10
+	3 -> 10
+	10 -> 11
+	3 -> 11
+	13 -> 12
+	14 -> 13
+	24 -> 14
+	16 -> 14
+	25 -> 14
+	15 -> 14
+	16 -> 15
+	20 -> 15
+	21 -> 16
+	14 -> 16
+	17 -> 16
+	18 -> 17
+	19 -> 18
+	29 -> 19
+	15 -> 19
+	24 -> 19
+	20 -> 19
+	16 -> 20
+	15 -> 20
+	22 -> 21
+	23 -> 22
+	14 -> 23
+	27 -> 24
+	26 -> 24
+	55 -> 24
+	29 -> 24
+	25 -> 24
+	26 -> 25
+	24 -> 25
+	27 -> 26
+	24 -> 26
+	28 -> 27
+	29 -> 28
+	30 -> 29
+	45 -> 29
+	31 -> 29
+	19 -> 29
+	66 -> 29
+	32 -> 29
+	14 -> 29
+	34 -> 30
+	29 -> 30
+	29 -> 31
+	68 -> 31
+	36 -> 31
+	24 -> 31
+	33 -> 32
+	5 -> 32
+	10 -> 32
+	35 -> 34
+	29 -> 35
+	37 -> 35
+	24 -> 35
+	33 -> 36
+	5 -> 36
+	10 -> 36
+	36 -> 37
+	34 -> 38
+	29 -> 38
+	40 -> 39
+	41 -> 40
+	42 -> 41
+	10 -> 42
+	3 -> 42
+	44 -> 43
+	45 -> 44
+	19 -> 44
+	46 -> 45
+	47 -> 46
+	48 -> 47
+	56 -> 47
+	49 -> 48
+	52 -> 49
+	50 -> 49
+	51 -> 49
+	10 -> 50
+	3 -> 50
+	29 -> 51
+	24 -> 51
+	117 -> 52
+	54 -> 53
+	55 -> 53
+	24 -> 53
+	10 -> 54
+	3 -> 54
+	29 -> 55
+	24 -> 55
+	57 -> 56
+	52 -> 56
+	58 -> 57
+	41 -> 57
+	3 -> 58
+	10 -> 58
+	3 -> 59
+	36 -> 60
+	62 -> 61
+	3 -> 62
+	46 -> 63
+	65 -> 64
+	24 -> 65
+	29 -> 65
+	16 -> 65
+	15 -> 65
+	29 -> 66
+	67 -> 66
+	10 -> 67
+	3 -> 67
+	33 -> 68
+	5 -> 68
+	10 -> 68
+	52 -> 69
+	71 -> 70
+	76 -> 71
+	74 -> 71
+	77 -> 71
+	73 -> 71
+	72 -> 71
+	62 -> 71
+	78 -> 71
+	3 -> 72
+	3 -> 73
+	75 -> 74
+	3 -> 75
+	10 -> 75
+	3 -> 77
+	3 -> 78
+	3 -> 79
+	81 -> 80
+	50 -> 81
+	19 -> 82
+	46 -> 83
+	19 -> 84
+	77 -> 85
+	14 -> 86
+	72 -> 87
+	89 -> 88
+	90 -> 89
+	29 -> 90
+	91 -> 90
+	51 -> 90
+	57 -> 91
+	50 -> 91
+	41 -> 91
+	93 -> 92
+	16 -> 93
+	95 -> 94
+	50 -> 95
+	51 -> 95
+	97 -> 96
+	10 -> 97
+	3 -> 97
+	73 -> 98
+	100 -> 99
+	101 -> 100
+	102 -> 101
+	9 -> 102
+	89 -> 103
+	29 -> 104
+	101 -> 105
+	78 -> 106
+	44 -> 107
+	109 -> 108
+	110 -> 109
+	111 -> 110
+	112 -> 111
+	113 -> 112
+	52 -> 112
+	51 -> 112
+	10 -> 113
+	3 -> 113
+	109 -> 114
+	74 -> 115
+	16 -> 116
+	53 -> 117
+}            

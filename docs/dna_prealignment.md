@@ -2,7 +2,7 @@
 See the [prealignment hydra-genetics module](https://prealignment.readthedocs.io/en/latest/) documentation for more details on the softwares. Default hydra-genetics settings/resources are used if no configuration is specfied.
 
 <br />
-![dag plot](images/prealignment.png)
+![dag plot](images/prealignment.png){: style="height:18%;width:18%"}
 
 ## Pipeline output files:
 Only temporary intermediate files are created.

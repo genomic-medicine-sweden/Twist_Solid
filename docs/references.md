@@ -13,7 +13,7 @@ The following reference files, panel of normals and design files are need to run
 | | fai | `hg19.with.mt.fai` |
 | | <div id="design_bed">design_bed</div> | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.210608.bed` |
 | | design_intervals | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.interval_list` |
-| | design_intervals_gatk_cnv | `pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list` |
+| | <div id="ref_gatk_intervals">design_intervals_gatk_cnv</div> | `pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list` |
 | | <div id="design_bed_rna">design_bed_rna</div> | `Twist_RNA_Design5.annotated.bed` |
 |_ _| design_intervals_rna | `Twist_RNA_Design5.annotated.interval_list` |
 | <div id="arriba_reference">arriba</div> | assembly | `hg19.with.mt.fasta` |
@@ -36,13 +36,13 @@ The following reference files, panel of normals and design files are need to run
 | | pac | `hg19.with.mt.pac` |
 |_ _| sa | `hg19.with.mt.sa` |
 | <div id="call_small_cnv_deletions">call_small_cnv_deletions</div> | regions_file | `cnv_deletion_genes.tsv` |
-| cnvkit_batch | normal_reference | `cnvkit_nextseq_36.cnn` |
+| <div id="cnvkit_ref">cnvkit_batch</div> | normal_reference | `cnvkit_nextseq_36.cnn` |
 | <div id="normal_reference_hrd">cnvkit_batch_hrd</div> | normal_reference_hrd | `cnvkit_nextseq_27_HRD.cnn` |
 | <div id="exon_skipping">exon_skipping</div> | design_bed | `Twist_RNA_Design5.annotated.bed` |
 | <div id="fusioncatcher">fusioncatcher</div> | genome_path | `human_v102/` |
-| gatk_collect_allelic_counts | SNP_interval | `gnomad_SNP_0.001_target.annotated.interval_list` |
-| gatk_denoise_read_counts | normal_reference | `gatk_cnv_nextseq_36.hdf5` |
-| gatk_get_pileup_summaries | sites | `small_exac_common_3.hg19.vcf.gz` |
+| <div id="gatk_collect_allelic_counts">gatk_collect_allelic_counts</div> | SNP_interval | `gnomad_SNP_0.001_target.annotated.interval_list` |
+| <div id="gatk_denoise_read_counts_pon">gatk_denoise_read_counts</div> | normal_reference | `gatk_cnv_nextseq_36.hdf5` |
+| <div id="gatk_get_pileup_summaries_sites">gatk_get_pileup_summaries</div> | sites | `small_exac_common_3.hg19.vcf.gz` |
 |_ _| variants | `small_exac_common_3.hg19.vcf.gz` |
 | <div id="genefuse_transcripts">gene_fuse | genes | `GMS560_fusion_w_pool2.hg19.221117.csv` |
 |_ _| <div id="genefuse_fasta">fasta</div> | `hg19.with.mt.fasta` |
@@ -59,7 +59,7 @@ The following reference files, panel of normals and design files are need to run
 | <div id="star_genome_index">star</div> | genome_index | `v2.7.10a_hg19/` |
 |_ _| <div id="star_genome_extra">extra</div> | `hg19.refGene.gtf` |
 | <div id="star_fusion">star_fusion</div> | genome_path | `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/` |
-| svdb_query | db_string | `all_TN_292_svdb_0.8_20220505.vcf` |
+| <div id="svdb_query">svdb_query</div> | db_string | `all_TN_292_svdb_0.8_20220505.vcf` |
 | <div id="vep_cache">vep</div> | vep_cache | `VEP/` |
 
 ## Downloadable reference files

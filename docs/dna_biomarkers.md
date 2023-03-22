@@ -1,6 +1,9 @@
 # Biomarkers
 See the [biomarkers hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for the respective biomarkers. Default hydra-genetics settings/resources are used if no configuration is specfied.
 
+<br />
+![biomarker dag plot](images/biomarkers.png){: style="height:50%;width:50%"}
+
 ## Pipeline output files:
 
 * `results/dna/tmb/{sample}_{type}.TMB.txt`
