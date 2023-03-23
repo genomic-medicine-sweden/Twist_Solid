@@ -27,27 +27,26 @@ The following steps are in included in the CNVkit calling:
 
 | Rule | Info | Settings | Description |
 |-|-|-|-|
-| batch | Makes segmentation | [cnn reference](references.md#cnvkit_ref) | Sequence machine specific ... |
-| | | method: "hybrid" | |
-|_ _|_ _| Panel of normal |  |
-| call | Calls CNVs | [Germline vcf](dna_cnvs.md#germline-vcf) | Germline vcf with variants called in the sample |
-| | | Tumor purity | |
-| diagram | Create pdf with chromosome overview | |
-| scatter | Create scatterplot of segmentation and BAF | |
+| batch | Makes segmentation | [cnn reference](references.md#cnvkit_ref) | Sequence machine specific panel of normal for coverage |
+|_ _|_ _| method: "hybrid" | |
+| call | Calls CNVs | [Germline vcf](dna_cnvs.md#germline-vcf) | Vcf with germline variants called in the sample |
+| | | Tumor purity | Estimated purity from samples.tsv or from other sources |
+| diagram | Create pdf with chromosome overview | | |
+| scatter | Create chromosome scatterplot of segmentation and BAF | | |
 
 ### GATK CNV
 CNV segmentation is performed by **[GATK CNV](https://gatk.broadinstitute.org/hc/en-us/articles/360035535892-Somatic-copy-number-variant-discovery-CNVs-)** v4.1.9.0 on BWA-mem aligned and merged bam-files. GATK CNV uses a panel of normal (see [references](references.md) on how the PoN was created) and a precompiled germline vcf file. GATK do not use the estimated tumor purity so the copy number levels are instead adjusted when the segmentation is coverted to vcf file.
-The following steps are in included in the GATK CNV calling: 
+The following steps are in included in the GATK CNV calling:
 <br />
 
 | Rule | Info | Settings | Description |
 |-|-|-|-|
 | CollectReadCounts | Calculate coverage | [Design bed](references.md#ref_gatk_intervals) | panel design interval file |
 | CollectAllelicCount | Allele frequencies of SNPs | [Fasta reference genome](references.md#reference_fasta) | |
-|_ _|_ _ | [SNP file](references.md#gatk_collect_allelic_counts) | with SNPs found in GnomAD with population frequency above 0.1%.|
-| DenoiseReadCounts | Normalize coverage against panel of normal | [Panel of normal](references.md#gatk_denoise_read_counts_pon) | |
-| ModelSegments | Make segmentation .... | | |
-| CallCopyRatioSegments | Call CNVs and create a segment file containing .... | | |
+|_ _|_ _ | [SNP file](references.md#gatk_collect_allelic_counts) | Vcf with germline SNPs found in GnomAD with population frequency above 0.1%. |
+| DenoiseReadCounts | Normalize coverage against panel of normal | [Panel of normal](references.md#gatk_denoise_read_counts_pon) | Sequence machine specific panel of normal for coverage |
+| ModelSegments | Make raw segmentation | | |
+| CallCopyRatioSegments | Refine segmentation and call CNVs | | |
 
 ## CNV call file conversion to vcf
 The CNVs call files from CNVkit and GATK CNV are converted to vcf format using the in-house scripts [cnvkit_vcf.py](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/cnvkit_vcf.py) ([rule](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/rules/cnvkit.smk)) and [gatk_to_vcf.py](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/gatk_to_vcf.py) ([rule](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/rules/gatk.smk)). In both cases a vcf header is added followed by the following annotation for each field in the vcf file:
@@ -225,7 +224,7 @@ Use **[bcftools filter -T](https://samtools.github.io/bcftools/bcftools.html)** 
 * [Bed file](references.md#bcftools_filter_exclude_region) with blacklisted regions
 
 ### Filter vcf
-The germline vcf file are filtered using the **[hydra-genetics filtering](https://filtering.readthedocs.io/en/latest/)** functionality included in v0.15.0. 
+The germline vcf file are filtered using the **[hydra-genetics filtering](https://filtering.readthedocs.io/en/latest/)** functionality included in v0.15.0.
 
 ### Configuration
 The filters are specified in the config file `config_hard_filter_germline.yaml` and consists of the following filters:
