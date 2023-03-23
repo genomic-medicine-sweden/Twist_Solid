@@ -1,6 +1,14 @@
 # CNV calling merging and purity estimation
 See the [cnv hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for cnv calling. Default hydra-genetics settings/resources are used if no configuration is specfied.
 
+<br />
+![purecn dag plot](images/cnv_purecn.png){: style="height:55%;width:55%"}
+![manta dag plot](images/cnv_manta.png){: style="height:30%;width:30%"}
+
+<br />
+<br />
+![cnv dag plot](images/cnvs.png)
+
 ## Pipeline output files:
 
 * `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv.html`
@@ -17,38 +25,29 @@ CNVs are called using both CNVkit and GATK CNV, followed by merging and annotati
 CNV segmentation is performed by **[CNVkit](https://cnvkit.readthedocs.io/en/stable/)** v0.9.9 on BWA-mem aligned and merged bam-files. CNVkit uses a panel of normal (see [references](references.md) on how the PoN was created) and a germline filtered vcf file. To call the final CNVs the program uses the estimated tumor purity, which can be from pathologists estimates or from purecn estimates.  
 The following steps are in included in the CNVkit calling:
 
-**CNVkit batch** (Make segmentation)
-
-* method: "hybrid"
-* Panel of normal
-
-**CNVkit call** (Call CNVs)
-
-* Germline vcf with variants called in the sample (see [Germline vcf](#germline-vcf) for details)
-* Tumor purity
-
-**CNVkit diagram** (Pdf with chromosome overview)  
-**CNVkit scatter** (Scatterplot of segmentation and BAF)
+| Rule | Info | Settings | Description |
+|-|-|-|-|
+| batch | Makes segmentation | [cnn reference](references.md#cnvkit_ref) | Sequence machine specific ... |
+| | | method: "hybrid" | |
+|_ _|_ _| Panel of normal |  |
+| call | Calls CNVs | [Germline vcf](dna_cnvs.md#germline-vcf) | Germline vcf with variants called in the sample |
+| | | Tumor purity | |
+| diagram | Create pdf with chromosome overview | |
+| scatter | Create scatterplot of segmentation and BAF | |
 
 ### GATK CNV
 CNV segmentation is performed by **[GATK CNV](https://gatk.broadinstitute.org/hc/en-us/articles/360035535892-Somatic-copy-number-variant-discovery-CNVs-)** v4.1.9.0 on BWA-mem aligned and merged bam-files. GATK CNV uses a panel of normal (see [references](references.md) on how the PoN was created) and a precompiled germline vcf file. GATK do not use the estimated tumor purity so the copy number levels are instead adjusted when the segmentation is coverted to vcf file.
-The following steps are in included in the GATK CNV calling:
+The following steps are in included in the GATK CNV calling: 
+<br />
 
-**gatk CollectReadCounts** (Coverage)
-
-* Design bed file in picards interval file format
-
-**gatk CollectAllelicCounts** (Allele frequencies of SNPs)
-
-* Fasta reference genome
-* SNP file with SNPs found in GnomAD with population frequency above 0.1%.
-
-**gatk DenoiseReadCounts** (Normalize coverage against panel of normal)
-
-* Uses a panel of normal
-
-**gatk ModelSegments** (Make segmentation)  
-**gatk CallCopyRatioSegments** (Call CNVs)
+| Rule | Info | Settings | Description |
+|-|-|-|-|
+| CollectReadCounts | Calculate coverage | [Design bed](references.md#ref_gatk_intervals) | panel design interval file |
+| CollectAllelicCount | Allele frequencies of SNPs | [Fasta reference genome](references.md#reference_fasta) | |
+|_ _|_ _ | [SNP file](references.md#gatk_collect_allelic_counts) | with SNPs found in GnomAD with population frequency above 0.1%.|
+| DenoiseReadCounts | Normalize coverage against panel of normal | [Panel of normal](references.md#gatk_denoise_read_counts_pon) | |
+| ModelSegments | Make segmentation .... | | |
+| CallCopyRatioSegments | Call CNVs and create a segment file containing .... | | |
 
 ## CNV call file conversion to vcf
 The CNVs call files from CNVkit and GATK CNV are converted to vcf format using the in-house scripts [cnvkit_vcf.py](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/cnvkit_vcf.py) ([rule](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/rules/cnvkit.smk)) and [gatk_to_vcf.py](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/gatk_to_vcf.py) ([rule](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/rules/gatk.smk)). In both cases a vcf header is added followed by the following annotation for each field in the vcf file:
@@ -121,7 +120,7 @@ SVDB --query
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
-| db_string | --db `SVDB_panel_of_normal.vcf` | Use a SVDB panel of normal to annotate the frequency of overlapping regions with at least 60 % <br/> overlap and at max 10000 bases from the breakpoints (see [references](references.md) on how the PoN was created) |
+| db_string | --db [`SVDB_panel_of_normal.vcf`](references.md#svdb_query) | Use a SVDB panel of normal to annotate the frequency of overlapping regions with at least 60 % <br/> overlap and at max 10000 bases from the breakpoints (see [references](references.md) on how the PoN was created) |
 | db_string | --out_frq Twist_AF | frequency annotation name in the INFO field |
 | db_string | --out_occ Twist_OCC | occurrence annotation name in the INFO field |
 

@@ -1,0 +1,11 @@
+digraph snakemake_dag {
+	rankdir=LR;
+    graph[bgcolor=white, margin=0];
+    node[shape=box, style=rounded, fontname=sans,                 fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+	200[label = "BAM", color = "0.0 0.0 0.0", style="dotted"];
+	2[label = "cnv_sv_manta_run_workflow_t", color = "0.53 0.6 0.85", style="rounded"];
+	11[label = "cnv_sv_manta_config_t", color = "0.32 0.6 0.85", style="rounded"];
+	200 -> 11
+	11 -> 2
+}            
