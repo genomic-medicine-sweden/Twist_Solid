@@ -1,6 +1,6 @@
 {
   "bam_dna/{sample}_{type}.bam": {"name": "_result_bam", "file": "alignment/samtools_merge_bam/{sample}_{type}.bam", "types": ["T", "N"]},
-  "bam_dna/{sample}_{type}.bam.bai": {"name": "_result_bai", "file": null, "types": ["T", "N"]},
+  "bam_dna/{sample}_{type}.bam.bai": {"name": "_result_bam_bai", "file": "alignment/samtools_merge_bam/{sample}_{type}.bam.bai", "types": ["T", "N"]},
   "bam_dna/mutect2_indel_bam/{sample}_{type}.bam": {"name": "_result_mutect2_indel_bam" , "file": "snv_indels/gatk_mutect2_merge/{sample}_{type}.bam", "types": ["T", "N"]},
   "bam_dna/mutect2_indel_bam/{sample}_{type}.bam.bai": {"name": "_result_mutect2_indel_bai" , "file": null, "types": ["T", "N"]},
   "bam_rna/{sample}_{type}.star_fusion.bam.bai": {"name": "_result_start_fusion_bai", "file": null, "types": ["R"]},
