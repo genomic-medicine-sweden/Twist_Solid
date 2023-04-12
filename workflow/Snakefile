@@ -213,7 +213,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 module biomarker:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.2.0")
+        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.3.0")
     config:
         config
 
