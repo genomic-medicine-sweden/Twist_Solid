@@ -9,6 +9,7 @@ results/dna/additional_files/cnv/VAL2022_T/VAL2022_T.purecn.svdb_query.vcf	33d50
 results/dna/cnv/VAL2022_T/VAL2022_T.purecn.purity.txt	04786973f5667168b36c3b1b4fcbc3f5
 results/dna/additional_files/fusion/VAL2022_T.gene_fuse_fusions.txt	30b4a76edd151b232828288d06e79062
 results/dna/fusion/VAL2022_T.gene_fuse_report.tsv	bb9a3b185f953f4bb0290ad93283dcfb
+results/dna/fusion/VAL2022_T.fuseq_wes.report.csv	ada3432e93dd1ff64f9254d8c83c91c5
 results/dna/hrd/VAL2022_T.pathology.scarhrd_cnvkit_score.txt	54ab3263a38fd8f38b78b5d5ec700a3c
 results/dna/hrd/VAL2022_T.purecn.scarhrd_cnvkit_score.txt	67f4304247ce18703315a41605c4ac45
 results/dna/msi/VAL2022_T.msisensor_pro.score.tsv	d60f0e5b61503d86c5a7ff82893609c1
