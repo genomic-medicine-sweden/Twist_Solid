@@ -33,7 +33,7 @@ pipeline {
                 module load singularity
                 module load slurm-drmaa
                 cd VAL2022
-                snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfile config/config.yaml -w 60
+                snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfile config/config.yaml -w 60 --notemp
                 git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
                 module load nextflow
                 nextflow run validation_workflow/validate_result.nf
