@@ -144,7 +144,7 @@ filter_fuseq_wes:
   gtf: "/data/ref_genomes/hg19/gtf/hg19.refGene.gtf"
 
 fuseq_wes:
-  container: "docker://hydragenetics/fuseq_wes:1.0.0"
+  container: "docker://hydragenetics/fuseq_wes:1.0.1"
   ref_json: "/data/ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json"
   gtfSqlite: "/data/ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite"
   fusiondb: "/data/ref_data/fuseq_wes/Mitelman_fusiondb.RData"
