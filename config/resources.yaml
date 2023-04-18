@@ -3,7 +3,7 @@ default_resources:
   time: "4:00:00"
   mem_mb: 6144
   mem_per_cpu: 6144
-  partition: "core"
+  partition: "low"
 
 arriba:
   threads: 5
@@ -21,6 +21,9 @@ fastp_pe:
   threads: 5
   mem_mb: 30720
   mem_per_cpu: 6144
+
+fuseq_wes:
+  time: "24:00:00"
 
 fusioncatcher:
   threads: 10

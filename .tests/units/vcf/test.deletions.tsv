@@ -1,0 +1,2 @@
+Gene(s)	Chromosome	Gene_start	Gene_end	Log2_ratio_diff	Median_L2R_deletion	Median_L2R_surrounding	Number_of_data_points	Number_of_stdev
+CDKN2A,CDKN2B	chr9	21968207	22008972	-0.9805237499999999	-1.2150835	-0.23455975	8	5.6758927918887725

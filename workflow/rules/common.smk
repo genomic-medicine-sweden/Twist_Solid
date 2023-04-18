@@ -133,6 +133,27 @@ def get_filtered_cnv_vcfs_for_merge_json(wildcards):
     return sorted(cnv_vcfs)
 
 
+def get_tc(wildcards):
+    tc_method = wildcards.tc_method
+    if tc_method == "pathology":
+        return get_sample(samples, wildcards)["tumor_content"]
+    else:
+        tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        if not os.path.exists(tc_file):
+            return -1
+        else:
+            with open(tc_file) as f:
+                return f.read()
+
+
+def get_tc_file(wildcards):
+    tc_method = wildcards.tc_method
+    if tc_method == "pathology":
+        return "samples.tsv"
+    else:
+        return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+
+
 def get_unfiltered_cnv_vcfs_for_merge_json(wildcards):
     cnv_vcfs = []
     tags = config.get("cnv_html_report", {}).get("cnv_vcf", [])
@@ -165,7 +186,7 @@ def generate_copy_code(workflow, output_json):
             code += f'@workflow.container("{copy_container}")\n'
             code += f'@workflow.conda("../env/copy_result.yaml")\n'
             code += f'@workflow.resources(time = "{time}", threads = {threads}, mem_mb = {mem_mb}, mem_per_cpu = {mem_per_cpu}, partition = "{partition}")\n'
-            code += '@workflow.shellcmd("cp {input} {output}")\n\n'
+            code += '@workflow.shellcmd("cp --preserve=timestamps {input} {output}")\n\n'
             code += "@workflow.run\n"
             code += (
                 f"def __rule_{rule_name}(input, output, params, wildcards, threads, resources, log, version, rule, "
@@ -173,6 +194,7 @@ def generate_copy_code(workflow, output_json):
                 "bench_iteration, cleanup_scripts, shadow_dir, edit_notebook, conda_base_path, basedir, runtime_sourcecache_path, "
                 "__is_snakemake_rule_func=True):\n"
                 '\tshell ( "(cp {input[0]} {output[0]}) &> {log}" , bench_record=bench_record, bench_iteration=bench_iteration)\n\n'
+                '\tshell ( "(cp --preserve=timestamps {input[0]} {output[0]}) &> {log}" , bench_record=bench_record, bench_iteration=bench_iteration)\n\n'
             )
     exec(compile(code, "result_to_copy", "exec"), workflow.globals)
 

@@ -4,7 +4,8 @@ filter_fusions = open(snakemake.params.filter_fusions)
 report = open(snakemake.output.report, "w")
 min_unique_reads = snakemake.params.min_unique_reads
 
-report.write("Gene1\tGene2\tNr_unique_reads\tGene_region1\tBreak_point1\tTranscript1\tGene_region2\tBreak_point2\tTranscript2\n")
+report.write("Gene1\tGene2\tNr_unique_reads\tGene_region1\tBreak_point1\tTranscript1\tGene_region2\tBreak_point2\t")
+report.write("Transcript2\tFlag\tRead_limit\n")
 
 FP_gene_pairs = []
 Noisy_genes_pairs = {}
@@ -41,13 +42,23 @@ for line in fusions:
     transcript2 = line.split("___")[1].split("_")[1].split(":")[0]
     min_u_r = min_unique_reads
     key = gene1 + "_" + gene2
+    Noisy_pair = False
+    Noisy_limit = 0
     if key in Noisy_genes_pairs:
         min_u_r = Noisy_genes_pairs[key]
+        Noisy_pair = True
+        Noisy_limit = min_u_r
     if unique_reads < min_u_r:
         continue
     if key in FP_gene_pairs:
         continue
-    report.write(
-        f"{gene1}\t{gene2}\t{unique_reads}\t{gene_region1}\t{bp1}\t{transcript1}\t{gene_region2}\t{bp2}\t{transcript2}\n"
-    )
+    if Noisy_pair:
+        report.write(
+            f"{gene1}\t{gene2}\t{unique_reads}\t{gene_region1}\t{bp1}\t{transcript1}\t{gene_region2}\t{bp2}\t{transcript2}\t"
+            f"Noisy fusion\t{Noisy_limit}\n"
+        )
+    else:
+        report.write(
+            f"{gene1}\t{gene2}\t{unique_reads}\t{gene_region1}\t{bp1}\t{transcript1}\t{gene_region2}\t{bp2}\t{transcript2}\t\t\n"
+        )
 report.close()

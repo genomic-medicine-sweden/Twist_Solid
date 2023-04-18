@@ -153,6 +153,9 @@ properties:
       cnv_hard_filter_amp:
         type: string
         description: Config file specifying which hard filters should be applied on cnvs with amplifications.
+      cnv_hard_filter_loh:
+        type: string
+        description: Config file specifying which hard filters should be applied on cnvs with deletions.
       germline:
         type: string
         description: Config file specifying which hard filters should be applied to obtain a germline vcf.
@@ -166,6 +169,26 @@ properties:
           type: string
           description: Gene annotated bed files with genes to be included.
 
+  filter_report_fuseq_wes:
+    type: object
+    properties:
+      min_support:
+        type: integer
+        description: Minimal number of supporting reads.
+      gene_white_list:
+        type: string
+        description: Genes which must be included in the fusion to be reported. Leave blank to report everything.
+      filter_on_fusiondb:
+        type: boolean
+        description: If True, only include fusions that are present in the Mitelman fusion database.
+      gtf:
+        type: string
+        description: Path to gtf annotation file
+    required:
+      - min_support
+      - filter_on_fusiondb
+      - gtf
+
   fix_vcf_ad_for_qci:
     type: object
     description: parameters for fix_vcf_ad_for_qci
@@ -173,6 +196,30 @@ properties:
       benchmark_repeats:
         type: integer
         description: set number of times benchmark should be repeated
+
+  fuseq_wes:
+    type: object
+    properties:
+      ref_json:
+        type: string
+        description: Reference file in json format.
+      gtfSqlite:
+        type: string
+        description: Reference file in SQLlite format.
+      fusiondb:
+        type: string
+        description: Known cancer fusions from the Mitelman fusion database.
+      paralogdb:
+        type: string
+        description: Database of paralog genes.
+      params:
+        type: string
+        description: Parameter file specifying filtering and other program parameters. Leave blank for default parameters.
+    required:
+      - ref_json
+      - gtfSqlite
+      - fusiondb
+      - paralogdb
 
   gatk_calculate_contamination:
     type: object

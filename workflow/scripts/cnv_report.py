@@ -5,11 +5,12 @@ from hydra_genetics.utils.io import utils
 log = logging.getLogger()
 
 
-def create_tsv_report(input_vcfs, input_org_vcfs, output_txt, del_1p19q_cn, del_1p19q_chr_arm_fraction):
+def create_tsv_report(input_vcfs, input_org_vcfs, input_tsv, output_txt, del_1p19q_cn, del_1p19q_chr_arm_fraction, TC):
     gene_all_dict = {}
     first_vcf = True
     nr_writes = 0
     log.info(f"Opening output tsv file: {output_txt}")
+    sample_name = ""
     with open(output_txt, "w") as writer:
         for input_org_vcf in input_org_vcfs:
             del_1p19q = {
@@ -23,6 +24,7 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt, del_1p19q_cn, del_
                 raise Exeception(f"Unable to process vcf with more then one sample: {samples}")
             else:
                 samples = samples[0]
+                sample_name = samples
             for variant in variants:
                 genes = utils.get_annotation_data_info(variant, "Genes")
                 log.debug(f"Processing variant: {variant}")
@@ -128,11 +130,30 @@ def create_tsv_report(input_vcfs, input_org_vcfs, output_txt, del_1p19q_cn, del_
                                 writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF:.2f}\t{cn:.2f}")
         log.info(f"Processed {counter} variants")
 
+        deletions = open(input_tsv)
+        header_list = next(deletions).split("\t")
+        for deletion in deletions:
+            columns = {k: v for k, v in zip(header_list, deletion.strip().split("\t"))}
+            gene = columns['Gene(s)']
+            chr = columns['Chromosome']
+            start = columns['Gene_start']
+            end = columns['Gene_end']
+            callers = "small_deletion"
+            AF = "NA"
+            log_odds_ratio = float(columns['Log2_ratio_diff'])
+            cn = 2*pow(2, float(log_odds_ratio))
+            ccn = cn
+            if TC > 0.0:
+                ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
+            writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
+
 
 if __name__ == "__main__":
     in_vcfs = snakemake.input.vcfs
     in_org_vcfs = snakemake.input.org_vcfs
+    in_tsv = snakemake.input.tsv
     out_tsv = snakemake.output.tsv
     del_1p19q_cn = snakemake.params.del_1p19q_cn_limit
     del_1p19q_chr_arm_fraction = snakemake.params.del_1p19q_chr_arm_fraction
-    create_tsv_report(in_vcfs, in_org_vcfs, out_tsv, del_1p19q_cn, del_1p19q_chr_arm_fraction)
+    TC = float(snakemake.params.tc)
+    create_tsv_report(in_vcfs, in_org_vcfs, in_tsv, out_tsv, del_1p19q_cn, del_1p19q_chr_arm_fraction, TC)

@@ -38,7 +38,7 @@
 
         .table-container {
             min-width: 35em;
-            max-width: 50em;
+            max-width: 60em;
         }
 
         svg .panel-overlay {
@@ -85,7 +85,7 @@
             }
 
             .table-container {
-                max-width: 40em;
+                max-width: 60em;
             }
 
             .chromosome-view {
@@ -116,7 +116,7 @@
             }
 
             .table-container {
-                max-width: 40em;
+                max-width: 50em;
             }
 
             .chromosome-view {
@@ -205,6 +205,10 @@
             width: 10%;
         }
 
+        #cnv-table th:nth-child(8) {
+            width: 10%;
+        }
+
         thead {
             background-color: #DDD;
             border-bottom: 1px solid #333;
@@ -276,6 +280,7 @@
             <ul>
                 <li>Sample: {{ metadata.sample }}</li>
                 <li>Date: <time>{{ metadata.date }}</time></li>
+                <li>Tumor cell content: {{ metadata.tc }} ({{ metadata.tc_method }})</li>
             </ul>
         </header>
 
@@ -311,6 +316,15 @@
                         Click the magnifying glass to zoom in on the region in question.
                         Hover over the copy number to see what results other callers got for this gene.
                     </p>
+                    <p>
+                        BAF values outside the range 0&ndash;1 might indicate that the tumor cell content is underestimated.
+                    </p>
+                    <p>
+                        Note that variants labelled as COPY_NORMAL can be present in the filtered table.
+                        This indicates that there is a variant covering the same gene that has been called by a different caller or the variant has a VAF value < 0.3 or > 0.7 .
+                    </p>
+                    <input type="checkbox" id="table-filter-toggle" checked />
+                    <label for="table-filter-toggle" title="Apply predefined filters to the table">Filter table</label>
                     <table id="cnv-table">
 
                     </table>
@@ -385,6 +399,13 @@
                 .attr("viewBox", [0, 0, width, height])
                 .attr("style", "max-width: 100%; height: auto; max-height: 500px; height: intrinsic;");
 
+            // Clip path for annotations
+            svg.append("clipPath")
+                .attr("id", "annotation-clip")
+                .append("rect")
+                .attr("width", width - margin.left - margin.right)
+                .attr("height", 2 * plotHeight + margin.between);
+
             // Clip path for log ratios
             svg.append("clipPath")
                 .attr("id", "lr-area-clip")
@@ -401,6 +422,7 @@
                 .attr("clip-path", "url(#lr-area-clip)");
             const vafArea = plotArea.append("g")
                 .attr("id", "vaf-plot")
+                .attr("clip-path", "url(#lr-area-clip)")
                 .attr("transform", `translate(0, ${plotHeight + margin.between})`)
 
             const regions = lrArea.append("g")
@@ -508,11 +530,12 @@
 
             const plotAnnotations = function() {
                 plotArea.selectAll(".annotation")
+                    .attr("clip-path", "url(#annotation-clip)")
                     .data(data.annotations, d => d.name)
                     .join(
                         enter => {
                             let annotation_group = enter.append("g")
-                                .attr("class", "annotation")
+                                .attr("class", "annotation");
                             annotation_group.append("rect")
                                 .attr("class", "annotation-marker")
                                 .attr("x", d => xScale(d.start))
@@ -1033,6 +1056,7 @@
 
             const tableHeader = table.append("thead").append("tr");
             const tableBody = table.append("tbody");
+            let applyFilter = d3.select("#table-filter-toggle").node().checked;
 
             let tableData = null;
 
@@ -1050,11 +1074,12 @@
                     // Floating point, allow for missing numbers
                     case "copyNumber":
                     case "corrCopyNumber":
+                    case "baf":
                     case "cn":
                         return {
                             class: "right tooltip-trigger",
                             format: x => {
-                                if (x !== null) {
+                                if (x !== null && !isNaN(x)) {
                                     return x.toLocaleString(
                                         undefined,
                                         { minimumFractionDigits: 2 }
@@ -1088,6 +1113,27 @@
                 }
             }
 
+            const getColumnLabel = col => {
+                const columns = {
+                    view: "View",
+                    caller: "Caller",
+                    chromosome: "Chr",
+                    genes: "Genes",
+                    start: "Start",
+                    end: "End",
+                    length: "Length",
+                    type: "Type",
+                    cn: "CN",
+                    baf: "BAF",
+                };
+
+                if (columns[col]) {
+                    return columns[col];
+                }
+
+                return col;
+            };
+
             const tooltip = d3.select(".container")
                 .append("div")
                 .attr("class", "copy-number-tooltip hidden")
@@ -1097,7 +1143,7 @@
                         .selectAll("th")
                         .data(["caller", "type", "cn"])
                         .join("th")
-                            .text(d => d))
+                            .text(getColumnLabel))
                     .call(t => t.append("tbody")));
 
             const copyNumberTooltip = (data, x, y) => {
@@ -1129,9 +1175,11 @@
                 const callerIndex = getActiveCaller();
                 tableData = cnvData
                     .map(d => d.callers[callerIndex].cnvs
+                        .filter(di => !applyFilter || (applyFilter && di.passed_filter))
                         .map(di => {
                             const allCols = {view: "🔍", chromosome: d.chromosome, ...di};
-                            const {caller, ...cols} = allCols;
+                            // Don't display caller and filter status in table
+                            const {caller, passed_filter, ...cols} = allCols;
                             return cols;
                         }))
                     .flat();
@@ -1161,7 +1209,7 @@
                     .selectAll("th")
                     .data(Object.keys(tableData[0]).filter(k => k !== "others"), d => d)
                     .join("th")
-                        .text(d => d)
+                        .text(getColumnLabel)
                         .attr("class", d => getColumnDef(d).class);
 
                 tableBody
@@ -1200,6 +1248,11 @@
                             .style("left", `${e.layerX - dims.width - 20}px`);
                     });
             }
+
+            d3.select("#table-filter-toggle").on("change", (event) => {
+                applyFilter = event.target.checked;
+                update();
+            });
 
             const getData = () => tableData;
 
