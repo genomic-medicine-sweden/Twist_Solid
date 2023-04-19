@@ -23,6 +23,8 @@ fastp_pe:
   mem_per_cpu: 6144
 
 fuseq_wes:
+  threads: 2
+  mem_mb: 12288
   time: "24:00:00"
 
 fusioncatcher:

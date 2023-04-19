@@ -24,6 +24,11 @@ vep:
 fastqc:
   threads: 2
 
+fuseq_wes:
+  threads: 3
+  mem_mb: 11400
+  time: "24:00:00"
+
 fusioncatcher:
   threads: 8
   mem_mb: 30000
