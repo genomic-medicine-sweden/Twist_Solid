@@ -108,15 +108,15 @@ def filter_amplifications(
     if median_high < 0:
         return "Not_amplification"
     # Filter based on difference in log odds ration between high and low median (min_log_odds_diff)
-    if median_low - median_high < min_log_odds_diff:
+    if median_high - median_low < min_log_odds_diff:
         return "Low_abs_diff"
     # Filter based on the number of standard deviation between the high and low median (min_nr_stdev_diff)
-    if median_high > median_low - stdev_low * min_nr_stdev_diff:
+    if median_high < median_low + stdev_low * min_nr_stdev_diff:
         return "Low_nr_std_diff"
     median_diff = median_high - median_low
     nr_std_diff = abs(median_diff) / stdev_low
     amplifications.write(f"{region[5]}\t{region[0]}\t{region[3]}\t{region[4]}")
-    amplifications.write(f"\t{median_diff}\t{median_low}\t{median_high}\t{len(low_probes)}\t{nr_std_diff}\n")
+    amplifications.write(f"\t{median_diff}\t{median_low}\t{median_high}\t{len(high_probes)}\t{nr_std_diff}\n")
     return "Unfiltered"
 
 
@@ -140,16 +140,16 @@ def call_small_cnv_amp(
 ):
     regions = read_regions_data(regions_file)
     sample_name = cnv_file_name.split("/")[1].split("_")[0]
-    amplifications.write("Gene(s)\tChromosome\tGene_start\tGene_end\tLog2_ratio_diff\tMedian_L2R_deletion\t")
+    amplifications.write("Gene(s)\tChromosome\tGene_start\tGene_end\tLog2_ratio_diff\tMedian_L2R_amplification\t")
     amplifications.write("Median_L2R_surrounding\tNumber_of_data_points\tNumber_of_stdev\n")
     for region in regions:
         probe_data, gene_probe_index = read_cnv_data(cnv_file_name, sample_name, region)
         # Warning about to small region
-        # 1 window for deletions and one window plus 3 for high probes (for statistics) plus 2 spaces between windows)
+        # 1 window for Amplifications and one window plus 3 for high probes (for statistics) plus 2 spaces between windows)
         if len(probe_data) < window_size * 2 + 3 + 2:
             log.info(f"Too few data points for region: {region}")
         max_probe_diff_index, min_probe_diff_index = find_max_probe_diff(probe_data, window_size)
-        filter = filter_deletions(
+        filter = filter_amplifications(
             max_probe_diff_index, min_probe_diff_index, probe_data, gene_probe_index, region, amplifications, region_max_size,
             window_size, min_log_odds_diff, min_nr_stdev_diff,
         )

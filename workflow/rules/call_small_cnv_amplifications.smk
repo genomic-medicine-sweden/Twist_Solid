@@ -9,7 +9,7 @@ rule call_small_cnv_amplifications:
         cnv_data="cnv_sv/gatk_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv",
         regions_file=config.get("call_small_cnv_amplifications", {}).get("regions_file", ""),
     output:
-        deletions=temp("cnv_sv/call_small_cnv_amplifications/{sample}_{type}.amplifications.tsv"),
+        amplifications=temp("cnv_sv/call_small_cnv_amplifications/{sample}_{type}.amplifications.tsv"),
     params:
         window_size=config.get("call_small_cnv_amplifications", {}).get("window_size", 4),
         region_max_size=config.get("call_small_cnv_amplifications", {}).get("region_max_size", 30),
@@ -34,6 +34,6 @@ rule call_small_cnv_amplifications:
     conda:
         "../envs/call_small_cnv_deletions.yaml"
     message:
-        "{rule}: call small amplifications in cnv data into {output.deletions}"
+        "{rule}: call small amplifications in cnv data into {output.amplifications}"
     script:
         "../scripts/call_small_cnv_amplifications.py"
