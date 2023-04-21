@@ -46,5 +46,6 @@
   "results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv_report.tsv": {"name": "_result_cnv_report_tsv1", "file": "cnv_sv/svdb_query/{sample}_{type}.purecn.cnv_report.tsv", "types": ["T", "N"]},
   "results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv_report.tsv": {"name": "_result_cnv_report_tsv2", "file": "cnv_sv/svdb_query/{sample}_{type}.pathology.cnv_report.tsv", "types": ["T", "N"]},
   "results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.deletions.tsv": {"name": "_result_call_small_cnv_deletions", "file": "cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv", "types": ["T", "N"]},
+  "results/dna/cnv/{sample}_{type}/{sample}_{type}.amplifications.tsv": {"name": "_result_call_small_cnv_amplifications", "file": "cnv_sv/call_small_cnv_amplifications/{sample}_{type}.amplifications.tsv", "types": ["T", "N"]},
   "results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz": {"name": "_result_manta_vcf", "file": "cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz", "types": ["T"]}
 }
