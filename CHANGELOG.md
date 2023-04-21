@@ -1,5 +1,92 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.4.0...v0.5.0) (2023-04-19)
+# Release notes
+For more details on features and bug fixes see further down.
+
+## Features
+
+### CNV
+- The CNV.hmtl report now reports TC content
+- The CNV.hmtl report now reports VAF values in the variant table
+- The CNV.tsv report now also includes deletions called by the small deletions caller
+
+### TMB
+- Improved TMB-calculations. Finds more true variants and have better correlation compared to TSO500. Does not use any panel of normals anymore making the calculations more independent on sequencing platform.
+
+### DNA fusions
+- Added DNA fusion calling using Fuseq-WES with superior results compared to GeneFuse
+- GeneFuse: Added filtering of the ERG gene
+
+### RNA exon skipping
+- Only report MET exon 14 skipping and EGFRvIII and not other potential skipping events in these genes
+
+## Bugfixes
+- Copy .bai file with timestamp instead of creating it so that it is not removed by snakemake
+
+## Changes in config.yaml
+- TMB: new and updated config options for tmb rule
+- FuseqWES: Added config for fuseq_wes rule
+- FuseqWES filtering: Added config for filter_fuseq_wes rule
+
+## Hydra modules with releases
+- prealignment: v1.0.0 (No change)
+- alignment: v0.3.1 (No change)
+- snv_indels: v0.3.0 (No change)
+- annotation: v0.3.0 (No change)
+- filtering: v0.1.0 (No change)
+- qc: v0.3.0 (No change)
+- biomarker: v0.3.0 (TMB updated with more config options)
+- cnv_sv: v0.3.1 (No change)
+
+### Features
+
+* add BAF to CNV table ([8f08da1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8f08da1e2bfad41b838c21778f489305117ce475))
+* add tumor cell content to report ([3740ab6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3740ab6eee7d647d45b75728b05297af2c677efa))
+* added fuseq_wes rule and filtering to pipeline ([3702411](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/37024115e0786323696858da45cd954c9f45a466))
+* added small cnv deletions to tsv report ([2bd67dd](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2bd67dda576d98ca5b73f48cecbf08c248ac9df2))
+* added trancript black list file ([f4d3aaa](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f4d3aaa07a7d4fa6b2b7252d2b90f2187a17b7bd))
+* change purity result file to purecn output for additional info ([270718e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/270718eef1d9f7f9672e89ccfcd24b80a32682f6))
+* ERG filtering ([9d57325](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9d57325d550a3f2abeeae593e483d1f1fbc69228))
+* improved tmb calculations independent of artifacts and background ([452ca47](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/452ca478972576704e9d2e280932f7dde271dc40))
+* move non-essential result files to additional files ([7883b8e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7883b8e38d82ef360b02dc2a9c0b1a612febbcf9))
+* move small deletions to additional result files ([bd71f95](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/bd71f955e67ceca96559b5793a728c5016e5df16))
+* report only MET exon 14 and EGFRvIII ([e6865d0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e6865d02364aca8bd5db7c97ea05395db7d0998e))
+* **script:** add flag for noisy fusions ([ed5b5d8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ed5b5d880180794d7fba7c33d93c9d464bef56e5))
+* update to latest hydra fusion develop tag ([9bcd34b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9bcd34ba4e6c9b3b4e858766a184026d998a1f3c))
+* update to new reference module tag ([3844f52](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3844f52240d2e44c395465f84d631912098bebef))
+* updated to biomarker develop tag ([860ebf6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/860ebf6049d076d90a06fca7020d619d84bd3524))
+
+
+### Bug Fixes
+
+* better table column names ([6419696](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6419696d245af09b4a1221fa6baf70cc4f102c41))
+* bugfix ([284520e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/284520eee3ebb9b1fc874df254b24db037e0898f))
+* **config:** purecn rules ([aee6424](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/aee642403369ae375f9b5f4b07595e262867de76))
+* **config:** variable name changed in new tag ([d01fc93](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d01fc93bf78ce9ad37ddaf9383b8fbbbd83d4abf))
+* copy bai files instead of creating ([feecb70](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/feecb705fe30e1d9223ffe4206156a73fe82b606))
+* docker version ([198f648](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/198f6481acc8c2b4528965b90f741be920965d5c))
+* docker version ([f022c57](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f022c57c8169c4fcac2b207e1e701b76987d8d63))
+* fix incorrect annoation order of BRAF ([5f65a3d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5f65a3d4246007e8c67a7626ca8bd1023db1f1cd))
+* input file name fix ([f1c0694](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f1c06941a64cfce877af4f2e8ade28b5976ee481))
+* preserve timestamps when copying ([ff1b17e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ff1b17e8d5abc10db38f7e00d905588b7c9f5a88))
+* ruleorder ([21ba998](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/21ba99867428bdbdb491bfbc93545412124327ea))
+* **schema:** update variable name ([c3ffb2d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c3ffb2d1c26b5c7eb5836e5dfe7c84c18d58e86d))
+* tag name ([1fa43ab](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1fa43abe9f627b65ac6ef8c71ba0805bb7609700))
+* update biomarker tag ([518e738](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/518e738d66b750ff2f2f2b31ab9341a1d6b5ddb3))
+* Update config/config.yaml ([daa344e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/daa344e82e49b7a87eff022abedbd1a31b87a419))
+* vaf and annotations plotted out-of-bounds ([44b8ce8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/44b8ce8b57241e1c0056cd967de8490080f17199))
+
+
+### Performance Improvements
+
+* increase allowed memory usage for fuseq wes ([10f9804](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/10f98047510248b730408c97834fe5f23f30f96b))
+
+
+### Documentation
+
+* add missing tumor_content column to sample schema ([7dbfa63](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7dbfa631b46b55a46e731630d5ead6acaa566b5e))
+
 ## [0.4.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.3.0...v0.4.0) (2023-02-07)
 
 
