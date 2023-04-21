@@ -89,7 +89,7 @@ call_small_cnv_amplifications:
   window_size: 3
   region_max_size: 15
   min_nr_stdev_diff: 6
-  min_log_odds_diff: 1.0
+  min_log_odds_diff: 0.4
 
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"
