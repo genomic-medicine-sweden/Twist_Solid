@@ -1,7 +1,43 @@
 # Changelog
 
 ## [0.5.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.4.0...v0.5.0) (2023-04-19)
+# Release notes
+For more details on features and bug fixes see further down.
 
+## Features
+
+### CNV
+- The CNV.hmtl report now reports TC content
+- The CNV.hmtl report now reports VAF values in the variant table
+- The CNV.tsv report now also includes deletions called by the small deletions caller
+
+### TMB
+- Improved TMB-calculations. Finds more true variants and have better correlation compared to TSO500. Does not use any panel of normals anymore making the calculations more independent on sequencing platform.
+
+### DNA fusions
+- Added DNA fusion calling using Fuseq-WES with superior results compared to GeneFuse
+- GeneFuse: Added filtering of the ERG gene
+
+### RNA exon skipping
+- Only report MET exon 14 skipping and EGFRvIII and not other potential skipping events in these genes
+
+## Bugfixes
+- Copy .bai file with timestamp instead of creating it so that it is not removed by snakemake
+
+## Changes in config.yaml
+- TMB: new and updated config options for tmb rule
+- FuseqWES: Added config for fuseq_wes rule
+- FuseqWES filtering: Added config for filter_fuseq_wes rule
+
+## Hydra modules with releases
+- prealignment: v1.0.0 (No change)
+- alignment: v0.3.1 (No change)
+- snv_indels: v0.3.0 (No change)
+- annotation: v0.3.0 (No change)
+- filtering: v0.1.0 (No change)
+- qc: v0.3.0 (No change)
+- biomarker: v0.3.0 (TMB updated with more config options)
+- cnv_sv: v0.3.1 (No change)
 
 ### Features
 
