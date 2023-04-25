@@ -14,7 +14,8 @@ rule cnv_tsv_report:
             "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf",
             "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes.vcf",
         ],
-        tsv="cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv",
+        deletions="cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv",
+        amplifications="cnv_sv/call_small_cnv_amplifications/{sample}_{type}.amplifications.tsv",
         tc_file=get_tc_file,
     output:
         tsv=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.cnv_report.tsv"),
