@@ -13,8 +13,8 @@ rule call_small_cnv_amplifications:
     params:
         window_size=config.get("call_small_cnv_amplifications", {}).get("window_size", 4),
         region_max_size=config.get("call_small_cnv_amplifications", {}).get("region_max_size", 30),
-        min_nr_stdev_diff=config.get("call_small_cnv_amplifications", {}).get("min_nr_stdev_diff", 5),
-        min_log_odds_diff=config.get("call_small_cnv_amplifications", {}).get("min_log_odds_diff", 5),
+        min_nr_stdev_diff=config.get("call_small_cnv_amplifications", {}).get("min_nr_stdev_diff", 8),
+        min_log_odds_diff=config.get("call_small_cnv_amplifications", {}).get("min_log_odds_diff", 0.4),
     log:
         "cnv_sv/call_small_cnv_amplifications/{sample}_{type}.amplifications.tsv.log",
     benchmark:

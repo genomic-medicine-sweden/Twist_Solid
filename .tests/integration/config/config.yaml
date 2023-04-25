@@ -57,10 +57,15 @@ call_small_cnv_deletions:
 
 call_small_cnv_amplifications:
   regions_file: "DATA/cnv_amplification_genes.tsv"
-  window_size: 4
-  region_max_size: 30
-  min_nr_stdev_diff: 5
-  min_log_odds_diff: 5
+  window_size: 3
+  region_max_size: 5
+  min_nr_stdev_diff: 8
+  min_log_odds_diff: 0.4
+
+cnv_tsv_report:
+  amp_cn_limit: 6.0
+  del_1p19q_cn_limit: 1.4
+  del_1p19q_chr_arm_fraction: 0.3
 
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"

@@ -116,7 +116,7 @@ def filter_amplifications(
     median_diff = median_high - median_low
     nr_std_diff = abs(median_diff) / stdev_low
     amplifications.write(f"{region[5]}\t{region[0]}\t{region[3]}\t{region[4]}")
-    amplifications.write(f"\t{median_diff}\t{median_low}\t{median_high}\t{len(high_probes)}\t{nr_std_diff}\n")
+    amplifications.write(f"\t{median_diff}\t{median_high}\t{median_low}\t{len(high_probes)}\t{nr_std_diff}\n")
     return "Unfiltered"
 
 
@@ -135,7 +135,7 @@ def read_regions_data(regions_file):
     return regions
 
 
-def call_small_cnv_amp(
+def call_small_cnv_amplifications(
     cnv_file_name, regions_file, amplifications, window_size, region_max_size, min_nr_stdev_diff, min_log_odds_diff,
 ):
     regions = read_regions_data(regions_file)
@@ -159,7 +159,7 @@ def call_small_cnv_amp(
 if __name__ == "__main__":
     log = snakemake.log_fmt_shell(stdout=False, stderr=True)
 
-    call_small_cnv_amp(
+    call_small_cnv_amplifications(
         snakemake.input.cnv_data,
         open(snakemake.input.regions_file),
         open(snakemake.output.amplifications, "w"),

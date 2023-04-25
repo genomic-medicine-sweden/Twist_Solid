@@ -88,7 +88,7 @@ call_small_cnv_amplifications:
   regions_file: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amplification_genes.tsv"
   window_size: 3
   region_max_size: 15
-  min_nr_stdev_diff: 6
+  min_nr_stdev_diff: 8
   min_log_odds_diff: 0.4
 
 cnvkit_batch:
@@ -122,6 +122,7 @@ cnvkit_scatter:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnv_tsv_report:
+  amp_cn_limit: 6.0
   del_1p19q_cn_limit: 1.4
   del_1p19q_chr_arm_fraction: 0.3
 
