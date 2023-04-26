@@ -228,7 +228,7 @@ use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
 
 module fusions:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="8599604")
+        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="8aec226")
     config:
         config
 
