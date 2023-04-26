@@ -86,6 +86,7 @@ call_small_cnv_deletions:
 
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"
+  extra: "--drop-low-coverage"
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_nextseq_36.cnn"
   method: "hybrid"
 
