@@ -213,7 +213,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 module biomarker:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.3.0")
+        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.3.1")
     config:
         config
 
@@ -228,7 +228,7 @@ use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
 
 module fusions:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="7edfaf1")
+        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="8599604")
     config:
         config
 
