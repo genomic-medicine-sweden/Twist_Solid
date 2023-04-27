@@ -171,8 +171,8 @@ def create_tsv_report(
 if __name__ == "__main__":
     in_vcfs = snakemake.input.vcfs
     in_org_vcfs = snakemake.input.org_vcfs
-    in_del = snakemake.input.deletion
-    in_amp = snakemake.input.amplification
+    in_del = snakemake.input.deletions
+    in_amp = snakemake.input.amplifications
     amp_cn_limit = snakemake.params.call_small_amplifications_cn_limit
     out_tsv = snakemake.output.tsv
     del_1p19q_cn = snakemake.params.del_1p19q_cn_limit
