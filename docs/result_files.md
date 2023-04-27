@@ -9,7 +9,7 @@ The pipeline line generates lots of files of which only some are kept. These fin
 | **File** | **File type** | **Description** |
 |-|-|-|
 | **Alignment** | :~~: | ~~ |
-| **`bam_dna/{sample}_{type}.bam`** | bam | Alignment file |
+| **`bam_dna/{sample}_{type}.bam`** | bam | Alignment file used for downstream analysis|
 | `bam_dna/{sample}_{type}.bam.bai` | bai | Alignment index file |
 | **`bam_rna/{sample}_{type}.star_fusion.bam`** | bam | Alignment file  |
 | `bam_rna/{sample}_{type}.star_fusion.bam.bai` | bai | Alignment index file |
