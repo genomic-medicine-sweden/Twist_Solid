@@ -61,7 +61,7 @@ default-resources: [threads=1, time="04:00:00", partition="low", mem_mb="3074", 
 ```
 
 ## samples.tsv and units.tsv
-The `samples.tsv` and `units.tsv` are input files that must be generated before running the pipeline and should in general be located in the base folder of the analysis folder even if this can be set in the config.yaml. See further [running the pipeline](running.md) and [create input files](https://hydra-genetics.readthedocs.io/en/latest/create_sample_files/).
+The `samples.tsv` and `units.tsv` are input files that must be generated before running the pipeline and should in general be located in the base folder of the analysis folder, can be changed in the config.yaml. See further [running the pipeline](running.md) and [create input files](https://hydra-genetics.readthedocs.io/en/latest/create_sample_files/).
 
 ### Example samples.tsv
 
