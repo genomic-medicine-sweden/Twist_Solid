@@ -7,3 +7,4 @@ mdx_spanner==0.0.5
 mkdocs-yaml-schema-plugin==0.2.2
 mkdocs-snakemake-rule-plugin==0.2.0
 mkdocs-material==9.1.7
+mkdocs-include-markdown-plugin==4.0.4
