@@ -1,5 +1,5 @@
 # Alignment
-See the [alignment hydra-genetics module](https://alignment.readthedocs.io/en/latest/) documentation for more details on the softwares. Default hydra-genetics settings/resources are used if no configuration is specfied.
+See the [alignment hydra-genetics module](https://alignment.readthedocs.io/en/latest/) documentation for more details on the softwares. Default hydra-genetics settings/resources are used if no configuration is specified.
 
 <br />
 ![dag plot](images/alignment.png){: style="height:90%;width:90%"}
@@ -10,7 +10,7 @@ See the [alignment hydra-genetics module](https://alignment.readthedocs.io/en/la
 * `bam_dna/{sample}_{type}.bam.bai`
 
 ## Alignment with BWA-mem
-Alignment of fastq files into bam files is performed by **[bwa-mem](https://github.com/lh3/bwa)** v0.7.17 using the non-merged trimmed fastq files. This make it possible to speed up alignent by utlizing parallization and also make it possible to analyze qc for lanes separately. Bamfile are then directly sorted by **[samtools sort](http://www.htslib.org/doc/samtools-sort.html)** v1.15. 
+Alignment of fastq files into bam files is performed by **[bwa-mem](https://github.com/lh3/bwa)** v0.7.17 using the non-merged trimmed fastq files. This make it possible to speed up alignent by utlizing parallization and also make it possible to analyze qc for lanes separately. Bamfile are then directly sorted by **[samtools sort](http://www.htslib.org/doc/samtools-sort.html)** v1.15.
 
 ### Read groups
 Bam file read groups are set according to sequencing information in the `units.tsv` file.
@@ -33,7 +33,7 @@ where the individual read groups are defined below:
 
 **Reference files**  
 
-- [bwa reference genome indexes](references.md#bwa_me_ref) 
+- [bwa reference genome indexes](references.md#bwa_me_ref)
 
 <br />
 **Software settings**

@@ -16,7 +16,7 @@ Here is a brief overview of the entire pipeline. For details see subsections and
   6.3 Annotation using SVDB and hydra-genetics  
   6.4 Filtering using hydra-genetics  
   6.5 CNV html report using hydra-genetics
-7. **Fusion** calling using GeneFuse
+7. **Fusion** calling using GeneFuse and FuSeq_WES
 8. **Biomarkers**  
   8.1 TMB using hydra-genetics  
   8.2 MSI score using MSIsensor-Pro  

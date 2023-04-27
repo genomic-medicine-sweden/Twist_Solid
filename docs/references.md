@@ -1,7 +1,7 @@
 # References, panel of normals and design files
 
 ## References overview
-The following reference files, panel of normals and design files are need to run the Twist Solid Pipeline:
+The following reference files, panel of normals and design files are needed to run the Twist Solid Pipeline:
 
 | Rule | Config name | File |
 |-|-|-|
@@ -22,7 +22,7 @@ The following reference files, panel of normals and design files are need to run
 | | <div id="arriba_extra_gff3_">extra</div> | `arriba/arriba_v2.3.0/database/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` |
 |_ _| <div id="arriba_extra_tsv">extra | `arriba/arriba_v2.3.0/database/known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` |
 | <div id="arriba_draw_fusion_cytobands">arriba_draw_fusion</div> | cytobands | `arriba/arriba_v2.3.0/database/cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv` |
-| | <div id="arriba_draw_fusion_gtf">gtf</div> | `hg19/gtf/hg19.refGene.gtf` |
+| | <div id="arriba_draw_fusion_gtf">gtf</div> | `hg19.refGene.gtf` |
 |_ _| <div id="arriba_draw_fusion_protein_domains">protein_domains</div> | `arriba/arriba_v2.3.0/database/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` |
 | <div id="cnv_amp_genes">annotate_cnv</div> | cnv_amp_genes | `cnv_amp_genes.bed` |
 |_ _| <div id="cnv_loh_genes">cnv_loh_genes</div> | `cnv_loh_genes.bed` |
@@ -36,6 +36,7 @@ The following reference files, panel of normals and design files are need to run
 | | pac | `hg19.with.mt.pac` |
 |_ _| sa | `hg19.with.mt.sa` |
 | <div id="call_small_cnv_deletions">call_small_cnv_deletions</div> | regions_file | `cnv_deletion_genes.tsv` |
+| <div id="call_small_cnv_amplifications">call_small_cnv_amplifications</div> | regions_file | `cnv_amplification_genes.tsv` |
 | <div id="cnvkit_ref">cnvkit_batch</div> | normal_reference | `cnvkit_nextseq_36.cnn` |
 | <div id="normal_reference_hrd">cnvkit_batch_hrd</div> | normal_reference_hrd | `cnvkit_nextseq_27_HRD.cnn` |
 | <div id="exon_skipping">exon_skipping</div> | design_bed | `Twist_RNA_Design5.annotated.bed` |
@@ -46,6 +47,13 @@ The following reference files, panel of normals and design files are need to run
 |_ _| variants | `small_exac_common_3.hg19.vcf.gz` |
 | <div id="genefuse_transcripts">gene_fuse | genes | `GMS560_fusion_w_pool2.hg19.221117.csv` |
 |_ _| <div id="genefuse_fasta">fasta</div> | `hg19.with.mt.fasta` |
+| <div id="fuseq_wes_json">FuSeq_WES | transcript annotation | `UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json` |
+|_ _| <div id="fuseq_wes_sqlite">transcript database</div> | `UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite` |
+|_ _| <div id="fuseq_wes_fusion_db>fusion database</div> | `Mitelman_fusiondb.RData` |
+|_ _| <div id="fuseq_wes_paralog_db">paralog database</div> | `ensmbl_paralogs_grch37.RData` |
+| <div id="filter_report_fuseq_wes">transcripts | transcript annotation | `hg19.refGene.gtf` |
+|_ _| <div id="fuseq_wes_white_list">gene white list</div> | `fuseq_wes_gene_white_list.txt` |
+|_ _| <div id="fuseq_wes_transcript_black_list">transcript black list</div> | `fuseq_wes_transcript_black_list.txt` |
 | <div id="hotspot_file">hotspot_annotation</div> | hotspots | `Hotspots_combined_regions_nodups.csv` |
 | <div id="hotspot_report">hotspot_report</div> | hotspot_mutations | `Hotspots_combined_regions_nodups.csv` |
 | <div id="manta_design_bed">manta_config_t</div> | extra | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz` |
@@ -276,6 +284,9 @@ These are design files and other pipeline specific only available to download fr
 | Hotspots | `Hotspots_combined_regions_nodups.csv` | Positions, transcript information, etc on clinically relevant regions |
 | GeneFuse | `GMS560_fusion_w_pool2.hg19.221117.csv` | Genes and its exonic positions included in fusion calling |
 | | `filter_fusions_20221114.csv` | Filtering criteria for false positive prone fusion partners |
+| FuSeq_WES | `fuseq_params.txt` | Filtering parameters used by FuSeq_WES |
+| FuSeq_WES_report | `fuseq_wes_gene_white_list.txt` | Gene list for filtering of fusion |
+|_ _| `fuseq_wes_transcript_black_list.txt` | Transcripts that should not be used in annotation |
 | CNVkit | `cnvkit_germline_blacklist_20221221.bed` | List of regions excluded from the germline vcf file |
 | GATK CNV | `gnomad_SNP_0.001_target.annotated.interval_list` | Bed file with CNV backbone SNPs which are selected from <br />GnomAD with over 0.1% global population frequency |
 | Small CNV deletions | `cnv_deletion_genes.tsv` | File defining gene and its surrounding regions used for <br />small CNV deletion. Same deletion genes as in the <br />CNV deletion reports |

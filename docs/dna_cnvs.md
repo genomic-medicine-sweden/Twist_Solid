@@ -1,5 +1,5 @@
 # CNV calling merging and purity estimation
-See the [cnv hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for cnv calling. Default hydra-genetics settings/resources are used if no configuration is specfied.
+See the [cnv hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for cnv calling. Default hydra-genetics settings/resources are used if no configuration is specified.
 
 <br />
 ![purecn dag plot](images/cnv_purecn.png){: style="height:55%;width:55%"}
@@ -15,11 +15,12 @@ See the [cnv hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/
 * `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv_report.tsv`
 * `results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv.html`
 * `results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv_report.tsv`
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.deletions.tsv`
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz`
+* `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.deletions.tsv`
+* `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.amplifications.tsv`
+* `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz`
 
 ## CNV calling
-CNVs are called using both CNVkit and GATK CNV, followed by merging and annotation by SVDB and finally filtered and visualized into an html report. Additionally, smaller CNV deletions are called in specific genes using an in-house script.
+CNVs are called using both CNVkit and GATK CNV, followed by merging and annotation by SVDB and finally filtered and visualized into an html report. Additionally, smaller CNV deletions and amplifications are called in specific genes using an in-house script.
 
 ### CNVkit
 CNV segmentation is performed by **[CNVkit](https://cnvkit.readthedocs.io/en/stable/)** v0.9.9 on BWA-mem aligned and merged bam-files. CNVkit uses a panel of normal (see [references](references.md) on how the PoN was created) and a germline filtered vcf file. To call the final CNVs the program uses the estimated tumor purity, which can be from pathologists estimates or from purecn estimates.  
@@ -165,6 +166,7 @@ A combined report in tsv format is generated based on the filtered vcf files by 
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
+| amp_cn_limit | 6.0 | Minimum number of copy numbers to be reported as an amplifications |
 | del_1p19q_cn_limit | 1.4 | Both the 1p and 19q chromosome must have a region of the arm with under 1.4 copies |
 | del_1p19q_chr_arm_fraction | 0.3 | The fraction of the arm that must be deleted |
 
@@ -210,7 +212,25 @@ CNVkit and GATK CNV sometimes miss small deletions where only a number of exons 
 
 ### Result file
 
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.deletions.tsv`
+* `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.deletions.tsv`
+
+## Small CNV amplifications
+CNVkit and GATK CNV sometimes miss small amplifications where only a number of exons are involved. A specialized small CNV caller in the form of the in-house script [call_small_cnv_amplifications.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/call_small_cnv_amplifications.py) ([rule and config](rules.md#call_small_cnv_amplifications)) is therefore run on the genes mentioned in [CNV gene annotation](#cnv-gene-annotation). The caller uses the log-odds values calculated by GATK for each region, where a region approximately corresponds to one region in the design file, i.e. exon, intron (if present) or CNV-probe. For each gene region, the caller uses a sliding window to find the biggest increase and subsequent decrease in copy number in the region. It then determines if the increase in copy number is big enough and is significantly higher than the surrounding region. If a large part or the entire region is amplified it will not be called but will instead be called by the other tools.
+
+### Configuration
+**Software settings**
+
+| **Options** | **Value** | **Description** |
+|-------------|-|-|
+| regions_file | [`cnv_amplfication_genes.tsv`](references.md#call_small_cnv_amplifications) | Genes and surrounding regions to call small CNVs in |
+| window_size | 3 | Sliding window size of data points which governs the minimum size that can be found |
+| region_max_size | 15 | Max size of the region in the form of number of data points |
+| min_log_odds_diff | 0.4 | Min difference in copy numbers between deletion and the rest of the |
+| min_nr_stdev_diff | 8 | Min number of standard deviations difference |
+
+### Result file
+
+* `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.amplifications.tsv`
 
 ## Germline vcf
 The germline vcf used by CNVkit and the CNV html report is based on the [VEP annotated vcf](dna_snv_indels.md#vep) file from the SNV and INDEL calling. Annotated vcfs are hard filtered first by removing black listed regions with noisy germline VAFs in normal samples and then filtered by a number of filtering criteria described below. See the [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/) for additional information.
@@ -289,6 +309,6 @@ Based on the coverage and a vcf file from Mutect2 PureCN make its own segmentati
 
 ### Result file
 
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz`
+* `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz`
 
 <br />

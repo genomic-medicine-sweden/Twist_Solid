@@ -1,5 +1,5 @@
 # QC
-See the [qc hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for the quality control. Default hydra-genetics settings/resources are used if no configuration is specfied.
+See the [qc hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for the quality control. Default hydra-genetics settings/resources are used if no configuration is specified.
 
 <br />
 ![dag plot](images/qc_dna.png){: style="height:55%;width:55%"}

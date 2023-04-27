@@ -24,7 +24,6 @@ The pipeline line generates lots of files of which only some are kept. These fin
 |  `results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv.html` | html | Interactive html report of the filtered CNV results <br />using tumor content estimated by PureCN |
 |  **`results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv_report.tsv`** | table | Table of filtered CNVs using tumor content <br />estimated by a pathologist |
 |  `results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv_report.tsv` | table | Table of filtered CNVs using tumor content <br />estimated by PureCN |
-|  `results/dna/cnv/{sample}_{type}/{sample}_{type}.deletions.tsv` | table | Table of called small CNVs by in-house script |
 |  `results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.purity.txt` | table | Estimated tumor content and ploidity by PureCN |
 | **Fusions** | :~~: | ~~ |
 |  **`results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv`** | table | Filtered report of DNA fusions from GeneFuse |
@@ -50,25 +49,27 @@ Additional files saved mainly for troubleshooting and development are located un
 | **File** | **File type** | **Description** |
 |-|-|-|
 | **SNV and INDELs** | :~~: | ~~ |
-| `results/additional_files/dna/vcf/{caller}_{sample}_{type}.vcf.gz` | vcf | SNV and INDEL variants file from the individual callers |
-| `results/additional_files/dna/vcf/{sample}_{type}.annotated.vcf.gz` | vcf | Merged and annotated SNV and INDEL variants file |
-| `results/additional_files/dna/vcf/`<br />`{sample}_{type}.annotated.exon_only.filter.soft_filter.vcf` | vcf | Soft filtered, merged and annotated SNV and INDEL variants file <br />without double variants |
-| `results/additional_files/dna/vcf/`<br />`{sample}_{type}.annotated.exon_only.filter.hard_filter.vcf` | vcf | Hard filtered, merged and annotated SNV and INDEL variants file <br />without double variants |
+| `results/dna/additional_files/vcf/{caller}_{sample}_{type}.vcf.gz` | vcf | SNV and INDEL variants file from the individual callers |
+| `results/dna/additional_files/vcf/{sample}_{type}.annotated.vcf.gz` | vcf | Merged and annotated SNV and INDEL variants file |
+| `results/dna/additional_files/vcf/`<br />`{sample}_{type}.annotated.exon_only.filter.soft_filter.vcf` | vcf | Soft filtered, merged and annotated SNV and INDEL variants file <br />without double variants |
+| `results/dna/additional_files/vcf/`<br />`{sample}_{type}.annotated.exon_only.filter.hard_filter.vcf` | vcf | Hard filtered, merged and annotated SNV and INDEL variants file <br />without double variants |
 | **CNVs** | :~~: | ~~ |
-|  `results/additional_files/dna/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz` | vcf | Manta variant calling |
-|  `results/additional_files/dna/cnv/{sample}_{type}/{sample}_{type}.cnvkit.scatter.png` | image | CNVkit genome CNV plot |
-|  `results/additional_files/dna/cnv/{sample}_{type}/{sample}_{type}.cnvkit.diagram.pdf` | image | CNVkit chromosome CNV plot |
-|  `results/additional_files/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.svdb_query.vcf` | vcf | Merged CNV vcf by SVDB from the two callers <br />using tumor content estimated by a pathologist |
-|  `results/additional_files/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.svdb_query.vcf` | vcf | Merged CNV vcf by SVDB from the two callers <br />using tumor content estimated by a PureCN |
+|  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz` | vcf | Manta variant calling |
+|  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.cnvkit.scatter.png` | image | CNVkit genome CNV plot |
+|  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.cnvkit.diagram.pdf` | image | CNVkit chromosome CNV plot |
+|  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.svdb_query.vcf` | vcf | Merged CNV vcf by SVDB from the two callers <br />using tumor content estimated by a pathologist |
+|  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.svdb_query.vcf` | vcf | Merged CNV vcf by SVDB from the two callers <br />using tumor content estimated by a PureCN |
+|  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.deletions.tsv` | table | Table of called small CNVs deletions by in-house script |
+|  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.amplifications.tsv` | table | Table of called small CNVs amplifications by in-house script |
 | **Fusions** | :~~: | ~~ |
-|  `results/additional_files/dna/fusion/{sample}_{type}.gene_fuse_fusions.txt` | table | Fusions called by GeneFuse |
-|  `results/additional_files/rna/fusion/{sample}_{type}.arriba.fusions.tsv` | table | Fusions called by Arriba |
-|  `results/additional_files/rna/fusion/{sample}_{type}.star-fusion.fusion_predictions.tsv` | table | Fusions called by Star-fusion |
-|  `results/additional_files/rna/fusion/{sample}_{type}.fusioncatcher.fusion_predictions.txt` | table | Fusions called by FusionCatcher |
+|  `results/dna/additional_files/fusion/{sample}_{type}.gene_fuse_fusions.txt` | table | Fusions called by GeneFuse |
+|  `results/rna/additional_files/fusion/{sample}_{type}.arriba.fusions.tsv` | table | Fusions called by Arriba |
+|  `results/rna/additional_files/fusion/{sample}_{type}.star-fusion.fusion_predictions.tsv` | table | Fusions called by Star-fusion |
+|  `results/rna/additional_files/fusion/{sample}_{type}.fusioncatcher.fusion_predictions.txt` | table | Fusions called by FusionCatcher |
 | **QC** | :~~: | ~~ |
-|  `results/additional_files/dna/qc/{sample}_{type}.alignment_summary_metrics.txt` | table | Picard alignment stats |
-|  `results/additional_files/dna/qc/{sample}_{type}.contamination.table` | table | GATK contamination stats |
-|  `results/additional_files/dna/qc/{sample}_{type}.duplication_metrics.txt` | table | Picard sequence duplication stats |
-|  `results/additional_files/dna/qc/{sample}_{type}.HsMetrics.txt` | table | Picard panel stats |
-|  `results/additional_files/dna/qc/{sample}_{type}.insert_size_metrics.txt` | table | Picard insert size stats |
-|  `results/additional_files/dna/qc/{sample}_{type}.samtools-stats.txt` | table | Samtools sequencing stats |
+|  `results/dna/additional_files/qc/{sample}_{type}.alignment_summary_metrics.txt` | table | Picard alignment stats |
+|  `results/dna/additional_files/qc/{sample}_{type}.contamination.table` | table | GATK contamination stats |
+|  `results/dna/additional_files/qc/{sample}_{type}.duplication_metrics.txt` | table | Picard sequence duplication stats |
+|  `results/dna/additional_files/qc/{sample}_{type}.HsMetrics.txt` | table | Picard panel stats |
+|  `results/dna/additional_files/qc/{sample}_{type}.insert_size_metrics.txt` | table | Picard insert size stats |
+|  `results/dna/additional_files/qc/{sample}_{type}.samtools-stats.txt` | table | Samtools sequencing stats |

@@ -1,5 +1,5 @@
 # Biomarkers
-See the [biomarkers hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for the respective biomarkers. Default hydra-genetics settings/resources are used if no configuration is specfied.
+See the [biomarkers hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for the respective biomarkers. Default hydra-genetics settings/resources are used if no configuration is specified.
 
 <br />
 ![biomarker dag plot](images/biomarkers.png){: style="height:50%;width:50%"}
@@ -12,24 +12,27 @@ See the [biomarkers hydra-genetics module](https://snv_indels.readthedocs.io/en/
 * `results/dna/hrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt`
 
 ## Tumor mutational burden (TMB)
-TMB is a measure of the frequency of somatic mutations and is usually measured as mutations per megabase. The size of design of the exons is approximately 1.55Mb. However, by validating the TMB for GMS560 against Foundation One and TSO500 TMB the effective design size is adjusted to 0.98Mb. This is based on the slope (1.02) of the correlation between TSO500 data and the number of variants in the TMB analysis. The TMB is calculated using the in-house script **[tmb.py](https://github.com/hydra-genetics/biomarker/blob/develop/workflow/scripts/tmb.py)** ([rule](https://github.com/hydra-genetics/biomarker/blob/develop/workflow/rules/tmb.smk))  which counts the number of nsSNVs and divide by the adjusted design size. Variants must fulfill the following criteria to be counted:
+TMB is a measure of the frequency of somatic mutations and is usually measured as mutations per megabase. The size of design of the exons is approximately 1.55Mb. However, by validating the TMB for GMS560 against Foundation One and TSO500 TMB the effective design size is adjusted to 1.19Mb. This is based on the slope (0.84) of the correlation between TSO500 data and the number of variants in the TMB analysis. The TMB is calculated using the in-house script **[tmb.py](https://github.com/hydra-genetics/biomarker/blob/develop/workflow/scripts/tmb.py)** ([rule](https://github.com/hydra-genetics/biomarker/blob/develop/workflow/rules/tmb.smk)) which counts the number of nsSNVs and divide by the adjusted design size. Variants must fulfill the following criteria to be counted:
 
 ### Configuration
 **Software settings**
 
 | **Options** | **Value** | **Description** |
 |-|-|-|
-| filter_nr_observations | 1 | Max seen once in panel of normal samples |
-| dp_limit | 100 | Minimum read depth of 100 |
-| vd_limit | 10 | Minimum 10 observations of variant allele |
 | af_lower_limit | 0.05 | Minimum 5% allele frequency |
-| af_upper_limit | 0.45 | Maximum 45% allele frequency |
-| gnomad_limit | 0.0001 | Germline filter of 0.01% population frequency |
-| db1000g_limit | 0.0001 | Germline filter of 0.01% population frequency |
-| background_sd_limit | 5 | At least 5 standard deviation above background |
-| nssnv_tmb_correction | 1.02 | Variant size times correction factor (correction factor = 1 / adjusted design size) |
+| af_upper_limit | 0.95 | Maximum 95% allele frequency |
+| af_germline_lower_limit | 0.47 | Filter out probable germline SNPs with allele frequency between 47%-53% |
+| af_germline_upper_limit | 0.53 | Filter out probable germline SNPs with allele frequency between 47%-53% |
+| artifacts | " " | Do not use artifact panel of normal |
+| background_panel | " " | Do not use background panel of normal |
+| db1000g_limit | 0.0001 | Germline filter of 0.01% population frequency
+| dp_limit | 100 | Minimum read depth of 100 |
+| gnomad_limit | 0.0001 | Germline filter of 0.01% population frequency ||
+| nssnv_tmb_correction | 0.84 | (Number of variants - nr_avg_germline_snvs) * correction factor (correction factor = 1 / adjusted design size) |
+| nr_avg_germline_snvs | 2.0 | Correction based on the average number of germline variants passing all filters |
+| vd_limit | 10 | Minimum 10 observations of variant allele |
 
-The main result is the TMB calculated using nsSNV only. However, TMB calculated using both nsSNVs and sSNVs are also provided as well as all the variants passing all filters.
+The result is the TMB calculated using nsSNVs. However, the variants passing all filters are also provided.
 
 ### Result file
 
