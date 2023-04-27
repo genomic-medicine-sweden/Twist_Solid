@@ -17,6 +17,7 @@
 *[QC]: Quality control
 *[RNA]: Ribonucleic acid
 *[sSNVs]: Synonymous single nucleotide variations
+*[nsSNV]: Non-synonymous single nucleotide variation
 *[nsSNVs]: Non-synonymous single nucleotide variations
 *[SNV]: Single nucleotide variation
 *[SNVs]: Single nucleotide variations
