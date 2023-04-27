@@ -70,7 +70,7 @@ properties:
         type: object
         description: list of outputs
         properties:
-          deletions:
+          deletion:
             type: string
             description: Text file with the called deletions
 
