@@ -51,19 +51,23 @@ properties:
         description: name or path to docker/singularity container
       regions_file:
         type: string
-        description: File with genes, gene regions with surrounding cnv-probes and the actual gene region
+        description: |
+          File with genes, gene regions with surrounding cnv-probes and the actual gene region.
+          Defines both the genomic position of the genes and their surrounding regions that should be analysed for this gene.
+          The size of the analysis region is dependent on the density of the backbone but should at least 10 backbone SNPs.
+          20 SNPs is used in Pipeline.
       window_size:
         type: integer
         description: Number of data points included in the sliding window
       region_max_size:
         type: integer
-        description: Max number of data points included in the deletion
+        description: Max number of data points of deletion to be reported
       min_nr_stdev_diff:
         type: number
-        description: Min number of standard deviations between the deletion and surrounding data points
+        description: Min number of standard deviations difference between the deletion and surrounding data points in region
       min_log_odds_diff:
         type: number
-        description: Min size difference between the deletion and surrounding data points
+        description: Min log2ratio difference between the deletion and the average of surrounding data points in region
 
   cnv_tsv_report:
     type: object
@@ -240,7 +244,7 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for hotspot_annotation
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -250,7 +254,7 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for hotspot_annotation
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -268,15 +272,21 @@ properties:
     properties:
       hotspot_mutations:
         type: string
-        description: path for file with hotspot definitions
+        description: Text file with hotspot positions and annotations
       report_config:
         type: string
-        description: path for file with defining which field should be extracted from annotation
+        description: file  defining which fields should be extracted from the annotation
       chr_translation_file:
         type: string
-        description: file used to translate chr to NC id. Format, a tab seperate file with column chr and NC
+        description: file used to translate chr to NC id. The format is a tab seperate file with column chr and NC
       levels:
         type: array
+        description: |
+          List of configurations.
+          1. depth above this value
+          2. depth level status, ex ok or low
+          3. depth status; ok, not analyzable
+          Example: - [200, "ok", "yes"]
         items:
           type: array
           items:
@@ -291,13 +301,13 @@ properties:
           maxItems: 3
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for msisensor_pro
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to msisensor_pro
+        description: parameters that should be forwarded
     required:
       - hotspot_mutations
       - report_config
@@ -472,31 +482,31 @@ properties:
     properties:
       annotation_bed:
         type: string
-        description: extra bed for annotation of partner gene exons
+        description: extra bed file for annotation of fusion partner gene exons not in design
       fusioncather_flag_low_support:
         type: integer
-        description: lower limit of supporting reads to flag for low support
+        description: lower limit of supporting reads to flag for low support for FusionCatcher
       fusioncather_low_support:
         type: integer
-        description: lower limit of supporting reads to filter fusion
+        description: lower limit of supporting reads to filter fusion for FusionCatcher
       fusioncather_low_support_fp_genes:
         type: integer
-        description: lower limit of supporting reads to filter fusion in common fp genes
+        description: lower limit of supporting reads to filter fusion in common fp genes for FusionCatcher
       fusioncather_low_support_inframe:
         type: integer
-        description: lower limit of supporting reads to filter fusion that are inframe
+        description: lower limit of supporting reads to filter fusion that are inframe for FusionCatcher
       star_fusion_flag_low_support:
         type: integer
-        description: lower limit of supporting reads to filter fusion
+        description: lower limit of supporting reads to filter fusion for StarFusion
       star_fusion_low_support:
         type: integer
-        description: lower limit of supporting reads to filter fusion
+        description: lower limit of supporting reads to filter fusion for StarFusion
       star_fusion_low_support_fp_genes:
         type: integer
-        description: lower limit of supporting reads to flag filter fusion in common fp genes
+        description: lower limit of supporting reads to flag filter fusion in common fp genes for StarFusion
       star_fusion_low_support_inframe:
         type: integer
-        description: lower limit of supporting reads to flag filter fusion that are inframe
+        description: lower limit of supporting reads to flag filter fusion that are inframe for StarFusion
 
   report_gene_fuse:
     description: report results from genefuse
@@ -504,12 +514,12 @@ properties:
     properties:
       filter_fusions:
         type: string
-        description: file specifying fusions that should be filtered completely (0 in column 2) or have higher limit (>0 in column 2)
+        description: file specifying fusions that should be filtered completely (value 0 in column 2) or have higher limit (value >0 in column 2)
       min_unique_reads:
         type: integer
         description: lower limit of uniquely supporting reads to report fusion
-      required:
-        - min_unique_reads
+    required:
+      - min_unique_reads
 
   trimmer_software:
     description: trimmer software that should be used

@@ -206,7 +206,7 @@ Two or more variants affecting the same codon can have different clinical implic
 * `results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.vcf`
 
 ## QCI AF correction of vcf
-The clinical interpretation tool QCI calculates allele frequency from the AD FORMAT field instead of using the AF FORMAT field supplied by the callers. This has shown to be wrong especially for INDELs. The AD field is therefore corrected so that the allele frequency based on the AD field corresponds to the AF field. This correction of the vcf file is performed by an the in-house script [fix_vcf_ad_for_qci.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/fix_vcf_ad_for_qci.py) ([rule](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/rules/fix_vcf_ad_for_qci.smk)).
+The clinical interpretation tool QCI calculates allele frequency from the AD FORMAT field instead of using the AF FORMAT field supplied by the callers. This has shown to be wrong especially for INDELs. The AD field is therefore corrected so that the allele frequency based on the AD field corresponds to the AF field. This correction of the vcf file is performed by an the in-house script [fix_vcf_ad_for_qci.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/fix_vcf_ad_for_qci.py) ([rule and config](rules.md#fix_vcf_ad_for_qci)).
 
 ### Result file
 
