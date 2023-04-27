@@ -13,7 +13,7 @@ The pipeline line generates lots of files of which only some are kept. These fin
 | `bam_dna/{sample}_{type}.bam.bai` | bai | Alignment index file |
 | **`bam_rna/{sample}_{type}.star_fusion.bam`** | bam | Alignment file  |
 | `bam_rna/{sample}_{type}.star_fusion.bam.bai` | bai | Alignment index file |
-| `bam_dna/mutect2_indel_bam/{sample}_{type}.bam` | bam | Realigned regions around INDELs |
+| `bam_dna/mutect2_indel_bam/{sample}_{type}.bam` | bam | Realigned regions around INDELs, used to look at indels in for example IGV |
 | `bam_dna/mutect2_indel_bam/{sample}_{type}.bam.bai` | bai | Alignment index file |
 | **SNV and INDELs** | :~~: | ~~ |
 | **`results/dna/vcf/`<br />`{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.vcf`** | vcf | Final hard filtered and annotated file with SNV and INDEL variants. <br /> **OBS! Do not use as input to QCI** |
