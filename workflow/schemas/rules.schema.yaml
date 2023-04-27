@@ -30,6 +30,28 @@ properties:
             type: string
             description: Vcf with pileup informations for all positions in input bed file
 
+  call_small_cnv_amplifications:
+    type: object
+    description: input and output parameters for call_small_cnv_amplifications
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          cnv_data:
+            type: string
+            description: Copy number region data from GATK CNV
+          regions_file:
+            type: string
+            description: File with genes, gene regions with surrounding cnv-probes and the actual gene region
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          amplifications:
+            type: string
+            description: Text file with the called amplifictions
+
   call_small_cnv_deletions:
     type: object
     description: input and output parameters for call_small_cnv_deletions

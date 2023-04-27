@@ -45,14 +45,14 @@ The following reference files, panel of normals and design files are needed to r
 | <div id="gatk_denoise_read_counts_pon">gatk_denoise_read_counts</div> | normal_reference | `gatk_cnv_nextseq_36.hdf5` |
 | <div id="gatk_get_pileup_summaries_sites">gatk_get_pileup_summaries</div> | sites | `small_exac_common_3.hg19.vcf.gz` |
 |_ _| variants | `small_exac_common_3.hg19.vcf.gz` |
-| <div id="genefuse_transcripts">gene_fuse | genes | `GMS560_fusion_w_pool2.hg19.221117.csv` |
+| <div id="genefuse_transcripts">gene_fuse</div> | genes | `GMS560_fusion_w_pool2.hg19.221117.csv` |
 |_ _| <div id="genefuse_fasta">fasta</div> | `hg19.with.mt.fasta` |
-| <div id="fuseq_wes_json">FuSeq_WES | transcript annotation | `UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json` |
-|_ _| <div id="fuseq_wes_sqlite">transcript database</div> | `UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite` |
-|_ _| <div id="fuseq_wes_fusion_db>fusion database</div> | `Mitelman_fusiondb.RData` |
+| <div id="fuseq_wes_json">FuSeq_WES</div> | transcript annotation | `UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json` |
+| | <div id="fuseq_wes_sqlite">transcript database</div> | `UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite` |
+| | <div id="fuseq_wes_fusion_db">fusion database</div> | `Mitelman_fusiondb.RData` |
 |_ _| <div id="fuseq_wes_paralog_db">paralog database</div> | `ensmbl_paralogs_grch37.RData` |
-| <div id="filter_report_fuseq_wes">transcripts | transcript annotation | `hg19.refGene.gtf` |
-|_ _| <div id="fuseq_wes_white_list">gene white list</div> | `fuseq_wes_gene_white_list.txt` |
+| <div id="filter_report_fuseq_wes">filter_report_fuseq_wes</div> | transcript annotation | `hg19.refGene.gtf` |
+| | <div id="fuseq_wes_white_list">gene white list</div> | `fuseq_wes_gene_white_list.txt` |
 |_ _| <div id="fuseq_wes_transcript_black_list">transcript black list</div> | `fuseq_wes_transcript_black_list.txt` |
 | <div id="hotspot_file">hotspot_annotation</div> | hotspots | `Hotspots_combined_regions_nodups.csv` |
 | <div id="hotspot_report">hotspot_report</div> | hotspot_mutations | `Hotspots_combined_regions_nodups.csv` |
@@ -289,5 +289,6 @@ These are design files and other pipeline specific only available to download fr
 |_ _| `fuseq_wes_transcript_black_list.txt` | Transcripts that should not be used in annotation |
 | CNVkit | `cnvkit_germline_blacklist_20221221.bed` | List of regions excluded from the germline vcf file |
 | GATK CNV | `gnomad_SNP_0.001_target.annotated.interval_list` | Bed file with CNV backbone SNPs which are selected from <br />GnomAD with over 0.1% global population frequency |
-| Small CNV deletions | `cnv_deletion_genes.tsv` | File defining gene and its surrounding regions used for <br />small CNV deletion. Same deletion genes as in the <br />CNV deletion reports |
+| Small CNV deletions | `cnv_deletion_genes.tsv` | File defining gene and its surrounding regions used for <br />small CNV deletion. Same deletion genes as used in the <br />CNV deletion reports |
+| Small CNV amplifications | `cnv_amplification_genes.tsv` | File defining gene and its surrounding regions used for <br />small CNV amplification. Same amplification genes as used in the <br />CNV reports |
 | Report RNA fusions | `Twist_RNA_fusionpartners.bed` | Bed file used for annotation of fusion partner exons |

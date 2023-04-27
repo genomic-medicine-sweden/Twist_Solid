@@ -43,6 +43,32 @@ properties:
         type: string
         description: path to bed file the id SNPs
 
+  call_small_cnv_amplifications:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      regions_file:
+        type: string
+        description: |
+          File with genes, gene regions with surrounding cnv-probes and the actual gene region.
+          Defines both the genomic position of the genes and their surrounding regions that should be analysed for this gene.
+          The size of the analysis region is dependent on the density of the backbone but should at least 20 backbone SNPs.
+          20 SNPs is used in Pipeline.
+      window_size:
+        type: integer
+        description: Number of data points included in the sliding window
+      region_max_size:
+        type: integer
+        description: Max number of data points of deletion to be reported
+      min_nr_stdev_diff:
+        type: number
+        description: Min number of standard deviations difference between the deletion and surrounding data points in region
+      min_log_odds_diff:
+        type: number
+        description: Min log2ratio difference between the deletion and the average of surrounding data points in region
+
   call_small_cnv_deletions:
     type: object
     properties:
@@ -54,8 +80,8 @@ properties:
         description: |
           File with genes, gene regions with surrounding cnv-probes and the actual gene region.
           Defines both the genomic position of the genes and their surrounding regions that should be analysed for this gene.
-          The size of the analysis region is dependent on the density of the backbone but should at least 10 backbone SNPs.
-          20 SNPs is used in Pipeline.
+          The size of the analysis region is dependent on the density of the backbone but should at least 20 backbone SNPs.
+          40 SNPs is used in Pipeline.
       window_size:
         type: integer
         description: Number of data points included in the sliding window

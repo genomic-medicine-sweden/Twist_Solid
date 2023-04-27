@@ -24,8 +24,31 @@ Trim `.fastq` files by removing adapter sequences and other unwanted sequences. 
 
 ---
 
+## call_small_cnv_amplifications
+The CNVkit and GATK CNV caller often miss small amplifications of four exons or smaller. This rule analyses genes of interest and reports small amplifications in these genes when predefined criteria are met. The caller is based on two rolling window averaged over the region and finds the largest difference in log2ratio between these two windows. If the difference is large enough it is reported. See further [call small cnv amplifications info](dna_cnvs.md#small-cnv-amplifications).
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__call_small_cnv_amplifications__call_small_cnv_amplifications#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__call_small_cnv_amplifications__call_small_cnv_amplifications#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__call_small_cnv_amplifications#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__call_small_cnv_amplifications#
+
+---
+
 ## call_small_cnv_deletions
-The CNVkit and GATK CNV caller often miss small deletions of four exons or smaller. This rule analyses genes of interest and reports small deletions in these genes when predefined criteria are met. The caller is based on two rolling window averaged over the region and finds the largest differnece in log2ratio between these two windows. If the difference is large enough it is reported. See further [call small cnv deletions info](dna_cnvs.md#small-cnv-deletions).
+The CNVkit and GATK CNV caller often miss small deletions of four exons or smaller. This rule analyses genes of interest and reports small deletions in these genes when predefined criteria are met. The caller is based on two rolling window averaged over the region and finds the largest difference in log2ratio between these two windows. If the difference is large enough it is reported. See further [call small cnv deletions info](dna_cnvs.md#small-cnv-deletions).
 
 ### :snake: Rule
 
