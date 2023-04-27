@@ -36,18 +36,20 @@ theme: readthedocs
 extra_css: [extra.css]
 markdown_extensions:
   - abbr
+  - admonition
   - attr_list
+  - mdx_spanner
   - pymdownx.details
   - pymdownx.snippets:
       auto_append:
         - includes/abbreviations.md
       base_path: ["docs/", "workflow/rules/"]
       url_download: "True"
-  - mdx_spanner
-  - admonition
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
+  - toc:
+      permalink: True
 
 plugins:
   - yaml-schema:
