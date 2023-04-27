@@ -36,7 +36,7 @@ The main result is the TMB calculated using nsSNV only. However, TMB calculated 
 * `results/dna/tmb/{sample}_{type}.TMB.txt`
 
 ## Microsatellite instability (MSI)
-To determine MSS or MSI status of the samples the percentage of sites that have microsatellite instability are calculated using **[MSIsensor-pro]([https://github.com/xjtu-omics/msisensor-pro])** v1.1.a. When the more than 10% of the sites are instable the sample is determined to have MSI status. The program uses a panel of normal to determine the normal level of instability in the used sites.
+To determine MSS or MSI status of the samples the percentage of sites that have microsatellite instability are calculated using **[MSIsensor-pro]([https://github.com/xjtu-omics/msisensor-pro])** v1.1.a. When more than 10% of the sites are instable the sample is determined to have MSI status. The program uses a panel of normal to determine the normal level of instability in the used sites.
 
 ### Configuration
 **Reference**
