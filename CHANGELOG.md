@@ -1,5 +1,48 @@
 # Changelog
 
+## [0.6.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.5.0...v0.6.0) (2023-04-28)
+
+## Features
+
+###Documentation
+First relase of read the docs (https://twist_solid.readthedocs.io/en/v0.6.0/)
+
+### CNV
+- New small cnv amplification caller (in house script) for the 20 relevant amplification genes which is very similar to the small deletion caller. 
+- The CNV.tsv report now also includes amplifications called by the small amplification caller
+
+## Bugfixes
+- New lines added to variants in the TMB report
+
+## Changes in config.yaml
+- Small amplification caller: new in config
+- CNV tsv report: added option for small amplification filtering
+
+## Hydra modules with releases
+- prealignment: v1.0.0 (No change)
+- alignment: v0.3.1 (No change)
+- snv_indels: v0.3.0 (No change)
+- annotation: v0.3.0 (No change)
+- filtering: v0.1.0 (No change)
+- qc: v0.3.0 (No change)
+- biomarker: v0.3.1 (fixed TMB report bug)
+- cnv_sv: v0.3.1 (No change)
+
+
+### Features
+
+* added caller for small amplifications ([61181d5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/61181d51462458c850813641e13c6d9aba2685fe))
+
+
+### Bug Fixes
+
+* add missing parameter to call of create_tsv_report ([36f3508](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/36f35080259d5edd1f48cb7afc33d72bc0964fd3))
+* bugfixes and config tweaking ([e8313ff](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e8313ff7f9165d5838d791247ab399ca3bfb9dda))
+* match rule input names ([981d2a6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/981d2a6525cde093754a8f4c6e1808f2bd15e153))
+* parameter tweaking ([16ab328](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/16ab3284af92067c4fcbc618c6a9a1f4eebc1294))
+* update fusions and biomarker tags ([9dfadef](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9dfadef44e4f7da4397095bd1051cff639162e61))
+
+
 ## [0.5.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.4.0...v0.5.0) (2023-04-19)
 # Release notes
 For more details on features and bug fixes see further down.
