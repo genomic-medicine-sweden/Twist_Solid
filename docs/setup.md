@@ -22,7 +22,7 @@ See further [pipeline configuration](https://hydra-genetics.readthedocs.io/en/la
 
 <br />
 
-/// details | current config.yaml
+/// details | Expand to view current config.yaml
 ```yaml
 {% include "includes/config.yaml" %}
 ```
@@ -48,7 +48,7 @@ vardict:
 
 <br />
 
-/// details | current resources.yaml
+/// details | Expand to view current resources.yaml
 ```yaml
 {% include "includes/resources.yaml" %}
 ```
