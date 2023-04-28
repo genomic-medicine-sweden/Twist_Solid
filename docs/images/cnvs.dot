@@ -1,0 +1,59 @@
+digraph snakemake_dag {
+	rankdir=LR;
+    graph[bgcolor=white, margin=0];
+    node[shape=box, style=rounded, fontname=sans,                 fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+	200[label = "BAM", color = "0.0 0.0 0.0", style="dotted"];
+	202[label = "TC: pathology/purecn", color = "0.0 0.0 0.0", style="dotted"];
+	203[label = "VCF: germline", color = "0.0 0.0 0.0", style="dotted"];
+	19[label = "filter_vcf", color = "0.61 0.6 0.85", style="rounded"];
+	40[label = "call_small_cnv_deletions", color = "0.10 0.6 0.85", style="rounded"];
+	41[label = "gatk_denoise_read_counts", color = "0.36 0.6 0.85", style="rounded"];
+	42[label = "gatk_collect_read_counts", color = "0.21 0.6 0.85", style="rounded"];
+	44[label = "cnv_tsv_report", color = "0.42 0.6 0.85", style="rounded"];
+	45[label = "annotate_cnv", color = "0.47 0.6 0.85", style="rounded"];
+	46[label = "svdb_query/merge", color = "0.44 0.6 0.85", style="rounded"];
+	48[label = "cnvkit_vcf", color = "0.17 0.6 0.85", style="rounded"];
+	49[label = "cnvkit_call", color = "0.23 0.6 0.85", style="rounded"];
+	50[label = "cnvkit_batch", color = "0.59 0.6 0.85", style="rounded"];
+	51[label = "bcftools_filter_exclude_region", color = "0.37 0.6 0.85", style="rounded"];
+	56[label = "gatk_to_vcf", color = "0.18 0.6 0.85", style="rounded"];
+	57[label = "gatk_model_segments", color = "0.63 0.6 0.85", style="rounded"];
+	58[label = "gatk_collect_allelic_counts", color = "0.62 0.6 0.85", style="rounded"];
+	81[label = "cnvkit_diagram", color = "0.06 0.6 0.85", style="rounded"];
+	89[label = "cnv_html_report", color = "0.34 0.6 0.85", style="rounded"];
+	90[label = "merge_json", color = "0.54 0.6 0.85", style="rounded"];
+	91[label = "cnv_json", color = "0.63 0.6 0.85", style="rounded"];
+	95[label = "cnvkit_scatter", color = "0.66 0.6 0.85", style="rounded"];
+	200 -> 42
+	41 -> 40
+	42 -> 41
+	45 -> 44
+	46 -> 45
+	48 -> 46
+	202 -> 56
+	56 -> 46
+	202 -> 49
+	49 -> 48
+	200 -> 50
+	50 -> 49
+	203 -> 51
+	51 -> 49
+	57 -> 56
+	200 -> 58
+	58 -> 57
+	41 -> 57
+	50 -> 81
+	90 -> 89
+	19 -> 44
+	45 -> 19
+	19 -> 90
+	91 -> 90
+	51 -> 90
+	45 -> 90
+	57 -> 91
+	50 -> 91
+	41 -> 91
+	50 -> 95
+	51 -> 95
+}            

@@ -1,0 +1,232 @@
+# Rule specific to the Twist Solid pipeline that are not defined in hydra
+
+## bcftools_id_snps
+Trim `.fastq` files by removing adapter sequences and other unwanted sequences. Adapter sequences are specified in `units.tsv` under the adapter column. See further [ID-SNPs info](rna_id_snps.md).
+
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__bcftools__bcftools_id_snps#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__bcftools__bcftools_id_snps#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__bcftools_id_snps#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__bcftools_id_snps#
+
+---
+
+## call_small_cnv_amplifications
+The CNVkit and GATK CNV caller often miss small amplifications of four exons or smaller. This rule analyses genes of interest and reports small amplifications in these genes when predefined criteria are met. The caller is based on two rolling window averaged over the region and finds the largest difference in log2ratio between these two windows. If the difference is large enough it is reported. See further [call small cnv amplifications info](dna_cnvs.md#small-cnv-amplifications).
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__call_small_cnv_amplifications__call_small_cnv_amplifications#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__call_small_cnv_amplifications__call_small_cnv_amplifications#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__call_small_cnv_amplifications#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__call_small_cnv_amplifications#
+
+---
+
+## call_small_cnv_deletions
+The CNVkit and GATK CNV caller often miss small deletions of four exons or smaller. This rule analyses genes of interest and reports small deletions in these genes when predefined criteria are met. The caller is based on two rolling window averaged over the region and finds the largest difference in log2ratio between these two windows. If the difference is large enough it is reported. See further [call small cnv deletions info](dna_cnvs.md#small-cnv-deletions).
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__call_small_cnv_deletions__call_small_cnv_deletions#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__call_small_cnv_deletions__call_small_cnv_deletions#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__call_small_cnv_deletions#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__call_small_cnv_deletions#
+
+---
+
+## cnv_tsv_report
+Collect all CNV calls into an excel friendly text file. Adds potential 1p19q calls. See further [CNV tsv report info](dna_cnvs.md#cnv-report).
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__cnv_tsv_report__cnv_tsv_report#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__cnv_tsv_report__cnv_tsv_report#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__cnv_tsv_report#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__cnv_tsv_report#
+
+---
+
+## exon_skipping
+Calls exon skipping events in RNA data. Only reports MET exon 14 skipping and the EGFRvIII variant. See further [exon skipping info](rna_exon_skipping.md).
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__exon_skipping__exon_skipping#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__exon_skipping__exon_skipping#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__exon_skipping#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__exon_skipping#
+
+---
+
+## fix_vcf_ad_for_qci
+Produces a QCI compatible vcf file with SNV and INDEL calls were the AD field has been corrected to so that the numbers corresponds with the AF field. QCI uses the AD field to calculate allele frequency. See further [QCI fix info](dna_snv_indels.md#qci-af-correction-of-vcf).
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__fix_vcf_ad_for_qci__fix_vcf_ad_for_qci#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__fix_vcf_ad_for_qci__fix_vcf_ad_for_qci#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__fix_vcf_ad_for_qci#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__fix_vcf_ad_for_qci#
+
+---
+
+## hotspot_report
+A excel friendly text file containing information of all hotspot postions as well as all called variants. For all hotspot positions the coverage and alternative allele information is reported as well as additional annotations. The columns reported are configured by the config file `hotspot_report.yaml`. See further [Hotspot report info](dna_qc.md#coverage-and-mutations).
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__hotspot_report__hotspot_report#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__hotspot_report__hotspot_report#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__hotspot_report#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__hotspot_report#
+
+---
+
+## house_keeping_gene_coverage
+List the average coverage of the housekeeping genes GAPDH, GUSB, OAZ1, and POLR2A. See further [house keeping gene coverage info](rna_qc.md#house-keeping-gene-coverage).
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__house_keeping_gene_coverage__house_keeping_gene_coverage#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__house_keeping_gene_coverage__house_keeping_gene_coverage#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__house_keeping_gene_coverage#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__house_keeping_gene_coverage#
+
+---
+
+## report_fusions
+Make a combined report of filtered fusion calls from all RNA fusion callers. Applies caller specific thresholds based on read support and fusion type. Annotates breakpoints to genes and exons when available. See further [RNA fusions report info](rna_fusions.md#fusion-filtering-and-report).
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__report_fusions__report_fusions#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__report_fusions__report_fusions#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__report_fusions#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__report_fusions#
+
+---
+
+## report_gene_fuse
+The output from GeneFuse is filtered and then made into a fusion report. See further [DNA fusions report info](dna_fusions.md#filtering-and-report).
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__report_gene_fuse__report_gene_fuse#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__report_gene_fuse__report_gene_fuse#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__report_gene_fuse#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__report_gene_fuse#
+
+---
