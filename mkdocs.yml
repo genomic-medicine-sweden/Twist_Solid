@@ -39,7 +39,7 @@ markdown_extensions:
   - admonition
   - attr_list
   - mdx_spanner
-  - pymdownx.details
+  - pymdownx.blocks.details
   - pymdownx.snippets:
       auto_append:
         - includes/abbreviations.md
@@ -52,6 +52,7 @@ markdown_extensions:
       permalink: True
 
 plugins:
+  - include-markdown
   - search
   - yaml-schema:
       yaml_files:
