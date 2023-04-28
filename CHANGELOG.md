@@ -1,5 +1,21 @@
 # Changelog
 
+### [0.6.1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.6.0...v0.6.1) (2023-04-28)
+
+
+### Bug Fixes
+
+* fix building of read the docs ([8043566](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8043566e569df32fb6a9859f0a61bc3c161f95f0))
+
+
+### Documentation
+
+* moved build yaml ([a7a3bfe](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a7a3bfe1a3917786c0ef72e86d84ee6d3ab1daf3))
+* update build yaml ([c3455aa](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c3455aa5bda22a47d14c49634807de4403665a00))
+* update build yaml ([aad3220](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/aad32201832060c1dd9d2ea936d8aa13c147b05e))
+* update build yaml ([6173387](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6173387939d6897243e300017456799f46163c67))
+* update build yaml ([4830711](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4830711e23784f4a724ad95e827e9c8d7f645aff))
+
 ## [0.6.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.5.0...v0.6.0) (2023-04-28)
 
 ## Features
