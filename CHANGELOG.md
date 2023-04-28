@@ -1,5 +1,69 @@
 # Changelog
 
+## [0.6.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.5.0...v0.6.0) (2023-04-28)
+
+
+### Features
+
+* add abbreviations, license, changelog and minor test updates ([3259456](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3259456f58a91146e125a638d292cd71894e9a27))
+* added caller for small amplifications ([61181d5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/61181d51462458c850813641e13c6d9aba2685fe))
+
+
+### Bug Fixes
+
+* add missing parameter to call of create_tsv_report ([36f3508](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/36f35080259d5edd1f48cb7afc33d72bc0964fd3))
+* bugfixes and config tweaking ([e8313ff](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e8313ff7f9165d5838d791247ab399ca3bfb9dda))
+* match rule input names ([981d2a6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/981d2a6525cde093754a8f4c6e1808f2bd15e153))
+* parameter tweaking ([16ab328](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/16ab3284af92067c4fcbc618c6a9a1f4eebc1294))
+* update fusions and biomarker tags ([9dfadef](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9dfadef44e4f7da4397095bd1051cff639162e61))
+
+
+### Documentation
+
+* add anchor links to headers ([b62a4eb](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b62a4eb8d95b20c267192bffa49f839d13a7f630))
+* add more links to reference page ([6f9250c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6f9250c01a6238e37c258b4d91a9dbff73a36489))
+* added a lot of tables for easier reading ([8518691](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8518691a8e463519a9c477d848844ebbf8ef81da))
+* added a number of documents regarding the Twist Solid pipeline ([f1d2a31](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f1d2a3180e60b6fa74a03c8eeed8ba38a0ab7997))
+* added abreviations ([d00e7f6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d00e7f66e2e57ccf00968f90e76f5bee6ac365f0))
+* added all dna documenation ([9c1e410](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9c1e41019904a71629ba7958ec3860f50a255eb0))
+* Added call_small_amp and fuseq_wes, updated TMB, references and outputfile ([21bd6f4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/21bd6f41d11bf6c0d627b9d76fe69e4f8f3d6680))
+* added cnv table info ([4d98735](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4d98735770283c6e17fadb3a04498375982a2ad8))
+* added even more tables ([a7d4b9c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a7d4b9cea12dbb4fa953d6bcb00f8aff0d5cf5ab))
+* added examples of units.tsv and samples.tsv ([713c72d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/713c72da36b06cf8db36f2b820cacf67ea0a0cf1))
+* added links to all in-house script ([05d36eb](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/05d36eb4bd32288c913453bd9c32811f59c62f7a))
+* added missing info ([00b8531](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/00b8531e1f54f641a9c909c4ef70e25943bed19b))
+* added more documentation ([fdfbaa1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/fdfbaa1bf0df7943396949886561a46fc155743b))
+* added notes to references ([d32fdb5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d32fdb5d05e5098927bd3f9bf01eadd87336dcf9))
+* added reference files overview ([ccf4826](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ccf4826ff0f43fa62a0e960a23e81dbf6fb24509))
+* added references ([c9f50bc](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c9f50bcb68a2e2925db6ed26d61e52524b440264))
+* added results files overview ([7dc4161](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7dc416124a45443913d5e357ad9f3e9e3012bafe))
+* added rule definitions ([e58a12b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e58a12bf42fcc3fb22aae1552993cffd36e2919e))
+* Added some RNA fusion docs ([e1de283](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e1de28375bec99e1ecb328b5e39a5214a5856904))
+* added table for biomarkers ([d1d4d2f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d1d4d2ff25fbeb340fd6663e585590e4e0f68b77))
+* added tables to dna_CNV ([6f0216b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6f0216bf7d8fd2c2888b2ee05c0ed1299cac80b5))
+* added tables to references ([c1a226b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c1a226be496936ef4454432c26ceb9bccee68103))
+* adjust header and paragraph spacing and font size ([4bdde7e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4bdde7ec40609cf5fa8cb09b530081c108abd4c4))
+* configure simple hook plugin and search ([0d88b2e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0d88b2ecb6caff37f109735c1185f4c41336bfc6))
+* convert gatk/cnvkit to a table ([f61fa7f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f61fa7fad2b81ea656565614a40520a0589526bc))
+* dag plots and minor text changes ([4d51392](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4d513921980c45a3c4621f5338e3fb65df3c8240))
+* display current config and resource file as a expandable section ([77853c8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/77853c8a6c6640186da70aa5e1e7e9e941ea1ab4))
+* fixed lists in referenses ([f95171d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f95171dbbd5cf87891c20636174dc566952f046e))
+* improved references ([27e1b55](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/27e1b556de2c4b5387c25739f43c3a20a929bf84))
+* minor updates ([5355c98](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5355c988acb9fa01eb702f51c68a0c837c8312ef))
+* more format updates ([834c78e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/834c78e16d8370aacee6ff334977d774c79f8d9d))
+* small text changes. Dag plots prealignment, alignment, snv_indels and fusions ([e7309a1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e7309a126e6316256abef62c56a007661474d847))
+* the RNA pipeline is now completed ([72ec35e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/72ec35e681a54dc3a9bb113af88e425dc7e4b9ec))
+* Update docs/dna_biomarkers.md ([52fc800](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/52fc80055d74db7c668e89115104d9f2f0fe0d23))
+* Update docs/includes/abbreviations.md ([a91f95b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a91f95bf705be3833cefc591a46abacd197c986c))
+* Update docs/result_files.md ([e0f219d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e0f219da22a04996d58b2aad23f8f966a9a79428))
+* Update docs/result_files.md ([4dfa0ca](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4dfa0caebc374e4bf3a578859b36f111c701d10e))
+* Update docs/setup.md ([04c1fb2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/04c1fb2d46f932d17def8c5538d1b6da0f96ba51))
+* update text ([9c516aa](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9c516aa11d441b8124c9813e01554f17b5d82fd3))
+* Update workflow/schemas/rules.schema.yaml ([48d943e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/48d943ecb718156ff9adfeb12968ba13f7baf78f))
+* Update workflow/schemas/rules.schema.yaml ([da90583](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/da905830194653ca2c711d4bf19b5b021e3006d2))
+* Update workflow/schemas/rules.schema.yaml ([2ba10cc](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2ba10ccbdecf9eaa64476ab35134fcbb5309ef6a))
+* Update workflow/schemas/rules.schema.yaml ([665a821](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/665a821fa81a7ce3da88062b7608e7981b1ae0a0))
+
 ## [0.5.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.4.0...v0.5.0) (2023-04-19)
 # Release notes
 For more details on features and bug fixes see further down.
