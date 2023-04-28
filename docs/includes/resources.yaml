@@ -1,0 +1,78 @@
+default_resources:
+  threads: 1
+  time: "4:00:00"
+  mem_mb: 6144
+  mem_per_cpu: 6144
+  partition: "low"
+
+arriba:
+  threads: 5
+  time: "8:00:00"
+  mem_mb: 30720
+  mem_per_cpu: 6144
+
+bwa_mem:
+  mem_mb: 61440
+  mem_per_cpu: 6144
+  threads: 10
+  time: "8:00:00"
+
+fastp_pe:
+  threads: 5
+  mem_mb: 30720
+  mem_per_cpu: 6144
+
+fuseq_wes:
+  threads: 2
+  mem_mb: 12288
+  time: "24:00:00"
+
+fusioncatcher:
+  threads: 10
+  time: "16:00:00"
+  mem_mb: 61440
+  mem_per_cpu: 6144
+
+vep:
+  threads: 5
+  time: "6:00:00"
+  mem_mb: 30720
+  mem_per_cpu: 6144
+
+fastqc:
+  threads: 2
+  mem_mb: 12288
+  mem_per_cpu: 6144
+
+manta_run_workflow_t:
+  threads: 4
+  time: "8:00:00"
+  mem_mb: 24576
+  mem_per_cpu: 6144
+
+gatk_mutect2_gvcf:
+  time: "8:00:00"
+
+gatk_mutect2:
+  time: "8:00:00"
+
+gene_fuse:
+  threads: 6
+  time: "8:00:00"
+  mem_mb: 36864
+  mem_per_cpu: 6144
+
+vardict:
+  time: "48:00:00"
+
+star:
+  threads: 5
+  time: "8:00:00"
+  mem_mb: 30720
+  mem_per_cpu: 6144
+
+star_fusion:
+  threads: 5
+  time: "8:00:00"
+  mem_mb: 30720
+  mem_per_cpu: 6144
