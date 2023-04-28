@@ -32,7 +32,8 @@ nav:
     - More Resources: more_resources.md
 
 
-theme: readthedocs
+theme:
+    name: readthedocs
 extra_css: [extra.css]
 markdown_extensions:
   - abbr
