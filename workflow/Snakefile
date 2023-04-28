@@ -7,6 +7,7 @@ __license__ = "GPL-3"
 include: "rules/common.smk"
 include: "rules/bcftools.smk"
 include: "rules/call_small_cnv_deletions.smk"
+include: "rules/call_small_cnv_amplifications.smk"
 include: "rules/cnv_tsv_report.smk"
 include: "rules/cnv_html_report.smk"
 include: "rules/exon_skipping.smk"
@@ -213,7 +214,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 module biomarker:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.3.0")
+        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.3.1")
     config:
         config
 
@@ -228,7 +229,7 @@ use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
 
 module fusions:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="7edfaf1")
+        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="8aec226")
     config:
         config
 

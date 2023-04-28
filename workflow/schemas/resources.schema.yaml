@@ -28,6 +28,46 @@ properties:
       - mem_per_cpu
       - partition
 
+  bcftools_id_snps:
+    type: object
+    description: resource definitions for bacftools variant pileup
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  call_small_cnv_amplifications:
+    type: object
+    description: resource definitions for calling small amplifications in cnv data
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
   call_small_cnv_deletions:
     type: object
     description: resource definitions for calling small deletions in cnv data
@@ -68,9 +108,89 @@ properties:
         type: integer
         description:  number of threads to be available
 
+  exon_skipping:
+    type: object
+    description: resource definitions for generating a cnv report
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
   fix_vcf_ad_for_qci:
     type: object
     description: resource definitions for fix_vcf_ad_for_qci
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  hotspot_report:
+    type: object
+    description: resource definitions for hotspot_report
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  house_keeping_gene_coverage:
+    type: object
+    description: resource definitions for house_keeping_gene_coverage
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  report_fusions:
+    type: object
+    description: resource definitions for report_fusions
     properties:
       mem_mb:
         type: integer

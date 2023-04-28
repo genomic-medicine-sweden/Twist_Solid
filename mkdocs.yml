@@ -1,0 +1,70 @@
+site_name: Twist Solid
+nav:
+  - Overview:
+    - Introduction: index.md
+    - Pipeline overview: overview.md
+    - Result files: result_files.md
+    - Running the pipeline: running.md
+    - Pipeline setup and cofiguration: setup.md
+    - Reference files: references.md
+  - DNA Pipeline:
+    - Prealignment: dna_prealignment.md
+    - Alignment: dna_alignment.md
+    - SNV and INDELs: dna_snv_indels.md
+    - CNVs: dna_cnvs.md
+    - Fusions: dna_fusions.md
+    - Biomarkers: dna_biomarkers.md
+    - QC: dna_qc.md
+  - RNA Pipeline:
+    - Fusions: rna_fusions.md
+    - Exon skipping: rna_exon_skipping.md
+    - ID-SNPs: rna_id_snps.md
+    - QC: rna_qc.md
+  - Pipeline specific rules:
+    - Rule list: rules.md
+  - Project Info:
+    - Changelog: changelog.md
+    - Citations: citations.md
+    - Contributing: contributing.md
+    - Credits: credits.md
+    - Frequently Asked Questions: faq.md
+    - License: license.md
+    - More Resources: more_resources.md
+
+
+theme: readthedocs
+extra_css: [extra.css]
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - mdx_spanner
+  - pymdownx.blocks.details
+  - pymdownx.snippets:
+      auto_append:
+        - includes/abbreviations.md
+      base_path: ["docs/", "workflow/rules/"]
+      url_download: "True"
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - toc:
+      permalink: True
+
+plugins:
+  - include-markdown
+  - search
+  - yaml-schema:
+      yaml_files:
+        - file: "workflow/schemas/config.schema.yaml"
+          tag: "CONFIGSCHEMA"
+        - file: "workflow/schemas/resources.schema.yaml"
+          tag: "RESOURCESSCHEMA"
+  - snakemake-rule:
+      rule_folders:
+        - 'workflow/rules'
+      schemas:
+        - 'workflow/schemas/rules.schema.yaml'
+  - mkdocs-simple-hooks:
+      hooks:
+        on_pre_build: "docs.hooks:copy_changelog_and_license"

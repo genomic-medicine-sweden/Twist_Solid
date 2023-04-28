@@ -1,0 +1,250 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake rule input and output files description file
+type: object
+properties:
+  bcftools_id_snps:
+    type: object
+    description: input and output parameters for bcftools_id_snps
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: Bam file from an split-read aware aligner like STAR
+          bai:
+            type: string
+            description: Bam index file
+          bed:
+            type: string
+            description: Bed file with regions or positions to pileup
+          ref:
+            type: string
+            description: Reference genome
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: Vcf with pileup informations for all positions in input bed file
+
+  call_small_cnv_amplifications:
+    type: object
+    description: input and output parameters for call_small_cnv_amplifications
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          cnv_data:
+            type: string
+            description: Copy number region data from GATK CNV
+          regions_file:
+            type: string
+            description: File with genes, gene regions with surrounding cnv-probes and the actual gene region
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          amplifications:
+            type: string
+            description: Text file with the called amplifictions
+
+  call_small_cnv_deletions:
+    type: object
+    description: input and output parameters for call_small_cnv_deletions
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          cnv_data:
+            type: string
+            description: Copy number region data from GATK CNV
+          regions_file:
+            type: string
+            description: File with genes, gene regions with surrounding cnv-probes and the actual gene region
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          deletions:
+            type: string
+            description: Text file with the called deletions
+
+  cnv_tsv_report:
+    type: object
+    description: input and output parameters for cnv_tsv_report
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcfs:
+            type: string
+            description: Filtered vcf-files with merged calls from CNVkit and GATK CNV
+          org_vcfs:
+            type: string
+            description: Unfiltered vcf-files with merged calls from CNVkit and GATK CNV
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          tsv:
+            type: string
+            description: A CNV report in excel friendly format
+
+  exon_skipping:
+    type: object
+    description: input and output parameters for exon_skipping
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bed:
+            type: string
+            description: Bed file used to extract exonic genomic regions
+          junction:
+            type: string
+            description: Junction file from STAR based on split reads
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          result:
+            type: string
+            description: Report with info regarding MET exon 14 and EGFR vIII skipping
+
+  fix_vcf_ad_for_qci:
+    type: object
+    description: input and output parameters for fix_vcf_ad_for_qci
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: Vcf file with SNV and INDEL calls
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: QCI compatible vcf file with SNV and INDEL calls were the AD field has been corrected
+
+  hotspot_report:
+    type: object
+    description: input and output parameters for hotspot_report
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          hotspots:
+            type: string
+            description: Text file with hotspot positions and annotations
+          vcf:
+            type: string
+            description: Vcf file with filtered SNV and INDEL calls
+          vcf_index:
+            type: string
+            description: Vcf tabix index file
+          gvcf:
+            type: string
+            description: Genome vcf file coverage and allele information on all positions in the panel
+          gvcf_index:
+            type: string
+            description: Genome vcf tabix index file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          report:
+            type: string
+            description: Excel frienly text report with hotspot position qc information
+
+  house_keeping_gene_coverage:
+    type: object
+    description: input and output parameters for house_keeping_gene_coverage
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: Bam file
+          bai:
+            type: string
+            description: Bam index file
+          bed:
+            type: string
+            description: Bed file with gene regions used to obtain genomic coordinates
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          result:
+            type: string
+            description: Excel frienly text report with gene coverage information
+
+  report_fusions:
+    type: object
+    description: input and output parameters for report_fusions
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          arriba:
+            type: string
+            description: Called fusions by Arriba
+          bam:
+            type: string
+            description: Bam file
+          bai:
+            type: string
+            description: Bam index file
+          bed:
+            type: string
+            description: Bed file with regions of the design
+          bed_extra_annotation:
+            type: string
+            description: Bed file with gene annotations of regions outide of the design
+          fusioncatcher:
+            type: string
+            description: Called fusions by FusionCatcher
+          star_fusion:
+            type: string
+            description: Called fusions by StarFusion
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          fusions:
+            type: string
+            description: Excel frienly text report with filtered fusion calls from respective caller
+
+  report_gene_fuse:
+    type: object
+    description: input and output parameters for report_gene_fuse
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          fusions:
+            type: string
+            description: Called fusions by GeneFuse
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          report:
+            type: string
+            description: Excel frienly text report with filtered fusion calls from GeneFuse

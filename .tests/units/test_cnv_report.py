@@ -18,6 +18,8 @@ class TestGetCaller(unittest.TestCase):
             [".tests/units/vcf/test.cnv1.vcf"],
             [".tests/units/vcf/test.cnv2.vcf"],
             ".tests/units/vcf/test.deletions.tsv",
+            ".tests/units/vcf/test.amplifications.tsv",
+            2.0,
             cnv,
             1.5,
             0.5,
@@ -48,7 +50,11 @@ class TestGetCaller(unittest.TestCase):
                 ),
                 TestCase(
                     name="small deletion",
-                    expected=("testSample_T", "CDKN2A,CDKN2B", "chr9", "21968207-22008972", "small_deletion", "NA", "0.03")
+                    expected=("testSample_T", "CDKN2A,CDKN2B", "chr9", "21968207-22008972", "small_deletion", "NA", "-0.28")
+                ),
+                TestCase(
+                    name="small amplification",
+                    expected=("testSample_T", "MYCN", "chr2", "16968207-17008972", "small_amplification", "NA", "7.29")
                 ),
         ]
 
