@@ -5,4 +5,11 @@
 # Twist_Solid
 Pipeline for Solid tumours
 
-Goto the wiki page for more information on how to run and configure the pipeline
+
+## Code style validation
+[![Lint](https://github.com/genomic-medicine-sweden/Twist_Solid/actions/workflows/lint.yaml/badge.svg)](https://github.com/genomic-medicine-sweden/Twist_Solid/actions/workflows/lint.yaml)
+[![pycodestyle](https://github.com/genomic-medicine-sweden/Twist_Solid/actions/workflows/pycodestyle.yaml/badge.svg)](https://github.com/genomic-medicine-sweden/Twist_Solid/actions/workflows/pycodestyle.yaml)
+
+## Code testing
+[![pytest](https://github.com/genomic-medicine-sweden/Twist_Solid/actions/workflows/pytest.yaml/badge.svg)](https://github.com/genomic-medicine-sweden/Twist_Solid/actions/workflows/pytest.yaml)
+[![Snakemake dry run](https://github.com/genomic-medicine-sweden/Twist_Solid/actions/workflows/snakemake-dry-run.yaml/badge.svg)](https://github.com/genomic-medicine-sweden/Twist_Solid/actions/workflows/snakemake-dry-run.yaml)
