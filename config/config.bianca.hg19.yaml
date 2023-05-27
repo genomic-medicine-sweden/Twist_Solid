@@ -1,0 +1,387 @@
+resources: "config/resources.yaml"
+samples: "samples.tsv"
+units: "units.tsv"
+
+#hydra_local_path: "PATH_TO_REPO"
+
+output: "config/output_list.json"
+default_container: "docker://hydragenetics/common:0.1.9"
+
+trimmer_software: "fastp_pe"
+
+reference:
+  background: "/PROJECT_DATA/Background/background_panel_nextseq_noUmea_27_dp500_af015.tsv"
+  artifacts: "/PROJECT_DATA/Artifact/artifact_panel_nextseq_36.tsv"
+  fasta: "/sw/data/reference/Homo_sapiens/hg19/concat/Homo_sapiens.GRCh37.57.dna.concat.fa"
+  fasta_rna: "/sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
+  dict: "/sw/data/reference/Homo_sapiens/hg19/program_files/samtools/concat.dict"
+  fai: "/sw/data/reference/Homo_sapiens/hg19/concat/Homo_sapiens.GRCh37.57.dna.concat.fa.fai"
+  design_bed: "/PROJECT_DATA/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.230222.bed"
+  design_intervals: "/PROJECT_DATA/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.interval_list"
+  design_intervals_gatk_cnv: "/PROJECT_DATA/design/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
+  design_bed_rna: "/PROJECT_DATA/design/Twist_RNA_Design5.annotated.bed"
+  design_intervals_rna: "/PROJECT_DATA/design/Twist_RNA_Design5.annotated.interval_list"
+  skip_chrs:
+    - "MT"
+
+arriba:
+  assembly: "/sw/data/reference/Homo_sapiens/hg19/concat/Homo_sapiens.GRCh37.57.dna.concat.fa"
+  blacklist: "/PROJECT_DATA/ref_data/arriba/blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz"
+  container: "docker://hydragenetics/arriba:2.3.0"
+  gtf: "/sw/data/reference/Homo_sapiens/hg19/program_files/lifescope/refGene/refGene.hg19.20101221.gtf"
+  extra: "-p /PROJECT_DATA/ref_data/arriba/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3 -k /PROJECT_DATA/ref_data/arriba/known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz"
+
+arriba_draw_fusion:
+  container: "docker://hydragenetics/arriba:2.3.0"
+  cytobands: "/PROJECT_DATA/ref_data/arriba/cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv"
+  gtf: "/sw/data/reference/Homo_sapiens/hg19/program_files/lifescope/refGene/refGene.hg19.20101221.gtf"
+  protein_domains: /PROJECT_DATA/ref_data/arriba/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3
+
+add_multi_snv_in_codon:
+  af_limit: 0.00
+  artifact_limit: 10000
+
+annotate_cnv:
+  cnv_amp_genes: "/PROJECT_DATA/cnv/cnv_amp_genes.bed"
+  # cnv_loh_genes: "/PROJECT_DATA/design/cnv_loh_uppsala_genes.bed"
+  cnv_loh_genes: "/PROJECT_DATA/cnv/cnv_loh_genes.bed"
+
+bcbio_variation_recall_ensemble:
+  container: "docker://hydragenetics/bcbio-vc:0.2.6"
+  callers:
+    - vardict
+    - gatk_mutect2
+
+bcftools_annotate:
+  annotation_db: "/PROJECT_DATA/ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz"
+  output_type: "z"
+  annotation_string: "-m DB"
+
+bcftools_filter_include_region:
+  exon: "/PROJECT_DATA/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.bed"
+
+bcftools_filter_exclude_region:
+  blacklist: "/PROJECT_DATA/cnv/cnvkit_germline_blacklist_20221221.bed"
+
+bcftools_id_snps:
+  snps_bed: "/PROJECT_DATA/design/ID_SNPs.bed"
+
+bwa_mem:
+  container: "docker://hydragenetics/bwa_mem:0.7.17"
+  amb: "/sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.amb"
+  ann: "/sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.ann"
+  bwt: "/sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.bwt"
+  pac: "/sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.pac"
+  sa: "/sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.sa"
+
+bwa_mem_merge:
+  extra: "-c -p"
+
+call_small_cnv_deletions:
+  regions_file: "/PROJECT_DATA/cnv/cnv_deletion_genes.tsv"
+  window_size: 4
+  region_max_size: 30
+  min_nr_stdev_diff: 2.5
+  min_log_odds_diff: 0.3
+
+call_small_cnv_amplifications:
+  regions_file: "/PROJECT_DATA/cnv/cnv_amplification_genes.tsv"
+  window_size: 3
+  region_max_size: 15
+  min_nr_stdev_diff: 8
+  min_log_odds_diff: 0.4
+
+cnvkit_batch:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+  extra: "--drop-low-coverage"
+  normal_reference: "/PROJECT_DATA/PoN/cnvkit_nextseq_36.cnn"
+  method: "hybrid"
+
+cnvkit_batch_hrd:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+  normal_reference_hrd: "/PROJECT_DATA/PoN/cnvkit_nextseq_27_HRD.cnn"
+  method: "hybrid"
+
+cnvkit_call:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
+cnvkit_diagram:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
+cnvkit_export_seg:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
+cnv_html_report:
+  cnv_vcf:
+    - annotation: cnv_loh_genes
+      filter: cnv_hard_filter_loh
+    - annotation: cnv_amp_genes
+      filter: cnv_hard_filter_amp
+  template: config/cnv_report_template.html
+
+cnvkit_scatter:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
+cnv_tsv_report:
+  amp_cn_limit: 6.0
+  del_1p19q_cn_limit: 1.4
+  del_1p19q_chr_arm_fraction: 0.3
+
+exon_skipping:
+  design_bed: "/PROJECT_DATA/design/Twist_RNA_Design5.annotated.bed"
+
+fastp_pe:
+  container: "docker://hydragenetics/fastp:0.20.1"
+  # Default enabled trimming parameters for fastp. Specified for clarity.
+  extra: "--trim_poly_g --qualified_quality_phred 15 --unqualified_percent_limit 40 --n_base_limit 5 --length_required 15"
+
+fastqc:
+  container: "docker://hydragenetics/fastqc:0.11.9"
+
+filter_vcf:
+  snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
+  snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
+  cnv_hard_filter_amp: "config/config_hard_filter_cnv_amp.yaml"
+  cnv_hard_filter_loh: "config/config_hard_filter_cnv_loh.yaml"
+  germline: "config/config_hard_filter_germline.yaml"
+
+filter_fuseq_wes:
+  min_support: 30
+  gene_white_list: "/PROJECT_DATA/fuseq_wes/fuseq_wes_gene_white_list.txt"
+  transcript_black_list: "/PROJECT_DATA/fuseq_wes/fuseq_wes_transcript_black_list.txt"
+  filter_on_fusiondb: True
+  gtf: "/sw/data/reference/Homo_sapiens/hg19/program_files/lifescope/refGene/refGene.hg19.20101221.gtf"
+
+fuseq_wes:
+  container: "docker://hydragenetics/fuseq_wes:1.0.1"
+  ref_json: "/data/ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json"
+  gtfSqlite: "/data/ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite"
+  fusiondb: "/data/ref_data/fuseq_wes/Mitelman_fusiondb.RData"
+  paralogdb: "/data/ref_data/fuseq_wes/ensmbl_paralogs_grch37.RData"
+  params: "/PROJECT_DATA/fuseq_wes/fuseq_params.txt"
+
+fusioncatcher:
+  container: "docker://hydragenetics/fusioncatcher:1.33"
+  genome_path: "/sw/bioinfo/FusionCatcher/1.33/bianca/fusioncatcher/data/human_v102/"
+
+gatk_calculate_contamination:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_call_copy_ratio_segments:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_collect_allelic_counts:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+  SNP_interval: "/PROJECT_DATA/cnv/gnomad_SNP_0.001_target.annotated.interval_list"
+
+gatk_collect_read_counts:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_denoise_read_counts:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+  normal_reference: "/PROJECT_DATA/PoN/gatk_cnv_nextseq_36.hdf5"
+
+gatk_model_segments:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_get_pileup_summaries:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+  sites: "/PROJECT_DATA/ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz"
+  variants: "/PROJECT_DATA/ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz"
+
+gatk_mutect2:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_filter:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_gvcf:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gatk_mutect2_merge_stats:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
+gene_fuse:
+  container: "docker://hydragenetics/genefuse:0.6.1"
+  genes: "/PROJECT_DATA/gene_fuse/GMS560_fusion_w_pool2.hg19.221117.csv"
+  fasta: "/sw/data/reference/Homo_sapiens/hg19/concat/Homo_sapiens.GRCh37.57.dna.concat.fa"
+
+hotspot_annotation:
+  hotspots: "/PROJECT_DATA/design/Hotspots_combined_regions_nodups.csv"
+  chr_translation_file: "config/hotspot_report.chr.translation.hg19"
+
+hotspot_info:
+  hotspot_mutations: "/PROJECT_DATA/design/Hotspots_combined_regions_nodups.csv"
+
+hotspot_report:
+  hotspot_mutations: "/PROJECT_DATA/design/Hotspots_combined_regions_nodups.csv"
+  report_config: "config/hotspot_report.yaml"
+  chr_translation_file: "config/hotspot_report.chr.translation.hg19"
+  levels:
+    - [200, "ok", "yes"]
+    - [30, "low", "yes"]
+    - [0, "low", "not analyzable"]
+
+manta_config_t:
+  container: "docker://hydragenetics/manta:1.6.0"
+  extra: "--exome --callRegions /PROJECT_DATA/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz"
+
+manta_run_workflow_t:
+  container: "docker://hydragenetics/manta:1.6.0"
+
+mosdepth:
+  container: "docker://hydragenetics/mosdepth:0.3.2"
+  extra: "--no-per-base --fast-mode"
+
+mosdepth_bed:
+  container: "docker://hydragenetics/mosdepth:0.3.2"
+
+msisensor_pro:
+  container: "docker://hydragenetics/msisensor_pro:1.1.a"
+  PoN: "/PROJECT_DATA/PoN/Msisensor_pro_reference_nextseq_36.list_baseline"
+
+multiqc:
+  container: "docker://hydragenetics/multiqc:1.11"
+  reports:
+    DNA:
+      config: "config/multiqc_config_dna.yaml"
+      included_unit_types: ["N", "T"]
+      qc_files:
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2_fastqc.zip"
+        - "qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
+        - "qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
+        - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
+        - "qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt"
+        - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
+        - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
+    RNA:
+      config: "config/multiqc_config_rna.yaml"
+      included_unit_types: ["R"]
+      qc_files:
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2_fastqc.zip"
+        - "qc/mosdepth/{sample}_{type}.mosdepth.global.dist.txt"
+        - "qc/mosdepth/{sample}_{type}.mosdepth.region.dist.txt"
+        - "qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
+        - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
+        - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
+        - "qc/mosdepth/{sample}_{type}.regions.bed.gz"
+
+optitype:
+  #container: "docker://hydragenetics/optitype:1.3.5"
+  container: "docker://fred2/optitype"
+  sample_type: "-d"
+  enumeration: 4
+
+picard_collect_alignment_summary_metrics:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+picard_collect_hs_metrics:
+  container: "docker://hydragenetics/picard:2.25.0"
+  extra: "COVERAGE_CAP=50000"
+
+picard_collect_duplication_metrics:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+picard_collect_insert_size_metrics:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+picard_mark_duplicates:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+purecn:
+  container: "docker://hydragenetics/purecn:2.2.0"
+  genome: "hg19"
+  interval_padding: 100
+  segmentation_method: "internal"
+  fun_segmentation: "PSCBS"
+  extra: "--model betabin --mapping-bias-file /PROJECT_DATA/purecn/mapping_bias_nextseq_27_hg19.rds"
+  normaldb: "/PROJECT_DATA/purecn/normalDB_nextseq_27_hg19.rds"
+  intervals: "/PROJECT_DATA/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
+
+purecn_coverage:
+  container: "docker://hydragenetics/purecn:2.2.0"
+  intervals: "/PROJECT_DATA/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
+
+report_fusions:
+  annotation_bed: "PROJECT_DATA/rna_fusion/Twist_RNA_fusionpartners.bed"
+  fusioncather_flag_low_support: 15
+  fusioncather_low_support: 3
+  fusioncather_low_support_fp_genes: 20
+  fusioncather_low_support_inframe: 6
+  star_fusion_flag_low_support: 15
+  star_fusion_low_support: 2
+  star_fusion_low_support_fp_genes: 20
+  star_fusion_low_support_inframe: 6
+
+report_gene_fuse:
+  filter_fusions: "/PROJECT_DATA/gene_fuse/filter_fusions_20230214.csv"
+  min_unique_reads: 6
+
+samtools_merge_bam:
+  extra: "-c -p"
+
+scarhrd:
+  container: "docker://hydragenetics/scarhrd:20200825"
+  reference_name: "grch37"
+  seqz: FALSE
+
+star:
+  container: "docker://hydragenetics/star:2.7.10a"
+  genome_index: "/sw/data/reference/Homo_sapiens/hg19/program_files/star/concat"
+  extra: "--quantMode GeneCounts --sjdbGTFfile /sw/data/reference/Homo_sapiens/hg19/program_files/lifescope/refGene/refGene.hg19.20101221.gtf --outSAMtype BAM SortedByCoordinate --chimSegmentMin 10 --chimOutType WithinBAM SoftClip --chimJunctionOverhangMin 10 --chimScoreMin 1 --chimScoreDropMax 30 --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --alignSJstitchMismatchNmax 5 -1 5 5 --chimSegmentReadGapMax 3"
+
+star_fusion:
+  container: "docker://hydragenetics/star-fusion:1.10.1"
+  genome_path: "/sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/"
+  extra: "--examine_coding_effect"
+
+svdb_merge:
+  container: "docker://hydragenetics/svdb:2.6.0"
+  tc_method:
+    - name: purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
+    - name: pathology
+      cnv_caller:
+        - cnvkit
+        - gatk
+  extra: "--pass_only" #Just merge the two vcf-files without merging regions
+
+svdb_query:
+  container: "docker://hydragenetics/svdb:2.6.0"
+  db_string: "--db /PROJECT_DATA/SVDB/all_TN_292_svdb_0.8_20220505.vcf --out_frq Twist_AF --out_occ Twist_OCC"
+
+tmb:
+  af_lower_limit: 0.05
+  af_upper_limit: 0.95
+  af_germline_lower_limit: 0.47
+  af_germline_upper_limit: 0.53
+  artifacts: ""
+  background_panel: ""
+  db1000g_limit: 0.0001
+  dp_limit: 100
+  gnomad_limit: 0.0001
+  vd_limit: 10
+  nr_avg_germline_snvs: 2.0
+  nssnv_tmb_correction: 0.84
+
+vardict:
+  container: "docker://hydragenetics/vardict:1.8.3"
+  allele_frequency_threshold: "0.01"
+  bed_columns: "-c 1 -S 2 -E 3 -g 4"
+  extra: "-Q 1"
+
+vep:
+  container: "docker://hydragenetics/vep:107"
+  vep_cache:  "/sw/data/vep/107/homo_sapiens/107_GRCh37"
+  mode: --offline --cache
+  extra: " --assembly GRCh37 --check_existing --pick --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
+
+vt_decompose:
+  container: "docker://hydragenetics/vt:2015.11.10"
+
+vt_normalize:
+  container: "docker://hydragenetics/vt:2015.11.10"

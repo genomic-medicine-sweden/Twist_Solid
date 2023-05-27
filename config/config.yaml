@@ -53,7 +53,7 @@ bcbio_variation_recall_ensemble:
     - gatk_mutect2
 
 bcftools_annotate:
-  annotation_db: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf.gz"
+  annotation_db: "/PROJECT_DATA/ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz"
   output_type: "z"
   annotation_string: "-m DB"
 
@@ -157,13 +157,13 @@ fgbio_group_reads_by_umi:
   umi_strategy: paired
 
 filter_vcf:
-  snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
-  snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
-  snv_hard_filter_umi: "config/config_hard_filter_umi.yaml"
+  snv_soft_filter: "config/filters/config_soft_filter_uppsala.yaml"
+  snv_hard_filter: "config/filters/config_hard_filter_uppsala.yaml"
+  snv_hard_filter_umi: "config/filters/config_hard_filter_umi.yaml"
   snv_hard_filter_purecn: "config/config_hard_filter_purecn.yaml"
-  cnv_hard_filter_amp: "config/config_hard_filter_cnv_amp.yaml"
-  cnv_hard_filter_loh: "config/config_hard_filter_cnv_loh.yaml"
-  germline: "config/config_hard_filter_germline.yaml"
+  cnv_hard_filter_amp: "config/filters/config_hard_filter_cnv_amp.yaml"
+  cnv_hard_filter_loh: "config/filters/config_hard_filter_cnv_loh.yaml"
+  germline: "config/filters/config_hard_filter_germline.yaml"
 
 filter_fuseq_wes:
   min_support: 30

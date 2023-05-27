@@ -1,0 +1,46 @@
+---
+
+ gene_fuse:
+   fasta:
+     path: /sw/data/reference/Homo_sapiens/hg19/concat/Homo_sapiens.GRCh37.57.dna.concat.fa
+
+ references:
+   fasta:
+     path: /sw/data/reference/Homo_sapiens/hg19/concat/Homo_sapiens.GRCh37.57.dna.concat.fa
+   fasta_rna:
+     path: /sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa
+   fai:
+     path: /sw/data/reference/Homo_sapiens/hg19/concat/Homo_sapiens.GRCh37.57.dna.concat.fa.fai
+   dict:
+     path: /sw/data/reference/Homo_sapiens/hg19/program_files/samtools/concat.dict 
+# /data/ref_data/star/v2.7.10a_hg19/
+ bwa:
+  amp:
+    path: /sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.amb
+  ann:
+    path: /sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.ann
+  bwt:
+    path: /sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.bwt
+  pact:
+    path: /sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.pac
+  sa:
+    path: /sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.sa
+
+ fusioncatcher:
+   genome_path:
+     path: /sw/bioinfo/FusionCatcher/1.33/bianca/fusioncatcher/data/human_v102/
+
+ star:
+   extra:
+     path: /sw/data/reference/Homo_sapiens/hg19/program_files/lifescope/refGene/refGene.hg19.20101221.gtf
+   genome_index:
+     path: /sw/data/reference/Homo_sapiens/hg19/program_files/star/concat
+
+ star-fusion:
+   genome_path:
+     path: /sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/
+
+ vep:
+   vep_cache:
+     path: /sw/data/vep/107/homo_sapiens/107_GRCh37
+   
