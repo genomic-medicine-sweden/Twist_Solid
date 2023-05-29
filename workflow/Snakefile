@@ -322,7 +322,7 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
 
 use rule purecn from cnv_sv as cnv_sv_purecn with:
     input:
-        unpack(cnv.sv.get_purecn_inputs),
+        unpack(cnv_sv.get_purecn_inputs),
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
         tbi="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz.tbi",
 
