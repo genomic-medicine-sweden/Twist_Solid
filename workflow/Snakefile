@@ -320,7 +320,7 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
 
 
-use checkpoint purecn from cnv_sv as cnv_sv_purecn with:
+use rule purecn from cnv_sv as cnv_sv_purecn with:
     input:
         unpack(cnv.sv.get_purecn_inputs),
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
