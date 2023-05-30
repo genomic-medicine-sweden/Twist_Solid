@@ -114,6 +114,11 @@ module snv_indels:
 use rule * from snv_indels as snv_indels_*
 
 
+use rule bcftools_annotate from snv_indels as snv_indels_bcftools_annotate_purecn with:
+    output:
+        vcf=temp("{file}.bcftools_annotated_purecn.vcf.gz"),
+
+
 module annotation:
     snakefile:
         get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.3.0")
@@ -323,8 +328,8 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
 use rule purecn from cnv_sv as cnv_sv_purecn with:
     input:
         unpack(cnv_sv.get_purecn_inputs),
-        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.bcftools_annotated.vcf.gz",
-        tbi="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.bcftools_annotated.vcf.gz.tbi",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.bcftools_annotated_purecn.vcf.gz",
+        tbi="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.bcftools_annotated_purecn.vcf.gz.tbi",
 
 
 module reports:
