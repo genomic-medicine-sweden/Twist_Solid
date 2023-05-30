@@ -131,10 +131,17 @@ use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purec
     output:
         vcf=temp("annotation/background_annotation/{sample}_{type}.background_annotation.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.gz"),
     params:
-        annotation_db="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf.gz,
+        annotation_db="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf.gz",
         output_type=config.get("bcftools_annotate_purecn", {}).get("output_type", "z"),
         annotation_string=config.get("bcftools_annotate_purecn", {}).get("annotation_string", "-m DB"),
         extra=config.get("bcftools_annotate_purecn", {}).get("extra", ""),
+    log:
+        "annotation/background_annotation/{sample}_{type}.background_annotation.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.gz",
+    benchmark:
+        repeat(
+            "annotation/background_annotation/{sample}_{type}.background_annotation.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.gz.benchmark.tsv",
+            config.get("bcftools_annotate", {}).get("benchmark_repeats", 1),
+        )
 
 
 module filtering:
