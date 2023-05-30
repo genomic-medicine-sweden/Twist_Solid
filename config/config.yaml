@@ -58,9 +58,8 @@ bcftools_annotate:
   annotation_string: "-m DB"
 
 bcftools_annotate_purecn:
-  annotation_db: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf.gz"
   output_type: "z"
-  annotation_string: "-m -DB"
+  annotation_string: "-m DB"
 
 bcftools_filter_include_region:
   exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.bed"
@@ -309,10 +308,10 @@ purecn:
   interval_padding: 100
   segmentation_method: "internal"
   fun_segmentation: "PSCBS"
-  # extra: "--model betabin --mapping-bias-file /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/mapping_bias_nextseq_27_hg19.rds"
-  extra: "--model betabin --mapping-bias-file /scratch/wp1/nobackup/ngs/utveckling/analys/2023/purecn/results/mapping_bias_hg19.rds"
-  # normaldb: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/normalDB_nextseq_27_hg19.rds"
-  normaldb: "/scratch/wp1/nobackup/ngs/utveckling/analys/2023/purecn/results/purecn_normal_db.rds"
+  extra: "--model betabin --mapping-bias-file /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/mapping_bias_nextseq_27_hg19.rds"
+  # extra: "--model betabin --mapping-bias-file /scratch/wp1/nobackup/ngs/utveckling/analys/2023/purecn/results/mapping_bias_hg19.rds"
+  normaldb: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/normalDB_nextseq_27_hg19.rds"
+  # normaldb: "/scratch/wp1/nobackup/ngs/utveckling/analys/2023/purecn/results/purecn_normal_db.rds"
   intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
 
 purecn_coverage:

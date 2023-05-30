@@ -125,10 +125,13 @@ use rule * from annotation as annotation_*
 
 
 use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purecn with:
+    input:
+        vcf="annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.vcf.gz",
+        tbi="annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.vcf.gz.tbi",
     output:
-        vcf=temp("{file}.bcftools_annotated_purecn.vcf.gz"),
+        vcf=temp("annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.bcftools_annotated_purecn.vcf.gz"),
     params:
-        annotation_db=config.get("bcftools_annotate_purecn", {}).get("annotation_db", ""),
+        annotation_db="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.vcf.gz,
         output_type=config.get("bcftools_annotate_purecn", {}).get("output_type", "z"),
         annotation_string=config.get("bcftools_annotate_purecn", {}).get("annotation_string", "-m DB"),
         extra=config.get("bcftools_annotate_purecn", {}).get("extra", ""),
@@ -333,8 +336,8 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
 use rule purecn from cnv_sv as cnv_sv_purecn with:
     input:
         unpack(cnv_sv.get_purecn_inputs),
-        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.bcftools_annotated_purecn.vcf.gz",
-        tbi="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.bcftools_annotated_purecn.vcf.gz.tbi",
+        vcf="annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.bcftools_annotated_purecn.vcf.gz",
+        tbi="annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.bcftools_annotated_purecn.vcf.gz.tbi",
 
 
 module reports:
