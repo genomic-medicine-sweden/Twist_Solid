@@ -114,11 +114,6 @@ module snv_indels:
 use rule * from snv_indels as snv_indels_*
 
 
-use rule bcftools_annotate from snv_indels as snv_indels_bcftools_annotate_purecn with:
-    output:
-        vcf=temp("{file}.bcftools_annotated_purecn.vcf.gz"),
-
-
 module annotation:
     snakefile:
         get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.3.0")
@@ -127,6 +122,11 @@ module annotation:
 
 
 use rule * from annotation as annotation_*
+
+
+use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purecn with:
+    output:
+        vcf=temp("{file}.bcftools_annotated_purecn.vcf.gz"),
 
 
 module filtering:
