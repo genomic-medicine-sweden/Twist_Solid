@@ -141,6 +141,7 @@ fastqc:
 filter_vcf:
   snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
+  snv_hard_filter_purecn: "config/config_hard_filter_purecn.yaml"
   cnv_hard_filter_amp: "config/config_hard_filter_cnv_amp.yaml"
   cnv_hard_filter_loh: "config/config_hard_filter_cnv_loh.yaml"
   germline: "config/config_hard_filter_germline.yaml"
