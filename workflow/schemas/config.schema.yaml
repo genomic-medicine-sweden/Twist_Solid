@@ -455,7 +455,6 @@ properties:
           - fun_segmentation
           - interval_padding
 
-
   purecn_coverage:
     description: parameters for purecn_coverage
     type: object
@@ -475,6 +474,16 @@ properties:
     required:
       - intervals
 
+  purecn_modify_vcf:
+    type: object
+    description: parameters for purecn_modify_vcf
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
 
   reference:
     type: object
