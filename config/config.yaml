@@ -58,7 +58,6 @@ bcftools_annotate:
   annotation_string: "-m DB"
 
 bcftools_annotate_purecn:
-  output_type: "z"
   annotation_string: "-m DB"
 
 bcftools_filter_include_region:
