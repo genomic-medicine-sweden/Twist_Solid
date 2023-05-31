@@ -46,7 +46,7 @@ ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
 ruleorder: qc_samtools_stats_rna > qc_samtools_stats
 ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
 ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
-ruleorder: _result_bam_bai > alignment_samtools_index
+ruleorder: _copy_bam_index > alignment_samtools_index
 
 
 module prealignment:
