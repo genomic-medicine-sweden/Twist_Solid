@@ -131,17 +131,17 @@ use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purec
         tbi="snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.vcf.gz.tbi",
         annotation_db="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
     output:
-        vcf=temp("snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.gz"),
+        vcf=temp("snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf"),
     params:
         annotation_db="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
         output_type=config.get("bcftools_annotate_purecn", {}).get("output_type", "z"),
         annotation_string=config.get("bcftools_annotate_purecn", {}).get("annotation_string", "-m DB"),
         extra=config.get("bcftools_annotate_purecn", {}).get("extra", ""),
     log:
-        "snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.gz.log",
+        "snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.log",
     benchmark:
         repeat(
-            "snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.gz.benchmark.tsv",
+            "snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.benchmark.tsv",
             config.get("bcftools_annotate", {}).get("benchmark_repeats", 1),
         )
 
@@ -345,8 +345,8 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
 use rule purecn from cnv_sv as cnv_sv_purecn with:
     input:
         unpack(cnv_sv.get_purecn_inputs),
-        vcf="snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.gz",
-        tbi="snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.gz.tbi",
+        vcf="cnv_sv/purecn_modify_vcf/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.mbq.vcf.gz",
+        tbi="cnv_sv/purecn_modify_vcf/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.mbq.vcf.gz.tbi",
 
 
 module reports:
