@@ -1,0 +1,477 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake configuration file
+type: object
+properties:
+  default_container:
+    type: string
+    description: name or path to a default docker/singularity container
+    pattern: >-
+        hydragenetics/common:0\.1\.9$|hydragenetics_common_0\.1\.9\.sif$
+
+  bcbio_variation_recall_ensemble:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/bcbio-vc:0\.2\.6$|hydragenetics_bcbio-vc_0\.2\.6\.sif$|
+    required:
+      - container
+
+  bwa_mem:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/bwa_mem:0\.7\.17$|hydragenetics_bwa_mem_0\.7\.17\.sif$
+    required:
+      - container
+
+  cnvkit_batch:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/cnvkit:0\.9\.9$|hydragenetics_cnvkit_0\.9\.9\.sif$
+    required:
+      - container
+
+  cnvkit_call:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/cnvkit:0\.9\.9$|hydragenetics_cnvkit_0\.9\.9\.sif$
+    required:
+      - container
+
+  cnvkit_diagram:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/cnvkit:0\.9\.9$|hydragenetics_cnvkit_0\.9\.9\.sif$
+    required:
+      - container
+
+  cnvkit_scatter:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/cnvkit:0\.9\.9$|hydragenetics_cnvkit_0\.9\.9\.sif$
+    required:
+      - container
+
+  fastp_pe:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/fastp:0\.20\.1$|hydragenetics_fastp_0\.20\.1\.sif$
+      required:
+        - container
+
+  fastqc:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/fastqc:0\.11\.9$|hydragenetics_fastqc_0\.11\.9\.sif$
+      required:
+        - container
+
+  fusioncatcher:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/fusioncatcher:1\.33$|hydragenetics_fusioncatcher_1\.33\.sif$
+      required:
+        - container
+
+  gatk_calculate_contamination:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
+      required:
+        - container
+
+  gatk_call_copy_ratio_segments:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
+      required:
+        - container
+
+  gatk_collect_allelic_counts:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
+      required:
+        - container
+
+  gatk_collect_read_counts:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
+      required:
+        - container
+
+  gatk_denoise_read_counts:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
+      required:
+        - container
+
+  gatk_get_pileup_summaries:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics|gatk4_4\.1\.9\.0\.sif$
+      required:
+        - container
+
+  gatk_mutect2:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
+      required:
+        - container
+
+  gatk_mutect2_gvcf:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
+      required:
+        - container
+
+  gatk_model_segments:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
+      required:
+        - container
+
+  gene_fuse:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/genefuse:0\.6\.1$|hydragenetics_genefuse_0\.6\.1\.sif$
+      required:
+        - container
+
+  manta_config_t:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/manta:1\.6\.0$|hydragenetics_manta_1\.6\.0\.sif$
+    required:
+      - container
+
+  manta_run_workflow_t:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/manta:1\.6\.0$|hydragenetics_manta_1\.6\.0\.sif$
+      required:
+        - container
+
+  mosdepth_bed:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/mosdepth:0\.3\.2$|hydragenetics_mosdepth_0\.3\.2\.sif$
+      required:
+        - container
+
+  msisensor_pro:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/msisensor_pro:1\.1\.a$|hydragenetics_msisensor_pro_1\.1\.a\.sif$
+      required:
+        - container
+
+  multiqc:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/multiqc:1\.11$|hydragenetics_multiqc_1\.11\.sif$
+      required:
+        - container
+
+  optitype:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            fred2/optitype$|fred2_optitype\.sif$
+      required:
+        - container
+
+  picard_collect_alignment_summary_metrics:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/picard:2\.25\.0$|hydragenetics_picard_2\.25\.0\.sif$
+      required:
+        - container
+
+  picard_collect_hs_metrics:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/picard:2\.25\.0$|hydragenetics_picard_2\.25\.0\.sif$
+      required:
+        - container
+
+  picard_collect_duplication_metrics:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/picard:2\.25\.0$|hydragenetics_picard_2\.25\.0\.sif$
+      required:
+        - container
+
+  picard_collect_insert_size_metrics:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/picard:2\.25\.0$|hydragenetics_picard_2\.25\.0\.sif$
+      required:
+        - container
+
+  picard_mark_duplicates:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/picard:2\.25\.0$|hydragenetics_picard_2\.25\.0\.sif$
+      required:
+        - container
+
+  purecn:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/purecn:2\.2\.0$|hydragenetics_purecn_2\.2\.0\.sif$
+      required:
+        - container
+
+  purecn_coverage:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/purecn:2\.2\.0$|hydragenetics_purecn_2\.2\.0\.sif$
+      required:
+        - container
+
+  star_fusion:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/star-fusion:1\.10\.1$|hydragenetics_star-fusion_1\.10\.1\.sif$
+      required:
+        - container
+
+  svdb_merge:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/svdb:2\.6\.0$|hydragenetics_svdb_2\.6\.0\.sif$
+    required:
+      - container
+
+  svdb_query:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/svdb:2\.6\.0$|hydragenetics_svdb_2\.6\.0\.sif$
+    required:
+      - container
+
+  vardict:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/vardict:1\.8\.3$|hydragenetics_vardict_1\.8\.3\.sif$
+    required:
+      - container
+
+  vep:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/vep:105$|hydragenetics_vep_107\.sif$
+    required:
+      - container
+
+  vt_decompose:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/vt:2015\.11\.10$|hydragenetics_vt_2015\.11\.10\.sif$
+    required:
+      - container
+
+  vt_normalize:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to a default docker/singularity container
+        pattern: >-
+            hydragenetics/vt:2015\.11\.10$|hydragenetics_vt_2015\.11\.10\.sif$
+      required:
+        - container
+
+required:
+  - default_container
+  - bcbio_variation_recall_ensemble
+  - bwa_mem
+  - cnvkit_batch
+  - cnvkit_call
+  - cnvkit_diagram
+  - cnvkit_scatter
+  - fastp_pe
+  - fastqc
+  - fusioncatcher
+  - gatk_call_copy_ratio_segments
+  - gatk_collect_allelic_counts
+  - gatk_collect_read_counts
+  - gatk_denoise_read_counts
+  - gatk_mutect2
+  - gatk_mutect2_gvcf
+  - gatk_model_segments
+  - gene_fuse
+  - manta_config_t
+  - manta_run_workflow_t
+  - mosdepth_bed
+  - msisensor_pro
+  - multiqc
+  - optitype
+  - picard_collect_alignment_summary_metrics
+  - picard_collect_hs_metrics
+  - picard_collect_duplication_metrics
+  - picard_collect_insert_size_metrics
+  - picard_mark_duplicates
+  - purecn
+  - purecn_coverage
+  - svdb_merge
+  - svdb_query
+  - vardict
+  - vep
+  - vt_decompose
+  - vt_normalize
