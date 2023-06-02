@@ -30,7 +30,6 @@ rule purecn_modify_vcf:
     message:
         "{rule}: modify mbq in {input.vcf}"
     shell:
-        "sed -r 's/(.*)(\MBQ=[0-9]+,)([0-9]+)(.*)/echo \"\1\2$((\3+5))\4\"/ge' | "
-        "sed -r 's/(.*)(\MBQ=)([0-9]+)(.*)/echo \"\1\2$((\3+5))\4\"/ge' "
-        "{input.vcf} > "
-        "{output.vcf} &> {log}"
+        "(sed -r 's/(.*)(\\MBQ=[0-9]+,)([0-9]+)(.*)/echo \"\\1\\2$((\\3+5))\\4\"/ge' {input.vcf} | "
+        "sed -r 's/(.*)(\\MBQ=)([0-9]+)(.*)/echo \"\\1\\2$((\\3+5))\\4\"/ge' > "
+        "{output.vcf}) &> {log}"

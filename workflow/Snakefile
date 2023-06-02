@@ -130,6 +130,7 @@ use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purec
         vcf="snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.vcf.gz",
         tbi="snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.vcf.gz.tbi",
         annotation_db="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
+        annotation_db_tbi="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz.tbi",
     output:
         vcf=temp("snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf"),
     params:
