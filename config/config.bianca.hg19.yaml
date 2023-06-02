@@ -1,4 +1,4 @@
-resources: "config/resources.yaml"
+0resources: "config/resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
@@ -154,10 +154,10 @@ filter_fuseq_wes:
 
 fuseq_wes:
   container: "docker://hydragenetics/fuseq_wes:1.0.1"
-  ref_json: "/data/ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json"
-  gtfSqlite: "/data/ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite"
-  fusiondb: "/data/ref_data/fuseq_wes/Mitelman_fusiondb.RData"
-  paralogdb: "/data/ref_data/fuseq_wes/ensmbl_paralogs_grch37.RData"
+  ref_json: "/PROJECT_DATA/ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json"
+  gtfSqlite: "/PROJECT_DATA/ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite"
+  fusiondb: "/PROJECT_DATA/ref_data/fuseq_wes/Mitelman_fusiondb.RData"
+  paralogdb: "/PROJECT_DATA/ref_data/fuseq_wes/ensmbl_paralogs_grch37.RData"
   params: "/PROJECT_DATA/fuseq_wes/fuseq_params.txt"
 
 fusioncatcher:
@@ -208,7 +208,7 @@ gene_fuse:
 
 hotspot_annotation:
   hotspots: "/PROJECT_DATA/design/Hotspots_combined_regions_nodups.csv"
-  chr_translation_file: "config/hotspot_report.chr.translation.hg19"
+  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
 
 hotspot_info:
   hotspot_mutations: "/PROJECT_DATA/design/Hotspots_combined_regions_nodups.csv"
@@ -216,7 +216,7 @@ hotspot_info:
 hotspot_report:
   hotspot_mutations: "/PROJECT_DATA/design/Hotspots_combined_regions_nodups.csv"
   report_config: "config/hotspot_report.yaml"
-  chr_translation_file: "config/hotspot_report.chr.translation.hg19"
+  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
   levels:
     - [200, "ok", "yes"]
     - [30, "low", "yes"]
