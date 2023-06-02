@@ -2697,7 +2697,7 @@ gene_fuse:
 
 hotspot_annotation:
   hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups_hg38.csv"
-  chr_translation_file: "config/hotspot_report.chr.translation.hg38"
+  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg38"
 
 hotspot_info:
   hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups_hg38.csv"
@@ -2705,7 +2705,7 @@ hotspot_info:
 hotspot_report:
   hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups_hg38.csv"
   report_config: "config/hotspot_report.yaml"
-  chr_translation_file: "config/hotspot_report.chr.translation.hg38"
+  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg38"
   levels:
     - [300, "ok", "yes"]
     - [30, "low", "yes"]

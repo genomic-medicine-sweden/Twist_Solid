@@ -238,7 +238,7 @@ hotspot_info:
 hotspot_report:
   hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.231011.csv"
   report_config: "config/hotspot_report.yaml"
-  chr_translation_file: "config/hotspot_report.chr.translation.hg19"
+  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
   levels:
     - [200, "ok", "yes"]
     - [30, "low", "yes"]
