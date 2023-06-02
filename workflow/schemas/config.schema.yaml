@@ -612,6 +612,7 @@ required:
   - samples
   - units
   - resources
+  - singularity_schema
   - output
   - default_container
   - bcbio_variation_recall_ensemble

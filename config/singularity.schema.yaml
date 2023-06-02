@@ -6,7 +6,7 @@ properties:
     type: string
     description: name or path to a default docker/singularity container
     pattern: >-
-        hydragenetics/common:0\.1\.9$
+        hydragenetics/common:0\.1\.9$|hydragenetics_common_0\.1\.9\.sif$
 
   bcbio_variation_recall_ensemble:
     type: object
@@ -15,7 +15,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/bcbio-vc:0\.2\.6$
+            hydragenetics/bcbio-vc:0\.2\.6$|hydragenetics_bcbio-vc_0\.2\.6\.sif$|
     required:
       - container
 
@@ -26,7 +26,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/bwa_mem:0\.7\.17$
+            hydragenetics/bwa_mem:0\.7\.17$|hydragenetics_bwa_mem_0\.7\.17\.sif$
     required:
       - container
 
@@ -37,7 +37,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/cnvkit:0\.9\.9$
+            hydragenetics/cnvkit:0\.9\.9$|hydragenetics_cnvkit_0\.9\.9\.sif$
     required:
       - container
 
@@ -48,7 +48,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/cnvkit:0\.9\.9$
+            hydragenetics/cnvkit:0\.9\.9$|hydragenetics_cnvkit_0\.9\.9\.sif$
     required:
       - container
 
@@ -59,7 +59,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/cnvkit:0\.9\.9$
+            hydragenetics/cnvkit:0\.9\.9$|hydragenetics_cnvkit_0\.9\.9\.sif$
     required:
       - container
 
@@ -70,7 +70,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/cnvkit:0\.9\.9$
+            hydragenetics/cnvkit:0\.9\.9$|hydragenetics_cnvkit_0\.9\.9\.sif$
     required:
       - container
 
@@ -81,7 +81,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/fastp:0\.20\.1$
+            hydragenetics/fastp:0\.20\.1$|hydragenetics_fastp_0\.20\.1\.sif$
       required:
         - container
 
@@ -92,7 +92,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/fastqc:0\.11\.9$
+            hydragenetics/fastqc:0\.11\.9$|hydragenetics_fastqc_0\.11\.9\.sif$
       required:
         - container
 
@@ -103,7 +103,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/fusioncatcher:1\.33$
+            hydragenetics/fusioncatcher:1\.33$|hydragenetics_fusioncatcher_1\.33\.sif$
       required:
         - container
 
@@ -114,7 +114,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/gatk4:4\.1\.9\.0$
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
       required:
         - container
 
@@ -125,7 +125,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/gatk4:4\.1\.9\.0$
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
       required:
         - container
 
@@ -136,7 +136,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/gatk4:4\.1\.9\.0$
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
       required:
         - container
 
@@ -147,7 +147,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/gatk4:4\.1\.9\.0$
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
       required:
         - container
 
@@ -158,7 +158,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/gatk4:4\.1\.9\.0$
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
       required:
         - container
 
@@ -169,7 +169,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/gatk4:4\.1\.9\.0$
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics|gatk4_4\.1\.9\.0\.sif$
       required:
         - container
 
@@ -180,7 +180,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/gatk4:4\.1\.9\.0$
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
       required:
         - container
 
@@ -191,7 +191,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/gatk4:4\.1\.9\.0$
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
       required:
         - container
 
@@ -202,7 +202,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/gatk4:4\.1\.9\.0$
+            hydragenetics/gatk4:4\.1\.9\.0$|hydragenetics_gatk4_4\.1\.9\.0\.sif$
       required:
         - container
 
@@ -213,7 +213,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/genefuse:0\.6\.1$
+            hydragenetics/genefuse:0\.6\.1$|hydragenetics_genefuse_0\.6\.1\.sif$
       required:
         - container
 
@@ -224,7 +224,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/manta:1\.6\.0$
+            hydragenetics/manta:1\.6\.0$|hydragenetics_manta_1\.6\.0\.sif$
     required:
       - container
 
@@ -235,7 +235,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/manta:1\.6\.0$
+            hydragenetics/manta:1\.6\.0$|hydragenetics_manta_1\.6\.0\.sif$
       required:
         - container
 
@@ -246,7 +246,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/mosdepth:0\.3\.2$
+            hydragenetics/mosdepth:0\.3\.2$|hydragenetics_mosdepth_0\.3\.2\.sif$
       required:
         - container
 
@@ -257,7 +257,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/msisensor_pro:1\.1\.a$
+            hydragenetics/msisensor_pro:1\.1\.a$|hydragenetics_msisensor_pro_1\.1\.a\.sif$
       required:
         - container
 
@@ -268,7 +268,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/multiqc:1\.11$
+            hydragenetics/multiqc:1\.11$|hydragenetics_multiqc_1\.11\.sif$
       required:
         - container
 
@@ -279,7 +279,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            fred2/optitype$
+            fred2/optitype$|fred2_optitype\.sif$
       required:
         - container
 
@@ -290,7 +290,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/picard:2\.25\.0$
+            hydragenetics/picard:2\.25\.0$|hydragenetics_picard_2\.25\.0\.sif$
       required:
         - container
 
@@ -301,7 +301,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/picard:2\.25\.0$
+            hydragenetics/picard:2\.25\.0$|hydragenetics_picard_2\.25\.0\.sif$
       required:
         - container
 
@@ -312,7 +312,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/picard:2\.25\.0$
+            hydragenetics/picard:2\.25\.0$|hydragenetics_picard_2\.25\.0\.sif$
       required:
         - container
 
@@ -323,7 +323,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/picard:2\.25\.0$
+            hydragenetics/picard:2\.25\.0$|hydragenetics_picard_2\.25\.0\.sif$
       required:
         - container
 
@@ -334,7 +334,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/picard:2\.25\.0$
+            hydragenetics/picard:2\.25\.0$|hydragenetics_picard_2\.25\.0\.sif$
       required:
         - container
 
@@ -345,7 +345,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/purecn:2\.2\.0$
+            hydragenetics/purecn:2\.2\.0$|hydragenetics_purecn_2\.2\.0\.sif$
       required:
         - container
 
@@ -356,7 +356,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/purecn:2\.2\.0$
+            hydragenetics/purecn:2\.2\.0$|hydragenetics_purecn_2\.2\.0\.sif$
       required:
         - container
 
@@ -367,7 +367,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/star-fusion:1\.10\.1$
+            hydragenetics/star-fusion:1\.10\.1$|hydragenetics_star-fusion_1\.10\.1\.sif$
       required:
         - container
 
@@ -378,7 +378,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/svdb:2\.6\.0$
+            hydragenetics/svdb:2\.6\.0$|hydragenetics_svdb_2\.6\.0\.sif$
     required:
       - container
 
@@ -389,7 +389,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/svdb:2\.6\.0$
+            hydragenetics/svdb:2\.6\.0$|hydragenetics_svdb_2\.6\.0\.sif$
     required:
       - container
 
@@ -400,7 +400,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/vardict:1\.8\.3$
+            hydragenetics/vardict:1\.8\.3$|hydragenetics_vardict_1\.8\.3\.sif$
     required:
       - container
 
@@ -411,7 +411,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/vep:105$
+            hydragenetics/vep:105$|hydragenetics_vep_105\.sif$
     required:
       - container
 
@@ -422,7 +422,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/vt:2015\.11\.10$
+            hydragenetics/vt:2015\.11\.10$|hydragenetics_vt_2015\.11\.10\.sif$
     required:
       - container
 
@@ -433,7 +433,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/vt:2015\.11\.10$
+            hydragenetics/vt:2015\.11\.10$|hydragenetics_vt_2015\.11\.10\.sif$
       required:
         - container
 

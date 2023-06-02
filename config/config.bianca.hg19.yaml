@@ -1,6 +1,7 @@
-0resources: "config/resources.yaml"
+resources: "config/bianca/resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
+singularity_schema: config/bianca/singularity.schema.yaml
 
 #hydra_local_path: "PATH_TO_REPO"
 
@@ -305,7 +306,7 @@ purecn_coverage:
   intervals: "/PROJECT_DATA/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
 
 report_fusions:
-  annotation_bed: "PROJECT_DATA/rna_fusion/Twist_RNA_fusionpartners.bed"
+  annotation_bed: "/PROJECT_DATA/rna_fusion/Twist_RNA_fusionpartners.bed"
   fusioncather_flag_low_support: 15
   fusioncather_low_support: 3
   fusioncather_low_support_fp_genes: 20
