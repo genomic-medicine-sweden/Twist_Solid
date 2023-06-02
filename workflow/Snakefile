@@ -321,6 +321,16 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
 
 
+module reports:
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.1.0")
+    config:
+        config
+
+
+use rule * from reports as reports_*
+
+
 module misc:
     snakefile:
         get_module_snakefile(config, "hydra-genetics/misc", path="workflow/Snakefile", tag="v0.2.0")

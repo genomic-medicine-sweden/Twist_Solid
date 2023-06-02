@@ -84,7 +84,7 @@ cnvkit_diagram:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnv_html_report:
-  template: "../../config/cnv_report_template.html"
+  template_dir: "../../config/cnv_report_template"
 
 cnvkit_scatter:
   container: "docker://hydragenetics/cnvkit:0.9.9"

@@ -132,36 +132,6 @@ properties:
     required:
       - normal_reference_hrd
 
-  cnv_html_report:
-    type: object
-    properties:
-      cnv_vcf:
-        description: >
-          A list of pairs of annotations and filters that should be applied to the svdb output.
-          This will be used for populating the results table of the report. If this list is empty,
-          no results table will be generated.
-        type: array
-        items:
-          description: >
-            A pair of values corresponding to an annotation tag and a filter tag.
-          type: object
-          properties:
-            annotation:
-              description: Annotation to apply (from `annotate_cnv`)
-              type: string
-            filter:
-              description: Filter to apply (from `filter_vcf`)
-              type: string
-          required:
-            - annotation
-            - filter
-      template:
-        type: string
-        description: Path to HTML report template
-        format: uri
-    required:
-      - template
-
   exon_skipping:
     type: object
     properties:
@@ -616,7 +586,6 @@ required:
   - default_container
   - bcbio_variation_recall_ensemble
   - cnvkit_batch
-  - cnv_html_report
   - filter_vcf
   - gatk_collect_allelic_counts
   - gatk_denoise_read_counts
