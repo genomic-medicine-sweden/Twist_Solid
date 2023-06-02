@@ -96,52 +96,6 @@ def get_flowcell(units, wildcards):
     return flowcells.pop()
 
 
-def get_cnv_ratio_file(wildcards):
-    caller = wildcards.get("caller", "")
-    if caller == "cnvkit":
-        return "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr".format(**wildcards)
-    elif caller == "gatk":
-        return "cnv_sv/gatk_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv".format(**wildcards)
-    else:
-        raise NotImplementedError(f"not implemented for caller {caller}")
-
-
-def get_cnv_segment_file(wildcards):
-    caller = wildcards.get("caller", "")
-    if caller == "cnvkit":
-        return "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns".format(**wildcards)
-    elif caller == "gatk":
-        return "cnv_sv/gatk_model_segments/{sample}_{type}.clean.cr.seg".format(**wildcards)
-    else:
-        raise NotImplementedError(f"not implemented for caller {caller}")
-
-
-def get_json_for_merge_json(wildcards):
-    json_dict = {}
-    for v in config.get("svdb_merge", {}).get("tc_method"):
-        tc_method = v["name"]
-        callers = v["cnv_caller"]
-        for caller in callers:
-            if tc_method in json_dict:
-                json_dict[tc_method].append(
-                    f"cnv_sv/cnv_html_report/{wildcards.sample}_{wildcards.type}.{caller}.{tc_method}.json"
-                )
-            else:
-                json_dict[tc_method] = [f"cnv_sv/cnv_html_report/{wildcards.sample}_{wildcards.type}.{caller}.{tc_method}.json"]
-    return json_dict[wildcards.tc_method]
-
-
-def get_filtered_cnv_vcfs_for_merge_json(wildcards):
-    cnv_vcfs = []
-    tags = config.get("cnv_html_report", {}).get("cnv_vcf", [])
-    for t in tags:
-        cnv_vcfs.append(
-            f"cnv_sv/svdb_query/{wildcards.sample}_{wildcards.type}.{wildcards.tc_method}.svdb_query."
-            f"annotate_cnv.{t['annotation']}.filter.{t['filter']}.vcf.gz"
-        )
-    return sorted(cnv_vcfs)
-
-
 def get_tc(wildcards):
     tc_method = wildcards.tc_method
     if tc_method == "pathology":
@@ -161,17 +115,6 @@ def get_tc_file(wildcards):
         return "samples.tsv"
     else:
         return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
-
-
-def get_unfiltered_cnv_vcfs_for_merge_json(wildcards):
-    cnv_vcfs = []
-    tags = config.get("cnv_html_report", {}).get("cnv_vcf", [])
-    for t in tags:
-        cnv_vcfs.append(
-            f"cnv_sv/svdb_query/{wildcards.sample}_{wildcards.type}.{wildcards.tc_method}.svdb_query."
-            f"annotate_cnv.{t['annotation']}.vcf.gz"
-        )
-    return sorted(cnv_vcfs)
 
 
 def generate_copy_code(workflow, output_spec):
