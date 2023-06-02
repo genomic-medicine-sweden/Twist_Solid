@@ -235,7 +235,7 @@ files:
       - T
       - N
   - name: CNV HTML report - PureCN
-    input: cnv_sv/cnv_html_report/{sample}_{type}.purecn.cnv.html
+    input: reports/cnv_html_report/{sample}_{type}.purecn.cnv_report.html
     output: results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv.html
     types:
       - T
@@ -247,7 +247,7 @@ files:
       - T
       - N
   - name: CNV HTML report - pathology
-    input: cnv_sv/cnv_html_report/{sample}_{type}.pathology.cnv.html
+    input: reports/cnv_html_report/{sample}_{type}.pathology.cnv_report.html
     output: results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv.html
     types:
       - T

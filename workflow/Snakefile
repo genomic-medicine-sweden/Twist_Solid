@@ -9,7 +9,6 @@ include: "rules/bcftools.smk"
 include: "rules/call_small_cnv_deletions.smk"
 include: "rules/call_small_cnv_amplifications.smk"
 include: "rules/cnv_tsv_report.smk"
-include: "rules/cnv_html_report.smk"
 include: "rules/exon_skipping.smk"
 include: "rules/fix_vcf_ad_for_qci.smk"
 include: "rules/hotspot_report.smk"
@@ -319,6 +318,16 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
         segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
         segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
+
+
+module reports:
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.1.0")
+    config:
+        config
+
+
+use rule * from reports as reports_*
 
 
 module misc:

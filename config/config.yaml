@@ -111,16 +111,12 @@ cnvkit_diagram:
 cnvkit_export_seg:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
-cnv_html_report:
-  cnv_vcf:
-    - annotation: cnv_loh_genes
-      filter: cnv_hard_filter_loh
-    - annotation: cnv_amp_genes
-      filter: cnv_hard_filter_amp
-  template: config/cnv_report_template.html
-
 cnvkit_scatter:
   container: "docker://hydragenetics/cnvkit:0.9.9"
+
+cnv_html_report:
+  show_table: true
+  template_dir: config/cnv_report_template
 
 cnv_tsv_report:
   amp_cn_limit: 6.0
@@ -228,6 +224,18 @@ manta_config_t:
 
 manta_run_workflow_t:
   container: "docker://hydragenetics/manta:1.6.0"
+
+merge_cnv_json:
+  annotations:
+    - /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed
+    - /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_genes.bed
+  filtered_cnv_vcfs:
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf.gz
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.filter.cnv_hard_filter_loh.vcf.gz
+  unfiltered_cnv_vcfs:
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.vcf.gz
+  germline_vcf: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz
 
 mosdepth:
   container: "docker://hydragenetics/mosdepth:0.3.2"
