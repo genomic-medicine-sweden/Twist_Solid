@@ -16,7 +16,7 @@ rule purecn_modify_vcf:
     benchmark:
         repeat(
             "cnv_sv/purecn_modify_vcf/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.mbq.vcf.benchmark.tsv",
-            config.get("purecn_modify_vcf", {}).get("benchmark_repeats", 1)
+            config.get("purecn_modify_vcf", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("purecn_modify_vcf", {}).get("threads", config["default_resources"]["threads"])
     resources:
