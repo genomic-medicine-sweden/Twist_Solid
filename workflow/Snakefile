@@ -136,7 +136,7 @@ use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purec
             "snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf"
         ),
     params:
-        annotation_db="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
+        annotation_db="{input.annotation_db}",
         output_type=config.get("bcftools_annotate_purecn", {}).get("output_type", "z"),
         annotation_string=config.get("bcftools_annotate_purecn", {}).get("annotation_string", "-m DB"),
         extra=config.get("bcftools_annotate_purecn", {}).get("extra", ""),
