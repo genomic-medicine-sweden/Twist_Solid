@@ -34,7 +34,7 @@ class TestGetCaller(unittest.TestCase):
         testcases = [
                 TestCase(
                     name="header row",
-                    expected=("sample", "gene(s)", "chrom", "region", "callers", "normal_freq", "copy_number")
+                    expected=("sample", "gene(s)", "chrom", "region", "callers", "freq_in_db", "copy_number")
                 ),
                 TestCase(
                     name="variant 1",
