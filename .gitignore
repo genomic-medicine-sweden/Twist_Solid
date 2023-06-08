@@ -13,3 +13,10 @@ venv
 docs/changelog.md
 docs/license.md
 site/
+
+*.sif
+ref_dat
+
+*.gz
+*.sif
+ref_data

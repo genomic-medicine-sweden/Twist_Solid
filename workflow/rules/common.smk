@@ -33,8 +33,8 @@ validate(config, schema="../schemas/config.schema.yaml")
 config = load_resources(config, config["resources"])
 validate(config, schema="../schemas/resources.schema.yaml")
 
-if workflow.use_singularity is True:
-    validate(config, schema="../schemas/singularity.schema.yaml")
+#if workflow.use_singularity is True:
+#    validate(config, schema=config["singularity_schema"])
 
 ### Read and validate samples file
 

@@ -14,9 +14,9 @@
   mem_per_cpu: 7000
 
  bwa_mem:
-  mem_mb: 56000
+  mem_mb: 112000
   mem_per_cpu: 7000
-  threads: 8
+  threads: 16
   time: "8:00:00"
 
  fastp_pe:
