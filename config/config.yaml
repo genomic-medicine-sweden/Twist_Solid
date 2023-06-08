@@ -1,7 +1,7 @@
 resources: "config/resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
-singularity_resources: config/singularity.schema.yaml
+singularity_schema: "config/singularity.schema.yaml"
 
 #hydra_local_path: "PATH_TO_REPO"
 
@@ -158,13 +158,13 @@ fgbio_group_reads_by_umi:
   umi_strategy: paired
 
 filter_vcf:
-  snv_soft_filter: "config/filters/config_soft_filter_uppsala.yaml"
-  snv_hard_filter: "config/filters/config_hard_filter_uppsala.yaml"
+  snv_soft_filter: "config/filters/config_soft_filter_uppsala_vep105.yaml"
+  snv_hard_filter: "config/filters/config_hard_filter_uppsala_vep105.yaml"
   snv_hard_filter_umi: "config/filters/config_hard_filter_umi.yaml"
   snv_hard_filter_purecn: "config/config_hard_filter_purecn.yaml"
   cnv_hard_filter_amp: "config/filters/config_hard_filter_cnv_amp.yaml"
   cnv_hard_filter_loh: "config/filters/config_hard_filter_cnv_loh.yaml"
-  germline: "config/filters/config_hard_filter_germline.yaml"
+  germline: "config/filters/config_hard_filter_germline_vep105.yaml"
 
 filter_fuseq_wes:
   min_support: 30
@@ -238,7 +238,7 @@ hotspot_info:
 
 hotspot_report:
   hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.231011.csv"
-  report_config: "config/hotspot_report.yaml"
+  report_config: "config/reports/hotspot_report.yaml"
   chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
   levels:
     - [200, "ok", "yes"]
@@ -279,7 +279,7 @@ multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
   reports:
     DNA:
-      config: "config/multiqc_config_dna.yaml"
+      config: "config/reports/multiqc_config_dna.yaml"
       included_unit_types: ["N", "T"]
       deduplication: ["mark_duplicates"]
       qc_files:
@@ -306,7 +306,7 @@ multiqc:
         - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
         - "alignment/fgbio_group_reads_by_umi/{sample}_{type}.umi.histo.tsv"
     RNA:
-      config: "config/multiqc_config_rna.yaml"
+      config: "config/reports/multiqc_config_rna.yaml"
       included_unit_types: ["R"]
       qc_files:
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"

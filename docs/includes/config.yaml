@@ -1,6 +1,7 @@
 resources: "config/resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
+singularity_schema: "config/singularity.schema.yaml"
 
 #hydra_local_path: "PATH_TO_REPO"
 
@@ -53,7 +54,7 @@ bcbio_variation_recall_ensemble:
     - gatk_mutect2
 
 bcftools_annotate:
-  annotation_db: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf.gz"
+  annotation_db: "/PROJECT_DATA/ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz"
   output_type: "z"
   annotation_string: "-m DB"
 
@@ -205,15 +206,15 @@ gene_fuse:
 
 hotspot_annotation:
   hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
-  chr_translation_file: "config/hotspot_report.chr.translation.hg19"
+  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
 
 hotspot_info:
   hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
 
 hotspot_report:
   hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
-  report_config: "config/hotspot_report.yaml"
-  chr_translation_file: "config/hotspot_report.chr.translation.hg19"
+  report_config: "config/reports/hotspot_report.yaml"
+  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
   levels:
     - [200, "ok", "yes"]
     - [30, "low", "yes"]
@@ -253,7 +254,7 @@ multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
   reports:
     DNA:
-      config: "config/multiqc_config_dna.yaml"
+      config: "config/reports/multiqc_config_dna.yaml"
       included_unit_types: ["N", "T"]
       qc_files:
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"
@@ -265,7 +266,7 @@ multiqc:
         - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
         - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
     RNA:
-      config: "config/multiqc_config_rna.yaml"
+      config: "config/reports/multiqc_config_rna.yaml"
       included_unit_types: ["R"]
       qc_files:
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"

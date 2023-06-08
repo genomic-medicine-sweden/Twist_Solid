@@ -1,0 +1,60 @@
+Bootstrap: docker-archive
+From: twist_solid_temp.tar.gz
+
+%setup
+
+$post
+    
+%files
+
+%environment
+
+%runscript
+    TWIST_SOLID_VERSION=$(cat /Twist_Solid/version.txt)
+    echo "Twist Solid version: $TWIST_SOLID_VERSION"
+    echo "Arguments received: $*"
+    exec echo "$@"
+
+%labels
+    Author patrik.smeds@scilifelab.uu.se
+    Version v0.0.1
+
+%help
+    This is Twist_DNA_Solid pipeline.
+
+%apphelp validate_ref_files
+    Make sure that all reference files are available and up to date
+    arguments:
+     1. --configfile {PATH_TO_CONFIG_YAML_UPDATED FOR_BIANCA}
+     2. --profile {PATH_TO_BIANCA_SLURM_PROFILE}
+    
+    configfile only need to override path to reference files and 
+    location of containers.
+
+
+%apphelp bianca
+    This is Twist_DNA_Solid pipeline. Predefined command options 
+    for bianca. The app need to be provided with the following 
+    arguments:
+     1. --configfile {PATH_TO_CONFIG_YAML_UPDATED FOR_BIANCA}
+     2. --profile {PATH_TO_BIANCA_SLURM_PROFILE}
+    
+    configfile only need to override path to reference files and 
+    location of containers.
+    
+
+%apprun bianca
+    TWIST_SOLID_VERSION=$(cat /Twist_Solid/version.txt)
+    echo "Twist Solid version: $TWIST_SOLID_VERSION"
+
+    if [ $# -le 3 ]
+    then
+      echo "No arguments provided! A updated configuration file and a profile needs to be provided."
+      exit 1
+    fi
+
+    echo "Command: snakemake --configfile /Twist_Solid/TwistSolid/config/config.yaml\n\t-s /Twist_DNA/Twist_Solid/workflow/Snakefile\n\t--wrapper-prefix git+file://Twist_DNA/hydra-genetics/snakemake-wrappers\n\t$1 $2 $3 $4"
+    bash -c "snakemake --configfile /Twist_Solid/Twist_Solid/config/config.yaml -s /Twist_Solid/Twist_Solid/workflow/Snakefile --wrapper-prefix /Twist_Solid/hydra-genetics/snakemake-wrappers $1 $2 $3 $4"
+
+%apphelp twist_dna_solid
+    twist_dna_solid is the help run

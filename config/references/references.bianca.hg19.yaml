@@ -1,106 +1,28 @@
 ---
 
- arriba: 
-   blacklist:
-     checksum: ca7b0b42ec2498814a5c408a5477e052
-     path: ref_data/arriba/blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz
-     url: https://figshare.com/ndownloader/files/40928345?private_link=f0837fafe533b970fd02
-      
-   extra1:
-     checksum: b5bc63c70c9eb08c71528ee8b0186901
-     path: ref_data/arriba/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3
-     url: https://figshare.com/ndownloader/files/40928354?private_link=f0837fafe533b970fd02
-   
-   extra2:
-     checksum: 2f063a0065c1c88d86c859b924d8d590
-     path: ref_data/arriba/known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz
-     url: https://figshare.com/ndownloader/files/40928351?private_link=f0837fafe533b970fd02
-
- arriba_draw_fusion:
-   cytobands: 
-     checksum: 9333eaa96c56fa22624ab432b8391b2b
-     path: ref_data/arriba/cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv
-     url: https://figshare.com/ndownloader/files/40928348?private_link=f0837fafe533b970fd02
-   
-   protein_domains: 
-     checksum: b5bc63c70c9eb08c71528ee8b0186901
-     path: ref_data/arriba/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3
-     url: https://figshare.com/ndownloader/files/40928354?private_link=f0837fafe533b970fd02
-
- bwa:
-  amp:
-    path: /sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.amb
-  ann:
-    path: /sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.ann
-  bwt:
-    path: /sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.bwt
-  pact:
-    path: /sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.pac
-  sa:
-    path: /sw/data/reference/Homo_sapiens/hg19/program_files/bwa/concat.fa.sa
-
- fuseq_wes:
-   ref_json:
-     checksum: 30d56f2305d33734e0bff3eb888b12ba
-     path: ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json
-     url: https://figshare.com/ndownloader/files/40933238?private_link=cac83963374a4c0407a5
-
-   gtfSqlite: 
-     checksum: 92357e04c72c06ab39b7cff59d24a852 
-     path: ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite
-     url: https://figshare.com/ndownloader/files/40933241?private_link=cac83963374a4c0407a5
-
-   fusiondb:
-     checksum: e4fbf81b5b02b9fe201161d324405822
-     path: ref_data/fuseq_wes/Mitelman_fusiondb.RData
-     url: https://figshare.com/ndownloader/files/40933235?private_link=cac83963374a4c0407a5
-
-   paralogdb:
-     checksum: af95895660e6b09ca07ffcedcc6c7ef1
-     path: ref_data/fuseq_wes/ensmbl_paralogs_grch37.RData
-     url: https://figshare.com/ndownloader/files/40933232?private_link=cac83963374a4c0407a5
-
- fusioncatcher:
-   genome_path:
-     path: /sw/bioinfo/FusionCatcher/1.33/bianca/fusioncatcher/data/human_v102/
-
- gatk_get_pileup_summaries:
-   sites:
-     checksum: 1eb85e09195f0092e389510b40765f5e
-     path: ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz
-     url: https://figshare.com/ndownloader/files/40933373?private_link=1b151eaf283e62084f0f
-
-   variants:
-     checksum: 1eb85e09195f0092e389510b40765f5e
-     path: ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz
-     url: https://figshare.com/ndownloader/files/40933373?private_link=1b151eaf283e62084f0f
-
- gene_fuse:
-   fasta:
-     path: /sw/data/reference/Homo_sapiens/hg19/concat/Homo_sapiens.GRCh37.57.dna.concat.fa
-
- references:
-   fasta:
-     path: /sw/data/reference/Homo_sapiens/hg19/concat/Homo_sapiens.GRCh37.57.dna.concat.fa
-   fasta_rna:
-     path: /sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa
-   fai:
-     path: /sw/data/reference/Homo_sapiens/hg19/concat/Homo_sapiens.GRCh37.57.dna.concat.fa.fai
-   dict:
-     path: /sw/data/reference/Homo_sapiens/hg19/program_files/samtools/concat.dict 
-# /data/ref_data/star/v2.7.10a_hg19/
+  fusioncatcher:
+    genome_path:
+      path: /sw/bioinfo/FusionCatcher/1.33/bianca/fusioncatcher/data/human_v102/  
  
- star:
-   extra:
-     path: /sw/data/reference/Homo_sapiens/hg19/program_files/lifescope/refGene/refGene.hg19.20101221.gtf
-   genome_index:
-     path: /sw/data/reference/Homo_sapiens/hg19/program_files/star/concat
+  reference:
+    fasta_rna:
+      path: /sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa
+#    fai:
+#      path: /sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa.fai
+#    dict:
+#      path: /sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa.fai
+ 
+  star:
+    extra:
+      path: /sw/data/reference/Homo_sapiens/GRCh37/program_files/lifescope/refGene/refGene.hg19.20101221.gtf
+    genome_index:
+      path: /sw/data/reference/Homo_sapiens/hg19/program_files/star/concat
 
- star-fusion:
-   genome_path:
-     path: /sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/
+  star-fusion:
+    genome_path:
+      path: /sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/
 
- vep:
-   vep_cache:
-     path: /sw/data/vep/107/homo_sapiens/107_GRCh37
+  vep:
+    vep_cache:
+      path: /sw/data/vep/107
    
