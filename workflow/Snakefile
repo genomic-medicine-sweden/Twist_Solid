@@ -316,11 +316,11 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
     input:
         segment="cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
-        tc_file=cnv_sv.get_tc_file,
+        tc_file=get_tc_file,
     output:
         segment=temp("cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns"),
     params:
-        tc=cnv_sv.get_tc,
+        tc=get_tc,
         extra=config.get("cnvkit_call_hrd", {}).get("extra", ""),
     log:
         "cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns.log",
@@ -335,7 +335,7 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:
     input:
         segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
-        tc_file=cnv_sv.get_tc_file,
+        tc_file=get_tc_file,
 
 
 use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:

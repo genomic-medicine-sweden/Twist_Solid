@@ -98,7 +98,17 @@ def get_flowcell(units, wildcards):
 
 def get_tc(wildcards):
     tc_method = wildcards.tc_method
-    if tc_method == "pathology":
+    if tc_method == "pathology_purecn":
+        tc = ""
+        tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        if os.path.exists(tc_file):
+            with open(tc_file) as f:
+                tc = f.read()
+        if float(tc) < 0.3:
+            return get_sample(samples, wildcards)["tumor_content"]
+        else:
+            return tc
+    elif tc_method == "pathology":
         return get_sample(samples, wildcards)["tumor_content"]
     else:
         tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
@@ -111,7 +121,17 @@ def get_tc(wildcards):
 
 def get_tc_file(wildcards):
     tc_method = wildcards.tc_method
-    if tc_method == "pathology":
+    if tc_method == "pathology_purecn":
+        tc = ""
+        tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        if os.path.exists(tc_file):
+            with open(tc_file) as f:
+                tc = f.read()
+        if float(tc) < 0.3:
+            return "samples.tsv"
+        else:
+            return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+    elif tc_method == "pathology":
         return "samples.tsv"
     else:
         return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
