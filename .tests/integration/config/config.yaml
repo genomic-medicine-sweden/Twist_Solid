@@ -313,6 +313,10 @@ star_fusion:
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
   tc_method:
+    - name: pathology_purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
     - name: purecn
       cnv_caller:
         - cnvkit

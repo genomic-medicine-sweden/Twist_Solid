@@ -31,8 +31,8 @@ rule purecn_modify_vcf:
         "{rule}: modify mbq in {input.vcf}"
     shell:
         # new lines are used to tell the linter that it is not an absolut path
-        "(sed -r 's/(.*)(\\MBQ=[0-9]+,)([0-9]+)(.*)/echo \"\\1\\2$((\\3+5))\\4\"/"
+        '(sed -r \'s/(.*)(\\MBQ=[0-9]+,)([0-9]+)(.*)/echo "\\1\\2$((\\3+5))\\4"/'
         "ge' {input.vcf} | "
-        "sed -r 's/(.*)(\\MBQ=)([0-9]+)(.*)/echo \"\\1\\2$((\\3+5))\\4\"/"
+        'sed -r \'s/(.*)(\\MBQ=)([0-9]+)(.*)/echo "\\1\\2$((\\3+5))\\4"/'
         "ge' > "
         "{output.vcf}) &> {log}"

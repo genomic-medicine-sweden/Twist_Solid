@@ -147,13 +147,19 @@ files:
       - N
   - name: HRD score - PureCN
     input: biomarker/scarhrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt
-    output: results/dna/hrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt
+    output: results/dna/additional_files/hrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt
     types:
       - T
       - N
   - name: HRD score - pathology
     input: biomarker/scarhrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt
-    output: results/dna/hrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt
+    output: results/dna/additional_files/hrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt
+    types:
+      - T
+      - N
+  - name: HRD score - pathology_purecn
+    input: biomarker/scarhrd/{sample}_{type}.pathology_purecn.scarhrd_cnvkit_score.txt
+    output: results/dna/hrd/{sample}_{type}.pathology_purecn.scarhrd_cnvkit_score.txt
     types:
       - T
       - N
@@ -234,21 +240,33 @@ files:
     types:
       - T
       - N
+  - name: SVDB query - pathology_purecn
+    input: cnv_sv/svdb_query/{sample}_{type}.pathology_purecn.svdb_query.vcf
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.svdb_query.vcf
+    types:
+      - T
+      - N
   - name: CNV HTML report - PureCN
     input: reports/cnv_html_report/{sample}_{type}.purecn.cnv_report.html
-    output: results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv.html
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv.html
+    types:
+      - T
+      - N
+  - name: CNV HTML report - pathology
+    input: reports/cnv_html_report/{sample}_{type}.pathology.cnv_report.html
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv.html
+    types:
+      - T
+      - N
+  - name: CNV HTML report - pathology_purecn
+    input: reports/cnv_html_report/{sample}_{type}.pathology_purecn.cnv_report.html
+    output: results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.cnv.html
     types:
       - T
       - N
   - name: PureCN purity
     input: cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt
     output: results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.purity.txt
-    types:
-      - T
-      - N
-  - name: CNV HTML report - pathology
-    input: reports/cnv_html_report/{sample}_{type}.pathology.cnv_report.html
-    output: results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv.html
     types:
       - T
       - N
@@ -260,13 +278,19 @@ files:
       - N
   - name: CNV TSV report - pathology
     input: cnv_sv/svdb_query/{sample}_{type}.pathology.cnv_loh_genes_all.cnv_report.tsv
-    output: results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.amp_all_del_all.cnv_report.tsv
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.amp_all_del_all.cnv_report.tsv
     types:
       - T
       - N
   - name: CNV TSV report validated - pathology
     input: cnv_sv/svdb_query/{sample}_{type}.pathology.cnv_loh_genes_validated.cnv_report.tsv
-    output: results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.amp_all_del_validated.cnv_report.tsv
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.amp_all_del_validated.cnv_report.tsv
+    types:
+      - T
+      - N
+  - name: CNV TSV report validated - pathology_purecn
+    input: cnv_sv/svdb_query/{sample}_{type}.pathology_purecn.cnv_loh_genes_validated.cnv_report.tsv
+    output: results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.amp_all_del_validated.cnv_report.tsv
     types:
       - T
       - N

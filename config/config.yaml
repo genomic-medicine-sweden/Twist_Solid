@@ -57,9 +57,6 @@ bcftools_annotate:
   output_type: "z"
   annotation_string: "-m DB"
 
-bcftools_annotate_purecn:
-  annotation_string: "-m DB"
-
 bcftools_filter_include_region:
   exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.bed"
 
@@ -140,7 +137,6 @@ fastqc:
 filter_vcf:
   snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
-  snv_hard_filter_purecn: "config/config_hard_filter_purecn.yaml"
   cnv_hard_filter_amp: "config/config_hard_filter_cnv_amp.yaml"
   cnv_hard_filter_loh: "config/config_hard_filter_cnv_loh.yaml"
   germline: "config/config_hard_filter_germline.yaml"
@@ -308,7 +304,7 @@ purecn:
   interval_padding: 100
   segmentation_method: "internal"
   fun_segmentation: "PSCBS"
-  extra: "--model betabin --mapping-bias-file /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/mapping_bias_nextseq_27_hg19.rds --post-optimize --max-non-clonal 0.3"
+  extra: "--model betabin --mapping-bias-file /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/mapping_bias_nextseq_27_hg19.rds"
   normaldb: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/normalDB_nextseq_27_hg19.rds"
   intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
 
@@ -353,6 +349,14 @@ svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
   tc_method:
     - name: pathology_purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
+    - name: purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
+    - name: pathology
       cnv_caller:
         - cnvkit
         - gatk

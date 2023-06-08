@@ -1,6 +1,3 @@
-# vim: syntax=python tabstop=4 expandtab
-# coding: utf-8
-
 __author__ = "Jonas A"
 __copyright__ = "Copyright 2021, Jonas A"
 __email__ = "jonas.almlof@igp.uu.se"
@@ -100,18 +97,18 @@ def get_tc(wildcards):
     tc_method = wildcards.tc_method
     if tc_method == "pathology_purecn":
         tc = ""
-        tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        tc_file = f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
         if os.path.exists(tc_file):
             with open(tc_file) as f:
                 tc = f.read()
-        if float(tc) < 0.3:
+        if tc == "" or float(tc) < 0.3:
             return get_sample(samples, wildcards)["tumor_content"]
         else:
             return tc
     elif tc_method == "pathology":
         return get_sample(samples, wildcards)["tumor_content"]
     else:
-        tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        tc_file = f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
         if not os.path.exists(tc_file):
             return -1
         else:
@@ -123,18 +120,18 @@ def get_tc_file(wildcards):
     tc_method = wildcards.tc_method
     if tc_method == "pathology_purecn":
         tc = ""
-        tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        tc_file = f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
         if os.path.exists(tc_file):
             with open(tc_file) as f:
                 tc = f.read()
-        if float(tc) < 0.3:
+        if tc == "" or float(tc) < 0.3:
             return "samples.tsv"
         else:
-            return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+            return f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
     elif tc_method == "pathology":
         return "samples.tsv"
     else:
-        return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        return f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
 
 
 def generate_copy_code(workflow, output_spec):
