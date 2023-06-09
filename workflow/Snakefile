@@ -378,6 +378,13 @@ module reports:
 use rule * from reports as reports_*
 
 
+rule cnv_html_report:
+    params:
+        include_table=config.get("cnv_html_report", {}).get("show_table", True),
+        tc=get_tc,
+        tc_method=lambda wildcards: wildcards.tc_method,
+
+
 module misc:
     snakefile:
         get_module_snakefile(config, "hydra-genetics/misc", path="workflow/Snakefile", tag="v0.2.0")
