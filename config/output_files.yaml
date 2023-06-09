@@ -282,6 +282,18 @@ files:
     types:
       - T
       - N
+  - name: CNV TSV report - pathology_purecn
+    input: cnv_sv/svdb_query/{sample}_{type}.pathology_purecn.cnv_loh_genes_all.cnv_report.tsv
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.amp_all_del_all.cnv_report.tsv
+    types:
+      - T
+      - N
+  - name: CNV TSV report validated - PureCN
+    input: cnv_sv/svdb_query/{sample}_{type}.purecn.cnv_loh_genes_validated.cnv_report.tsv
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.amp_all_del_validated.cnv_report.tsv
+    types:
+      - T
+      - N
   - name: CNV TSV report validated - pathology
     input: cnv_sv/svdb_query/{sample}_{type}.pathology.cnv_loh_genes_validated.cnv_report.tsv
     output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.amp_all_del_validated.cnv_report.tsv

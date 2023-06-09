@@ -119,7 +119,7 @@ def get_tc(wildcards):
 def get_tc_file(wildcards):
     tc_method = wildcards.tc_method
     if tc_method == "pathology_purecn":
-        return [f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt", "samples.txt"]
+        return [f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt", "samples.tsv"]
     elif tc_method == "pathology":
         return "samples.tsv"
     else:
