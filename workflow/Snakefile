@@ -336,6 +336,9 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:
         segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
         tc_file=get_tc_file,
+    params:
+        extra=config.get("cnvkit_call", {}).get("extra", ""),
+        tc=get_tc,
 
 
 use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
@@ -349,6 +352,13 @@ use rule gatk_to_vcf from cnv_sv as cnv_sv_gatk_to_vcf with:
     input:
         segment="cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.seg",
         tc_file=get_tc_file,
+    params:
+        dup_limit=config.get("gatk_vcf", {}).get("dup_limit", 2.5),
+        het_del_limit=config.get("gatk_vcf", {}).get("het_del_limit", 1.5),
+        hom_del_limit=config.get("gatk_vcf", {}).get("hom_del_limit", 0.5),
+        sample_id="{sample}_{type}",
+        #tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
+        tc=get_tc,
 
 
 use rule purecn from cnv_sv as cnv_sv_purecn with:

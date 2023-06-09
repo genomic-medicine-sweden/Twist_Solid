@@ -119,15 +119,7 @@ def get_tc(wildcards):
 def get_tc_file(wildcards):
     tc_method = wildcards.tc_method
     if tc_method == "pathology_purecn":
-        tc = ""
-        tc_file = f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
-        if os.path.exists(tc_file):
-            with open(tc_file) as f:
-                tc = f.read()
-        if tc == "" or float(tc) < 0.3:
-            return "samples.tsv"
-        else:
-            return f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        return [f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt", "samples.txt"]
     elif tc_method == "pathology":
         return "samples.tsv"
     else:
