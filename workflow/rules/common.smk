@@ -101,7 +101,7 @@ def get_tc(wildcards):
         if os.path.exists(tc_file):
             with open(tc_file) as f:
                 tc = f.read()
-        if tc == "" or float(tc) < 0.3:
+        if tc == "" or float(tc) < 0.35:
             return get_sample(samples, wildcards)["tumor_content"]
         else:
             return tc
