@@ -113,7 +113,11 @@ def get_tc(wildcards):
             return -1
         else:
             with open(tc_file) as f:
-                return f.read()
+                tc = f.read()
+                if tc == "":
+                    return "0.2"
+                else:
+                    return f.read()
 
 
 def get_tc_file(wildcards):
