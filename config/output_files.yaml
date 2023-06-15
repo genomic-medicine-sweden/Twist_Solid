@@ -272,7 +272,7 @@ files:
       - N
   - name: CNV TSV report - PureCN
     input: cnv_sv/svdb_query/{sample}_{type}.purecn.cnv_loh_genes_all.cnv_report.tsv
-    output: results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.amp_all_del_all.cnv_report.tsv
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.amp_all_del_all.cnv_report.tsv
     types:
       - T
       - N
