@@ -265,8 +265,8 @@ files:
       - T
       - N
   - name: PureCN purity
-    input: cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt
-    output: results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.purity.txt
+    input: cnv_sv/purecn/{sample}_{type}.csv
+    output: results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn_purity_ploidity.csv
     types:
       - T
       - N
