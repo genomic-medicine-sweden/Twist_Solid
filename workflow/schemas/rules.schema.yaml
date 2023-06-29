@@ -248,3 +248,22 @@ properties:
           report:
             type: string
             description: Excel frienly text report with filtered fusion calls from GeneFuse
+
+  purecn_modify_vcf:
+    type: object
+    description: input and output parameters for purecn_modify_vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: hard filtered vcf with variants from mutect2 for purecn
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: hard filtered vcf with corrected MBQ values for purecn 

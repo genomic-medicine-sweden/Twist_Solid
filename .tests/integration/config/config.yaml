@@ -118,6 +118,7 @@ fuseq_wes:
 filter_vcf:
   snv_soft_filter: "../../config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "../../config/config_hard_filter_uppsala.yaml"
+  snv_hard_filter_purecn: "../../config/config_hard_filter_purecn.yaml"
   cnv_hard_filter_amp: "../../config/config_hard_filter_cnv_amp.yaml"
   cnv_hard_filter_loh: "../../config/config_hard_filter_cnv_loh.yaml"
   germline: "../../config/config_hard_filter_germline.yaml"
@@ -312,6 +313,10 @@ star_fusion:
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
   tc_method:
+    - name: pathology_purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
     - name: purecn
       cnv_caller:
         - cnvkit

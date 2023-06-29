@@ -13,6 +13,7 @@ include: "rules/exon_skipping.smk"
 include: "rules/fix_vcf_ad_for_qci.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/house_keeping_gene_coverage.smk"
+include: "rules/purecn_modify_vcf.smk"
 include: "rules/report_gene_fuse.smk"
 include: "rules/report_fusions.smk"
 
@@ -122,6 +123,30 @@ module annotation:
 
 
 use rule * from annotation as annotation_*
+
+
+use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purecn with:
+    input:
+        vcf="snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.vcf.gz",
+        tbi="snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.vcf.gz.tbi",
+        annotation_db="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
+        annotation_db_tbi="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz.tbi",
+    output:
+        vcf=temp(
+            "snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf"
+        ),
+    params:
+        annotation_db=lambda wildcards, input: input.annotation_db,
+        output_type=config.get("bcftools_annotate_purecn", {}).get("output_type", "z"),
+        annotation_string=config.get("bcftools_annotate_purecn", {}).get("annotation_string", "-m DB"),
+        extra=config.get("bcftools_annotate_purecn", {}).get("extra", ""),
+    log:
+        "snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.log",
+    benchmark:
+        repeat(
+            "snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.benchmark.tsv",
+            config.get("bcftools_annotate", {}).get("benchmark_repeats", 1),
+        )
 
 
 module filtering:
@@ -291,11 +316,11 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
     input:
         segment="cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
-        tc_file=cnv_sv.get_tc_file,
+        tc_file=get_tc_file,
     output:
         segment=temp("cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns"),
     params:
-        tc=cnv_sv.get_tc,
+        tc=get_tc,
         extra=config.get("cnvkit_call_hrd", {}).get("extra", ""),
     log:
         "cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns.log",
@@ -310,7 +335,10 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:
     input:
         segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
-        tc_file=cnv_sv.get_tc_file,
+        tc_file=get_tc_file,
+    params:
+        extra=config.get("cnvkit_call", {}).get("extra", ""),
+        tc=get_tc,
 
 
 use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
@@ -318,6 +346,26 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
         segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
         segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
+
+
+use rule gatk_to_vcf from cnv_sv as cnv_sv_gatk_to_vcf with:
+    input:
+        segment="cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.seg",
+        tc_file=get_tc_file,
+    params:
+        dup_limit=config.get("gatk_vcf", {}).get("dup_limit", 2.5),
+        het_del_limit=config.get("gatk_vcf", {}).get("het_del_limit", 1.5),
+        hom_del_limit=config.get("gatk_vcf", {}).get("hom_del_limit", 0.5),
+        sample_id="{sample}_{type}",
+        #tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
+        tc=get_tc,
+
+
+use rule purecn from cnv_sv as cnv_sv_purecn with:
+    input:
+        unpack(cnv_sv.get_purecn_inputs),
+        vcf="cnv_sv/purecn_modify_vcf/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.mbq.vcf.gz",
+        tbi="cnv_sv/purecn_modify_vcf/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.mbq.vcf.gz.tbi",
 
 
 module reports:
@@ -328,6 +376,13 @@ module reports:
 
 
 use rule * from reports as reports_*
+
+
+use rule cnv_html_report from reports as reports_cnv_html_report with:
+    params:
+        include_table=config.get("cnv_html_report", {}).get("show_table", True),
+        tc=get_tc,
+        tc_method=lambda wildcards: wildcards.tc_method,
 
 
 module misc:
