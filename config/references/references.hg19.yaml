@@ -87,7 +87,7 @@
       url: https://figshare.com/ndownloader/files/40933373?private_link=1b151eaf283e62084f0f
 
     variants_tbi:
-      checksum: 7d5a3f6d3350476a234aed9953351a08
+      checksum: fe613a305067fa746f49113b78088490
       path: ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz.tbi
       url: https://figshare.com/ndownloader/files/41119760?private_link=1b151eaf283e62084f0f
     
