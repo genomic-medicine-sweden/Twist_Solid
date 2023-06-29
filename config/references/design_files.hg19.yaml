@@ -100,7 +100,7 @@
      path: design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.0/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz
    extra_tbi:
-     checksum: 6e786aed3645b81af20018d404118ae7
+     checksum: 9c57e51d22b33d8683698d9c8d0c4b7a
      path: design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz.tbi
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.0/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz.tbi
 

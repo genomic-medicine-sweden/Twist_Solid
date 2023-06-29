@@ -3,7 +3,7 @@ keep-going: True
 restart-times: 2
 rerun-incomplete: True
 use-singularity: True
-configfiles: ["config/config.yaml", "config/config.bianca.hg19.yaml"]
+configfiles: ["config/config.yaml", "config/bianca/config.hg19.yaml"]
 singularity-args: "-e --cleanenv -B /sw -B /proj -B /storage -B /castor "
 wrapper-prefix: "PATH_TO_WRAPPERS"
 drmaa: " -A ADD_YOUR_ACCOUNT -N 1-1 -t {resources.time} -n {resources.threads} --mem={resources.mem_mb} --mem-per-cpu={resources.mem_per_cpu} --mem-per-cpu={resources.mem_per_cpu} --partition={resources.partition} -J {rule} -e slurm_out/{rule}_%j.err -o slurm_out/{rule}_%j.out"

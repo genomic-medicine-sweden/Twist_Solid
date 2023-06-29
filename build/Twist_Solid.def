@@ -4,57 +4,221 @@ From: twist_solid_temp.tar.gz
 %setup
 
 $post
-    
+
 %files
 
-%environment
-
-%runscript
-    TWIST_SOLID_VERSION=$(cat /Twist_Solid/version.txt)
-    echo "Twist Solid version: $TWIST_SOLID_VERSION"
-    echo "Arguments received: $*"
-    exec echo "$@"
 
 %labels
     Author patrik.smeds@scilifelab.uu.se
     Version v0.0.1
 
 %help
-    This is Twist_DNA_Solid pipeline.
+    This is container used to prepare Twist Solid pipeline. With the following apps:
+    - copy-hydra-modules
+    - copy-snakemake-wrappers
+    - copy-twist-pipeline
+    - copy-twist-solid-env
+    - create-profile-bianca
+    - create-config-folder-bianca
+    - download_reference_files
+    - validate_config
+    - validate_config_bianca
 
-%apphelp validate_ref_files
-    Make sure that all reference files are available and up to date
-    arguments:
-     1. --configfile {PATH_TO_CONFIG_YAML_UPDATED FOR_BIANCA}
-     2. --profile {PATH_TO_BIANCA_SLURM_PROFILE}
+%apprun download_reference_files
+    exec hydra-genetics --verbose references download -o design_and_ref_files -v /Twist_Solid/Twist_Solid/config/references/design_files.hg19.yaml -v /Twist_Solid/Twist_Solid/config/references/nextseq.hg19.pon.yaml -v /Twist_Solid/Twist_Solid/config/references/novaseq.hg19.pon.yaml -v /Twist_Solid/Twist_Solid/config/references/references.hg19.yaml
+
+
+%apphelp download_reference_files
+    Will download design and a collection of reference files. Data that already need to exist on the filesystem are
+    1 - vep cache 
+    2 - reference fasta file for RNA analysis
+    3 - star index
+    4 - start fusion references
+    5 - gtf file used with RNA data
+
+%apprun validate-config-hg19
+    hydra-genetics --debug references validate -v config/references/design_files.hg19.yaml -v config/references.hg19.yaml -v config/references/nextseq.hg19.pon.yaml -v config/references/references.hg19.yaml $@
+
+%apphelp validate-config-hg19
+    To validate bianca config file please provide path regular config file and bianca override and path to reference and design files. Ex:
+    -c config/config.yaml -p ref_and_design_folder
+
+%apprun validate-config-hg19-bianca
+    hydra-genetics --debug references validate -v config/references/design_files.hg19.yaml -v config/references/references.bianca.hg19.yaml -v config/references/nextseq.hg19.pon.yaml -v config/references/references.hg19.yaml $@
+
+%apphelp validate-config-hg19-bianca
+    To validate bianca config file please provide path regular config file and bianca override and path to reference and design files. Ex:
+    -c config/config.yaml -c config/bianca/config.hg19.yaml -p ref_and_design_folder
     
-    configfile only need to override path to reference files and 
-    location of containers.
+%apprun create_singularity_cache
+    hydra-genetics prepare-environment create-singularity-files -c config/config.yaml -o singularity_cache 
 
-
-%apphelp bianca
-    This is Twist_DNA_Solid pipeline. Predefined command options 
-    for bianca. The app need to be provided with the following 
-    arguments:
-     1. --configfile {PATH_TO_CONFIG_YAML_UPDATED FOR_BIANCA}
-     2. --profile {PATH_TO_BIANCA_SLURM_PROFILE}
+%apphelp create_singularity_cache
+    Will download container using to current config.
     
-    configfile only need to override path to reference files and 
-    location of containers.
+%apphelp copy-hydra-modules
+    Will copy hydra-genetics modules from the container into the current directory, if a directory isn't provided.
+    ex: 
+     - singularity run --app copy-hydra-modules image.sif
+     - singularity run --app copy-hydra-modules image.sif output_directory
     
-
-%apprun bianca
-    TWIST_SOLID_VERSION=$(cat /Twist_Solid/version.txt)
-    echo "Twist Solid version: $TWIST_SOLID_VERSION"
-
-    if [ $# -le 3 ]
+%apprun copy-hydra-modules
+   exec bash -c """
+    if [ $# == 1 ]
     then
-      echo "No arguments provided! A updated configuration file and a profile needs to be provided."
-      exit 1
+        if [ -d "$1/hydra-genetics" ]
+        then 
+           echo 'Folder '$1'/hydra-genetics already exist, please remove it!' 
+           exit 1
+        fi
+        if [ ! -d "$1" ]
+        then
+            mkdir -p $1
+        fi
+        cp -r /Twist_Solid/hydra-genetics $1/hydra-genetics
+    else
+        if [ -d ./hydra-genetics ]
+        then 
+           echo 'Folder ./hydra-genetics already exist, please remove it!'
+           exit 2
+        fi
+        exec cp -r /Twist_Solid/hydra-genetics hydra-genetics
+    fi"""
+
+%apphelp copy-snakemake-wrappers
+    Will copy snakemake-wrappers from the container into the current directory if a directory isn't provided.
+    ex: singularity run --app copy-snakemake-wrappers image.sif output_directory
+    
+%apprun copy-snakemake-wrappers
+   exec bash -c """
+    if [ $# == 1 ]
+    then
+        if [ -d "$1/snakemake-wrappers" ]
+        then 
+           echo 'Folder '$1'/snakemake-wrappers already exist, please remove it!' 
+           exit 1
+        fi
+        if [ ! -d "$1" ]
+        then
+            mkdir -p $1
+        fi
+        cp -r /Twist_Solid/snakemake-wrappers $1/snakemake-wrappers
+    else
+        if [ -d "./snakemake-wrappers" ]
+        then 
+           echo 'Folder ./snakemake-wrappers already exist, please remove it!'
+           exit 2
+        fi
+        exec cp -r /Twist_Solid/snakemake-wrappers snakemake-wrappers
+    fi"""
+
+%apphelp copy-twist-pipeline
+    Will copy twist_pipeline from the container into the current directory if a directory isn't provided.
+    ex: singularity run --app copy-twist-pipeline image.sif output_directory
+    
+%apprun copy-twist-pipeline
+   exec bash -c """
+    if [ $# == 1 ]
+    then
+        if [ -d "$1/Twist_Solid" ]
+        then 
+           echo 'Folder '$1'/snakemake-wrappers already exist, please remove it!' 
+           exit 1
+        fi
+        if [ ! -d "$1" ]
+        then
+            mkdir -p $1
+        fi
+        cp -r /Twist_Solid/Twist_Solid $1/Twist_Solid
+    else
+        if [ -d "./Twist_Solid" ]
+        then 
+           echo 'Folder ./Twist_Solid already exist, please remove it!'
+           exit 2
+        fi
+        exec cp -r /Twist_Solid/Twist_Solid Twist_Solid
+    fi"""
+
+
+
+%apphelp create-config-folder-bianca
+    Prepares config folder for bianca, updating paths design and reference files and singularity 
+    containers. Expects 3 inputs:
+    1 - path to singularity cache
+    2 - path to ref and design folder 
+    3 - path to hydra-genetics modules
+    Ex: singularity run --app create-config-folder-bianca image.sif /proj/sens2022566/nobackup/patriksm/singularity_cache /proj/sens2022566/nobackup/patriksm/design_and_ref_files
+
+%apprun create-config-folder-bianca
+    bash -c """
+    if [ $# != 3 ]
+    then
+        echo 'Please provide three arguments, absolute path for singularity_cache, ref_and_design_folder and hydra-genetics modules' 
+        exit 1
     fi
+    if [ -d ./config ]
+    then
+        echo 'Folder ./config already exist, please remove it!'
+        exit 2
+    fi
+    """
+    singularity_cache=$1
+    ref_and_design_folder=$2
+    hydra_genetics_modules=$3
+    cp -r /Twist_Solid/Twist_Solid/config config
+    hydra-genetics prepare-environment container-path-update -c /Twist_Solid/Twist_Solid/config/config.yaml -n config/config.yaml -p $singularity_cache
+    hydra-genetics prepare-environment reference-path-update -c /Twist_Solid/Twist_Solid/config/bianca/config.hg19.yaml -n config/bianca/config.hg19.yaml --reference-path /PROJECT_DATA:$ref_and_design_folder --reference-path PATH_TO_REPO:$hydra_genetics_modules
+    
+%apphelp create-profile-bianca
+    Update bianca profile to use correct snakemake-wrapper repo path and and project id, expects 2 inputs:
+    1 - project id
+    2 - absolute path to snakemake-wrappers folder
+    Ex: singularity run --app create-profile-bianca image.sif sens2022566 /proj/sens2022566/nobackup/patriksm/snakemake-wrappers
 
-    echo "Command: snakemake --configfile /Twist_Solid/TwistSolid/config/config.yaml\n\t-s /Twist_DNA/Twist_Solid/workflow/Snakefile\n\t--wrapper-prefix git+file://Twist_DNA/hydra-genetics/snakemake-wrappers\n\t$1 $2 $3 $4"
-    bash -c "snakemake --configfile /Twist_Solid/Twist_Solid/config/config.yaml -s /Twist_Solid/Twist_Solid/workflow/Snakefile --wrapper-prefix /Twist_Solid/hydra-genetics/snakemake-wrappers $1 $2 $3 $4"
+%apprun create-profile-bianca
+    project_id=$1
+    path_to_snakemakewrappers="git+file:/"$2
+    bash -c """
+    if [ $# != 2 ]
+    then
+        echo 'Please provide two arguments, project_id and absolute path to snakemake-wrappers' 
+        exit 1
+    fi
+    if [ -d ./profiles ]
+    then
+        echo 'Folder ./profiles already exist, please remove it!'
+        exit 2
+    fi
+    """
+    cp -r /Twist_Solid/Twist_Solid/profiles ./profiles
+    sed "s|ADD_YOUR_ACCOUNT|$project_id|" -i ./profiles/bianca/config.yaml
+    sed "s|PATH_TO_WRAPPERS|$path_to_snakemakewrappers|" -i ./profiles/bianca/config.yaml
+    
+%apphelp copy-twist-solid-env
+    Add Twist Solid env to the current directory or provided path
+    ex: singularity run --app copy-twist-solid-env image.sif sens2022566 ./Pipeline
 
-%apphelp twist_dna_solid
-    twist_dna_solid is the help run
+%apprun copy-twist-solid-env
+    exec bash -c """
+    if [ $# == 1 ]
+    then
+        if [ -d "$1/twist_solid_env" ]
+        then 
+           echo 'Folder '$1'/twist_solid_env already exist, please remove it!' 
+           exit 1
+        fi
+        if [ ! -d "$1/twist_solid_env" ]
+        then
+            mkdir -p $1/twist_solid_env
+        fi
+        tar xvf /Twist_Solid/env.tar.gz -C $1/twist_solid_env/
+    else
+        if [ -d "./twist_solid_env" ]
+        then 
+           echo 'Folder ./twist_solid_env already exist, please remove it!'
+           exit 2
+        fi
+        mkdir twist_solid_env
+        tar xvf /Twist_Solid/env.tar.gz -C twist_solid_env/
+    fi"""
+    
