@@ -155,7 +155,7 @@ Genes and filtering criteria specified in `config_hard_filter_cnv_amp.yaml` are 
 Genes and filtering criteria specified in `config_hard_filter_cnv_loh.yaml` are listed below. Observe that regions with neutral copies but with high BAF signal is not filtered as they are candidates for copy neutral loss of heterozygosity.
 
 * Filter cnvs with over 1.4 copies if the BAF between 0.3 and 0.7 as well as all duplication (copy number > 2.5)
-* Filter cnvs found in more than 15% of the normal samples
+* Filter cnvs found in more than 15% of the normal samples if they are less than 10 M bases
 * Filter cnvs not annotated in the INFO:Genes tag
 
 ## CNV report
@@ -172,8 +172,7 @@ A combined report in tsv format is generated based on the filtered vcf files by 
 
 ### Result files
 
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv_report.tsv`
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv_report.tsv`
+* `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.cnv_report.tsv`
 
 ## CNV visulization
 
@@ -208,8 +207,7 @@ For more information, see the [hydra-genetics/reports documentation](https://hyd
 
 ### Result files
 
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv.html`
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv.html`
+* `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.cnv.html`
 
 ## Small CNV deletions
 CNVkit and GATK CNV sometimes miss small deletions where only a number of exons are involved. A specialized small CNV caller in the form of the in-house script [call_small_cnv_deletions.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/call_small_cnv_deletions.py) ([rule and config](rules.md#call_small_cnv_deletions)) is therefore run on the genes mentioned in [CNV gene annotation](#cnv-gene-annotation). The caller uses the log-odds values calculated by GATK for each region, where a region approximately corresponds to one region in the design file, i.e. exon, intron (if present) or CNV-probe. For each gene region, the caller uses a sliding window to find the biggest drop and subsequent rise in copy number in the region. It then determines if the drop in copy number is big enough and is significantly lower than the surrounding region. If a large part or the entire region is deleted it will not be called but will instead be called by the other tools.
@@ -269,7 +267,7 @@ The filters are specified in the config file `config_hard_filter_germline.yaml` 
 * variant type - Filter variants that are not SNVs
 
 ## Purity estimation using PureCN
-The purity of the samples is estimated in the lab by a pathologist and sometimes the estimation is incorrect. To obtain an alternative estimation we use **[PureCN](https://github.com/lima1/PureCN)** v2.2.0.
+The purity of the samples is estimated in the lab by a pathologist and sometimes the estimation is incorrect. To obtain an alternative estimation we use **[PureCN](https://github.com/lima1/PureCN)** v2.2.0. If the estimated value of PureCN is >= 35% then this value is used in the CNV reports and the pathology value otherwise. Reports from the individual estimates are also supplied in the additional results folder.
 
 ### PureCN coverage
 PureCN calculates the coverage in 25kb windows of the BWA-mem aligned and merged bam files and normalizes these against a panel of normal (see [references](references.md) on how the PoN was created).
@@ -283,7 +281,7 @@ PureCN calculates the coverage in 25kb windows of the BWA-mem aligned and merged
 | intervals | [`targets_window_intervals.txt`](references.md#purecn_coverage_intervals) | panel of normal |
 
 ### PureCN purity estimation
-Based on the coverage and a vcf file from Mutect2 PureCN make its own segmentation with the additional help of a normal db created from a panel of normal (see [references](references.md) on how the PoN was created). The germline SNPs allele frequency in combination with the called copy numbers is then used to search for the optimal purity and ploidity combination. The optimal values are determined by looking for the best fit between the germline SNPs allele frequency and integer copy numbers.
+PureCN uses a filtered (`config/config_hard_filter_purecn.yaml`) and germline annotated vcf file from Mutect2. The file is further modified to increase the base quality by 5 so that not all varaints are filtered out by PureCN. PureCN uses its own segmentation with the help of a normal db created from a panel of normal (see [references](references.md) on how the PoN was created). The germline SNPs allele frequency in combination with the called copy numbers is then used to search for the optimal purity and ploidity combination. The optimal values are determined by looking for the best fit between the germline SNPs allele frequency and integer copy numbers.
 
 ### Configuration
 
