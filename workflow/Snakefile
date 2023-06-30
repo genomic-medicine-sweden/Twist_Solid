@@ -231,7 +231,7 @@ use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics_rna w
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         bait_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
-        reference=config.get("reference", {}).get("fasta_rna", ""),
+        reference=config.get("reference", {}).get("fasta", ""),
         target_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
     wildcard_constraints:
         type="R",
@@ -252,7 +252,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        ref=config.get("reference", {}).get("fasta_rna", ""),
+        ref=config.get("reference", {}).get("fasta", ""),
     wildcard_constraints:
         type="R",
 
