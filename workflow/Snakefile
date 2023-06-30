@@ -70,6 +70,16 @@ module alignment:
 use rule * from alignment as alignment_*
 
 
+use rule star from alignment as alignment_star with:
+    params:
+        extra=lambda wildcards: "%s %s"
+        % (
+            config.get("star", {}).get("extra", ""),
+            config.get("star", {}).get("read_group", alignment.generate_read_group(wildcards)),
+        ),
+    idx="{input.idx}",
+
+
 use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
     input:
         "fusions/star_fusion/{path_file}.out.bam",
@@ -86,8 +96,8 @@ use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
 
 use rule samtools_extract_reads from alignment as alignment_samtools_extract_reads_rna with:
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        bam="alignment/star/{sample}_{type}.bam",
+        bai="alignment/star/{sample}_{type}.bam.bai",
     wildcard_constraints:
         type="R",
 
