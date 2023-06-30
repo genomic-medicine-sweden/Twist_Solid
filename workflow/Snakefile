@@ -75,9 +75,9 @@ use rule star from alignment as alignment_star with:
         extra=lambda wildcards: "%s %s"
         % (
             config.get("star", {}).get("extra", ""),
-            config.get("star", {}).get("read_group", alignment.generate_read_group(wildcards)),
+            config.get("star", {}).get("read_group", generate_star_read_group(wildcards)),
         ),
-    idx="{input.idx}",
+        idx="{input.idx}",
 
 
 use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
