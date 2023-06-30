@@ -134,7 +134,7 @@ def generate_star_read_group(wildcards):
     return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}\\tLB:{}' -v 1 ".format(
         "{}_{}".format(wildcards.sample, wildcards.type),
         "{}_{}".format(wildcards.sample, wildcards.type),
-        get_unit_platform(units, wildcards),
+        "Illumina",
         "{}_{}".format(wildcards.sample, wildcards.type),
         "{}_{}".format(wildcards.sample, wildcards.type),
     )
