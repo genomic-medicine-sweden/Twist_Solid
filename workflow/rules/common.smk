@@ -130,6 +130,16 @@ def get_tc_file(wildcards):
         return f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
 
 
+def generate_star_read_group(wildcards):
+    return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}\\tLB:{}' -v 1 ".format(
+        "{}_{}".format(wildcards.sample, wildcards.type),
+        "{}_{}".format(wildcards.sample, wildcards.type),
+        "Illumina",
+        "{}_{}".format(wildcards.sample, wildcards.type),
+        "{}_{}".format(wildcards.sample, wildcards.type),
+    )
+
+
 def generate_copy_code(workflow, output_spec):
     code = ""
     for filedef in output_spec["files"]:

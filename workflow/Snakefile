@@ -47,6 +47,7 @@ ruleorder: qc_samtools_stats_rna > qc_samtools_stats
 ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
 ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
 ruleorder: _copy_bam_index > alignment_samtools_index
+ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
 
 
 module prealignment:
@@ -69,6 +70,16 @@ module alignment:
 use rule * from alignment as alignment_*
 
 
+use rule star from alignment as alignment_star with:
+    params:
+        extra=lambda wildcards: "%s %s"
+        % (
+            config.get("star", {}).get("extra", ""),
+            config.get("star", {}).get("read_group", generate_star_read_group(wildcards)),
+        ),
+        idx="{input.idx}",
+
+
 use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
     input:
         "fusions/star_fusion/{path_file}.out.bam",
@@ -81,6 +92,14 @@ use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
             "fusions/star_fusion/{path_file}.bam.sort.benchmark.tsv",
             config.get("samtools_sort", {}).get("benchmark_repeats", 1),
         )
+
+
+use rule samtools_extract_reads from alignment as alignment_samtools_extract_reads_rna with:
+    input:
+        bam="alignment/star/{sample}_{type}.bam",
+        bai="alignment/star/{sample}_{type}.bam.bai",
+    wildcard_constraints:
+        type="R",
 
 
 use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutect2 with:
@@ -171,9 +190,11 @@ use rule * from qc as qc_*
 
 use rule mosdepth from qc as qc_mosdepth with:
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         bed=config.get("reference", {}).get("design_bed_rna", ""),
+    wildcard_constraints:
+        type="R",
 
 
 use rule samtools_stats from qc as qc_samtools_stats with:
@@ -183,7 +204,7 @@ use rule samtools_stats from qc as qc_samtools_stats with:
 
 use rule samtools_stats from qc as qc_samtools_stats_rna with:
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
     params:
         extra="%s -t %s"
         % (
@@ -207,10 +228,10 @@ use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics_rna w
             "VALIDATION_STRINGENCY=LENIENT",
         ),
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         bait_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
-        reference=config.get("reference", {}).get("fasta_rna", ""),
+        reference=config.get("reference", {}).get("fasta", ""),
         target_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
     wildcard_constraints:
         type="R",
@@ -229,9 +250,9 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
             "VALIDATION_STRINGENCY=LENIENT",
         ),
     input:
-        bam="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam",
-        bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
-        ref=config.get("reference", {}).get("fasta_rna", ""),
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        ref=config.get("reference", {}).get("fasta", ""),
     wildcard_constraints:
         type="R",
 
