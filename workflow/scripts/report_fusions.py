@@ -13,10 +13,10 @@ star_fusion_flag_low_support = snakemake.params.star_fusion_flag_low_support
 star_fusion_low_support = snakemake.params.star_fusion_low_support
 star_fusion_low_support_inframe = snakemake.params.star_fusion_low_support_inframe
 star_fusion_low_support_fp_genes = snakemake.params.star_fusion_low_support_fp_genes
-fusioncather_flag_low_support = snakemake.params.fusioncather_flag_low_support
-fusioncather_low_support = snakemake.params.fusioncather_low_support
-fusioncather_low_support_inframe = snakemake.params.fusioncather_low_support_inframe
-fusioncather_low_support_fp_genes = snakemake.params.fusioncather_low_support_fp_genes
+fusioncatcher_flag_low_support = snakemake.params.fusioncatcher_flag_low_support
+fusioncatcher_low_support = snakemake.params.fusioncatcher_low_support
+fusioncatcher_low_support_inframe = snakemake.params.fusioncatcher_low_support_inframe
+fusioncatcher_low_support_fp_genes = snakemake.params.fusioncatcher_low_support_fp_genes
 
 
 housekeeping_genes = ["GAPDH", "GUSB", "OAZ1", "POLR2A"]
@@ -185,18 +185,18 @@ for line in input_fusioncatcher:
     predicted_effect = lline[15]
     # Flag fusions with Spanning_reads_unique < 5
     confidence = ""
-    if int(Spanning_reads_unique) < fusioncather_flag_low_support:
+    if int(Spanning_reads_unique) < fusioncatcher_flag_low_support:
         confidence = "Low support"
     # Filter fusions with very low support
-    if int(Spanning_reads_unique) <= fusioncather_low_support_inframe and predicted_effect != "in-frame":
+    if int(Spanning_reads_unique) <= fusioncatcher_low_support_inframe and predicted_effect != "in-frame":
         continue
-    if int(Spanning_reads_unique) <= fusioncather_low_support:
+    if int(Spanning_reads_unique) <= fusioncatcher_low_support:
         continue
     # Higher demand of read support for genes with frequent FP, house keeping genes, and pool2 genes without fusion to pool1 gene
     if (((gene1 in artefact_genes and gene2 in artefact_genes[gene1]) or
         (gene2 in artefact_genes and gene1 in artefact_genes[gene2])) or
        gene1 in housekeeping_genes or gene2 in housekeeping_genes):
-        if int(Spanning_reads_unique) < fusioncather_low_support_fp_genes:
+        if int(Spanning_reads_unique) < fusioncatcher_low_support_fp_genes:
             continue
     # Flag fusions annotated that are fusions with very high probability
     fp_db = [

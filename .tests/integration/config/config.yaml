@@ -239,9 +239,6 @@ multiqc:
 optitype:
   container: "docker://fred2/optitype"
 
-picard_mark_duplicates:
-  container: "docker://hydragenetics/picard:2.25.0"
-
 picard_collect_alignment_summary_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
 
@@ -283,10 +280,10 @@ reference:
 
 report_fusions:
   annotation_bed: "reference/Twist_RNA_fusionpartners.bed"
-  fusioncather_flag_low_support: 15
-  fusioncather_low_support: 3
-  fusioncather_low_support_fp_genes: 20
-  fusioncather_low_support_inframe: 6
+  fusioncatcher_flag_low_support: 15
+  fusioncatcher_low_support: 3
+  fusioncatcher_low_support_fp_genes: 20
+  fusioncatcher_low_support_inframe: 6
   star_fusion_flag_low_support: 15
   star_fusion_low_support: 2
   star_fusion_low_support_fp_genes: 20

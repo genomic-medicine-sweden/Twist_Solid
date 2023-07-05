@@ -24,7 +24,7 @@ def create_tsv_report(
             variants = VariantFile(input_org_vcf)
             samples = list(variants.header.samples)
             if len(samples) > 1:
-                raise Exeception(f"Unable to process vcf with more then one sample: {samples}")
+                raise Exception(f"Unable to process vcf with more then one sample: {samples}")
             else:
                 samples = samples[0]
                 sample_name = samples
@@ -87,7 +87,7 @@ def create_tsv_report(
             variants = VariantFile(input_vcf)
             samples = list(variants.header.samples)
             if len(samples) > 1:
-                raise Exeception(f"Unable to process vcf with more then one sample: {samples}")
+                raise Exception(f"Unable to process vcf with more then one sample: {samples}")
             else:
                 samples = samples[0]
             counter = 0
