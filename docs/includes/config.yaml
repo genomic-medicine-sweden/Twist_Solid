@@ -316,10 +316,10 @@ purecn_coverage:
 
 report_fusions:
   annotation_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_fusionpartners.bed"
-  fusioncather_flag_low_support: 15
-  fusioncather_low_support: 3
-  fusioncather_low_support_fp_genes: 20
-  fusioncather_low_support_inframe: 6
+  fusioncatcher_flag_low_support: 15
+  fusioncatcher_low_support: 3
+  fusioncatcher_low_support_fp_genes: 20
+  fusioncatcher_low_support_inframe: 6
   star_fusion_flag_low_support: 15
   star_fusion_low_support: 2
   star_fusion_low_support_fp_genes: 20

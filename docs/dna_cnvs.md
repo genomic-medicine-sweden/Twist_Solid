@@ -129,7 +129,7 @@ CNV regions that overlap with clinically relevant genes for amplifications ([`cn
 
 <br />
 
-**Amplicifcation genes**
+**Amplification genes**
 <table>
  <tr><td>MTOR</td><td>NTRK1</td><td>MYCN</td><td>ALK</td><td>FGFR3</td><td>PDGFRA</td><td>KIT</td><td>FGFR4</td><td>EGFR</td><td>CDK6</td><td>MET</td><td>BRAF</td></tr>
  <tr><td>FGFR1</td><td>MYC</td><td>CDKN2A</td><td>NTRK2</td><td>PTEN</td><td>FGFR2</td><td>KRAS</td><td>CDK4</td><td>NTRK3</td><td>ERBB2</td><td colspan="2">AR</td><tr>
@@ -157,57 +157,6 @@ Genes and filtering criteria specified in `config_hard_filter_cnv_loh.yaml` are 
 * Filter cnvs with over 1.4 copies if the BAF between 0.3 and 0.7 as well as all duplication (copy number > 2.5)
 * Filter cnvs found in more than 15% of the normal samples if they are less than 10 M bases
 * Filter cnvs not annotated in the INFO:Genes tag
-
-## CNV report
-A combined report in tsv format is generated based on the filtered vcf files by the in-house script [cnv_report.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/cnv_report.py) ([rule and config](rules.md#cnv_tsv_report)). The script also looks for 1p19q deletions and add that to the report.
-
-### Configuration
-**Software settings**
-
-| **Options** | **Value** | **Description** |
-|-------------|-|-|
-| amp_cn_limit | 6.0 | Minimum number of copy numbers to be reported as an amplifications |
-| del_1p19q_cn_limit | 1.4 | Both the 1p and 19q chromosome must have a region of the arm with under 1.4 copies |
-| del_1p19q_chr_arm_fraction | 0.3 | The fraction of the arm that must be deleted |
-
-### Result files
-
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.cnv_report.tsv`
-
-## CNV visulization
-
-In addition to the tsv report, an html report is also generated which provides a visualization of the underlying data as well as CNV information.
-
-### Configuration
-
-**Software settings**
-
-```yaml
-# config.yaml
-cnv_html_report:
-    show_table: true
-    template_dir: config/cnv_report_template
-
-merge_cnv_json:
-  annotations:
-    - /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed
-    - /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_genes.bed
-  filtered_cnv_vcfs:
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf.gz
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.filter.cnv_hard_filter_loh.vcf.gz
-  unfiltered_cnv_vcfs:
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.vcf.gz
-  germline_vcf: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz
-```
-
-The attribute `cnv_html_report.show_table` determines whether a table of CNV calls should be generated. It this is true, then the attributes `merge_cnv_json.filtered_cnv_vcfs` and `merge_cnv_json.unfiltered_cnv_vcfs` are required. The optional attribute `merge_cnv_json.annotations` is an array of bed-files with annotations that will be added to the chromosome plot of the report. Finally, `merge_cnv_json.germline_vcf` should be a VCF file with germline variants annotated with allele frequency that will be used to populate the VAF-plots in the report.
-
-For more information, see the [hydra-genetics/reports documentation](https://hydra-genetics-reports.readthedocs.io).
-
-### Result files
-
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.cnv.html`
 
 ## Small CNV deletions
 CNVkit and GATK CNV sometimes miss small deletions where only a number of exons are involved. A specialized small CNV caller in the form of the in-house script [call_small_cnv_deletions.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/call_small_cnv_deletions.py) ([rule and config](rules.md#call_small_cnv_deletions)) is therefore run on the genes mentioned in [CNV gene annotation](#cnv-gene-annotation). The caller uses the log-odds values calculated by GATK for each region, where a region approximately corresponds to one region in the design file, i.e. exon, intron (if present) or CNV-probe. For each gene region, the caller uses a sliding window to find the biggest drop and subsequent rise in copy number in the region. It then determines if the drop in copy number is big enough and is significantly lower than the surrounding region. If a large part or the entire region is deleted it will not be called but will instead be called by the other tools.
@@ -244,6 +193,58 @@ CNVkit and GATK CNV sometimes miss small amplifications where only a number of e
 ### Result file
 
 * `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.amplifications.tsv`
+
+## CNV report (.tsv)
+A combined cnv report in tsv format is generated by the in-house script [cnv_report.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/cnv_report.py) ([rule and config](rules.md#cnv_tsv_report)). The report extract cnv variants from the vcf files with filtered cnv calls as well as the small amplification and deletion files. The script also looks for 1p19q deletions and add that to the report.
+
+### Configuration
+**Software settings**
+
+| **Options** | **Value** | **Description** |
+|-------------|-|-|
+| amp_cn_limit | 6.0 | Minimum number of copy numbers to be reported as a small amplification |
+| del_1p19q_cn_limit | 1.4 | Both the 1p and 19q chromosome must have a region of the arm with under 1.4 copies |
+| del_1p19q_chr_arm_fraction | 0.3 | The fraction of the arm that must be deleted |
+
+### Result files
+
+* `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.cnv_report.tsv`
+
+## CNV visualization (.html)
+
+In addition to the tsv report, an html report is also generated which provides a visualization of the underlying data as well as CNV information.
+
+### Configuration
+
+**Software settings**
+
+```yaml
+# config.yaml
+cnv_html_report:
+    show_table: true
+    template_dir: config/cnv_report_template
+
+merge_cnv_json:
+  annotations:
+    - /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed
+    - /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_genes.bed
+  filtered_cnv_vcfs:
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf.gz
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.filter.cnv_hard_filter_loh.vcf.gz
+  unfiltered_cnv_vcfs:
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.vcf.gz
+  germline_vcf: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz
+```
+
+The attribute `cnv_html_report.show_table` determines whether a table of CNV calls should be generated. It this is true, then the attributes `merge_cnv_json.filtered_cnv_vcfs` and `merge_cnv_json.unfiltered_cnv_vcfs` are required. The optional attribute `merge_cnv_json.annotations` is an array of bed-files with annotations that will be added to the chromosome plot of the report. Finally, `merge_cnv_json.germline_vcf` should be a VCF file with germline variants annotated with allele frequency that will be used to populate the VAF-plots in the report.
+
+For more information, see the [hydra-genetics/reports documentation](https://hydra-genetics-reports.readthedocs.io).
+
+### Result files
+
+* `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.cnv.html`
+
 
 ## Germline vcf
 The germline vcf used by CNVkit and the CNV html report is based on the [VEP annotated vcf](dna_snv_indels.md#vep) file from the SNV and INDEL calling. Annotated vcfs are hard filtered first by removing black listed regions with noisy germline VAFs in normal samples and then filtered by a number of filtering criteria described below. See the [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/) for additional information.
