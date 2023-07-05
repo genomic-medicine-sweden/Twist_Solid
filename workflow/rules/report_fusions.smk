@@ -18,7 +18,9 @@ rule report_fusions:
     params:
         fusioncatcher_flag_low_support=config.get("report_fusions", {}).get("fusioncatcher", {}).get("flag_low_support", 15),
         fusioncatcher_low_support=config.get("report_fusions", {}).get("fusioncatcher", {}).get("low_support", 3),
-        fusioncatcher_low_support_fp_genes=config.get("report_fusions", {}).get("fusioncatcher", {}).get("low_support_fp_genes", 20),
+        fusioncatcher_low_support_fp_genes=config.get("report_fusions", {})
+        .get("fusioncatcher", {})
+        .get("low_support_fp_genes", 20),
         fusioncatcher_low_support_inframe=config.get("report_fusions", {}).get("fusioncatcher", {}).get("low_support_inframe", 6),
         star_fusion_flag_low_support=config.get("report_fusions", {}).get("star_fusion", {}).get("flag_low_support", 15),
         star_fusion_low_support=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support", 2),
