@@ -1,5 +1,70 @@
 # Changelog
 
+## [0.7.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.6.1...v0.7.0) (2023-08-17)
+
+
+### Features
+
+* add result file for combined purecn and pathology ([fb17cc2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/fb17cc25f112994a8a7047f56072d0a0ae32ac75))
+* added duplication % to multiQC ([2923ebf](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2923ebf492b672993d71afa992f9d577b0879149))
+* added picard mark duplicates of bam-files for QC ([0f33656](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0f33656a54c007d027591d3e9cf117ca0637b148))
+* added read group function for STAR ([c224c17](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c224c177eeb72d8fbbc3d42c7af1cc1ec3068787))
+* added RG to STAR and changed bam file for QC ([1f68585](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1f685859ae5e36716a5b3e5716de3f90dce0c4f7))
+* added rule for modifying MBQ in vcf ([72dc309](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/72dc309cebb3eacb6d68f1c13fe65e3f904d05f2))
+* added rule for modifying MBQ in vcf ([6c26626](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6c26626f45857a00eea1e8f257cd9370ee1163c9))
+* added rule for modifying MBQ in vcf ([188f418](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/188f418a5385fad636e7603a3baf14eda4ee41c2))
+* change pureCN cutoff to 0.35 ([4e06643](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4e06643375303ff8718607e42da314fe1bed6356))
+* choose purecn if tc > 30% and pathology otherwise ([20292ab](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/20292abf636c1514cb4c3d5e8a6c395bc36c0ef4))
+* harder filtering ([7cae319](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7cae319b8ed460a194788ecf2f81eb0441c010ea))
+* make two tsv reports using different gene lists ([0737c60](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0737c605dea5a90d87735cc0dd2b97d0f32882f5))
+* test_input_all.tsv for v0.7.0 ([27df350](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/27df350071e9d23f4a024544d79f82fe6498d16a))
+* test_input_VAL2022.tsv for v0.7.0 ([26f5157](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/26f515742d0d1587b57acf0cda4ba2dd0d526a88))
+* use filtered vcf with both germline and somatic variants ([f6c5cc3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f6c5cc3ac86c85e40130edf2edfac37da1379966))
+* use gatk2 for purecn ([ee2e2bc](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ee2e2bc98e034cfc01f405adc9e35cf09ff03e55))
+* use germline vcf for purecn ([eb0eaf5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/eb0eaf5c2bbd26c5e3f960488e147c65092ae02a))
+* use purity file directly from purecn to also get ploidity ([b397a3c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b397a3c9a486d8ed1d8b0f326ae553d088c3cb9d))
+* use vaf and snv filtered vcf with both germline and somatic variants ([48f3563](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/48f35631991ede274ee5daeea30a9ba252964333))
+
+
+### Bug Fixes
+
+* add germline flag to vcf ([1e8de1b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1e8de1bb1c4741b61ab4915298f82dd3c0ed4bdc))
+* add missing filter tag ([7c01e2d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7c01e2d17205b03938ea73d6afbdbf412fea3238))
+* annotate using missing sites instead ([de172b0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/de172b06028c2acab5b0f82a9ce9d699cb35c9f8))
+* bug fixes ([224a6a4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/224a6a48a9f3db711a9c86f4789235619557fce4))
+* change checkpoint to rule ([5e04c9a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5e04c9acad4c27049b14ae1829d4eb840fa0fc5f))
+* change path to new normals ([7a3b420](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7a3b4209d7d16ba8672e464f0845c1b4a4ad6ae6))
+* correct header in cnv report file ([c947152](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c947152845a43019db577035d549f9b7fe55c5d5))
+* correct output name for purecn reference ([92af141](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/92af1410b325942fd0a12c04c7b971917c2c758a))
+* correct rule import from wrong module ([275a60d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/275a60d0ed2fe7c8a86f92d0882c4dfd29fd90a4))
+* delegate schema validation to reports module ([b5dada0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b5dada0172b5b94e7eb89c57e5b164ef0fae29d8))
+* do not filter large cnvs based on frequency in database ([4b86637](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4b86637cf673856a7b1899c0c2b27db635fcec46))
+* get correct tc to html report ([c394cba](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c394cbabefd5f4443c37f53bf21473ed4a6a67a9))
+* handle empty purecn file ([df89fe5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/df89fe570f1651ef8a6a08180309144e71d51e22))
+* import spelling mistake ([f3e7248](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f3e72484c31130921ff5c860e836139c266cd024))
+* moved result file to additional files ([c6c7574](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c6c75742c39138a16c491c2795134f2982bf7fbd))
+* properly overrule the `get_tc` function ([701ceb8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/701ceb8f3a381e71c43874dc417cba9838a24b0f))
+* purecn_modify_vcf bugfix ([e910e18](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e910e18b8588e2204622b21536b4595160fb7846))
+* redefine rule to use new params in config ([5ef5dac](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5ef5dac3536a90d26320330058c98c9ba81b9f38))
+* return correct tc ([45485c7](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/45485c76c45bdd96ea87f58c39904f30a608ef1c))
+* solve different wildcards in rule error ([62082a1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/62082a1a004676e4b0b38ba9b7d09ef6c18e204b))
+* spelling error of Exception ([8d6fbf9](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8d6fbf9c8916b79987b598242e8ebe3ec2ab681d))
+* tabix of annotation database ([1f70635](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1f70635d33a2c05d2d32b2c07e2f82286c3ae817))
+* use correct genome ([66e3c8b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/66e3c8b04f2e0457117d2c9493e86eff071c6c92))
+* use correct get_tc ([ba5272e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ba5272e5c86ec743c1984c1834b5b710d3ea02aa))
+* use correct interval file ([92c0e41](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/92c0e419069c174c817eea1161088b288240558b))
+* use Illumina for platform ([130f3a2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/130f3a2d8160ef723c3d184c3981b132bbc30764))
+
+
+### Documentation
+
+* add readthedocs link to readme ([7c61ef3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7c61ef3d2c8ac8dd641ac4a01fc4bbcfbcc979a8))
+* update CNV HTML report documentation ([3478612](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/34786124f7cb071868708268b7a99dd35da09228))
+* update mention of output spec in docs ([60b9800](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/60b9800cf3b6549b1fd53cebd08afee2c643f2c8))
+* update readme ([8673794](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/86737947780e45af1d4fa0e984ad4e142d43950c))
+* updated cnv documentation ([a503ddd](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a503dddfd4e49e16401e0d25029de0fc4654c4f8))
+* updated cnv documentation ([ef6786a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ef6786ab7bf09119381ca27bf2de88c1c46bb6b0))
+
 ### [0.6.1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.6.0...v0.6.1) (2023-04-28)
 
 
