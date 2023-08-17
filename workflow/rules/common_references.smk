@@ -1,6 +1,3 @@
-# vim: syntax=python tabstop=4 expandtab
-# coding: utf-8
-
 __author__ = "Jonas A"
 __copyright__ = "Copyright 2021, Jonas A"
 __email__ = "jonas.almlof@igp.uu.se"
@@ -54,7 +51,7 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
         "results/background_panel.tsv",
         "results/artifact_panel.tsv",
         "results/svdb_cnv.vcf",
-        "results/normalDB_hg19.rds",
-        "results/mapping_bias_nextseq_27_hg19.rds",
+        "results/purecn_normal_db.rds",
+        "results/mapping_bias_hg19.rds",
     ]
     return output_files

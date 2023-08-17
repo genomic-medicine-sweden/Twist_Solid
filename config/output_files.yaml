@@ -1,0 +1,325 @@
+files:
+  - name: BAM
+    input: alignment/samtools_merge_bam/{sample}_{type}.bam
+    output: bam_dna/{sample}_{type}.bam
+    types:
+      - T
+      - N
+  - name: BAM index
+    input: alignment/samtools_merge_bam/{sample}_{type}.bam.bai
+    output: bam_dna/{sample}_{type}.bam.bai
+    types:
+      - T
+      - N
+  - name: Mutect2 INDEL BAM
+    input: snv_indels/gatk_mutect2_merge/{sample}_{type}.bam
+    output: bam_dna/mutect2_indel_bam/{sample}_{type}.bam
+    types:
+      - T
+      - N
+  - name: Mutect2 INDEL BAM index
+    input: null
+    output: bam_dna/mutect2_indel_bam/{sample}_{type}.bam.bai
+    types:
+      - T
+      - N
+  - name: STAR Fusion BAM index
+    input: null
+    output: bam_rna/{sample}_{type}.star_fusion.bam.bai
+    types:
+      - R
+  - name: STAR Fusion BAM
+    input: fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam
+    output: bam_rna/{sample}_{type}.star_fusion.bam
+    types:
+      - R
+  - name: Mosdepth GVCF
+    input: qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz
+    output: gvcf_dna/{sample}_{type}.mosdepth.g.vcf.gz
+    types:
+      - T
+      - N
+  - name: Annotated VCF
+    input: annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz
+    output: results/dna/additional_files/vcf/{sample}_{type}.annotated.vcf.gz
+    types:
+      - T
+      - N
+  - name: Exon-only soft-filtered VCF
+    input: annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_soft_filter.vcf
+    output: results/dna/additional_files/vcf/{sample}_{type}.annotated.exon_only.filter.soft_filter.vcf
+    types:
+      - T
+      - N
+  - name: Exon-only hard-filtered VCF
+    input: annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.vcf
+    output: results/dna/additional_files/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.vcf
+    types:
+      - T
+      - N
+  - name: Conv SNV VCF
+    input: annotation/add_multi_snv_in_codon/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf
+    output: results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.vcf
+    types:
+      - T
+      - N
+  - name: QCI VCF
+    input: annotation/fix_vcf_ad_for_qci/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.qci.vcf
+    output: results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf
+    types:
+      - T
+      - N
+  - name: Caller VCF
+    input: snv_indels/{caller}/{sample}_{type}.merged.vcf.gz
+    output: results/dna/additional_files/vcf/{caller}_{sample}_{type}.vcf.gz
+    types:
+      - T
+      - N
+  - name: Duplication metrics
+    input: qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt
+    output: results/dna/additional_files/qc/{sample}_{type}.duplication_metrics.txt
+    types:
+      - T
+      - N
+  - name: Alignment summary metrics
+    input: qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt
+    output: results/dna/additional_files/qc/{sample}_{type}.alignment_summary_metrics.txt
+    types:
+      - T
+      - N
+  - name: HsMetrics
+    input: qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt
+    output: results/dna/additional_files/qc/{sample}_{type}.HsMetrics.txt
+    types:
+      - T
+      - N
+  - name: Insert size metrics
+    input: qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt
+    output: results/dna/additional_files/qc/{sample}_{type}.insert_size_metrics.txt
+    types:
+      - T
+      - N
+  - name: Samtool stats
+    input: qc/samtools_stats/{sample}_{type}.samtools-stats.txt
+    output: results/dna/additional_files/qc/{sample}_{type}.samtools-stats.txt
+    types:
+      - T
+      - N
+  - name: Hotspot TSV
+    input: qc/hotspot_report/{sample}_{type}.output.tsv
+    output: results/dna/qc/{sample}_{type}.coverage_and_mutations.tsv
+    types:
+      - T
+      - N
+  - name: Contamination table
+    input: qc/gatk_calculate_contamination/{sample}_{type}.contamination.table
+    output: results/dna/additional_files/qc/{sample}_{type}.contamination.table
+    types:
+      - T
+      - N
+  - name: Housekeeping gene coverage
+    input: qc/house_keeping_gene_coverage/{sample}_{type}.house_keeping_gene_coverage.tsv
+    output: results/rna/qc/{sample}_{type}.house_keeping_gene_coverage.tsv
+    types:
+      - R
+  - name: MultiQC RNA HTML
+    input: qc/multiqc/multiqc_RNA.html
+    output: results/rna/qc/multiqc_RNA.html
+    types:
+      - R
+  - name: MultiQC DNA HTML
+    input: qc/multiqc/multiqc_DNA.html
+    output: results/dna/qc/multiqc_DNA.html
+    types:
+      - T
+      - N
+  - name: MSI Sensor Pro TSV
+    input: biomarker/msisensor_pro/{sample}_{type}
+    output: results/dna/msi/{sample}_{type}.msisensor_pro.score.tsv
+    types:
+      - T
+      - N
+  - name: TMB
+    input: biomarker/tmb/{sample}_{type}.TMB.txt
+    output: results/dna/tmb/{sample}_{type}.TMB.txt
+    types:
+      - T
+      - N
+  - name: HRD score - PureCN
+    input: biomarker/scarhrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt
+    output: results/dna/additional_files/hrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt
+    types:
+      - T
+      - N
+  - name: HRD score - pathology
+    input: biomarker/scarhrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt
+    output: results/dna/additional_files/hrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt
+    types:
+      - T
+      - N
+  - name: HRD score - pathology_purecn
+    input: biomarker/scarhrd/{sample}_{type}.pathology_purecn.scarhrd_cnvkit_score.txt
+    output: results/dna/hrd/{sample}_{type}.pathology_purecn.scarhrd_cnvkit_score.txt
+    types:
+      - T
+      - N
+  - name: Fusion report TSV
+    input: fusions/report_fusions/{sample}_{type}.fusion_report.tsv
+    output: results/rna/fusion/{sample}_{type}.fusion_report.tsv
+    types:
+      - R
+  - name: Arriba fusion TSV
+    input: fusions/arriba/{sample}_{type}.fusions.tsv
+    output: results/rna/additional_files/fusion/{sample}_{type}.arriba.fusions.tsv
+    types:
+      - R
+  - name: Arriba fusion PDF
+    input: fusions/arriba_draw_fusion/{sample}_{type}.pdf
+    output: results/rna/fusion/{sample}_{type}.arriba.fusions.pdf
+    types:
+      - R
+  - name: Exon skipping TSV
+    input: fusions/exon_skipping/{sample}_{type}.results.tsv
+    output: results/rna/fusion/{sample}_{type}.exon_skipping.tsv
+    types:
+      - R
+  - name: STAR Fusion prediction TSV
+    input: fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv
+    output: results/rna/additional_files/fusion/{sample}_{type}.star-fusion.fusion_predictions.tsv
+    types:
+      - R
+  - name: Fusioncatcher prediction TSV
+    input: fusions/fusioncatcher/{sample}_{type}/final-list_candidate-fusion-genes.hg19.txt
+    output: results/rna/additional_files/fusion/{sample}_{type}.fusioncatcher.fusion_predictions.txt
+    types:
+      - R
+  - name: fuseq WES
+    input: fusions/filter_fuseq_wes/{sample}_{type}.fuseq_wes.report.csv
+    output: results/dna/fusion/{sample}_{type}.fuseq_wes.report.csv
+    types:
+      - T
+      - N
+  - name: GeneFuse report
+    input: fusions/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv
+    output: results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv
+    types:
+      - T
+      - N
+  - name: GeneFuse fusions TXT
+    input: fusions/gene_fuse/{sample}_{type}_gene_fuse_fusions.txt
+    output: results/dna/additional_files/fusion/{sample}_{type}.gene_fuse_fusions.txt
+    types:
+      - T
+      - N
+  - name: ID-SNP VCF
+    input: snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf
+    output: results/rna/id_snps/{sample}_{type}.id_snps.vcf
+    types:
+      - R
+  - name: CNVkit scatter PNG
+    input: cnv_sv/cnvkit_scatter/{sample}_{type}.png
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.cnvkit.scatter.png
+    types:
+      - T
+      - N
+  - name: CNVkit diagram PDF
+    input: cnv_sv/cnvkit_diagram/{sample}_{type}.pdf
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.cnvkit.diagram.pdf
+    types:
+      - T
+      - N
+  - name: SVDB query - PureCN
+    input: cnv_sv/svdb_query/{sample}_{type}.purecn.svdb_query.vcf
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.svdb_query.vcf
+    types:
+      - T
+      - N
+  - name: SVDB query - pathology
+    input: cnv_sv/svdb_query/{sample}_{type}.pathology.svdb_query.vcf
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.svdb_query.vcf
+    types:
+      - T
+      - N
+  - name: SVDB query - pathology_purecn
+    input: cnv_sv/svdb_query/{sample}_{type}.pathology_purecn.svdb_query.vcf
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.svdb_query.vcf
+    types:
+      - T
+      - N
+  - name: CNV HTML report - PureCN
+    input: reports/cnv_html_report/{sample}_{type}.purecn.cnv_report.html
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv.html
+    types:
+      - T
+      - N
+  - name: CNV HTML report - pathology
+    input: reports/cnv_html_report/{sample}_{type}.pathology.cnv_report.html
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv.html
+    types:
+      - T
+      - N
+  - name: CNV HTML report - pathology_purecn
+    input: reports/cnv_html_report/{sample}_{type}.pathology_purecn.cnv_report.html
+    output: results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.cnv.html
+    types:
+      - T
+      - N
+  - name: PureCN purity
+    input: cnv_sv/purecn/{sample}_{type}.csv
+    output: results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn_purity_ploidity.csv
+    types:
+      - T
+      - N
+  - name: CNV TSV report - PureCN
+    input: cnv_sv/svdb_query/{sample}_{type}.purecn.cnv_loh_genes_all.cnv_report.tsv
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.amp_all_del_all.cnv_report.tsv
+    types:
+      - T
+      - N
+  - name: CNV TSV report - pathology
+    input: cnv_sv/svdb_query/{sample}_{type}.pathology.cnv_loh_genes_all.cnv_report.tsv
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.amp_all_del_all.cnv_report.tsv
+    types:
+      - T
+      - N
+  - name: CNV TSV report - pathology_purecn
+    input: cnv_sv/svdb_query/{sample}_{type}.pathology_purecn.cnv_loh_genes_all.cnv_report.tsv
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.amp_all_del_all.cnv_report.tsv
+    types:
+      - T
+      - N
+  - name: CNV TSV report validated - PureCN
+    input: cnv_sv/svdb_query/{sample}_{type}.purecn.cnv_loh_genes_validated.cnv_report.tsv
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.amp_all_del_validated.cnv_report.tsv
+    types:
+      - T
+      - N
+  - name: CNV TSV report validated - pathology
+    input: cnv_sv/svdb_query/{sample}_{type}.pathology.cnv_loh_genes_validated.cnv_report.tsv
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.amp_all_del_validated.cnv_report.tsv
+    types:
+      - T
+      - N
+  - name: CNV TSV report validated - pathology_purecn
+    input: cnv_sv/svdb_query/{sample}_{type}.pathology_purecn.cnv_loh_genes_validated.cnv_report.tsv
+    output: results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.amp_all_del_validated.cnv_report.tsv
+    types:
+      - T
+      - N
+  - name: Small CNV deletions
+    input: cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.deletions.tsv
+    types:
+      - T
+      - N
+  - name: Small CNV amplifications
+    input: cnv_sv/call_small_cnv_amplifications/{sample}_{type}.amplifications.tsv
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.amplifications.tsv
+    types:
+      - T
+      - N
+  - name: Manta VCF
+    input: cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz
+    output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz
+    types:
+      - T

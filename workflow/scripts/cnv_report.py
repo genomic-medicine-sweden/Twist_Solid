@@ -24,7 +24,7 @@ def create_tsv_report(
             variants = VariantFile(input_org_vcf)
             samples = list(variants.header.samples)
             if len(samples) > 1:
-                raise Exeception(f"Unable to process vcf with more then one sample: {samples}")
+                raise Exception(f"Unable to process vcf with more then one sample: {samples}")
             else:
                 samples = samples[0]
                 sample_name = samples
@@ -67,7 +67,7 @@ def create_tsv_report(
             if (del_1p19q["1p_cnvkit"] / del_1p19q["1p"][2] > del_1p19q_chr_arm_fraction and
                     del_1p19q["19q_cnvkit"] / del_1p19q["19q"][2] > del_1p19q_chr_arm_fraction):
                 if first_vcf:
-                    writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tnormal_freq\tcopy_number")
+                    writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tfreq_in_db\tcopy_number")
                     first_vcf = False
                 if nr_writes < 2:
                     writer.write(f"\n{samples}\t1p19q\tNA\tNA\tcnvkit\tNA\tNA")
@@ -75,7 +75,7 @@ def create_tsv_report(
             if (del_1p19q["1p_gatkcnv"] / del_1p19q["1p"][2] > del_1p19q_chr_arm_fraction and
                     del_1p19q["19q_gatkcnv"] / del_1p19q["19q"][2] > del_1p19q_chr_arm_fraction):
                 if first_vcf:
-                    writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tnormal_freq\tcopy_number")
+                    writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tfreq_in_db\tcopy_number")
                     first_vcf = False
                 if nr_writes < 2:
                     writer.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
@@ -87,12 +87,12 @@ def create_tsv_report(
             variants = VariantFile(input_vcf)
             samples = list(variants.header.samples)
             if len(samples) > 1:
-                raise Exeception(f"Unable to process vcf with more then one sample: {samples}")
+                raise Exception(f"Unable to process vcf with more then one sample: {samples}")
             else:
                 samples = samples[0]
             counter = 0
             if first_vcf:
-                writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tnormal_freq\tcopy_number")
+                writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tfreq_in_db\tcopy_number")
                 first_vcf = False
             for variant in variants:
                 genes = utils.get_annotation_data_info(variant, "Genes")

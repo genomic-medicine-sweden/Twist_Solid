@@ -1,4 +1,4 @@
-$schema: "http://json-schema.org/draft-04/schema#"
+$schema: "http://json-schema.org/draft-07/schema#"
 description: snakemake configuration file
 type: object
 properties:
@@ -131,36 +131,6 @@ properties:
         description: path to normal reference panel for cnvkit_batch_hrd
     required:
       - normal_reference_hrd
-
-  cnv_html_report:
-    type: object
-    properties:
-      cnv_vcf:
-        description: >
-          A list of pairs of annotations and filters that should be applied to the svdb output.
-          This will be used for populating the results table of the report. If this list is empty,
-          no results table will be generated.
-        type: array
-        items:
-          description: >
-            A pair of values corresponding to an annotation tag and a filter tag.
-          type: object
-          properties:
-            annotation:
-              description: Annotation to apply (from `annotate_cnv`)
-              type: string
-            filter:
-              description: Filter to apply (from `filter_vcf`)
-              type: string
-          required:
-            - annotation
-            - filter
-      template:
-        type: string
-        description: Path to HTML report template
-        format: uri
-    required:
-      - template
 
   exon_skipping:
     type: object
@@ -485,7 +455,6 @@ properties:
           - fun_segmentation
           - interval_padding
 
-
   purecn_coverage:
     description: parameters for purecn_coverage
     type: object
@@ -505,6 +474,16 @@ properties:
     required:
       - intervals
 
+  purecn_modify_vcf:
+    type: object
+    description: parameters for purecn_modify_vcf
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
 
   reference:
     type: object
@@ -616,7 +595,6 @@ required:
   - default_container
   - bcbio_variation_recall_ensemble
   - cnvkit_batch
-  - cnv_html_report
   - filter_vcf
   - gatk_collect_allelic_counts
   - gatk_denoise_read_counts

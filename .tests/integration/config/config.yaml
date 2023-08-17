@@ -1,7 +1,7 @@
 samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
-output: ".././../config/output_list.json"
+output: "../../config/output_files.yaml"
 
 default_container: "docker://hydragenetics/common:0.1.9"
 
@@ -84,7 +84,7 @@ cnvkit_diagram:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnv_html_report:
-  template: "../../config/cnv_report_template.html"
+  template_dir: "../../config/cnv_report_template"
 
 cnvkit_scatter:
   container: "docker://hydragenetics/cnvkit:0.9.9"
@@ -118,6 +118,7 @@ fuseq_wes:
 filter_vcf:
   snv_soft_filter: "../../config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "../../config/config_hard_filter_uppsala.yaml"
+  snv_hard_filter_purecn: "../../config/config_hard_filter_purecn.yaml"
   cnv_hard_filter_amp: "../../config/config_hard_filter_cnv_amp.yaml"
   cnv_hard_filter_loh: "../../config/config_hard_filter_cnv_loh.yaml"
   germline: "../../config/config_hard_filter_germline.yaml"
@@ -238,9 +239,6 @@ multiqc:
 optitype:
   container: "docker://fred2/optitype"
 
-picard_mark_duplicates:
-  container: "docker://hydragenetics/picard:2.25.0"
-
 picard_collect_alignment_summary_metrics:
   container: "docker://hydragenetics/picard:2.25.0"
 
@@ -282,10 +280,10 @@ reference:
 
 report_fusions:
   annotation_bed: "reference/Twist_RNA_fusionpartners.bed"
-  fusioncather_flag_low_support: 15
-  fusioncather_low_support: 3
-  fusioncather_low_support_fp_genes: 20
-  fusioncather_low_support_inframe: 6
+  fusioncatcher_flag_low_support: 15
+  fusioncatcher_low_support: 3
+  fusioncatcher_low_support_fp_genes: 20
+  fusioncatcher_low_support_inframe: 6
   star_fusion_flag_low_support: 15
   star_fusion_low_support: 2
   star_fusion_low_support_fp_genes: 20
@@ -312,6 +310,10 @@ star_fusion:
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
   tc_method:
+    - name: pathology_purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
     - name: purecn
       cnv_caller:
         - cnvkit
