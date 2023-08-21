@@ -1,5 +1,5 @@
 # Biomarkers
-See the [biomarkers hydra-genetics module](https://hydra-genetics-biomarkers.readthedocs.io/en/latest/) documentation for more details on the softwares for the respective biomarkers. Default hydra-genetics settings/resources are used if no configuration is specified.
+See the [biomarkers hydra-genetics module](https://hydra-genetics-biomarker.readthedocs.io/en/latest/) documentation for more details on the softwares for the respective biomarkers. Default hydra-genetics settings/resources are used if no configuration is specified.
 
 <br />
 ![biomarker dag plot](images/biomarkers.png){: style="height:50%;width:50%"}
