@@ -1,5 +1,5 @@
 # Fusion calling in DNA
-See the [fusions hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for fusion calling. Default hydra-genetics settings/resources are used if no configuration is specified.
+See the [fusions hydra-genetics module](https://hydra-genetics_fusions.readthedocs.io/en/latest/) documentation for more details on the softwares for fusion calling. Default hydra-genetics settings/resources are used if no configuration is specified.
 
 <br />
 ![dag plot](images/fusions.png){: style="height:25%;width:25%"}
