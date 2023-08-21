@@ -1,5 +1,5 @@
 # Prealignment
-See the [prealignment hydra-genetics module](https://prealignment.readthedocs.io/en/latest/) documentation for more details on the softwares. Default hydra-genetics settings/resources are used if no configuration is specified.
+See the [prealignment hydra-genetics module](https://hydra-genetics_prealignment.readthedocs.io/en/latest/) documentation for more details on the softwares. Default hydra-genetics settings/resources are used if no configuration is specified.
 
 <br />
 ![dag plot](images/prealignment.png){: style="height:18%;width:18%"}
