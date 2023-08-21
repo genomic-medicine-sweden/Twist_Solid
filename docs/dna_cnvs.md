@@ -1,5 +1,5 @@
 # CNV calling merging and purity estimation
-See the [cnv hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for cnv calling. Default hydra-genetics settings/resources are used if no configuration is specified.
+See the [cnv hydra-genetics module](https://hydra-genetics_snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for cnv calling. Default hydra-genetics settings/resources are used if no configuration is specified.
 
 <br />
 ![purecn dag plot](images/cnv_purecn.png){: style="height:55%;width:55%"}
