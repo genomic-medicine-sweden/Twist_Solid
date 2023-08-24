@@ -3,17 +3,20 @@
    db_string:
      checksum: 076f3a9bec5e9941eb4bbbf4594c0037
      path: SVDB/all_TN_292_svdb_0.8_20220505.vcf
+     type: file
      url: https://figshare.scilifelab.se/ndownloader/files/40882898
 
  purecn:
    extra: 
      checksum: eb311461a92b53a9494bba9625ecd4c3
      path: purecn/mapping_bias_nextseq_27_hg19.rds
+     type: file
      url: https://figshare.scilifelab.se/ndownloader/files/40882865
 
    normaldb:
      checksum: d77528e5bfeec40791235e52dcbed7ef
      path: purecn/normalDB_nextseq_27_hg19.rds
+     type: file
      url: https://figshare.scilifelab.se/ndownloader/files/40882874
 
 
@@ -21,34 +24,40 @@
    normal_reference:
       checksum: ab0a2f3276125c8695b72a2b2c5779ea
       path: PoN/gatk_cnv_novaseq_13.hdf5
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40882862
 
  cnvkit_batch:
    normal_reference:
      checksum: e7853030e7a6b0ccbeffb7c008983a29
      path: PoN/cnvkit_novaseq_13.cnn
+     type: file
      url: https://figshare.scilifelab.se/ndownloader/files/40882853
 
  cnvkit_batch_hrd:
    normal_reference_hrd:
       checksum: e7853030e7a6b0ccbeffb7c008983a29
       path: PoN/cnvkit_novaseq_13_HRD.cnn
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40882871
 
  msisensor_pro:
    PoN:
      checksum: 40bda778c9208a366b39ec0e6cefde11
      path: PoN/Msisensor_pro_reference_novaseq_13.list_baseline
+     type: file
      url: https://figshare.scilifelab.se/ndownloader/files/40882871
 
  reference:
     background:
       checksum: 563aa06990d90ed3ef33b4da1aac3c2e
       path: Background/background_panel_novaseq_13_dp500_af015.tsv
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40882844
     
     artifacts: 
       checksum: 6d589735a4b922a6f7e852539f44a539
       path: Artifact/artifact_panel_novaseq_13.tsv
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40882838
 

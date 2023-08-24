@@ -2,11 +2,13 @@
 
   fusioncatcher:
     genome_path:
-      path: /sw/bioinfo/FusionCatcher/1.33/bianca/fusioncatcher/data/human_v102/  
+      type: folder
+      path: /sw/bioinfo/FusionCatcher/1.33/bianca/fusioncatcher/data/human_v102/
  
   reference:
     fasta_rna:
       path: /sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa
+      type: file
 #    fai:
 #      path: /sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa.fai
 #    dict:
@@ -15,14 +17,18 @@
   star:
     extra:
       path: /sw/data/reference/Homo_sapiens/GRCh37/program_files/lifescope/refGene/refGene.hg19.20101221.gtf
+      type: file
     genome_index:
       path: /sw/data/reference/Homo_sapiens/hg19/program_files/star/concat
+      type: file
 
   star-fusion:
     genome_path:
       path: /sw/data/CTAT_RESOURCE_LIB/2021-03/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/
+      type: folder
 
   vep:
     vep_cache:
       path: /sw/data/vep/107
+      type: folder
    

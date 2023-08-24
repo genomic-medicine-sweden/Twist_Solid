@@ -4,66 +4,78 @@
     blacklist:
       checksum: ca7b0b42ec2498814a5c408a5477e052
       path: ref_data/arriba/blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40928345
       
     extra1:
       checksum: b5bc63c70c9eb08c71528ee8b0186901
       path: ref_data/arriba/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40928354
    
     extra2:
       checksum: 2f063a0065c1c88d86c859b924d8d590
       path: ref_data/arriba/known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40928351
   
     gtf:
       checksum: 57b812f0595dc8a446ca81fe568e142d
       path: ref_data/gtf/hg19.refGene.gtf
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/42061200
 
     data_folder:
       #checksum: 
       path: ariba_v2.3.0.tar.gz
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/42116952
 
   arriba_draw_fusion:
     cytobands: 
       checksum: 9333eaa96c56fa22624ab432b8391b2b
       path: ref_data/arriba/cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40928348
    
     protein_domains: 
       checksum: b5bc63c70c9eb08c71528ee8b0186901
       path: ref_data/arriba/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40928354
 
   bwa:
    amb:
      checksum: b1998db7fbda653133fa278cd9b1e61b
      path: ref_data/hg19/hg19.with.mt.fasta.amb
+     type: file
      url: https://figshare.scilifelab.se/ndownloader/files/42061203
    ann:
      checksum: 745e9a6afe1951cc54e8cc1b6c1429ff
      path: ref_data/hg19/hg19.with.mt.fasta.ann
+     type: file
      url: https://figshare.scilifelab.se/ndownloader/files/42061206
    bwt:
      checksum: da1a091388a038c22e1d5c555db00a8b
      path: ref_data/hg19/hg19.with.mt.fasta.bwt
+     type: file
      url: https://figshare.scilifelab.se/ndownloader/files/42061209
    pac:
      checksum: 90c98011896647750981f091b90bf2af
      path: ref_data/hg19/hg19.with.mt.fasta.pac
+     type: file
      url: https://figshare.scilifelab.se/ndownloader/files/42061221
    sa:
      checksum: 9acd60cb19c1dd8da83283348670c744
      path: ref_data/hg19/hg19.with.mt.fasta.sa
+     type: file
      url: https://figshare.scilifelab.se/ndownloader/files/42061224
 
   fuseq_wes:
     reference:
       type: folder
       compressed_checksum: c66a0ba6fe5b76fedf16b404f67fcda4
-      path: reference_data/fuseq_wes
+      path: ref_data/fuseq_wes
       content_checksum:
         ensmbl_paralogs_grch37.RData: af95895660e6b09ca07ffcedcc6c7ef1
         Mitelman_fusiondb.RData: e4fbf81b5b02b9fe201161d324405822
@@ -75,65 +87,77 @@
     sites:
       checksum: 1eb85e09195f0092e389510b40765f5e
       path: ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40933373
 
     variants:
       checksum: 1eb85e09195f0092e389510b40765f5e
       path: ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40933373
 
     variants_tbi:
       checksum: fe613a305067fa746f49113b78088490
       path: ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz.tbi
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/41119760
     
   gene_fuse:
     fasta:
       checksum: 7c1739fd43764bd5e3b9b76ce8635bf0
       path: ref_data/hg19/hg19.with.mt.fasta
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/42060171 
       
   references:
     fasta:
       checksum: 7c1739fd43764bd5e3b9b76ce8635bf0
       path: ref_data/hg19/hg19.with.mt.fasta
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/42060171 
       
     fai:
       checksum: 6071b578df509d097874b3e58a1a9fc6
       path: ref_data/hg19/hg19.with.mt.fasta.fai
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/42061218
     
     dict:
       checksum: bfd3a82e44e749f6864084ec51119a09
       path: ref_data/hg19/hg19.with.mt.fasta.dict
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/42061359
 
   fusioncatcher:
     genome_path:
-      path: /sw/bioinfo/FusionCatcher/1.33/bianca/fusioncatcher/data/human_v102/ 
-      url:
       compressed_name: human_v102.tar.gz
-
- 
+      path: human_v102/ 
+      type: file
+      url:
+        https://figshare.scilifelab.se/ndownloader/files/42061230:5f4968cf58a28bfe661ee3d1207259c6
+        https://figshare.scilifelab.se/ndownloader/files/42061233:ad677c79617e36f85592b45918a10f21
+        https://figshare.scilifelab.se/ndownloader/files/42061242:b4a57d1a48b12e3302fa7d12e6ac6347
+        https://figshare.scilifelab.se/ndownloader/files/42061248:1280e3204b6990b825c762ac14e4446a
+      
   star:
-    extra:
-      path: ...
     genome_index:
-      path: ref_data/star
-      url: https://figshare.scilifelab.se/ndownloader/files/42061278
-      checksum:
       compressed_name: star_v2.7.10a_hg19_index.tar.gz
+      path: star
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/42061278
+      
 
   star-fusion:
     genome_path:
       #path: ref_data/ctat_genome_lib_build_dir
       path: GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play.tar.gz
+      type: file
       url: https://figshare.scilifelab.se/ndownloader/files/42084318      
       #compressed_name: GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play.tar.gz
 
   vep:
     vep_cache:
       path: /sw/data/vep/107
+      type: folder
       
 
