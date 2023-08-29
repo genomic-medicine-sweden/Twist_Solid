@@ -23,7 +23,7 @@
 
  gatk_denoise_read_counts:
    normal_reference:
-     checksum: eee609d42ca9ea071521664bdac6c4d6
+     checksum: 81a1eab73b833f80ad2cc0b8856bfa07
      path: PoN/gatk_cnv_nextseq_36.hdf5
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/40882859
