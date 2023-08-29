@@ -1,5 +1,5 @@
 # SNV and INDEL calling, annotation and filtering
-See the [snv_indels hydra-genetics module](https://snv_indels.readthedocs.io/en/latest/) documentation for more details on the softwares for variant calling, [annotation hydra-genetics module](https://annotation.readthedocs.io/en/latest/) for annotation and [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/) for filtering. Default hydra-genetics settings/resources are used if no configuration is specified.
+See the [snv_indels hydra-genetics module](https://hydra-genetics-snv-indels.readthedocs.io/en/latest/) documentation for more details on the softwares for variant calling, [annotation hydra-genetics module](https://annotation.readthedocs.io/en/latest/) for annotation and [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/) for filtering. Default hydra-genetics settings/resources are used if no configuration is specified.
 
 <br />
 ![dag plot](images/snv.png)
