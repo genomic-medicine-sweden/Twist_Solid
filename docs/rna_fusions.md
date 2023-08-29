@@ -1,5 +1,5 @@
 # Fusions in RNA
-See the [fusions hydra-genetics module](https://hydra-genetics_fusions.readthedocs.io/en/latest/) documentation for more details on the softwares for fusion calling.  Default hydra-genetics settings/resources are used if no configuration is specfied.
+See the [fusions hydra-genetics module](https://hydra-genetics-fusions.readthedocs.io/en/latest/) documentation for more details on the softwares for fusion calling.  Default hydra-genetics settings/resources are used if no configuration is specfied.
 
 Fusion calling is performed using three different fusion callers; [Arriba](https://github.com/suhrig/arriba), [Star-Fusion](https://github.com/STAR-Fusion/STAR-Fusion) and [fusioncatcher](https://github.com/ndaniel/fusioncatcher). Both Arriba and Star-Fusion uses the [Star](https://github.com/alexdobin/STAR) for alignment but with different settings while fusioncatcher uses its own aligner. After fusion calling the fusions are filtered depending on software and then merged into a fusion report.
 
