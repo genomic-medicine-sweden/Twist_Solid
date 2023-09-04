@@ -3,20 +3,20 @@
  svdb_query:
    db_string:
      checksum: 076f3a9bec5e9941eb4bbbf4594c0037
-     path: SVDB/all_TN_292_svdb_0.8_20220505.vcf
+     path: GMS560/PoN/SVDB/all_TN_292_svdb_0.8_20220505.vcf
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/40882898
 
  purecn:
    extra: 
      checksum: eb311461a92b53a9494bba9625ecd4c3
-     path: purecn/mapping_bias_nextseq_27_hg19.rds
+     path: GMS560/PoN/purecn/mapping_bias_nextseq_27_hg19.rds
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/40882865
 
-   normaldb:
+   gatk_denoise_read_countsnormaldb:
      checksum: d77528e5bfeec40791235e52dcbed7ef
-     path: purecn/normalDB_nextseq_27_hg19.rds
+     path: GMS560/PoN/purecn/normalDB_nextseq_27_hg19.rds
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/40882874
 
@@ -24,40 +24,40 @@
  gatk_denoise_read_counts:
    normal_reference:
      checksum: 81a1eab73b833f80ad2cc0b8856bfa07
-     path: PoN/gatk_cnv_nextseq_36.hdf5
+     path: GMS560/PoN/gatk_cnv_nextseq_36.hdf5
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/40882859
 
  cnvkit_batch:
    normal_reference:
      checksum: 2c8f519a872d92ec1cb43bd29518a71b
-     path: PoN/cnvkit_nextseq_36.cnn
+     path: GMS560/PoN/cnvkit_nextseq_36.cnn
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/40882850
 
  cnvkit_batch_hrd:
    normal_reference_hrd:
       checksum: 89d2ca215b62651e5272a4bb70b7d217
-      path: PoN/cnvkit_nextseq_27_HRD.cnn
+      path: GMS560/PoN/cnvkit_nextseq_27_HRD.cnn
       type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40882847
 
  msisensor_pro:
    PoN:
      checksum: 23c9553c7043fff1a8428fcd3b231c60
-     path: PoN/Msisensor_pro_reference_nextseq_36.list_baseline
+     path: GMS560/PoN/Msisensor_pro_reference_nextseq_36.list_baseline
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/40882868
 
  reference:
     background:
       checksum: 664471a52761adf69ed1f8310a60f445
-      path: Background/background_panel_nextseq_noUmea_27_dp500_af015.tsv
+      path: GMS560/Background/background_panel_nextseq_noUmea_27_dp500_af015.tsv
       type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40882841
     
     artifacts: 
       checksum: 73531299238e0a0884405a892e6789ac
-      path: Artifact/artifact_panel_nextseq_36.tsv
+      path: GMS560/Artifact/artifact_panel_nextseq_36.tsv
       type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40882835

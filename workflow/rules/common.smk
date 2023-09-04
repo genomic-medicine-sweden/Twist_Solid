@@ -16,6 +16,7 @@ from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.misc import extract_chr
+from hydra_genetics.utils.misc import replace_dict_variables
 from hydra_genetics import min_version as hydra_min_version
 
 hydra_min_version("0.15.0")
@@ -28,12 +29,14 @@ if not workflow.overwrite_configfiles:
     sys.exit("At least one config file must be passed using --configfile/--configfiles, by command line or a profile!")
 
 
+config = replace_dict_variables(config)
+
 validate(config, schema="../schemas/config.schema.yaml")
 config = load_resources(config, config["resources"])
 validate(config, schema="../schemas/resources.schema.yaml")
 
-#if workflow.use_singularity is True:
-#    validate(config, schema=config["singularity_schema"])
+if workflow.use_singularity is True:
+    validate(config, schema=config["singularity_schema"])
 
 ### Read and validate samples file
 

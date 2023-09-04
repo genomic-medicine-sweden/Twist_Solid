@@ -35,26 +35,31 @@
   bwa:
    amb:
      checksum: b1998db7fbda653133fa278cd9b1e61b
+     link: ref_data/hg19/hg19.with.mt.amb
      path: ref_data/hg19/hg19.with.mt.fasta.amb
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/42061203
    ann:
      checksum: 745e9a6afe1951cc54e8cc1b6c1429ff
+     link: ref_data/hg19/hg19.with.mt.ann
      path: ref_data/hg19/hg19.with.mt.fasta.ann
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/42061206
    bwt:
      checksum: da1a091388a038c22e1d5c555db00a8b
+     link: ref_data/hg19/hg19.with.mt.bwt
      path: ref_data/hg19/hg19.with.mt.fasta.bwt
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/42061209
    pac:
      checksum: 90c98011896647750981f091b90bf2af
+     link: ref_data/hg19/hg19.with.mt.pac
      path: ref_data/hg19/hg19.with.mt.fasta.pac
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/42061221
    sa:
      checksum: 9acd60cb19c1dd8da83283348670c744
+     link: ref_data/hg19/hg19.with.mt.sa
      path: ref_data/hg19/hg19.with.mt.fasta.sa
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/42061224
@@ -106,12 +111,14 @@
       
     fai:
       checksum: 6071b578df509d097874b3e58a1a9fc6
+      link: ref_data/hg19/hg19.with.mt.fai
       path: ref_data/hg19/hg19.with.mt.fasta.fai
       type: file
       url: https://figshare.scilifelab.se/ndownloader/files/42061218
     
     dict:
       checksum: bfd3a82e44e749f6864084ec51119a09
+      link: ref_data/hg19/hg19.with.mt.dict
       path: ref_data/hg19/hg19.with.mt.fasta.dict
       type: file
       url: https://figshare.scilifelab.se/ndownloader/files/42061359

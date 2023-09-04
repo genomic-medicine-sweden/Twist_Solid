@@ -1,0 +1,142 @@
+
+PROJECT_DESIGN_DATA: ""
+PROJECT_PON_DATA: ""
+PROJECT_REF_DATA: ""
+
+reference:
+  background: "{{PROJECT_PON_DATA}}/GMS560/Background/background_panel_nextseq_noUmea_27_dp500_af015.tsv"
+  artifacts: "{{PROJECT_PON_DATA}}/GMS560/Artifact/artifact_panel_nextseq_36.tsv"
+  fasta: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta"
+  fasta_rna: "{{PROJECT_REF_DATA}}/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
+  dict: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta.dict"
+  fai: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fai"
+  design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.230222.bed"
+  design_intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.interval_list"
+  design_intervals_gatk_cnv: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
+  design_bed_rna: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.bed"
+  design_intervals_rna: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.interval_list"
+  skip_chrs:
+    - "MT"
+
+arriba:
+  assembly: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta"
+  blacklist: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz"
+  gtf: "{{PROJECT_REF_DATA}}/ref_data/refGene/hg19.refGene.gtf"
+  extra: "-p {{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3 -k {{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz"
+
+arriba_draw_fusion:
+  cytobands: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv"
+  gtf: "{{PROJECT_REF_DATA}}/ref_data/gtrefGene/f/hg19.refGene.gtf"
+  protein_domains: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3"
+
+annotate_cnv:
+  cnv_amp_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes.bed"
+  cnv_loh_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes.bed"
+
+bcftools_annotate:
+  annotation_db: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz"
+
+bcftools_filter_include_region:
+  exon: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.bed"
+
+bcftools_filter_exclude_region:
+  blacklist: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnvkit_germline_blacklist_20221221.bed"
+
+bcftools_id_snps:
+  snps_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/ID_SNPs.bed"
+
+bwa_mem:
+  amb: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta.amb"
+  ann: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta.ann"
+  bwt: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta.bwt"
+  pac: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta.pac"
+  sa: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta.sa"
+
+call_small_cnv_deletions:
+  regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_deletion_genes.tsv"
+
+call_small_cnv_amplifications:
+  regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amplification_genes.tsv"
+
+cnvkit_batch:
+  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_36.cnn"
+
+cnvkit_batch_hrd:
+  normal_reference_hrd: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_27_HRD.cnn"
+
+exon_skipping:
+  design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.bed"
+
+filter_fuseq_wes:
+  gene_white_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_gene_white_list.txt"
+  transcript_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_transcript_black_list.txt"
+  gtf: "{{PROJECT_REF_DATA}}/ref_data/refGene/hg19.refGene.gtf"
+
+fuseq_wes:
+  ref_json: "{{PROJECT_REF_DATA}}/ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.json"
+  gtfSqlite: "{{PROJECT_REF_DATA}}/ref_data/fuseq_wes/UCSC_hg19_wes_contigSize3000_bigLen130000_r100.sqlite"
+  fusiondb: "{{PROJECT_REF_DATA}}/ref_data/fuseq_wes/Mitelman_fusiondb.RData"
+  paralogdb: "{{PROJECT_REF_DATA}}/ref_data/fuseq_wes/ensmbl_paralogs_grch37.RData"
+  params: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_params.txt"
+
+fusioncatcher:
+  genome_path: "{{PROJECT_REF_DATA}}/ref_data/fusioncatcher/data/human_v102/"
+
+gatk_collect_allelic_counts:
+  SNP_interval: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/gnomad_SNP_0.001_target.annotated.interval_list"
+
+gatk_denoise_read_counts:
+  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/gatk_cnv_nextseq_36.hdf5"
+
+gatk_get_pileup_summaries:
+  sites: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz"
+  variants: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz"
+
+gene_fuse:
+  genes: "{{PROJECT_DESIGN_DATA}}/GMS560/gene_fuse/GMS560_fusion_w_pool2.hg19.221117.csv"
+  fasta: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta"
+
+hotspot_annotation:
+  hotspots: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.csv"
+
+hotspot_info:
+  hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.csv"
+
+hotspot_report:
+  hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.csv"
+
+manta_config_t:
+  extra: "--exome --callRegions {{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz"
+
+mosdepth:
+  extra: "--no-per-base --fast-mode"
+
+msisensor_pro:
+  PoN: "{{PROJECT_PON_DATA}}/GMS560/PoN/Msisensor_pro_reference_nextseq_36.list_baseline"
+
+purecn:
+  extra: "--model betabin --mapping-bias-file {{PROJECT_PON_DATA}}/GMS560/PoN/purecn/mapping_bias_nextseq_27_hg19.rds"
+  normaldb: "{{PROJECT_PON_DATA}}/GMS560/PoN/purecn/normalDB_nextseq_27_hg19.rds"
+  intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
+
+purecn_coverage:
+  intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
+
+report_fusions:
+  annotation_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_fusionpartners.bed"
+
+report_gene_fuse:
+  filter_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/gene_fuse/filter_fusions_20230214.csv"
+
+star:
+  genome_index: "{{PROJECT_REF_DATA}}/ref_data/star/concat"
+  extra: "--quantMode GeneCounts --sjdbGTFfile {{PROJECT_REF_DATA}}/ref_data/refGene/hg19.refGene.gtf --outSAMtype BAM SortedByCoordinate --chimSegmentMin 10 --chimOutType WithinBAM SoftClip --chimJunctionOverhangMin 10 --chimScoreMin 1 --chimScoreDropMax 30 --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --alignSJstitchMismatchNmax 5 -1 5 5 --chimSegmentReadGapMax 3"
+
+star_fusion:
+  genome_path: "{{PROJECT_REF_DATA}}/ref_data/star/v2.7.10a_hg19/"
+  
+svdb_query:
+  db_string: "--db {{PROJECT_PON_DATA}}/GMS560/PoN/SVDB/all_TN_292_svdb_0.8_20220505.vcf --out_frq Twist_AF --out_occ Twist_OCC"
+
+vep:
+  vep_cache:  "{{PROJECT_REF_DATA}}/ref_data/vep/105"

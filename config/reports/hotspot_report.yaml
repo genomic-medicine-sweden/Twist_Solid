@@ -114,7 +114,7 @@ columns:
     order: 21
   GnomAD:
     from: 'vep'
-    field: 'gnomADe_AF'
+    field: 'gnomAD_AF'
     order: 22
   clinvar:
     from: 'vep'
