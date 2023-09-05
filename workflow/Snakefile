@@ -60,6 +60,60 @@ module prealignment:
 use rule * from prealignment as prealignment_*
 
 
+use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
+    output:
+        trimmed=temp(
+            [
+                "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.fastq.gz",
+                "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.fastq.gz",
+            ]
+        ),
+        html="prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.html",
+        json="prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.json",
+    params:
+        adapters=lambda wildcards: " --adapter_sequence {} --adapter_sequence_r2 {} ".format(
+            *get_fastq_adapter(units, wildcards).split(",")
+        ),
+        extra=config.get("fastp_pe_arriba", {}).get("extra", ""),
+    log:
+        "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq.fastq.gz.log",
+    benchmark:
+        repeat(
+            "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq.fastq.gz.benchmark.tsv",
+            config.get("fastp_pe_arriba", {}).get("benchmark_repeats", 1),
+        )
+    resources:
+        mem_mb=config.get("fastp_pe_arriba", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("fastp_pe_arriba", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("fastp_pe_arriba", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("fastp_pe_arriba", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("fastp_pe_arriba", {}).get("time", config["default_resources"]["time"]),
+    threads: config.get("fastp_pe_arriba", {}).get("threads", config["default_resources"]["threads"])
+
+
+use rule merged from prealignment as prealignment_merged_arriba with:
+    input:
+        fastq=merged_input_arriba,
+    output:
+        fastq=temp("prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz"),
+    log:
+        "prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz.log",
+    benchmark:
+        repeat(
+            "prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz.benchmark.tsv",
+            config.get("merged_arriba", {}).get("benchmark_repeats", 1),
+        )
+    resources:
+        mem_mb=config.get("merged_arriba", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("merged_arriba", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("merged_arriba", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("merged_arriba", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("merged_arriba", {}).get("time", config["default_resources"]["time"]),
+    threads: config.get("merged_arriba", {}).get("threads", config["default_resources"]["threads"])
+    container:
+        config.get("merged_arriba", {}).get("container", config["default_container"])
+
+
 module alignment:
     snakefile:
         get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.3.1")
@@ -292,6 +346,13 @@ use rule star_fusion from fusions as fusions_star_fusion with:
         fusions=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv"),
         fusions_abridged=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.coding_effect.tsv"),
         sj=temp("fusions/star_fusion/{sample}_{type}/SJ.out.tab"),
+
+
+use rule star from fusions as fusions_star with:
+    input:
+        fq1="prealignment/merged_arriba/{sample}_{type}_fastq1.fastq.gz",
+        fq2="prealignment/merged_arriba/{sample}_{type}_fastq2.fastq.gz",
+        idx=config.get("star", {}).get("genome_index", ""),
 
 
 module cnv_sv:
