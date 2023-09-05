@@ -125,6 +125,10 @@ use rule * from alignment as alignment_*
 
 
 use rule star from alignment as alignment_star with:
+    input:
+        fq1="prealignment/merged_arriba/{sample}_{type}_fastq1.fastq.gz",
+        fq2="prealignment/merged_arriba/{sample}_{type}_fastq2.fastq.gz",
+        idx=config.get("star", {}).get("genome_index", ""),
     params:
         extra=lambda wildcards: "%s %s"
         % (
@@ -346,13 +350,6 @@ use rule star_fusion from fusions as fusions_star_fusion with:
         fusions=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv"),
         fusions_abridged=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.coding_effect.tsv"),
         sj=temp("fusions/star_fusion/{sample}_{type}/SJ.out.tab"),
-
-
-use rule star from fusions as fusions_star with:
-    input:
-        fq1="prealignment/merged_arriba/{sample}_{type}_fastq1.fastq.gz",
-        fq2="prealignment/merged_arriba/{sample}_{type}_fastq2.fastq.gz",
-        idx=config.get("star", {}).get("genome_index", ""),
 
 
 module cnv_sv:
