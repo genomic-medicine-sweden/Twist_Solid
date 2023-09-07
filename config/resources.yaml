@@ -22,6 +22,11 @@ fastp_pe:
   mem_mb: 30720
   mem_per_cpu: 6144
 
+fastp_pe_arriba:
+  threads: 5
+  mem_mb: 30720
+  mem_per_cpu: 6144
+
 fuseq_wes:
   threads: 2
   mem_mb: 12288

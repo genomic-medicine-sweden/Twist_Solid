@@ -70,6 +70,14 @@ wildcard_constraints:
     type="N|T|R",
 
 
+merged_input_arriba = lambda wildcards: expand(
+    "prealignment/fastp_pe_arriba/{{sample}}_{{type}}_{flowcell_lane_barcode}_{{read}}.fastq.gz",
+    flowcell_lane_barcode=[
+        "{}_{}_{}".format(unit.flowcell, unit.lane, unit.barcode) for unit in get_units(units, wildcards, wildcards.type)
+    ],
+)
+
+
 def compile_output_list(wildcards):
     output_files = []
     types = set([unit.type for unit in units.itertuples()])

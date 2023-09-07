@@ -131,6 +131,10 @@ fastp_pe:
   # Default enabled trimming parameters for fastp. Specified for clarity.
   extra: "--trim_poly_g --qualified_quality_phred 15 --unqualified_percent_limit 40 --n_base_limit 5 --length_required 15"
 
+fastp_pe_arriba:
+  container: "docker://hydragenetics/fastp:0.20.1"
+  extra: "--max_len1 100"
+
 fastqc:
   container: "docker://hydragenetics/fastqc:0.11.9"
 
