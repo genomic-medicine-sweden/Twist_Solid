@@ -70,16 +70,16 @@ pip install -r requirements.txt
 # make sure that TMPDIR points to a location with a lot of storage, it
 # will be required to fetch reference data
 # export TMPDIR=/PATH_TO_STORAGE
-hydra-genetics --verbose references download -o design_and_ref_files  -v config/references/references.hg19.yaml -v config/references/design_files.hg19.yaml -v config/references/nextseq.hg19.pon.yaml
+hydra-genetics --debug --verbose references download -o design_and_ref_files  -v config/references/references.hg19.yaml -v config/references/design_files.hg19.yaml -v config/references/nextseq.hg19.pon.yaml
 ```
 
 **Update config**
 ```yaml 
 # file config/config.data.hg19.yaml
 # change rows:
-PROJECT_DESIGN_DATA: "" # parent folder for GMS560 design, ex GMS560/design
-PROJECT_PON_DATA: "" # artifact/background/PoN, ex GMS560/PoN
-PROJECT_REF_DATA: "" # parent folder for ref_data, ex ref_data/hg19
+PROJECT_DESIGN_DATA: "PATH_TO/design_and_ref_files" # parent folder for GMS560 design, ex GMS560/design
+PROJECT_PON_DATA: "PATH_TO/design_and_ref_files" # artifact/background/PoN, ex GMS560/PoN
+PROJECT_REF_DATA: "PATH_TO/design_and_ref_files" # parent folder for ref_data, ex ref_data/hg19
 
 ```
 
@@ -92,7 +92,7 @@ hydra-genetics create-input-files -d path/to/fastq-files/
 ## Run command
 Using the activated python virtual environment created above, this is a basic command for running the pipeline:
 ```bash
-snakemake --profile profiles/ -s workflow/Snakefile
+snakemake --profile profiles/NAME_OF_PROFILE -s workflow/Snakefile
 ```  
 <br />
 The are many additional [snakemake running options](https://snakemake.readthedocs.io/en/stable/executing/cli.html#) some of which is listed below. However, options that are always used should be put in the [profile](https://hydra-genetics.readthedocs.io/en/latest/profile/).

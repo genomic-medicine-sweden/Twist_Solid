@@ -7,11 +7,17 @@
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/cnv/cnv_amp_genes.bed
 
-   cnv_loh_genes: 
+   cnv_loh_genes_all: 
      path: GMS560/cnv/cnv_loh_genes.bed
      checksum: 38d3acbe99bb9626ccc0ab1815b6e35b
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/cnv/cnv_loh_genes.bed
+ 
+   cnv_loh_genes_validated: 
+     path: GMS560/cnv/cnv_loh_uppsala_genes.bed
+     checksum: 2f72bf8e05124335ffc2adf860cd13c8
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/cnv/cnv_loh_uppsala_genes.bed
 
  bcftools_filter_include_region:
    exon: 
