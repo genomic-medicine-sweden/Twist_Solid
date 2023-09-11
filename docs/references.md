@@ -1,5 +1,19 @@
 # References, panel of normals and design files
 
+## Easy setup
+
+### Download data
+Use hydra-genetics to setup reference files. Remember to update config/config.data.hg19.yaml and include it when running an analysis.
+```bash
+# make sure hydra-genetics is available
+# make sure that TMPDIR points to a location with a lot of storage, it
+# will be required to fetch reference data
+export TMPDIR=/PATH_TO_STORAGE
+hydra-genetics --debug --verbose references download -o design_and_ref_files  -v config/references/references.hg19.yaml -v config/references/design_files.hg19.yaml -v config/references/nextseq.hg19.pon.yaml
+```
+
+### Validate if data requires update
+
 ## References overview
 The following reference files, panel of normals and design files are needed to run the Twist Solid Pipeline:
 

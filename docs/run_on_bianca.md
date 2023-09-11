@@ -1,4 +1,4 @@
-Follow the instructions [RUNNING THE PIPELINE -> Closed System](run_on_closed_env.md)
+Follow the instructions [RUNNING THE PIPELINE -> Restricted system](run_on_restricted_system_env.md)
 
 # Setup environment
 

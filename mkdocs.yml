@@ -8,7 +8,7 @@ nav:
     - Reference files: references.md
   - Running the pipeline:
     - Basic: running.md
-    - Closed system: run_on_closed_env.md
+    - Restricted system: run_on_restricted_system_env.md
     - Bianca: run_on_bianca.md
   - DNA Pipeline:
     - Prealignment: dna_prealignment.md

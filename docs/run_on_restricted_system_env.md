@@ -1,3 +1,12 @@
+Some system doesn't allow access to internet making it impossible to have a pipeline that are dependent on
+resource from hosted on web, like docker hub and github. This is solved by packing the pipeline and all
+dependencies:
+
+1. Pipeline code and environment
+2. Singularities
+3. Reference/design files
+
+
 # Preperations
 Fetch the pipeline and install requirements
 
@@ -11,27 +20,6 @@ cd Twist_Solid
 # Python 3.8 or newer
 python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-```
-
-## Fetch resources
-
-### Download reference files
-
-```bash
-# NextSeq
- hydra-genetics --debug references download -o design_and_ref_files -v config/references/design_files.hg19.yaml -v config/references/nextseq.hg19.pon.yaml -v config/references/references.hg19.yaml
-
- #NovaSeq, not all files are prepare for novaseq
- hydra-genetics references download -o design_and_ref_files -v config/references/design_files.hg19.yaml -v config/references/novaseq.hg19.pon.yaml -v config/references/references.hg19.yaml
-
- # Compress data
-tar -czvf design_and_ref_files.tar.gz design_and_ref_files
-```
-
-## Download  Containers
-```bash
-# NOTE: singularity command need to be available for this step
-hydra-genetics prepare-environment create-singularity-files -c config/config.yaml -o singularity_cache 
 ```
 
 ## Environment
@@ -50,6 +38,26 @@ Requires:
 # - conda env
 TAG_OR_BRANCH="vX.Y.X" bash build/build_conda.sh
 ```
+
+## Download  Containers
+```bash
+# NOTE: singularity command need to be available for this step
+hydra-genetics prepare-environment create-singularity-files -c config/config.yaml -o singularity_cache 
+```
+
+### Download reference files
+
+```bash
+# NextSeq
+ hydra-genetics --debug references download -o design_and_ref_files -v config/references/design_files.hg19.yaml -v config/references/nextseq.hg19.pon.yaml -v config/references/references.hg19.yaml
+
+ #NovaSeq, not all files are prepare for novaseq
+ hydra-genetics references download -o design_and_ref_files -v config/references/design_files.hg19.yaml -v config/references/novaseq.hg19.pon.yaml -v config/references/references.hg19.yaml
+
+ # Compress data
+tar -czvf design_and_ref_files.tar.gz design_and_ref_files
+```
+
 
 ---
 
