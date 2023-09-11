@@ -11,6 +11,22 @@ files:
     types:
       - T
       - N
+  - name: BAM umi
+    input: alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam
+    output: bam_dna/{sample}_{type}.umi.bam
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: BAM umi index
+    input: alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam.bai
+    output: bam_dna/{sample}_{type}.umi.bam.bai
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
   - name: Mutect2 INDEL BAM
     input: snv_indels/gatk_mutect2_merge/{sample}_{type}.bam
     output: bam_dna/mutect2_indel_bam/{sample}_{type}.bam
@@ -99,7 +115,7 @@ files:
     types:
       - T
       - N
-  - name: Samtool stats
+  - name: Samtools stats
     input: qc/samtools_stats/{sample}_{type}.samtools-stats.txt
     output: results/dna/additional_files/qc/{sample}_{type}.samtools-stats.txt
     types:
@@ -319,7 +335,7 @@ files:
       - T
       - N
   - name: Manta VCF
-    input: cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz
+    input: cnv_sv/manta_run_workflow_t/{sample}_{type}/results/variants/tumorSV.vcf.gz
     output: results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz
     types:
       - T

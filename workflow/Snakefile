@@ -47,6 +47,7 @@ ruleorder: qc_samtools_stats_rna > qc_samtools_stats
 ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
 ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
 ruleorder: _copy_bam_index > alignment_samtools_index
+ruleorder: _copy_bam_umi_index > alignment_samtools_index
 ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
 
 
@@ -116,7 +117,8 @@ use rule merged from prealignment as prealignment_merged_arriba with:
 
 module alignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.3.1")
+        #get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.3.1")
+        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="ec58daa")
     config:
         config
 
@@ -195,6 +197,30 @@ module snv_indels:
 
 
 use rule * from snv_indels exclude all as snv_indels_*
+
+
+use rule vardict from snv_indels as snv_indels_vardict with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_chr_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_chr_input(wildcards), ".bai"),
+        reference=config["reference"]["fasta"],
+        regions="snv_indels/bed_split/design_bedfile_{chr}.bed",
+
+
+use rule gatk_mutect2 from snv_indels as snv_indels_gatk_mutect2 with:
+    input:
+        map=lambda wildcards: get_deduplication_bam_chr_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_chr_input(wildcards), ".bai"),
+        reference=config["reference"]["fasta"],
+        regions="snv_indels/bed_split/design_bedfile_{chr}.bed",
+
+
+use rule gatk_mutect2_gvcf from snv_indels as snv_indels_gatk_mutect2_gvcf with:
+    input:
+        map=lambda wildcards: get_deduplication_bam_chr_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_chr_input(wildcards), ".bai"),
+        reference=config["reference"]["fasta"],
+        regions="snv_indels/bed_split/design_bedfile_{chr}.bed",
 
 
 module annotation:
@@ -330,6 +356,13 @@ module biomarker:
 use rule * from biomarker exclude all as biomarker_*
 
 
+use rule msisensor_pro from biomarker as biomarker_msisensor_pro with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        PoN=config.get("msisensor_pro", {}).get("PoN", ""),
+
+
 use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
     input:
         seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns",
@@ -346,6 +379,18 @@ use rule * from fusions exclude all as fusions_*
 
 
 use rule fuseq_wes from fusions as fusions_fuseq_wes with:
+    priority: 50
+
+
+use rule fuseq_wes from fusions as fusions_fuseq_wes with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        ref_json=config.get("fuseq_wes", {}).get("ref_json", ""),
+        gtfSqlite=config.get("fuseq_wes", {}).get("gtfSqlite", ""),
+        fusiondb=config.get("fuseq_wes", {}).get("fusiondb", ""),
+        paralogdb=config.get("fuseq_wes", {}).get("paralogdb", ""),
+        params=config.get("fuseq_wes", {}).get("params", ""),
     priority: 50
 
 
@@ -368,17 +413,54 @@ use rule * from cnv_sv exclude all as cnv_sv_*
 
 
 use rule manta_config_t from cnv_sv as cnv_sv_manta_config_t with:
+    input:
+        bam_t=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai_t=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        ref=config["reference"]["fasta"],
+    output:
+        scrpt=temp("cnv_sv/manta_run_workflow_t/{sample}_{type}/runWorkflow.py"),
+    log:
+        "cnv_sv/manta_config_t/{sample}_{type}/runWorkflow.py.log",
+    benchmark:
+        repeat(
+            "cnv_sv/manta_config_t/{sample}_{type}/runWorkflow.py.benchmark.tsv",
+            config.get("manta_config_t", {}).get("benchmark_repeats", 1),
+        )
     priority: 40
+    wildcard_constraints:
+        type="T",
 
 
 use rule manta_run_workflow_t from cnv_sv as cnv_sv_manta_run_workflow_t with:
+    input:
+        bam_t=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai_t=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        ref=config["reference"]["fasta"],
+        scrpt="cnv_sv/manta_run_workflow_t/{sample}_{type}/runWorkflow.py",
+    output:
+        cand_si_vcf=temp("cnv_sv/manta_run_workflow_t/{sample}_{type}/results/variants/candidateSmallIndels.vcf.gz"),
+        cand_si_tbi=temp("cnv_sv/manta_run_workflow_t/{sample}_{type}/results/variants/candidateSmallIndels.vcf.gz.tbi"),
+        cand_sv_vcf=temp("cnv_sv/manta_run_workflow_t/{sample}_{type}/results/variants/candidateSV.vcf.gz"),
+        cand_sv_tbi=temp("cnv_sv/manta_run_workflow_t/{sample}_{type}/results/variants/candidateSV.vcf.gz.tbi"),
+        tum_sv_vcf=temp("cnv_sv/manta_run_workflow_t/{sample}_{type}/results/variants/tumorSV.vcf.gz"),
+        tum_sv_tbi=temp("cnv_sv/manta_run_workflow_t/{sample}_{type}/results/variants/tumorSV.vcf.gz.tbi"),
+        wrk_dir=temp(directory("cnv_sv/manta_run_workflow_t/{sample}_{type}/workspace")),
+    log:
+        "cnv_sv/manta_run_workflow_t/{sample}_{type}/manta_t.log",
+    benchmark:
+        repeat(
+            "cnv_sv/manta_run_workflow_t/{sample}_{type}/manta_t.benchmark.tsv",
+            config.get("manta_run_workflow_t", {}).get("benchmark_repeats", 1),
+        )
     priority: 40
+    wildcard_constraints:
+        type="T",
 
 
 use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
         cnv_reference=config.get("cnvkit_batch_hrd", {}).get("normal_reference_hrd", ""),
     output:
         regions=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cnr"),
@@ -394,6 +476,13 @@ use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
             "cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.benchmark.hrd.tsv",
             config.get("cnvkit_batch_hrd", {}).get("benchmark_repeats", 1),
         )
+
+
+use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        cnv_reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
 
 
 use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
@@ -443,6 +532,21 @@ use rule gatk_to_vcf from cnv_sv as cnv_sv_gatk_to_vcf with:
         sample_id="{sample}_{type}",
         #tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
         tc=get_tc,
+
+
+use rule gatk_collect_read_counts from cnv_sv as cnv_sv_gatk_collect_read_counts with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        interval=config.get("reference", {}).get("design_intervals_gatk_cnv", ""),
+
+
+use rule gatk_collect_allelic_counts from cnv_sv as cnv_sv_gatk_collect_allelic_counts with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        interval=config.get("gatk_collect_allelic_counts", {}).get("SNP_interval", ""),
+        ref=config["reference"]["fasta"],
 
 
 use rule purecn from cnv_sv as cnv_sv_purecn with:

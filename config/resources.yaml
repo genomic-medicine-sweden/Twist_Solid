@@ -26,6 +26,14 @@ fastp_pe_arriba:
   threads: 5
   mem_mb: 30720
   mem_per_cpu: 6144
+fgbio_call_and_filter_consensus_reads:
+  threads: 3
+  mem_mb: 18432
+  mem_per_cpu: 6144
+  time: "8:00:00"
+
+fgbio_group_reads_by_umi:
+  time: "8:00:00"
 
 fuseq_wes:
   threads: 2

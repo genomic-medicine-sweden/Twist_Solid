@@ -74,8 +74,22 @@ bwa_mem:
   pac: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.pac"
   sa: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.sa"
 
+bwa_mem_umi:
+  container: "docker://hydragenetics/bwa_mem:0.7.17"
+  amb: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.amb"
+  ann: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.ann"
+  bwt: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.bwt"
+  pac: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.pac"
+  sa: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.sa"
+
 bwa_mem_merge:
   extra: "-c -p"
+
+bwa_mem_merge_umi:
+  extra: "-c -p"
+
+bwa_mem_realign_consensus_reads:
+  container: "docker://hydragenetics/fgbio:2.1.0"
 
 call_small_cnv_deletions:
   regions_file: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_deletion_genes.tsv"
@@ -137,6 +151,21 @@ fastp_pe_arriba:
 
 fastqc:
   container: "docker://hydragenetics/fastqc:0.11.9"
+
+fgbio_call_and_filter_consensus_reads:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+  max_base_error_rate: 0.2
+  min_reads_call: "1 1 1"
+  min_reads_filter: "1 1 1"
+  min_input_base_quality_call: 20
+  min_input_base_quality_filter: 45
+
+fgbio_copy_umi_from_read_name:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+
+fgbio_group_reads_by_umi:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+  umi_strategy: grouped
 
 filter_vcf:
   snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
@@ -334,6 +363,9 @@ report_gene_fuse:
   min_unique_reads: 6
 
 samtools_merge_bam:
+  extra: "-c -p"
+
+samtools_merge_bam_umi:
   extra: "-c -p"
 
 scarhrd:
