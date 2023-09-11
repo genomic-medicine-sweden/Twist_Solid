@@ -236,7 +236,7 @@ The `units.tsv` file needs to be adapted depending which panel of normals are cr
 
 | Header | Data | Description |
 |-|-|-|
-| vcf | `results/dna/additional_files/vcf/{sample}_{type}.annotated.vcf.gz` | Unfiltered and merged vcf files created as output of the Twist Solid pipeline <br />from normal FFPE samples |
+| gvcf | `gvcf_dna/{sample}_{type}.mosdepth.g.vcf.gz` | Genome vcf files from Mutect2 created as output of the Twist Solid pipeline <br />from normal FFPE samples |
 
 **Software settings**
 
@@ -246,7 +246,7 @@ The `units.tsv` file needs to be adapted depending which panel of normals are cr
 | max_af | 0.015 | Max allele frequency to be included (default: 0.015) |
 
 ### PureCN
-**OBS!** The best way to run PureCN is still to be determined. At present PureCN uses Mutect2 filtered vcf files (not hard filtered). This is not the same as the other PoNs that use ensembled vcf files.
+**OBS!** The vcf files used for purecn are not the same as in other steps meaning that currently the refence pipeline will have to be run twice. Also the vcfs used are not a final output file of the pipeline so use --notemp when running.
 
 #### Target interval file
 Target interval file for hg19 with 25000 in target bin size also including of target regions.
@@ -261,7 +261,7 @@ singularity docker://hydragenetics/purecn:2.2.0 Rscript $PURECN/IntervalFile.R -
 | Header | Data | Description |
 |-|-|-|
 | bam | `bam_dna/{sample}_{type}.bam` | Merged bam files created as output of the Twist Solid pipeline from <br />normal FFPE samples |
-| vcf | `results/dna/additional_files/vcf/gatk_mutect2_{sample}_{type}.vcf.gz` | Mutect2 softfiltered vcf files created as output of the Twist Solid pipeline <br />from normal FFPE samples |
+| vcf | `cnv_sv/purecn_modify_vcf/`<br />`{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn`<br />`.bcftools_annotated_purecn.mbq.vcf.gz` | Hard filtered vcf files for purecn created as intermediate output of the Twist Solid pipeline <br />from normal FFPE samples |
 
 **Software settings**
 
