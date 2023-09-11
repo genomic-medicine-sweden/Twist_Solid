@@ -117,7 +117,7 @@ use rule merged from prealignment as prealignment_merged_arriba with:
 
 module alignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="95cc725")
+        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="bd5ad5b")
     config:
         config
 
@@ -375,10 +375,6 @@ module fusions:
 
 
 use rule * from fusions exclude all as fusions_*
-
-
-use rule fuseq_wes from fusions as fusions_fuseq_wes with:
-    priority: 50
 
 
 use rule fuseq_wes from fusions as fusions_fuseq_wes with:
