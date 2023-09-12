@@ -99,7 +99,7 @@ def compile_output_list(wildcards):
 def get_deduplication_bam_input(wildcards):
     sample = get_sample(samples, wildcards)
     if sample.get("deduplication", "") == "umi":
-        return "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam"
+        return "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"
     else:
         return "alignment/samtools_merge_bam/{sample}_{type}.bam"
 
@@ -107,7 +107,7 @@ def get_deduplication_bam_input(wildcards):
 def get_deduplication_bam_chr_input(wildcards):
     sample = get_sample(samples, wildcards)
     if sample.get("deduplication", "") == "umi":
-        return "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}_{chr}.umi.bam"
+        return "alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam"
     else:
         return "alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam"
 

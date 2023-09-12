@@ -12,7 +12,7 @@ files:
       - T
       - N
   - name: BAM umi
-    input: alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam
+    input: alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam
     output: bam_dna/{sample}_{type}.umi.bam
     types:
       - T
@@ -20,7 +20,7 @@ files:
     deduplication:
       - umi
   - name: BAM umi index
-    input: alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam.bai
+    input: alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai
     output: bam_dna/{sample}_{type}.umi.bam.bai
     types:
       - T
