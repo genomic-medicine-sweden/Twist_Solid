@@ -20,7 +20,8 @@ rule all:
 # the config point to files created by references pipeline.
 config["purecn"]["normaldb"] = "references/purecn_normal_db/output/normalDB_hg19.rds"
 config["purecn"]["intervals"] = "references/purecn_interval_file/targets_intervals.txt"
-
+config['reference']['design_intervals'] = "references/preprocess_intervals/design.preprocessed.interval_list"
+config['reference']['design_intervals_gatk_cnv'] = "references/preprocess_intervals/design.preprocessed.interval_list"
 
 module pipeline:
     snakefile:
@@ -134,7 +135,7 @@ use rule cnvkit_build_normal_reference from references as references_cnvkit_buil
 # Use bam files created by pipeline: alignment/samtools_merge_bam/{sample}_{type}.bam
 use rule purecn_bam_list from references as references_purecn_bam_list with:
     input:
-        bam_list=get_bams(units, "mapping_bias"),
+        bam_list=get_bams(units, "purecn_mapping_bias"),
 
 
 use rule bcftools_merge from references as references_bcftools_merge with:
@@ -149,8 +150,11 @@ use rule create_background_file from references as references_create_background_
         gvcfs=get_gvcfs(units, "background"),
 
 
-# Make use of new interval file created by the pipeline
+# Make use of new interval file created by the pipeline, and wait for it to be created
 use rule purecn_coverage from references as references_purecn_coverage with:
+    input:
+        bam_list_file="references/purecn_bam_list/bam_files.list",
+        intervals="references/purecn_interval_file/targets_intervals.txt",
     params:
         intervals="references/purecn_interval_file/targets_intervals.txt",
         extra=config.get("purecn_coverage", {}).get("extra", ""),

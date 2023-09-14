@@ -47,7 +47,7 @@ files:
     types:
       - T
       - N
-  - name: mapping_bias
+  - name: purecn_mapping_bias
     input: references/purecn_normal_db/output/mapping_bias_hg19.rds
     output: result/mapping_bias_hg19.rds
     types:
