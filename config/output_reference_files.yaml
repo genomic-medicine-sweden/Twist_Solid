@@ -52,3 +52,9 @@ files:
     types:
       - T
       - N
+  - name: design_interval_list
+    input: references/preprocess_intervals/design.preprocessed.interval_list
+    output: result/design.preprocessed.interval_list
+    types:
+      - T
+      - N

@@ -107,8 +107,12 @@ use rule collect_read_counts from references as references_collect_read_counts w
     input:
         bam=lambda wildcards: "alignment/samtools_merge_bam/%s_%s.bam" % (wildcards.sample, wildcards.type),
         bai=lambda wildcards: "alignment/samtools_merge_bam/%s_%s.bam.bai" % (wildcards.sample, wildcards.type),
-        interval="references/preprocess_intervals/%s.preprocessed.interval_list"
-        % config.get("reference", {}).get("design_bed", "").split("/")[-1],
+        interval="references/preprocess_intervals/design.preprocessed.interval_list",
+
+
+use rule preprocess_intervals from references as references_preprocess_intervals with:
+    output:
+        temp("references/preprocess_intervals/design.preprocessed.interval_list"),
 
 
 ####################################################
