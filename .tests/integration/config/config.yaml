@@ -97,6 +97,7 @@ hotspot_annotation:
   chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"
 
 hotspot_report:
+  hotspot_mutations: "DATA/Hotspots_combined.csv"
   report_config: "../../config/config/hotspot_report.yaml"
   chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"
 
@@ -109,6 +110,18 @@ multiqc:
       config: "../../config/multiqc_config.yaml"
     RNA:
       config: "../../config/multiqc_config.yaml"
+
+merge_cnv_json:
+  annotations:
+    - reference/cnv_amp_genes.bed
+    - reference/cnv_loh_genes.bed
+  filtered_cnv_vcfs:
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf.gz
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.filter.cnv_hard_filter_loh.vcf.gz
+  unfiltered_cnv_vcfs:
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.vcf.gz
+  germline_vcf: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz
 
 purecn_coverage:
   intervals: "reference/purecn_dummy_intervals.txt"

@@ -42,7 +42,7 @@ purecn_normal_db:
 
 reference:
   artifacts: /dev/null
-  background: /dev/nul
+  background: /dev/null
   mappability: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/access-5k-mappable.hg19.bed"
 
 svdb_build:
