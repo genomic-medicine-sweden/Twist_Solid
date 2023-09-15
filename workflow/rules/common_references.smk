@@ -113,69 +113,31 @@ generate_copy_code(workflow, output_spec)
 
 
 def get_bams(units: pandas.DataFrame, name: str) -> typing.List[str]:
-    types = []
-    for i in output_spec["files"]:
-        print(i)
-        print(i["types"])
-        if i["name"] == name:
-            types = i["types"]
-    data = ["alignment/samtools_merge_bam/%s_%s.bam" % (t.sample, t.type) for t in units[units["type"].isin(types)].itertuples()]
-    if not data:
-        raise Exception("Couldn't get bam files for " + str(name))
-    return data
+    return get_files(unit, name, "alignment/samtools_merge_bam/%s_%s.bam")
 
 
 def get_hdf5(units: pandas.DataFrame, name: str) -> typing.List[str]:
-    types = []
-    for i in output_spec["files"]:
-        if i["name"] == name:
-            types = i["types"]
-    data = [
-        "references/collect_read_counts/%s_%s.counts.hdf5" % (t.sample, t.type)
-        for t in units[units["type"].isin(types)].itertuples()
-    ]
-    if not data:
-        raise Exception("Couldn't get hdf5 files for " + str(name))
-    return data
+    return get_files(unit, name, "references/collect_read_counts/%s_%s.counts.hdf5")
 
 
 def get_vcfs(units: pandas.DataFrame, name: str) -> typing.List[str]:
-    types = []
-    for i in output_spec["files"]:
-        if i["name"] == name:
-            types = i["types"]
-    data=  [
-        "annotation/background_annotation/%s_%s.background_annotation.vcf.gz" % (t.sample, t.type)
-        for t in units[units["type"].isin(types)].itertuples()
-    ]
-    if not data:
-        raise Exception("Couldn't get vcfs files for " + str(name))
-    return data
+    return get_files(unit, name, "annotation/background_annotation/%s_%s.background_annotation.vcf.gz")
 
 
 def get_gvcfs(units: pandas.DataFrame, name: str) -> typing.List[str]:
-    types = []
-    for i in output_spec["files"]:
-        if i["name"] == name:
-            types = i["types"]
-    data = [
-        "qc/add_mosdepth_coverage_to_gvcf/%s_%s.mosdepth.g.vcf.gz" % (t.sample, t.type)
-        for t in units[units["type"].isin(types)].itertuples()
-    ]
-    if not data:
-        raise Exception("Couldn't get gvcfs files for " + str(name))
-    return data
+    return get_files(unit, name, "qc/add_mosdepth_coverage_to_gvcf/%s_%s.mosdepth.g.vcf.gz")
 
 
 def get_cnv_vcfs(units: pandas.DataFrame, name: str) -> typing.List[str]:
+    return get_files(unit, name, "cnv_sv/svdb_query/%s_%s.pathology_purecn.svdb_query.vcf")
+
+
+def get_files(units: pandas.DataFrame, name: str, string_path: str):
     types = []
     for i in output_spec["files"]:
         if i["name"] == name:
             types = i["types"]
-    data = [
-        "cnv_sv/svdb_query/%s_%s.pathology_purecn.svdb_query.vcf" % (t.sample, t.type)
-        for t in units[units["type"].isin(types)].itertuples()
-    ]
+    data = [string_path % (t.sample, t.type) for t in units[units["type"].isin(types)].itertuples()]
     if not data:
-        raise Exception("Couldn't get cnv vcfs files for " + str(name))
+        raise Exception(f"Couldn't create file list using name: {name}, {string_path}")
     return data

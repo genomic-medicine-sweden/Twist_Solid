@@ -23,6 +23,7 @@ config["purecn"]["intervals"] = "references/purecn_interval_file/targets_interva
 config['reference']['design_intervals'] = "references/preprocess_intervals/design.preprocessed.interval_list"
 config['reference']['design_intervals_gatk_cnv'] = "references/preprocess_intervals/design.preprocessed.interval_list"
 
+
 module pipeline:
     snakefile:
         "Snakefile"
@@ -140,8 +141,8 @@ use rule purecn_bam_list from references as references_purecn_bam_list with:
 
 use rule bcftools_merge from references as references_bcftools_merge with:
     input:
-        vcfs=get_vcfs(units, "mapping_bias"),
-        vcfs_tabix=expand("{dataset}.{ext}", dataset=get_vcfs(units, "mapping_bias"), ext=["tbi"]),
+        vcfs=get_vcfs(units, "purcen_mapping_bias"),
+        vcfs_tabix=expand("{dataset}.{ext}", dataset=get_vcfs(units, "purecn_mapping_bias"), ext=["tbi"]),
 
 
 # Uses to create background

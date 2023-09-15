@@ -126,6 +126,13 @@ merge_cnv_json:
 purecn_coverage:
   intervals: "reference/purecn_dummy_intervals.txt"
 
+purecn:  
+  normaldb: "reference/purecn_dummy_normaldb.rds"
+  intervals: "reference/purecn_dummy_intervals.txt"
+
+purecn_coverage:
+  intervals: "reference/purecn_dummy_intervals.txt"
+
 reference:
   artifacts: "DATA/artifact_panel_normal.tsv"
   background: "DATA/artifact_panel_normal.tsv"
