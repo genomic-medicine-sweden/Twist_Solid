@@ -35,6 +35,11 @@ module pipeline:
 # input files for PoN, Background, Artifacts, etc
 use rule * from pipeline
 
+use rule gatk_collect_read_counts from pipeline with:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        interval="references/preprocess_intervals/design.preprocessed.interval_list",
 
 use rule gatk_denoise_read_counts from pipeline with:
     input:
