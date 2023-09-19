@@ -1,0 +1,4 @@
+output: "config/output_reference_files.yaml"
+
+reference:
+  mappability: DATA/access-5k-mappable.bed

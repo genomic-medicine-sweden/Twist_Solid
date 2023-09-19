@@ -31,3 +31,7 @@ jobs:
         working-directory: .tests/integration
         run: |
           snakemake -n -s ../../workflow/Snakefile --configfiles ../../config/config.yaml config/config.yaml
+      - run: snakemake dry run reference
+         working-directory: .tests/integration
+         run: | 
+          snakemake -s ../../workflow/Snakefile_references.smk --configfiles ../../config/config.yaml config/config.yaml ../../config/config_references.yaml config/config_reference.yaml  -n

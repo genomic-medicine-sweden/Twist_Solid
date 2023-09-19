@@ -35,11 +35,13 @@ module pipeline:
 # input files for PoN, Background, Artifacts, etc
 use rule * from pipeline
 
+
 use rule gatk_collect_read_counts from pipeline with:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         interval="references/preprocess_intervals/design.preprocessed.interval_list",
+
 
 use rule gatk_denoise_read_counts from pipeline with:
     input:
@@ -52,6 +54,12 @@ use rule cnvkit_batch from pipeline with:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         cnv_reference="references/cnvkit_build_normal_reference/cnvkit.PoN.cnn",
+
+
+use rule background_annotation from pipeline with:
+    input:
+        background="references/create_background_file/background_panel.tsv  ",
+        vcf="annotation/hotspot_annotation/{sample}_{type}.hotspot_annotation.vcf",
 
 
 module misc:
@@ -146,7 +154,7 @@ use rule purecn_bam_list from references as references_purecn_bam_list with:
 
 use rule bcftools_merge from references as references_bcftools_merge with:
     input:
-        vcfs=get_vcfs(units, "purcen_mapping_bias"),
+        vcfs=get_vcfs(units, "purecn_mapping_bias"),
         vcfs_tabix=expand("{dataset}.{ext}", dataset=get_vcfs(units, "purecn_mapping_bias"), ext=["tbi"]),
 
 
