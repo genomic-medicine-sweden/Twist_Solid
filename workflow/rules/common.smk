@@ -112,6 +112,14 @@ def get_deduplication_bam_chr_input(wildcards):
         return "alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam"
 
 
+def get_vardict_min_af(wildcards):
+    sample = get_sample(samples, wildcards)
+    if sample.get("deduplication", "") == "umi":
+        return allele_frequency_threshold=config.get("vardict", {}).get("allele_frequency_threshold_umi", "0.001"),
+    else:
+        return allele_frequency_threshold=config.get("vardict", {}).get("allele_frequency_threshold", "0.01"),
+
+
 def get_flowcell(units, wildcards):
     flowcells = set([u.flowcell for u in get_units(units, wildcards)])
     if len(flowcells) > 1:

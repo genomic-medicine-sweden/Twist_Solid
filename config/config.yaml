@@ -144,8 +144,8 @@ fastqc:
 fgbio_call_and_filter_consensus_reads:
   container: "docker://hydragenetics/fgbio:2.1.0"
   max_base_error_rate: "0.2"
-  min_reads_call: "1 1 1"
-  min_reads_filter: "1 1 1"
+  min_reads_call: "1 0 0"
+  min_reads_filter: "1 0 0"
   min_input_base_quality_call: 20
   min_input_base_quality_filter: 45
 
@@ -411,6 +411,7 @@ tmb:
 vardict:
   container: "docker://hydragenetics/vardict:1.8.3"
   allele_frequency_threshold: "0.01"
+  allele_frequency_threshold_umi: "0.001"
   bed_columns: "-c 1 -S 2 -E 3 -g 4"
   extra: "-Q 1"
 
