@@ -115,9 +115,9 @@ def get_deduplication_bam_chr_input(wildcards):
 def get_vardict_min_af(wildcards):
     sample = get_sample(samples, wildcards)
     if sample.get("deduplication", "") == "umi":
-        return config.get("vardict", {}).get("allele_frequency_threshold_umi", "0.001"),
+        return config.get("vardict", {}).get("allele_frequency_threshold_umi", "0.001")
     else:
-        return config.get("vardict", {}).get("allele_frequency_threshold", "0.01"),
+        return config.get("vardict", {}).get("allele_frequency_threshold", "0.01")
 
 
 def get_flowcell(units, wildcards):
