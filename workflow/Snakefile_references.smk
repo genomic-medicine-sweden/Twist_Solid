@@ -33,32 +33,32 @@ module pipeline:
 
 # The actual pipeline is imported to create files need to generate
 # input files for PoN, Background, Artifacts, etc
-use rule * from pipeline
+use rule * from pipeline exclude all
 
 
-use rule gatk_collect_read_counts from pipeline with:
+use rule gatk_collect_read_counts from cnv_sv as cnv_sv_gatk_collect_read_counts with:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         interval="references/preprocess_intervals/design.preprocessed.interval_list",
 
 
-use rule gatk_denoise_read_counts from pipeline with:
+use rule gatk_denoise_read_counts from cnv_sv as cnv_sv_gatk_denoise_read_counts with:
     input:
         hdf5PoN="references/create_read_count_panel_of_normals/gatk_cnv_panel_of_normal.hdf5",
         hdf5Tumor="cnv_sv/gatk_collect_read_counts/{sample}_{type}.counts.hdf5",
 
 
-use rule cnvkit_batch from pipeline with:
+use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch with:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         cnv_reference="references/cnvkit_build_normal_reference/cnvkit.PoN.cnn",
 
 
-use rule background_annotation from pipeline with:
+use rule background_annotation from annotation as annotation_background_annotation with:
     input:
-        background="references/create_background_file/background_panel.tsv  ",
+        background="references/create_background_file/background_panel.tsv",
         vcf="annotation/hotspot_annotation/{sample}_{type}.hotspot_annotation.vcf",
 
 
@@ -71,12 +71,12 @@ module misc:
 
 module references:
     snakefile:
-        github("hydra-genetics/references", path="workflow/Snakefile", tag="788c904")
+        github("hydra-genetics/references", path="workflow/Snakefile", tag="Smeds-patch-1")
     config:
         config
 
 
-use rule * from references as references_*
+use rule * from references exclude all as references_*
 
 
 # Ovveride input to use files generate by imported pipeline
