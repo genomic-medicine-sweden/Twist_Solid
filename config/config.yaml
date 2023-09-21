@@ -381,6 +381,7 @@ tmb:
   background_panel: ""
   db1000g_limit: 0.0001
   dp_limit: 100
+  filter_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/tmb_filter_genes.txt"
   gnomad_limit: 0.0001
   vd_limit: 10
   nr_avg_germline_snvs: 2.0
