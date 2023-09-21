@@ -117,7 +117,7 @@ use rule merged from prealignment as prealignment_merged_arriba with:
 
 module alignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="65fc53b")
+        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="06baef7")
     config:
         config
 
