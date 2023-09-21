@@ -140,4 +140,4 @@ def get_files(units: pandas.DataFrame, name: str, string_path: str):
     data = [string_path % (t.sample, t.type) for t in units[units["type"].isin(types)].itertuples()]
     if not data:
         raise Exception(f"Couldn't create file list using name: {name}, {string_path}")
-    return data
+    return set(data)
