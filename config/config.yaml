@@ -147,7 +147,7 @@ fgbio_call_and_filter_consensus_reads:
   min_reads_call: "1 0 0"
   min_reads_filter: "1 0 0"
   min_input_base_quality_call: 20
-  min_input_base_quality_filter: 45
+  min_input_base_quality_filter: 30
 
 fgbio_copy_umi_from_read_name:
   container: "docker://hydragenetics/fgbio:2.1.0"
@@ -158,7 +158,7 @@ fgbio_group_reads_by_umi:
 
 filter_vcf:
   snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
-  snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
+  snv_hard_filter: "config/config_hard_filter_umi.yaml"
   snv_hard_filter_purecn: "config/config_hard_filter_purecn.yaml"
   cnv_hard_filter_amp: "config/config_hard_filter_cnv_amp.yaml"
   cnv_hard_filter_loh: "config/config_hard_filter_cnv_loh.yaml"
