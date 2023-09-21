@@ -463,6 +463,10 @@ use rule * from reports as reports_*
 
 
 use rule cnv_html_report from reports as reports_cnv_html_report with:
+    input:
+        json="reports/cnv_html_report/{sample}_{type}.{tc_method}.merged.json",
+        template_dir=config.get("cnv_html_report", {}).get("template_dir", ""),
+        tc_file=get_tc_file,
     params:
         include_table=config.get("cnv_html_report", {}).get("show_table", True),
         tc=get_tc,
