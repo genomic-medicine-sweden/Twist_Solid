@@ -1,5 +1,45 @@
 # Changelog
 
+## [0.8.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.7.0...v0.8.0) (2023-09-22)
+
+
+### Features
+
+* tmb two noisy genes filtered ([45397d5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/45397d508ab84f11d091fd039f1115cde18691cc))
+* trim reads to 100bp for improved results in Arriba ([aa06413](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/aa06413befbc812bae78e0787a79128350853245))
+* update biomarker module version ([d9f0059](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d9f0059a76bc13fe3c3a25c16810227386e78437))
+* update reports module to v0.2.0 ([3f9be85](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3f9be856ce2c8cf415f01b0606d70c0687a858e0))
+
+
+### Bug Fixes
+
+* added modified input function to cnv_html_report to fix notemp bug ([b535c42](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b535c42c62914460a32b73797eb521d3c86380df))
+* keep bai files ([753b789](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/753b789d3ff2d4aec8889903a7e9b26f8b427d31))
+* merge two rule definitions into one ([e294971](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e2949715dbbb33ae8b4d077a34bddc5b1f7f6196))
+* update snakemake version to avoid checkpoint restart job bug ([67f1bf6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/67f1bf6dd693078d47de9745759e485bcd502239))
+
+
+### Documentation
+
+* correct rtd links ([46de326](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/46de326494df35c6e6ab004a628b9106b846f958))
+* correct rtd links ([f793098](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f793098c03065b3595b2f264e8f1e44464eb549a))
+* correct rtd links ([51c0a55](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/51c0a55580352a2ff8a642e91a69f0e203c79d0e))
+* correct rtd links ([8e6a3be](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8e6a3be0c244d19a99c621a8687f3d2fae245460))
+* correct rtd links ([216e0b2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/216e0b29540aa7cc21d559faa0d8ad4036bab14c))
+* correct rtd links ([20b021c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/20b021c67342a72542c66618296a20458f7d810c))
+* correct rtd links ([497db09](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/497db093bd8ec7378e834378f68736bea05db5e1))
+* update PoN description ([92db1ee](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/92db1ee65d24e22a865112ed56a640412747fffe))
+* update readthedocs links ([aac222f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/aac222fccd3e18882f885c8c1baf50362e0729c9))
+* update rtd links ([0347a62](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0347a6206d161727e12058ef3c8cb139889997bb))
+* update rtd links ([576112f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/576112fe1417b9e210ca1c1bf993e5a849c1b372))
+* update rtd links ([4f07de7](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4f07de7454989cf197f5a1426c215012bb377d14))
+* update rtd links ([6f99f6b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6f99f6beb226765f33a7bf96dc3198740d79670a))
+* update rtd links ([2c353c2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2c353c259a013585746d0eadf5031c1cc48b7e4d))
+* update rtd links ([6a1c7bf](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6a1c7bffbe82ef2f64412a860ad183d01440350f))
+* update rtd links ([238d74b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/238d74b02fe62a2ba033345721c1c9a78bebd409))
+* update rtd links ([80b0637](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/80b0637e40d893153f14c90f994bda40256a9f17))
+* update rtd links ([b2e3967](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b2e3967cf99579c119cf7b294575f22c93d36769))
+
 ## [0.7.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.6.1...v0.7.0) (2023-08-17)
 
 
