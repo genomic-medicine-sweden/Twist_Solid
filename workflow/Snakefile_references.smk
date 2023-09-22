@@ -18,10 +18,11 @@ rule all:
 # purecn will be fetching normaldb and intervals from the config
 # and we want to use the newly generated files. There fore we overide
 # the config point to files created by references pipeline.
+# ToDo override rules instead
 config["purecn"]["normaldb"] = "references/purecn_normal_db/output/normalDB_hg19.rds"
 config["purecn"]["intervals"] = "references/purecn_interval_file/targets_intervals.txt"
-config['reference']['design_intervals'] = "references/preprocess_intervals/design.preprocessed.interval_list"
-config['reference']['design_intervals_gatk_cnv'] = "references/preprocess_intervals/design.preprocessed.interval_list"
+config["reference"]["design_intervals"] = "references/preprocess_intervals/design.preprocessed.interval_list"
+config["reference"]["design_intervals_gatk_cnv"] = "references/preprocess_intervals/design.preprocessed.interval_list"
 
 
 module pipeline:
