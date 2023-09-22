@@ -127,8 +127,8 @@ results/dna/qc/HD827_T.coverage_and_mutations.tsv	3d88970bdab56b2cad8299e299d950
 results/dna/qc/HD832_T.coverage_and_mutations.tsv	559222bf250fb8ecb8dc25cc9c0f5960
 results/dna/qc/NA12878_T.coverage_and_mutations.tsv	e86759ee208722f0e27d3e27682d46cb
 results/dna/qc/VAL2022_T.coverage_and_mutations.tsv	d78823415dd95a041c4015dca27dde44
-results/dna/tmb/HD827_T.TMB.txt	8b1881f58eafaa73bb071eb698e7d60c
-results/dna/tmb/HD832_T.TMB.txt	34d6664c4de71d71554c4327cc4ef580
+results/dna/tmb/HD827_T.TMB.txt	4e865a386ed04808fce809e8c8c1b383
+results/dna/tmb/HD832_T.TMB.txt	766f6c13ea71ee2604d64f3f4dc804e6
 results/dna/tmb/NA12878_T.TMB.txt	bda4caafa15a03bd9efb61dd83b073a7
 results/dna/tmb/VAL2022_T.TMB.txt	6a9f7afee72f069296e9268e567479cc
 results/dna/vcf/HD827_T.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf	580efcf54901f1013bf1c3406679d8a3
