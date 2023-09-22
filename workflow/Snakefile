@@ -60,6 +60,60 @@ module prealignment:
 use rule * from prealignment as prealignment_*
 
 
+use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
+    output:
+        trimmed=temp(
+            [
+                "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.fastq.gz",
+                "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.fastq.gz",
+            ]
+        ),
+        html="prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.html",
+        json="prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.json",
+    params:
+        adapters=lambda wildcards: " --adapter_sequence {} --adapter_sequence_r2 {} ".format(
+            *get_fastq_adapter(units, wildcards).split(",")
+        ),
+        extra=config.get("fastp_pe_arriba", {}).get("extra", ""),
+    log:
+        "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq.fastq.gz.log",
+    benchmark:
+        repeat(
+            "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq.fastq.gz.benchmark.tsv",
+            config.get("fastp_pe_arriba", {}).get("benchmark_repeats", 1),
+        )
+    resources:
+        mem_mb=config.get("fastp_pe_arriba", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("fastp_pe_arriba", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("fastp_pe_arriba", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("fastp_pe_arriba", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("fastp_pe_arriba", {}).get("time", config["default_resources"]["time"]),
+    threads: config.get("fastp_pe_arriba", {}).get("threads", config["default_resources"]["threads"])
+
+
+use rule merged from prealignment as prealignment_merged_arriba with:
+    input:
+        fastq=merged_input_arriba,
+    output:
+        fastq=temp("prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz"),
+    log:
+        "prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz.log",
+    benchmark:
+        repeat(
+            "prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz.benchmark.tsv",
+            config.get("merged_arriba", {}).get("benchmark_repeats", 1),
+        )
+    resources:
+        mem_mb=config.get("merged_arriba", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("merged_arriba", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("merged_arriba", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("merged_arriba", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("merged_arriba", {}).get("time", config["default_resources"]["time"]),
+    threads: config.get("merged_arriba", {}).get("threads", config["default_resources"]["threads"])
+    container:
+        config.get("merged_arriba", {}).get("container", config["default_container"])
+
+
 module alignment:
     snakefile:
         get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.3.1")
@@ -70,7 +124,16 @@ module alignment:
 use rule * from alignment as alignment_*
 
 
+use rule samtools_index from alignment as alignment_samtools_index with:
+    output:
+        bai="{file}.bam.bai",
+
+
 use rule star from alignment as alignment_star with:
+    input:
+        fq1="prealignment/merged_arriba/{sample}_{type}_fastq1.fastq.gz",
+        fq2="prealignment/merged_arriba/{sample}_{type}_fastq2.fastq.gz",
+        idx=config.get("star", {}).get("genome_index", ""),
     params:
         extra=lambda wildcards: "%s %s"
         % (
@@ -259,7 +322,7 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
 
 module biomarker:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.3.1")
+        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.4.0")
     config:
         config
 
@@ -391,7 +454,7 @@ use rule purecn from cnv_sv as cnv_sv_purecn with:
 
 module reports:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.1.0")
+        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.2.0")
     config:
         config
 
@@ -400,6 +463,10 @@ use rule * from reports as reports_*
 
 
 use rule cnv_html_report from reports as reports_cnv_html_report with:
+    input:
+        json="reports/cnv_html_report/{sample}_{type}.{tc_method}.merged.json",
+        template_dir=config.get("cnv_html_report", {}).get("template_dir", ""),
+        tc_file=get_tc_file,
     params:
         include_table=config.get("cnv_html_report", {}).get("show_table", True),
         tc=get_tc,
