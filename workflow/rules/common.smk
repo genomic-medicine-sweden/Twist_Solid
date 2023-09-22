@@ -19,7 +19,7 @@ from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics.utils.misc import replace_dict_variables
 from hydra_genetics import min_version as hydra_min_version
 
-hydra_min_version("0.15.0")
+hydra_min_version("1.8.0")
 
 min_version("7.13.0")
 
@@ -36,7 +36,7 @@ config = load_resources(config, config["resources"])
 validate(config, schema="../schemas/resources.schema.yaml")
 
 if workflow.use_singularity is True:
-    validate(config, schema=config["singularity_schema"])
+    validate(config, "../schemas/singularity.schema.yaml")
 
 ### Read and validate samples file
 

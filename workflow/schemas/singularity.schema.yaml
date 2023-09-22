@@ -411,7 +411,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/vep:105$|hydragenetics_vep_105\.sif$
+            hydragenetics/vep:[0-9]+$|hydragenetics_vep_[0-9]+\.sif$
     required:
       - container
 

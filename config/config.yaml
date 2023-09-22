@@ -1,7 +1,6 @@
 resources: "config/resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
-singularity_schema: "config/singularity.schema.yaml"
 
 #hydra_local_path: "PATH_TO_REPO"
 

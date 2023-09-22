@@ -1,2 +1,1 @@
 resources: "config/bianca/resources.yaml"
-singularity_schema: "config/bianca/singularity.schema.yaml"

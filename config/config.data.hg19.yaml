@@ -4,8 +4,8 @@ PROJECT_PON_DATA: ""
 PROJECT_REF_DATA: ""
 
 reference:
-  background: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA_HG38/Background/background_panel_novaseq_lund_8.tsv"
-  artifacts: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA_HG38/Artifact/artifact_panel_novaseq_lund_8.tsv"
+  background: "{{PROJECT_PON_DATA}}/Background/background_panel_novaseq_lund_8.tsv"
+  artifacts: "{{PROJECT_PON_DATA}}/Artifact/artifact_panel_novaseq_lund_8.tsv"
   fasta: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta"
   fasta_rna: "{{PROJECT_REF_DATA}}/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
   dict: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta.dict"
