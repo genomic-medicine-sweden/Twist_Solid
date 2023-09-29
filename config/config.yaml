@@ -182,6 +182,7 @@ fuseq_wes:
 fusioncatcher:
   container: "docker://hydragenetics/fusioncatcher:1.33"
   genome_path: "/data/ref_data/fusioncatcher/human_v102/human_v102/"
+  extra: "--skip-deduplication --visualization-sam"
 
 gatk_calculate_contamination:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
@@ -277,6 +278,7 @@ multiqc:
     DNA:
       config: "config/multiqc_config_dna.yaml"
       included_unit_types: ["N", "T"]
+      deduplication: ["mark_duplicates"]
       qc_files:
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2_fastqc.zip"
@@ -286,6 +288,20 @@ multiqc:
         - "qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt"
         - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
         - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
+    DNA_umi:
+      config: "config/multiqc_config_dna.yaml"
+      included_unit_types: ["N", "T"]
+      deduplication: ["umi"]
+      qc_files:
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2_fastqc.zip"
+        - "qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
+        - "qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
+        - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
+        - "qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt"
+        - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
+        - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
+        - "alignment/fgbio_group_reads_by_umi/{sample}_{type}.umi.histo.tsv"
     RNA:
       config: "config/multiqc_config_rna.yaml"
       included_unit_types: ["R"]
@@ -370,7 +386,7 @@ star:
 star_fusion:
   container: "docker://hydragenetics/star-fusion:1.10.1"
   genome_path: "/data/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/"
-  extra: "--examine_coding_effect"
+  extra: "--examine_coding_effect --no_remove_dups"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"

@@ -62,25 +62,28 @@ use rule * from prealignment exclude all as prealignment_*
 
 
 use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
+    input:
+        sample=[
+                "alignment/samtools_fastq/{sample}_{type}.fastq1.umi.fastq.gz",
+                "alignment/samtools_fastq/{sample}_{type}.fastq2.umi.fastq.gz",
+            ]   
     output:
         trimmed=temp(
             [
-                "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.fastq.gz",
-                "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.fastq.gz",
+                "prealignment/fastp_pe_arriba/{sample}_{type}.fastq1.umi.fastq.gz",
+                "prealignment/fastp_pe_arriba/{sample}_{type}.fastq2.umi.fastq.gz",
             ]
         ),
-        html="prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.html",
-        json="prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.json",
+        html="prealignment/fastp_pe_arriba/{sample}_{type}.umi.fastp.html",
+        json="prealignment/fastp_pe_arriba/{sample}_{type}.umi.fastp.json",
     params:
-        adapters=lambda wildcards: " --adapter_sequence {} --adapter_sequence_r2 {} ".format(
-            *get_fastq_adapter(units, wildcards).split(",")
-        ),
+        adapters="",
         extra=config.get("fastp_pe_arriba", {}).get("extra", ""),
     log:
-        "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq.fastq.gz.log",
+        "prealignment/fastp_pe_arriba/{sample}_{type}.fastq.umi.fastq.gz.log",
     benchmark:
         repeat(
-            "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq.fastq.gz.benchmark.tsv",
+            "prealignment/fastp_pe_arriba/{sample}_{type}.fastq.umi.fastq.gz.benchmark.tsv",
             config.get("fastp_pe_arriba", {}).get("benchmark_repeats", 1),
         )
     resources:
@@ -94,14 +97,14 @@ use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
 
 use rule merged from prealignment as prealignment_merged_arriba with:
     input:
-        fastq=merged_input_arriba,
+        fastq="prealignment/fastp_pe_arriba/{sample}_{type}.{read}.umi.fastq.gz",
     output:
-        fastq=temp("prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz"),
+        fastq=temp("prealignment/merged_arriba/{sample}_{type}.{read}.umi.fastq.gz"),
     log:
-        "prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz.log",
+        "prealignment/merged_arriba/{sample}_{type}.{read}.umi.fastq.gz.log",
     benchmark:
         repeat(
-            "prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz.benchmark.tsv",
+            "prealignment/merged_arriba/{sample}_{type}.{read}.umi.fastq.gz.benchmark.tsv",
             config.get("merged_arriba", {}).get("benchmark_repeats", 1),
         )
     resources:
@@ -117,7 +120,7 @@ use rule merged from prealignment as prealignment_merged_arriba with:
 
 module alignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="06baef7")
+        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="5ea452a")
     config:
         config
 
@@ -132,8 +135,8 @@ use rule samtools_index from alignment as alignment_samtools_index with:
 
 use rule star from alignment as alignment_star with:
     input:
-        fq1="prealignment/merged_arriba/{sample}_{type}_fastq1.fastq.gz",
-        fq2="prealignment/merged_arriba/{sample}_{type}_fastq2.fastq.gz",
+        fq1="prealignment/merged_arriba/{sample}_{type}.fastq1.umi.fastq.gz",
+        fq2="prealignment/merged_arriba/{sample}_{type}.fastq2.umi.fastq.gz",
         idx=config.get("star", {}).get("genome_index", ""),
     params:
         extra=lambda wildcards: "%s %s"
@@ -392,6 +395,13 @@ use rule star_fusion from fusions as fusions_star_fusion with:
         fusions=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv"),
         fusions_abridged=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.coding_effect.tsv"),
         sj=temp("fusions/star_fusion/{sample}_{type}/SJ.out.tab"),
+
+
+use rule fusioncatcher from fusions as fusions_fusioncatcher with:
+    input:
+        fq1="alignment/samtools_fastq/{sample}_{type}.fastq1.umi.fastq.gz",
+        fq2="alignment/samtools_fastq/{sample}_{type}.fastq2.umi.fastq.gz",
+        genome_path=config.get("fusioncatcher", {}).get("genome_path", ""),
 
 
 module cnv_sv:
