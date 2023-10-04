@@ -156,7 +156,7 @@ files:
       - T
       - N
   - name: MSI Sensor Pro TSV umi
-    input: biomarker/msisensor_pro/{sample}_{type}
+    input: biomarker/msisensor_pro/{sample}_{type}.umi
     output: results/dna/msi/{sample}_{type}.umi.msisensor_pro.score.tsv
     types:
       - T

@@ -412,6 +412,14 @@ use rule msisensor_pro from biomarker as biomarker_msisensor_pro_umi with:
         bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
         bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai",
         PoN=config.get("msisensor_pro", {}).get("PoN", ""),
+    output:
+        msi_score=temp("biomarker/msisensor_pro/{sample}_{type}.umi"),
+        msi_all=temp("biomarker/msisensor_pro/{sample}_{type}_all.umi"),
+        msi_dis=temp("biomarker/msisensor_pro/{sample}_{type}_dis.umi"),
+        msi_unstable=temp("biomarker/msisensor_pro/{sample}_{type}_unstable.umi"),
+    params:
+        extra=config.get("msisensor_pro", {}).get("extra", "-c 50 -b 2"),
+        out_prefix="biomarker/msisensor_pro/{sample}_{type}.umi",
 
 
 use rule tmb from biomarker as biomarker_tmb_umi with:
