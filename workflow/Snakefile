@@ -509,6 +509,21 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
 
 
+use rule gatk_collect_read_counts from cnv_sv as cnv_sv_gatk_collect_read_counts with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        interval=config.get("reference", {}).get("design_intervals_gatk_cnv", ""),
+
+
+use rule gatk_collect_allelic_counts from cnv_sv as cnv_sv_gatk_collect_allelic_counts with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        interval=config.get("gatk_collect_allelic_counts", {}).get("SNP_interval", ""),
+        ref=config["reference"]["fasta"],
+
+
 use rule gatk_to_vcf from cnv_sv as cnv_sv_gatk_to_vcf with:
     input:
         segment="cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.seg",
