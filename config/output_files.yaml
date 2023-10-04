@@ -155,6 +155,14 @@ files:
     types:
       - T
       - N
+  - name: MSI Sensor Pro TSV umi
+    input: biomarker/msisensor_pro/{sample}_{type}
+    output: results/dna/msi/{sample}_{type}.umi.msisensor_pro.score.tsv
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
   - name: TMB
     input: biomarker/tmb/{sample}_{type}.TMB.txt
     output: results/dna/tmb/{sample}_{type}.TMB.txt
