@@ -370,6 +370,18 @@ module biomarker:
 use rule * from biomarker exclude all as biomarker_*
 
 
+use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
+    input:
+        seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns",
+
+
+use rule msisensor_pro from biomarker as biomarker_msisensor_pro with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        PoN=config.get("msisensor_pro", {}).get("PoN", ""),
+
+
 use rule tmb from biomarker as biomarker_tmb_umi with:
     input:
         vcf="annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz",
@@ -391,11 +403,6 @@ use rule tmb from biomarker as biomarker_tmb_umi with:
         nr_avg_germline_snvs=config.get("tmb_umi", {}).get("nr_avg_germline_snvs", 2.0),
         nssnv_tmb_correction=config.get("tmb_umi", {}).get("nssnv_tmb_correction", 0.84),
         vd_limit=config.get("tmb_umi", {}).get("vd_limit", 20),
-
-
-use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
-    input:
-        seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns",
 
 
 module fusions:
@@ -447,8 +454,8 @@ use rule manta_run_workflow_t from cnv_sv as cnv_sv_manta_run_workflow_t with:
 
 use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
         cnv_reference=config.get("cnvkit_batch_hrd", {}).get("normal_reference_hrd", ""),
     output:
         regions=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cnr"),
