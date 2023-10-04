@@ -104,6 +104,14 @@ def get_deduplication_bam_input(wildcards):
         return "alignment/samtools_merge_bam/{sample}_{type}.bam"
 
 
+def get_deduplication_bam_input_manta(wildcards):
+    sample = get_sample(samples, wildcards)
+    if sample.get("deduplication", "") == "umi":
+        return "alignment/bwa_mem_realign_consensus_reads/{sample}_T.umi.bam"
+    else:
+        return "alignment/samtools_merge_bam/{sample}_T.bam"
+
+
 def get_deduplication_bam_chr_input(wildcards):
     sample = get_sample(samples, wildcards)
     if sample.get("deduplication", "") == "umi":
