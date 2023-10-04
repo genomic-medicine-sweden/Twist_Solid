@@ -424,6 +424,20 @@ tmb:
   nr_avg_germline_snvs: 2.0
   nssnv_tmb_correction: 0.84
 
+tmb_umi:
+  af_lower_limit: 0.006
+  af_upper_limit: 0.994
+  af_germline_lower_limit: 0.3
+  af_germline_upper_limit: 0.7
+  artifacts: ""
+  background_panel: ""
+  db1000g_limit: 0.0001
+  dp_limit: 300
+  gnomad_limit: 0.0001
+  vd_limit: 6
+  nr_avg_germline_snvs: 2.0
+  nssnv_tmb_correction: 0.84
+
 vardict:
   container: "docker://hydragenetics/vardict:1.8.3"
   allele_frequency_threshold: "0.01"

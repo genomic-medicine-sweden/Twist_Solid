@@ -64,9 +64,9 @@ use rule * from prealignment exclude all as prealignment_*
 use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
     input:
         sample=[
-                "alignment/samtools_fastq/{sample}_{type}.fastq1.umi.fastq.gz",
-                "alignment/samtools_fastq/{sample}_{type}.fastq2.umi.fastq.gz",
-            ]   
+            "alignment/samtools_fastq/{sample}_{type}.fastq1.umi.fastq.gz",
+            "alignment/samtools_fastq/{sample}_{type}.fastq2.umi.fastq.gz",
+        ],
     output:
         trimmed=temp(
             [
@@ -368,6 +368,29 @@ module biomarker:
 
 
 use rule * from biomarker exclude all as biomarker_*
+
+
+use rule tmb from biomarker as biomarker_tmb_umi with:
+    input:
+        vcf="annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz",
+    output:
+        tmb=temp("biomarker/tmb/{sample}_{type}.umi.TMB.txt"),
+    params:
+        af_germline_lower_limit=config.get("tmb_umi", {}).get("af_germline_lower_limit", 0.47),
+        af_germline_upper_limit=config.get("tmb_umi", {}).get("af_germline_upper_limit", 0.53),
+        af_lower_limit=config.get("tmb_umi", {}).get("af_lower_limit", 0.05),
+        af_upper_limit=config.get("tmb_umi", {}).get("af_upper_limit", 0.95),
+        artifacts=config.get("tmb_umi", {}).get("artifacts", ""),
+        background_panel=config.get("tmb_umi", {}).get("background", ""),
+        background_sd_limit=config.get("tmb_umi", {}).get("background_sd_limit", 5),
+        db1000g_limit=config.get("tmb_umi", {}).get("db1000g_limit", 0.0001),
+        dp_limit=config.get("tmb_umi", {}).get("dp_limit", 200),
+        filter_genes=config.get("tmb_umi", {}).get("filter_genes", ""),
+        filter_nr_observations=config.get("tmb_umi", {}).get("filter_nr_observations", 1),
+        gnomad_limit=config.get("tmb_umi", {}).get("gnomad_limit", 0.0001),
+        nr_avg_germline_snvs=config.get("tmb_umi", {}).get("nr_avg_germline_snvs", 2.0),
+        nssnv_tmb_correction=config.get("tmb_umi", {}).get("nssnv_tmb_correction", 0.84),
+        vd_limit=config.get("tmb_umi", {}).get("vd_limit", 20),
 
 
 use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:

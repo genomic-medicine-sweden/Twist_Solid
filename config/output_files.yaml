@@ -161,6 +161,14 @@ files:
     types:
       - T
       - N
+  - name: TMB umi
+    input: biomarker/tmb/{sample}_{type}.umi.TMB.txt
+    output: results/dna/tmb/{sample}_{type}.umi.TMB.txt
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
   - name: HRD score - PureCN
     input: biomarker/scarhrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt
     output: results/dna/additional_files/hrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt
