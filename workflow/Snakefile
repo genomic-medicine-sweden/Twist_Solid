@@ -120,7 +120,7 @@ use rule merged from prealignment as prealignment_merged_arriba with:
 
 module alignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="5ea452a")
+        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="c4a6e8c")
     config:
         config
 
@@ -424,7 +424,7 @@ use rule msisensor_pro from biomarker as biomarker_msisensor_pro_umi with:
 
 use rule tmb from biomarker as biomarker_tmb_umi with:
     input:
-        vcf="annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz",
+        vcf= "annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.vcf.gz",
     output:
         tmb=temp("biomarker/tmb/{sample}_{type}.umi.TMB.txt"),
     params:
