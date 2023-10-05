@@ -381,7 +381,6 @@ use rule picard_collect_duplication_metrics from qc as qc_picard_collect_duplica
 use rule picard_collect_insert_size_metrics from qc as qc_picard_collect_insert_size_metrics with:
     input:
         bam=lambda wildcards: get_deduplication_bam_input(wildcards),
-        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
 
 
 use rule gatk_get_pileup_summaries from qc as qc_gatk_get_pileup_summaries with:
@@ -424,7 +423,7 @@ use rule msisensor_pro from biomarker as biomarker_msisensor_pro_umi with:
 
 use rule tmb from biomarker as biomarker_tmb_umi with:
     input:
-        vcf= "annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.vcf.gz",
+        vcf="annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.vcf.gz",
     output:
         tmb=temp("biomarker/tmb/{sample}_{type}.umi.TMB.txt"),
     params:
