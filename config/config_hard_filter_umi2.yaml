@@ -17,25 +17,25 @@ filters:
     soft_filter: "False"
   af_ad_snv1:
     description: "Hard filter SNV variants with low vaf and low ad"
-    expression: "(FORMAT:AF:0 < 0.004 and FORMAT:AD:1 <= 10 and exist[SNV, VEP:VARIANT_CLASS])"
+    expression: "(FORMAT:AF:0 < 0.004 and FORMAT:AD:1 < 11 and exist[SNV, VEP:VARIANT_CLASS])"
     soft_filter: "False"
   af_ad_snv2:
     description: "Hard filter SNV variants with low vaf and low ad"
-    expression: "(FORMAT:AF:0 < 0.005 and FORMAT:AD:1 <= 8 and exist[SNV, VEP:VARIANT_CLASS])"
+    expression: "(FORMAT:AF:0 < 0.005 and FORMAT:AD:1 < 9 and exist[SNV, VEP:VARIANT_CLASS])"
     soft_filter: "False"
   af_ad_snv3:
     description: "Hard filter SNV variants with low vaf and low ad"
-    expression: "(FORMAT:AF:0 < 0.006 and FORMAT:AD:1 <= 6 and exist[SNV, VEP:VARIANT_CLASS])"
+    expression: "(FORMAT:AF:0 < 0.006 and FORMAT:AD:1 < 7 and exist[SNV, VEP:VARIANT_CLASS])"
     soft_filter: "False"
   af_ad_snv4:
     description: "Hard filter SNV variants with low vaf and low ad"
-    expression: "(FORMAT:AD:1 <= 4 and !exist[SNV, VEP:VARIANT_CLASS])"
+    expression: "(FORMAT:AD:1 < 5 and !exist[SNV, VEP:VARIANT_CLASS])"
     soft_filter: "False"
   af_ad_indel1:
     description: "Hard filter INDEL variants with low vaf and low ad"
-    expression: "(FORMAT:AF:0 <= 0.008 and FORMAT:AD:1 <= 13 and !exist[SNV, VEP:VARIANT_CLASS])"
+    expression: "(FORMAT:AF:0 < 0.008 and FORMAT:AD:1 < 14 and !exist[SNV, VEP:VARIANT_CLASS])"
     soft_filter: "False"
   af_ad_indel2:
     description: "Hard filter INDEL variants with low vaf and low ad"
-    expression: "(FORMAT:AD:1 <= 4 and !exist[SNV, VEP:VARIANT_CLASS])"
+    expression: "(FORMAT:AD:1 < 5 and !exist[SNV, VEP:VARIANT_CLASS])"
     soft_filter: "False"

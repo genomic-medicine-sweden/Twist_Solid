@@ -414,9 +414,9 @@ use rule msisensor_pro from biomarker as biomarker_msisensor_pro_umi with:
         PoN=config.get("msisensor_pro", {}).get("PoN", ""),
     output:
         msi_score=temp("biomarker/msisensor_pro/{sample}_{type}.umi"),
-        msi_all=temp("biomarker/msisensor_pro/{sample}_{type}_all.umi"),
-        msi_dis=temp("biomarker/msisensor_pro/{sample}_{type}_dis.umi"),
-        msi_unstable=temp("biomarker/msisensor_pro/{sample}_{type}_unstable.umi"),
+        msi_all=temp("biomarker/msisensor_pro/{sample}_{type}.umi_all"),
+        msi_dis=temp("biomarker/msisensor_pro/{sample}_{type}.umi_dis"),
+        msi_unstable=temp("biomarker/msisensor_pro/{sample}_{type}.umi_unstable"),
     params:
         extra=config.get("msisensor_pro", {}).get("extra", "-c 50 -b 2"),
         out_prefix="biomarker/msisensor_pro/{sample}_{type}.umi",
@@ -493,19 +493,10 @@ use rule * from cnv_sv exclude all as cnv_sv_*
 
 
 use rule manta_config_t from cnv_sv as cnv_sv_manta_config_t with:
-    input:
-        bam_t=lambda wildcards: get_deduplication_bam_input_manta(wildcards),
-        bai_t=lambda wildcards: "%s%s" % (get_deduplication_bam_input_manta(wildcards), ".bai"),
-        ref=config["reference"]["fasta"],
     priority: 40
 
 
 use rule manta_run_workflow_t from cnv_sv as cnv_sv_manta_run_workflow_t with:
-    input:
-        bam_t=lambda wildcards: get_deduplication_bam_input_manta(wildcards),
-        bai_t=lambda wildcards: "%s%s" % (get_deduplication_bam_input_manta(wildcards), ".bai"),
-        ref=config["reference"]["fasta"],
-        scrpt="cnv_sv/manta_run_workflow_t/{sample}/runWorkflow.py",
     priority: 40
 
 
