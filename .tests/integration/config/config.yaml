@@ -158,10 +158,8 @@ star:
   genome_index: "reference_star_fusion/star_idx/"
 
 star_fusion:
-  container: "docker://hydragenetics/star-fusion:1.10.1"
   genome_path: "reference_star_fusion/"
 
 vep:
-  container: "docker://hydragenetics/vep:105"
   vep_cache:  "DATA/VEP/homo_sapiens/"
   
