@@ -1,0 +1,60 @@
+files:
+  - name: cnvkit_pon
+    input: references/cnvkit_build_normal_reference/cnvkit.PoN.cnn
+    output: result/cnvkit.PoN.cnn
+    types:
+      - N
+  - name: gatk_pon
+    input: references/create_read_count_panel_of_normals/gatk_cnv_panel_of_normal.hdf5
+    output: result/pon/gatk_cnv_panel_of_normal.hdf5
+    types:
+      - N
+  - name: artifact
+    input: references/create_artifact_file/artifact_panel.tsv
+    output: result/artifact_panel.tsv
+    types:
+      - N
+  - name: svdb
+    input: references/svdb_export/svdb_cnv.vcf
+    output: result/svdb_cnv.vcf
+    types:
+      - T
+      - N
+  - name: background
+    input: references/create_background_file/background_panel.tsv
+    output: result/background_panel.tsv
+    types:
+      - N
+  - name: msisensor_pro_reference_list_baseline
+    input: references/msisensor_pro_scan/Msisensor_pro_reference.list
+    output: result/Msisensor_pro_reference.list_baseline
+    types:
+      - N
+  - name: BAM index
+    input: alignment/samtools_merge_bam/{sample}_{type}.bam.bai
+    output: result/bam_dna/{sample}_{type}.bam.bai
+    types:
+      - T
+      - N
+  - name: purecn_pn
+    input: references/purecn_normal_db/output/normalDB_hg19.rds
+    output: result/purecn_normal_db.rds
+    types:
+      - N
+  - name: purecn_mapping_bias
+    input: references/purecn_normal_db/output/mapping_bias_hg19.rds
+    output: result/mapping_bias_hg19.rds
+    types:
+      - N
+  - name: purecn_interval
+    input: references/purecn_interval_file/targets_intervals.txt
+    output: result/purecn_targets_intervals.txt
+    types:
+      - T
+      - N
+  - name: design_interval_list
+    input: references/preprocess_intervals/design.preprocessed.interval_list
+    output: result/design.preprocessed.interval_list
+    types:
+      - T
+      - N

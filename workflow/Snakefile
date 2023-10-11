@@ -57,7 +57,7 @@ module prealignment:
         config
 
 
-use rule * from prealignment as prealignment_*
+use rule * from prealignment exclude all as prealignment_*
 
 
 use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
@@ -121,7 +121,7 @@ module alignment:
         config
 
 
-use rule * from alignment as alignment_*
+use rule * from alignment exclude all as alignment_*
 
 
 use rule samtools_index from alignment as alignment_samtools_index with:
@@ -194,7 +194,7 @@ module snv_indels:
         config
 
 
-use rule * from snv_indels as snv_indels_*
+use rule * from snv_indels exclude all as snv_indels_*
 
 
 module annotation:
@@ -204,7 +204,7 @@ module annotation:
         config
 
 
-use rule * from annotation as annotation_*
+use rule * from annotation exclude all as annotation_*
 
 
 use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purecn with:
@@ -238,7 +238,7 @@ module filtering:
         config
 
 
-use rule * from filtering as filtering_*
+use rule * from filtering exclude all as filtering_*
 
 
 module qc:
@@ -248,7 +248,7 @@ module qc:
         config
 
 
-use rule * from qc as qc_*
+use rule * from qc exclude all as qc_*
 
 
 use rule mosdepth from qc as qc_mosdepth with:
@@ -327,7 +327,7 @@ module biomarker:
         config
 
 
-use rule * from biomarker as biomarker_*
+use rule * from biomarker exclude all as biomarker_*
 
 
 use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
@@ -342,7 +342,7 @@ module fusions:
         config
 
 
-use rule * from fusions as fusions_*
+use rule * from fusions exclude all as fusions_*
 
 
 use rule fuseq_wes from fusions as fusions_fuseq_wes with:
@@ -364,7 +364,7 @@ module cnv_sv:
         config
 
 
-use rule * from cnv_sv as cnv_sv_*
+use rule * from cnv_sv exclude all as cnv_sv_*
 
 
 use rule manta_config_t from cnv_sv as cnv_sv_manta_config_t with:
@@ -459,7 +459,7 @@ module reports:
         config
 
 
-use rule * from reports as reports_*
+use rule * from reports exclude all as reports_*
 
 
 use rule cnv_html_report from reports as reports_cnv_html_report with:
