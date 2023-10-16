@@ -1,5 +1,5 @@
 Some system doesn't allow access to internet making it impossible to have a pipeline that are dependent on
-resource from hosted on web, like docker hub and github. This is solved by packing the pipeline and all
+resource hosted on web, like docker hub and github. This is solved by packing the pipeline and all
 dependencies:
 
 1. Pipeline code and environment
@@ -62,7 +62,7 @@ tar -czvf design_and_ref_files.tar.gz design_and_ref_files
 ---
 
 # Files/Folders
-The following file/folders have been create and need to be moved to your server:
+The following file/folders have been created and need to be moved to your server:
 
 1. file: design_and_ref_files.tar.gz
 2. file Twist_Solid_{TAG_OR_BRANCH}.tar.gz
@@ -84,7 +84,7 @@ cd Twist_Solid_{TAG_OR_BRANCH}
 mkdir venv && tar xvf env.tar.gz -C venv/
 source venv/bin/activate
 
-# Variable that will be used lated
+# Variables that will be used later
 PATH_TO_ENV=${PWD}
 PATH_TO_HYDRA_MODULES=${PWD}/hydra-genetics
 PATH_TO_FOLDER_WITH_PIPELINE=${PWD}/Twist_Solid
@@ -97,7 +97,7 @@ tar -xvf design_and_ref_files.tar.gz
 ```
 
 ### Singularities
-Move singularity cache to appropriate location
+Move singularity cache to a appropriate location
 
 ## Modify config and profile
 
