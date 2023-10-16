@@ -53,7 +53,7 @@ bcbio_variation_recall_ensemble:
     - gatk_mutect2
 
 bcftools_annotate:
-  annotation_db: "/PROJECT_DATA/ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz"
+  annotation_db: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg19.vcf.gz"
   output_type: "z"
   annotation_string: "-m DB"
 
