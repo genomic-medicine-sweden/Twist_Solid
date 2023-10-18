@@ -23,32 +23,27 @@ rule all:
         unpack(compile_output_list),
 
 
+ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
+ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
+ruleorder: annotation_annotate_cnv > misc_bgzip
+ruleorder: annotation_annotate_cnv > snv_indels_bgzip
+ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
+ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
 ruleorder: prealignment_fastp_pe > misc_bgzip
-ruleorder: snv_indels_tabix > annotation_tabix_vcf > misc_tabix
+ruleorder: qc_samtools_stats_rna > qc_samtools_stats
+ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
+ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
+ruleorder: snv_indels_bcftools_sort > snv_indels_bgzip
+ruleorder: snv_indels_tabix > misc_tabix
 ruleorder: snv_indels_gatk_mutect2 > misc_tabix
 ruleorder: snv_indels_gatk_mutect2_gvcf > alignment_samtools_sort
 ruleorder: snv_indels_gatk_mutect2_gvcf > misc_tabix
 ruleorder: snv_indels_gatk_mutect2_gvcf > misc_bgzip
 ruleorder: snv_indels_bgzip > misc_bgzip
-ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
-ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
-ruleorder: annotation_bgzip_vcf > misc_bgzip
-ruleorder: annotation_tabix_vcf > misc_tabix
-ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
-ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
-ruleorder: annotation_tabix_vcf > snv_indels_tabix
-ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
-ruleorder: annotation_annotate_cnv > misc_bgzip
-ruleorder: annotation_annotate_cnv > snv_indels_bgzip
-ruleorder: filtering_bcftools_filter_include_region > annotation_bgzip_vcf
-ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
-ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
-ruleorder: qc_samtools_stats_rna > qc_samtools_stats
-ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
-ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
+ruleorder: snv_indels_bcftools_sort > misc_bgzip
 ruleorder: _copy_bam_index > alignment_samtools_index
 ruleorder: _copy_bam_umi_index > alignment_samtools_index
-ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
+ruleorder: _copy_qci_vcf > fix_vcf_ad_for_qci
 
 
 module prealignment:
@@ -232,7 +227,7 @@ use rule gatk_mutect2_gvcf from snv_indels as snv_indels_gatk_mutect2_gvcf with:
 
 module annotation:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.3.0")
+        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="25bb34e")
     config:
         config
 
@@ -266,7 +261,7 @@ use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purec
 
 module filtering:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag="v0.1.0")
+        get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag="v0.3.0")
     config:
         config
 
@@ -421,9 +416,14 @@ use rule msisensor_pro from biomarker as biomarker_msisensor_pro_umi with:
         out_prefix="biomarker/msisensor_pro/{sample}_{type}.umi",
 
 
+use rule tmb from biomarker as biomarker_tmb with:
+    input:
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.vcf.gz",
+
+
 use rule tmb from biomarker as biomarker_tmb_umi with:
     input:
-        vcf="annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.vcf.gz",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter_umi.vcf.gz",
     output:
         tmb=temp("biomarker/tmb/{sample}_{type}.umi.TMB.txt"),
     params:
