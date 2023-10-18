@@ -158,7 +158,8 @@ fgbio_group_reads_by_umi:
 
 filter_vcf:
   snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
-  snv_hard_filter: "config/config_hard_filter_umi2.yaml"
+  snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
+  snv_hard_filter_umi: "config/config_hard_filter_umi.yaml"
   snv_hard_filter_purecn: "config/config_hard_filter_purecn.yaml"
   cnv_hard_filter_amp: "config/config_hard_filter_cnv_amp.yaml"
   cnv_hard_filter_loh: "config/config_hard_filter_cnv_loh.yaml"
