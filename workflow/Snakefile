@@ -228,7 +228,7 @@ use rule gatk_mutect2_gvcf from snv_indels as snv_indels_gatk_mutect2_gvcf with:
 
 module annotation:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="25bb34e")
+        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v1.0.0")
     config:
         config
 
