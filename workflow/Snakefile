@@ -41,9 +41,10 @@ ruleorder: snv_indels_gatk_mutect2_gvcf > misc_tabix
 ruleorder: snv_indels_gatk_mutect2_gvcf > misc_bgzip
 ruleorder: snv_indels_bgzip > misc_bgzip
 ruleorder: snv_indels_bcftools_sort > misc_bgzip
-ruleorder: _copy_bam_index > alignment_samtools_index
-ruleorder: _copy_bam_umi_index > alignment_samtools_index
-ruleorder: _copy_qci_vcf > fix_vcf_ad_for_qci
+
+
+wildcard_constraints:
+    file="^(?!bam_dna|results).*"
 
 
 module prealignment:

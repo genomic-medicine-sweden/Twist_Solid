@@ -34,7 +34,7 @@ files:
       - T
       - N
   - name: Mutect2 INDEL BAM index
-    input: null
+    input: snv_indels/gatk_mutect2_merge/{sample}_{type}.bam.bai
     output: bam_dna/mutect2_indel_bam/{sample}_{type}.bam.bai
     types:
       - T
