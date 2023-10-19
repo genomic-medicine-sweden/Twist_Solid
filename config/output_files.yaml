@@ -62,7 +62,7 @@ files:
       - T
       - N
   - name: Exon-only soft-filtered VCF
-    input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_soft_filter.vcf 
+    input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_soft_filter.vcf
     output: results/dna/additional_files/vcf/{sample}_{type}.annotated.exon_only.filter.soft_filter.vcf
     types:
       - T

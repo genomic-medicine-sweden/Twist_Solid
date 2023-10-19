@@ -121,7 +121,7 @@ def get_hdf5(units: pandas.DataFrame, name: str) -> typing.List[str]:
 
 
 def get_vcfs(units: pandas.DataFrame, name: str) -> typing.List[str]:
-    return get_files(units, name, "annotation/background_annotation/%s_%s.background_annotation.vcf.gz")
+    return get_files(units, name, "snv_indels/bcbio_variation_recall_ensemble/%s_%s.ensembled.vep_annotated.vcf.gz")
 
 
 def get_gvcfs(units: pandas.DataFrame, name: str) -> typing.List[str]:

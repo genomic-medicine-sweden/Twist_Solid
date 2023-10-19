@@ -60,7 +60,7 @@ use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch with:
 use rule background_annotation from annotation as annotation_background_annotation with:
     input:
         background="references/create_background_file/background_panel.tsv",
-        vcf="annotation/hotspot_annotation/{sample}_{type}.hotspot_annotation.vcf",
+        vcf="{file}.hotspot_annotated.vcf",
 
 
 module misc:
