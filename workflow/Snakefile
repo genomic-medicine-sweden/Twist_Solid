@@ -44,7 +44,7 @@ ruleorder: snv_indels_bcftools_sort > misc_bgzip
 
 
 wildcard_constraints:
-    file="^(?!bam_dna|results).*"
+    file="^(?!bam_dna|results).*",
 
 
 module prealignment:
