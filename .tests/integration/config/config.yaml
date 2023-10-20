@@ -70,6 +70,7 @@ fuseq_wes:
 filter_vcf:
   snv_soft_filter: "../../config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "../../config/config_hard_filter_uppsala.yaml"
+  snv_hard_filter_umi: "../../config/config_hard_filter_umi.yaml"
   snv_hard_filter_purecn: "../../config/config_hard_filter_purecn.yaml"
   cnv_hard_filter_amp: "../../config/config_hard_filter_cnv_amp.yaml"
   cnv_hard_filter_loh: "../../config/config_hard_filter_cnv_loh.yaml"
@@ -122,9 +123,6 @@ merge_cnv_json:
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.vcf.gz
   germline_vcf: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz
-
-purecn_coverage:
-  intervals: "reference/purecn_dummy_intervals.txt"
 
 purecn:  
   normaldb: "reference/purecn_dummy_normaldb.rds"

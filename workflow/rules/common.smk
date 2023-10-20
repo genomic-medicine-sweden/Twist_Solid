@@ -81,17 +81,51 @@ merged_input_arriba = lambda wildcards: expand(
 def compile_output_list(wildcards):
     output_files = []
     types = set([unit.type for unit in units.itertuples()])
+    dedup_types = set([])
     for filedef in output_spec["files"]:
         output_files += set(
             [
                 filedef["output"].format(sample=sample, type=unit_type, caller=caller)
-                for sample in get_samples(samples)
+                for sample in samples.index
+                if "deduplication" not in filedef or samples.loc[sample].get("deduplication", "") in filedef["deduplication"]
                 for unit_type in get_unit_types(units, sample)
                 if unit_type in set(filedef["types"]).intersection(types)
                 for caller in config["bcbio_variation_recall_ensemble"]["callers"]
             ]
         )
     return list(set(output_files))
+
+
+def get_deduplication_bam_input(wildcards):
+    sample = get_sample(samples, wildcards)
+    if sample.get("deduplication", "") == "umi":
+        return "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"
+    else:
+        return "alignment/samtools_merge_bam/{sample}_{type}.bam"
+
+
+def get_deduplication_bam_input_manta(wildcards):
+    sample = get_sample(samples, wildcards)
+    if sample.get("deduplication", "") == "umi":
+        return "alignment/bwa_mem_realign_consensus_reads/{sample}_T.umi.bam"
+    else:
+        return "alignment/samtools_merge_bam/{sample}_T.bam"
+
+
+def get_deduplication_bam_chr_input(wildcards):
+    sample = get_sample(samples, wildcards)
+    if sample.get("deduplication", "") == "umi":
+        return "alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam"
+    else:
+        return "alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam"
+
+
+def get_vardict_min_af(wildcards):
+    sample = get_sample(samples, wildcards)
+    if sample.get("deduplication", "") == "umi":
+        return config.get("vardict", {}).get("allele_frequency_threshold_umi", "0.001")
+    else:
+        return config.get("vardict", {}).get("allele_frequency_threshold", "0.01")
 
 
 def get_flowcell(units, wildcards):

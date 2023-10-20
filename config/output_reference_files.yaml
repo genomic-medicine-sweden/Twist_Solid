@@ -37,13 +37,13 @@ files:
       - T
       - N
   - name: purecn_pn
-    input: references/purecn_normal_db/output/normalDB_hg19.rds
+    input: references/purecn_normal_db/output/normalDB.rds
     output: result/purecn_normal_db.rds
     types:
       - N
   - name: purecn_mapping_bias
-    input: references/purecn_normal_db/output/mapping_bias_hg19.rds
-    output: result/mapping_bias_hg19.rds
+    input: references/purecn_normal_db/output/mapping_bias.rds
+    output: result/mapping_bias.rds
     types:
       - N
   - name: purecn_interval

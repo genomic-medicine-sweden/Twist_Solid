@@ -6,14 +6,14 @@ __license__ = "GPL-3"
 
 rule fix_vcf_ad_for_qci:
     input:
-        vcf="annotation/add_multi_snv_in_codon/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf",
+        vcf="{file}.vcf",
     output:
-        vcf="annotation/fix_vcf_ad_for_qci/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.qci.vcf",
+        vcf="{file}.qci.vcf",
     log:
-        "annotation/fix_vcf_ad_for_qci/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.qci.vcf.log",
+        "{file}.qci.vcf.log",
     benchmark:
         repeat(
-            "annotation/fix_vcf_ad_for_qci/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.qci.vcf.benchmark.tsv",
+            "{file}.qci.vcf.benchmark.tsv",
             config.get("fix_vcf_ad_for_qci", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("fix_vcf_ad_for_qci", {}).get("threads", config["default_resources"]["threads"])
