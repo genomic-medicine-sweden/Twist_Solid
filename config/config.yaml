@@ -77,6 +77,9 @@ bwa_mem:
 bwa_mem_merge:
   extra: "-c -p"
 
+bwa_mem_realign_consensus_reads:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+
 call_small_cnv_deletions:
   regions_file: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_deletion_genes.tsv"
   window_size: 4
@@ -138,9 +141,25 @@ fastp_pe_arriba:
 fastqc:
   container: "docker://hydragenetics/fastqc:0.11.9"
 
+fgbio_call_and_filter_consensus_reads:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+  max_base_error_rate: "0.2"
+  min_reads_call: "1 0 0"
+  min_reads_filter: "1 0 0"
+  min_input_base_quality_call: 20
+  min_input_base_quality_filter: 30
+
+fgbio_copy_umi_from_read_name:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+
+fgbio_group_reads_by_umi:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+  umi_strategy: paired
+
 filter_vcf:
   snv_soft_filter: "config/config_soft_filter_uppsala.yaml"
   snv_hard_filter: "config/config_hard_filter_uppsala.yaml"
+  snv_hard_filter_umi: "config/config_hard_filter_umi.yaml"
   snv_hard_filter_purecn: "config/config_hard_filter_purecn.yaml"
   cnv_hard_filter_amp: "config/config_hard_filter_cnv_amp.yaml"
   cnv_hard_filter_loh: "config/config_hard_filter_cnv_loh.yaml"
@@ -164,6 +183,7 @@ fuseq_wes:
 fusioncatcher:
   container: "docker://hydragenetics/fusioncatcher:1.33"
   genome_path: "/data/ref_data/fusioncatcher/human_v102/human_v102/"
+  extra: "--visualization-sam"
 
 gatk_calculate_contamination:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
@@ -259,6 +279,7 @@ multiqc:
     DNA:
       config: "config/multiqc_config_dna.yaml"
       included_unit_types: ["N", "T"]
+      deduplication: ["mark_duplicates"]
       qc_files:
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2_fastqc.zip"
@@ -268,6 +289,20 @@ multiqc:
         - "qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt"
         - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
         - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
+    DNA_umi:
+      config: "config/multiqc_config_dna.yaml"
+      included_unit_types: ["N", "T"]
+      deduplication: ["umi"]
+      qc_files:
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1_fastqc.zip"
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2_fastqc.zip"
+        - "qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
+        - "qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
+        - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
+        - "qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt"
+        - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
+        - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
+        - "alignment/fgbio_group_reads_by_umi/{sample}_{type}.umi.histo.tsv"
     RNA:
       config: "config/multiqc_config_rna.yaml"
       included_unit_types: ["R"]
@@ -336,6 +371,9 @@ report_gene_fuse:
 samtools_merge_bam:
   extra: "-c -p"
 
+samtools_merge_bam_umi:
+  extra: "-c -p"
+
 scarhrd:
   container: "docker://hydragenetics/scarhrd:20200825"
   reference_name: "grch37"
@@ -387,9 +425,25 @@ tmb:
   nr_avg_germline_snvs: 2.0
   nssnv_tmb_correction: 0.84
 
+tmb_umi:
+  af_lower_limit: 0.000
+  af_upper_limit: 0.994
+  af_germline_lower_limit: 0.3
+  af_germline_upper_limit: 0.7
+  artifacts: ""
+  background_panel: ""
+  db1000g_limit: 0.0001
+  dp_limit: 300
+  filter_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/tmb_filter_genes.txt"
+  gnomad_limit: 0.0001
+  vd_limit: 0
+  nr_avg_germline_snvs: 0.0
+  nssnv_tmb_correction: 0.84
+
 vardict:
   container: "docker://hydragenetics/vardict:1.8.3"
   allele_frequency_threshold: "0.01"
+  allele_frequency_threshold_umi: "0.001"
   bed_columns: "-c 1 -S 2 -E 3 -g 4"
   extra: "-Q 1"
 

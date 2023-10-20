@@ -1,4 +1,4 @@
-name: Lint
+name: build mkdocs
 
 on:
   push:
@@ -12,22 +12,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint:
-    name: Lint workflow
-    runs-on: ubuntu-latest
+  build-mkdocs:
+    name: build mkdocs
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.8
         uses: actions/setup-python@v3
         with:
           python-version: 3.8
-      - name: Add conda to system path
-        run: |
-          echo $CONDA/bin >> $GITHUB_PATH
       - name: Install requirements.txt
         run: |
           pip install -r requirements.txt
-      - name: Linting
-        working-directory: .tests/integration
+      - name: Install requirements.test.txt
         run: |
-          snakemake --lint -n -s ../../workflow/Snakefile --configfiles ../../config/config.yaml config/config.yaml
+          pip install -r requirements.test.txt
+          pip install -r docs/requirements.txt
+      - name: build mkdocs
+        run: |
+          mkdocs build

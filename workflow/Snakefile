@@ -23,31 +23,28 @@ rule all:
         unpack(compile_output_list),
 
 
+ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
+ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
+ruleorder: annotation_annotate_cnv > misc_bgzip
+ruleorder: annotation_annotate_cnv > snv_indels_bgzip
+ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
+ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
 ruleorder: prealignment_fastp_pe > misc_bgzip
-ruleorder: snv_indels_tabix > annotation_tabix_vcf > misc_tabix
+ruleorder: qc_samtools_stats_rna > qc_samtools_stats
+ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
+ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
+ruleorder: snv_indels_bcftools_sort > snv_indels_bgzip
+ruleorder: snv_indels_tabix > misc_tabix
 ruleorder: snv_indels_gatk_mutect2 > misc_tabix
 ruleorder: snv_indels_gatk_mutect2_gvcf > alignment_samtools_sort
 ruleorder: snv_indels_gatk_mutect2_gvcf > misc_tabix
 ruleorder: snv_indels_gatk_mutect2_gvcf > misc_bgzip
 ruleorder: snv_indels_bgzip > misc_bgzip
-ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
-ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
-ruleorder: annotation_bgzip_vcf > misc_bgzip
-ruleorder: annotation_tabix_vcf > misc_tabix
-ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
-ruleorder: annotation_bgzip_vcf > snv_indels_bgzip
-ruleorder: annotation_tabix_vcf > snv_indels_tabix
-ruleorder: annotation_bgzip_vcf > snv_indels_bcftools_sort
-ruleorder: annotation_annotate_cnv > misc_bgzip
-ruleorder: annotation_annotate_cnv > snv_indels_bgzip
-ruleorder: filtering_bcftools_filter_include_region > annotation_bgzip_vcf
-ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
-ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
-ruleorder: qc_samtools_stats_rna > qc_samtools_stats
-ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
-ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
-ruleorder: _copy_bam_index > alignment_samtools_index
-ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
+ruleorder: snv_indels_bcftools_sort > misc_bgzip
+
+
+wildcard_constraints:
+    file="^(?!bam_dna|results).*",
 
 
 module prealignment:
@@ -57,29 +54,32 @@ module prealignment:
         config
 
 
-use rule * from prealignment as prealignment_*
+use rule * from prealignment exclude all as prealignment_*
 
 
 use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
+    input:
+        sample=[
+            "alignment/samtools_fastq/{sample}_{type}.fastq1.umi.fastq.gz",
+            "alignment/samtools_fastq/{sample}_{type}.fastq2.umi.fastq.gz",
+        ],
     output:
         trimmed=temp(
             [
-                "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.fastq.gz",
-                "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.fastq.gz",
+                "prealignment/fastp_pe_arriba/{sample}_{type}.fastq1.umi.fastq.gz",
+                "prealignment/fastp_pe_arriba/{sample}_{type}.fastq2.umi.fastq.gz",
             ]
         ),
-        html="prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.html",
-        json="prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.json",
+        html="prealignment/fastp_pe_arriba/{sample}_{type}.umi.fastp.html",
+        json="prealignment/fastp_pe_arriba/{sample}_{type}.umi.fastp.json",
     params:
-        adapters=lambda wildcards: " --adapter_sequence {} --adapter_sequence_r2 {} ".format(
-            *get_fastq_adapter(units, wildcards).split(",")
-        ),
+        adapters="",
         extra=config.get("fastp_pe_arriba", {}).get("extra", ""),
     log:
-        "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq.fastq.gz.log",
+        "prealignment/fastp_pe_arriba/{sample}_{type}.fastq.umi.fastq.gz.log",
     benchmark:
         repeat(
-            "prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq.fastq.gz.benchmark.tsv",
+            "prealignment/fastp_pe_arriba/{sample}_{type}.fastq.umi.fastq.gz.benchmark.tsv",
             config.get("fastp_pe_arriba", {}).get("benchmark_repeats", 1),
         )
     resources:
@@ -93,14 +93,14 @@ use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
 
 use rule merged from prealignment as prealignment_merged_arriba with:
     input:
-        fastq=merged_input_arriba,
+        fastq="prealignment/fastp_pe_arriba/{sample}_{type}.{read}.umi.fastq.gz",
     output:
-        fastq=temp("prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz"),
+        fastq=temp("prealignment/merged_arriba/{sample}_{type}.{read}.umi.fastq.gz"),
     log:
-        "prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz.log",
+        "prealignment/merged_arriba/{sample}_{type}.{read}.umi.fastq.gz.log",
     benchmark:
         repeat(
-            "prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz.benchmark.tsv",
+            "prealignment/merged_arriba/{sample}_{type}.{read}.umi.fastq.gz.benchmark.tsv",
             config.get("merged_arriba", {}).get("benchmark_repeats", 1),
         )
     resources:
@@ -116,12 +116,12 @@ use rule merged from prealignment as prealignment_merged_arriba with:
 
 module alignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.3.1")
+        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.5.0")
     config:
         config
 
 
-use rule * from alignment as alignment_*
+use rule * from alignment exclude all as alignment_*
 
 
 use rule samtools_index from alignment as alignment_samtools_index with:
@@ -131,8 +131,8 @@ use rule samtools_index from alignment as alignment_samtools_index with:
 
 use rule star from alignment as alignment_star with:
     input:
-        fq1="prealignment/merged_arriba/{sample}_{type}_fastq1.fastq.gz",
-        fq2="prealignment/merged_arriba/{sample}_{type}_fastq2.fastq.gz",
+        fq1="prealignment/merged_arriba/{sample}_{type}.fastq1.umi.fastq.gz",
+        fq2="prealignment/merged_arriba/{sample}_{type}.fastq2.umi.fastq.gz",
         idx=config.get("star", {}).get("genome_index", ""),
     params:
         extra=lambda wildcards: "%s %s"
@@ -194,17 +194,46 @@ module snv_indels:
         config
 
 
-use rule * from snv_indels as snv_indels_*
+use rule * from snv_indels exclude all as snv_indels_*
+
+
+use rule vardict from snv_indels as snv_indels_vardict with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_chr_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_chr_input(wildcards), ".bai"),
+        reference=config["reference"]["fasta"],
+        regions="snv_indels/bed_split/design_bedfile_{chr}.bed",
+    params:
+        extra=config.get("vardict", {}).get("extra", "-Q 1"),
+        bed_columns=config.get("vardict", {}).get("bed_columns", "-c 1 -S 2 -E 3 -g 4"),
+        allele_frequency_threshold=lambda wildcards: get_vardict_min_af(wildcards),
+        sample_name="{sample}_{type}",
+
+
+use rule gatk_mutect2 from snv_indels as snv_indels_gatk_mutect2 with:
+    input:
+        map=lambda wildcards: get_deduplication_bam_chr_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_chr_input(wildcards), ".bai"),
+        fasta=config.get("reference", {}).get("fasta", ""),
+        bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
+
+
+use rule gatk_mutect2_gvcf from snv_indels as snv_indels_gatk_mutect2_gvcf with:
+    input:
+        map=lambda wildcards: get_deduplication_bam_chr_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_chr_input(wildcards), ".bai"),
+        fasta=config.get("reference", {}).get("fasta", ""),
+        bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
 
 
 module annotation:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.3.0")
+        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v1.0.0")
     config:
         config
 
 
-use rule * from annotation as annotation_*
+use rule * from annotation exclude all as annotation_*
 
 
 use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purecn with:
@@ -233,12 +262,12 @@ use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purec
 
 module filtering:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag="v0.1.0")
+        get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag="v0.3.0")
     config:
         config
 
 
-use rule * from filtering as filtering_*
+use rule * from filtering exclude all as filtering_*
 
 
 module qc:
@@ -248,7 +277,7 @@ module qc:
         config
 
 
-use rule * from qc as qc_*
+use rule * from qc exclude all as qc_*
 
 
 use rule mosdepth from qc as qc_mosdepth with:
@@ -260,7 +289,16 @@ use rule mosdepth from qc as qc_mosdepth with:
         type="R",
 
 
+use rule mosdepth_bed from qc as qc_mosdepth_bed with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        bed=config.get("reference", {}).get("design_bed", ""),
+
+
 use rule samtools_stats from qc as qc_samtools_stats with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
     wildcard_constraints:
         type="T|N",
 
@@ -279,45 +317,74 @@ use rule samtools_stats from qc as qc_samtools_stats_rna with:
 
 
 use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        bait_intervals=config.get("reference", {}).get("design_intervals", ""),
+        reference=config.get("reference", {}).get("fasta", ""),
+        target_intervals=config.get("reference", {}).get("design_intervals", ""),
     wildcard_constraints:
         type="T|N",
 
 
 use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics_rna with:
-    params:
-        extra="%s %s"
-        % (
-            config.get("picard_collect_hs_metrics", {}).get("extra", ""),
-            "VALIDATION_STRINGENCY=LENIENT",
-        ),
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         bait_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
         reference=config.get("reference", {}).get("fasta", ""),
         target_intervals=config.get("reference", {}).get("design_intervals_rna", ""),
+    params:
+        extra="%s %s"
+        % (
+            config.get("picard_collect_hs_metrics", {}).get("extra", ""),
+            "VALIDATION_STRINGENCY=LENIENT",
+        ),
     wildcard_constraints:
         type="R",
 
 
 use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        ref=config.get("reference", {}).get("fasta", ""),
     wildcard_constraints:
         type="T|N",
 
 
 use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_alignment_summary_metrics_rna with:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        ref=config.get("reference", {}).get("fasta", ""),
     params:
         extra="%s %s"
         % (
             config.get("picard_collect_alignment_summary_metrics", {}).get("extra", ""),
             "VALIDATION_STRINGENCY=LENIENT",
         ),
-    input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
     wildcard_constraints:
         type="R",
+
+
+use rule picard_collect_duplication_metrics from qc as qc_picard_collect_duplication_metrics with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+
+
+use rule picard_collect_insert_size_metrics from qc as qc_picard_collect_insert_size_metrics with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+
+
+use rule gatk_get_pileup_summaries from qc as qc_gatk_get_pileup_summaries with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        sites=config.get("gatk_get_pileup_summaries", {}).get("sites", ""),
+        variants=config.get("gatk_get_pileup_summaries", {}).get("variants", ""),
 
 
 module biomarker:
@@ -327,12 +394,55 @@ module biomarker:
         config
 
 
-use rule * from biomarker as biomarker_*
+use rule * from biomarker exclude all as biomarker_*
 
 
 use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
     input:
         seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns",
+
+
+use rule msisensor_pro from biomarker as biomarker_msisensor_pro_umi with:
+    input:
+        bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
+        bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai",
+        PoN=config.get("msisensor_pro", {}).get("PoN", ""),
+    output:
+        msi_score=temp("biomarker/msisensor_pro/{sample}_{type}.umi"),
+        msi_all=temp("biomarker/msisensor_pro/{sample}_{type}.umi_all"),
+        msi_dis=temp("biomarker/msisensor_pro/{sample}_{type}.umi_dis"),
+        msi_unstable=temp("biomarker/msisensor_pro/{sample}_{type}.umi_unstable"),
+    params:
+        extra=config.get("msisensor_pro", {}).get("extra", "-c 50 -b 2"),
+        out_prefix="biomarker/msisensor_pro/{sample}_{type}.umi",
+
+
+use rule tmb from biomarker as biomarker_tmb with:
+    input:
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.vcf.gz",
+
+
+use rule tmb from biomarker as biomarker_tmb_umi with:
+    input:
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter_umi.vcf.gz",
+    output:
+        tmb=temp("biomarker/tmb/{sample}_{type}.umi.TMB.txt"),
+    params:
+        af_germline_lower_limit=config.get("tmb_umi", {}).get("af_germline_lower_limit", 0.47),
+        af_germline_upper_limit=config.get("tmb_umi", {}).get("af_germline_upper_limit", 0.53),
+        af_lower_limit=config.get("tmb_umi", {}).get("af_lower_limit", 0.05),
+        af_upper_limit=config.get("tmb_umi", {}).get("af_upper_limit", 0.95),
+        artifacts=config.get("tmb_umi", {}).get("artifacts", ""),
+        background_panel=config.get("tmb_umi", {}).get("background", ""),
+        background_sd_limit=config.get("tmb_umi", {}).get("background_sd_limit", 5),
+        db1000g_limit=config.get("tmb_umi", {}).get("db1000g_limit", 0.0001),
+        dp_limit=config.get("tmb_umi", {}).get("dp_limit", 200),
+        filter_genes=config.get("tmb_umi", {}).get("filter_genes", ""),
+        filter_nr_observations=config.get("tmb_umi", {}).get("filter_nr_observations", 1),
+        gnomad_limit=config.get("tmb_umi", {}).get("gnomad_limit", 0.0001),
+        nr_avg_germline_snvs=config.get("tmb_umi", {}).get("nr_avg_germline_snvs", 2.0),
+        nssnv_tmb_correction=config.get("tmb_umi", {}).get("nssnv_tmb_correction", 0.84),
+        vd_limit=config.get("tmb_umi", {}).get("vd_limit", 20),
 
 
 module fusions:
@@ -342,10 +452,18 @@ module fusions:
         config
 
 
-use rule * from fusions as fusions_*
+use rule * from fusions exclude all as fusions_*
 
 
 use rule fuseq_wes from fusions as fusions_fuseq_wes with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        ref_json=config.get("fuseq_wes", {}).get("ref_json", ""),
+        gtfSqlite=config.get("fuseq_wes", {}).get("gtfSqlite", ""),
+        fusiondb=config.get("fuseq_wes", {}).get("fusiondb", ""),
+        paralogdb=config.get("fuseq_wes", {}).get("paralogdb", ""),
+        params=config.get("fuseq_wes", {}).get("params", ""),
     priority: 50
 
 
@@ -357,6 +475,13 @@ use rule star_fusion from fusions as fusions_star_fusion with:
         sj=temp("fusions/star_fusion/{sample}_{type}/SJ.out.tab"),
 
 
+use rule fusioncatcher from fusions as fusions_fusioncatcher with:
+    input:
+        fq1="alignment/samtools_fastq/{sample}_{type}.fastq1.umi.fastq.gz",
+        fq2="alignment/samtools_fastq/{sample}_{type}.fastq2.umi.fastq.gz",
+        genome_path=config.get("fusioncatcher", {}).get("genome_path", ""),
+
+
 module cnv_sv:
     snakefile:
         get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.3.1")
@@ -364,7 +489,7 @@ module cnv_sv:
         config
 
 
-use rule * from cnv_sv as cnv_sv_*
+use rule * from cnv_sv exclude all as cnv_sv_*
 
 
 use rule manta_config_t from cnv_sv as cnv_sv_manta_config_t with:
@@ -377,8 +502,8 @@ use rule manta_run_workflow_t from cnv_sv as cnv_sv_manta_run_workflow_t with:
 
 use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
         cnv_reference=config.get("cnvkit_batch_hrd", {}).get("normal_reference_hrd", ""),
     output:
         regions=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cnr"),
@@ -415,6 +540,13 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
         )
 
 
+use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        cnv_reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
+
+
 use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:
     input:
         segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
@@ -430,6 +562,21 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
         segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
         segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
+
+
+use rule gatk_collect_read_counts from cnv_sv as cnv_sv_gatk_collect_read_counts with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        interval=config.get("reference", {}).get("design_intervals_gatk_cnv", ""),
+
+
+use rule gatk_collect_allelic_counts from cnv_sv as cnv_sv_gatk_collect_allelic_counts with:
+    input:
+        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        interval=config.get("gatk_collect_allelic_counts", {}).get("SNP_interval", ""),
+        ref=config["reference"]["fasta"],
 
 
 use rule gatk_to_vcf from cnv_sv as cnv_sv_gatk_to_vcf with:
@@ -459,7 +606,7 @@ module reports:
         config
 
 
-use rule * from reports as reports_*
+use rule * from reports exclude all as reports_*
 
 
 use rule cnv_html_report from reports as reports_cnv_html_report with:

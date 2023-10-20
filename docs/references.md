@@ -214,7 +214,7 @@ The `units.tsv` file needs to be adapted depending which panel of normals are cr
 
 | Header | Data | Description |
 |-|-|-|
-| cnv_vcf | `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.svdb_query.vcf` | SVDB merged CNV vcf files created as output of the <br />Twist Solid pipeline from both normal and <br />tumor FFPE samples |
+| cnv_vcf | `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.svdb_query.vcf` | SVDB merged CNV vcf files created as output of the <br />Twist Solid pipeline from both normal and <br />tumor FFPE samples |
 
 **Software settings**
 

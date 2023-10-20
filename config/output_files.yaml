@@ -11,6 +11,22 @@ files:
     types:
       - T
       - N
+  - name: BAM umi
+    input: alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam
+    output: bam_dna/{sample}_{type}.umi.bam
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: BAM umi index
+    input: alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai
+    output: bam_dna/{sample}_{type}.umi.bam.bai
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
   - name: Mutect2 INDEL BAM
     input: snv_indels/gatk_mutect2_merge/{sample}_{type}.bam
     output: bam_dna/mutect2_indel_bam/{sample}_{type}.bam
@@ -18,7 +34,7 @@ files:
       - T
       - N
   - name: Mutect2 INDEL BAM index
-    input: null
+    input: snv_indels/gatk_mutect2_merge/{sample}_{type}.bam.bai
     output: bam_dna/mutect2_indel_bam/{sample}_{type}.bam.bai
     types:
       - T
@@ -39,36 +55,38 @@ files:
     types:
       - T
       - N
-  - name: Annotated VCF
-    input: annotation/background_annotation/{sample}_{type}.background_annotation.vcf.gz
+  - name: Vep annotated VCF
+    input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.vcf.gz
     output: results/dna/additional_files/vcf/{sample}_{type}.annotated.vcf.gz
     types:
       - T
       - N
   - name: Exon-only soft-filtered VCF
-    input: annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_soft_filter.vcf
+    input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_soft_filter.vcf
     output: results/dna/additional_files/vcf/{sample}_{type}.annotated.exon_only.filter.soft_filter.vcf
     types:
       - T
       - N
-  - name: Exon-only hard-filtered VCF
-    input: annotation/background_annotation/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.vcf
-    output: results/dna/additional_files/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.vcf
-    types:
-      - T
-      - N
-  - name: Conv SNV VCF
-    input: annotation/add_multi_snv_in_codon/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf
+  - name: Codon SNV VCF
+    input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf 
     output: results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.vcf
     types:
       - T
       - N
   - name: QCI VCF
-    input: annotation/fix_vcf_ad_for_qci/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.qci.vcf
+    input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.qci.vcf 
     output: results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf
     types:
       - T
       - N
+  - name: QCI umi VCF
+    input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter_umi.codon_snvs.sorted.vep_annotated.qci.vcf 
+    output: results/dna/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv..umi.qci.vcf
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
   - name: Caller VCF
     input: snv_indels/{caller}/{sample}_{type}.merged.vcf.gz
     output: results/dna/additional_files/vcf/{caller}_{sample}_{type}.vcf.gz
@@ -99,7 +117,7 @@ files:
     types:
       - T
       - N
-  - name: Samtool stats
+  - name: Samtools stats
     input: qc/samtools_stats/{sample}_{type}.samtools-stats.txt
     output: results/dna/additional_files/qc/{sample}_{type}.samtools-stats.txt
     types:
@@ -139,12 +157,28 @@ files:
     types:
       - T
       - N
+  - name: MSI Sensor Pro TSV umi
+    input: biomarker/msisensor_pro/{sample}_{type}.umi
+    output: results/dna/msi/{sample}_{type}.umi.msisensor_pro.score.tsv
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
   - name: TMB
     input: biomarker/tmb/{sample}_{type}.TMB.txt
     output: results/dna/tmb/{sample}_{type}.TMB.txt
     types:
       - T
       - N
+  - name: TMB umi
+    input: biomarker/tmb/{sample}_{type}.umi.TMB.txt
+    output: results/dna/tmb/{sample}_{type}.umi.TMB.txt
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
   - name: HRD score - PureCN
     input: biomarker/scarhrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt
     output: results/dna/additional_files/hrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt
