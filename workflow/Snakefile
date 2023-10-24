@@ -60,26 +60,26 @@ use rule * from prealignment exclude all as prealignment_*
 use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
     input:
         sample=[
-            "alignment/samtools_fastq/{sample}_{type}.fastq1.umi.fastq.gz",
-            "alignment/samtools_fastq/{sample}_{type}.fastq2.umi.fastq.gz",
+            "alignment/samtools_fastq/{sample}_{type}.fastq1.fastq.gz",
+            "alignment/samtools_fastq/{sample}_{type}.fastq2.fastq.gz",
         ],
     output:
         trimmed=temp(
             [
-                "prealignment/fastp_pe_arriba/{sample}_{type}.fastq1.umi.fastq.gz",
-                "prealignment/fastp_pe_arriba/{sample}_{type}.fastq2.umi.fastq.gz",
+                "prealignment/fastp_pe_arriba/{sample}_{type}.fastq1.fastq.gz",
+                "prealignment/fastp_pe_arriba/{sample}_{type}.fastq2.fastq.gz",
             ]
         ),
-        html="prealignment/fastp_pe_arriba/{sample}_{type}.umi.fastp.html",
-        json="prealignment/fastp_pe_arriba/{sample}_{type}.umi.fastp.json",
+        html="prealignment/fastp_pe_arriba/{sample}_{type}.fastp.html",
+        json="prealignment/fastp_pe_arriba/{sample}_{type}.fastp.json",
     params:
         adapters="",
         extra=config.get("fastp_pe_arriba", {}).get("extra", ""),
     log:
-        "prealignment/fastp_pe_arriba/{sample}_{type}.fastq.umi.fastq.gz.log",
+        "prealignment/fastp_pe_arriba/{sample}_{type}.fastq.fastq.gz.log",
     benchmark:
         repeat(
-            "prealignment/fastp_pe_arriba/{sample}_{type}.fastq.umi.fastq.gz.benchmark.tsv",
+            "prealignment/fastp_pe_arriba/{sample}_{type}.fastq.fastq.gz.benchmark.tsv",
             config.get("fastp_pe_arriba", {}).get("benchmark_repeats", 1),
         )
     resources:
@@ -93,14 +93,14 @@ use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
 
 use rule merged from prealignment as prealignment_merged_arriba with:
     input:
-        fastq="prealignment/fastp_pe_arriba/{sample}_{type}.{read}.umi.fastq.gz",
+        fastq="prealignment/fastp_pe_arriba/{sample}_{type}.{read}.fastq.gz",
     output:
-        fastq=temp("prealignment/merged_arriba/{sample}_{type}.{read}.umi.fastq.gz"),
+        fastq=temp("prealignment/merged_arriba/{sample}_{type}.{read}.fastq.gz"),
     log:
-        "prealignment/merged_arriba/{sample}_{type}.{read}.umi.fastq.gz.log",
+        "prealignment/merged_arriba/{sample}_{type}.{read}.fastq.gz.log",
     benchmark:
         repeat(
-            "prealignment/merged_arriba/{sample}_{type}.{read}.umi.fastq.gz.benchmark.tsv",
+            "prealignment/merged_arriba/{sample}_{type}.{read}.fastq.gz.benchmark.tsv",
             config.get("merged_arriba", {}).get("benchmark_repeats", 1),
         )
     resources:
@@ -131,8 +131,8 @@ use rule samtools_index from alignment as alignment_samtools_index with:
 
 use rule star from alignment as alignment_star with:
     input:
-        fq1="prealignment/merged_arriba/{sample}_{type}.fastq1.umi.fastq.gz",
-        fq2="prealignment/merged_arriba/{sample}_{type}.fastq2.umi.fastq.gz",
+        fq1="prealignment/merged_arriba/{sample}_{type}.fastq1.fastq.gz",
+        fq2="prealignment/merged_arriba/{sample}_{type}.fastq2.fastq.gz",
         idx=config.get("star", {}).get("genome_index", ""),
     params:
         extra=lambda wildcards: "%s %s"
@@ -477,8 +477,8 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 use rule fusioncatcher from fusions as fusions_fusioncatcher with:
     input:
-        fq1="alignment/samtools_fastq/{sample}_{type}.fastq1.umi.fastq.gz",
-        fq2="alignment/samtools_fastq/{sample}_{type}.fastq2.umi.fastq.gz",
+        fq1="alignment/samtools_fastq/{sample}_{type}.fastq1.fastq.gz",
+        fq2="alignment/samtools_fastq/{sample}_{type}.fastq2.fastq.gz",
         genome_path=config.get("fusioncatcher", {}).get("genome_path", ""),
 
 
@@ -502,8 +502,8 @@ use rule manta_run_workflow_t from cnv_sv as cnv_sv_manta_run_workflow_t with:
 
 use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
     input:
-        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
-        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         cnv_reference=config.get("cnvkit_batch_hrd", {}).get("normal_reference_hrd", ""),
     output:
         regions=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cnr"),
@@ -542,8 +542,8 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
 
 use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch with:
     input:
-        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
-        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         cnv_reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
 
 
@@ -566,15 +566,15 @@ use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
 
 use rule gatk_collect_read_counts from cnv_sv as cnv_sv_gatk_collect_read_counts with:
     input:
-        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
-        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         interval=config.get("reference", {}).get("design_intervals_gatk_cnv", ""),
 
 
 use rule gatk_collect_allelic_counts from cnv_sv as cnv_sv_gatk_collect_allelic_counts with:
     input:
-        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
-        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         interval=config.get("gatk_collect_allelic_counts", {}).get("SNP_interval", ""),
         ref=config["reference"]["fasta"],
 
@@ -588,7 +588,6 @@ use rule gatk_to_vcf from cnv_sv as cnv_sv_gatk_to_vcf with:
         het_del_limit=config.get("gatk_vcf", {}).get("het_del_limit", 1.5),
         hom_del_limit=config.get("gatk_vcf", {}).get("hom_del_limit", 0.5),
         sample_id="{sample}_{type}",
-        #tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
         tc=get_tc,
 
 
