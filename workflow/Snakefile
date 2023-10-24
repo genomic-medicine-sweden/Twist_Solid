@@ -189,7 +189,7 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutec
 
 module snv_indels:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.3.0")
+        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.6.0")
     config:
         config
 
@@ -228,12 +228,12 @@ use rule gatk_mutect2_gvcf from snv_indels as snv_indels_gatk_mutect2_gvcf with:
 
 module annotation:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v1.0.0")
+        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v1.0.1")
     config:
         config
 
 
-use rule * from annotation exclude all as annotation_*
+use rule * from annotation exclude all, bgzip_vcf, tabix_vcf as annotation_*
 
 
 use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purecn with:
