@@ -1,5 +1,61 @@
 # Changelog
 
+## [0.9.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.8.0...v0.9.0) (2023-11-01)
+
+
+### Features
+
+* 2 new TERT promoter variants ([ee72af1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ee72af10749fe1f770243e91850291c052f7d9f9))
+* add umi support for cnvkit ([979c816](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/979c816a60040871642e44d172ff95306c488d1a))
+* add umi support for fuseq wes ([a4d7139](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a4d7139a37dfe5254208d37e1c9b20509b721b70))
+* add umi support for fuseq wes ([522ac37](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/522ac37a144a04566967308e7e0e14e691f43dca))
+* add umi support for gatkcnv ([a2ce975](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a2ce975ed69e384af67bc4f3d00007f90b06a3dc))
+* add umi support for hrd and msi ([20560a2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/20560a286dc369f22c0afecb69a2f58f499c40ca))
+* add umi support for manta ([8a703d9](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8a703d9cd60d538bdf170dd7b6e30519215f5a5f))
+* add umi support for qc ([89f673b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/89f673b4ad2aefddfd844996fc80b2c4dd4eee88))
+* add umi support for tmb ([9683d6b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9683d6b16eb9f1e62eafe149f8051cef2d41e54f))
+* added tmb gene filter. TMB uses hard filtered file for input ([9e242a3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9e242a38e987b4f9107781f898b64bb1270fd527))
+* added umi choice to the pipeline ([8e13b38](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8e13b38bbb5ac74204d33f59210c08a0f9c24c4c))
+* changes hard filtering to let more variants through ([70606f3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/70606f3e348a2c00b977e66658c14df87fe8a74e))
+* hard filter for qci ([9ae0a2f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9ae0a2f0067e76951a2ba13c4b46cbe9820ddc2d))
+* min vaf configurable in vardict ([303b5f7](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/303b5f7abb99085fd8c75646b541409e84be61c2))
+* rm need for ruleorder for copy rules using global wildcard constraints ([ad15f6c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ad15f6c4a7e42c6aea2da4c0ba87763335aca596))
+* run msi w and wo umi ([6766b18](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6766b187a9f7cfbcbf949358208216b7e9c8b82d))
+* umi in rna ([6ccba4c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6ccba4c0a011c9db6e7fcf62b77a0bd710531427))
+* umi vcf filtering based on sample.tsv ([4fdd999](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4fdd999890a55d1f3dba50b0bee63638ff6bbb1a))
+* update alignment module tag ([ed33d45](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ed33d459affe04e9ec69117979d5724f3bdc6f4f))
+* update to v1.0.0 relaese of annotation ([3fd0c7b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3fd0c7bd56b70e88952093636e4e7d7265c7f29e))
+* Update workflow/Snakefile with new alignment tag ([e74398e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e74398e731c9a9d5493ea8d27c9387a3b78ace4b))
+* updated alignment module tag ([62500dd](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/62500dd79cb6f4fad6627b93fa333d69b458e9b4))
+* updated alignment module tag ([341a3ba](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/341a3ba3ffae977bce862fbc2f8127955ee236bb))
+* updated module versions and adapted to these new versions ([c4aa705](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c4aa705018c8d533e906d7fee31adfb3d7b5e2e3))
+
+
+### Bug Fixes
+
+* adapt to new umi alignment module ([60a90b3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/60a90b38cc243baf289550114c81e173716237b5))
+* adopt to breaking change in vep rule ([96b4b26](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/96b4b267fc0829f4b15ffc14228f915f537034b3))
+* bugfix in get_vardict_min_af ([cd503b7](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/cd503b74bcbb91361d15c843b7e8bbaa0f3fa1c3))
+* bugfix in get_vardict_min_af ([44d4b59](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/44d4b5958b2a49b4041e80a9f6e113e29b0c8ba0))
+* corrected gatk_mutect2 input files ([442d62c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/442d62c93c013ae49eb6f773210eb5f40b9bbb22))
+* fix manta output files and rm unneaded umi rules in Snakefile ([5ec7a33](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5ec7a33699c34fedc03556ceac549e1bc14c24f2))
+* fixed units.tsv and adaption of reference pipeline to new annotation module ([9d0c926](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9d0c926319d6d19e8a2b8f4c65c09aa6a00a995b))
+* gvcfs now have mosdepth umi coverage ([cf3e9c6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/cf3e9c69abb3d1112bc28975e4bc8132c042638b))
+* manta to use original name, filtering wo <=, msi-sensor w correct output name ([0a9960b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0a9960b4506e7920e4e940c2d3e5e1123fc8d909))
+* match output result from reference module ([e2415d5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e2415d54bbf204516555be2a2b862c665e3d8431))
+* mosdepth should be run on entire bam file ([8643bb2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8643bb20a72cb7ff78589cab2115a9549116dc8f))
+* msi ([6578e7d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6578e7d4a0ffd6dfdb6d7ada6d0b7b21026b9a35))
+* new common container compatible with filtering module v0.3.0 ([28256f0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/28256f00c5f8d049e235e4f5e62fd9d64b04d172))
+* reinstate output vcf file ([2b6607b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2b6607b20bd488bded16266faa68630d439621dc))
+* rm bai input for picard insert size metrics ([4f8915f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4f8915f4d233a5c021560be0e0d1a5b7bc05b1ea))
+* rm umi on rna ([086f8dc](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/086f8dcdc3bef4456d23517860a34d69ce65b002))
+* umi fixes ([9ce1a0b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9ce1a0b8b4f5fa32f30fbf8aeb2462e0cfddbe61))
+* update tag and only use umi for snv and indels ([d6b1edc](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d6b1edc7f2d64bdb0dfb7658dc2244a3e885deeb))
+* updated alignment module tag ([6207ed2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6207ed22e64a1b29a50f48ef790460ea576c699b))
+* updated vcf filters ([def213d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/def213d7acb25e46f3e6e739e4d51b95aabfa437))
+* updated versions of snv_indels and annotation to fix compatilibilty issues ([974dd27](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/974dd27822368d149a155a96e150ac591f075492))
+* use same hydra as in common container (v1.8.1) ([d3f401e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d3f401e20f1750842fbfa222dfa2476388244144))
+
 ## [0.8.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.7.0...v0.8.0) (2023-09-22)
 
 
