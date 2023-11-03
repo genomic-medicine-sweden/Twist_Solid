@@ -132,6 +132,14 @@ def get_cnv_vcfs(units: pandas.DataFrame, name: str) -> typing.List[str]:
     return get_files(units, name, "cnv_sv/svdb_query/%s_%s.pathology_purecn.svdb_query.vcf")
 
 
+def get_cnvkit_target(units: pandas.DataFrame, name: str) -> typing.List[str]:
+    return get_files(units, name, "%s_%s.targetcoverage.cnn")
+
+
+def get_cnvkit_antitarget(units: pandas.DataFrame, name: str) -> typing.List[str]:
+    return get_files(units, name, "%s_%s.antitargetcoverage.cnn")
+
+
 def get_files(units: pandas.DataFrame, name: str, string_path: str):
     types = []
     for i in output_spec["files"]:
