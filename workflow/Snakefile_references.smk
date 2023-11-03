@@ -145,9 +145,8 @@ use rule cnvkit_build_normal_reference from references as references_cnvkit_buil
     output:
         PoN=temp("references/cnvkit_build_normal_reference/cnvkit.PoN.cnn"),
         tmp_bed=temp("cnvkit_manifest.target.target.bed"),
-        tmp_target_cov=temp(get_cnvkit_target(units,  "cnvkit_pon")),
-        tmp_antitarget_cov=temp(get_cnvkit_antitarget(units,  "cnvkit_pon")),
-
+        tmp_target_cov=temp(get_cnvkit_target(units, "cnvkit_pon")),
+        tmp_antitarget_cov=temp(get_cnvkit_antitarget(units, "cnvkit_pon")),
 
 
 ####################################################
