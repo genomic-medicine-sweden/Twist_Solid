@@ -449,7 +449,7 @@ use rule tmb from biomarker as biomarker_tmb_umi with:
 
 module fusions:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="8aec226")
+        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="v0.1.0")
     config:
         config
 
