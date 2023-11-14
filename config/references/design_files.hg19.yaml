@@ -180,3 +180,10 @@
       path: GMS560/gene_fuse/filter_fusions_20230214.csv
       type: file
       url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/gene_fuse/filter_fusions_20230214.csv
+
+ tmb:
+   filter_genes:
+      checksum: c1a958320451fab1200ab769d963d4c6
+      path: GMS560/tmb/tmb_filter_genes.txt
+      type: file
+      url: https://raw.githubusercontent.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/v0.2.1/tmb/tmb_filter_genes.txt

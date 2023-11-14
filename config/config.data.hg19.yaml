@@ -4,8 +4,8 @@ PROJECT_PON_DATA: ""
 PROJECT_REF_DATA: ""
 
 reference:
-  background: "{{PROJECT_PON_DATA}}/Background/background_panel_novaseq_lund_8.tsv"
-  artifacts: "{{PROJECT_PON_DATA}}/Artifact/artifact_panel_novaseq_lund_8.tsv"
+  background: "{{PROJECT_PON_DATA}}/GMS560/Background/background_panel_nextseq_noUmea_27_dp500_af015.tsv"
+  artifacts: "{{PROJECT_PON_DATA}}/GMS560/Artifact/artifact_panel_nextseq_36.tsv"
   fasta: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta"
   fasta_rna: "{{PROJECT_REF_DATA}}/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
   dict: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta.dict"
@@ -16,7 +16,7 @@ reference:
   design_bed_rna: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.bed"
   design_intervals_rna: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.interval_list"
   skip_chrs:
-    - "MT"
+    - "chrM"
 
 arriba:
   assembly: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta"
@@ -26,7 +26,7 @@ arriba:
 
 arriba_draw_fusion:
   cytobands: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv"
-  gtf: "{{PROJECT_REF_DATA}}/ref_data/gtrefGene/f/hg19.refGene.gtf"
+  gtf: "{{PROJECT_REF_DATA}}/ref_data/refGene/hg19.refGene.gtf"
   protein_domains: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3"
 
 annotate_cnv:
@@ -98,13 +98,13 @@ gene_fuse:
   fasta: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta"
 
 hotspot_annotation:
-  hotspots: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.csv"
+  hotspots: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
 
 hotspot_info:
-  hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.csv"
+  hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
 
 hotspot_report:
-  hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.csv"
+  hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
 
 manta_config_t:
   extra: "--exome --callRegions {{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz"
@@ -138,6 +138,12 @@ star_fusion:
   
 svdb_query:
   db_string: "--db {{PROJECT_PON_DATA}}/GMS560/PoN/SVDB/all_TN_292_svdb_0.8_20220505.vcf --out_frq Twist_AF --out_occ Twist_OCC"
+
+tmb:
+  filter_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/tmb/tmb_filter_genes.txt"
+
+tmb_umi:
+  filter_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/tmb/tmb_filter_genes.txt"
 
 vep:
   vep_cache:  "{{PROJECT_REF_DATA}}/ref_data/vep/105"
