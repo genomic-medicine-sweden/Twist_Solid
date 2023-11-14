@@ -1,4 +1,5 @@
 output: "../../config/output_files.yaml"
+singularity_schema: "../../config/singularity.schema.yaml"
 
 annotate_cnv:
   cnv_amp_genes: "reference/cnv_amp_genes.bed"
@@ -49,7 +50,7 @@ cnvkit_batch_hrd:
   normal_reference_hrd: "DATA/design.PoN.cnn"
 
 cnv_html_report:
-  template_dir: "../../config/cnv_report_template"
+  template_dir: "../../config/reports/cnv_report_template"
 
 
 exon_skipping:
@@ -95,12 +96,28 @@ gene_fuse:
 
 hotspot_annotation:
   hotspots: "DATA/Hotspots_combined.csv"
-  chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"
+  chr_translation_file: "../../config/reports/hotspot_report.chr.translation.hg19"
+
+hotspot_info:
+  hotspot_mutations: "DATA/Hotspots_combined.csv"
 
 hotspot_report:
   hotspot_mutations: "DATA/Hotspots_combined.csv"
-  report_config: "../../config/config/hotspot_report.yaml"
-  chr_translation_file: "../../config/hotspot_report.chr.translation.hg19"
+  report_config: "../../config/reports/config/reports/hotspot_report.yaml"
+  chr_translation_file: "../../reports/config/reports/hotspot_report.chr.translation.hg19"
+  levels:
+    - [300, "ok", "yes"]
+    - [30, "low", "yes"]
+    - [0, "low", "not analyzable"]
+
+manta_config_t:
+  container: "docker://hydragenetics/manta:1.6.0"
+
+manta_run_workflow_t:
+  container: "docker://hydragenetics/manta:1.6.0"
+
+mosdepth_bed:
+  container: "docker://hydragenetics/mosdepth:0.3.2"
 
 msisensor_pro:
   PoN: "DATA/msisensor_pro_reference_26_normal.list_baseline"
