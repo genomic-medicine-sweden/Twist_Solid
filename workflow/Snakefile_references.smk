@@ -97,7 +97,7 @@ use rule * from references exclude all as references_*
 # use vcf create by pipeline. ??????????Shoud we override svdb annotation??????????
 use rule svdb_build from references as references_svdb_build with:
     input:
-        cnv_vcfs=get_cnv_vcfs(units, "svdb"),
+        cnv_vcfs=lambda wildcards: get_cnv_vcfs(units, "svdb"),
 
 
 ####################################################
@@ -106,7 +106,7 @@ use rule svdb_build from references as references_svdb_build with:
 # use vcf created by pipeline
 use rule create_artifact_file from references as references_create_artifact_file with:
     input:
-        vcfs=get_vcfs(units, "artifact"),
+        vcfs=lambda wildcards: get_vcfs(units, "artifact"),
 
 
 ####################################################
@@ -115,7 +115,7 @@ use rule create_artifact_file from references as references_create_artifact_file
 # use hdf5 files created by reference pipeline references/collect_read_counts/%s_%s.counts.hdf5
 use rule create_read_count_panel_of_normals from references as references_create_read_count_panel_of_normals with:
     input:
-        bams=get_hdf5(units, "gatk_pon"),
+        bams=lambda wildcards: get_hdf5(units, "gatk_pon"),
 
 
 # Use bam files created by pipeline: alignment/samtools_merge_bam/{sample}_{type}.bam
@@ -137,7 +137,7 @@ use rule preprocess_intervals from references as references_preprocess_intervals
 # use bam files create by pipeline: alignment/samtools_merge_bam/{sample}_{type}.bam
 use rule cnvkit_build_normal_reference from references as references_cnvkit_build_normal_reference with:
     input:
-        bams=get_bams(units, "cnvkit_pon"),
+        bams=lambda wildcards: get_bams(units, "cnvkit_pon"),
         target="references/cnvkit_create_targets/cnvkit_manifest.target.bed",
         antitarget="references/cnvkit_create_anti_targets/cnvkit_manifest.antitarget.bed",
         ref=config.get("reference", {}).get("fasta", ""),
@@ -155,19 +155,19 @@ use rule cnvkit_build_normal_reference from references as references_cnvkit_buil
 # Use bam files created by pipeline: alignment/samtools_merge_bam/{sample}_{type}.bam
 use rule purecn_bam_list from references as references_purecn_bam_list with:
     input:
-        bam_list=get_bams(units, "purecn_mapping_bias"),
+        bam_list=lambda wildcards: get_bams(units, "purecn_mapping_bias"),
 
 
 use rule bcftools_merge from references as references_bcftools_merge with:
     input:
-        vcfs=get_vcfs(units, "purecn_mapping_bias"),
-        vcfs_tabix=expand("{dataset}.{ext}", dataset=get_vcfs(units, "purecn_mapping_bias"), ext=["tbi"]),
+        vcfs=lambda wildcards: get_vcfs(units, "purecn_mapping_bias"),
+        vcfs_tabix=expand("{dataset}.{ext}", dataset=lambda wildcards: get_vcfs(units, "purecn_mapping_bias"), ext=["tbi"]),
 
 
 # Uses to create background
 use rule create_background_file from references as references_create_background_file with:
     input:
-        gvcfs=get_gvcfs(units, "background"),
+        gvcfs=lambda wildcards: get_gvcfs(units, "background"),
 
 
 # Make use of new interval file created by the pipeline, and wait for it to be created
