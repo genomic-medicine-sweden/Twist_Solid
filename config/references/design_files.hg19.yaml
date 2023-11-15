@@ -97,24 +97,24 @@
 
  hotspot_annotation:
    hotspots:
-     checksum: 59fe5daf8039746c6690fce5e55d5115
-     path: GMS560/reports/Hotspots_combined_regions_nodups.csv
+     checksum: 50564a9b99f86b123bb61f6e361eff10
+     path: GMS560/reports/Hotspots_combined_regions_nodups.231011.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/design/Hotspots_combined_regions_nodups.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.3.0/design/Hotspots_combined_regions_nodups.231011.csv
 
  hotspot_info:
    hotspot_mutations:
-     checksum: 59fe5daf8039746c6690fce5e55d5115
-     path: GMS560/reports/Hotspots_combined_regions_nodups.csv
+     checksum: 50564a9b99f86b123bb61f6e361eff10
+     path: GMS560/reports/Hotspots_combined_regions_nodups.231011.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/design/Hotspots_combined_regions_nodups.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.3.0/design/Hotspots_combined_regions_nodups.231011.csv
 
  hotspot_report:
    hotspot_mutations:
-     checksum: 59fe5daf8039746c6690fce5e55d5115
-     path: GMS560/reports/Hotspots_combined_regions_nodups.csv
+     checksum: 50564a9b99f86b123bb61f6e361eff10
+     path: GMS560/reports/Hotspots_combined_regions_nodups.231011.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/design/Hotspots_combined_regions_nodups.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.0.0/design/Hotspots_combined_regions_nodups.231011.csv
 
  manta_config_t:
    extra:
