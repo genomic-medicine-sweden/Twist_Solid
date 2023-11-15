@@ -34,3 +34,10 @@ results/dna/qc/VAL2022-2-5M_T.coverage_and_mutations.tsv	89bc60fb06bd68a514cb66b
 results/dna/tmb/VAL2022-2-5M_T.TMB.txt	e20d98b80deb3ad74605c0439abda1f2
 results/dna/vcf/VAL2022-2-5M_T.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf	e9dc0afeeb5d2b738183ce465973b292
 results/dna/vcf/VAL2022-2-5M_T.annotated.exon_only.filter.hard_filter.codon_snv.vcf	7c62b3abce55f9eacce567211dbb0a1b
+bam_rna/SeraSeq-NTRK-FFPE-2-5M_R.star_fusion.bam	f18994c2789c4754a00c7c255b41408d
+results/rna/additional_files/fusion/SeraSeq-NTRK-FFPE-2-5M_R.arriba.fusions.tsv	eedffe64014818557f8fd9ea2c21fa7c
+results/rna/additional_files/fusion/SeraSeq-NTRK-FFPE-2-5M_R.fusioncatcher.fusion_predictions.txt	43be5d6575176d9170d81cd5589ec56c
+results/rna/fusion/SeraSeq-NTRK-FFPE-2-5M_R.exon_skipping.tsv	70b9661bfcb1c30b17f2f175ef937b3b
+results/rna/fusion/SeraSeq-NTRK-FFPE-2-5M_R.fusion_report.tsv	52fd43c559ef3348e648f6302aa67bee
+results/rna/qc/multiqc_RNA.html	aaa12bbd872cabd7d7917dbe16af5f68
+results/rna/qc/SeraSeq-NTRK-FFPE-2-5M_R.house_keeping_gene_coverage.tsv	d263eca5ca14299df55119d9778a3d1b
