@@ -161,7 +161,7 @@ use rule purecn_bam_list from references as references_purecn_bam_list with:
 use rule bcftools_merge from references as references_bcftools_merge with:
     input:
         vcfs=lambda wildcards: get_vcfs(units, "purecn_mapping_bias"),
-        vcfs_tabix=expand("{dataset}.{ext}", dataset=lambda wildcards: get_vcfs(units, "purecn_mapping_bias"), ext=["tbi"]),
+        vcfs_tabix=lambda wildcards: expand("{dataset}.{ext}", dataset=get_vcfs(units, "purecn_mapping_bias"), ext=["tbi"]),
 
 
 # Uses to create background
