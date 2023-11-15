@@ -109,6 +109,11 @@ hotspot_report:
 manta_config_t:
   extra: "--exome --callRegions {{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz"
 
+merge_cnv_json:
+  annotations:
+    - {{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes.bed
+    - {{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes.bed
+
 mosdepth:
   extra: "--no-per-base --fast-mode"
 
