@@ -34,8 +34,8 @@ if fp_fusions_filename != "":
             artefact_gene_dict[gene1] = {}
         artefact_gene_dict[gene1][gene2] = [read_limit_SF, read_limit_FC]
 
-output_fusions.write("caller\tgene1\tgene2\texon1\texon2\tconfidence\tFC-callers\tpredicted_effect\tbreakpoint1\tbreakpoint2\tcoverage1\t")
-output_fusions.write("coverage2\tsplit_reads\tspanning_pairs\ttotal_supporting_reads\n")
+output_fusions.write("caller\tgene1\tgene2\texon1\texon2\tconfidence\tFC-callers\tpredicted_effect\tbreakpoint1\tbreakpoint2\t")
+output_fusions.write("coverage1\tcoverage2\tsplit_reads\tspanning_pairs\ttotal_supporting_reads\n")
 
 # Only keep fusions with one gene that are in the design
 design_genes = {}
@@ -253,5 +253,6 @@ for line in input_fusioncatcher:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(Spanning_pairs) + int(Spanning_reads_unique)
-    output_fusions.write(f"FusionCatcher\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\{Fusion_finding_method}\t{predicted_effect}\t{breakpoint1}")
-    output_fusions.write(f"\t{breakpoint2}\t\t\t{Spanning_pairs}\t{Spanning_reads_unique}\t{total_supporting_reads}\n")
+    output_fusions.write(f"FusionCatcher\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{Fusion_finding_method}")
+    output_fusions.write(f"\t{predicted_effect}\t{breakpoint1}\t{breakpoint2}\t\t\t{Spanning_pairs}")
+    output_fusions.write(f"\t{Spanning_reads_unique}\t{total_supporting_reads}\n")
