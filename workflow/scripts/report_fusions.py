@@ -24,7 +24,7 @@ artefact_genes = {"MAML2": [
     "FRMPD3", "NCOA6", "ATXN3", "SRP14", "KMT2D", "CHD1", "NFAT5", "FOXP2", "NUMBL", "GLG1", "VEZF1", "AAK1", "NCOR2"
 ]}
 
-output_fusions.write("caller\tgene1\tgene2\texon1\texon2\tconfidence\tpredicted_effect\tbreakpoint1\tbreakpoint2\tcoverage1\t")
+output_fusions.write("caller\tgene1\tgene2\texon1\texon2\tconfidence\tFC-callers\tpredicted_effect\tbreakpoint1\tbreakpoint2\tcoverage1\t")
 output_fusions.write("coverage2\tsplit_reads\tspanning_pairs\ttotal_supporting_reads\n")
 
 # Only keep fusions with one gene that are in the design
@@ -102,7 +102,7 @@ for line in input_arriba:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(total_split_reads) + int(discordant_mates)
-    output_fusions.write(f"Arriba\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}")
+    output_fusions.write(f"Arriba\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t\t{predicted_effect}\t{breakpoint1}")
     output_fusions.write(f"\t{breakpoint2}\t{coverage1}\t{coverage2}\t{total_split_reads}\t{discordant_mates}")
     output_fusions.write(f"\t{total_supporting_reads}\n")
 
@@ -158,7 +158,7 @@ for line in input_starfusion:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(Junction_read_count) + int(Spanning_Frag_count)
-    output_fusions.write(f"StarFusion\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}")
+    output_fusions.write(f"StarFusion\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t\t{predicted_effect}\t{breakpoint1}")
     output_fusions.write(f"\t{breakpoint2}\t\t\t{Junction_read_count}\t{Spanning_Frag_count}\t{total_supporting_reads}\n")
 
 
@@ -229,5 +229,5 @@ for line in input_fusioncatcher:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(Spanning_pairs) + int(Spanning_reads_unique)
-    output_fusions.write(f"FusionCatcher\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}")
+    output_fusions.write(f"FusionCatcher\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\{Fusion_finding_method}\t{predicted_effect}\t{breakpoint1}")
     output_fusions.write(f"\t{breakpoint2}\t\t\t{Spanning_pairs}\t{Spanning_reads_unique}\t{total_supporting_reads}\n")
