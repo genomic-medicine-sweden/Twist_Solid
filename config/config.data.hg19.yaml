@@ -111,8 +111,8 @@ manta_config_t:
 
 merge_cnv_json:
   annotations:
-    - {{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes.bed
-    - {{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes.bed
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes.bed"
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes.bed"
 
 mosdepth:
   extra: "--no-per-base --fast-mode"
@@ -130,6 +130,7 @@ purecn_coverage:
 
 report_fusions:
   annotation_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_fusionpartners.bed"
+  fp_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/design/filter_rna_fusions_20231020.txt"
 
 report_gene_fuse:
   filter_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/gene_fuse/filter_fusions_20230214.csv"
