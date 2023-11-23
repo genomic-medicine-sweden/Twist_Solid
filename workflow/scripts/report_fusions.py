@@ -23,7 +23,7 @@ artefact_gene_dict = {}
 if fp_fusions_filename != "":
     with open(fp_fusions_filename) as fp_fusions
         for line in fp_fusions:
-            if not line.startswith("#"):
+            if line.startswith("#"):
                 continue
             columns = line.strip().split("\t")
             gene1 = columns[0]
