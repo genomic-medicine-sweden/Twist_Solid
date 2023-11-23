@@ -12,20 +12,30 @@ output_fusions = open(snakemake.output.fusions, "w")
 star_fusion_flag_low_support = snakemake.params.star_fusion_flag_low_support
 star_fusion_low_support = snakemake.params.star_fusion_low_support
 star_fusion_low_support_inframe = snakemake.params.star_fusion_low_support_inframe
-star_fusion_low_support_fp_genes = snakemake.params.star_fusion_low_support_fp_genes
 fusioncatcher_flag_low_support = snakemake.params.fusioncatcher_flag_low_support
 fusioncatcher_low_support = snakemake.params.fusioncatcher_low_support
 fusioncatcher_low_support_inframe = snakemake.params.fusioncatcher_low_support_inframe
-fusioncatcher_low_support_fp_genes = snakemake.params.fusioncatcher_low_support_fp_genes
+fp_fusions_filename = snakemake.params.fp_fusions
 
 
-housekeeping_genes = ["GAPDH", "GUSB", "OAZ1", "POLR2A"]
-artefact_genes = {"MAML2": [
-    "FRMPD3", "NCOA6", "ATXN3", "SRP14", "KMT2D", "CHD1", "NFAT5", "FOXP2", "NUMBL", "GLG1", "VEZF1", "AAK1", "NCOR2"
-]}
+housekeeping_genes = {}
+artefact_gene_dict = {}
+if fp_fusions_filename != "":
+    fp_fusions = open(fp_fusions_filename)
+    for line in fp_fusions:
+        columns = line.strip().split("\t")
+        gene1 = columns[0]
+        gene2 = columns[1]
+        read_limit_SF = int(columns[2])
+        read_limit_FC = int(columns[3])
+        if gene2 == "housekeeping":
+            housekeeping_genes[gene1] = [read_limit_SF, read_limit_FC]
+        if gene1 not in artefact_gene_dict:
+            artefact_gene_dict[gene1] = {}
+        artefact_gene_dict[gene1][gene2] = [read_limit_SF, read_limit_FC]
 
-output_fusions.write("caller\tgene1\tgene2\texon1\texon2\tconfidence\tpredicted_effect\tbreakpoint1\tbreakpoint2\tcoverage1\t")
-output_fusions.write("coverage2\tsplit_reads\tspanning_pairs\ttotal_supporting_reads\n")
+output_fusions.write("caller\tgene1\tgene2\texon1\texon2\tconfidence\tFC-callers\tpredicted_effect\tbreakpoint1\tbreakpoint2\t")
+output_fusions.write("coverage1\tcoverage2\tsplit_reads\tspanning_pairs\ttotal_supporting_reads\n")
 
 # Only keep fusions with one gene that are in the design
 design_genes = {}
@@ -102,7 +112,7 @@ for line in input_arriba:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(total_split_reads) + int(discordant_mates)
-    output_fusions.write(f"Arriba\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}")
+    output_fusions.write(f"Arriba\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t\t{predicted_effect}\t{breakpoint1}")
     output_fusions.write(f"\t{breakpoint2}\t{coverage1}\t{coverage2}\t{total_split_reads}\t{discordant_mates}")
     output_fusions.write(f"\t{total_supporting_reads}\n")
 
@@ -132,10 +142,17 @@ for line in input_starfusion:
     if int(Junction_read_count) <= star_fusion_low_support:
         continue
     # Higher demand of read support for genes with frequent FP, house keeping genes
-    if (((gene1 in artefact_genes and gene2 in artefact_genes[gene1]) or
-        (gene2 in artefact_genes and gene1 in artefact_genes[gene2])) or
-       gene1 in housekeeping_genes or gene2 in housekeeping_genes):
-        if int(Junction_read_count) < star_fusion_low_support_fp_genes:
+    if (gene1 in artefact_gene_dict and gene2 in artefact_gene_dict[gene1]):
+        if int(Junction_read_count) < artefact_gene_dict[gene1][gene2][0]:
+            continue
+    if (gene2 in artefact_gene_dict and gene1 in artefact_gene_dict[gene2]):
+        if int(Junction_read_count) < artefact_gene_dict[gene2][gene1][0]:
+            continue
+    if gene1 in housekeeping_genes:
+        if int(Junction_read_count) < housekeeping_genes[gene1]["housekeeping"][0]:
+            continue
+    if gene2 in housekeeping_genes:
+        if int(Junction_read_count) < housekeeping_genes[gene2]["housekeeping"][0]:
             continue
     breakpoint1 = lline[7]
     breakpoint2 = lline[9]
@@ -158,7 +175,7 @@ for line in input_starfusion:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(Junction_read_count) + int(Spanning_Frag_count)
-    output_fusions.write(f"StarFusion\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}")
+    output_fusions.write(f"StarFusion\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t\t{predicted_effect}\t{breakpoint1}")
     output_fusions.write(f"\t{breakpoint2}\t\t\t{Junction_read_count}\t{Spanning_Frag_count}\t{total_supporting_reads}\n")
 
 
@@ -193,10 +210,17 @@ for line in input_fusioncatcher:
     if int(Spanning_reads_unique) <= fusioncatcher_low_support:
         continue
     # Higher demand of read support for genes with frequent FP, house keeping genes, and pool2 genes without fusion to pool1 gene
-    if (((gene1 in artefact_genes and gene2 in artefact_genes[gene1]) or
-        (gene2 in artefact_genes and gene1 in artefact_genes[gene2])) or
-       gene1 in housekeeping_genes or gene2 in housekeeping_genes):
-        if int(Spanning_reads_unique) < fusioncatcher_low_support_fp_genes:
+    if (gene1 in artefact_gene_dict and gene2 in artefact_gene_dict[gene1]):
+        if int(Spanning_reads_unique) < artefact_gene_dict[gene1][gene2][1]:
+            continue
+    if (gene2 in artefact_gene_dict and gene1 in artefact_gene_dict[gene2]):
+        if int(Spanning_reads_unique) < artefact_gene_dict[gene2][gene1][1]:
+            continue
+    if gene1 in housekeeping_genes:
+        if int(Spanning_reads_unique) < housekeeping_genes[gene1]["housekeeping"][1]:
+            continue
+    if gene2 in housekeeping_genes:
+        if int(Spanning_reads_unique) < housekeeping_genes[gene2]["housekeeping"][1]:
             continue
     # Flag fusions annotated that are fusions with very high probability
     fp_db = [
@@ -229,5 +253,6 @@ for line in input_fusioncatcher:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(Spanning_pairs) + int(Spanning_reads_unique)
-    output_fusions.write(f"FusionCatcher\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{predicted_effect}\t{breakpoint1}")
-    output_fusions.write(f"\t{breakpoint2}\t\t\t{Spanning_pairs}\t{Spanning_reads_unique}\t{total_supporting_reads}\n")
+    output_fusions.write(f"FusionCatcher\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{Fusion_finding_method}")
+    output_fusions.write(f"\t{predicted_effect}\t{breakpoint1}\t{breakpoint2}\t\t\t{Spanning_pairs}")
+    output_fusions.write(f"\t{Spanning_reads_unique}\t{total_supporting_reads}\n")

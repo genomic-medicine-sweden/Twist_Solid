@@ -149,6 +149,7 @@ purecn_coverage:
 
 report_fusions:
   annotation_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_fusionpartners.bed"
+  fp_fusions: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/filter_rna_fusions_20231020.txt"
 
 report_gene_fuse:
   filter_fusions: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/filter_fusions_20230214.csv"
