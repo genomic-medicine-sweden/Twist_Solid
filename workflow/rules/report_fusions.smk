@@ -37,8 +37,6 @@ rule report_fusions:
             "qc/report_fusions/{sample}_{type}.fusion_report.tsv.benchmark.tsv",
             config.get("report_fusions", {}).get("benchmark_repeats", 1),
         )
-    conda:
-        "../envs/report_fusions.yaml"
     container:
         config.get("report_fusions", {}).get("container", config["default_container"])
     message:
