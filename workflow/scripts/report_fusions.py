@@ -21,7 +21,7 @@ fp_fusions_filename = snakemake.params.fp_fusions
 housekeeping_genes = {}
 artefact_gene_dict = {}
 if fp_fusions_filename != "":
-    with open(fp_fusions_filename) as fp_fusions
+    with open(fp_fusions_filename) as fp_fusions:
         for line in fp_fusions:
             if line.startswith("#"):
                 continue
