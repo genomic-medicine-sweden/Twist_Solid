@@ -98,12 +98,14 @@ gene_fuse:
   fasta: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta"
 
 hotspot_annotation:
+  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
   hotspots: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
 
 hotspot_info:
   hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
 
 hotspot_report:
+  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
   hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
 
 manta_config_t:
