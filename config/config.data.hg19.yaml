@@ -69,6 +69,7 @@ exon_skipping:
   design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.bed"
 
 filter_fuseq_wes:
+  gene_fusion_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/false_positive_fusion_pairs.txt"
   gene_white_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_gene_white_list.txt"
   transcript_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_transcript_black_list.txt"
   gtf: "{{PROJECT_REF_DATA}}/ref_data/refGene/hg19.refGene.gtf"
