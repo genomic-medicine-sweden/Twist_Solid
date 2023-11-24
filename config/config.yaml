@@ -164,12 +164,8 @@ gatk_mutect2_merge_stats:
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
 
-hotspot_annotation:
-  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
-
 hotspot_report:
   report_config: "config/reports/hotspot_report.yaml"
-  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
   levels:
     - [200, "ok", "yes"]
     - [30, "low", "yes"]
