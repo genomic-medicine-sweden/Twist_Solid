@@ -129,7 +129,7 @@ def get_gvcfs(units: pandas.DataFrame, name: str) -> typing.List[str]:
 
 
 def get_cnv_vcfs(units: pandas.DataFrame, name: str) -> typing.List[str]:
-    return get_files(units, name, "cnv_sv/svdb_query/%s_%s.pathology_purecn.svdb_query.vcf")
+    return get_files(units, name, "cnv_sv/svdb_merge/%s_%s.pathology_purecn.merged.vcf")
 
 
 def get_cnvkit_target(units: pandas.DataFrame, name: str) -> typing.List[str]:
