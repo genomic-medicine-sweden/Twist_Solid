@@ -21,18 +21,20 @@ fp_fusions_filename = snakemake.params.fp_fusions
 housekeeping_genes = {}
 artefact_gene_dict = {}
 if fp_fusions_filename != "":
-    fp_fusions = open(fp_fusions_filename)
-    for line in fp_fusions:
-        columns = line.strip().split("\t")
-        gene1 = columns[0]
-        gene2 = columns[1]
-        read_limit_SF = int(columns[2])
-        read_limit_FC = int(columns[3])
-        if gene2 == "housekeeping":
-            housekeeping_genes[gene1] = [read_limit_SF, read_limit_FC]
-        if gene1 not in artefact_gene_dict:
-            artefact_gene_dict[gene1] = {}
-        artefact_gene_dict[gene1][gene2] = [read_limit_SF, read_limit_FC]
+    with open(fp_fusions_filename) as fp_fusions:
+        for line in fp_fusions:
+            if line.startswith("#"):
+                continue
+            columns = line.strip().split("\t")
+            gene1 = columns[0]
+            gene2 = columns[1]
+            read_limit_SF = int(columns[2])
+            read_limit_FC = int(columns[3])
+            if gene2 == "housekeeping":
+                housekeeping_genes[gene1] = [read_limit_SF, read_limit_FC]
+            if gene1 not in artefact_gene_dict:
+                artefact_gene_dict[gene1] = {}
+            artefact_gene_dict[gene1][gene2] = [read_limit_SF, read_limit_FC]
 
 output_fusions.write("caller\tgene1\tgene2\texon1\texon2\tconfidence\tFC-callers\tpredicted_effect\tbreakpoint1\tbreakpoint2\t")
 output_fusions.write("coverage1\tcoverage2\tsplit_reads\tspanning_pairs\ttotal_supporting_reads\n")
