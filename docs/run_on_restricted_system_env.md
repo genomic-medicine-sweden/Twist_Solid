@@ -29,6 +29,7 @@ Create an environment, on a computer/server with access to internet, that can be
 Requires:
 
  - conda
+ - conda-pack
 
 ```bash
 # Build compressed file containing, named Twist_Solid_{TAG_OR_BRANCH}.tar.gz
