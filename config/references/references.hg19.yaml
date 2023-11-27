@@ -64,6 +64,13 @@
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/42061224
 
+  filter_fuseq_wes:
+    gtf:
+      checksum: 57b812f0595dc8a446ca81fe568e142d
+      path: ref_data/refGene/hg19.refGene.gtf
+      type: file 
+      url: https://figshare.scilifelab.se/ndownloader/files/42061200
+
   fuseq_wes:
     reference:
       type: folder

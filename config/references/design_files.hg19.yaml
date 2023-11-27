@@ -67,12 +67,19 @@
      path: GMS560/fuseq_wes/fuseq_wes_gene_white_list.txt
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/fuseq_wes/fuseq_wes_gene_white_list.txt
-  
+
    transcript_black_list:
      checksum: 586ad13ce609fdf5390d299cbbaae183
      path: GMS560/fuseq_wes/fuseq_wes_transcript_black_list.txt
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/fuseq_wes/fuseq_wes_transcript_black_list.txt
+
+   gene_fusion_black_list:
+     checksum: 21f8b965c1404f6ec4088d3816421809
+     path: GMS560/fuseq_wes/false_positive_fusion_pairs.txt
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/fuseq_wes/false_positive_fusion_pairs.txt
+    
 
  fuseq_wes:
    params:
@@ -100,21 +107,21 @@
      checksum: 50564a9b99f86b123bb61f6e361eff10
      path: GMS560/reports/Hotspots_combined_regions_nodups.231011.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.3.0/design/Hotspots_combined_regions_nodups.231011.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/design/Hotspots_combined_regions_nodups.231011.csv
 
  hotspot_info:
    hotspot_mutations:
      checksum: 50564a9b99f86b123bb61f6e361eff10
      path: GMS560/reports/Hotspots_combined_regions_nodups.231011.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.3.0/design/Hotspots_combined_regions_nodups.231011.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/design/Hotspots_combined_regions_nodups.231011.csv
 
  hotspot_report:
    hotspot_mutations:
      checksum: 50564a9b99f86b123bb61f6e361eff10
      path: GMS560/reports/Hotspots_combined_regions_nodups.231011.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.0.0/design/Hotspots_combined_regions_nodups.231011.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/design/Hotspots_combined_regions_nodups.231011.csv
 
  manta_config_t:
    extra:
@@ -148,6 +155,12 @@
      path: GMS560/design/Twist_RNA_fusionpartners.bed
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/rna_fusion/Twist_RNA_fusionpartners.bed
+
+   fp_fusions: 
+     checksum: eca1c1cf1f1e068cbdada20bdb75c392
+     path: GMS560/design/filter_rna_fusions_20231024.txt
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/rna_fusion/filter_rna_fusions_20231024.txt
 
  references:
    design_bed:
