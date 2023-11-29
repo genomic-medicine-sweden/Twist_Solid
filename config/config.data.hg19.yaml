@@ -82,7 +82,7 @@ fuseq_wes:
   params: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_params.txt"
 
 fusioncatcher:
-  genome_path: "{{PROJECT_REF_DATA}}/ref_data/fusioncatcher/data/human_v102/"
+  genome_path: "{{PROJECT_REF_DATA}}/ref_data/fusioncatcher/human_v102/"
 
 gatk_collect_allelic_counts:
   SNP_interval: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/gnomad_SNP_0.001_target.annotated.interval_list"
