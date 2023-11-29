@@ -185,7 +185,7 @@
      checksum: 5e38c3495625d3f854859eddf1643ff7
      path: GMS560/design/Twist_RNA_Design5.annotated.20230630.interval_list
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/design/Twist_RNA_Design5.annotated.20230630.interval_list
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.1/design/Twist_RNA_Design5.annotated.20230630.interval_list
 
  report_gene_fuse:
    filter_fusions:
