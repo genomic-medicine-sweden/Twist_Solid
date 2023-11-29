@@ -158,7 +158,7 @@
 
    fp_fusions: 
      checksum: eca1c1cf1f1e068cbdada20bdb75c392
-     path: GMS560/design/filter_rna_fusions_20231024.txt
+     path: GMS560/rna_fusion/filter_rna_fusions_20231024.txt
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/rna_fusion/filter_rna_fusions_20231024.txt
 
