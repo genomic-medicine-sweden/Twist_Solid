@@ -143,7 +143,7 @@ star:
   extra: "--quantMode GeneCounts --sjdbGTFfile {{PROJECT_REF_DATA}}/ref_data/refGene/hg19.refGene.gtf --outSAMtype BAM SortedByCoordinate --chimSegmentMin 10 --chimOutType WithinBAM SoftClip --chimJunctionOverhangMin 10 --chimScoreMin 1 --chimScoreDropMax 30 --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --alignSJstitchMismatchNmax 5 -1 5 5 --chimSegmentReadGapMax 3"
 
 star_fusion:
-  genome_path: "{{PROJECT_REF_DATA}}/ref_data/star/v2.7.10a_hg19/"
+  genome_path: "{{PROJECT_REF_DATA}}/ref_data/star-fusion/GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir"
   
 svdb_query:
   db_string: "--db {{PROJECT_PON_DATA}}/GMS560/PoN/SVDB/all_TN_292_svdb_0.8_20220505.vcf --out_frq Twist_AF --out_occ Twist_OCC"
