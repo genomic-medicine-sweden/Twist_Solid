@@ -299,6 +299,7 @@ star:
 
 star_fusion:
   container: "docker://hydragenetics/star-fusion:1.10.1"
+  extra: "--examine_coding_effect"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
