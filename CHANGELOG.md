@@ -1,5 +1,46 @@
 # Changelog
 
+## [0.10.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.9.0...v0.10.0) (2023-12-01)
+
+
+### Features
+
+* 2 new TERT positions added to report ([3617acb](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3617acb951c9d471cb3903fb536982c4aca01733))
+* add blacklist for fuseq_wes filtering ([6bc03e3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6bc03e308bf08b16dca0d5cbcba72f8e83066c3c))
+* make fusion filtering configurable and add more fp fusions ([5ed5c97](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5ed5c97c032e28027f384c095bb867368958fa8c))
+* more conda updates ([df2b77c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/df2b77c18fa3aa38c8f270fff3a9e30bf4aee3a8))
+* report internal callers for fusioncatcher ([d5fccad](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d5fccad6e6a908274d1d9d72601ff7b399bc1922))
+* setup files for reference file validation and fetching using yaml files ([7078c04](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7078c043a3e05310d70a898b017d30f66df10d6f))
+* singularity build script update ([8a8b665](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8a8b665e178b4980b7c6ab6dffd6db6fbba92f86))
+* update to latest files used by config ([07e351c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/07e351ce02df7a2cf623c19ce305c0497d60ac7f))
+* update to newer hotspot file and clean config ([72ef4ff](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/72ef4ff102c3eda03e2f175604994aa0b2abc942))
+* use v0.1.0 of fusion module to filter FP Fuseq_WES calls ([3c30fb1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3c30fb10cde2b23a5cfe86a56236c8d123e59621))
+
+
+### Bug Fixes
+
+* add lambda to functions so that they are only valuated when used ([0b85dda](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0b85dda077d46451074b3cd34d8bd3b8e3e3a5ca))
+* add missing extra option in star-fusion ([7476a0d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7476a0ddcbaf72d6aa040e989b291e37a8e30f67))
+* add missing type ([35e5f6e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/35e5f6eba600695d52de07bf3f9b7f6c7df611ac))
+* change from svdb_query file to svdb_merge file ([1ed29ad](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1ed29adbd2474204bd71eed92d95215faa89d502))
+* configs for reference profile ([6262775](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/626277567977673149cf341ca51ac279df5889ca))
+* correct path in config ([dd63afa](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/dd63afae10de654765bea96f29375059f7632a50))
+* handle reference creation with unit file containing both T and N ([61b7764](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/61b7764bd502cd28d47d631effb90fa11a5b955d))
+* increased star_fusions wall time ([5ff15de](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5ff15de1e6763eda2057650f97ab544f0e56bcdc))
+* lamda in correct position ([128aa8f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/128aa8fd206e20a9f9828ea61b634a8a97b56fa0))
+* minor config updates ([8296226](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8296226be5383ef1fc887f83ae51c26895caa71f))
+* new rna fusion filter file without duplicate entry and header ([280fd4a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/280fd4a59afb54952ab4b8420d37d1827bba50ad))
+* pycodestyle ([36eed32](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/36eed3242ee439363ee7249320a8433a6ef7b9e7))
+* support header with fusions filtering ([c8a8bb7](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c8a8bb734614c4686ac3251ec71bd7a2eae4d283))
+* updarw config files to match current setup ([0e689db](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0e689db20ee5e19ce3746d554a5f2b0f49be2ccc))
+* update configs and restructure ([7f397de](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7f397de7c49d78d606d229d8413d0d6c3dd2dec6))
+
+
+### Documentation
+
+* update documentation ([0fd09ea](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0fd09ea58561c38466cbdf1cb97243ec7eb0704c))
+* update reference page with instructions to download reference files ([3abac1f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3abac1f9fde475163371fa6e6160ca071b2195d2))
+
 ## [0.9.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.8.0...v0.9.0) (2023-11-01)
 
 
