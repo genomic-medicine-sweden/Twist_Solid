@@ -4,9 +4,12 @@ nav:
     - Introduction: index.md
     - Pipeline overview: overview.md
     - Result files: result_files.md
-    - Running the pipeline: running.md
     - Pipeline setup and cofiguration: setup.md
     - Reference files: references.md
+  - Running the pipeline:
+    - Basic: running.md
+    - Restricted system: run_on_restricted_system_env.md
+    - Bianca: run_on_bianca.md
   - DNA Pipeline:
     - Prealignment: dna_prealignment.md
     - Alignment: dna_alignment.md

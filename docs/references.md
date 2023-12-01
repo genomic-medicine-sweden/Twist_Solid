@@ -1,5 +1,31 @@
 # References, panel of normals and design files
 
+## Easy setup
+
+### Download data
+Use hydra-genetics to setup reference files. Remember to update config/config.data.hg19.yaml and include it when running an analysis.
+```bash
+# make sure hydra-genetics is available
+# make sure that TMPDIR points to a location with a lot of storage, it
+# will be required to fetch reference data
+export TMPDIR=/PATH_TO_STORAGE
+# NextSeq
+ hydra-genetics --debug references download -o design_and_ref_files -v config/references/design_files.hg19.yaml -v config/references/nextseq.hg19.pon.yaml -v config/references/references.hg19.yaml
+
+ #NovaSeq, not all files are prepare for novaseq
+ hydra-genetics references download -o design_and_ref_files -v config/references/design_files.hg19.yaml -v config/references/novaseq.hg19.pon.yaml -v config/references/references.hg19.yaml
+
+```
+
+### Validate if data requires update
+
+To validate if all design and reference files are up to date the following command can be run, assuming that they are store at the same parent folder.
+```bash
+# This will make sure that all design and reference files exists and haven't changed
+# Warnings for possible file PATH/hydra-genetics and missing tbi files in config can be ignored
+hydra-genetics --debug references validate -c config/config.yaml -c config/config.data.hg19.yaml -v config/references/design_files.hg19.yaml -v config/references/nextseq.hg19.pon.yaml -v config/references/references.hg19.yaml  -p ${PATH_TO_design_and_ref_files} 
+```
+
 ## References overview
 The following reference files, panel of normals and design files are needed to run the Twist Solid Pipeline:
 

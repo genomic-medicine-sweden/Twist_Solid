@@ -16,16 +16,13 @@ rule report_fusions:
     output:
         fusions=temp("fusions/report_fusions/{sample}_{type}.fusion_report.tsv"),
     params:
-        fusioncatcher_flag_low_support=config.get("report_fusions", {}).get("fusioncatcher", {}).get("flag_low_support", 15),
-        fusioncatcher_low_support=config.get("report_fusions", {}).get("fusioncatcher", {}).get("low_support", 3),
-        fusioncatcher_low_support_fp_genes=config.get("report_fusions", {})
-        .get("fusioncatcher", {})
-        .get("low_support_fp_genes", 20),
-        fusioncatcher_low_support_inframe=config.get("report_fusions", {}).get("fusioncatcher", {}).get("low_support_inframe", 6),
-        star_fusion_flag_low_support=config.get("report_fusions", {}).get("star_fusion", {}).get("flag_low_support", 15),
-        star_fusion_low_support=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support", 2),
-        star_fusion_low_support_fp_genes=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support_fp_genes", 20),
-        star_fusion_low_support_inframe=config.get("report_fusions", {}).get("star_fusion", {}).get("low_support_inframe", 6),
+        fp_fusions=config.get("report_fusions", {}).get("fp_fusions", ""),
+        fusioncatcher_flag_low_support=config.get("report_fusions", {}).get("fusioncatcher_flag_low_support", 15),
+        fusioncatcher_low_support=config.get("report_fusions", {}).get("fusioncatcher_low_support", 3),
+        fusioncatcher_low_support_inframe=config.get("report_fusions", {}).get("fusioncatcher_low_support_inframe", 6),
+        star_fusion_flag_low_support=config.get("report_fusions", {}).get("star_fusion_flag_low_support", 15),
+        star_fusion_low_support=config.get("report_fusions", {}).get("star_fusion_low_support", 2),
+        star_fusion_low_support_inframe=config.get("report_fusions", {}).get("star_fusion_low_support_inframe", 6),
     log:
         "qc/report_fusions/{sample}_{type}.fusion_report.tsv.log",
     threads: config.get("report_fusions", {}).get("threads", config["default_resources"]["threads"])
@@ -40,8 +37,6 @@ rule report_fusions:
             "qc/report_fusions/{sample}_{type}.fusion_report.tsv.benchmark.tsv",
             config.get("report_fusions", {}).get("benchmark_repeats", 1),
         )
-    conda:
-        "../envs/report_fusions.yaml"
     container:
         config.get("report_fusions", {}).get("container", config["default_container"])
     message:
