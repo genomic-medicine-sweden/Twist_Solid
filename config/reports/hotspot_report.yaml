@@ -31,34 +31,19 @@ columns:
     field: 'EXON'
     order: 6
   AA_change:
-    from: 'select'
-    items: "[0]"
-    else: "[1:]"
-    divider: ';'
-    elements:
-      hotspot:
-        from: 'hotspot'
-        field: 'AA_MUTATION_SYNTAX'
-      vep:
-        from: 'vep'
-        field: 'HGVSp'
+    vep:
+      from: 'vep'
+      field: 'HGVSp'
+      extract_regex: ':p.([A-Za-z0-9]+)'
     order: 7
   CDS_change:
-    from: 'select'
-    items: '[0]'
-    else: '[1:]'
-    divider: ';'
-    elements:
-      hotspot:
-        from: 'hotspot'
-        field: 'CDS_MUTATION_SYNTAX'
-      vep:
-        from: 'vep'
-        field: 'HGVSc'
+    vep:
+      from: 'vep'
+      field: 'HGVSc'
     order: 8
   Accession_number:
-    from: 'hotspot'
-    field: 'ACCESSION_NUMBER'
+    from: 'vep'
+    field: 'Feature'
     order: 9
   report:
     order: 10
@@ -143,34 +128,4 @@ columns:
       - 'var'
       - 'Artifact'
     order: 26
-  Other_AA_change:
-    from: 'select'
-    items: "[1:]"
-    condition:
-      items: "[0]"
-      empty: False
-    divider: ';'
-    elements:
-      hotspot:
-        from: 'hotspot'
-        field: 'AA_MUTATION_SYNTAX'
-      vep:
-        from: 'vep'
-        field: 'HGVSp'
-    order: 27
-  Other_CDS_change:
-    from: 'select'
-    items: '[1:]'
-    condition: 
-      items: '[0]'
-      empty: False
-    divider: ';'
-    elements:
-      hotspot:
-        from: 'hotspot'
-        field: 'CDS_MUTATION_SYNTAX'
-      vep:
-        from: 'vep'
-        field: 'HGVSc'
-    order: 28
 
