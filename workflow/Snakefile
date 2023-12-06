@@ -238,7 +238,7 @@ module annotation:
 use rule * from annotation exclude all, bgzip_vcf, tabix_vcf as annotation_*
 
 
-use rule vep from annotation as annotation_vep_wo_pick:
+use rule vep from annotation as annotation_vep_wo_pick with:
     output:
         vcf=temp("{file}.vep_annotated_wo_pick.vcf"),
     params:
