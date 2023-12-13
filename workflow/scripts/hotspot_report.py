@@ -2,7 +2,7 @@ from hydra_genetics.utils.io.hotspot_report import generate_hotspot_report
 
 hotspot_file = snakemake.input.hotspots
 vcf_file = snakemake.input.vcf
-vcf_file_wo_pick = snakemake.input.vcf_wo_pick
+vcf_file_wo_pick = snakemake.input.vcf_file_wo_pick
 gvcf_file = snakemake.input.gvcf
 
 report = snakemake.output.report
