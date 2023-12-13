@@ -31,15 +31,13 @@ columns:
     field: 'EXON'
     order: 6
   AA_change:
-    vep:
-      from: 'vep'
-      field: 'HGVSp'
-      extract_regex: ':p.([A-Za-z0-9]+)'
+    from: 'vep'
+    field: 'HGVSp'
+    extract_regex: ':p.([A-Za-z0-9]+)'
     order: 7
   CDS_change:
-    vep:
-      from: 'vep'
-      field: 'HGVSc'
+    from: 'vep'
+    field: 'HGVSc'
     order: 8
   Accession_number:
     from: 'vep'

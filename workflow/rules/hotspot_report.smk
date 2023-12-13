@@ -12,8 +12,8 @@ rule hotspot_report:
         hotspots=config["hotspot_report"]["hotspot_mutations"],
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf.gz",
         vcf_index="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf.gz.tbi",
-        vcf_file_wo_pick="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated_wo_pick.vcf.gz",
-        vcf_file_wo_pick_index="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated_wo_pick.vcf.gz.tbi",
+        vcf_file_wo_pick="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated_wo_pick.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf.gz",
+        vcf_file_wo_pick_index="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated_wo_pick.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf.gz.tbi",
         gvcf="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz",
         gvcf_index="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz.tbi",
     output:
