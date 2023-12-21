@@ -30,7 +30,7 @@ if fp_fusions_filename != "":
             read_limit_SF = int(columns[2])
             read_limit_FC = int(columns[3])
             if gene2 == "housekeeping":
-                housekeeping_genes[gene1] = [read_limit_SF, read_limit_FC]
+                housekeeping_genes[gene1]["housekeeping"] = [read_limit_SF, read_limit_FC]
             if gene1 not in artefact_gene_dict:
                 artefact_gene_dict[gene1] = {}
             artefact_gene_dict[gene1][gene2] = [read_limit_SF, read_limit_FC]
@@ -63,12 +63,12 @@ for line in input_bed_extra_annotation:
     end = int(lline[2])
     exon = lline[3]
     gene = lline[3].split("_")[0]
-    if gene in design_genes:
-        design_genes[gene].append([chrom, start, end, exon])
+    if gene in annotation_genes:
+        annotation_genes[gene].append([chrom, start, end, exon])
     else:
-        design_genes[gene] = [[chrom, start, end, exon]]
+        annotation_genes[gene] = [[chrom, start, end, exon]]
 
-fusion_dict = []
+fusion_dict = {}
 
 # Arriba fusions
 header = True
@@ -177,8 +177,16 @@ for line in input_starfusion:
         for region in design_genes[gene1]:
             if int(pos1) >= region[1] and int(pos1) <= region[2]:
                 exon1 = region[3]
+    elif gene1 in annotation_genes:
+        for region in annotation_genes[gene1]:
+            if int(pos1) >= region[1] and int(pos1) <= region[2]:
+                exon1 = region[3]
     if gene2 in design_genes:
         for region in design_genes[gene2]:
+            if int(pos2) >= region[1] and int(pos2) <= region[2]:
+                exon2 = region[3]
+    elif gene2 in annotation_genes:
+        for region in annotation_genes[gene2]:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(Junction_read_count) + int(Spanning_Frag_count)
@@ -258,8 +266,16 @@ for line in input_fusioncatcher:
         for region in design_genes[gene1]:
             if int(pos1) >= region[1] and int(pos1) <= region[2]:
                 exon1 = region[3]
+    elif gene1 in annotation_genes:
+        for region in annotation_genes[gene1]:
+            if int(pos1) >= region[1] and int(pos1) <= region[2]:
+                exon1 = region[3]
     if gene2 in design_genes:
         for region in design_genes[gene2]:
+            if int(pos2) >= region[1] and int(pos2) <= region[2]:
+                exon2 = region[3]
+    elif gene2 in annotation_genes:
+        for region in annotation_genes[gene2]:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(Spanning_pairs) + int(Spanning_reads_unique)
