@@ -1,6 +1,5 @@
 
-import sys
-import subprocess
+import operator
 
 input_bed = open(snakemake.input.bed)
 input_bed_extra_annotation = open(snakemake.input.bed_extra_annotation)
@@ -36,8 +35,10 @@ if fp_fusions_filename != "":
                 artefact_gene_dict[gene1] = {}
             artefact_gene_dict[gene1][gene2] = [read_limit_SF, read_limit_FC]
 
-output_fusions.write("caller\tgene1\tgene2\texon1\texon2\tconfidence\tFC-callers\tpredicted_effect\tbreakpoint1\tbreakpoint2\t")
-output_fusions.write("coverage1\tcoverage2\tsplit_reads\tspanning_pairs\ttotal_supporting_reads\n")
+output_fusions.write("callers\tgene1\tgene2\texon1\texon2\tconfidence\tFC-callers\tpredicted_effect\tbreakpoint1\tbreakpoint2\t")
+output_fusions.write("coverage1\tcoverage2\tA_split_reads\tA_spanning_pairs\tA_total_supporting_reads\t")
+output_fusions.write("SF_split_reads\tSF_spanning_pairs\tSF_total_supporting_reads\tFC_split_reads\tFC_spanning_pairs\t")
+output_fusions.write("FC_total_supporting_reads\tAll_total_supporting_reads\n")
 
 # Only keep fusions with one gene that are in the design
 design_genes = {}
@@ -66,6 +67,8 @@ for line in input_bed_extra_annotation:
         design_genes[gene].append([chrom, start, end, exon])
     else:
         design_genes[gene] = [[chrom, start, end, exon]]
+
+fusion_dict = []
 
 # Arriba fusions
 header = True
@@ -114,9 +117,11 @@ for line in input_arriba:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(total_split_reads) + int(discordant_mates)
-    output_fusions.write(f"Arriba\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t\t{predicted_effect}\t{breakpoint1}")
-    output_fusions.write(f"\t{breakpoint2}\t{coverage1}\t{coverage2}\t{total_split_reads}\t{discordant_mates}")
-    output_fusions.write(f"\t{total_supporting_reads}\n")
+    break_points = breakpoint1 + "_" + breakpoint2
+    if break_points not in fusion_dict:
+        fusion_dict[break_points] = {}
+    fusion_dict[break_points]["Arriba"] = [gene1, gene2, exon1, exon2, confidence, "", predicted_effect, breakpoint1, breakpoint2,
+                                           total_split_reads, discordant_mates, total_supporting_reads]
 
 
 # Star-fusions
@@ -156,8 +161,8 @@ for line in input_starfusion:
     if gene2 in housekeeping_genes:
         if int(Junction_read_count) < housekeeping_genes[gene2]["housekeeping"][0]:
             continue
-    breakpoint1 = lline[7]
-    breakpoint2 = lline[9]
+    breakpoint1 = lline[7][:-2]
+    breakpoint2 = lline[9][:-2]
     FFPM = lline[11]
     DBs = lline[16]
     # Compare fusion coverage with coverage in breakpoints
@@ -177,8 +182,11 @@ for line in input_starfusion:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(Junction_read_count) + int(Spanning_Frag_count)
-    output_fusions.write(f"StarFusion\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t\t{predicted_effect}\t{breakpoint1}")
-    output_fusions.write(f"\t{breakpoint2}\t\t\t{Junction_read_count}\t{Spanning_Frag_count}\t{total_supporting_reads}\n")
+    break_points = breakpoint1 + "_" + breakpoint2
+    if break_points not in fusion_dict:
+        fusion_dict[break_points] = {}
+    fusion_dict[break_points]["StarFusion"] = [gene1, gene2, exon1, exon2, confidence, "", predicted_effect, breakpoint1,
+                                               breakpoint2, Junction_read_count, Spanning_Frag_count, total_supporting_reads]
 
 
 # FusionCatcher
@@ -199,8 +207,8 @@ for line in input_fusioncatcher:
     Spanning_pairs = lline[4]
     Spanning_reads_unique = lline[5]
     Fusion_finding_method = lline[7]
-    breakpoint1 = lline[8]
-    breakpoint2 = lline[9]
+    breakpoint1 = lline[8][:-2]
+    breakpoint2 = lline[9][:-2]
     predicted_effect = lline[15]
     # Flag fusions with Spanning_reads_unique < 5
     confidence = ""
@@ -255,6 +263,60 @@ for line in input_fusioncatcher:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(Spanning_pairs) + int(Spanning_reads_unique)
-    output_fusions.write(f"FusionCatcher\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{Fusion_finding_method}")
-    output_fusions.write(f"\t{predicted_effect}\t{breakpoint1}\t{breakpoint2}\t\t\t{Spanning_pairs}")
-    output_fusions.write(f"\t{Spanning_reads_unique}\t{total_supporting_reads}\n")
+    break_points = breakpoint1 + "_" + breakpoint2
+    if break_points not in fusion_dict:
+        fusion_dict[break_points] = {}
+    fusion_dict[break_points]["FusionCatcher"] = [gene1, gene2, exon1, exon2, confidence, Fusion_finding_method,
+                                                  predicted_effect, breakpoint1, breakpoint2, Spanning_pairs,
+                                                  Spanning_reads_unique, total_supporting_reads]
+
+
+merged_fusions = []
+i = 0
+for break_points in fusion_dict:
+    first = True
+    if "Arriba" in fusion_dict[break_points]:
+        data = fusion_dict[break_points]["Arriba"]
+        merged_fusions.append([data[0], data[1], data[2], data[3], data[4], "", data[6], data[7], data[8], data[9], data[10],
+                               data[11], "", "", "", "", "", "", int(data[11]), 1, "Arriba"])
+        first = False
+    if "StarFusion" in fusion_dict[break_points]:
+        data = fusion_dict[break_points]["StarFusion"]
+        if first:
+            merged_fusions.append([data[0], data[1], data[2], data[3], data[4], "", data[6], data[7], data[8], "", "", "",
+                                   data[9], data[10], data[11], "", "", "", int(data[11]), 1, "StarFusion"])
+            first = False
+        else:
+            merged_fusions[i][4] += f", {data[4]}"
+            merged_fusions[i][6] += f", {data[6]}"
+            merged_fusions[i][12] = data[9]
+            merged_fusions[i][13] = data[10]
+            merged_fusions[i][14] = data[11]
+            merged_fusions[i][18] += int(data[11])
+            merged_fusions[i][19] += 1
+            merged_fusions[i][20] += ", StarFusion"
+    if "FusionCatcher" in fusion_dict[break_points]:
+        data = fusion_dict[break_points]["FusionCatcher"]
+        if first:
+            merged_fusions.append([data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], "", "", "",
+                                   "", "", "", data[9], data[10], data[11], int(data[11]), 1, "FusionCatcher"])
+            first = False
+        else:
+            merged_fusions[i][4] += f", {data[4]}"
+            merged_fusions[i][5] += data[5]
+            merged_fusions[i][6] += f", {data[6]}"
+            merged_fusions[i][15] = data[9]
+            merged_fusions[i][16] = data[10]
+            merged_fusions[i][17] = data[11]
+            merged_fusions[i][18] += int(data[11])
+            merged_fusions[i][19] += 1
+            merged_fusions[i][20] += ", FusionCatcher"
+    i += 1
+
+merged_fusions.sort(key=operator.itemgetter(19, 18))
+
+for fusion in merged_fusions:
+    output_fusions.write(f"{fusion[20]}\t{fusion[0]}\t{fusion[1]}\t{fusion[2]}\t{fusion[3]}\t{fusion[4]}\t{fusion[5]}\t")
+    output_fusions.write(f"{fusion[6]}\t{fusion[7]}\t{fusion[8]}\t{fusion[9]}\t{fusion[10]}\t{fusion[11]}\t")
+    output_fusions.write(f"{fusion[12]}\t{fusion[13]}\t{fusion[14]}\t{fusion[15]}\t{fusion[16]}\t{fusion[17]}\t")
+    output_fusions.write(f"{fusion[18]}\n")
