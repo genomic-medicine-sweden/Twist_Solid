@@ -30,6 +30,7 @@ if fp_fusions_filename != "":
             read_limit_SF = int(columns[2])
             read_limit_FC = int(columns[3])
             if gene2 == "housekeeping":
+                housekeeping_genes[gene1] = {}
                 housekeeping_genes[gene1]["housekeeping"] = [read_limit_SF, read_limit_FC]
             if gene1 not in artefact_gene_dict:
                 artefact_gene_dict[gene1] = {}
