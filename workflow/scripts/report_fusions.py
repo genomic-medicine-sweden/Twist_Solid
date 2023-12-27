@@ -216,8 +216,8 @@ for line in input_fusioncatcher:
     Spanning_pairs = lline[4]
     Spanning_reads_unique = lline[5]
     Fusion_finding_method = lline[7]
-    breakpoint1 = lline[8][:-2]
-    breakpoint2 = lline[9][:-2]
+    breakpoint1 = f"chr{lline[8][:-2]}"
+    breakpoint2 = f"chr{lline[9][:-2]}"
     predicted_effect = lline[15]
     # Flag fusions with Spanning_reads_unique < 5
     confidence = ""
@@ -330,7 +330,7 @@ for break_points in fusion_dict:
             merged_fusions[i][20] += ", FusionCatcher"
     i += 1
 
-merged_fusions.sort(key=operator.itemgetter(19, 18))
+merged_fusions.sort(key=operator.itemgetter(19, 18), reverse=True)
 
 for fusion in merged_fusions:
     output_fusions.write(f"{fusion[20]}\t{fusion[0]}\t{fusion[1]}\t{fusion[2]}\t{fusion[3]}\t{fusion[4]}\t{fusion[5]}\t")
