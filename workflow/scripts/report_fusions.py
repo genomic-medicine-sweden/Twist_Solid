@@ -37,7 +37,7 @@ if fp_fusions_filename != "":
             artefact_gene_dict[gene1][gene2] = [read_limit_SF, read_limit_FC]
 
 output_fusions.write("callers\tgene1\tgene2\texon1\texon2\tconfidence\tFC-callers\tpredicted_effect\tbreakpoint1\tbreakpoint2\t")
-output_fusions.write("coverage1\tcoverage2\tA_split_reads\tA_spanning_pairs\tA_total_supporting_reads\t")
+output_fusions.write("A_split_reads\tA_spanning_pairs\tA_total_supporting_reads\t")
 output_fusions.write("SF_split_reads\tSF_spanning_pairs\tSF_total_supporting_reads\tFC_split_reads\tFC_spanning_pairs\t")
 output_fusions.write("FC_total_supporting_reads\tAll_total_supporting_reads\n")
 
