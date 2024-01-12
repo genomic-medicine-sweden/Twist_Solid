@@ -30,8 +30,7 @@ if fp_fusions_filename != "":
             read_limit_SF = int(columns[2])
             read_limit_FC = int(columns[3])
             if gene2 == "housekeeping":
-                housekeeping_genes[gene1] = {}
-                housekeeping_genes[gene1]["housekeeping"] = [read_limit_SF, read_limit_FC]
+                housekeeping_genes[gene1] = [read_limit_SF, read_limit_FC]
             if gene1 not in artefact_gene_dict:
                 artefact_gene_dict[gene1] = {}
             artefact_gene_dict[gene1][gene2] = [read_limit_SF, read_limit_FC]
@@ -157,10 +156,10 @@ for line in input_starfusion:
         if int(Junction_read_count) < artefact_gene_dict[gene2][gene1][0]:
             continue
     if gene1 in housekeeping_genes:
-        if int(Junction_read_count) < housekeeping_genes[gene1]["housekeeping"][0]:
+        if int(Junction_read_count) < housekeeping_genes[gene1][0]:
             continue
     if gene2 in housekeeping_genes:
-        if int(Junction_read_count) < housekeeping_genes[gene2]["housekeeping"][0]:
+        if int(Junction_read_count) < housekeeping_genes[gene2][0]:
             continue
     breakpoint1 = lline[7][:-2]
     breakpoint2 = lline[9][:-2]
@@ -236,10 +235,10 @@ for line in input_fusioncatcher:
         if int(Spanning_reads_unique) < artefact_gene_dict[gene2][gene1][1]:
             continue
     if gene1 in housekeeping_genes:
-        if int(Spanning_reads_unique) < housekeeping_genes[gene1]["housekeeping"][1]:
+        if int(Spanning_reads_unique) < housekeeping_genes[gene1][1]:
             continue
     if gene2 in housekeeping_genes:
-        if int(Spanning_reads_unique) < housekeeping_genes[gene2]["housekeeping"][1]:
+        if int(Spanning_reads_unique) < housekeeping_genes[gene2][1]:
             continue
     # Flag fusions annotated that are fusions with very high probability
     fp_db = [
