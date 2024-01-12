@@ -1,8 +1,10 @@
 
 import operator
+import gzip
 
 input_bed = open(snakemake.input.bed)
 input_bed_extra_annotation = open(snakemake.input.bed_extra_annotation)
+dedup_coverage_filename = snakemake.input.dedup_coverage
 input_arriba = open(snakemake.input.arriba)
 input_starfusion = open(snakemake.input.star_fusion)
 input_fusioncatcher = open(snakemake.input.fusioncatcher)
@@ -16,7 +18,12 @@ fusioncatcher_low_support = snakemake.params.fusioncatcher_low_support
 fusioncatcher_low_support_inframe = snakemake.params.fusioncatcher_low_support_inframe
 fp_fusions_filename = snakemake.params.fp_fusions
 
+output_fusions.write("callers\tgene1\tgene2\texon1\texon2\tconfidence\tFC-callers\tpredicted_effect\tbreakpoint1\tbreakpoint2\t")
+output_fusions.write("dedup_coverage\tA_split_reads\tA_spanning_pairs\tA_total_supporting_reads\t")
+output_fusions.write("SF_split_reads\tSF_spanning_pairs\tSF_total_supporting_reads\tFC_split_reads\tFC_spanning_pairs\t")
+output_fusions.write("FC_total_supporting_reads\tAll_total_supporting_reads\n")
 
+# Filter noisy genes and housekeeping genes involved in fusions
 housekeeping_genes = {}
 artefact_gene_dict = {}
 if fp_fusions_filename != "":
@@ -34,11 +41,6 @@ if fp_fusions_filename != "":
             if gene1 not in artefact_gene_dict:
                 artefact_gene_dict[gene1] = {}
             artefact_gene_dict[gene1][gene2] = [read_limit_SF, read_limit_FC]
-
-output_fusions.write("callers\tgene1\tgene2\texon1\texon2\tconfidence\tFC-callers\tpredicted_effect\tbreakpoint1\tbreakpoint2\t")
-output_fusions.write("A_split_reads\tA_spanning_pairs\tA_total_supporting_reads\t")
-output_fusions.write("SF_split_reads\tSF_spanning_pairs\tSF_total_supporting_reads\tFC_split_reads\tFC_spanning_pairs\t")
-output_fusions.write("FC_total_supporting_reads\tAll_total_supporting_reads\n")
 
 # Only keep fusions with one gene that are in the design
 design_genes = {}
@@ -67,6 +69,17 @@ for line in input_bed_extra_annotation:
         annotation_genes[gene].append([chrom, start, end, exon])
     else:
         annotation_genes[gene] = [[chrom, start, end, exon]]
+
+# Deduplicated coverage of fusion regions
+dedup_coverage_list = []
+with gzip.open(dedup_coverage_filename,'r') as dedup_coverage:
+    for line in dedup_coverage:
+        columns = line.strip().split("\t")
+        chrom = columns[0]
+        start_pos = int(columns[1])
+        end_pos = int(columns[2])
+        coverage = round(float(columns[4]))
+        dedup_coverage_list.append([chrom, start_pos, end_pos, coverage])
 
 fusion_dict = {}
 
@@ -254,7 +267,7 @@ for line in input_fusioncatcher:
     # Compare fusion coverage with coverage in breakpoints
     pos1 = "0"
     pos2 = "0"
-    if len(breakpoint1.split(":")) == 3 and len(breakpoint2.split(":")) == 3:
+    if len(breakpoint1.split(":")) == 2 and len(breakpoint2.split(":")) == 2:
         chrom1 = "chr" + breakpoint1.split(":")[0]
         pos1 = breakpoint1.split(":")[1]
         chrom2 = "chr" + breakpoint2.split(":")[0]
@@ -290,17 +303,39 @@ for line in input_fusioncatcher:
 merged_fusions = []
 i = 0
 for break_points in fusion_dict:
+
+    exon_coverage1 = 0
+    exon_coverage2 = 0
+    max_exon_coverage = 0
+    caller = ""
+    if "Arriba" in fusion_dict[break_points]:
+        caller = "Arriba"
+    elif "StarFusion" in fusion_dict[break_points]:
+        caller = "StarFusion"
+    elif "FusionCatcher" in fusion_dict[break_points]:
+        caller = "FusionCatcher"
+    chrom1 = fusion_dict[break_points][caller][7].split(":")[0]
+    pos1 = int(fusion_dict[break_points][caller][7].split(":")[1])
+    chrom2 = fusion_dict[break_points][caller][8].split(":")[0]
+    pos2 = int(fusion_dict[break_points][caller][8].split(":")[1])        
+    for exon in dedup_coverage_list:
+        if chrom1 == exon[0] and pos1 >= exon[1] and pos1 <= exon[2]:
+            exon_coverage1 = exon[4]
+        if chrom2 == exon[0] and pos2 >= exon[1] and pos2 <= exon[2]:
+            exon_coverage2 = exon[4]
+    max_exon_coverage = max(exon_coverage1, exon_coverage2)
+
     first = True
     if "Arriba" in fusion_dict[break_points]:
         data = fusion_dict[break_points]["Arriba"]
         merged_fusions.append([data[0], data[1], data[2], data[3], data[4], "", data[6], data[7], data[8], data[9], data[10],
-                               data[11], "", "", "", "", "", "", int(data[11]), 1, "Arriba"])
+                               data[11], "", "", "", "", "", "", int(data[11]), 1, "Arriba", max_exon_coverage])
         first = False
     if "StarFusion" in fusion_dict[break_points]:
         data = fusion_dict[break_points]["StarFusion"]
         if first:
             merged_fusions.append([data[0], data[1], data[2], data[3], data[4], "", data[6], data[7], data[8], "", "", "",
-                                   data[9], data[10], data[11], "", "", "", int(data[11]), 1, "StarFusion"])
+                                   data[9], data[10], data[11], "", "", "", int(data[11]), 1, "StarFusion", max_exon_coverage])
             first = False
         else:
             merged_fusions[i][4] += f", {data[4]}"
@@ -315,7 +350,7 @@ for break_points in fusion_dict:
         data = fusion_dict[break_points]["FusionCatcher"]
         if first:
             merged_fusions.append([data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], "", "", "",
-                                   "", "", "", data[9], data[10], data[11], int(data[11]), 1, "FusionCatcher"])
+                                   "", "", "", data[9], data[10], data[11], int(data[11]), 1, "FusionCatcher", max_exon_coverage])
             first = False
         else:
             merged_fusions[i][4] += f", {data[4]}"
@@ -333,6 +368,6 @@ merged_fusions.sort(key=operator.itemgetter(19, 18), reverse=True)
 
 for fusion in merged_fusions:
     output_fusions.write(f"{fusion[20]}\t{fusion[0]}\t{fusion[1]}\t{fusion[2]}\t{fusion[3]}\t{fusion[4]}\t{fusion[5]}\t")
-    output_fusions.write(f"{fusion[6]}\t{fusion[7]}\t{fusion[8]}\t{fusion[9]}\t{fusion[10]}\t{fusion[11]}\t")
+    output_fusions.write(f"{fusion[6]}\t{fusion[7]}\t{fusion[8]}\t{fusion[21]}\t{fusion[9]}\t{fusion[10]}\t{fusion[11]}\t")
     output_fusions.write(f"{fusion[12]}\t{fusion[13]}\t{fusion[14]}\t{fusion[15]}\t{fusion[16]}\t{fusion[17]}\t")
     output_fusions.write(f"{fusion[18]}\n")

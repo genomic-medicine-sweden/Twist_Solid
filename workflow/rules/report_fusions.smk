@@ -11,6 +11,7 @@ rule report_fusions:
         bai="fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai",
         bed=config.get("reference", {}).get("design_bed_rna", ""),
         bed_extra_annotation=config.get("report_fusions", {}).get("annotation_bed", ""),
+        dedup_coverage="qc/mosdepth/{sample}_{type}.regions.bed.gz",
         fusioncatcher="fusions/fusioncatcher/{sample}_{type}/final-list_candidate-fusion-genes.hg19.txt",
         star_fusion="fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.coding_effect.tsv",
     output:
