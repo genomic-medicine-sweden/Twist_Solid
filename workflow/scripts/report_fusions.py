@@ -72,7 +72,7 @@ for line in input_bed_extra_annotation:
 
 # Deduplicated coverage of fusion regions
 dedup_coverage_list = []
-with gzip.open(dedup_coverage_filename,'r') as dedup_coverage:
+with gzip.open(dedup_coverage_filename, 'r') as dedup_coverage:
     for line in dedup_coverage:
         columns = line.strip().split("\t")
         chrom = columns[0]
@@ -317,7 +317,7 @@ for break_points in fusion_dict:
     chrom1 = fusion_dict[break_points][caller][7].split(":")[0]
     pos1 = int(fusion_dict[break_points][caller][7].split(":")[1])
     chrom2 = fusion_dict[break_points][caller][8].split(":")[0]
-    pos2 = int(fusion_dict[break_points][caller][8].split(":")[1])        
+    pos2 = int(fusion_dict[break_points][caller][8].split(":")[1])
     for exon in dedup_coverage_list:
         if chrom1 == exon[0] and pos1 >= exon[1] and pos1 <= exon[2]:
             exon_coverage1 = exon[4]
