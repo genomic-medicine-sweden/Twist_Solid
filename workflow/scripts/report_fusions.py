@@ -72,7 +72,7 @@ for line in input_bed_extra_annotation:
 
 # Deduplicated coverage of fusion regions
 dedup_coverage_list = []
-with gzip.open(dedup_coverage_filename, 'r') as dedup_coverage:
+with gzip.open(dedup_coverage_filename, 'rt') as dedup_coverage:
     for line in dedup_coverage:
         columns = line.strip().split("\t")
         chrom = columns[0]
@@ -320,9 +320,9 @@ for break_points in fusion_dict:
     pos2 = int(fusion_dict[break_points][caller][8].split(":")[1])
     for exon in dedup_coverage_list:
         if chrom1 == exon[0] and pos1 >= exon[1] and pos1 <= exon[2]:
-            exon_coverage1 = exon[4]
+            exon_coverage1 = exon[3]
         if chrom2 == exon[0] and pos2 >= exon[1] and pos2 <= exon[2]:
-            exon_coverage2 = exon[4]
+            exon_coverage2 = exon[3]
     max_exon_coverage = max(exon_coverage1, exon_coverage2)
 
     first = True
@@ -364,7 +364,7 @@ for break_points in fusion_dict:
             merged_fusions[i][20] += ", FusionCatcher"
     i += 1
 
-merged_fusions.sort(key=operator.itemgetter(19, 18), reverse=True)
+merged_fusions.sort(key=operator.itemgetter(18), reverse=True)
 
 for fusion in merged_fusions:
     output_fusions.write(f"{fusion[20]}\t{fusion[0]}\t{fusion[1]}\t{fusion[2]}\t{fusion[3]}\t{fusion[4]}\t{fusion[5]}\t")
