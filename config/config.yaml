@@ -127,7 +127,7 @@ fuseq_wes:
 
 fusioncatcher:
   container: "docker://hydragenetics/fusioncatcher:1.33"
-  extra: "--visualization-sam"
+  extra: ""
 
 gatk_calculate_contamination:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
