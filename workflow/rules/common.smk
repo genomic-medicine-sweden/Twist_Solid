@@ -19,7 +19,7 @@ from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics.utils.misc import replace_dict_variables
 from hydra_genetics import min_version as hydra_min_version
 
-hydra_min_version("1.9.1")
+hydra_min_version("1.10.0")
 
 min_version("7.13.0")
 

@@ -238,6 +238,18 @@ module annotation:
 use rule * from annotation exclude all, bgzip_vcf, tabix_vcf as annotation_*
 
 
+use rule vep from annotation as annotation_vep_wo_pick with:
+    output:
+        vcf=temp("{file}.vep_annotated_wo_pick.vcf"),
+    params:
+        extra=config.get("vep_wo_pick", {}).get("extra", ""),
+        mode=config.get("vep_wo_pick", {}).get("mode", "--offline --cache --refseq "),
+    log:
+        "{file}.vep_annotated_wo_pick.vcf.log",
+    benchmark:
+        repeat("{file}.vep_annotated_wo_pick.vcf.benchmark.tsv", config.get("vep_wo_pick", {}).get("benchmark_repeats", 1))
+
+
 use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purecn with:
     input:
         vcf="snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.vcf.gz",
