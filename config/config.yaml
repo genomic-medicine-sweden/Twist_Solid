@@ -110,6 +110,7 @@ fgbio_group_reads_by_umi:
 
 filter_vcf:
   snv_soft_filter: "config/filters/config_soft_filter_uppsala_vep105.yaml"
+  snv_soft_filter_umi: "config/filters/config_soft_filter_umi_vep105.yaml"
   snv_hard_filter: "config/filters/config_hard_filter_uppsala_vep105.yaml"
   snv_hard_filter_umi: "config/filters/config_hard_filter_umi_vep105.yaml"
   snv_hard_filter_purecn: "config/filters/config_hard_filter_purecn.yaml"
@@ -126,7 +127,7 @@ fuseq_wes:
 
 fusioncatcher:
   container: "docker://hydragenetics/fusioncatcher:1.33"
-  extra: "--visualization-sam"
+  extra: ""
 
 gatk_calculate_contamination:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
