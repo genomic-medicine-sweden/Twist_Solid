@@ -266,108 +266,108 @@ files:
       - R
   - name: CNVkit scatter PNG
     input: cnv_sv/cnvkit_scatter/{sample}_{type}.png
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.cnvkit.scatter.png
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.cnvkit.scatter.png
     types:
       - T
       - N
   - name: CNVkit diagram PDF
     input: cnv_sv/cnvkit_diagram/{sample}_{type}.pdf
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.cnvkit.diagram.pdf
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.cnvkit.diagram.pdf
     types:
       - T
       - N
   - name: SVDB query - PureCN
     input: cnv_sv/svdb_query/{sample}_{type}.purecn.svdb_query.vcf
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.svdb_query.vcf
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.purecn.svdb_query.vcf
     types:
       - T
       - N
   - name: SVDB query - pathology
     input: cnv_sv/svdb_query/{sample}_{type}.pathology.svdb_query.vcf
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.svdb_query.vcf
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology.svdb_query.vcf
     types:
       - T
       - N
   - name: SVDB query - pathology_purecn
     input: cnv_sv/svdb_query/{sample}_{type}.pathology_purecn.svdb_query.vcf
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.svdb_query.vcf
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology_purecn.svdb_query.vcf
     types:
       - T
       - N
   - name: CNV HTML report - PureCN
     input: reports/cnv_html_report/{sample}_{type}.purecn.cnv_report.html
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv.html
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.purecn.cnv.html
     types:
       - T
       - N
   - name: CNV HTML report - pathology
     input: reports/cnv_html_report/{sample}_{type}.pathology.cnv_report.html
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv.html
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology.cnv.html
     types:
       - T
       - N
   - name: CNV HTML report - pathology_purecn
     input: reports/cnv_html_report/{sample}_{type}.pathology_purecn.cnv_report.html
-    output: results/dna/{sample}_{type}/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.cnv.html
+    output: results/dna/{sample}_{type}/cnv/{sample}_{type}.pathology_purecn.cnv.html
     types:
       - T
       - N
   - name: PureCN purity
     input: cnv_sv/purecn/{sample}_{type}.csv
-    output: results/dna/{sample}_{type}/cnv/{sample}_{type}/{sample}_{type}.purecn_purity_ploidity.csv
+    output: results/dna/{sample}_{type}/cnv/{sample}_{type}.purecn_purity_ploidity.csv
     types:
       - T
       - N
   - name: CNV TSV report - PureCN
     input: cnv_sv/svdb_query/{sample}_{type}.purecn.cnv_loh_genes_all.cnv_report.tsv
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.amp_all_del_all.cnv_report.tsv
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.purecn.amp_all_del_all.cnv_report.tsv
     types:
       - T
       - N
   - name: CNV TSV report - pathology
     input: cnv_sv/svdb_query/{sample}_{type}.pathology.cnv_loh_genes_all.cnv_report.tsv
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.amp_all_del_all.cnv_report.tsv
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology.amp_all_del_all.cnv_report.tsv
     types:
       - T
       - N
   - name: CNV TSV report - pathology_purecn
     input: cnv_sv/svdb_query/{sample}_{type}.pathology_purecn.cnv_loh_genes_all.cnv_report.tsv
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.amp_all_del_all.cnv_report.tsv
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology_purecn.amp_all_del_all.cnv_report.tsv
     types:
       - T
       - N
   - name: CNV TSV report validated - PureCN
     input: cnv_sv/svdb_query/{sample}_{type}.purecn.cnv_loh_genes_validated.cnv_report.tsv
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.amp_all_del_validated.cnv_report.tsv
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.purecn.amp_all_del_validated.cnv_report.tsv
     types:
       - T
       - N
   - name: CNV TSV report validated - pathology
     input: cnv_sv/svdb_query/{sample}_{type}.pathology.cnv_loh_genes_validated.cnv_report.tsv
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.amp_all_del_validated.cnv_report.tsv
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology.amp_all_del_validated.cnv_report.tsv
     types:
       - T
       - N
   - name: CNV TSV report validated - pathology_purecn
     input: cnv_sv/svdb_query/{sample}_{type}.pathology_purecn.cnv_loh_genes_validated.cnv_report.tsv
-    output: results/dna/{sample}_{type}/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.amp_all_del_validated.cnv_report.tsv
+    output: results/dna/{sample}_{type}/cnv/{sample}_{type}.pathology_purecn.amp_all_del_validated.cnv_report.tsv
     types:
       - T
       - N
   - name: Small CNV deletions
     input: cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.deletions.tsv
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.deletions.tsv
     types:
       - T
       - N
   - name: Small CNV amplifications
     input: cnv_sv/call_small_cnv_amplifications/{sample}_{type}.amplifications.tsv
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.amplifications.tsv
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.amplifications.tsv
     types:
       - T
       - N
   - name: Manta VCF
     input: cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.manta_tumorSV.vcf.gz
     types:
       - T
