@@ -73,7 +73,7 @@ cnvkit_scatter:
 
 cnv_html_report:
   show_table: true
-  template_dir: config/reports/cnv_report_template
+  show_cytobands: true
 
 cnv_tsv_report:
   amp_cn_limit: 6.0
