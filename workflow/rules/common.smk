@@ -19,7 +19,7 @@ from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics.utils.misc import replace_dict_variables
 from hydra_genetics import min_version as hydra_min_version
 
-hydra_min_version("1.9.1")
+hydra_min_version("1.10.0")
 
 min_version("7.13.0")
 
@@ -145,7 +145,7 @@ def get_tc(wildcards):
         tc_file = f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
         if os.path.exists(tc_file):
             with open(tc_file) as f:
-                tc = f.read()
+                tc = f.read().strip()
         if tc == "" or float(tc) < 0.35:
             return get_sample(samples, wildcards)["tumor_content"]
         else:
@@ -158,7 +158,7 @@ def get_tc(wildcards):
             return -1
         else:
             with open(tc_file) as f:
-                tc = f.read()
+                tc = f.read().strip()
                 if tc == "":
                     return "0.2"
                 else:

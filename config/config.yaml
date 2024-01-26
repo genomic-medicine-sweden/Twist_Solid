@@ -5,7 +5,7 @@ units: "units.tsv"
 #hydra_local_path: "PATH_TO_REPO"
 
 output: "config/output_files.yaml"
-default_container: "docker://hydragenetics/common:1.8.1"
+default_container: "docker://hydragenetics/common:1.10.2"
 
 trimmer_software: "fastp_pe"
 
@@ -73,7 +73,7 @@ cnvkit_scatter:
 
 cnv_html_report:
   show_table: true
-  template_dir: config/reports/cnv_report_template
+  show_cytobands: true
 
 cnv_tsv_report:
   amp_cn_limit: 6.0
@@ -110,6 +110,7 @@ fgbio_group_reads_by_umi:
 
 filter_vcf:
   snv_soft_filter: "config/filters/config_soft_filter_uppsala_vep105.yaml"
+  snv_soft_filter_umi: "config/filters/config_soft_filter_umi_vep105.yaml"
   snv_hard_filter: "config/filters/config_hard_filter_uppsala_vep105.yaml"
   snv_hard_filter_umi: "config/filters/config_hard_filter_umi_vep105.yaml"
   snv_hard_filter_purecn: "config/filters/config_hard_filter_purecn.yaml"
@@ -126,7 +127,7 @@ fuseq_wes:
 
 fusioncatcher:
   container: "docker://hydragenetics/fusioncatcher:1.33"
-  extra: "--visualization-sam"
+  extra: ""
 
 gatk_calculate_contamination:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
@@ -360,6 +361,10 @@ vep:
   container: "docker://hydragenetics/vep:105"
   mode: --offline --cache --refseq
   extra: " --assembly GRCh37 --check_existing --pick --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
+
+vep_wo_pick:
+  mode: --offline --cache --refseq
+  extra: " --assembly GRCh37 --check_existing --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
 
 vt_decompose:
   container: "docker://hydragenetics/vt:2015.11.10"

@@ -44,7 +44,7 @@ ruleorder: snv_indels_bcftools_sort > misc_bgzip
 
 
 wildcard_constraints:
-    file="^(?!bam_dna|results).*",
+    file="^(?!bam_dna|results|gvcf_dna).*",
 
 
 module prealignment:
@@ -236,6 +236,18 @@ module annotation:
 
 
 use rule * from annotation exclude all, bgzip_vcf, tabix_vcf as annotation_*
+
+
+use rule vep from annotation as annotation_vep_wo_pick with:
+    output:
+        vcf=temp("{file}.vep_annotated_wo_pick.vcf"),
+    params:
+        extra=config.get("vep_wo_pick", {}).get("extra", ""),
+        mode=config.get("vep_wo_pick", {}).get("mode", "--offline --cache --refseq "),
+    log:
+        "{file}.vep_annotated_wo_pick.vcf.log",
+    benchmark:
+        repeat("{file}.vep_annotated_wo_pick.vcf.benchmark.tsv", config.get("vep_wo_pick", {}).get("benchmark_repeats", 1))
 
 
 use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purecn with:
@@ -595,7 +607,7 @@ use rule purecn from cnv_sv as cnv_sv_purecn with:
 
 module reports:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.2.0")
+        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.3.1")
     config:
         config
 
@@ -605,11 +617,14 @@ use rule * from reports exclude all as reports_*
 
 use rule cnv_html_report from reports as reports_cnv_html_report with:
     input:
-        json="reports/cnv_html_report/{sample}_{type}.{tc_method}.merged.json",
-        template_dir=config.get("cnv_html_report", {}).get("template_dir", ""),
+        json=workflow.get_rule("reports_cnv_html_report").input.json,
+        html_template=workflow.get_rule("reports_cnv_html_report").input.html_template,
+        js_files=workflow.get_rule("reports_cnv_html_report").input.js_files,
+        css_files=workflow.get_rule("reports_cnv_html_report").input.css_files,
         tc_file=get_tc_file,
     params:
         include_table=config.get("cnv_html_report", {}).get("show_table", True),
+        include_cytobands=config.get("cnv_html_report", {}).get("show_cytobands", True),
         tc=get_tc,
         tc_method=lambda wildcards: wildcards.tc_method,
 

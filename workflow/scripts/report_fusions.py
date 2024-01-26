@@ -1,9 +1,10 @@
 
-import sys
-import subprocess
+import operator
+import gzip
 
 input_bed = open(snakemake.input.bed)
 input_bed_extra_annotation = open(snakemake.input.bed_extra_annotation)
+dedup_coverage_filename = snakemake.input.dedup_coverage
 input_arriba = open(snakemake.input.arriba)
 input_starfusion = open(snakemake.input.star_fusion)
 input_fusioncatcher = open(snakemake.input.fusioncatcher)
@@ -17,7 +18,12 @@ fusioncatcher_low_support = snakemake.params.fusioncatcher_low_support
 fusioncatcher_low_support_inframe = snakemake.params.fusioncatcher_low_support_inframe
 fp_fusions_filename = snakemake.params.fp_fusions
 
+output_fusions.write("callers\tgene1\tgene2\texon1\texon2\tconfidence\tFC-callers\tpredicted_effect\tbreakpoint1\tbreakpoint2\t")
+output_fusions.write("dedup_coverage\tA_split_reads\tA_spanning_pairs\tA_total_supporting_reads\t")
+output_fusions.write("SF_split_reads\tSF_spanning_pairs\tSF_total_supporting_reads\tFC_split_reads\tFC_spanning_pairs\t")
+output_fusions.write("FC_total_supporting_reads\tAll_total_supporting_reads\n")
 
+# Filter noisy genes and housekeeping genes involved in fusions
 housekeeping_genes = {}
 artefact_gene_dict = {}
 if fp_fusions_filename != "":
@@ -35,9 +41,6 @@ if fp_fusions_filename != "":
             if gene1 not in artefact_gene_dict:
                 artefact_gene_dict[gene1] = {}
             artefact_gene_dict[gene1][gene2] = [read_limit_SF, read_limit_FC]
-
-output_fusions.write("caller\tgene1\tgene2\texon1\texon2\tconfidence\tFC-callers\tpredicted_effect\tbreakpoint1\tbreakpoint2\t")
-output_fusions.write("coverage1\tcoverage2\tsplit_reads\tspanning_pairs\ttotal_supporting_reads\n")
 
 # Only keep fusions with one gene that are in the design
 design_genes = {}
@@ -62,10 +65,23 @@ for line in input_bed_extra_annotation:
     end = int(lline[2])
     exon = lline[3]
     gene = lline[3].split("_")[0]
-    if gene in design_genes:
-        design_genes[gene].append([chrom, start, end, exon])
+    if gene in annotation_genes:
+        annotation_genes[gene].append([chrom, start, end, exon])
     else:
-        design_genes[gene] = [[chrom, start, end, exon]]
+        annotation_genes[gene] = [[chrom, start, end, exon]]
+
+# Deduplicated coverage of fusion regions
+dedup_coverage_list = []
+with gzip.open(dedup_coverage_filename, 'rt') as dedup_coverage:
+    for line in dedup_coverage:
+        columns = line.strip().split("\t")
+        chrom = columns[0]
+        start_pos = int(columns[1])
+        end_pos = int(columns[2])
+        coverage = round(float(columns[4]))
+        dedup_coverage_list.append([chrom, start_pos, end_pos, coverage])
+
+fusion_dict = {}
 
 # Arriba fusions
 header = True
@@ -114,9 +130,11 @@ for line in input_arriba:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
     total_supporting_reads = int(total_split_reads) + int(discordant_mates)
-    output_fusions.write(f"Arriba\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t\t{predicted_effect}\t{breakpoint1}")
-    output_fusions.write(f"\t{breakpoint2}\t{coverage1}\t{coverage2}\t{total_split_reads}\t{discordant_mates}")
-    output_fusions.write(f"\t{total_supporting_reads}\n")
+    break_points = breakpoint1 + "_" + breakpoint2
+    if break_points not in fusion_dict:
+        fusion_dict[break_points] = {}
+    fusion_dict[break_points]["Arriba"] = [gene1, gene2, exon1, exon2, confidence, "", predicted_effect, breakpoint1, breakpoint2,
+                                           total_split_reads, discordant_mates, total_supporting_reads]
 
 
 # Star-fusions
@@ -151,13 +169,13 @@ for line in input_starfusion:
         if int(Junction_read_count) < artefact_gene_dict[gene2][gene1][0]:
             continue
     if gene1 in housekeeping_genes:
-        if int(Junction_read_count) < housekeeping_genes[gene1]["housekeeping"][0]:
+        if int(Junction_read_count) < housekeeping_genes[gene1][0]:
             continue
     if gene2 in housekeeping_genes:
-        if int(Junction_read_count) < housekeeping_genes[gene2]["housekeeping"][0]:
+        if int(Junction_read_count) < housekeeping_genes[gene2][0]:
             continue
-    breakpoint1 = lline[7]
-    breakpoint2 = lline[9]
+    breakpoint1 = lline[7][:-2]
+    breakpoint2 = lline[9][:-2]
     FFPM = lline[11]
     DBs = lline[16]
     # Compare fusion coverage with coverage in breakpoints
@@ -172,13 +190,24 @@ for line in input_starfusion:
         for region in design_genes[gene1]:
             if int(pos1) >= region[1] and int(pos1) <= region[2]:
                 exon1 = region[3]
+    elif gene1 in annotation_genes:
+        for region in annotation_genes[gene1]:
+            if int(pos1) >= region[1] and int(pos1) <= region[2]:
+                exon1 = region[3]
     if gene2 in design_genes:
         for region in design_genes[gene2]:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
+    elif gene2 in annotation_genes:
+        for region in annotation_genes[gene2]:
+            if int(pos2) >= region[1] and int(pos2) <= region[2]:
+                exon2 = region[3]
     total_supporting_reads = int(Junction_read_count) + int(Spanning_Frag_count)
-    output_fusions.write(f"StarFusion\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t\t{predicted_effect}\t{breakpoint1}")
-    output_fusions.write(f"\t{breakpoint2}\t\t\t{Junction_read_count}\t{Spanning_Frag_count}\t{total_supporting_reads}\n")
+    break_points = breakpoint1 + "_" + breakpoint2
+    if break_points not in fusion_dict:
+        fusion_dict[break_points] = {}
+    fusion_dict[break_points]["StarFusion"] = [gene1, gene2, exon1, exon2, confidence, "", predicted_effect, breakpoint1,
+                                               breakpoint2, Junction_read_count, Spanning_Frag_count, total_supporting_reads]
 
 
 # FusionCatcher
@@ -199,8 +228,8 @@ for line in input_fusioncatcher:
     Spanning_pairs = lline[4]
     Spanning_reads_unique = lline[5]
     Fusion_finding_method = lline[7]
-    breakpoint1 = lline[8]
-    breakpoint2 = lline[9]
+    breakpoint1 = f"chr{lline[8][:-2]}"
+    breakpoint2 = f"chr{lline[9][:-2]}"
     predicted_effect = lline[15]
     # Flag fusions with Spanning_reads_unique < 5
     confidence = ""
@@ -219,10 +248,10 @@ for line in input_fusioncatcher:
         if int(Spanning_reads_unique) < artefact_gene_dict[gene2][gene1][1]:
             continue
     if gene1 in housekeeping_genes:
-        if int(Spanning_reads_unique) < housekeeping_genes[gene1]["housekeeping"][1]:
+        if int(Spanning_reads_unique) < housekeeping_genes[gene1][1]:
             continue
     if gene2 in housekeeping_genes:
-        if int(Spanning_reads_unique) < housekeeping_genes[gene2]["housekeeping"][1]:
+        if int(Spanning_reads_unique) < housekeeping_genes[gene2][1]:
             continue
     # Flag fusions annotated that are fusions with very high probability
     fp_db = [
@@ -238,7 +267,7 @@ for line in input_fusioncatcher:
     # Compare fusion coverage with coverage in breakpoints
     pos1 = "0"
     pos2 = "0"
-    if len(breakpoint1.split(":")) == 3 and len(breakpoint2.split(":")) == 3:
+    if len(breakpoint1.split(":")) == 2 and len(breakpoint2.split(":")) == 2:
         chrom1 = "chr" + breakpoint1.split(":")[0]
         pos1 = breakpoint1.split(":")[1]
         chrom2 = "chr" + breakpoint2.split(":")[0]
@@ -250,11 +279,95 @@ for line in input_fusioncatcher:
         for region in design_genes[gene1]:
             if int(pos1) >= region[1] and int(pos1) <= region[2]:
                 exon1 = region[3]
+    elif gene1 in annotation_genes:
+        for region in annotation_genes[gene1]:
+            if int(pos1) >= region[1] and int(pos1) <= region[2]:
+                exon1 = region[3]
     if gene2 in design_genes:
         for region in design_genes[gene2]:
             if int(pos2) >= region[1] and int(pos2) <= region[2]:
                 exon2 = region[3]
+    elif gene2 in annotation_genes:
+        for region in annotation_genes[gene2]:
+            if int(pos2) >= region[1] and int(pos2) <= region[2]:
+                exon2 = region[3]
     total_supporting_reads = int(Spanning_pairs) + int(Spanning_reads_unique)
-    output_fusions.write(f"FusionCatcher\t{gene1}\t{gene2}\t{exon1}\t{exon2}\t{confidence}\t{Fusion_finding_method}")
-    output_fusions.write(f"\t{predicted_effect}\t{breakpoint1}\t{breakpoint2}\t\t\t{Spanning_pairs}")
-    output_fusions.write(f"\t{Spanning_reads_unique}\t{total_supporting_reads}\n")
+    break_points = breakpoint1 + "_" + breakpoint2
+    if break_points not in fusion_dict:
+        fusion_dict[break_points] = {}
+    fusion_dict[break_points]["FusionCatcher"] = [gene1, gene2, exon1, exon2, confidence, Fusion_finding_method,
+                                                  predicted_effect, breakpoint1, breakpoint2, Spanning_pairs,
+                                                  Spanning_reads_unique, total_supporting_reads]
+
+
+merged_fusions = []
+i = 0
+for break_points in fusion_dict:
+
+    exon_coverage1 = 0
+    exon_coverage2 = 0
+    max_exon_coverage = 0
+    caller = ""
+    if "Arriba" in fusion_dict[break_points]:
+        caller = "Arriba"
+    elif "StarFusion" in fusion_dict[break_points]:
+        caller = "StarFusion"
+    elif "FusionCatcher" in fusion_dict[break_points]:
+        caller = "FusionCatcher"
+    chrom1 = fusion_dict[break_points][caller][7].split(":")[0]
+    pos1 = int(fusion_dict[break_points][caller][7].split(":")[1])
+    chrom2 = fusion_dict[break_points][caller][8].split(":")[0]
+    pos2 = int(fusion_dict[break_points][caller][8].split(":")[1])
+    for exon in dedup_coverage_list:
+        if chrom1 == exon[0] and pos1 >= exon[1] and pos1 <= exon[2]:
+            exon_coverage1 = exon[3]
+        if chrom2 == exon[0] and pos2 >= exon[1] and pos2 <= exon[2]:
+            exon_coverage2 = exon[3]
+    max_exon_coverage = max(exon_coverage1, exon_coverage2)
+
+    first = True
+    if "Arriba" in fusion_dict[break_points]:
+        data = fusion_dict[break_points]["Arriba"]
+        merged_fusions.append([data[0], data[1], data[2], data[3], data[4], "", data[6], data[7], data[8], data[9], data[10],
+                               data[11], "", "", "", "", "", "", int(data[11]), 1, "Arriba", max_exon_coverage])
+        first = False
+    if "StarFusion" in fusion_dict[break_points]:
+        data = fusion_dict[break_points]["StarFusion"]
+        if first:
+            merged_fusions.append([data[0], data[1], data[2], data[3], data[4], "", data[6], data[7], data[8], "", "", "",
+                                   data[9], data[10], data[11], "", "", "", int(data[11]), 1, "StarFusion", max_exon_coverage])
+            first = False
+        else:
+            merged_fusions[i][4] += f", {data[4]}"
+            merged_fusions[i][6] += f", {data[6]}"
+            merged_fusions[i][12] = data[9]
+            merged_fusions[i][13] = data[10]
+            merged_fusions[i][14] = data[11]
+            merged_fusions[i][18] += int(data[11])
+            merged_fusions[i][19] += 1
+            merged_fusions[i][20] += ", StarFusion"
+    if "FusionCatcher" in fusion_dict[break_points]:
+        data = fusion_dict[break_points]["FusionCatcher"]
+        if first:
+            merged_fusions.append([data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], "", "", "",
+                                   "", "", "", data[9], data[10], data[11], int(data[11]), 1, "FusionCatcher", max_exon_coverage])
+            first = False
+        else:
+            merged_fusions[i][4] += f", {data[4]}"
+            merged_fusions[i][5] += data[5]
+            merged_fusions[i][6] += f", {data[6]}"
+            merged_fusions[i][15] = data[9]
+            merged_fusions[i][16] = data[10]
+            merged_fusions[i][17] = data[11]
+            merged_fusions[i][18] += int(data[11])
+            merged_fusions[i][19] += 1
+            merged_fusions[i][20] += ", FusionCatcher"
+    i += 1
+
+merged_fusions.sort(key=operator.itemgetter(18), reverse=True)
+
+for fusion in merged_fusions:
+    output_fusions.write(f"{fusion[20]}\t{fusion[0]}\t{fusion[1]}\t{fusion[2]}\t{fusion[3]}\t{fusion[4]}\t{fusion[5]}\t")
+    output_fusions.write(f"{fusion[6]}\t{fusion[7]}\t{fusion[8]}\t{fusion[21]}\t{fusion[9]}\t{fusion[10]}\t{fusion[11]}\t")
+    output_fusions.write(f"{fusion[12]}\t{fusion[13]}\t{fusion[14]}\t{fusion[15]}\t{fusion[16]}\t{fusion[17]}\t")
+    output_fusions.write(f"{fusion[18]}\n")
