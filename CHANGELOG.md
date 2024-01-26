@@ -1,5 +1,53 @@
 # Changelog
 
+## [0.11.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.10.0...v0.11.0) (2024-01-26)
+
+
+### Features
+
+* add amino acid change to coverage_and_mutations ([a66f501](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a66f501177ac9393c452ba8b49c8202b69b1dca2))
+* added dedup coverage ([01046e6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/01046e6841ce62457041d12538c645a0fc40073f))
+* added umi vcf filters ([dd1cbe2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/dd1cbe21ba1dd93218771c62500d7a7123962bc6))
+* decrease germline support needed to improve cnv visualization of deletions ([c6cd922](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c6cd922d97e4c1899ceb3dc88cddb55283d8e9eb))
+* decrease support needed for germline SNVs ([efb2827](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/efb2827002a48bf9a6b94796b4f5c472e02a9afb))
+* restructured rna fusion report for improved interpretation ([373021c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/373021cd2b49dfa43103b7f34bd0d3c669b0c010))
+* update Jenkins main test ([5b30a35](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5b30a352a9951edda2afb2c5a3cb812e62fd9bba))
+* update reports module to 0.3.1 ([#389](https://www.github.com/genomic-medicine-sweden/Twist_Solid/issues/389)) ([9346b03](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9346b033c722a797a67a1f39ec069857f57948ad))
+* update to latest common container ([eef00aa](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/eef00aa9729bfde0f2378835b1efa25e412a1312))
+* updated hydra-genetics version ([b7eadaa](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b7eadaa05f046f957838870c47cb4da658b2ce35))
+
+
+### Bug Fixes
+
+* added missing double mutations to report ([ed1a526](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ed1a526d31713c12bb72114c7a6f242d8fc32b4f))
+* bugfix ([e9f2511](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e9f25111a78fdc576b718daa80206216cc3d4654))
+* bugfix ([2dbc810](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2dbc81070d027003beb2364b53c4529df93733e2))
+* bugfixes ([7fcd240](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7fcd2403b681e3ae62076e52407903d7a6f029c5))
+* changed sorting and bugfixes ([355d99e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/355d99efcb0d823996b67a22ba346d6cddaad15b))
+* corrected filepath for rna in develop ([85abf47](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/85abf47bf827592b47ef70cc0bf08017d70c3993))
+* corrected input file for hotspot_report.smk ([8ce6512](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8ce6512d526ce2ffcc11c71055654b5dcbb9e002))
+* corrected input variables for hotspot_report.py ([076f5fd](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/076f5fdb35ce124d36a69e2244f086851e36bc03))
+* corrected input variables for hotspot_report.smk ([6758fa4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6758fa42d0b05d192713ab0269e5f2d617df036d))
+* corrected results path for soft-filtered umi vcf ([a8ed44c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a8ed44c90a8dca842d1ba7d3fd837586f6d413f4))
+* delete extra file ([2803f67](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2803f67ef1141d6ce224f550111411ea62fb1324))
+* housekeeping dict ([7105a88](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7105a8830028f0a57578f01be4203fee22d16a78))
+* input file bugfix ([bfa94a6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/bfa94a6fd1bb09a9b17b30b463307d4878409da7))
+* pulp version ([f37c08a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f37c08a42bd43286d74e23985bd738e18b9d26cd))
+* remove extra header columns ([6bb5d42](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6bb5d42afd1dc4f3f702302b75079e73fce73e98))
+* remove extra sample folder in output ([39fefd8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/39fefd85154a62b31c7c41654d5abbc964f46b15))
+* remove newline after purity in cnvkit_call command ([b820ab5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b820ab51ec10b8685cbe36afc482f9146e5174c5))
+* remove unused time consuming step in fusioncatcher ([635a40b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/635a40bcf62b51dff051322c40bf41e127cc0e8b))
+* removed spaces in jenkins test develop ([05eb8ef](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/05eb8ef564a97f80c7a386c6ef545aadaac50818))
+* reverse sorting and add chr to fusioncatcher ([794f8f7](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/794f8f7c6924c019d5139cf38b3de9b6dcb287fb))
+* update hydra-genetics to v1.10.1 ([be2682d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/be2682d79c8c37a6f43be7940ff4d3166e3e8979))
+* update jenkins start scripts ([8cdaf1f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8cdaf1f3e0500e1c4af308bd9a485f4c6d6b39fe))
+* update profile with mounted home ([7665c8b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7665c8b4108c24558d030304ca3f219008969fc5))
+* update profile with mounted home ([0b1be40](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0b1be406eefd3d36ea3324dffcfa98e941847194))
+* update profile with mounted home ([1947e3a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1947e3a8d170250146529847df7dac2e5f6d884e))
+* update profile with mounted home ([b3d56e2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b3d56e2fe3a2227789b947889ce4ef818ae1b749))
+* updated jenkins output for develop ([887584b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/887584bf8775e15a54f053b62d93b1bf9bd802db))
+* updated to bugfixed common container ([1449abd](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1449abd6b6e8b74623985bd7b22073a225346cf7))
+
 ## [0.10.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.9.0...v0.10.0) (2023-12-01)
 
 
