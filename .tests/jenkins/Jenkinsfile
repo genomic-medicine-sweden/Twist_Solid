@@ -33,7 +33,8 @@ pipeline {
                 module load singularity
                 module load slurm-drmaa
                 cd develop
-                snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfile config/config.yaml -w 60 --notemp --keep-incomplete
+                git clone https://github.com/clinical-genomics-uppsala/GMS560_config
+                snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfiles GMS560_config/config/config_production_pipeline.yaml config/config.yaml -w 60 --notemp --keep-incomplete
                 git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
                 module load nextflow
                 nextflow run validation_workflow/validate_result.nf
@@ -63,7 +64,8 @@ pipeline {
               module load singularity
               module load slurm-drmaa
               cd main
-              snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfile config/config.yaml -w 60 --notemp --keep-incomplete
+              git clone https://github.com/clinical-genomics-uppsala/GMS560_config
+              snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfiles GMS560_config/config/config_production_pipeline.yaml config/config.yaml -w 60 --notemp --keep-incomplete
               git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
               module load nextflow
               nextflow run validation_workflow/validate_result.nf
