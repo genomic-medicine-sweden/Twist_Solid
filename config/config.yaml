@@ -119,7 +119,7 @@ filter_vcf:
   germline: "config/filters/config_hard_filter_germline_vep105.yaml"
 
 filter_fuseq_wes:
-  min_support: 30
+  min_support: 50
   filter_on_fusiondb: True
 
 fuseq_wes:
