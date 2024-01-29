@@ -207,26 +207,3 @@ Make a combined report of filtered fusion calls from all RNA fusion callers. App
 #RESOURCESSCHEMA__report_fusions#
 
 ---
-
-## report_gene_fuse
-The output from GeneFuse is filtered and then made into a fusion report. See further [DNA fusions report info](dna_fusions.md#filtering-and-report).
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__report_gene_fuse__report_gene_fuse#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__report_gene_fuse__report_gene_fuse#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__report_gene_fuse#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__report_gene_fuse#
-
----

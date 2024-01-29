@@ -79,6 +79,7 @@ The following reference files, panel of normals and design files are needed to r
 |_ _| <div id="fuseq_wes_paralog_db">paralog database</div> | `ensmbl_paralogs_grch37.RData` |
 | <div id="filter_report_fuseq_wes">filter_report_fuseq_wes</div> | transcript annotation | `hg19.refGene.gtf` |
 | | <div id="fuseq_wes_white_list">gene white list</div> | `fuseq_wes_gene_white_list.txt` |
+| | <div id="gene_fusion_black_list">fusion gene pair black list</div> | `false_positive_fusion_pairs.txt` |
 |_ _| <div id="fuseq_wes_transcript_black_list">transcript black list</div> | `fuseq_wes_transcript_black_list.txt` |
 | <div id="hotspot_file">hotspot_annotation</div> | hotspots | `Hotspots_combined_regions_nodups.csv` |
 | <div id="hotspot_report">hotspot_report</div> | hotspot_mutations | `Hotspots_combined_regions_nodups.csv` |
@@ -296,7 +297,7 @@ singularity docker://hydragenetics/purecn:2.2.0 Rscript $PURECN/IntervalFile.R -
 | intervals | Target interval file | File created by the command described above |
 
 ## Pipeline specific files
-These are design files and other pipeline specific only available to download from the Uppsala Owncloud solution.
+These are design files and other pipeline specific files only available to download from out [git](https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files) or the Uppsala Owncloud solution.
 
 | File type | File | Description |
 |-|-|-|
@@ -312,6 +313,7 @@ These are design files and other pipeline specific only available to download fr
 | | `filter_fusions_20221114.csv` | Filtering criteria for false positive prone fusion partners |
 | FuSeq_WES | `fuseq_params.txt` | Filtering parameters used by FuSeq_WES |
 | FuSeq_WES_report | `fuseq_wes_gene_white_list.txt` | Gene list for filtering of fusion |
+| | `false_positive_fusion_pairs.txt` | Gene list for filtering of fusion |
 |_ _| `fuseq_wes_transcript_black_list.txt` | Transcripts that should not be used in annotation |
 | CNVkit | `cnvkit_germline_blacklist_20221221.bed` | List of regions excluded from the germline vcf file |
 | GATK CNV | `gnomad_SNP_0.001_target.annotated.interval_list` | Bed file with CNV backbone SNPs which are selected from <br />GnomAD with over 0.1% global population frequency |

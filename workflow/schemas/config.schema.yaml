@@ -273,15 +273,6 @@ properties:
         type: string
         description: parameters that should be forwarded
 
-  gene_fuse:
-    type: object
-    properties:
-      genes:
-        type: string
-        description: path to gene files used by gene_fuse
-      required:
-        - genes
-
   house_keeping_gene_coverage:
     type: object
     properties:
@@ -560,19 +551,6 @@ properties:
         type: integer
         description: lower limit of supporting reads to flag filter fusion that are inframe for StarFusion
 
-  report_gene_fuse:
-    description: report results from genefuse
-    type: object
-    properties:
-      filter_fusions:
-        type: string
-        description: file specifying fusions that should be filtered completely (value 0 in column 2) or have higher limit (value >0 in column 2)
-      min_unique_reads:
-        type: integer
-        description: lower limit of uniquely supporting reads to report fusion
-    required:
-      - min_unique_reads
-
   trimmer_software:
     description: trimmer software that should be used
     pattern: "^(fastp_pe|None)$"
@@ -598,13 +576,11 @@ required:
   - filter_vcf
   - gatk_collect_allelic_counts
   - gatk_denoise_read_counts
-  - gene_fuse
   - hotspot_annotation
   - hotspot_info
   - hotspot_report
   - msisensor_pro
   - multiqc
   - reference
-  - report_gene_fuse
   - trimmer_software
   - vep
