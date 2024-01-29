@@ -162,9 +162,6 @@ gatk_mutect2_gvcf:
 gatk_mutect2_merge_stats:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
-gene_fuse:
-  container: "docker://hydragenetics/genefuse:0.6.1"
-
 hotspot_report:
   report_config: "config/reports/hotspot_report.yaml"
   levels:
@@ -280,9 +277,6 @@ report_fusions:
   star_fusion_flag_low_support: 15
   star_fusion_low_support: 2
   star_fusion_low_support_inframe: 6
-
-report_gene_fuse:
-  min_unique_reads: 6
 
 samtools_merge_bam:
   extra: "-c -p"
