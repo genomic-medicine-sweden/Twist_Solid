@@ -607,7 +607,7 @@ use rule purecn from cnv_sv as cnv_sv_purecn with:
 
 module reports:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.3.1")
+        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.4.1")
     config:
         config
 
@@ -622,11 +622,13 @@ use rule cnv_html_report from reports as reports_cnv_html_report with:
         js_files=workflow.get_rule("reports_cnv_html_report").input.js_files,
         css_files=workflow.get_rule("reports_cnv_html_report").input.css_files,
         tc_file=get_tc_file,
+        extra_table_files=config.get("cnv_html_report", {}).get("extra_table_files", []),
     params:
         include_table=config.get("cnv_html_report", {}).get("show_table", True),
         include_cytobands=config.get("cnv_html_report", {}).get("show_cytobands", True),
         tc=get_tc,
         tc_method=lambda wildcards: wildcards.tc_method,
+        extra_tables=config.get("cnv_html_report", {}).get("extra_tables", []),
 
 
 module misc:
