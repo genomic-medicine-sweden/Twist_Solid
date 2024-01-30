@@ -267,3 +267,27 @@ properties:
           vcf:
             type: string
             description: hard filtered vcf with corrected MBQ values for purecn 
+
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  sample_mixup_check:
+    type: object
+    description: input and output parameters for sample_mixup_check
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          input1:
+            type: string
+            description: description input1
+            #value: set to override value in table, else remove
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          output1:
+            type: string
+            description: description output1
+            #value: set to override value in table, else remove

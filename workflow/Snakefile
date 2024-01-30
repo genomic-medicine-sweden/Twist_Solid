@@ -5,6 +5,7 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
+include: "rules/sample_mixup_check.smk"
 include: "rules/bcftools.smk"
 include: "rules/call_small_cnv_deletions.smk"
 include: "rules/call_small_cnv_amplifications.smk"
@@ -45,6 +46,15 @@ ruleorder: snv_indels_bcftools_sort > misc_bgzip
 
 wildcard_constraints:
     file="^(?!bam_dna|results|gvcf_dna).*",
+
+
+use rule bcftools_id_snps as bcftools_id_snps_dna with:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bed=config.get("bcftools_id_snps", {}).get("snps_bed", "missing bcftools_id_snps snps_bed file"),
+        ref=config.get("reference", {}).get("fasta", "missing reference fasta"),
+    wildcard_constraints: type="[TN]"
 
 
 module prealignment:
