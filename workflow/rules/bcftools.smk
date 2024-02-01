@@ -12,7 +12,7 @@ rule bcftools_id_snps:
         ref=config.get("reference", {}).get("fasta_rna", "missing reference fasta_rna"),
     output:
         vcf=temp("snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf"),
-    wildcard_constraints: 
+    wildcard_constraints:
         type="[R]",
     log:
         "snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf.log",
