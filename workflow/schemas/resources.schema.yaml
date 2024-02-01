@@ -248,9 +248,6 @@ properties:
         type: integer
         description:  number of threads to be available
 
-
-
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
   sample_mixup_check:
     type: object
     description: resource definitions for sample_mixup_check

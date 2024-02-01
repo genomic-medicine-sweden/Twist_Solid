@@ -272,7 +272,7 @@ files:
       - N
   - name: RNA DNA sample mixup report
     input: qc/sample_mixup_check/sample_mixup_check.txt
-    output: results/dna/qc/sample_mixup_check/sample_mixup_check.txt
+    output: results/dna/qc/sample_mixup_check.txt
     types:
       - T
       - N

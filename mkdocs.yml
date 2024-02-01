@@ -24,7 +24,7 @@ nav:
     - ID-SNPs: rna_id_snps.md
     - QC: rna_qc.md
   - Pipeline specific rules:
-    - Rule list: rules.md
+    - Rule list: softwares.md
   - Project Info:
     - Changelog: changelog.md
     - Citations: citations.md

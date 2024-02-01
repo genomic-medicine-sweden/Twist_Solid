@@ -587,9 +587,6 @@ properties:
       required:
         - vep_cache
 
-
-
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
   sample_mixup_check:
     type: object
     description: parameters for sample_mixup_check
