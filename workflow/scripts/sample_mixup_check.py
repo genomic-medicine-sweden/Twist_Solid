@@ -10,6 +10,7 @@ dna_samples = {}
 vcf_dict_rna = {}
 rna_samples = {}
 
+
 def read_vcf(vcf_filename, vcf_dict, samples):
     vcf = open(vcf_filename)
     sample_type = os.path.split(vcf_filename)[1].split(".")[0]
@@ -63,7 +64,7 @@ for rna_sample in rna_samples:
         if rna_samples[rna_sample][dna_sample] > best_gt_match:
             best_dna_sample = dna_sample
             best_gt_match = rna_samples[rna_sample][dna_sample]
-    p_match = round(best_gt_match * 100 / 42.0, 1
+    p_match = round(best_gt_match * 100 / 42.0, 1)
     report.write(f"{rna_sample}\t{best_dna_sample}\t{best_gt_match}\t{p_match}%")
     if p_match > 80:
         report.write(f"yes\n")
