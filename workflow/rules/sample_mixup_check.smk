@@ -19,14 +19,14 @@ rule sample_mixup_check:
             if unit_type == "R"
         ],
     output:
-        mixup_report="qc/sample_mixup_check/sample_mixup_check.txt",
+        mixup_report="qc/sample_mixup_check/sample_mixup_check.tsv",
     params:
         extra=config.get("sample_mixup_check", {}).get("extra", ""),
     log:
-        "twist_solid/sample_mixup_check/sample_mixup_check.txt.log",
+        "twist_solid/sample_mixup_check/sample_mixup_check.tsv.log",
     benchmark:
         repeat(
-            "twist_solid/sample_mixup_check/sample_mixup_check.txt.benchmark.tsv",
+            "twist_solid/sample_mixup_check/sample_mixup_check.tsv.benchmark.tsv",
             config.get("sample_mixup_check", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("sample_mixup_check", {}).get("threads", config["default_resources"]["threads"])

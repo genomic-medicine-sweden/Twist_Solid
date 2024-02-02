@@ -231,7 +231,7 @@ The output from GeneFuse is filtered and then made into a fusion report. See fur
 
 ---
 
-## [purecn_modify_vcf]
+## purecn_modify_vcf
 Increases the MQB (mean base quality) value by 5 as the qualities are so bad for our samples.
 
 ### :snake: Rule
@@ -254,7 +254,7 @@ Increases the MQB (mean base quality) value by 5 as the qualities are so bad for
 
 ---
 
-## [sample_mixup_check]
+## sample_mixup_check
 Compare ID-SNPs in the RNA samples to the DNA samples in the same analysis and report sample similarities to be able to discern sample mixups
 
 ### :snake: Rule
