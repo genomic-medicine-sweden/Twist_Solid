@@ -7,14 +7,15 @@ log = logging.getLogger()
 
 def create_tsv_report(
     input_vcfs, input_org_vcfs, input_del, input_amp, amp_cn_limit,
-    output_txt, del_1p19q_cn, del_1p19q_chr_arm_fraction, TC
+    output_txt, out_additional_only, del_1p19q_cn, del_1p19q_chr_arm_fraction, TC
 ):
     gene_all_dict = {}
-    first_vcf = True
     nr_writes = 0
     log.info(f"Opening output tsv file: {output_txt}")
     sample_name = ""
     with open(output_txt, "w") as writer:
+        writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tfreq_in_db\tcopy_number")
+        out_additional_only.write("sample\tgene(s)\tchrom\tregion\tcallers\tfreq_in_db\tcopy_number")
         for input_org_vcf in input_org_vcfs:
             del_1p19q = {
                 "1p_cnvkit": 0, "19q_cnvkit": 0, "1p_gatkcnv": 0, "19q_gatkcnv": 0,
@@ -66,19 +67,15 @@ def create_tsv_report(
                                 gene_all_dict[gene].append([chr, start, end, callers, cn, AF])
             if (del_1p19q["1p_cnvkit"] / del_1p19q["1p"][2] > del_1p19q_chr_arm_fraction and
                     del_1p19q["19q_cnvkit"] / del_1p19q["19q"][2] > del_1p19q_chr_arm_fraction):
-                if first_vcf:
-                    writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tfreq_in_db\tcopy_number")
-                    first_vcf = False
                 if nr_writes < 2:
                     writer.write(f"\n{samples}\t1p19q\tNA\tNA\tcnvkit\tNA\tNA")
+                    out_additional_only.write(f"\n{samples}\t1p19q\tNA\tNA\tcnvkit\tNA\tNA")
                     nr_writes += 1
             if (del_1p19q["1p_gatkcnv"] / del_1p19q["1p"][2] > del_1p19q_chr_arm_fraction and
                     del_1p19q["19q_gatkcnv"] / del_1p19q["19q"][2] > del_1p19q_chr_arm_fraction):
-                if first_vcf:
-                    writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tfreq_in_db\tcopy_number")
-                    first_vcf = False
                 if nr_writes < 2:
                     writer.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
+                    out_additional_only.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
                     nr_writes += 1
 
         for input_vcf in input_vcfs:
@@ -91,9 +88,6 @@ def create_tsv_report(
             else:
                 samples = samples[0]
             counter = 0
-            if first_vcf:
-                writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tfreq_in_db\tcopy_number")
-                first_vcf = False
             for variant in variants:
                 genes = utils.get_annotation_data_info(variant, "Genes")
                 log.debug(f"Processing variant: {variant}")
@@ -149,6 +143,7 @@ def create_tsv_report(
             if TC > 0.0:
                 ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
             writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
+            out_additional_only.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
         amplifications = open(input_amp)
         header_list = next(amplifications).split("\t")
         for amplification in amplifications:
@@ -166,6 +161,7 @@ def create_tsv_report(
                 ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
             if ccn > amp_cn_limit:
                 writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
+                out_additional_only.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
 
 
 if __name__ == "__main__":
@@ -175,7 +171,8 @@ if __name__ == "__main__":
     in_amp = snakemake.input.amplifications
     amp_cn_limit = snakemake.params.call_small_amplifications_cn_limit
     out_tsv = snakemake.output.tsv
+    out_additional_only = open(snakemake.output.tsv_additional_only, "w")
     del_1p19q_cn = snakemake.params.del_1p19q_cn_limit
     del_1p19q_chr_arm_fraction = snakemake.params.del_1p19q_chr_arm_fraction
     TC = float(snakemake.params.tc)
-    create_tsv_report(in_vcfs, in_org_vcfs, in_del, in_amp, amp_cn_limit, out_tsv, del_1p19q_cn, del_1p19q_chr_arm_fraction, TC)
+    create_tsv_report(in_vcfs, in_org_vcfs, in_del, in_amp, amp_cn_limit, out_tsv, out_additional_only, del_1p19q_cn, del_1p19q_chr_arm_fraction, TC)
