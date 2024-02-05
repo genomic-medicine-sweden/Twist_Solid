@@ -247,7 +247,7 @@ properties:
         properties:
           report:
             type: string
-            description: Excel frienly text report with filtered fusion calls from GeneFuse
+            description: Excel friendly text report with filtered fusion calls from GeneFuse
 
   purecn_modify_vcf:
     type: object
@@ -267,3 +267,25 @@ properties:
           vcf:
             type: string
             description: hard filtered vcf with corrected MBQ values for purecn 
+
+  sample_mixup_check:
+    type: object
+    description: input and output parameters for sample_mixup_check
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          id_snp_vcf_dna:
+            type: string
+            description: list of vcf files with ID-SNP positions called by bcftools for the dna samples
+          id_snp_vcf_rna:
+            type: string
+            description: list of vcf files with ID-SNP positions called by bcftools for the rna samples
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          mixup_report:
+            type: string
+            description: text report where the most similar RNA and DNA sample pairs in one analysis are reported together with the percent similarity
