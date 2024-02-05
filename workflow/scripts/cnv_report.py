@@ -175,4 +175,15 @@ if __name__ == "__main__":
     del_1p19q_cn = snakemake.params.del_1p19q_cn_limit
     del_1p19q_chr_arm_fraction = snakemake.params.del_1p19q_chr_arm_fraction
     TC = float(snakemake.params.tc)
-    create_tsv_report(in_vcfs, in_org_vcfs, in_del, in_amp, amp_cn_limit, out_tsv, out_additional_only, del_1p19q_cn, del_1p19q_chr_arm_fraction, TC)
+    create_tsv_report(
+        in_vcfs,
+        in_org_vcfs,
+        in_del,
+        in_amp,
+        amp_cn_limit,
+        out_tsv,
+        out_additional_only,
+        del_1p19q_cn,
+        del_1p19q_chr_arm_fraction,
+        TC,
+    )
