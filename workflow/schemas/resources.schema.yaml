@@ -228,9 +228,9 @@ properties:
         type: integer
         description:  number of threads to be available
 
-  report_gene_fuse:
+  sample_mixup_check:
     type: object
-    description: resource definitions for generating a gene fuse report
+    description: resource definitions for sample_mixup_check
     properties:
       mem_mb:
         type: integer
@@ -247,26 +247,6 @@ properties:
       threads:
         type: integer
         description:  number of threads to be available
-
-  sample_mixup_check:
-    type: object
-    description: resource definitions for sample_mixup_check
-    properties:
-      mem_mb:
-        type: integer
-        description: max memory in MB to be available
-      mem_per_cpu:
-        type: integer
-        description: memory in MB used per cpu
-      partition:
-        type: string
-        description: partition to use on cluster
-      threads:
-        type: integer
-        description: number of threads to be available
-      time:
-        type: string
-        description: max execution time
 
 required:
   - default_resources

@@ -15,7 +15,6 @@ include: "rules/fix_vcf_ad_for_qci.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/house_keeping_gene_coverage.smk"
 include: "rules/purecn_modify_vcf.smk"
-include: "rules/report_gene_fuse.smk"
 include: "rules/report_fusions.smk"
 
 

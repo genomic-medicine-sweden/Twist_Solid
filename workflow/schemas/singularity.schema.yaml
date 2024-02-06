@@ -206,17 +206,6 @@ properties:
       required:
         - container
 
-  gene_fuse:
-    type: object
-    properties:
-      container:
-        type: string
-        description: name or path to a default docker/singularity container
-        pattern: >-
-            hydragenetics/genefuse:0\.6\.1$|hydragenetics_genefuse_0\.6\.1\.sif$
-      required:
-        - container
-
   manta_config_t:
     type: object
     properties:
@@ -455,7 +444,6 @@ required:
   - gatk_mutect2
   - gatk_mutect2_gvcf
   - gatk_model_segments
-  - gene_fuse
   - manta_config_t
   - manta_run_workflow_t
   - mosdepth_bed
