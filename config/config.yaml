@@ -75,11 +75,11 @@ cnv_html_report:
   show_table: true
   show_cytobands: true
   extra_tables:
-    - name: CNV TSV report
+    - name: Small CNVs and 1p19q
       description: >
         Additional small amplifications and deletions as well as 1p19q co-deletions called by Twist Solid
         in-house scripts. Can have overlaps with called regions from other callers.
-      path: cnv_sv/svdb_query/{sample}_{type}.{tc_method}.cnv_loh_genes_all.cnv_additional_variants_only.tsv
+      path: "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.cnv_loh_genes_all.cnv_additional_variants_only.tsv"
 
 cnv_tsv_report:
   amp_cn_limit: 6.0
