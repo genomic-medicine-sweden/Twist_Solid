@@ -565,6 +565,20 @@ properties:
       required:
         - vep_cache
 
+  sample_mixup_check:
+    type: object
+    description: parameters for sample_mixup_check
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
 required:
   - samples
   - units

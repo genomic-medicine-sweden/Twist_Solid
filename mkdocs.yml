@@ -4,14 +4,14 @@ nav:
     - Introduction: index.md
     - Pipeline overview: overview.md
     - Result files: result_files.md
-    - Pipeline setup and cofiguration: setup.md
+    - Pipeline setup and configuration: setup.md
     - Reference files: references.md
   - Running the pipeline:
     - Basic: running.md
     - Restricted system: run_on_restricted_system_env.md
     - Bianca: run_on_bianca.md
   - DNA Pipeline:
-    - Prealignment: dna_prealignment.md
+    - Pre-alignment: dna_prealignment.md
     - Alignment: dna_alignment.md
     - SNV and INDELs: dna_snv_indels.md
     - CNVs: dna_cnvs.md
@@ -24,7 +24,7 @@ nav:
     - ID-SNPs: rna_id_snps.md
     - QC: rna_qc.md
   - Pipeline specific rules:
-    - Rule list: rules.md
+    - Rule list: softwares.md
   - Project Info:
     - Changelog: changelog.md
     - Citations: citations.md
@@ -47,7 +47,7 @@ markdown_extensions:
   - pymdownx.snippets:
       auto_append:
         - includes/abbreviations.md
-      base_path: ["docs/", "workflow/rules/"]
+      base_path: "docs/"
       url_download: "True"
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji

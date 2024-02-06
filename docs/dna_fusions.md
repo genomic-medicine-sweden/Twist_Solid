@@ -37,7 +37,7 @@ DNA fusion calling is performed by **[FuSeq_WES](https://github.com/nghiavtr/FuS
 | time | "24:00:00" |
 
 ## FuSeq_WES Filtering and report
-The output from FuSeq_WES is filtered and then reported into a fusion report using the in-house script [filter_report_fuseq_wes.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/filter_report_fuseq_wes.py) ([rule and config](rules.md#report_fuseq_wes)). The following filter criteria is used:
+The output from FuSeq_WES is filtered and then reported into a fusion report using the in-house script [filter_report_fuseq_wes.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/filter_report_fuseq_wes.py) ([rule and config](softwares.md#report_fuseq_wes)). The following filter criteria is used:
 
 ### Configuration
 **Software settings**

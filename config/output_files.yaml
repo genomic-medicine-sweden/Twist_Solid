@@ -247,11 +247,23 @@ files:
     types:
       - T
       - N
-  - name: ID-SNP VCF
+  - name: ID-SNP VCF RNA
     input: snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf
     output: results/rna/{sample}_{type}/id_snps/{sample}_{type}.id_snps.vcf
     types:
       - R
+  - name: ID-SNP VCF DNA
+    input: snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf
+    output: results/dna/{sample}_{type}/id_snps/{sample}_{type}.id_snps.vcf
+    types:
+      - T
+      - N
+  - name: RNA DNA sample mixup report
+    input: qc/sample_mixup_check/sample_mixup_check.tsv
+    output: results/dna/qc/sample_mixup_check.tsv
+    types:
+      - T
+      - N
   - name: CNVkit scatter PNG
     input: cnv_sv/cnvkit_scatter/{sample}_{type}.png
     output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.cnvkit.scatter.png
@@ -345,7 +357,7 @@ files:
   - name: Small CNV deletions
     input: cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv
     output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.deletions.tsv
-    types:
+    types:git merge develop
       - T
       - N
   - name: Small CNV amplifications
