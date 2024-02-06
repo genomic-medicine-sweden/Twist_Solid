@@ -357,7 +357,7 @@ files:
   - name: Small CNV deletions
     input: cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv
     output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.deletions.tsv
-    types:git merge develop
+    types:
       - T
       - N
   - name: Small CNV amplifications
