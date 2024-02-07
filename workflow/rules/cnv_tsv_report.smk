@@ -19,6 +19,7 @@ rule cnv_tsv_report:
         tc_file=get_tc_file,
     output:
         tsv=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_report.tsv"),
+        tsv_additional_only=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_additional_variants_only.tsv"),
     params:
         call_small_amplifications_cn_limit=config.get("cnv_tsv_report", {}).get("amp_cn_limit", "6"),
         del_1p19q_cn_limit=config.get("cnv_tsv_report", {}).get("del_1p19q_cn_limit", "2"),
