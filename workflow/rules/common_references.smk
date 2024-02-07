@@ -149,10 +149,7 @@ def get_files(units: pandas.DataFrame, name: str, string_path: str):
     for i in output_spec["files"]:
         if i["name"] == name:
             types = i["types"]
-    data = [
-        string_path % (t.sample, t.type) for t in units[units["type"].isin(types)].itertuples()
-        if t.sample in sample_list
-    ]
+    data = [string_path % (t.sample, t.type) for t in units[units["type"].isin(types)].itertuples() if t.sample in sample_list]
     if not data:
         log.warning(f"No files matching the output files found for rules using name: {name}, {string_path}")
     return set(data)
