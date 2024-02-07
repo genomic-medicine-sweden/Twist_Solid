@@ -5,6 +5,7 @@ __license__ = "GPL-3"
 
 import pandas as pd
 import yaml
+import logging
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
@@ -12,6 +13,8 @@ from hydra_genetics.utils.misc import get_module_snakefile
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
+
+log = logging.getLogger()
 
 min_version("7.18.0")
 
@@ -142,10 +145,14 @@ def get_cnvkit_antitarget(units: pandas.DataFrame, name: str) -> typing.List[str
 
 def get_files(units: pandas.DataFrame, name: str, string_path: str):
     types = []
+    sample_list = get_samples(samples)
     for i in output_spec["files"]:
         if i["name"] == name:
             types = i["types"]
-    data = [string_path % (t.sample, t.type) for t in units[units["type"].isin(types)].itertuples()]
+    data = [
+        string_path % (t.sample, t.type) for t in units[units["type"].isin(types)].itertuples()
+        if t.sample in sample_list
+    ]
     if not data:
-        raise Exception(f"Couldn't create file list using name: {name}, {string_path}")
+        log.warning(f"No files matching the output files found for rules using name: {name}, {string_path}")
     return set(data)
