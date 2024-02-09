@@ -1,0 +1,65 @@
+---
+
+## We need to create files for NovaSeq
+#  svdb_query:
+#    db_string:
+#      checksum: 
+#      path: GMS560/PoN/SVDB/all_TN_292_svdb_0.8_20220505.vcf
+#      type: file
+#      url: 
+
+#  purecn:
+#    extra: 
+#      checksum: 4050b046b37d2c8ae600f3fe8c49922f
+#      path: GMS560/PoN/purecn/purecn_mapping_bias_Lund_8HRD_samples.rds
+#      type: file
+#      url: https://figshare.com/ndownloader/files/44328710?private_link=53f1597211477d840a29
+
+#    normaldb:
+#      checksum: 1970ef0831cab6328df954b9e9482b54
+#      path: GMS560/PoN/purecn/purecn_normal_db_Lund_8HRD_samples.rds
+#      type: file
+#      url: https://figshare.com/ndownloader/files/44328722?private_link=53f1597211477d840a29
+
+
+#  gatk_denoise_read_counts:
+#    normal_reference:
+#       checksum: e353bb1a647a0240fbd0107ce5b01e6d
+#       path: GMS560/PoN/gatk_cnv_novaseq_13_hg38.hdf5
+#       type: file
+#       url: https://figshare.com/ndownloader/files/44328719?private_link=53f1597211477d840a29
+
+#  cnvkit_batch:
+#    normal_reference:
+#      checksum: 8aac23e2ed093ef6bb8a94c5d181a595
+#      path: GMS560/PoN/cnvkit_novaseq_13_hg38.cnn
+#      type: file
+#      url: https://figshare.com/ndownloader/files/44328731?private_link=53f1597211477d840a29
+
+#  cnvkit_batch_hrd:
+#    normal_reference_hrd:
+#       checksum: 
+#       path: GMS560/PoN/cnvkit_novaseq_13_HRD.cnn
+#       type: file
+#       url: https://figshare.com/ndownloader/files/44328713?private_link=53f1597211477d840a29
+
+#  msisensor_pro:
+#    PoN:
+#      checksum: 8b5ea989a5c617aaa1ab1f81ec525e8b
+#      path: GMS560/PoN/Msisensor_pro_reference_novaseq_13_hg38.list_baseline
+#      type: file
+#      url: https://figshare.com/ndownloader/files/44328713?private_link=53f1597211477d840a29
+
+#  reference:
+#     background:
+#       checksum: 1180c940991a8cf9a232b364ca6934a8
+#       path: GMS560/Background/background_panel_novaseq_13_dp500_af015_hg38.tsv
+#       type: file
+#       url: https://figshare.com/ndownloader/files/44328740?private_link=53f1597211477d840a29
+    
+#     artifacts: 
+#       checksum: b4ca00ae1046cb13c2cd4ec38b4b7308
+#       path: GMS560/Artifact/artifact_panel_novaseq_13_hg38.tsv
+#       type: file
+#       url: https://figshare.com/ndownloader/files/44328725?private_link=53f1597211477d840a29
+

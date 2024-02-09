@@ -7,27 +7,27 @@ reference:
   background: "{{PROJECT_PON_DATA}}/GMS560/Background/background_panel_nextseq_noUmea_27_dp500_af015_hg38.tsv"
   artifacts: "{{PROJECT_PON_DATA}}/GMS560/Artifact/artifact_panel_nextseq_noUmea_27_hg38.tsv"
   fasta: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta"
-  fasta_rna: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
+  fasta_rna: "{{PROJECT_REF_DATA}}/ref_data/star-fusion/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
   dict: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.dict"
   fai: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.fai"
   design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed"
   design_intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.interval_list"
   design_intervals_gatk_cnv: "{{PROJECT_DESIGN_DATA}}/GMS560/design/gatk.design.hg38.preprocessed.interval_list"
-  design_bed_rna: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated_hg38.bed"
+  design_bed_rna: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.hg38.bed"
   design_intervals_rna: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.hg38.interval_list"
   skip_chrs:
     - "chrM"
 
 arriba:
   assembly: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta"
-  blacklist: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0_hg38/blacklist_hg38_GRCh38_v2.3.0.tsv.gz"
+  blacklist: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/blacklist_hg38_GRCh38_v2.3.0.tsv.gz"
   gtf: "{{PROJECT_REF_DATA}}/ref_data/refGene/hg38.refGene.gtf"
-  extra: "-p {{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0_hg38/protein_domains_hg38_GRCh38_v2.3.0.gff3 -k {{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0_hg38/known_fusions_hg38_GRCh38_v2.3.0.tsv.gz"
+  extra: "-p {{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/protein_domains_hg38_GRCh38_v2.3.0.gff3 -k {{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/known_fusions_hg38_GRCh38_v2.3.0.tsv.gz"
 
 arriba_draw_fusion:
-  cytobands: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0_hg38/cytobands_hg38_GRCh38_v2.3.0.tsv"
+  cytobands: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/cytobands_hg38_GRCh38_v2.3.0.tsv"
   gtf: "{{PROJECT_REF_DATA}}/ref_data/refGene/hg38.refGene.gtf"
-  protein_domains: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0_hg38/protein_domains_hg38_GRCh38_v2.3.0.gff3"
+  protein_domains: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/protein_domains_hg38_GRCh38_v2.3.0.gff3"
 
 annotate_cnv:
   cnv_amp_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_hg38.bed"
@@ -66,7 +66,7 @@ cnvkit_batch_hrd:
   normal_reference_hrd: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_noUmea_27_hg38.cnn"
 
 exon_skipping:
-  design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated_hg38.bed"
+  design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.hg38.bed"
 
 filter_fuseq_wes:
   gene_fusion_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/false_positive_fusion_pairs.txt"
@@ -120,8 +120,8 @@ msisensor_pro:
   PoN: "{{PROJECT_PON_DATA}}/GMS560/PoN/Msisensor_pro_reference_nextseq_noUmea_27_hg38.list_baseline"
 
 purecn:
-  extra: "--model betabin --mapping-bias-file {{PROJECT_PON_DATA}}/GMS560/PoN/purecn/mapping_bias_hg38.rds"
-  normaldb: "{{PROJECT_PON_DATA}}/GMS560/PoN/purecn/normalDB_hg38.rds"
+  extra: "--model betabin --mapping-bias-file {{PROJECT_PON_DATA}}/GMS560/PoN/purecn/mapping_bias_nextseq_hg38.rds"
+  normaldb: "{{PROJECT_PON_DATA}}/GMS560/PoN/purecn/normalDB_nextseq_hg38.rds"
   intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/purecn/targets_twist-gms-st_hg38_25000_intervals.txt"
 
 purecn_coverage:
@@ -135,7 +135,7 @@ scarhrd:
   reference_name: "grch38"
 
 star:
-  genome_index: "{{PROJECT_REF_DATA}}/ref_data/star/v2.7.10a_hg38/"
+  genome_index: "{{PROJECT_REF_DATA}}/ref_data/star/STAR_v2.7.10a_hg38/"
   extra: "--quantMode GeneCounts --sjdbGTFfile {{PROJECT_REF_DATA}}/ref_data/refGene/hg38.refGene.gtf --outSAMtype BAM SortedByCoordinate --chimSegmentMin 10 --chimOutType WithinBAM SoftClip --chimJunctionOverhangMin 10 --chimScoreMin 1 --chimScoreDropMax 30 --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --alignSJstitchMismatchNmax 5 -1 5 5 --chimSegmentReadGapMax 3"
 
 star_fusion:
