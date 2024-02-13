@@ -1,7 +1,7 @@
 def isPullRequest = false
 
 pipeline {
-  agent { label 'marvin-clone' }
+  agent { label 'jenkins-ssh-agent' }
   stages {
     stage('First stage') {
       steps {
@@ -18,7 +18,7 @@ pipeline {
           }
       }
       steps {
-        sshagent(['jenkins']) {
+        sshagent(['jenkins-ssh-agent']) {
           sh '''#!/bin/bash
                 virtualenv venv -p python3.8
                 source venv/bin/activate
@@ -49,7 +49,7 @@ pipeline {
           }
       }
       steps {
-        sshagent(['jenkins']) {
+        sshagent(['jenkins-ssh-agent']) {
           sh '''#!/bin/bash
               virtualenv venv -p python3.8
               source venv/bin/activate
