@@ -22,7 +22,7 @@ pipeline {
           sh '''#!/bin/bash
                 virtualenv venv -p python3.8
                 source venv/bin/activate
-                pip install -r requirements.txt
+                pip3 install -r requirements.txt
                 mkdir -p develop/slurm_out
                 cp -r config develop/
                 cp .tests/jenkins/units_develop.tsv develop/units.tsv
@@ -30,8 +30,6 @@ pipeline {
                 cp .tests/jenkins/resources.yaml develop/config/resources.yaml
                 cp .tests/jenkins/test_input_develop.tsv develop/test_input.tsv
 
-                module load singularity
-                module load slurm-drmaa
                 cd develop
                 git clone https://github.com/clinical-genomics-uppsala/GMS560_config
                 snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfiles GMS560_config/config/config_production_pipeline.yaml config/config.yaml -w 60 --notemp --keep-incomplete
@@ -53,7 +51,7 @@ pipeline {
           sh '''#!/bin/bash
               virtualenv venv -p python3.8
               source venv/bin/activate
-              pip install -r requirements.txt
+              pip3 install -r requirements.txt
               mkdir -p main/slurm_out
               cp -r config main/
               cp .tests/jenkins/units_main.tsv main/units.tsv
@@ -61,8 +59,6 @@ pipeline {
               cp .tests/jenkins/resources.yaml main/config/resources.yaml
               cp .tests/jenkins/test_input_main.tsv main/test_input.tsv
 
-              module load singularity
-              module load slurm-drmaa
               cd main
               git clone https://github.com/clinical-genomics-uppsala/GMS560_config
               snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfiles GMS560_config/config/config_production_pipeline.yaml config/config.yaml -w 60 --notemp --keep-incomplete
