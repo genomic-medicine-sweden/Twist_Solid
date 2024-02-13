@@ -14,7 +14,7 @@ pipeline {
     stage('develop') {
       when {
           anyOf {
-                 expression { isPullRequest == false && env.BRANCH_NAME == 'develop' }
+                 expression { isPullRequest == true }
           }
       }
       steps {
@@ -29,10 +29,12 @@ pipeline {
                 cp .tests/jenkins/samples_develop.tsv develop/samples.tsv
                 cp .tests/jenkins/resources.yaml develop/config/resources.yaml
                 cp .tests/jenkins/test_input_develop.tsv develop/test_input.tsv
-
+ls 
                 cd develop
-                git clone https://github.com/clinical-genomics-uppsala/GMS560_config
-                snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfiles GMS560_config/config/config_production_pipeline.yaml config/config.yaml -w 60 --notemp --keep-incomplete
+                sed 's,PROJECT_DESIGN_DATA:.*,PROJECT_DESIGN_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+                sed 's,PROJECT_PON_DATA:.*,PROJECT_PON_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+                sed 's,PROJECT_REF_DATA:.*,PROJECT_REF_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+                snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile -w 60 --notemp --keep-incomplete
                 git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
                 nextflow run validation_workflow/validate_result.nf
              '''
@@ -59,8 +61,10 @@ pipeline {
               cp .tests/jenkins/test_input_main.tsv main/test_input.tsv
 
               cd main
-              git clone https://github.com/clinical-genomics-uppsala/GMS560_config
-              snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfiles GMS560_config/config/config_production_pipeline.yaml config/config.yaml -w 60 --notemp --keep-incomplete
+              sed 's,PROJECT_DESIGN_DATA:.*,PROJECT_DESIGN_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+              sed 's,PROJECT_PON_DATA:.*,PROJECT_PON_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+              sed 's,PROJECT_REF_DATA:.*,PROJECT_REF_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+              snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile -w 60 --notemp --keep-incomplete
               git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
               nextflow run validation_workflow/validate_result.nf
              '''
