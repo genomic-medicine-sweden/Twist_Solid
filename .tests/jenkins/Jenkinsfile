@@ -29,7 +29,7 @@ pipeline {
                 cp .tests/jenkins/samples_develop.tsv develop/samples.tsv
                 cp .tests/jenkins/resources.yaml develop/config/resources.yaml
                 cp .tests/jenkins/test_input_develop.tsv develop/test_input.tsv
-ls 
+
                 cd develop
                 sed 's,PROJECT_DESIGN_DATA:.*,PROJECT_DESIGN_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
                 sed 's,PROJECT_PON_DATA:.*,PROJECT_PON_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
