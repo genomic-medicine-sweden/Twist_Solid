@@ -37,7 +37,7 @@ pipeline {
     stage('develop') {
       when {
           anyOf {
-                 expression { isPullRequest == false && env.BRANCH_NAME == true }
+                 expression { isPullRequest == false && env.BRANCH_NAME == 'develop' }
           }
       }
       steps {
