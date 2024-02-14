@@ -584,8 +584,6 @@ properties:
       vep_cache:
         type: string
         description: path to vep cache directory
-      required:
-        - vep_cache
 
 required:
   - samples
