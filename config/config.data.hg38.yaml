@@ -12,7 +12,7 @@ reference:
   fai: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.fai"
   design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.230222.bed"
   design_intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.interval_list"
-  design_intervals_gatk_cnv: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list"
+  design_intervals_gatk_cnv: "{{PROJECT_DESIGN_DATA}}/GMS560/design/gatk.design.hg38.preprocessed.interval_list"
   design_bed_rna: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated_hg38.bed"
   design_intervals_rna: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated_hg38.20230630.interval_list"
   skip_chrs:
@@ -88,7 +88,7 @@ gatk_collect_allelic_counts:
   SNP_interval: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/gnomad_SNP_0.001_target.annotated.hg38.interval_list"
 
 gatk_denoise_read_counts:
-  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/gatk_cnv_nextseq_noUmea_27_hg38.hdf5"
+  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/gatk_cnv_nextseq_27_hg38.hdf5"
 
 gatk_get_pileup_summaries:
   sites: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg38.vcf.gz"
@@ -120,16 +120,19 @@ msisensor_pro:
   PoN: "{{PROJECT_PON_DATA}}/GMS560/PoN/Msisensor_pro_reference_nextseq_noUmea_27_hg38.list_baseline"
 
 purecn:
-  extra: "--model betabin --mapping-bias-file {{PROJECT_PON_DATA}}/GMS560/PoN/purecn/mapping_bias_nextseq_27_hg19.rds"
-  normaldb: "{{PROJECT_PON_DATA}}/GMS560/PoN/purecn/normalDB_nextseq_27_hg19.rds"
-  intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
+  extra: "--model betabin --mapping-bias-file {{PROJECT_PON_DATA}}/GMS560/PoN/purecn/mapping_bias_hg38.rds"
+  normaldb: "{{PROJECT_PON_DATA}}/GMS560/PoN/purecn/normalDB_hg38.rds"
+  intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/purecn/targets_twist-gms-st_hg38_25000_intervals.txt"
 
 purecn_coverage:
-  intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
+  intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/purecn/targets_twist-gms-st_hg38_25000_intervals.txt"
 
 report_fusions:
   annotation_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_fusionpartners.bed"
   fp_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/rna_fusion/filter_rna_fusions_20231024.txt"
+
+scarhrd:
+  reference_name: "grch38"
 
 star:
   genome_index: "{{PROJECT_REF_DATA}}/ref_data/star/v2.7.10a_hg38/"
@@ -139,7 +142,7 @@ star_fusion:
   genome_path: "{{PROJECT_REF_DATA}}/ref_data/star-fusion/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir"
   
 svdb_query:
-  db_string: "--db {{PROJECT_PON_DATA}}/GMS560/PoN/SVDB/all_TN_292_svdb_0.8_20220505.vcf --out_frq Twist_AF --out_occ Twist_OCC"
+  db_string: "--db {{PROJECT_PON_DATA}}/GMS560/PoN/SVDB/all_T_185_svdb_0.8_hg38_20240214.vcf --out_frq Twist_AF --out_occ Twist_OCC"
 
 tmb:
   filter_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/tmb/tmb_filter_genes.txt"
@@ -148,4 +151,9 @@ tmb_umi:
   filter_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/tmb/tmb_filter_genes.txt"
 
 vep:
-  vep_cache:  "{{PROJECT_REF_DATA}}/ref_data/vep/109"
+  vep_cache:  "{{PROJECT_REF_DATA}}/ref_data/vep/105"
+  extra: " --assembly GRCh38 --check_existing --pick --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
+
+vep_wo_pick:
+  vep_cache:  "{{PROJECT_REF_DATA}}/ref_data/vep/105"
+  extra: " --assembly GRCh38 --check_existing --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
