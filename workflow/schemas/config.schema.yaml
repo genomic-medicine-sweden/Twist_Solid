@@ -562,8 +562,8 @@ properties:
       vep_cache:
         type: string
         description: path to vep cache directory
-      required:
-        - vep_cache
+    required:
+      - vep_cache
 
   sample_mixup_check:
     type: object
