@@ -35,26 +35,31 @@
   bwa:
    amb:
      checksum: 04c08086272e0a86043cc51148ece9ef
+     link: ref_data/GRCh38_p14/homo_sapiens.amb
      path: ref_data/GRCh38_p14/homo_sapiens.fasta.amb
      type: file
      url: https://figshare.com/ndownloader/files/44326166?private_link=7084cf61820c148a23d2
    ann:
      checksum: 07b88ee3a7631805de435e4f5b0354c1
+     link: ref_data/GRCh38_p14/homo_sapiens.ann
      path: ref_data/GRCh38_p14/homo_sapiens.fasta.ann
      type: file
      url: https://figshare.com/ndownloader/files/44326163?private_link=7084cf61820c148a23d2
    bwt:
      checksum: d2c37eb4a95b93065cc47959a456e59e
+     link: ref_data/GRCh38_p14/homo_sapiens.bwt
      path: ref_data/GRCh38_p14/homo_sapiens.fasta.bwt
      type: file
      url: https://figshare.com/ndownloader/files/44326175?private_link=7084cf61820c148a23d2
    pac:
      checksum: 7150c22df742fa77e6810aa7a55fc99a
+     link: ref_data/GRCh38_p14/homo_sapiens.pac
      path: ref_data/GRCh38_p14/homo_sapiens.fasta.pac
      type: file
      url: https://figshare.com/ndownloader/files/44326169?private_link=7084cf61820c148a23d2
    sa:
      checksum: 3548426aa7ecaef1e724f7ea52a80a1d
+     link: ref_data/GRCh38_p14/homo_sapiens.sa
      path: ref_data/GRCh38_p14/homo_sapiens.fasta.sa
      type: file
      url: https://figshare.com/ndownloader/files/44326172?private_link=7084cf61820c148a23d2
@@ -106,12 +111,14 @@
       
     fai:
       checksum: 7b0d658ae292f8ee17b371d387dbdc0d
+      link: ref_data/GRCh38_p14/homo_sapiens.fai
       path: ref_data/GRCh38_p14/homo_sapiens.fasta.fai
       type: file
       url: https://figshare.com/ndownloader/files/44326157?private_link=7084cf61820c148a23d2
     
     dict:
       checksum: cabb2e8bbbf8ad3ab1f7f5177da20044
+      link: ref_data/GRCh38_p14/homo_sapiens.dict
       path: ref_data/GRCh38_p14/homo_sapiens.fasta.dict
       type: file
       url: https://figshare.com/ndownloader/files/44326160?private_link=7084cf61820c148a23d2

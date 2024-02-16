@@ -162,10 +162,10 @@
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/main/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed
 
    design_intervals: 
-     checksum: 509c6f79e136b8c3de8dbe5b63c29fb0
-     path: GMS560/design//pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.interval_list
+     checksum: 86a073346c27a5c7c5034f82b79ed65c
+     path: GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.interval_list
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/main/design//pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.interval_list
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/main/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.interval_list
     
    design_intervals_gatk_cnv: 
      checksum: 58088e1c88e02f7b0cfd5211eabc01cd
