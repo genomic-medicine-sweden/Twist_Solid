@@ -129,14 +129,14 @@
 
  purecn:    
    intervals: 
-     checksum: af529c0ece5fe201de4d507000564ff7
+     checksum: 868c8991360482315f820ae822108965
      path: GMS560/purecn/targets_twist-gms-st_hg38_25000_intervals.txt
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/targets_twist-gms-st_hg38_25000_intervals.txt
 
  purecn_coverage:
    intervals:
-     checksum: af529c0ece5fe201de4d507000564ff7
+     checksum: 868c8991360482315f820ae822108965
      path: GMS560/purecn/targets_twist-gms-st_hg38_25000_intervals.txt
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/targets_twist-gms-st_hg38_25000_intervals.txt
