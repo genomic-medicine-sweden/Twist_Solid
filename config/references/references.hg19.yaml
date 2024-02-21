@@ -6,7 +6,7 @@
       path: ref_data/arriba_v2.3.0
       type: folder
       content_checksum:
-          : ca7b0b42ec2498814a5c408a5477e052
+        blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz: ca7b0b42ec2498814a5c408a5477e052
         cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv: 9333eaa96c56fa22624ab432b8391b2b
         known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz: 2f063a0065c1c88d86c859b924d8d590
         protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3: b5bc63c70c9eb08c71528ee8b0186901
