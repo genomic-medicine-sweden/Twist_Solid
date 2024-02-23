@@ -17,7 +17,6 @@ results/dna/HD827_T/additional_files/cnv/HD827_T.pathology.svdb_query.vcf	2c73b0
 results/dna/HD827_T/additional_files/cnv/HD827_T.purecn.amp_all_del_all.cnv_report.tsv	b13e1595a1b891bb5a18ec24e51ee748
 results/dna/HD827_T/additional_files/cnv/HD827_T.purecn.amp_all_del_validated.cnv_report.tsv	8a9d642420b9e09e2fd8dcc7cb4a196a
 results/dna/HD827_T/additional_files/cnv/HD827_T.purecn.svdb_query.vcf	9e1269f0072aa92eeaf969432af18ad8
-results/dna/HD827_T/additional_files/fusion/HD827_T.gene_fuse_fusions.txt	897f8ed619e4745867dbf54f7e47c7f6
 results/dna/HD827_T/additional_files/qc/HD827_T.alignment_summary_metrics.txt	351f113346779003eae764ab6d16c5c4
 results/dna/HD827_T/additional_files/qc/HD827_T.contamination.table	3c9511e7efab4fefd32144ff2ad19d19
 results/dna/HD827_T/additional_files/qc/HD827_T.duplication_metrics.txt	9ac673f2e7d28e6d9601bc096b7764e4
@@ -34,7 +33,6 @@ results/dna/HD827_T/biomarker/HD827_T.pathology_purecn.scarhrd_cnvkit_score.txt	
 results/dna/HD827_T/biomarker/HD827_T.TMB.txt	daaee4de560681775bff827c15a8bc9b
 results/dna/HD827_T/cnv/HD827_T.pathology_purecn.amp_all_del_validated.cnv_report.tsv	8a9d642420b9e09e2fd8dcc7cb4a196a
 results/dna/HD827_T/fusion/HD827_T.fuseq_wes.report.csv	ada3432e93dd1ff64f9254d8c83c91c5
-results/dna/HD827_T/fusion/HD827_T.gene_fuse_report.tsv	bb9a3b185f953f4bb0290ad93283dcfb
 results/dna/HD827_T/qc/HD827_T.coverage_and_mutations.tsv	8a0e25a13c1c24b1fcb31c6ed0fa30b2
 results/dna/HD827_T/vcf/HD827_T.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf	d0afb01193e5806d935dbe0d3d3b7918
 results/dna/HD827_T/vcf/HD827_T.annotated.exon_only.filter.hard_filter.codon_snv.vcf	48f5b016b07dbb62454690fea532ad5d
@@ -51,7 +49,6 @@ results/dna/HD832_T/additional_files/cnv/HD832_T.pathology.svdb_query.vcf	ed9da0
 results/dna/HD832_T/additional_files/cnv/HD832_T.purecn.amp_all_del_all.cnv_report.tsv	cbe488d5aa2fc115614cce7b63d97b58
 results/dna/HD832_T/additional_files/cnv/HD832_T.purecn.amp_all_del_validated.cnv_report.tsv	f63fffa3ffab1b112ac2a4db77a2d969
 results/dna/HD832_T/additional_files/cnv/HD832_T.purecn.svdb_query.vcf	c9e96e55f8d252282ee43004710d731f
-results/dna/HD832_T/additional_files/fusion/HD832_T.gene_fuse_fusions.txt	22de9c26107905e3d01d61e78188dfb9
 results/dna/HD832_T/additional_files/qc/HD832_T.alignment_summary_metrics.txt	8b2548b05cc43eaff20aeabb16aa1490
 results/dna/HD832_T/additional_files/qc/HD832_T.contamination.table	18bef22a4210099ec22b2444e6ac2482
 results/dna/HD832_T/additional_files/qc/HD832_T.duplication_metrics.txt	20cd0962dab4ca0011aec2100f4a572e
@@ -68,7 +65,6 @@ results/dna/HD832_T/biomarker/HD832_T.pathology_purecn.scarhrd_cnvkit_score.txt	
 results/dna/HD832_T/biomarker/HD832_T.TMB.txt	71ff435292edd8cc8613cceef2abab25
 results/dna/HD832_T/cnv/HD832_T.pathology_purecn.amp_all_del_validated.cnv_report.tsv	f63fffa3ffab1b112ac2a4db77a2d969
 results/dna/HD832_T/fusion/HD832_T.fuseq_wes.report.csv	ada3432e93dd1ff64f9254d8c83c91c5
-results/dna/HD832_T/fusion/HD832_T.gene_fuse_report.tsv	bb9a3b185f953f4bb0290ad93283dcfb
 results/dna/HD832_T/qc/HD832_T.coverage_and_mutations.tsv	6f2c4bb63ae1af1095dfa83ca63c4935
 results/dna/HD832_T/vcf/HD832_T.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf	57d25b05d0836bdb74081c5ef5288859
 results/dna/HD832_T/vcf/HD832_T.annotated.exon_only.filter.hard_filter.codon_snv.vcf	e7657d6abeafaa2784e81df47822f93f
@@ -85,7 +81,6 @@ results/dna/NA12878_T/additional_files/cnv/NA12878_T.pathology.svdb_query.vcf	7d
 results/dna/NA12878_T/additional_files/cnv/NA12878_T.purecn.amp_all_del_all.cnv_report.tsv	e50724c480055cef54bfb943bb0b14f4
 results/dna/NA12878_T/additional_files/cnv/NA12878_T.purecn.amp_all_del_validated.cnv_report.tsv	6b4fe34d4bb5308290660825384de0ca
 results/dna/NA12878_T/additional_files/cnv/NA12878_T.purecn.svdb_query.vcf	8b6a8f92b09c532570e93a1d6f0e6b73
-results/dna/NA12878_T/additional_files/fusion/NA12878_T.gene_fuse_fusions.txt	4128e81c3c59df166e53c57d84abe48b
 results/dna/NA12878_T/additional_files/qc/NA12878_T.alignment_summary_metrics.txt	3256b89a54ac29cf4f7ef0d6551a3be3
 results/dna/NA12878_T/additional_files/qc/NA12878_T.contamination.table	e2ab7189dcf7c8cfb1f0ac24ac8766dc
 results/dna/NA12878_T/additional_files/qc/NA12878_T.duplication_metrics.txt	355ba5b555b9d83a5820f054c323eef6
@@ -102,7 +97,6 @@ results/dna/NA12878_T/biomarker/NA12878_T.pathology_purecn.scarhrd_cnvkit_score.
 results/dna/NA12878_T/biomarker/NA12878_T.TMB.txt	bda4caafa15a03bd9efb61dd83b073a7
 results/dna/NA12878_T/cnv/NA12878_T.pathology_purecn.amp_all_del_validated.cnv_report.tsv	36011c087f38232688ff51c50ae80a40
 results/dna/NA12878_T/fusion/NA12878_T.fuseq_wes.report.csv	ada3432e93dd1ff64f9254d8c83c91c5
-results/dna/NA12878_T/fusion/NA12878_T.gene_fuse_report.tsv	bb9a3b185f953f4bb0290ad93283dcfb
 results/dna/NA12878_T/qc/NA12878_T.coverage_and_mutations.tsv	6cc860f8c112163b0f391407c9660908
 results/dna/NA12878_T/vcf/NA12878_T.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf	9c160c300df2e96a3f6a04a6a08cd135
 results/dna/NA12878_T/vcf/NA12878_T.annotated.exon_only.filter.hard_filter.codon_snv.vcf	83be1a5998e42c091baccb02fda98caa
@@ -119,7 +113,6 @@ results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.pathology.svdb_query.vcf	eb
 results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.purecn.amp_all_del_all.cnv_report.tsv	cd7fb369633f346b8a29aa7ea0b6dc97
 results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.purecn.amp_all_del_validated.cnv_report.tsv	65f50408fa28a6b68eb24dc99561d75e
 results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.purecn.svdb_query.vcf	abde954047d0b215e596d6305a96ed62
-results/dna/VAL2022_T/additional_files/fusion/VAL2022_T.gene_fuse_fusions.txt	30b4a76edd151b232828288d06e79062
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.alignment_summary_metrics.txt	6c99476824c691ca10e75382ed9bb059
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.contamination.table	c1d8fc1cdb993dda50a430028277c37b
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.duplication_metrics.txt	31611542aafb4495560e062cac828f08
@@ -136,7 +129,6 @@ results/dna/VAL2022_T/biomarker/VAL2022_T.pathology_purecn.scarhrd_cnvkit_score.
 results/dna/VAL2022_T/biomarker/VAL2022_T.TMB.txt	630203bccc74adf3947b35438a893e7b
 results/dna/VAL2022_T/cnv/VAL2022_T.pathology_purecn.amp_all_del_validated.cnv_report.tsv	11768eafeb999c30d122ed72b0e85961
 results/dna/VAL2022_T/fusion/VAL2022_T.fuseq_wes.report.csv	ada3432e93dd1ff64f9254d8c83c91c5
-results/dna/VAL2022_T/fusion/VAL2022_T.gene_fuse_report.tsv	bb9a3b185f953f4bb0290ad93283dcfb
 results/dna/VAL2022_T/qc/VAL2022_T.coverage_and_mutations.tsv	ac11b8228a5464a29c47e946e87b8007
 results/dna/VAL2022_T/vcf/VAL2022_T.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf	ba20747697a5415dd40e2f19cec19b1c
 results/dna/VAL2022_T/vcf/VAL2022_T.annotated.exon_only.filter.hard_filter.codon_snv.vcf	fc948ceb919093acd6aa8aca4f3012c4
