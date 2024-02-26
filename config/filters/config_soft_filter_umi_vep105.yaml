@@ -12,7 +12,7 @@ filters:
   germline:
     description: "Hard filter germline"
     expression: "(VEP:gnomAD_AF > 0.005)"
-    soft_filter_flag: "germline"
+    soft_filter_flag: "germline_gnomad"
     soft_filter: "True"
   af_snv:
     description: "Hard filter SNV variants with low vaf"
