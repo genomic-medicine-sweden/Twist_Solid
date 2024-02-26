@@ -336,17 +336,17 @@ tmb:
   nssnv_tmb_correction: 0.84
 
 tmb_umi:
-  af_lower_limit: 0.000
+  af_lower_limit: 0.006
   af_upper_limit: 0.994
-  af_germline_lower_limit: 0.3
-  af_germline_upper_limit: 0.7
+  af_germline_lower_limit: 0.47
+  af_germline_upper_limit: 0.53
   artifacts: ""
   background_panel: ""
   db1000g_limit: 0.0001
-  dp_limit: 300
+  dp_limit: 100
   gnomad_limit: 0.0001
-  vd_limit: 0
-  nr_avg_germline_snvs: 0.0
+  vd_limit: 15
+  nr_avg_germline_snvs: 2.0
   nssnv_tmb_correction: 0.84
 
 vardict:
