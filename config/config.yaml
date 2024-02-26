@@ -336,8 +336,8 @@ tmb:
   nssnv_tmb_correction: 0.84
 
 tmb_umi:
-  af_lower_limit: 0.006
-  af_upper_limit: 0.994
+  af_lower_limit: 0.01
+  af_upper_limit: 0.99
   af_germline_lower_limit: 0.47
   af_germline_upper_limit: 0.53
   artifacts: ""
