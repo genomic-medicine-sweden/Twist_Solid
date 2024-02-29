@@ -19,6 +19,16 @@ from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics.utils.misc import replace_dict_variables
 from hydra_genetics import min_version as hydra_min_version
 
+from hydra_genetics.utils.software_versions import export_pipeline_version_as_file
+from hydra_genetics.utils.software_versions import get_pipeline_version
+
+from hydra_genetics.utils.misc import export_config_as_file
+from hydra_genetics.utils.software_versions import use_container
+from hydra_genetics.utils.software_versions import export_pipeline_version_as_file
+from hydra_genetics.utils.software_versions import get_pipeline_version
+from hydra_genetics.utils.software_versions import add_software_version_to_config
+from hydra_genetics.utils.software_versions import export_software_version_as_files
+
 hydra_min_version("1.10.0")
 
 min_version("7.13.0")
@@ -61,6 +71,28 @@ with open(config["output"]) as output:
         raise ValueError(f"output specification should be JSON or YAML: {output.name}")
 
 validate(output_spec, schema="../schemas/output_files.schema.yaml")
+
+onstart:
+    date_string = datetime.now().strftime('%Y%m%d--%H-%M-%S')
+    pipeline_version = get_pipeline_version(workflow, pipeline_name="Twist_Solid")
+    export_pipeline_version_as_file(pipeline_version, date_string=date_string, directory="results/versions/software")
+    # Make sure that the user have the requested containers to be used
+    if use_container(workflow):
+        # From the config retrieve all dockers used and parse labels for software versions. Add
+        # this information to config dict.
+        update_config, software_info = add_software_version_to_config(config, workflow, False)
+
+        # Print all softwares used as files. Additional parameters that can be set
+        # - directory, default value: software_versions
+        # - file_name_ending, default value: mqv_versions.yaml
+        # date_string, a string that will be added to the folder name to make it unique (preferably a timestamp)
+        export_software_version_as_files(software_info, date_string=date_string, directory="results/versions/software")
+
+        # print config dict as a file. Additional parameters that can be set
+        # output_file, default config
+        # output_directory, default = None, i.e no folder
+        # date_string, a string that will be added to the folder name to make it unique (preferably a timestamp)
+        export_config_as_file(update_config, date_string=date_string, directory="results/versions")
 
 
 ### Set wildcard constraints
