@@ -20,7 +20,7 @@ results/dna/VAL2022-2-5M_T/additional_files/qc/VAL2022-2-5M_T.duplication_metric
 results/dna/VAL2022-2-5M_T/additional_files/qc/VAL2022-2-5M_T.HsMetrics.txt	4cd233605b72ef66168d19bff9d77884
 results/dna/VAL2022-2-5M_T/additional_files/qc/VAL2022-2-5M_T.insert_size_metrics.txt	c39dfcba5fb8677464b4cdac5e81e2df
 results/dna/VAL2022-2-5M_T/additional_files/qc/VAL2022-2-5M_T.samtools-stats.txt	7e4dca8f1c46592f1dba4e7b6915aa91
-results/dna/VAL2022-2-5M_T/additional_files/vcf/gatk_mutect2_VAL2022-2-5M_T.vcf.gz	f9bfce1a98d8e6f853231703913333dc
+results/dna/VAL2022-2-5M_T/additional_files/vcf/gatk_mutect2_VAL2022-2-5M_T.vcf.gz	26078361a0eb1804ced972deb0ec6279
 results/dna/VAL2022-2-5M_T/additional_files/vcf/VAL2022-2-5M_T.annotated.exon_only.filter.hard_filter.vcf	7524982046a552acc334fdfb09ad3c94
 results/dna/VAL2022-2-5M_T/additional_files/vcf/VAL2022-2-5M_T.annotated.exon_only.filter.soft_filter.vcf	c9c329fad899dc12af8c19d4a65c4b3a
 results/dna/VAL2022-2-5M_T/additional_files/vcf/VAL2022-2-5M_T.annotated.vcf.gz	61bc6de716210bbc7f2926b97e7d506f
