@@ -74,6 +74,12 @@ cnvkit_scatter:
 cnv_html_report:
   show_table: true
   show_cytobands: true
+  extra_tables:
+    - name: Small CNVs and 1p19q
+      description: >
+        Additional small amplifications and deletions as well as 1p19q co-deletions called by Twist Solid
+        in-house scripts. Can have overlaps with called regions from other callers.
+      path: "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.cnv_loh_genes_all.cnv_additional_variants_only.tsv"
 
 cnv_tsv_report:
   amp_cn_limit: 6.0
@@ -119,7 +125,7 @@ filter_vcf:
   germline: "config/filters/config_hard_filter_germline_vep105.yaml"
 
 filter_fuseq_wes:
-  min_support: 30
+  min_support: 50
   filter_on_fusiondb: True
 
 fuseq_wes:
@@ -161,9 +167,6 @@ gatk_mutect2_gvcf:
 
 gatk_mutect2_merge_stats:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
-
-gene_fuse:
-  container: "docker://hydragenetics/genefuse:0.6.1"
 
 hotspot_report:
   report_config: "config/reports/hotspot_report.yaml"
@@ -281,9 +284,6 @@ report_fusions:
   star_fusion_low_support: 2
   star_fusion_low_support_inframe: 6
 
-report_gene_fuse:
-  min_unique_reads: 6
-
 samtools_merge_bam:
   extra: "-c -p"
 
@@ -292,7 +292,6 @@ samtools_merge_bam_umi:
 
 scarhrd:
   container: "docker://hydragenetics/scarhrd:20200825"
-  reference_name: "grch37"
   seqz: FALSE
 
 star:
@@ -337,17 +336,17 @@ tmb:
   nssnv_tmb_correction: 0.84
 
 tmb_umi:
-  af_lower_limit: 0.000
-  af_upper_limit: 0.994
-  af_germline_lower_limit: 0.3
-  af_germline_upper_limit: 0.7
+  af_lower_limit: 0.01
+  af_upper_limit: 0.99
+  af_germline_lower_limit: 0.47
+  af_germline_upper_limit: 0.53
   artifacts: ""
   background_panel: ""
   db1000g_limit: 0.0001
-  dp_limit: 300
+  dp_limit: 100
   gnomad_limit: 0.0001
-  vd_limit: 0
-  nr_avg_germline_snvs: 0.0
+  vd_limit: 15
+  nr_avg_germline_snvs: 2.0
   nssnv_tmb_correction: 0.84
 
 vardict:
@@ -360,11 +359,9 @@ vardict:
 vep:
   container: "docker://hydragenetics/vep:105"
   mode: --offline --cache --refseq
-  extra: " --assembly GRCh37 --check_existing --pick --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
 
 vep_wo_pick:
   mode: --offline --cache --refseq
-  extra: " --assembly GRCh37 --check_existing --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
 
 vt_decompose:
   container: "docker://hydragenetics/vt:2015.11.10"

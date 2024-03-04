@@ -148,7 +148,7 @@ Arriba produces a pdf file containing a figure for every fusion called with a sc
 * `results/rna/additional_files/fusion/{sample}_{type}.fusioncatcher.fusion_predictions.txt`
 
 ## Fusion filtering and report
-Fusion candidates from the three fusions callers are collected and filtered with different filtering options for each caller by the in-house script [report_fusions.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/report_fusions.py) ([rule and config](rules.md#report_fusions)). The remaining fusion calls are then reported in a excel friendly tsv file. Fusions are filtered based on the number of reads cover the breakpoint. However, read pairs spanning the breakpoint are also reported together with total supporting reads as well as other annotations. The settings for respective caller are presented below:
+Fusion candidates from the three fusions callers are collected and filtered with different filtering options for each caller by the in-house script [report_fusions.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/report_fusions.py) ([rule and config](softwares.md#report_fusions)). The remaining fusion calls are then reported in a excel friendly tsv file. Fusions are filtered based on the number of reads cover the breakpoint. However, read pairs spanning the breakpoint are also reported together with total supporting reads as well as other annotations. The settings for respective caller are presented below:
 
 ### Filter settings
 

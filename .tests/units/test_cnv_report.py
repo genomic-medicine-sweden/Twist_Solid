@@ -13,7 +13,8 @@ from cnv_report import create_tsv_report  # noqa
 
 class TestGetCaller(unittest.TestCase):
     def test_create_tsv_report(self):
-        cnv = tempfile.mkdtemp() + "/tcvn.txt"
+        cnv = tempfile.mkdtemp() + "/tcnv.txt"
+        out_additional_only = open(tempfile.mkdtemp() + "/out_additional_only.txt", "w")
         create_tsv_report(
             [".tests/units/vcf/test.cnv1.vcf"],
             [".tests/units/vcf/test.cnv2.vcf"],
@@ -21,6 +22,7 @@ class TestGetCaller(unittest.TestCase):
             ".tests/units/vcf/test.amplifications.tsv",
             2.0,
             cnv,
+            out_additional_only,
             1.5,
             0.5,
             0.5,

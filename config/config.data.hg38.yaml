@@ -1,175 +1,159 @@
 
+PROJECT_DESIGN_DATA: ""
+PROJECT_PON_DATA: ""
+PROJECT_REF_DATA: ""
+
 reference:
-  background: ""
-  artifacts: ""
-  fasta: "/data/ref_genomes/GRCh38_p14/homo_sapiens.fasta"
-  fasta_rna: "/data/ref_data/star-fusion/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
-  dict: "/data/ref_genomes/GRCh38_p14/homo_sapiens.fasta.dict"
-  fai: "/data/ref_genomes/GRCh38_p14/homo_sapiens.fasta.fai"
-  design_bed: ""
-  design_intervals: ""
-  design_intervals_gatk_cnv: ""
-  design_bed_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"
-  design_intervals_rna: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.20230630.interval_list"
+  background: "{{PROJECT_PON_DATA}}/GMS560/Background/background_panel_nextseq_noUmea_27_dp500_af015_hg38.tsv"
+  artifacts: "{{PROJECT_PON_DATA}}/GMS560/Artifact/artifact_panel_nextseq_noUmea_27_hg38.tsv"
+  fasta: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta"
+  fasta_rna: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
+  dict: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.dict"
+  fai: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.fai"
+  design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed"
+  design_intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.interval_list"
+  design_intervals_gatk_cnv: "{{PROJECT_DESIGN_DATA}}/GMS560/design/gatk.design.hg38.preprocessed.interval_list"
+  design_bed_rna: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated_hg38.bed"
+  design_intervals_rna: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.hg38.interval_list"
   skip_chrs:
     - "chrM"
 
 arriba:
-  assembly: "/data/ref_genomes/GRCh38_p14/homo_sapiens.fasta"
-  blacklist: "/data/ref_data/arriba/arriba_v2.3.0/database/blacklist_hg38_GRCh38_v2.3.0.tsv.gz"
-  gtf: "/data/ref_genomes/GRCh38/gtf/hg38.refGene.gtf"
-  extra: "-p /data/ref_data/arriba/arriba_v2.3.0/database/protein_domains_hg38_GRCh38_v2.3.0.gff3 -k /data/ref_data/arriba/arriba_v2.3.0/database/known_fusions_hg38_GRCh38_v2.3.0.tsv.gz"
+  assembly: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta"
+  blacklist: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0_hg38/blacklist_hg38_GRCh38_v2.3.0.tsv.gz"
+  gtf: "{{PROJECT_REF_DATA}}/ref_data/refGene/hg38.refGene.gtf"
+  extra: "-p {{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0_hg38/protein_domains_hg38_GRCh38_v2.3.0.gff3 -k {{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0_hg38/known_fusions_hg38_GRCh38_v2.3.0.tsv.gz"
 
 arriba_draw_fusion:
-  cytobands: "/data/ref_data/arriba/arriba_v2.3.0/database/cytobands_hg38_GRCh38_v2.3.0.tsv"
-  gtf: "/data/ref_genomes/GRCh38/gtf/hg38.refGene.gtf"
-  protein_domains: "/data/ref_data/arriba/arriba_v2.3.0/database/protein_domains_hg38_GRCh38_v2.3.0.gff3"
+  cytobands: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0_hg38/cytobands_hg38_GRCh38_v2.3.0.tsv"
+  gtf: "{{PROJECT_REF_DATA}}/ref_data/refGene/hg38.refGene.gtf"
+  protein_domains: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0_hg38/protein_domains_hg38_GRCh38_v2.3.0.gff3"
 
 annotate_cnv:
-  cnv_amp_genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed"
-  cnv_loh_genes_validated: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_uppsala_genes.bed"
-  cnv_loh_genes_all: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_genes.bed"
-
+  cnv_amp_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_hg38.bed"
+  cnv_loh_genes_validated: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_uppsala_genes_hg38.bed"
+  cnv_loh_genes_all: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes_hg38.bed"
 
 bcftools_annotate:
-  annotation_db: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg38.vcf.gz"
-  
+  annotation_db: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg38.vcf.gz"
+
 bcftools_filter_include_region:
-  exon: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.bed"
+  exon: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.bed"
 
 bcftools_filter_exclude_region:
-  blacklist: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnvkit_germline_blacklist_20221221.bed"
+  blacklist: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnvkit_germline_blacklist_20221221_hg38.bed"
 
 bcftools_id_snps:
-  snps_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/ID_SNPs.bed"
+  snps_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/ID_SNPs_hg38.bed"
 
 bwa_mem:
-  amb: "/data/ref_genomes/GRCh38_p14/homo_sapiens.fasta.amb"
-  ann: "/data/ref_genomes/GRCh38_p14/homo_sapiens.fasta.ann"
-  bwt: "/data/ref_genomes/GRCh38_p14/homo_sapiens.fasta.bwt"
-  pac: "/data/ref_genomes/GRCh38_p14/homo_sapiens.fasta.pac"
-  sa: "/data/ref_genomes/GRCh38_p14/homo_sapiens.fasta.sa"
+  amb: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.amb"
+  ann: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.ann"
+  bwt: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.bwt"
+  pac: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.pac"
+  sa: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.sa"
 
 call_small_cnv_deletions:
-  regions_file: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_deletion_genes.tsv"
+  regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_deletion_genes_hg38.tsv"
 
 call_small_cnv_amplifications:
-  regions_file: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amplification_genes.tsv"
+  regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amplification_genes_hg38.tsv"
 
 cnvkit_batch:
-  normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_nextseq_36.cnn"
+  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_noUmea_27_hg38.cnn"
 
 cnvkit_batch_hrd:
-  normal_reference_hrd: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_nextseq_27_HRD.cnn"
+  normal_reference_hrd: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_noUmea_27_hg38.cnn"
 
 exon_skipping:
-  design_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_Design5.annotated.bed"
-
+  design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated_hg38.bed"
 
 filter_fuseq_wes:
-  gene_white_list: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA_HG38/fuseq_wes/fuseq_wes_gene_white_list.txt"
-  transcript_black_list: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA_HG38/fuseq_wes/fuseq_wes_transcript_black_list.txt"
-  gtf: "/data/ref_genomes/GRCh38/gtf/hg38.refGene.gtf"
+  gene_fusion_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/false_positive_fusion_pairs.txt"
+  gene_white_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_gene_white_list.txt"
+  transcript_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_transcript_black_list.txt"
+  gtf: "{{PROJECT_REF_DATA}}/ref_data/refGene/hg38.refGene.gtf"
 
 fuseq_wes:
-  ref_json: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA_HG38/fuseq_wes/UCSC_hg38_wes_contigSize3000_bigLen130000_r100.json"
-  gtfSqlite: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA_HG38/fuseq_wes/UCSC_hg38_wes_contigSize3000_bigLen130000_r100.sqlite"
-  fusiondb: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA_HG38/fuseq_wes/Mitelman_fusiondb.RData"
-  paralogdb: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA_HG38/fuseq_wes/ensmbl_paralogs_grch38.RData"
-  params: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/fuseq_wes/fuseq_params.txt"
+  ref_json: "{{PROJECT_REF_DATA}}/ref_data/fuseq_wes/UCSC_hg38_wes_contigSize3000_bigLen130000_r100.json"
+  gtfSqlite: "{{PROJECT_REF_DATA}}/ref_data/fuseq_wes/UCSC_hg38_wes_contigSize3000_bigLen130000_r100.sqlite"
+  fusiondb: "{{PROJECT_REF_DATA}}/ref_data/fuseq_wes/Mitelman_fusiondb.RData"
+  paralogdb: "{{PROJECT_REF_DATA}}/ref_data/fuseq_wes/ensmbl_paralogs_grch38.RData"
+  params: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_params.txt"
 
 fusioncatcher:
-  genome_path: "/data/ref_data/fusioncatcher/human_v102/human_v102/"
-
+  genome_path: "{{PROJECT_REF_DATA}}/ref_data/fusioncatcher/human_v102/"
 
 gatk_collect_allelic_counts:
-  SNP_interval: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA_HG38/bed/gnomad_SNP_0.001_target.annotated.hg38.interval_list"
+  SNP_interval: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/gnomad_SNP_0.001_target.annotated.hg38.interval_list"
 
 gatk_denoise_read_counts:
-  normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/gatk_cnv_nextseq_36.hdf5"
-
+  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/gatk_cnv_nextseq_27_hg38.hdf5"
 
 gatk_get_pileup_summaries:
-  sites: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg38.vcf.gz"
-  variants: "/data/ref_genomes/GNOMAD/small_exac_common_3.hg38.vcf.gz"
-
-
-gene_fuse:
-  genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion_w_pool2.hg38.csv"
-  fasta: "/data/ref_genomes/GRCh38_p14/homo_sapiens.fasta"
+  sites: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg38.vcf.gz"
+  variants: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg38.vcf.gz"
 
 hotspot_annotation:
-  hotspots: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
-  chr_translation_file: "config/hotspot_report.chr.translation.hg38"
+  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg38"
+  hotspots: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011_hg38.csv"
 
 hotspot_info:
-  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
+  hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011_hg38.csv"
 
 hotspot_report:
-  hotspot_mutations: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/Hotspots_combined_regions_nodups.csv"
-  report_config: "config/hotspot_report.yaml"
-  chr_translation_file: "config/hotspot_report.chr.translation.hg38"
-  levels:
-    - [200, "ok", "yes"]
-    - [30, "low", "yes"]
-    - [0, "low", "not analyzable"]
+  chr_translation_file: "config/reports/hotspot_report.chr.translation.hg38"
+  hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011_hg38.csv"
 
 manta_config_t:
-  extra: "--exome --callRegions /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz"
-
+  extra: "--exome --callRegions {{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed.gz"
 
 merge_cnv_json:
   annotations:
-    - /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed
-    - /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_genes.bed
-  filtered_cnv_vcfs:
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf.gz
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.filter.cnv_hard_filter_loh.vcf.gz
-  unfiltered_cnv_vcfs:
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.vcf.gz
-  germline_vcf: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_hg38.bed"
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes_hg38.bed"
 
+mosdepth:
+  extra: "--no-per-base --fast-mode"
 
 msisensor_pro:
-  PoN: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/Msisensor_pro_reference_nextseq_36.list_baseline"
-
+  PoN: "{{PROJECT_PON_DATA}}/GMS560/PoN/Msisensor_pro_reference_nextseq_noUmea_27_hg38.list_baseline"
 
 purecn:
-  genome: "hg38"
-  interval_padding: 100
-  segmentation_method: "internal"
-  fun_segmentation: "PSCBS"
-  extra: "--model betabin --mapping-bias-file /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/mapping_bias_nextseq_27_hg19.rds"
-  normaldb: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/normalDB_nextseq_27_hg19.rds"
-  intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
+  extra: "--model betabin --mapping-bias-file {{PROJECT_PON_DATA}}/GMS560/PoN/purecn/mapping_bias_hg38.rds"
+  normaldb: "{{PROJECT_PON_DATA}}/GMS560/PoN/purecn/normalDB_hg38.rds"
+  intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/purecn/targets_twist-gms-st_hg38_25000_intervals.txt"
 
 purecn_coverage:
-  intervals: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/purecn/targets_twist-gms-st_hg19_25000_intervals.txt"
+  intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/purecn/targets_twist-gms-st_hg38_25000_intervals.txt"
 
 report_fusions:
-  annotation_bed: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/Twist_RNA_fusionpartners.bed"
-  fp_fusions: "/projects/wp1/nobackup/ngs/utveckling/Twist_RNA_DATA/bed/filter_rna_fusions_20231020.txt"
-
-report_gene_fuse:
-  filter_fusions: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/filter_fusions_20230214.csv"
-
+  annotation_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_fusionpartners_hg38.bed"
+  fp_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/rna_fusion/filter_rna_fusions_20231024.txt"
 
 scarhrd:
   reference_name: "grch38"
 
 star:
-  genome_index: "/data/ref_data/star/v2.7.10a_hg38/"
-  extra: "--quantMode GeneCounts --sjdbGTFfile /data/ref_genomes/GRCh38/gtf/hg38.refGene.gtf --outSAMtype BAM SortedByCoordinate --chimSegmentMin 10 --chimOutType WithinBAM SoftClip --chimJunctionOverhangMin 10 --chimScoreMin 1 --chimScoreDropMax 30 --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --alignSJstitchMismatchNmax 5 -1 5 5 --chimSegmentReadGapMax 3"
+  genome_index: "{{PROJECT_REF_DATA}}/ref_data/star/v2.7.10a_hg38/"
+  extra: "--quantMode GeneCounts --sjdbGTFfile {{PROJECT_REF_DATA}}/ref_data/refGene/hg38.refGene.gtf --outSAMtype BAM SortedByCoordinate --chimSegmentMin 10 --chimOutType WithinBAM SoftClip --chimJunctionOverhangMin 10 --chimScoreMin 1 --chimScoreDropMax 30 --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --alignSJstitchMismatchNmax 5 -1 5 5 --chimSegmentReadGapMax 3"
 
 star_fusion:
-  genome_path: "/data/ref_data/star-fusion/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/"
+  genome_path: "{{PROJECT_REF_DATA}}/ref_data/star-fusion/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir"
   
-
 svdb_query:
-  db_string: "--db /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/SVDB/all_TN_292_svdb_0.8_20220505.vcf --out_frq Twist_AF --out_occ Twist_OCC"
+  db_string: "--db {{PROJECT_PON_DATA}}/GMS560/PoN/SVDB/all_T_185_svdb_0.8_hg38_20240214.vcf --out_frq Twist_AF --out_occ Twist_OCC"
+
+tmb:
+  filter_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/tmb/tmb_filter_genes.txt"
+
+tmb_umi:
+  filter_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/tmb/tmb_filter_genes.txt"
 
 vep:
-  vep_cache:  "/data/ref_genomes/VEP/"
-  mode: --offline --cache
+  vep_cache:  "{{PROJECT_REF_DATA}}/ref_data/vep/105"
   extra: " --assembly GRCh38 --check_existing --pick --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
+
+vep_wo_pick:
+  vep_cache:  "{{PROJECT_REF_DATA}}/ref_data/vep/105"
+  extra: " --assembly GRCh38 --check_existing --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "

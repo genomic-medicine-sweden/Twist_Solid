@@ -1,15 +1,38 @@
 def isPullRequest = false
 
 pipeline {
-  agent { label 'marvin-clone' }
+  agent { label 'jenkins-ssh-agent' }
   stages {
-    stage('First stage') {
+    stage('first stage') {
       steps {
         script {
           isPullRequest = env.CHANGE_ID != null
         }
         sh 'printenv'
       }
+    }
+    stage('dry-run') {
+      steps {
+        sshagent(['jenkins-ssh-agent']) {
+          sh '''#!/bin/bash
+                virtualenv venv -p python3.9
+                source venv/bin/activate
+                pip3 install -r requirements.txt
+                mkdir -p develop/slurm_out
+                cp -r config develop/
+                cp .tests/jenkins/units_develop.tsv develop/units.tsv
+                cp .tests/jenkins/samples_develop.tsv develop/samples.tsv
+                cp .tests/jenkins/resources.yaml develop/config/resources.yaml
+                cp .tests/jenkins/test_input_develop.tsv develop/test_input.tsv
+
+                cd develop
+                sed 's,PROJECT_DESIGN_DATA:.*,PROJECT_DESIGN_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+                sed 's,PROJECT_PON_DATA:.*,PROJECT_PON_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+                sed 's,PROJECT_REF_DATA:.*,PROJECT_REF_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+                snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile -w 60 -n
+             '''
+         }
+       }
     }
     stage('develop') {
       when {
@@ -18,11 +41,11 @@ pipeline {
           }
       }
       steps {
-        sshagent(['jenkins']) {
+        sshagent(['jenkins-ssh-agent']) {
           sh '''#!/bin/bash
-                virtualenv venv -p python3.8
+                virtualenv venv -p python3.9
                 source venv/bin/activate
-                pip install -r requirements.txt
+                pip3 install -r requirements.txt
                 mkdir -p develop/slurm_out
                 cp -r config develop/
                 cp .tests/jenkins/units_develop.tsv develop/units.tsv
@@ -30,13 +53,12 @@ pipeline {
                 cp .tests/jenkins/resources.yaml develop/config/resources.yaml
                 cp .tests/jenkins/test_input_develop.tsv develop/test_input.tsv
 
-                module load singularity
-                module load slurm-drmaa
                 cd develop
-                git clone https://github.com/clinical-genomics-uppsala/GMS560_config
-                snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfiles GMS560_config/config/config_production_pipeline.yaml config/config.yaml -w 60 --notemp --keep-incomplete
+                sed 's,PROJECT_DESIGN_DATA:.*,PROJECT_DESIGN_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+                sed 's,PROJECT_PON_DATA:.*,PROJECT_PON_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+                sed 's,PROJECT_REF_DATA:.*,PROJECT_REF_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+                snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile -w 60 --notemp --keep-incomplete
                 git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
-                module load nextflow
                 nextflow run validation_workflow/validate_result.nf
              '''
          }
@@ -49,11 +71,11 @@ pipeline {
           }
       }
       steps {
-        sshagent(['jenkins']) {
+        sshagent(['jenkins-ssh-agent']) {
           sh '''#!/bin/bash
-              virtualenv venv -p python3.8
+              virtualenv venv -p python3.9
               source venv/bin/activate
-              pip install -r requirements.txt
+              pip3 install -r requirements.txt
               mkdir -p main/slurm_out
               cp -r config main/
               cp .tests/jenkins/units_main.tsv main/units.tsv
@@ -61,13 +83,12 @@ pipeline {
               cp .tests/jenkins/resources.yaml main/config/resources.yaml
               cp .tests/jenkins/test_input_main.tsv main/test_input.tsv
 
-              module load singularity
-              module load slurm-drmaa
               cd main
-              git clone https://github.com/clinical-genomics-uppsala/GMS560_config
-              snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile --configfiles GMS560_config/config/config_production_pipeline.yaml config/config.yaml -w 60 --notemp --keep-incomplete
+              sed 's,PROJECT_DESIGN_DATA:.*,PROJECT_DESIGN_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+              sed 's,PROJECT_PON_DATA:.*,PROJECT_PON_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+              sed 's,PROJECT_REF_DATA:.*,PROJECT_REF_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+              snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile -w 60 --notemp --keep-incomplete
               git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
-              module load nextflow
               nextflow run validation_workflow/validate_result.nf
              '''
          }

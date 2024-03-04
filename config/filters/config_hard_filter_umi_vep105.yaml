@@ -67,7 +67,3 @@ filters:
     description: "Hard filter variants only called by mutect2"
     expression: "INFO:CALLERS:0 = gatk_mutect2"
     soft_filter: "False"
-  qual:
-    description: "Hard filter variants with low calling quality"
-    expression: "INFO:QUAL:0 < 43.0"
-    soft_filter: "False"

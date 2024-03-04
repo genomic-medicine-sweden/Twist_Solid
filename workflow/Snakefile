@@ -5,6 +5,7 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
+include: "rules/sample_mixup_check.smk"
 include: "rules/bcftools.smk"
 include: "rules/call_small_cnv_deletions.smk"
 include: "rules/call_small_cnv_amplifications.smk"
@@ -14,7 +15,6 @@ include: "rules/fix_vcf_ad_for_qci.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/house_keeping_gene_coverage.smk"
 include: "rules/purecn_modify_vcf.smk"
-include: "rules/report_gene_fuse.smk"
 include: "rules/report_fusions.smk"
 
 
@@ -45,6 +45,16 @@ ruleorder: snv_indels_bcftools_sort > misc_bgzip
 
 wildcard_constraints:
     file="^(?!bam_dna|results|gvcf_dna).*",
+
+
+use rule bcftools_id_snps as bcftools_id_snps_dna with:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bed=config.get("bcftools_id_snps", {}).get("snps_bed", "missing bcftools_id_snps snps_bed file"),
+        ref=config.get("reference", {}).get("fasta", "missing reference fasta"),
+    wildcard_constraints:
+        type="[TN]",
 
 
 module prealignment:
@@ -607,7 +617,7 @@ use rule purecn from cnv_sv as cnv_sv_purecn with:
 
 module reports:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.3.1")
+        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.4.1")
     config:
         config
 
@@ -622,11 +632,13 @@ use rule cnv_html_report from reports as reports_cnv_html_report with:
         js_files=workflow.get_rule("reports_cnv_html_report").input.js_files,
         css_files=workflow.get_rule("reports_cnv_html_report").input.css_files,
         tc_file=get_tc_file,
+        extra_table_files=[t["path"] for t in config.get("cnv_html_report", {}).get("extra_tables", [])],
     params:
         include_table=config.get("cnv_html_report", {}).get("show_table", True),
         include_cytobands=config.get("cnv_html_report", {}).get("show_cytobands", True),
         tc=get_tc,
         tc_method=lambda wildcards: wildcards.tc_method,
+        extra_tables=config.get("cnv_html_report", {}).get("extra_tables", []),
 
 
 module misc:

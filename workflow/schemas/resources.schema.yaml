@@ -228,9 +228,9 @@ properties:
         type: integer
         description:  number of threads to be available
 
-  report_gene_fuse:
+  sample_mixup_check:
     type: object
-    description: resource definitions for generating a gene fuse report
+    description: resource definitions for sample_mixup_check
     properties:
       mem_mb:
         type: integer
