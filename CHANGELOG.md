@@ -1,5 +1,55 @@
 # Changelog
 
+## [0.12.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.11.0...v0.12.0) (2024-03-05)
+
+
+### Features
+
+* adapted configs to hg38 ([7c601ab](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7c601abd0a4ec6634b53b5711be7c314353ac1e9))
+* added new rule for rna dna mixup check ([164baa6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/164baa603d4026b7660187e15f78bf0777752a1f))
+* cnv html report additional table only includes additional calls ([e3971eb](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e3971eb054e0865447c2139ec8f125689d50b030))
+* data config for HG38 (missing HRD, SVDB, purecn) ([7376033](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7376033c86cf8841bd75de19a8a2cc047e831f30))
+* increased read support needed for fuseq_wes ([f669bc2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f669bc26a40ea3ae11dfc4f64b957a3ff8b97559))
+* print pipeline and software version and config to results ([d643a39](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d643a393387cb975b6537da85e0364b45bb372de))
+* put mixup report directly under result as it is both rna and dna ([c9cdbc5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c9cdbc5e21a8ace20b77dbb664bb47fe3f78d939))
+* removed gene fuse from config ([c1f25ba](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c1f25ba5beffcffc810c0838880ae861ca94d6e4))
+* removed gene fuse from pipeline ([83260f6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/83260f6a376abb8d11bf7b0be89f2a4f2d433bcf))
+* update hydra-genetics version ([c57d3f3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c57d3f3da9ead5f9868243d36507708605506c21))
+* update reports module to v0.4.1 ([#398](https://www.github.com/genomic-medicine-sweden/Twist_Solid/issues/398)) ([32e40e9](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/32e40e9bf8916b49f658d2e8ef65f533890a503d))
+
+
+### Bug Fixes
+
+* avoid clash with earlier filter annotation ([9d2ed1b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9d2ed1b103b3c41a4fd54225c8a247ea52ba322a))
+* bug in Snakefile ([d8307f4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d8307f4c1b38a54510aad1ea3a4e788a2167e910))
+* bugfix ([a154b11](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a154b110c5b78768f492e10c84ac81ccb2969181))
+* bugfix ([75d21be](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/75d21be979cb0803def7a54e6f559ecf02891f4a))
+* bugfix and improvements ([dc7f4b4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/dc7f4b4202b2762a17cc7b15daa8033054ec64eb))
+* changed sample mixup från txt to tsv ([5b91e60](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5b91e6068fca5ec776f745539c8888f3c180a56c))
+* correct paths for CNV report extra tables ([#401](https://www.github.com/genomic-medicine-sweden/Twist_Solid/issues/401)) ([37a461e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/37a461ee645b241405009854e8f2cccd12904ca7))
+* extra table without tag to cnv html report ([765ce51](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/765ce518879b3a9cb16938d34a47c47771bf0cd2))
+* handle missing files better ([a0be997](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a0be99720cce840688fd701c664d0f50fd5504af))
+* make umi tmb similar to tmb ([c525c0e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c525c0e78fbafb80a1acc308767f3e5042b52d4a))
+* min 1% AF ([ef2bcaf](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ef2bcaf3cf842166d1c779f6800712e89e8e06b7))
+* missing vep config in integration ([e8e8a57](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e8e8a5749df2b7fef449d5468f21704ca4e65b35))
+* new smart_open release crash ([03e0a0e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/03e0a0e7340c3936cedbe1c040f9d9315f04d890))
+* pycodestyle and unittest update ([79cf8f8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/79cf8f8267f425ff3aff12643d9476dcdad5ba15))
+* required variable with corrected indentation ([115e018](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/115e018027cfa2a2366cdb6b1068b1d94e424ee2))
+* resolve conflicts ([6343bd2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6343bd236a96841b11c5b9835107cb48ad40c533))
+* rm dangerous qual filter form umi ([c9d4584](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c9d45840a4c4efcffda44e0654c157571b6558cf))
+* rm dangerous qual filter form umi ([d20f0cc](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d20f0ccb7b3d9499650a75d5d17aad0f9cb0b6b2))
+* some hg19 file leftovers fixed ([5433b16](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5433b16de07cc0e9d865f9ed5e98ecfceddabe1a))
+* VEP cache move to config.data ([a36b570](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a36b570d8e62d31691ca56a6b6c62dbfabd8ede1))
+
+
+### Documentation
+
+* added missing rule ([a6712f6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a6712f6a66333920c756399036a73e0eb218e1d4))
+* fix documentation and codestyle ([7d793b6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7d793b64040d3b761d2d36ed21147b9cd6b71c35))
+* rm gene_fuse from schemas and updated documentation ([a991a0d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a991a0d85b0c593a34ca36f348a62df08cdef136))
+* rule plugin version updated ([2d63ac6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2d63ac6c3175cadd603bd9a1a96a0d2e9ddde69f))
+* updated rule documentation ([43cfb5c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/43cfb5c678935f816de60302429fdbd3450a84a4))
+
 ## [0.11.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.10.0...v0.11.0) (2024-01-26)
 
 
