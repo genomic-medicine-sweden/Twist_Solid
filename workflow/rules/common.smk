@@ -229,13 +229,14 @@ def generate_copy_code(workflow, output_spec):
         threads = config.get("_copy", {}).get("threads", config["default_resources"]["threads"])
         time = config.get("_copy", {}).get("time", config["default_resources"]["time"])
         copy_container = config.get("_copy", {}).get("container", config["default_container"])
-
+        print(rule_name)
+        print(f"[{rule_name}]")
         code += '@workflow.rule(name="' + rule_name + '")\n'
         code += '@workflow.input("' + input_file + '")\n'
         code += '@workflow.output("' + output_file + '")\n'
         code += '@workflow.log("logs/' + rule_name + '_' + result_file + '.log")\n'
         code += '@workflow.container("' + copy_container + '")\n'
-        code += '@workflow.resources(time = "' + time - '", threads = ' + str(threads) + f'}, mem_mb = {mem_mb}, mem_per_cpu = {mem_per_cpu}, partition = "{partition}")\n'
+        code += '@workflow.resources(time = "' + time - '", threads = ' + str(threads) + f', mem_mb = {mem_mb}, mem_per_cpu = {mem_per_cpu}, partition = "{partition}")\n'
         code += '@workflow.shellcmd("cp --preserve=timestamps {input} {output}")\n\n'
         code += "@workflow.run\n"
         code += (
