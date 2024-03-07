@@ -220,7 +220,7 @@ def generate_copy_code(workflow, output_spec):
 
         input_file = filedef["input"]
         output_file = filedef["output"]
-        rule_name = "_copy_{}".format("_".join(re.sub(r"[\"'-.,]", "", filedef["name"].strip().lower()).split()))
+        rule_name = "_copy_{}".format("_".join(re.sub(r"[\"'-.,]", "", filedef["name"].strip().lower()).split())).replace(" ", "")
         result_file = os.path.basename(filedef["output"])
 
         mem_mb = config.get("_copy", {}).get("mem_mb", config["default_resources"]["mem_mb"])
