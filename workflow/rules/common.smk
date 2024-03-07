@@ -239,7 +239,7 @@ def generate_copy_code(workflow, output_spec):
         code += '@workflow.shellcmd("cp --preserve=timestamps {input} {output}")\n\n'
         code += "@workflow.run\n"
         code += (
-            f"def __rule_{rule_name}(input, output, params, wildcards, threads, resources, log, version, rule, "
+            "def __rule_" + rule_name + "(input, output, params, wildcards, threads, resources, log, version, rule, "
             "conda_env, container_img, singularity_args, use_singularity, env_modules, bench_record, jobid, is_shell, "
             "bench_iteration, cleanup_scripts, shadow_dir, edit_notebook, conda_base_path, basedir, runtime_sourcecache_path, "
             "__is_snakemake_rule_func=True):\n"
