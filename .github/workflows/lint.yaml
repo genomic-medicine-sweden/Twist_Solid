@@ -27,6 +27,7 @@ jobs:
       - name: Install requirements.txt
         run: |
           pip install -r requirements.txt
+          pip list
       - name: Linting
         working-directory: .tests/integration
         run: |
