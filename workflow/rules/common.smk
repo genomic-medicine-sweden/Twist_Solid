@@ -244,7 +244,6 @@ def generate_copy_code(workflow, output_spec):
             "conda_env, container_img, singularity_args, use_singularity, env_modules, bench_record, jobid, is_shell, "
             "bench_iteration, cleanup_scripts, shadow_dir, edit_notebook, conda_base_path, basedir, runtime_sourcecache_path, "
             "__is_snakemake_rule_func=True):\n"
-            '\tshell ( "(cp {input[0]} {output[0]}) &> {log}" , bench_record=bench_record, bench_iteration=bench_iteration)\n\n'
             '\tshell ( "(cp --preserve=timestamps {input[0]} {output[0]}) &> {log}" , bench_record=bench_record, bench_iteration=bench_iteration)\n\n'
         )
 
