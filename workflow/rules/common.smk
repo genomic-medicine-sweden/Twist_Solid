@@ -230,7 +230,7 @@ def generate_copy_code(workflow, output_spec):
         time = config.get("_copy", {}).get("time", config["default_resources"]["time"])
         copy_container = config.get("_copy", {}).get("container", config["default_container"])
 
-        code += f'@workflow.rule(name="{rule_name}")\n'
+        code += f'@workflow.rule(name="{rule_name}")\n'.replace(' ', '')
         code += f'@workflow.input("{input_file}")\n'
         code += f'@workflow.output("{output_file}")\n'
         code += f'@workflow.log("logs/{rule_name}_{result_file}.log")\n'
