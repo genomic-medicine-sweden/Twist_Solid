@@ -31,8 +31,6 @@ rule call_small_cnv_deletions:
         time=config.get("call_small_cnv_deletions", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("call_small_cnv_deletions", {}).get("container", config["default_container"])
-    conda:
-        "../envs/call_small_cnv_deletions.yaml"
     message:
         "{rule}: call small deletions in cnv data into {output.deletions}"
     script:

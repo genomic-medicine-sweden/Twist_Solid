@@ -37,8 +37,6 @@ rule hotspot_info:
             "qc/hotspot_info/{sample}_{type}.fastq.gz.fastp_trimming.benchmark.tsv",
             config.get("hotspot_info", {}).get("benchmark_repeats", 1),
         )
-    conda:
-        "../envs/hotspot_info.yaml"
     container:
         config.get("hotspot_info", {}).get("container", config["default_container"])
     message:

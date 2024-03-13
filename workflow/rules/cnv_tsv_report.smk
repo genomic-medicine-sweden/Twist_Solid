@@ -41,8 +41,6 @@ rule cnv_tsv_report:
         time=config.get("cnv_tsv_report", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnv_tsv_report", {}).get("container", config["default_container"])
-    conda:
-        "../envs/cnv_tsv_report.yaml"
     message:
         "{rule}: Convert cnv vcf to a tsv file: {output.tsv}"
     script:
