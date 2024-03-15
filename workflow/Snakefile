@@ -23,24 +23,24 @@ rule all:
         unpack(compile_output_list),
 
 
+ruleorder: alignment_samtools_extract_reads > alignment_samtools_sort
 ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
-ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
-ruleorder: annotation_annotate_cnv > misc_bgzip
+ruleorder: alignment_bwa_mem > alignment_samtools_sort
+ruleorder: alignment_picard_mark_duplicates > alignment_samtools_sort
 ruleorder: annotation_annotate_cnv > snv_indels_bgzip
+ruleorder: annotation_bcftools_annotate_purecn > filtering_filter_vcf
+ruleorder: filtering_bcftools_filter_exclude_region > snv_indels_bgzip
 ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
-ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
-ruleorder: prealignment_fastp_pe > misc_bgzip
 ruleorder: qc_samtools_stats_rna > qc_samtools_stats
 ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
 ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
+ruleorder: snv_indels_bcbio_variation_recall_ensemble > snv_indels_bgzip
 ruleorder: snv_indels_bcftools_sort > snv_indels_bgzip
-ruleorder: snv_indels_tabix > misc_tabix
-ruleorder: snv_indels_gatk_mutect2 > misc_tabix
-ruleorder: snv_indels_gatk_mutect2_gvcf > alignment_samtools_sort
-ruleorder: snv_indels_gatk_mutect2_gvcf > misc_tabix
-ruleorder: snv_indels_gatk_mutect2_gvcf > misc_bgzip
-ruleorder: snv_indels_bgzip > misc_bgzip
-ruleorder: snv_indels_bcftools_sort > misc_bgzip
+ruleorder: snv_indels_gatk_mutect2 > snv_indels_bgzip
+ruleorder: snv_indels_gatk_mutect2_filter > snv_indels_bgzip
+ruleorder: snv_indels_mutect2_pass_filter > snv_indels_bgzip
+ruleorder: snv_indels_vt_decompose > snv_indels_bgzip
+ruleorder: snv_indels_vt_normalize > snv_indels_bgzip
 
 
 wildcard_constraints:
@@ -123,7 +123,7 @@ use rule merged from prealignment as prealignment_merged_arriba with:
 
 module alignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.5.0")
+        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="0dfe75e")
     config:
         config
 
@@ -152,9 +152,9 @@ use rule star from alignment as alignment_star with:
 
 use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
     input:
-        "fusions/star_fusion/{path_file}.out.bam",
+        bam="fusions/star_fusion/{path_file}.out.bam",
     output:
-        temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
+        bam=temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
     log:
         "fusions/star_fusion/{path_file}.bam.sort.log",
     benchmark:
@@ -162,6 +162,11 @@ use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
             "fusions/star_fusion/{path_file}.bam.sort.benchmark.tsv",
             config.get("samtools_sort", {}).get("benchmark_repeats", 1),
         )
+
+
+use rule samtools_index from alignment as alignment_samtools_index_rna with:
+    wildcard_constraints:
+        file="^fusions/.+",
 
 
 use rule samtools_extract_reads from alignment as alignment_samtools_extract_reads_rna with:
@@ -192,6 +197,16 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutec
             "snv_indels/gatk_mutect2_merge/{sample}_{type}.bam_unsorted.benchmark.tsv",
             config.get("alignment_samtools_merge_bam_mutect2", {}).get("benchmark_repeats", 1),
         )
+
+
+use rule samtools_sort from alignment as alignment_samtools_sort_bam_mutect2 with:
+    wildcard_constraints:
+        file="^snv_indels/.+",
+
+
+use rule samtools_index from alignment as alignment_samtools_index_bam_mutect2 with:
+    wildcard_constraints:
+        file="^snv_indels/.+",
 
 
 module snv_indels:
@@ -286,7 +301,7 @@ use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purec
 
 module filtering:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag="v0.3.0")
+        get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag="v1.0.0")
     config:
         config
 
@@ -640,15 +655,3 @@ use rule cnv_html_report from reports as reports_cnv_html_report with:
         tc_method=lambda wildcards: wildcards.tc_method,
         extra_tables=config.get("cnv_html_report", {}).get("extra_tables", []),
 
-
-module misc:
-    snakefile:
-        get_module_snakefile(config, "hydra-genetics/misc", path="workflow/Snakefile", tag="v0.2.0")
-    config:
-        config
-
-
-use rule tabix from misc as misc_tabix
-
-
-use rule bgzip from misc as misc_bgzip

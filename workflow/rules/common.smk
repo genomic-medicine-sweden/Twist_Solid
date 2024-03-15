@@ -47,7 +47,7 @@ validate(config, schema="../schemas/config.schema.yaml")
 config = load_resources(config, config["resources"])
 validate(config, schema="../schemas/resources.schema.yaml")
 
-if workflow.use_singularity is True:
+if workflow.deployment_settings.apptainer_prefix is not None:
     validate(config, schema="../schemas/singularity.schema.yaml")
 
 ### Read and validate samples file
@@ -239,7 +239,7 @@ def generate_copy_code(workflow, output_spec):
         code += '@workflow.shellcmd("cp --preserve=timestamps {input} {output}")\n\n'
         code += "@workflow.run\n"
         code += (
-            f"def __rule_{rule_name}(input, output, params, wildcards, threads, resources, log, version, rule, "
+            f"def __rule_{rule_name}(input, output, params, wildcards, threads, resources, log, rule, "
             "conda_env, container_img, singularity_args, use_singularity, env_modules, bench_record, jobid, is_shell, "
             "bench_iteration, cleanup_scripts, shadow_dir, edit_notebook, conda_base_path, basedir, runtime_sourcecache_path, "
             "__is_snakemake_rule_func=True):\n"
