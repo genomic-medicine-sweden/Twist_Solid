@@ -55,10 +55,10 @@ results/dna/HD832_T/additional_files/qc/HD832_T.duplication_metrics.txt	20cd0962
 results/dna/HD832_T/additional_files/qc/HD832_T.HsMetrics.txt	79cf2be8375dad0756215acad71f0213
 results/dna/HD832_T/additional_files/qc/HD832_T.insert_size_metrics.txt	68ffcb20c8001106382db7a416eb3c20
 results/dna/HD832_T/additional_files/qc/HD832_T.samtools-stats.txt	d0e806af618b04dd00fe231aa940d6d8
-results/dna/HD832_T/additional_files/vcf/gatk_mutect2_HD832_T.vcf.gz	19dabbf830c8ab2c3d2fc8d635c57294
+results/dna/HD832_T/additional_files/vcf/gatk_mutect2_HD832_T.vcf.gz	5d31eea2b62d5acfc17cdcdd4fbc1e2f
 results/dna/HD832_T/additional_files/vcf/HD832_T.annotated.exon_only.filter.hard_filter.vcf	28abf525563712c6c8755d6842f5f59c
 results/dna/HD832_T/additional_files/vcf/HD832_T.annotated.exon_only.filter.soft_filter.vcf	1ded59457be545896d374024b39c0cd0
-results/dna/HD832_T/additional_files/vcf/HD832_T.annotated.vcf.gz	32774b265215ef84447fc598c3477fae
+results/dna/HD832_T/additional_files/vcf/HD832_T.annotated.vcf.gz	919a2d85ed3a86169772c530ae0e4902
 results/dna/HD832_T/additional_files/vcf/vardict_HD832_T.vcf.gz	e105f2145cd7ee18b0912f696ecc86bb
 results/dna/HD832_T/biomarker/HD832_T.msisensor_pro.score.tsv	ec30212327f70eea52bf123bf8a5b6d2
 results/dna/HD832_T/biomarker/HD832_T.pathology_purecn.scarhrd_cnvkit_score.txt	4b722d55d746bd2b1cc8699ebd97f2ce
@@ -87,10 +87,10 @@ results/dna/NA12878_T/additional_files/qc/NA12878_T.duplication_metrics.txt	355b
 results/dna/NA12878_T/additional_files/qc/NA12878_T.HsMetrics.txt	413cd12525229fd92e1466c6807e1b6d
 results/dna/NA12878_T/additional_files/qc/NA12878_T.insert_size_metrics.txt	c0e59b052483e816bf73b27a8f1acf6e
 results/dna/NA12878_T/additional_files/qc/NA12878_T.samtools-stats.txt	f46d29555a2159425965938cbd0569f7
-results/dna/NA12878_T/additional_files/vcf/gatk_mutect2_NA12878_T.vcf.gz	d171e96a8d0a654bad5ac54968a80796
+results/dna/NA12878_T/additional_files/vcf/gatk_mutect2_NA12878_T.vcf.gz	2bb3ba66ec6bc9bc8d6740f3b4dab3b4
 results/dna/NA12878_T/additional_files/vcf/NA12878_T.annotated.exon_only.filter.hard_filter.vcf	abb4aad15483118c2c04b6b54ff21f5b
-results/dna/NA12878_T/additional_files/vcf/NA12878_T.annotated.exon_only.filter.soft_filter.vcf	af9ff932307ac0a63f863a560d655149
-results/dna/NA12878_T/additional_files/vcf/NA12878_T.annotated.vcf.gz	d1ed6519626ffe7daae5370f1767eedb
+results/dna/NA12878_T/additional_files/vcf/NA12878_T.annotated.exon_only.filter.soft_filter.vcf	238e5a6dc8f59134a7a4e5132c3a393e
+results/dna/NA12878_T/additional_files/vcf/NA12878_T.annotated.vcf.gz	a1f621cfbbb61723685ab7acd26bf25b
 results/dna/NA12878_T/additional_files/vcf/vardict_NA12878_T.vcf.gz	d4b82ab064afe007f46af1da81027101
 results/dna/NA12878_T/biomarker/NA12878_T.msisensor_pro.score.tsv	c6d1341e7c112a01e1dba61e460167ac
 results/dna/NA12878_T/biomarker/NA12878_T.pathology_purecn.scarhrd_cnvkit_score.txt	e98b73e2b3f15616a50c4f494f8493b2
@@ -119,7 +119,7 @@ results/dna/VAL2022_T/additional_files/qc/VAL2022_T.duplication_metrics.txt	3161
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.HsMetrics.txt	678188a31cb794a729b70c7a84ece6eb
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.insert_size_metrics.txt	e0e354ef710a189bbb910cc2558d1431
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.samtools-stats.txt	fcdedb544ce58edf94d76a0bc36171e3
-results/dna/VAL2022_T/additional_files/vcf/gatk_mutect2_VAL2022_T.vcf.gz	ce3cd8a94b0d4f56a7e93a1a313d9b49
+results/dna/VAL2022_T/additional_files/vcf/gatk_mutect2_VAL2022_T.vcf.gz	c7e1498a6df9f218b4ac3b32ffad1a84
 results/dna/VAL2022_T/additional_files/vcf/VAL2022_T.annotated.exon_only.filter.hard_filter.vcf	1cb3c5f2d244f43e36d57a95e0dcafaa
 results/dna/VAL2022_T/additional_files/vcf/VAL2022_T.annotated.exon_only.filter.soft_filter.vcf	0f7f935ad35f3ffb1d59db09fc1407a3
 results/dna/VAL2022_T/additional_files/vcf/VAL2022_T.annotated.vcf.gz	d539a550debe1c111428e9035242c28b

@@ -26,8 +26,6 @@ rule exon_skipping:
         time=config.get("exon_skipping", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("exon_skipping", {}).get("container", config["default_container"])
-    conda:
-        "../envs/exon_skipping.yaml"
     message:
         "{rule}: Find intergenic fusions and report them in {output.result}"
     script:

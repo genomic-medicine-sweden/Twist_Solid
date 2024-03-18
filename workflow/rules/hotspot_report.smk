@@ -39,8 +39,6 @@ rule hotspot_report:
         time=config.get("hotspot_report", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("hotspot_report", {}).get("container", config["default_container"])
-    conda:
-        "../envs/hotspot_report.yaml"
     message:
         "{rule}: Do stuff on twist_dna_solid_uppsala/{rule}/{wildcards.sample}_{wildcards.type}.input"
     script:
