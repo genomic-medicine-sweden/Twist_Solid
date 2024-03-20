@@ -654,4 +654,3 @@ use rule cnv_html_report from reports as reports_cnv_html_report with:
         tc=get_tc,
         tc_method=lambda wildcards: wildcards.tc_method,
         extra_tables=config.get("cnv_html_report", {}).get("extra_tables", []),
-
