@@ -217,6 +217,12 @@ module snv_indels:
 use rule * from snv_indels exclude all as snv_indels_*
 
 
+use rule tabix from snv_indels as snv_indels_tabix with:
+    wildcard_constraints:
+        file="(^snv_indels/.+|^cnv_sv/.+)",
+
+
+
 use rule bcftools_sort from snv_indels as snv_indels_bcftools_sort with:
     input:
         vcf="{file}.vcf.gz",

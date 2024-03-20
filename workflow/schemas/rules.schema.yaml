@@ -87,7 +87,10 @@ properties:
             description: Filtered vcf-files with merged calls from CNVkit and GATK CNV
           org_vcfs:
             type: string
-            description: Unfiltered vcf-files with merged calls from CNVkit and GATK CNV
+            description: Unfiltered bgzipped vcf-files with merged calls from CNVkit and GATK CNV
+          org_vcfs_tbi:
+            type: string
+            description: tabix index files
       output:
         type: object
         description: list of outputs

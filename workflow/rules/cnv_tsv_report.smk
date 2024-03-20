@@ -11,8 +11,12 @@ rule cnv_tsv_report:
             "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.filter.cnv_hard_filter_loh.vcf",
         ],
         org_vcfs=[
-            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf",
-            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.vcf",
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz",
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.vcf.gz",
+        ],
+        org_vcfs_tbi=[
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz.tbi",
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.vcf.gz.tbi",
         ],
         deletions="cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv",
         amplifications="cnv_sv/call_small_cnv_amplifications/{sample}_{type}.amplifications.tsv",
