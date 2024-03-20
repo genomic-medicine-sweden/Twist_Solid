@@ -119,7 +119,7 @@ results/dna/VAL2022_T/additional_files/qc/VAL2022_T.duplication_metrics.txt	3161
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.HsMetrics.txt	678188a31cb794a729b70c7a84ece6eb
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.insert_size_metrics.txt	e0e354ef710a189bbb910cc2558d1431
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.samtools-stats.txt	fcdedb544ce58edf94d76a0bc36171e3
-results/dna/VAL2022_T/additional_files/vcf/gatk_mutect2_VAL2022_T.vcf.gz	c7e1498a6df9f218b4ac3b32ffad1a84
+results/dna/VAL2022_T/additional_files/vcf/gatk_mutect2_VAL2022_T.vcf.gz	ce3cd8a94b0d4f56a7e93a1a313d9b49
 results/dna/VAL2022_T/additional_files/vcf/VAL2022_T.annotated.exon_only.filter.hard_filter.vcf	1cb3c5f2d244f43e36d57a95e0dcafaa
 results/dna/VAL2022_T/additional_files/vcf/VAL2022_T.annotated.exon_only.filter.soft_filter.vcf	0f7f935ad35f3ffb1d59db09fc1407a3
 results/dna/VAL2022_T/additional_files/vcf/VAL2022_T.annotated.vcf.gz	d539a550debe1c111428e9035242c28b
