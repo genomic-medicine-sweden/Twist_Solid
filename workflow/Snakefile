@@ -27,8 +27,6 @@ ruleorder: alignment_samtools_extract_reads > alignment_samtools_sort
 ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
 ruleorder: alignment_bwa_mem > alignment_samtools_sort
 ruleorder: alignment_picard_mark_duplicates > alignment_samtools_sort
-ruleorder: annotation_annotate_cnv > snv_indels_bgzip
-ruleorder: annotation_bcftools_annotate_purecn > filtering_filter_vcf
 ruleorder: filtering_bcftools_filter_exclude_region > snv_indels_bgzip
 ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
 ruleorder: qc_samtools_stats_rna > qc_samtools_stats
@@ -255,7 +253,7 @@ use rule gatk_mutect2_gvcf from snv_indels as snv_indels_gatk_mutect2_gvcf with:
 
 module annotation:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v1.0.1")
+        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="4b77e37")
     config:
         config
 
