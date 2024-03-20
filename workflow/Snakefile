@@ -23,22 +23,10 @@ rule all:
         unpack(compile_output_list),
 
 
-ruleorder: alignment_samtools_extract_reads > alignment_samtools_sort
 ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
-ruleorder: alignment_bwa_mem > alignment_samtools_sort
-ruleorder: alignment_picard_mark_duplicates > alignment_samtools_sort
-ruleorder: filtering_bcftools_filter_exclude_region > snv_indels_bgzip
-ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
 ruleorder: qc_samtools_stats_rna > qc_samtools_stats
 ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
 ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
-ruleorder: snv_indels_bcbio_variation_recall_ensemble > snv_indels_bgzip
-ruleorder: snv_indels_bcftools_sort > snv_indels_bgzip
-ruleorder: snv_indels_gatk_mutect2 > snv_indels_bgzip
-ruleorder: snv_indels_gatk_mutect2_filter > snv_indels_bgzip
-ruleorder: snv_indels_mutect2_pass_filter > snv_indels_bgzip
-ruleorder: snv_indels_vt_decompose > snv_indels_bgzip
-ruleorder: snv_indels_vt_normalize > snv_indels_bgzip
 
 
 wildcard_constraints:
@@ -121,7 +109,7 @@ use rule merged from prealignment as prealignment_merged_arriba with:
 
 module alignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="0dfe75e")
+        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="e9f5340")
     config:
         config
 
@@ -219,8 +207,12 @@ use rule * from snv_indels exclude all as snv_indels_*
 
 use rule tabix from snv_indels as snv_indels_tabix with:
     wildcard_constraints:
-        file="(^snv_indels/.+|^cnv_sv/.+)",
+        file="(^snv_indels/.+|^cnv_sv/.+|^qc/.+)",
 
+
+use rule bgzip from snv_indels as snv_indels_bgzip with:
+    wildcard_constraints:
+        file="(^snv_indels/.+|^cnv_sv/.+)",
 
 
 use rule bcftools_sort from snv_indels as snv_indels_bcftools_sort with:
