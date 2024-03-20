@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.12.1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.12.0...v0.12.1) (2024-03-20)
+
+
+### Bug Fixes
+
+* remove unused library that break requirements ([86afc7d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/86afc7da3413906a00c538cdad86372a18e28a51))
+
 ## [0.12.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.11.0...v0.12.0) (2024-03-05)
 
 
