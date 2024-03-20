@@ -8,7 +8,7 @@ rule purecn_modify_vcf:
     input:
         vcf="snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf",
     output:
-        vcf="cnv_sv/purecn_modify_vcf/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.mbq.vcf",
+        vcf="cnv_sv/purecn_modify_vcf/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.mbq.vcf.gz",
     params:
         extra=config.get("purecn_modify_vcf", {}).get("extra", ""),
     log:
@@ -34,5 +34,5 @@ rule purecn_modify_vcf:
         '(sed -r \'s/(.*)(\\MBQ=[0-9]+,)([0-9]+)(.*)/echo "\\1\\2$((\\3+5))\\4"/'
         "ge' {input.vcf} | "
         'sed -r \'s/(.*)(\\MBQ=)([0-9]+)(.*)/echo "\\1\\2$((\\3+5))\\4"/'
-        "ge' > "
+        "ge' | bgzip > "
         "{output.vcf}) &> {log}"
