@@ -209,7 +209,7 @@ use rule samtools_index from alignment as alignment_samtools_index_bam_mutect2 w
 
 module snv_indels:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.3.0")
+        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="4d5cc53")
     config:
         config
 
