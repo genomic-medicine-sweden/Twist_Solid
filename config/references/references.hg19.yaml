@@ -101,14 +101,7 @@
       path: ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz.tbi
       type: file
       url: https://figshare.scilifelab.se/ndownloader/files/42061254
-    
-  gene_fuse:
-    fasta:
-      checksum: 7c1739fd43764bd5e3b9b76ce8635bf0
-      path: ref_data/hg19/hg19.with.mt.fasta
-      type: file
-      url: https://figshare.scilifelab.se/ndownloader/files/42060171 
-      
+          
   references:
     fasta:
       checksum: 7c1739fd43764bd5e3b9b76ce8635bf0
@@ -318,7 +311,7 @@
       compressed_checksum: 96954f4f0fdf3c89fed6d8143aef3412
       path: ref_data/star
       type: folder
-      checksum_content:
+      content_checksum:
         v2.7.10a_hg19/exonInfo.tab: 1765bb10b661ae85f2187f10f0013c6a
         v2.7.10a_hg19/SA: 90569083f6334b60f98990b345ef30d5
         v2.7.10a_hg19/exonGeTrInfo.tab: e361a44a5fb8cde31953c10de9bc0fc7
@@ -393,12 +386,12 @@
   vep:
     vep_cache:
       compressed_checksum: 6eb952ad8c1003b7e1a9b011771fae9e
-      path: ref_data/vep/105
+      path: ref_data/vep/105/homo_sapiens_refseq
       type: folder
       content_checksum:
-        homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/114000001-115000000_reg.gz: c01d9c84f552841842da29450cbe3e9f
+        105_GRCh37/HG1463_PATCH/114000001-115000000_reg.gz: c01d9c84f552841842da29450cbe3e9f
         homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/all_vars.gz: 7a6c597ec65c982c80fe0ab89a071d59
-        homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/114000001-115000000.gz: 876549f369d9c55811216e29f7d0cd19
+        /105_GRCh37/HG1463_PATCH/114000001-115000000.gz: 876549f369d9c55811216e29f7d0cd19
         homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/115000001-116000000_reg.gz: 49865f8fa24479ca5342ce7df5b082d0
         homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/all_vars.gz.csi: 66f720e01f5b9f4fefd97225e590aa7c
         homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/115000001-116000000.gz: bf658fd769d3abd02c07be1538505e36
