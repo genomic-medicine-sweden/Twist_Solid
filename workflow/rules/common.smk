@@ -7,6 +7,7 @@ import json
 import os
 import pandas as pd
 import re
+from datetime import datetime
 from snakemake.utils import validate
 from snakemake.utils import min_version
 import yaml
@@ -19,7 +20,18 @@ from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics.utils.misc import replace_dict_variables
 from hydra_genetics import min_version as hydra_min_version
 
-hydra_min_version("1.10.0")
+from hydra_genetics.utils.misc import export_config_as_file
+from hydra_genetics.utils.software_versions import add_version_files_to_multiqc
+from hydra_genetics.utils.software_versions import add_software_version_to_config
+from hydra_genetics.utils.software_versions import export_pipeline_version_as_file
+from hydra_genetics.utils.software_versions import export_software_version_as_files
+from hydra_genetics.utils.software_versions import get_pipeline_version
+from hydra_genetics.utils.software_versions import touch_pipeline_verion_file_name
+from hydra_genetics.utils.software_versions import touch_software_version_files
+from hydra_genetics.utils.software_versions import use_container
+
+
+hydra_min_version("1.14.0")
 
 min_version("7.13.0")
 
@@ -61,6 +73,21 @@ with open(config["output"]) as output:
         raise ValueError(f"output specification should be JSON or YAML: {output.name}")
 
 validate(output_spec, schema="../schemas/output_files.schema.yaml")
+
+date_string = datetime.now().strftime('%Y%m%d')
+pipeline_version = get_pipeline_version(workflow, pipeline_name="Twist_Solid")
+version_files = touch_pipeline_verion_file_name(pipeline_version, date_string=date_string, directory="results/versions/software")
+if use_container(workflow):
+    version_files += touch_software_version_files(config, date_string=date_string, directory="results/versions/software")
+add_version_files_to_multiqc(config, version_files)
+
+
+onstart:
+    export_pipeline_version_as_file(pipeline_version, date_string=date_string, directory="results/versions/software")
+    if use_container(workflow):
+        update_config, software_info = add_software_version_to_config(config, workflow, False)
+        export_software_version_as_files(software_info, date_string=date_string, directory="results/versions/software")
+    export_config_as_file(update_config, date_string=date_string, directory="results/versions")
 
 
 ### Set wildcard constraints
@@ -208,7 +235,6 @@ def generate_copy_code(workflow, output_spec):
         code += f'@workflow.output("{output_file}")\n'
         code += f'@workflow.log("logs/{rule_name}_{result_file}.log")\n'
         code += f'@workflow.container("{copy_container}")\n'
-        code += f'@workflow.conda("../env/copy_result.yaml")\n'
         code += f'@workflow.resources(time = "{time}", threads = {threads}, mem_mb = {mem_mb}, mem_per_cpu = {mem_per_cpu}, partition = "{partition}")\n'
         code += '@workflow.shellcmd("cp --preserve=timestamps {input} {output}")\n\n'
         code += "@workflow.run\n"
@@ -217,7 +243,6 @@ def generate_copy_code(workflow, output_spec):
             "conda_env, container_img, singularity_args, use_singularity, env_modules, bench_record, jobid, is_shell, "
             "bench_iteration, cleanup_scripts, shadow_dir, edit_notebook, conda_base_path, basedir, runtime_sourcecache_path, "
             "__is_snakemake_rule_func=True):\n"
-            '\tshell ( "(cp {input[0]} {output[0]}) &> {log}" , bench_record=bench_record, bench_iteration=bench_iteration)\n\n'
             '\tshell ( "(cp --preserve=timestamps {input[0]} {output[0]}) &> {log}" , bench_record=bench_record, bench_iteration=bench_iteration)\n\n'
         )
 

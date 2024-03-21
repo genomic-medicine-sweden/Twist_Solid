@@ -27,8 +27,6 @@ rule house_keeping_gene_coverage:
         time=config.get("house_keeping_gene_coverage", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("house_keeping_gene_coverage", {}).get("container", config["default_container"])
-    conda:
-        "../envs/house_keeping_gene_coverage.yaml"
     message:
         "{rule}: Find intergenic fusions and report them in {output.result}"
     script:

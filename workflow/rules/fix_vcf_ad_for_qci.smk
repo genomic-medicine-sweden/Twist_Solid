@@ -25,8 +25,6 @@ rule fix_vcf_ad_for_qci:
         time=config.get("fix_vcf_ad_for_qci", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("fix_vcf_ad_for_qci", {}).get("container", config["default_container"])
-    conda:
-        "../envs/fix_vcf_ad_for_qci.yaml"
     message:
         "{rule}: Correct AD so the correct AF is shown in QCI for vcf {input.vcf}"
     script:

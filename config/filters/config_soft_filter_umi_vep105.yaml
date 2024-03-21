@@ -12,7 +12,7 @@ filters:
   germline:
     description: "Hard filter germline"
     expression: "(VEP:gnomAD_AF > 0.005)"
-    soft_filter_flag: "germline"
+    soft_filter_flag: "germline_gnomad"
     soft_filter: "True"
   af_snv:
     description: "Hard filter SNV variants with low vaf"
@@ -83,9 +83,4 @@ filters:
     description: "Hard filter variants only called by mutect2"
     expression: "INFO:CALLERS:0 = gatk_mutect2"
     soft_filter_flag: "only_mutect2"
-    soft_filter: "True"
-  qual:
-    description: "Hard filter variants with low calling quality"
-    expression: "INFO:QUAL:0 < 43.0"
-    soft_filter_flag: "calling_qual"
     soft_filter: "True"
