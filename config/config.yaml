@@ -199,6 +199,7 @@ mosdepth_bed:
 
 msisensor_pro:
   container: "docker://hydragenetics/msisensor_pro:1.1.a"
+  extra: "-c 50"
 
 multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
