@@ -40,7 +40,7 @@ files:
       - T
       - N
   - name: STAR Fusion BAM index
-    input: null
+    input: fusions/star_fusion/{sample}_{type}/Aligned.out.sorted.bam.bai
     output: bam_rna/{sample}_{type}.star_fusion.bam.bai
     types:
       - R
