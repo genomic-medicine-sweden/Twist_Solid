@@ -316,6 +316,7 @@ svdb_merge:
       cnv_caller:
         - cnvkit
         - gatk
+  overlap: 1 #Just merge the two vcf-files without merging regions
   extra: "--pass_only" #Just merge the two vcf-files without merging regions
 
 svdb_query:
