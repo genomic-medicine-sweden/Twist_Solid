@@ -26,9 +26,9 @@ rule cnv_tsv_report:
         call_small_amplifications_cn_limit=config.get("cnv_tsv_report", {}).get("amp_cn_limit", ""),
         del_1p19q_cn_limit=config.get("cnv_tsv_report", {}).get("del_1p19q_cn_limit", ""),
         del_1p19q_chr_arm_fraction=config.get("cnv_tsv_report", {}).get("del_1p19q_chr_arm_fraction", ""),
-        chrom_del=config.get("cnv_tsv_report", {}).get("chr_arm_fraction", ""),
-        chrom_del_cn_limit=config.get("cnv_tsv_report", {}).get("del_chr_arm_cn_limit", ""),
-        chrom_amp_cn_limit=config.get("cnv_tsv_report", {}).get("amp_chr_arm_cn_limit", ""),
+        chr_arm_fraction=config.get("cnv_tsv_report", {}).get("chr_arm_fraction", ""),
+        del_chr_arm_cn_limit=config.get("cnv_tsv_report", {}).get("del_chr_arm_cn_limit", ""),
+        amp_chr_arm_cn_limit=config.get("cnv_tsv_report", {}).get("amp_chr_arm_cn_limit", ""),
         tc=get_tc,
     log:
         "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_report.tsv.log",

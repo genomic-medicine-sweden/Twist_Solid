@@ -6,9 +6,25 @@ log = logging.getLogger()
 
 
 def create_tsv_report(
-    input_vcfs, input_org_vcfs, input_del, input_amp, amp_cn_limit,
-    output_txt, out_additional_only, del_1p19q_cn, del_1p19q_chr_arm_fraction, TC
+    input_vcfs, input_org_vcfs, input_del, input_amp, in_chrom_arm_size, amp_cn_limit,
+    output_txt, out_additional_only, out_tsv_chrom_arms, del_1p19q_cn, del_1p19q_chr_arm_fraction, 
+    chr_arm_fraction, del_chr_arm_cn_limit, amp_chr_arm_cn_limit, TC
 ):
+    
+    chrom_arm_size = {}
+    chrom_arm_del = {}
+    chrom_arm_amp = {}
+    with open(in_chrom_arm_size) as chrom_arm_size:
+        chrom_arm_size.next()
+        for line in chrom_arm_size:
+            columns = line.strip().split("\t")
+            chrom = columns[0]
+            p_size = int(columns[1])
+            q_size = int(columns[2])
+            chrom_arm_size[chrom] = [[0, p_size, p_size], [p_size, p_size + q_size, q_size]]
+            chrom_arm_del[chrom] = [0, 0]
+            chrom_arm_amp[chrom] = [0, 0]
+
     gene_all_dict = {}
     nr_writes = 0
     log.info(f"Opening output tsv file: {output_txt}")
@@ -37,6 +53,7 @@ def create_tsv_report(
                 chr = variant.chrom
                 start = variant.pos
                 end = variant.pos + int(utils.get_annotation_data_info(variant, "SVLEN")) - 1
+                size = end - start + 1
                 callers = utils.get_annotation_data_info(variant, "CALLER")
                 cn = utils.get_annotation_data_info(variant, "CORR_CN")
                 AF = utils.get_annotation_data_info(variant, "Twist_AF")
@@ -44,14 +61,24 @@ def create_tsv_report(
                     AF = 0.0
                 if cn < del_1p19q_cn and chr == "chr1" and start >= del_1p19q["1p"][0] and start <= del_1p19q["1p"][1]:
                     if callers == "cnvkit":
-                        del_1p19q["1p_cnvkit"] += end - start + 1
+                        del_1p19q["1p_cnvkit"] += size
                     elif callers == "gatk":
-                        del_1p19q["1p_gatkcnv"] += end - start + 1
+                        del_1p19q["1p_gatkcnv"] += size
                 if cn < del_1p19q_cn and chr == "chr19" and start >= del_1p19q["19q"][0] and start <= del_1p19q["19q"][1]:
                     if callers == "cnvkit":
-                        del_1p19q["19q_cnvkit"] += end - start + 1
+                        del_1p19q["19q_cnvkit"] += size
                     elif callers == "gatk":
-                        del_1p19q["19q_gatkcnv"] += end - start + 1
+                        del_1p19q["19q_gatkcnv"] += size
+                if cn < del_chr_arm_cn_limit and caller == "cnvkit":
+                    if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
+                        chrom_arm_del[chr][0] += size
+                    else:
+                        chrom_arm_del[chr][1] += size
+                if cn > amp_chr_arm_cn_limit and caller == "cnvkit":
+                    if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
+                        chrom_arm_amp[chr][0] += size
+                    else:
+                        chrom_arm_amp[chr][1] += size
                 if genes is not None:
                     for gene in genes.split(","):
                         if gene not in gene_all_dict:
@@ -73,10 +100,10 @@ def create_tsv_report(
                     nr_writes += 1
             if (del_1p19q["1p_gatkcnv"] / del_1p19q["1p"][2] > del_1p19q_chr_arm_fraction and
                     del_1p19q["19q_gatkcnv"] / del_1p19q["19q"][2] > del_1p19q_chr_arm_fraction):
-                if nr_writes < 2:
+                if nr_writes < 3:
                     writer.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
                     out_additional_only.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
-                    nr_writes += 1
+                    nr_writes += 1        
 
         for input_vcf in input_vcfs:
             gene_variant_dict = {}
@@ -163,16 +190,37 @@ def create_tsv_report(
                 writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
                 out_additional_only.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
 
+    with open(out_tsv_chrom_arms, "w") as writer:
+        writer.write("sample\tchrom\tarm\tcaller\ttype\tfraction")
+        for chrom in chrom_arm_del:
+            if chrom_arm_del[chrom][0] / chrom_arm_size[chrom][0] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tp\tcnvkit\tdeletion\t{chrom_arm_del[chrom][0] * 100 / chrom_arm_size[chrom][0]}%")
+            if chrom_arm_del[chrom][1] / chrom_arm_size[chrom][1] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tp\tcnvkit\tdeletion\t{chrom_arm_del[chrom][1] * 100 / chrom_arm_size[chrom][1]}%")
+            if chrom_arm_amp[chrom][0] / chrom_arm_size[chrom][0] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tp\tcnvkit\tduplication\t{chrom_arm_amp[chrom][0] * 100 / chrom_arm_size[chrom][0]}%")
+            if chrom_arm_amp[chrom][1] / chrom_arm_size[chrom][1] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tp\tcnvkit\tduplication\t{chrom_arm_amp[chrom][1] * 100 / chrom_arm_size[chrom][1]}%")
+            
+
+
+
+
 
 if __name__ == "__main__":
     in_vcfs = snakemake.input.vcfs
     in_org_vcfs = snakemake.input.org_vcfs
     in_del = snakemake.input.deletions
     in_amp = snakemake.input.amplifications
+    in_chrom_arm_size = snakemake.input.chrom_arm_size
     amp_cn_limit = snakemake.params.call_small_amplifications_cn_limit
     out_tsv = snakemake.output.tsv
+    out_tsv_chrom_arms = snakemake.output.tsv_chrom_arms
     del_1p19q_cn = snakemake.params.del_1p19q_cn_limit
     del_1p19q_chr_arm_fraction = snakemake.params.del_1p19q_chr_arm_fraction
+    chr_arm_fraction = snakemake.params.chr_arm_fraction
+    del_chr_arm_cn_limit = snakemake.params.del_chr_arm_cn_limit
+    amp_chr_arm_cn_limit = snakemake.params.amp_chr_arm_cn_limit
     TC = float(snakemake.params.tc)
     with open(snakemake.output.tsv_additional_only, "w") as out_additional_only:
         create_tsv_report(
@@ -180,10 +228,15 @@ if __name__ == "__main__":
             in_org_vcfs,
             in_del,
             in_amp,
+            in_chrom_arm_size,
             amp_cn_limit,
             out_tsv,
             out_additional_only,
+            out_tsv_chrom_arms,
             del_1p19q_cn,
             del_1p19q_chr_arm_fraction,
+            chr_arm_fraction,
+            del_chr_arm_cn_limit,
+            amp_chr_arm_cn_limit,
             TC,
         )
