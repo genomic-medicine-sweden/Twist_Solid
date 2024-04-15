@@ -7,10 +7,9 @@ log = logging.getLogger()
 
 def create_tsv_report(
     input_vcfs, input_org_vcfs, input_del, input_amp, in_chrom_arm_size, amp_cn_limit,
-    output_txt, out_additional_only, out_tsv_chrom_arms, del_1p19q_cn, del_1p19q_chr_arm_fraction, 
+    output_txt, out_additional_only, out_tsv_chrom_arms, del_1p19q_cn, del_1p19q_chr_arm_fraction,
     chr_arm_fraction, del_chr_arm_cn_limit, amp_chr_arm_cn_limit, TC
 ):
-    
     chrom_arm_size = {}
     chrom_arm_del = {}
     chrom_arm_amp = {}
@@ -103,7 +102,7 @@ def create_tsv_report(
                 if nr_writes < 3:
                     writer.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
                     out_additional_only.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
-                    nr_writes += 1        
+                    nr_writes += 1
 
         for input_vcf in input_vcfs:
             gene_variant_dict = {}
@@ -201,10 +200,6 @@ def create_tsv_report(
                 writer.write(f"\n{chrom}\tp\tcnvkit\tduplication\t{chrom_arm_amp[chrom][0] * 100 / chrom_arm_size[chrom][0]}%")
             if chrom_arm_amp[chrom][1] / chrom_arm_size[chrom][1] > chr_arm_fraction:
                 writer.write(f"\n{chrom}\tp\tcnvkit\tduplication\t{chrom_arm_amp[chrom][1] * 100 / chrom_arm_size[chrom][1]}%")
-            
-
-
-
 
 
 if __name__ == "__main__":
