@@ -13,6 +13,9 @@ def create_tsv_report(
     chrom_arm_size = {}
     chrom_arm_del = {}
     chrom_arm_amp = {}
+    baseline = [0, 0]
+    polyploidy = 0
+    genome_size = 0
     with open(in_chrom_arm_size) as chrom_arm_size:
         chrom_arm_size.next()
         for line in chrom_arm_size:
@@ -23,6 +26,7 @@ def create_tsv_report(
             chrom_arm_size[chrom] = [[0, p_size, p_size], [p_size, p_size + q_size, q_size]]
             chrom_arm_del[chrom] = [0, 0]
             chrom_arm_amp[chrom] = [0, 0]
+            genome_size += p_size + q_size
 
     gene_all_dict = {}
     nr_writes = 0
@@ -31,6 +35,7 @@ def create_tsv_report(
     with open(output_txt, "w") as writer:
         writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tfreq_in_db\tcopy_number")
         out_additional_only.write("sample\tgene(s)\tchrom\tregion\tcallers\tfreq_in_db\tcopy_number")
+        file1 = True
         for input_org_vcf in input_org_vcfs:
             del_1p19q = {
                 "1p_cnvkit": 0, "19q_cnvkit": 0, "1p_gatkcnv": 0, "19q_gatkcnv": 0,
@@ -56,8 +61,12 @@ def create_tsv_report(
                 callers = utils.get_annotation_data_info(variant, "CALLER")
                 cn = utils.get_annotation_data_info(variant, "CORR_CN")
                 AF = utils.get_annotation_data_info(variant, "Twist_AF")
+                BAF = utils.get_annotation_data_info(variant, "BAF")
+                if BAF != "":
+                    BAF = float(BAF)
                 if AF is None:
                     AF = 0.0
+                # 1p19q deletion
                 if cn < del_1p19q_cn and chr == "chr1" and start >= del_1p19q["1p"][0] and start <= del_1p19q["1p"][1]:
                     if callers == "cnvkit":
                         del_1p19q["1p_cnvkit"] += size
@@ -68,16 +77,35 @@ def create_tsv_report(
                         del_1p19q["19q_cnvkit"] += size
                     elif callers == "gatk":
                         del_1p19q["19q_gatkcnv"] += size
-                if cn < del_chr_arm_cn_limit and caller == "cnvkit":
-                    if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
-                        chrom_arm_del[chr][0] += size
-                    else:
-                        chrom_arm_del[chr][1] += size
-                if cn > amp_chr_arm_cn_limit and caller == "cnvkit":
-                    if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
-                        chrom_arm_amp[chr][0] += size
-                    else:
-                        chrom_arm_amp[chr][1] += size
+                # Large chromosome CNV
+                if file1:
+                    if cn < del_chr_arm_cn_limit and caller == "cnvkit":
+                        if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
+                            chrom_arm_del[chr][0] += size
+                        else:
+                            chrom_arm_del[chr][1] += size
+                    if cn > amp_chr_arm_cn_limit and caller == "cnvkit":
+                        if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
+                            chrom_arm_amp[chr][0] += size
+                        else:
+                            chrom_arm_amp[chr][1] += size
+                # Baseline check
+                if file1:
+                    if cn > 1.8 and cn < 2.2:
+                        if caller == "cnvkit":
+                            baseline[0] += size
+                        else:
+                            baseline[1] += size
+                # Poliploidy check
+                if file1:
+                    if caller == "cnvkit":
+                        if cn > 1.8 and cn < 2.2 and BAF != "" and (BAF < 0.3 or BAF > 0.7):
+                            polyploidy += size
+                        elif cn > 2.5 and BAF != "" and (BAF > 0.4 and BAF < 0.6):
+                            polyploidy += size
+                        elif cn < 1.4 and BAF != "" and (BAF > 0.4 and BAF < 0.6):
+                            polyploidy += size
+
                 if genes is not None:
                     for gene in genes.split(","):
                         if gene not in gene_all_dict:
@@ -99,10 +127,12 @@ def create_tsv_report(
                     nr_writes += 1
             if (del_1p19q["1p_gatkcnv"] / del_1p19q["1p"][2] > del_1p19q_chr_arm_fraction and
                     del_1p19q["19q_gatkcnv"] / del_1p19q["19q"][2] > del_1p19q_chr_arm_fraction):
-                if nr_writes < 3:
+                if nr_writes < 2:
                     writer.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
                     out_additional_only.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
                     nr_writes += 1
+
+            file1 = False
 
         for input_vcf in input_vcfs:
             gene_variant_dict = {}
@@ -190,7 +220,16 @@ def create_tsv_report(
                 out_additional_only.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
 
     with open(out_tsv_chrom_arms, "w") as writer:
-        writer.write("sample\tchrom\tarm\tcaller\ttype\tfraction")
+        print(baseline[0] / genome_size)
+        print(baseline[1] / genome_size)
+        print(polyploidy / genome_size)
+        writer.write("chrom\tarm\tcaller\ttype\tfraction")
+        if baseline[0] / genome_size < 0.2:
+            writer.write(f"\nWarning: baseline of GATK CNV might not ne correct!")
+        if baseline[1] / genome_size < 0.2:
+            writer.write(f"\nWarning: baseline of CNVkit might not ne correct!")
+        if polyploidy / genome_size > 0.5:
+            writer.write(f"\nWarning: potential polyploidy detected!")
         for chrom in chrom_arm_del:
             if chrom_arm_del[chrom][0] / chrom_arm_size[chrom][0] > chr_arm_fraction:
                 writer.write(f"\n{chrom}\tp\tcnvkit\tdeletion\t{chrom_arm_del[chrom][0] * 100 / chrom_arm_size[chrom][0]}%")
