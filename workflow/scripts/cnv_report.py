@@ -9,7 +9,7 @@ def create_tsv_report(
     input_vcfs, input_org_vcfs, input_del, input_amp, in_chrom_arm_size, amp_cn_limit,
     output_txt, out_additional_only, out_tsv_chrom_arms, del_1p19q_cn, del_1p19q_chr_arm_fraction,
     chr_arm_fraction, del_chr_arm_cn_limit, amp_chr_arm_cn_limit, normal_cn_lower_limit, normal_cn_upper_limit,
-    normal_baf_lower_limit, normal_baf_upper_limit,TC
+    normal_baf_lower_limit, normal_baf_upper_limit, TC
 ):
     chrom_arm_size = {}
     chrom_arm_del = {}
@@ -65,6 +65,16 @@ def create_tsv_report(
                 cn = utils.get_annotation_data_info(variant, "CORR_CN")
                 AF = utils.get_annotation_data_info(variant, "Twist_AF")
                 BAF = utils.get_annotation_data_info(variant, "BAF")
+                p_size = 0
+                q_size = 0
+                if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
+                    if end <= chrom_arm_size[chr][0][0] and end <= chrom_arm_size[chr][0][1] :
+                        p_size = size
+                    else:
+                        p_size = chrom_arm_size[chr][0][1] - start + 1
+                        q_size = end - chrom_arm_size[chr][0][1]
+                else:
+                    q_size = size
                 if BAF:
                     BAF = float(BAF)
                 if AF is None:
@@ -72,31 +82,29 @@ def create_tsv_report(
                 # 1p19q deletion
                 if cn < del_1p19q_cn and chr == "chr1" and start >= del_1p19q["1p"][0] and start <= del_1p19q["1p"][1]:
                     if caller == "cnvkit":
-                        del_1p19q["1p_cnvkit"] += size
+                        del_1p19q["1p_cnvkit"] += p_size
                     elif caller == "gatk":
-                        del_1p19q["1p_gatkcnv"] += size
+                        del_1p19q["1p_gatkcnv"] += p_size
                 if cn < del_1p19q_cn and chr == "chr19" and start >= del_1p19q["19q"][0] and start <= del_1p19q["19q"][1]:
                     if caller == "cnvkit":
-                        del_1p19q["19q_cnvkit"] += size
+                        del_1p19q["19q_cnvkit"] += q_size
                     elif caller == "gatk":
-                        del_1p19q["19q_gatkcnv"] += size
+                        del_1p19q["19q_gatkcnv"] += q_size
                 # Large chromosome CNV
                 if file1:
-                    if cn < del_chr_arm_cn_limit and caller == "cnvkit":
-                        if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
-                            chrom_arm_del[chr][0] += size
-                        else:
-                            chrom_arm_del[chr][1] += size
-                    if cn > normal_cn_lower_limit and cn < normal_cn_upper_limit and BAF and (BAF < normal_baf_lower_limit or BAF > normal_baf_upper_limit):
-                        if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
-                            chrom_arm_loh[chr][0] += size
-                        else:
-                            chrom_arm_loh[chr][1] += size
-                    if cn > amp_chr_arm_cn_limit and caller == "cnvkit":
-                        if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
-                            chrom_arm_amp[chr][0] += size
-                        else:
-                            chrom_arm_amp[chr][1] += size
+                    if caller == "cnvkit":
+                        if cn < del_chr_arm_cn_limit:
+                            chrom_arm_del[chr][0] += p_size
+                            chrom_arm_del[chr][1] += q_size
+                        if (
+                            cn > normal_cn_lower_limit and cn < normal_cn_upper_limit and
+                            BAF and (BAF < normal_baf_lower_limit or BAF > normal_baf_upper_limit)
+                        ):
+                            chrom_arm_loh[chr][0] += p_size
+                            chrom_arm_loh[chr][1] += q_size
+                        if cn > amp_chr_arm_cn_limit:
+                            chrom_arm_amp[chr][0] += p_size
+                            chrom_arm_amp[chr][1] += q_size
                 # Baseline check
                 if file1:
                     if cn > normal_cn_lower_limit and cn < normal_cn_upper_limit:
@@ -107,11 +115,20 @@ def create_tsv_report(
                 # Poliploidy check
                 if file1:
                     if caller == "cnvkit":
-                        if cn > normal_cn_lower_limit and cn < normal_cn_upper_limit and BAF and (BAF < normal_baf_lower_limit or BAF > normal_baf_upper_limit):
+                        if (
+                            cn > normal_cn_lower_limit and cn < normal_cn_upper_limit and
+                            BAF and (BAF < normal_baf_lower_limit or BAF > normal_baf_upper_limit)
+                        ):
                             polyploidy += size
-                        elif cn > amp_chr_arm_cn_limit and BAF and (BAF > normal_baf_lower_limit and BAF < normal_baf_upper_limit):
+                        elif (
+                            cn > amp_chr_arm_cn_limit and
+                            BAF and (BAF > normal_baf_lower_limit and BAF < normal_baf_upper_limit)
+                        ):
                             polyploidy += size
-                        elif cn < del_chr_arm_cn_limit and BAF and (BAF > normal_baf_lower_limit and BAF < normal_baf_upper_limit):
+                        elif (
+                            cn < del_chr_arm_cn_limit and
+                            BAF and (BAF > normal_baf_lower_limit and BAF < normal_baf_upper_limit)
+                        ):
                             polyploidy += size
 
                 if genes is not None:
@@ -237,17 +254,21 @@ def create_tsv_report(
             writer.write(f"\nWarning: potential polyploidy detected!")
         for chrom in chrom_arm_del:
             if chrom_arm_del[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tp\tcnvkit\tdeletion\t{chrom_arm_del[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
+                writer.write(f"\n{chrom}\tp\tcnvkit\tdeletion\t")
+                writer.write(f"{chrom_arm_del[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
             if chrom_arm_del[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tq\tcnvkit\tdeletion\t{chrom_arm_del[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
+                writer.write(f"\n{chrom}\tq\tcnvkit\tdeletion\t")
+                writer.write(f"{chrom_arm_del[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
             if chrom_arm_loh[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
                 writer.write(f"\n{chrom}\tp\tcnvkit\tloh\t{chrom_arm_loh[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
             if chrom_arm_loh[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
                 writer.write(f"\n{chrom}\tq\tcnvkit\tloh\t{chrom_arm_loh[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
             if chrom_arm_amp[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tp\tcnvkit\tduplication\t{chrom_arm_amp[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
+                writer.write(f"\n{chrom}\tp\tcnvkit\tduplication\t")
+                writer.write(f"{chrom_arm_amp[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
             if chrom_arm_amp[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tq\tcnvkit\tduplication\t{chrom_arm_amp[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
+                writer.write(f"\n{chrom}\tq\tcnvkit\tduplication\t")
+                writer.write(f"{chrom_arm_amp[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
 
 
 if __name__ == "__main__":
@@ -266,8 +287,8 @@ if __name__ == "__main__":
     amp_chr_arm_cn_limit = snakemake.params.amp_chr_arm_cn_limit
     normal_cn_lower_limit = snakemake.params.normal_cn_lower_limit
     normal_cn_upper_limit = snakemake.params.normal_cn_upper_limit
-    normal_baf_lower_limit = snakemake.params.normal_cn_lower_limit
-    normal_baf_upper_limit = snakemake.params.normal_cn_upper_limit
+    normal_baf_lower_limit = snakemake.params.normal_baf_lower_limit
+    normal_baf_upper_limit = snakemake.params.normal_baf_upper_limit
     TC = float(snakemake.params.tc)
     with open(snakemake.output.tsv_additional_only, "w") as out_additional_only:
         create_tsv_report(

@@ -74,7 +74,7 @@ with open(config["output"]) as output:
 
 validate(output_spec, schema="../schemas/output_files.schema.yaml")
 
-date_string = datetime.now().strftime('%Y%m%d')
+date_string = datetime.now().strftime("%Y%m%d")
 pipeline_version = get_pipeline_version(workflow, pipeline_name="Twist_Solid")
 version_files = touch_pipeline_verion_file_name(pipeline_version, date_string=date_string, directory="results/versions/software")
 if use_container(workflow):
