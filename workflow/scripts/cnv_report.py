@@ -8,23 +8,26 @@ log = logging.getLogger()
 def create_tsv_report(
     input_vcfs, input_org_vcfs, input_del, input_amp, in_chrom_arm_size, amp_cn_limit,
     output_txt, out_additional_only, out_tsv_chrom_arms, del_1p19q_cn, del_1p19q_chr_arm_fraction,
-    chr_arm_fraction, del_chr_arm_cn_limit, amp_chr_arm_cn_limit, TC
+    chr_arm_fraction, del_chr_arm_cn_limit, amp_chr_arm_cn_limit, normal_cn_lower_limit, normal_cn_upper_limit,
+    normal_baf_lower_limit, normal_baf_upper_limit,TC
 ):
     chrom_arm_size = {}
     chrom_arm_del = {}
+    chrom_arm_loh = {}
     chrom_arm_amp = {}
     baseline = [0, 0]
     polyploidy = 0
     genome_size = 0
-    with open(in_chrom_arm_size) as chrom_arm_size:
-        chrom_arm_size.next()
-        for line in chrom_arm_size:
+    with open(in_chrom_arm_size) as chrom_arm_size_file:
+        next(chrom_arm_size_file)
+        for line in chrom_arm_size_file:
             columns = line.strip().split("\t")
             chrom = columns[0]
             p_size = int(columns[1])
             q_size = int(columns[2])
             chrom_arm_size[chrom] = [[0, p_size, p_size], [p_size, p_size + q_size, q_size]]
             chrom_arm_del[chrom] = [0, 0]
+            chrom_arm_loh[chrom] = [0, 0]
             chrom_arm_amp[chrom] = [0, 0]
             genome_size += p_size + q_size
 
@@ -33,8 +36,8 @@ def create_tsv_report(
     log.info(f"Opening output tsv file: {output_txt}")
     sample_name = ""
     with open(output_txt, "w") as writer:
-        writer.write("sample\tgene(s)\tchrom\tregion\tcallers\tfreq_in_db\tcopy_number")
-        out_additional_only.write("sample\tgene(s)\tchrom\tregion\tcallers\tfreq_in_db\tcopy_number")
+        writer.write("sample\tgene(s)\tchrom\tregion\tcaller\tfreq_in_db\tcopy_number")
+        out_additional_only.write("sample\tgene(s)\tchrom\tregion\tcaller\tfreq_in_db\tcopy_number")
         file1 = True
         for input_org_vcf in input_org_vcfs:
             del_1p19q = {
@@ -58,24 +61,24 @@ def create_tsv_report(
                 start = variant.pos
                 end = variant.pos + int(utils.get_annotation_data_info(variant, "SVLEN")) - 1
                 size = end - start + 1
-                callers = utils.get_annotation_data_info(variant, "CALLER")
+                caller = utils.get_annotation_data_info(variant, "CALLER")
                 cn = utils.get_annotation_data_info(variant, "CORR_CN")
                 AF = utils.get_annotation_data_info(variant, "Twist_AF")
                 BAF = utils.get_annotation_data_info(variant, "BAF")
-                if BAF != "":
+                if BAF:
                     BAF = float(BAF)
                 if AF is None:
                     AF = 0.0
                 # 1p19q deletion
                 if cn < del_1p19q_cn and chr == "chr1" and start >= del_1p19q["1p"][0] and start <= del_1p19q["1p"][1]:
-                    if callers == "cnvkit":
+                    if caller == "cnvkit":
                         del_1p19q["1p_cnvkit"] += size
-                    elif callers == "gatk":
+                    elif caller == "gatk":
                         del_1p19q["1p_gatkcnv"] += size
                 if cn < del_1p19q_cn and chr == "chr19" and start >= del_1p19q["19q"][0] and start <= del_1p19q["19q"][1]:
-                    if callers == "cnvkit":
+                    if caller == "cnvkit":
                         del_1p19q["19q_cnvkit"] += size
-                    elif callers == "gatk":
+                    elif caller == "gatk":
                         del_1p19q["19q_gatkcnv"] += size
                 # Large chromosome CNV
                 if file1:
@@ -84,6 +87,11 @@ def create_tsv_report(
                             chrom_arm_del[chr][0] += size
                         else:
                             chrom_arm_del[chr][1] += size
+                    if cn > normal_cn_lower_limit and cn < normal_cn_upper_limit and BAF and (BAF < normal_baf_lower_limit or BAF > normal_baf_upper_limit):
+                        if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
+                            chrom_arm_loh[chr][0] += size
+                        else:
+                            chrom_arm_loh[chr][1] += size
                     if cn > amp_chr_arm_cn_limit and caller == "cnvkit":
                         if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
                             chrom_arm_amp[chr][0] += size
@@ -91,7 +99,7 @@ def create_tsv_report(
                             chrom_arm_amp[chr][1] += size
                 # Baseline check
                 if file1:
-                    if cn > 1.8 and cn < 2.2:
+                    if cn > normal_cn_lower_limit and cn < normal_cn_upper_limit:
                         if caller == "cnvkit":
                             baseline[0] += size
                         else:
@@ -99,26 +107,26 @@ def create_tsv_report(
                 # Poliploidy check
                 if file1:
                     if caller == "cnvkit":
-                        if cn > 1.8 and cn < 2.2 and BAF != "" and (BAF < 0.3 or BAF > 0.7):
+                        if cn > normal_cn_lower_limit and cn < normal_cn_upper_limit and BAF and (BAF < normal_baf_lower_limit or BAF > normal_baf_upper_limit):
                             polyploidy += size
-                        elif cn > 2.5 and BAF != "" and (BAF > 0.4 and BAF < 0.6):
+                        elif cn > amp_chr_arm_cn_limit and BAF and (BAF > normal_baf_lower_limit and BAF < normal_baf_upper_limit):
                             polyploidy += size
-                        elif cn < 1.4 and BAF != "" and (BAF > 0.4 and BAF < 0.6):
+                        elif cn < del_chr_arm_cn_limit and BAF and (BAF > normal_baf_lower_limit and BAF < normal_baf_upper_limit):
                             polyploidy += size
 
                 if genes is not None:
                     for gene in genes.split(","):
                         if gene not in gene_all_dict:
                             gene_all_dict[gene] = []
-                            gene_all_dict[gene].append([chr, start, end, callers, cn, AF])
+                            gene_all_dict[gene].append([chr, start, end, caller, cn, AF])
                         else:
                             duplicate = False
                             for variant in gene_all_dict[gene]:
-                                if chr == variant[0] and start == variant[1] and end == variant[2] and callers == variant[3]:
+                                if chr == variant[0] and start == variant[1] and end == variant[2] and caller == variant[3]:
                                     duplicate = True
                                     break
                             if not duplicate:
-                                gene_all_dict[gene].append([chr, start, end, callers, cn, AF])
+                                gene_all_dict[gene].append([chr, start, end, caller, cn, AF])
             if (del_1p19q["1p_cnvkit"] / del_1p19q["1p"][2] > del_1p19q_chr_arm_fraction and
                     del_1p19q["19q_cnvkit"] / del_1p19q["19q"][2] > del_1p19q_chr_arm_fraction):
                 if nr_writes < 2:
@@ -152,17 +160,17 @@ def create_tsv_report(
                 chr = variant.chrom
                 start = variant.pos
                 end = variant.pos + int(utils.get_annotation_data_info(variant, "SVLEN")) - 1
-                callers = utils.get_annotation_data_info(variant, "CALLER")
+                caller = utils.get_annotation_data_info(variant, "CALLER")
                 cn = utils.get_annotation_data_info(variant, "CORR_CN")
                 AF = utils.get_annotation_data_info(variant, "Twist_AF")
                 if AF is None:
                     AF = 0.0
-                writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{callers}\t{AF:.2f}\t{cn:.2f}")
+                writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}")
                 counter += 1
                 for gene in genes.split(","):
                     if gene not in gene_variant_dict:
                         gene_variant_dict[gene] = []
-                    gene_variant_dict[gene].append([chr, start, end, callers, cn, AF])
+                    gene_variant_dict[gene].append([chr, start, end, caller, cn, AF])
             for gene in gene_variant_dict:
                 if len(gene_variant_dict[gene]) == 1:
                     caller = gene_variant_dict[gene][0][3]
@@ -171,7 +179,7 @@ def create_tsv_report(
                             chr = cnv[0]
                             start = cnv[1]
                             end = cnv[2]
-                            callers = cnv[3]
+                            caller = cnv[3]
                             cn = cnv[4]
                             AF = cnv[5]
                             if (
@@ -180,7 +188,7 @@ def create_tsv_report(
                                 (gene_variant_dict[gene][0][1] >= start and gene_variant_dict[gene][0][1] <= end) or
                                 (gene_variant_dict[gene][0][2] >= end and gene_variant_dict[gene][0][2] <= start)
                             ):
-                                writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF:.2f}\t{cn:.2f}")
+                                writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}")
         log.info(f"Processed {counter} variants")
 
         deletions = open(input_del)
@@ -191,15 +199,15 @@ def create_tsv_report(
             chr = columns['Chromosome']
             start = columns['Gene_start']
             end = columns['Gene_end']
-            callers = "small_deletion"
+            caller = "small_deletion"
             AF = "NA"
             log_odds_ratio = float(columns['Median_L2R_deletion'])
             cn = 2*pow(2, float(log_odds_ratio))
             ccn = cn
             if TC > 0.0:
                 ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
-            writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
-            out_additional_only.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
+            writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}")
+            out_additional_only.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}")
         amplifications = open(input_amp)
         header_list = next(amplifications).split("\t")
         for amplification in amplifications:
@@ -208,7 +216,7 @@ def create_tsv_report(
             chr = columns['Chromosome']
             start = columns['Gene_start']
             end = columns['Gene_end']
-            callers = "small_amplification"
+            caller = "small_amplification"
             AF = "NA"
             log_odds_ratio = float(columns['Median_L2R_amplification'])
             cn = 2*pow(2, float(log_odds_ratio))
@@ -216,29 +224,30 @@ def create_tsv_report(
             if TC > 0.0:
                 ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
             if ccn > amp_cn_limit:
-                writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
-                out_additional_only.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{callers}\t{AF}\t{ccn:.2f}")
+                writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}")
+                out_additional_only.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}")
 
     with open(out_tsv_chrom_arms, "w") as writer:
-        print(baseline[0] / genome_size)
-        print(baseline[1] / genome_size)
-        print(polyploidy / genome_size)
         writer.write("chrom\tarm\tcaller\ttype\tfraction")
         if baseline[0] / genome_size < 0.2:
-            writer.write(f"\nWarning: baseline of GATK CNV might not ne correct!")
+            writer.write(f"\nWarning: baseline (log2ratio = 0) of GATK CNV might not be correct!")
         if baseline[1] / genome_size < 0.2:
-            writer.write(f"\nWarning: baseline of CNVkit might not ne correct!")
+            writer.write(f"\nWarning: baseline (log2ratio = 0) of CNVkit might not be correct!")
         if polyploidy / genome_size > 0.5:
             writer.write(f"\nWarning: potential polyploidy detected!")
         for chrom in chrom_arm_del:
-            if chrom_arm_del[chrom][0] / chrom_arm_size[chrom][0] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tp\tcnvkit\tdeletion\t{chrom_arm_del[chrom][0] * 100 / chrom_arm_size[chrom][0]}%")
-            if chrom_arm_del[chrom][1] / chrom_arm_size[chrom][1] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tp\tcnvkit\tdeletion\t{chrom_arm_del[chrom][1] * 100 / chrom_arm_size[chrom][1]}%")
-            if chrom_arm_amp[chrom][0] / chrom_arm_size[chrom][0] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tp\tcnvkit\tduplication\t{chrom_arm_amp[chrom][0] * 100 / chrom_arm_size[chrom][0]}%")
-            if chrom_arm_amp[chrom][1] / chrom_arm_size[chrom][1] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tp\tcnvkit\tduplication\t{chrom_arm_amp[chrom][1] * 100 / chrom_arm_size[chrom][1]}%")
+            if chrom_arm_del[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tp\tcnvkit\tdeletion\t{chrom_arm_del[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
+            if chrom_arm_del[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tq\tcnvkit\tdeletion\t{chrom_arm_del[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
+            if chrom_arm_loh[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tp\tcnvkit\tloh\t{chrom_arm_loh[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
+            if chrom_arm_loh[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tq\tcnvkit\tloh\t{chrom_arm_loh[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
+            if chrom_arm_amp[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tp\tcnvkit\tduplication\t{chrom_arm_amp[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
+            if chrom_arm_amp[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tq\tcnvkit\tduplication\t{chrom_arm_amp[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
 
 
 if __name__ == "__main__":
@@ -255,6 +264,10 @@ if __name__ == "__main__":
     chr_arm_fraction = snakemake.params.chr_arm_fraction
     del_chr_arm_cn_limit = snakemake.params.del_chr_arm_cn_limit
     amp_chr_arm_cn_limit = snakemake.params.amp_chr_arm_cn_limit
+    normal_cn_lower_limit = snakemake.params.normal_cn_lower_limit
+    normal_cn_upper_limit = snakemake.params.normal_cn_upper_limit
+    normal_baf_lower_limit = snakemake.params.normal_cn_lower_limit
+    normal_baf_upper_limit = snakemake.params.normal_cn_upper_limit
     TC = float(snakemake.params.tc)
     with open(snakemake.output.tsv_additional_only, "w") as out_additional_only:
         create_tsv_report(
@@ -272,5 +285,9 @@ if __name__ == "__main__":
             chr_arm_fraction,
             del_chr_arm_cn_limit,
             amp_chr_arm_cn_limit,
+            normal_cn_lower_limit,
+            normal_cn_upper_limit,
+            normal_baf_lower_limit,
+            normal_baf_upper_limit,
             TC,
         )
