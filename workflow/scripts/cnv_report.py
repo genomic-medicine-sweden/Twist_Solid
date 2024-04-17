@@ -68,7 +68,7 @@ def create_tsv_report(
                 p_size = 0
                 q_size = 0
                 if start >= chrom_arm_size[chr][0][0] and start <= chrom_arm_size[chr][0][1]:
-                    if end <= chrom_arm_size[chr][0][0] and end <= chrom_arm_size[chr][0][1] :
+                    if end >= chrom_arm_size[chr][0][0] and end <= chrom_arm_size[chr][0][1]:
                         p_size = size
                     else:
                         p_size = chrom_arm_size[chr][0][1] - start + 1
@@ -256,19 +256,19 @@ def create_tsv_report(
             if chrom_arm_del[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
                 writer.write(f"\n{chrom}\tp\tcnvkit\tdeletion\t")
                 writer.write(f"{chrom_arm_del[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
-            if chrom_arm_del[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tq\tcnvkit\tdeletion\t")
-                writer.write(f"{chrom_arm_del[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
-            if chrom_arm_loh[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tp\tcnvkit\tloh\t{chrom_arm_loh[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
-            if chrom_arm_loh[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tq\tcnvkit\tloh\t{chrom_arm_loh[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
             if chrom_arm_amp[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
                 writer.write(f"\n{chrom}\tp\tcnvkit\tduplication\t")
                 writer.write(f"{chrom_arm_amp[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
+            if chrom_arm_loh[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tp\tcnvkit\tloh\t{chrom_arm_loh[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
+            if chrom_arm_del[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tq\tcnvkit\tdeletion\t")
+                writer.write(f"{chrom_arm_del[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
             if chrom_arm_amp[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
                 writer.write(f"\n{chrom}\tq\tcnvkit\tduplication\t")
                 writer.write(f"{chrom_arm_amp[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
+            if chrom_arm_loh[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
+                writer.write(f"\n{chrom}\tq\tcnvkit\tloh\t{chrom_arm_loh[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
 
 
 if __name__ == "__main__":

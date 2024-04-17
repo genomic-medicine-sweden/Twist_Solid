@@ -31,8 +31,8 @@ rule cnv_tsv_report:
         del_1p19q_chr_arm_fraction=config.get("cnv_tsv_report", {}).get("del_1p19q_chr_arm_fraction", ""),
         normal_cn_lower_limit=config.get("cnv_tsv_report", {}).get("normal_cn_lower_limit", ""),
         normal_cn_upper_limit=config.get("cnv_tsv_report", {}).get("normal_cn_upper_limit", ""),
-        normal_baf_lower_limit=config.get("cnv_tsv_report", {}).get("normal_cn_lower_limit", ""),
-        normal_baf_upper_limit=config.get("cnv_tsv_report", {}).get("normal_cn_upper_limit", ""),
+        normal_baf_lower_limit=config.get("cnv_tsv_report", {}).get("normal_baf_lower_limit", ""),
+        normal_baf_upper_limit=config.get("cnv_tsv_report", {}).get("normal_baf_upper_limit", ""),
         tc=get_tc,
     log:
         "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_report.tsv.log",
