@@ -86,7 +86,7 @@ cnv_tsv_report:
   chrom_arm_size: "{{PROJECT_DESIGN_DATA}}/GMS560/design/chromosome_arm_size.tsv"
   del_1p19q_cn_limit: 1.4
   del_1p19q_chr_arm_fraction: 0.3
-  chr_arm_fraction: 0.5
+  chr_arm_fraction: 0.3
   del_chr_arm_cn_limit: 1.4
   amp_chr_arm_cn_limit: 2.5
   normal_baf_lower_limit: 0.4

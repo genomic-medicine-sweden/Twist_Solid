@@ -92,7 +92,7 @@ def create_tsv_report(
                         del_1p19q["19q_gatkcnv"] += q_size
                 # Large chromosome CNV
                 if file1:
-                    if caller == "cnvkit":
+                    if caller == "gatk":
                         if cn < del_chr_arm_cn_limit:
                             chrom_arm_del[chr][0] += p_size
                             chrom_arm_del[chr][1] += q_size
@@ -114,7 +114,7 @@ def create_tsv_report(
                             baseline[1] += size
                 # Poliploidy check
                 if file1:
-                    if caller == "cnvkit":
+                    if caller == "gatk":
                         if (
                             cn > normal_cn_lower_limit and cn < normal_cn_upper_limit and
                             BAF and (BAF < normal_baf_lower_limit or BAF > normal_baf_upper_limit)
@@ -254,21 +254,21 @@ def create_tsv_report(
             writer.write(f"\nWarning: potential polyploidy detected!")
         for chrom in chrom_arm_del:
             if chrom_arm_del[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tp\tcnvkit\tdeletion\t")
+                writer.write(f"\n{chrom}\tp\tgatk_cnv\tdeletion\t")
                 writer.write(f"{chrom_arm_del[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
             if chrom_arm_amp[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tp\tcnvkit\tduplication\t")
+                writer.write(f"\n{chrom}\tp\tgatk_cnv\tduplication\t")
                 writer.write(f"{chrom_arm_amp[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
             if chrom_arm_loh[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tp\tcnvkit\tloh\t{chrom_arm_loh[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
+                writer.write(f"\n{chrom}\tp\tgatk_cnv\tloh\t{chrom_arm_loh[chrom][0] * 100 / chrom_arm_size[chrom][0][2]:.1f}%")
             if chrom_arm_del[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tq\tcnvkit\tdeletion\t")
+                writer.write(f"\n{chrom}\tq\tgatk_cnv\tdeletion\t")
                 writer.write(f"{chrom_arm_del[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
             if chrom_arm_amp[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tq\tcnvkit\tduplication\t")
+                writer.write(f"\n{chrom}\tq\tgatk_cnv\tduplication\t")
                 writer.write(f"{chrom_arm_amp[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
             if chrom_arm_loh[chrom][1] / chrom_arm_size[chrom][1][2] > chr_arm_fraction:
-                writer.write(f"\n{chrom}\tq\tcnvkit\tloh\t{chrom_arm_loh[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
+                writer.write(f"\n{chrom}\tq\tgatk_cnv\tloh\t{chrom_arm_loh[chrom][1] * 100 / chrom_arm_size[chrom][1][2]:.1f}%")
 
 
 if __name__ == "__main__":
