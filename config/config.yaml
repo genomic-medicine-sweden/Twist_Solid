@@ -89,6 +89,7 @@ cnv_html_report:
 
 cnv_tsv_report:
   amp_cn_limit: 6.0
+  baseline_fraction_limit: 0.2
   chrom_arm_size: "{{PROJECT_DESIGN_DATA}}/GMS560/design/chromosome_arm_size.tsv"
   del_1p19q_cn_limit: 1.4
   del_1p19q_chr_arm_fraction: 0.3
@@ -99,6 +100,7 @@ cnv_tsv_report:
   normal_baf_upper_limit: 0.6
   normal_cn_lower_limit: 1.7
   normal_cn_upper_limit: 2.25
+  polyploidy_fraction_limit: 0.2
 
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"

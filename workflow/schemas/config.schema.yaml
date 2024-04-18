@@ -101,6 +101,9 @@ properties:
       amp_chr_arm_cn_limit:
         type: number
         description: Lower limit of copy number to be included in calculation of chr_arm_fraction for duplications
+      baseline_fraction_limit:
+        type: number
+        description: Lower limit of fraction with neutral copy segments and neutral BAF values. A warning of potentially incorrect baseline is reported otherwise.
       container:
         type: string
         description: name or path to docker/singularity container
@@ -131,6 +134,9 @@ properties:
       normal_baf_upper_limit:
         type: number
         description: Upper limit of BAF in segment to be counted as a normal segment
+      polyploidy_fraction_limit:
+        type: number
+        description: Upper limit of fraction with aberrant BAF / copy number segment combination. A warning of potential polyploidy is reported otherwise.
       
 
   cnvkit_batch:

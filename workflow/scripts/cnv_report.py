@@ -9,7 +9,7 @@ def create_tsv_report(
     input_vcfs, input_org_vcfs, input_del, input_amp, in_chrom_arm_size, amp_cn_limit,
     output_txt, out_additional_only, out_tsv_chrom_arms, del_1p19q_cn, del_1p19q_chr_arm_fraction,
     chr_arm_fraction, del_chr_arm_cn_limit, amp_chr_arm_cn_limit, normal_cn_lower_limit, normal_cn_upper_limit,
-    normal_baf_lower_limit, normal_baf_upper_limit, TC
+    normal_baf_lower_limit, normal_baf_upper_limit, baseline_fraction_limit, polyploidy_fraction_limit, TC
 ):
     chrom_arm_size = {}
     chrom_arm_del = {}
@@ -246,12 +246,15 @@ def create_tsv_report(
 
     with open(out_tsv_chrom_arms, "w") as writer:
         writer.write("chrom\tarm\tcaller\ttype\tfraction")
-        if baseline[0] / genome_size < 0.2:
-            writer.write(f"\nWarning: baseline of GATK CNV might be shifted!\t\t\t\t{baseline[0] * 100 / genome_size:.1f}% on baseline")
-        if baseline[1] / genome_size < 0.2:
-            writer.write(f"\nWarning: baseline of CNVkit might be shifted!\t\t\t\t{baseline[1] * 100 / genome_size:.1f}% on baseline")
-        if polyploidy / genome_size > 0.2:
-            writer.write(f"\nWarning: potential polyploidy detected!\t\t\t\t{polyploidy * 100 / genome_size:.1f}% polyploid regions")
+        if baseline[0] / genome_size < baseline_fraction_limit:
+            writer.write(f"\nWarning: baseline of GATK CNV might be shifted!\t\t\t\t")
+            writer.write(f"{baseline[0] * 100 / genome_size:.1f}% on baseline")
+        if baseline[1] / genome_size < baseline_fraction_limit:
+            writer.write(f"\nWarning: baseline of CNVkit might be shifted!\t\t\t\t")
+            writer.write(f"{baseline[1] * 100 / genome_size:.1f}% on baseline")
+        if polyploidy / genome_size > polyploidy_fraction_limit:
+            writer.write(f"\nWarning: potential polyploidy detected!\t\t\t\t")
+            writer.write(f"{polyploidy * 100 / genome_size:.1f}% polyploid regions")
         for chrom in chrom_arm_del:
             if chrom_arm_del[chrom][0] / chrom_arm_size[chrom][0][2] > chr_arm_fraction:
                 writer.write(f"\n{chrom}\tp\tcnvkit\tdeletion\t")
@@ -289,6 +292,8 @@ if __name__ == "__main__":
     normal_cn_upper_limit = snakemake.params.normal_cn_upper_limit
     normal_baf_lower_limit = snakemake.params.normal_baf_lower_limit
     normal_baf_upper_limit = snakemake.params.normal_baf_upper_limit
+    baseline_fraction_limit = snakemake.params.baseline_fraction_limit
+    polyploidy_fraction_limit = snakemake.params.polyploidy_fraction_limit
     TC = float(snakemake.params.tc)
     with open(snakemake.output.tsv_additional_only, "w") as out_additional_only:
         create_tsv_report(
@@ -310,5 +315,7 @@ if __name__ == "__main__":
             normal_cn_upper_limit,
             normal_baf_lower_limit,
             normal_baf_upper_limit,
+            baseline_fraction_limit,
+            polyploidy_fraction_limit,
             TC,
         )

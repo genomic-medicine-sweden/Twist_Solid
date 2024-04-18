@@ -24,6 +24,7 @@ rule cnv_tsv_report:
         tsv_chrom_arms=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_chromosome_arms.tsv"),
     params:
         amp_chr_arm_cn_limit=config.get("cnv_tsv_report", {}).get("amp_chr_arm_cn_limit", ""),
+        baseline_fraction_limit=config.get("cnv_tsv_report", {}).get("baseline_fraction_limit", ""),
         call_small_amplifications_cn_limit=config.get("cnv_tsv_report", {}).get("amp_cn_limit", ""),
         chr_arm_fraction=config.get("cnv_tsv_report", {}).get("chr_arm_fraction", ""),
         del_chr_arm_cn_limit=config.get("cnv_tsv_report", {}).get("del_chr_arm_cn_limit", ""),
@@ -33,6 +34,7 @@ rule cnv_tsv_report:
         normal_cn_upper_limit=config.get("cnv_tsv_report", {}).get("normal_cn_upper_limit", ""),
         normal_baf_lower_limit=config.get("cnv_tsv_report", {}).get("normal_baf_lower_limit", ""),
         normal_baf_upper_limit=config.get("cnv_tsv_report", {}).get("normal_baf_upper_limit", ""),
+        polyploidy_fraction_limit=config.get("cnv_tsv_report", {}).get("polyploidy_fraction_limit", ""),
         tc=get_tc,
     log:
         "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_report.tsv.log",
