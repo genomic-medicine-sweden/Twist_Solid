@@ -15,16 +15,28 @@ class TestGetCaller(unittest.TestCase):
     def test_create_tsv_report(self):
         cnv = tempfile.mkdtemp() + "/tcnv.txt"
         out_additional_only = open(tempfile.mkdtemp() + "/out_additional_only.txt", "w")
+        out_tsv_chrom_arms = tempfile.mkdtemp() + "/cnv_chromosome_arms.tsv"
         create_tsv_report(
             [".tests/units/vcf/test.cnv1.vcf"],
             [".tests/units/vcf/test.cnv2.vcf"],
             ".tests/units/vcf/test.deletions.tsv",
             ".tests/units/vcf/test.amplifications.tsv",
+            ".tests/integration/reference/chromosome_arm_size.tsv",
             2.0,
             cnv,
             out_additional_only,
+            out_tsv_chrom_arms,
             1.5,
             0.5,
+            0.3,
+            1.4,
+            2.5,
+            1.7,
+            2.25,
+            0.4,
+            0.6,
+            0.2,
+            0.2,
             0.5,
         )
 
@@ -36,7 +48,7 @@ class TestGetCaller(unittest.TestCase):
         testcases = [
                 TestCase(
                     name="header row",
-                    expected=("sample", "gene(s)", "chrom", "region", "callers", "freq_in_db", "copy_number")
+                    expected=("sample", "gene(s)", "chrom", "region", "caller", "freq_in_db", "copy_number")
                 ),
                 TestCase(
                     name="variant 1",
@@ -60,8 +72,58 @@ class TestGetCaller(unittest.TestCase):
                 ),
         ]
 
+        testcases2 = [
+                TestCase(
+                    name="header row",
+                    expected=('chrom', 'arm', 'caller', 'type', 'fraction')
+                ),
+                TestCase(
+                    name="baseline 1",
+                    expected=("Warning: baseline of GATK CNV might be shifted!", '', '', '', "4.5% on baseline")
+                ),
+                TestCase(
+                    name="baseline 2",
+                    expected=("Warning: baseline of CNVkit might be shifted!", '', '', '', "0.0% on baseline")
+                ),
+                TestCase(
+                    name="duplication",
+                    expected=('chr8', 'q', 'cnvkit', 'duplication', '98.7%')
+                ),
+                TestCase(
+                    name="loh 1",
+                    expected=('chr9', 'p', 'cnvkit', 'loh', '97.5%')
+                ),
+                TestCase(
+                    name="loh 2",
+                    expected=('chr9', 'q', 'cnvkit', 'loh', '99.2%')
+                ),
+        ]
+
         test_it = iter(testcases)
         with open(cnv) as reader:
+            for line in reader:
+
+                actual = tuple(line.rstrip().split("\t"))
+                try:
+                    case = next(test_it)
+                    self.assertEqual(
+                        case.expected,
+                        actual,
+                        "failed test '{}': expected {}, got {}".format(
+                            case.name, case.expected, actual
+                        ),
+                    )
+                except ValueError:
+                    if case.expected == "ValueError":
+                        assert True
+                    else:
+                        assert False
+                except StopIteration:
+                    print("More results than test cases")
+                    assert False
+
+        test_it = iter(testcases2)
+        with open(out_tsv_chrom_arms) as reader:
             for line in reader:
 
                 actual = tuple(line.rstrip().split("\t"))
