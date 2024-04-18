@@ -80,7 +80,7 @@ cnv_html_report:
         Additional small amplifications and deletions as well as 1p19q co-deletions called by Twist Solid
         in-house scripts. Can have overlaps with called regions from other callers.
       path: "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.cnv_loh_genes_all.cnv_additional_variants_only.tsv"
-    - name: Large chromosomal aberrations. 
+    - name: Large chromosomal aberrations
       description: >
         Large chromosomal aberrations in the form of deletions, duplications and copy neutral loss of heterozygosity.
         Also warnings of baseline skewness and detection of polyploidy in the sample.
