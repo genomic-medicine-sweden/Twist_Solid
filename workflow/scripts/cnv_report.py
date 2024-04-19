@@ -138,8 +138,11 @@ def create_tsv_report(
                             gene_all_dict[gene].append([chr, start, end, caller, cn, AF])
                         else:
                             duplicate = False
-                            for variant in gene_all_dict[gene]:
-                                if chr == variant[0] and start == variant[1] and end == variant[2] and caller == variant[3]:
+                            for cnv_variant in gene_all_dict[gene]:
+                                if (
+                                    chr == cnv_variant[0] and start == cnv_variant[1] and
+                                    end == cnv_variant[2] and caller == cnv_variant[3]
+                                ):
                                     duplicate = True
                                     break
                             if not duplicate:
@@ -190,13 +193,13 @@ def create_tsv_report(
                     gene_variant_dict[gene].append([chr, start, end, caller, cn, AF])
             for gene in gene_variant_dict:
                 if len(gene_variant_dict[gene]) == 1:
-                    caller = gene_variant_dict[gene][0][3]
+                    org_caller = gene_variant_dict[gene][0][3]
                     for cnv in gene_all_dict[gene]:
-                        if cnv[3] != caller:
+                        if cnv[3] != org_caller:
                             chr = cnv[0]
                             start = cnv[1]
                             end = cnv[2]
-                            caller = cnv[3]
+                            new_caller = cnv[3]
                             cn = cnv[4]
                             AF = cnv[5]
                             if (
@@ -205,7 +208,7 @@ def create_tsv_report(
                                 (gene_variant_dict[gene][0][1] >= start and gene_variant_dict[gene][0][1] <= end) or
                                 (gene_variant_dict[gene][0][2] >= end and gene_variant_dict[gene][0][2] <= start)
                             ):
-                                writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}")
+                                writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{new_caller}\t{AF:.2f}\t{cn:.2f}")
         log.info(f"Processed {counter} variants")
 
         deletions = open(input_del)
