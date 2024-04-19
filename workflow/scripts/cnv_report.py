@@ -139,7 +139,10 @@ def create_tsv_report(
                         else:
                             duplicate = False
                             for cnv_variant in gene_all_dict[gene]:
-                                if chr == cnv_variant[0] and start == cnv_variant[1] and end == cnv_variant[2] and caller == cnv_variant[3]:
+                                if (
+                                    chr == cnv_variant[0] and start == cnv_variant[1] and 
+                                    end == cnv_variant[2] and caller == cnv_variant[3]
+                                ):
                                     duplicate = True
                                     break
                             if not duplicate:
