@@ -45,7 +45,7 @@
      checksum: 75f7fd3a5e3b9b09935f17ec3d71f6f9
      path: GMS560/cnv/cnv_amplification_genes_hg38_240307.tsv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/cnv_amplification_genes_hg38_240307.tsv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/cnv_amplification_genes_hg38_240307.tsv
 
  call_small_cnv_deletions:
    regions_file:
