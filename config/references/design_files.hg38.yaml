@@ -2,10 +2,10 @@
 
  annotate_cnv:
    cnv_amp_genes:
-     path: GMS560/cnv/cnv_amp_genes_hg38.bed
-     checksum: 51ca611484f5b406edfe79f06e8879ef
+     path: GMS560/cnv/cnv_amp_genes_hg38_240307.bed
+     checksum: d808ff25722e43a243aa09f2607bc37e
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/cnv_amp_genes_hg38.bed
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/cnv_amp_genes_hg38_240307.bed
 
    cnv_loh_genes_all: 
      path: GMS560/cnv/cnv_loh_genes_hg38.bed
@@ -42,10 +42,10 @@
   
  call_small_cnv_amplifications:
    regions_file: 
-     checksum: 4f7b0d50c0acc18201512e59322c144c
-     path: GMS560/cnv/cnv_amplification_genes_hg38.tsv
+     checksum: 75f7fd3a5e3b9b09935f17ec3d71f6f9
+     path: GMS560/cnv/cnv_amplification_genes_hg38_240307.tsv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/cnv_amplification_genes_hg38.tsv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/cnv_amplification_genes_hg38_240307.tsv
 
  call_small_cnv_deletions:
    regions_file:
@@ -53,6 +53,20 @@
      path: GMS560/cnv/cnv_deletion_genes_hg38.tsv
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/cnv_deletion_genes_hg38.tsv 
+
+ cnvkit_build_normal_reference:
+   mappability:
+     checksum: 1fdacc8565eb13c53580f6c78b953ce5
+     path: GMS560/cnv/access-excludes.hg38.bed
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/access-excludes.hg38.bed
+
+ cnv_tsv_report:
+   chrom_arm_size:
+     checksum: 3b0242bea88285383dbb42aec1f252d0
+     path: GMS560/cnv/chromosome_arm_size.tsv
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/chromosome_arm_size.tsv
 
  exon_skipping:
    design_bed:
