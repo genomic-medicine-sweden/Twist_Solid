@@ -389,9 +389,9 @@
       path: ref_data/vep/105/homo_sapiens_refseq
       type: folder
       content_checksum:
-        105_GRCh37/HG1463_PATCH/114000001-115000000_reg.gz: c01d9c84f552841842da29450cbe3e9f
+        homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/114000001-115000000_reg.gz: c01d9c84f552841842da29450cbe3e9f
         homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/all_vars.gz: 7a6c597ec65c982c80fe0ab89a071d59
-        /105_GRCh37/HG1463_PATCH/114000001-115000000.gz: 876549f369d9c55811216e29f7d0cd19
+        homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/114000001-115000000.gz: 876549f369d9c55811216e29f7d0cd19
         homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/115000001-116000000_reg.gz: 49865f8fa24479ca5342ce7df5b082d0
         homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/all_vars.gz.csi: 66f720e01f5b9f4fefd97225e590aa7c
         homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/115000001-116000000.gz: bf658fd769d3abd02c07be1538505e36
