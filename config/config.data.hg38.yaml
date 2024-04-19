@@ -30,7 +30,7 @@ arriba_draw_fusion:
   protein_domains: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/protein_domains_hg38_GRCh38_v2.3.0.gff3"
 
 annotate_cnv:
-  cnv_amp_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_hg38_230307.bed"
+  cnv_amp_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_hg38_240307.bed"
   cnv_loh_genes_validated: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_uppsala_genes_hg38.bed"
   cnv_loh_genes_all: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes_hg38.bed"
 
