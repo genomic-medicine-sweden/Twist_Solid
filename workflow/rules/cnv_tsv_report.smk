@@ -6,24 +6,35 @@ __license__ = "GPL-3"
 
 rule cnv_tsv_report:
     input:
-        vcfs=[
-            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf",
-            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.filter.cnv_hard_filter_loh.vcf",
-        ],
+        amplifications="cnv_sv/call_small_cnv_amplifications/{sample}_{type}.amplifications.tsv",
+        chrom_arm_size=config.get("cnv_tsv_report", {}).get("chrom_arm_size", ""),
+        deletions="cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv",
         org_vcfs=[
             "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf",
             "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.vcf",
         ],
-        deletions="cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv",
-        amplifications="cnv_sv/call_small_cnv_amplifications/{sample}_{type}.amplifications.tsv",
         tc_file=get_tc_file,
+        vcfs=[
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf",
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.filter.cnv_hard_filter_loh.vcf",
+        ],
     output:
         tsv=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_report.tsv"),
         tsv_additional_only=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_additional_variants_only.tsv"),
+        tsv_chrom_arms=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_chromosome_arms.tsv"),
     params:
-        call_small_amplifications_cn_limit=config.get("cnv_tsv_report", {}).get("amp_cn_limit", "6"),
-        del_1p19q_cn_limit=config.get("cnv_tsv_report", {}).get("del_1p19q_cn_limit", "2"),
-        del_1p19q_chr_arm_fraction=config.get("cnv_tsv_report", {}).get("del_1p19q_chr_arm_fraction", "0"),
+        amp_chr_arm_cn_limit=config.get("cnv_tsv_report", {}).get("amp_chr_arm_cn_limit", ""),
+        baseline_fraction_limit=config.get("cnv_tsv_report", {}).get("baseline_fraction_limit", ""),
+        call_small_amplifications_cn_limit=config.get("cnv_tsv_report", {}).get("amp_cn_limit", ""),
+        chr_arm_fraction=config.get("cnv_tsv_report", {}).get("chr_arm_fraction", ""),
+        del_chr_arm_cn_limit=config.get("cnv_tsv_report", {}).get("del_chr_arm_cn_limit", ""),
+        del_1p19q_cn_limit=config.get("cnv_tsv_report", {}).get("del_1p19q_cn_limit", ""),
+        del_1p19q_chr_arm_fraction=config.get("cnv_tsv_report", {}).get("del_1p19q_chr_arm_fraction", ""),
+        normal_cn_lower_limit=config.get("cnv_tsv_report", {}).get("normal_cn_lower_limit", ""),
+        normal_cn_upper_limit=config.get("cnv_tsv_report", {}).get("normal_cn_upper_limit", ""),
+        normal_baf_lower_limit=config.get("cnv_tsv_report", {}).get("normal_baf_lower_limit", ""),
+        normal_baf_upper_limit=config.get("cnv_tsv_report", {}).get("normal_baf_upper_limit", ""),
+        polyploidy_fraction_limit=config.get("cnv_tsv_report", {}).get("polyploidy_fraction_limit", ""),
         tc=get_tc,
     log:
         "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_report.tsv.log",
