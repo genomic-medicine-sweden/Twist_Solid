@@ -117,7 +117,7 @@ manta_config_t:
 
 merge_cnv_json:
   annotations:
-    - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes.bed"
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_240307.bed"
     - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes.bed"
 
 mosdepth:
