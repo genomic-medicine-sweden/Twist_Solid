@@ -19,8 +19,8 @@ def create_tsv_report(
     baseline = [0, 0]
     new_baseline = {"cnvkit" : {"cn_neg" : {"cn" : [], "size": [], "weighted_avg" : 0.0},
                                 "cn_pos" : {"cn" : [], "size": [], "weighted_avg" : 0.0}},
-                    "gatkcnv" : {"cn_neg" : {"cn" : [], "size": [], "weighted_avg" : 0.0},
-                                 "cn_pos" : {"cn" : [], "size": [], "weighted_avg" : 0.0}}}
+                    "gatk" : {"cn_neg" : {"cn" : [], "size": [], "weighted_avg" : 0.0},
+                              "cn_pos" : {"cn" : [], "size": [], "weighted_avg" : 0.0}}}
     polyploidy = 0
     genome_size = 0
     with open(in_chrom_arm_size) as chrom_arm_size_file:
@@ -124,11 +124,11 @@ def create_tsv_report(
                         size > 10000000
                     ):
                         if cn < 0:
-                            new_baseline[caller]["cnv_neg"]["cn"].append(cn)
-                            new_baseline[caller]["cnv_neg"]["size"].append(size)
+                            new_baseline[caller]["cn_neg"]["cn"].append(cn)
+                            new_baseline[caller]["cn_neg"]["size"].append(size)
                         else:
-                            new_baseline[caller]["cnv_pos"]["cn"].append(cn)
-                            new_baseline[caller]["cnv_pos"]["size"].append(size)
+                            new_baseline[caller]["cn_pos"]["cn"].append(cn)
+                            new_baseline[caller]["cn_pos"]["size"].append(size)
                 # Poliploidy check
                 if file1:
                     if caller == "cnvkit":
@@ -185,7 +185,7 @@ def create_tsv_report(
                 if len(new_baseline[caller][cluster]["cn"]) > 0:
                     weighted_avg = np.average(new_baseline[caller][cluster]["cn"], weights=new_baseline[caller][cluster]["size"])
                 new_baseline[caller][cluster]["weighted_avg"] = weighted_avg
-        new_baseline_final = {"cnvkit" : 0.0, "gatkcnv" : 0.0}
+        new_baseline_final = {"cnvkit" : 0.0, "gatk" : 0.0}
         for caller in new_baseline:
             w_avg_neg = new_baseline[caller]["cn_neg"]["weighted_avg"]
             w_avg_pos = new_baseline[caller]["cn_pos"]["weighted_avg"]
