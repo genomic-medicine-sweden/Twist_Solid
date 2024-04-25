@@ -17,10 +17,10 @@ def create_tsv_report(
     chrom_arm_loh = {}
     chrom_arm_amp = {}
     baseline = [0, 0]
-    new_baseline = {"cnvkit" : {"cn_neg" : {"cn" : [], "size": [], "weighted_avg" : 0.0},
-                                "cn_pos" : {"cn" : [], "size": [], "weighted_avg" : 0.0}},
-                    "gatk" : {"cn_neg" : {"cn" : [], "size": [], "weighted_avg" : 0.0},
-                              "cn_pos" : {"cn" : [], "size": [], "weighted_avg" : 0.0}}}
+    new_baseline = {"cnvkit" : {"cn_neg" : {"cn" : [], "size": [], "weighted_avg" : 2.0},
+                                "cn_pos" : {"cn" : [], "size": [], "weighted_avg" : 2.0}},
+                    "gatk" : {"cn_neg" : {"cn" : [], "size": [], "weighted_avg" : 2.0},
+                              "cn_pos" : {"cn" : [], "size": [], "weighted_avg" : 2.0}}}
     polyploidy = 0
     genome_size = 0
     with open(in_chrom_arm_size) as chrom_arm_size_file:
@@ -123,7 +123,7 @@ def create_tsv_report(
                         BAF and BAF > normal_baf_lower_limit and BAF > normal_baf_upper_limit and
                         size > 10000000
                     ):
-                        if cn < 0:
+                        if cn < 2:
                             new_baseline[caller]["cn_neg"]["cn"].append(cn)
                             new_baseline[caller]["cn_neg"]["size"].append(size)
                         else:
@@ -185,12 +185,12 @@ def create_tsv_report(
                 if len(new_baseline[caller][cluster]["cn"]) > 0:
                     weighted_avg = np.average(new_baseline[caller][cluster]["cn"], weights=new_baseline[caller][cluster]["size"])
                 new_baseline[caller][cluster]["weighted_avg"] = weighted_avg
-        new_baseline_final = {"cnvkit" : 0.0, "gatk" : 0.0}
+        baseline_shift = {"cnvkit" : 0.0, "gatk" : 0.0}
         for caller in new_baseline:
             w_avg_neg = new_baseline[caller]["cn_neg"]["weighted_avg"]
             w_avg_pos = new_baseline[caller]["cn_pos"]["weighted_avg"]
-            if w_avg_pos - w_avg_neg > 0.5:
-                new_baseline_final[caller] = w_avg_neg * -1
+            if w_avg_pos - w_avg_neg > 1.0:
+                baseline_shift[caller] = 2.0 - w_avg_neg
 
         for input_vcf in input_vcfs:
             gene_variant_dict = {}
@@ -212,7 +212,7 @@ def create_tsv_report(
                 end = variant.pos + int(utils.get_annotation_data_info(variant, "SVLEN")) - 1
                 caller = utils.get_annotation_data_info(variant, "CALLER")
                 cn = utils.get_annotation_data_info(variant, "CORR_CN")
-                baseline_corrected_cn = cn + new_baseline_final[caller]
+                baseline_corrected_cn = cn + baseline_shift[caller]
                 AF = utils.get_annotation_data_info(variant, "Twist_AF")
                 if AF is None:
                     AF = 0.0
@@ -233,7 +233,7 @@ def create_tsv_report(
                             end = cnv[2]
                             new_caller = cnv[3]
                             cn = cnv[4]
-                            baseline_corrected_cn = cn + new_baseline_final[new_caller]
+                            baseline_corrected_cn = cn + baseline_shift[new_caller]
                             AF = cnv[5]
                             if (
                                 (start >= gene_variant_dict[gene][0][1] and start <= gene_variant_dict[gene][0][2]) or
