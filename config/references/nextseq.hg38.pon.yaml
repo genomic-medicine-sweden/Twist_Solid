@@ -1,0 +1,63 @@
+---
+
+ svdb_query:
+   db_string:
+     checksum: 0d7a6e99022ef92f54b90de79560577c
+     path: GMS560/PoN/SVDB/all_T_185_svdb_0.8_hg38_20240214.vcf 
+     type: file
+     url: https://figshare.com/ndownloader/files/44544002?private_link=53f1597211477d840a29
+
+ purecn:
+   extra: 
+     checksum: 71da81a7c80a06a7ec455271d9a21884
+     path: GMS560/PoN/purecn/mapping_bias_nextseq_hg38.rds
+     type: file
+     url: https://figshare.com/ndownloader/files/44486711?private_link=53f1597211477d840a29
+
+   normaldb:
+     checksum: 542e377a41834e9123b88800cfbd381c
+     path: GMS560/PoN/purecn/normalDB_nextseq_hg38.rds
+     type: file
+     url: https://figshare.com/ndownloader/files/44486714?private_link=53f1597211477d840a29
+
+
+ gatk_denoise_read_counts:
+   normal_reference:
+     checksum: 8a06c6f84bb01e4feadb92c35c556a62
+     path: GMS560/PoN/gatk_cnv_nextseq_27_hg38.hdf5
+     type: file
+     url: https://figshare.com/ndownloader/files/44525696?private_link=53f1597211477d840a29
+
+ cnvkit_batch:
+   normal_reference:
+     checksum: b9995ea0cfa1c259fe7229aee1fd2646
+     path: GMS560/PoN/cnvkit_nextseq_noUmea_27_hg38.cnn
+     type: file
+     url: https://figshare.com/ndownloader/files/44328734?private_link=53f1597211477d840a29
+
+ #cnvkit_batch_hrd:
+ #  normal_reference_hrd:
+ #     checksum: 
+ #     path: GMS560/PoN/XXXX_hg38.cnn
+ #     type: file
+ #     url: 
+
+ msisensor_pro:
+   PoN:
+     checksum: 62f5e1ce5c242013af8398ba427314d7
+     path: GMS560/PoN/Msisensor_pro_reference_nextseq_noUmea_27_hg38.list_baseline
+     type: file
+     url: https://figshare.com/ndownloader/files/44328716?private_link=53f1597211477d840a29
+
+ reference:
+    background:
+      checksum: 1180c940991a8cf9a232b364ca6934a8
+      path: GMS560/Background/background_panel_nextseq_noUmea_27_dp500_af015_hg38.tsv
+      type: file
+      url: https://figshare.com/ndownloader/files/44328743?private_link=53f1597211477d840a29
+    
+    artifacts: 
+      checksum: b4ca00ae1046cb13c2cd4ec38b4b7308
+      path: GMS560/Artifact/artifact_panel_nextseq_noUmea_27_hg38.tsv
+      type: file
+      url: https://figshare.com/ndownloader/files/44328728?private_link=53f1597211477d840a29

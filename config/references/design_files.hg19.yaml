@@ -2,10 +2,10 @@
 
  annotate_cnv:
    cnv_amp_genes:
-     path: GMS560/cnv/cnv_amp_genes.bed
-     checksum: 7bae2d8c592e54207c4b8effaca2bf4f
+     path: GMS560/cnv/cnv_amp_genes_240307.bed
+     checksum: daa4bd789c9beb84bf1c02e125dd1fd6
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/cnv/cnv_amp_genes.bed
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/cnv_amp_genes_240307.bed
 
    cnv_loh_genes_all: 
      path: GMS560/cnv/cnv_loh_genes.bed
@@ -42,10 +42,10 @@
   
  call_small_cnv_amplifications:
    regions_file: 
-     checksum: 24447a09e6691ca7382f4400b06943cf
-     path: GMS560/cnv/cnv_amplification_genes.tsv
+     checksum: d276c7848ed8fecc034f76bfd815e537
+     path: GMS560/cnv/cnv_amplification_genes_240307.tsv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/cnv/cnv_amplification_genes.tsv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/cnv_amplification_genes_240307.tsv
 
  call_small_cnv_deletions:
    regions_file:
@@ -54,6 +54,20 @@
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/cnv/cnv_deletion_genes.tsv
 
+ cnvkit_build_normal_reference:
+   mappability:
+     checksum: 5663ce9e7576e8ed7b4fa06fad1fdb88
+     path: GMS560/cnv/access-5k-mappable.hg19.bed
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/access-5k-mappable.hg19.bed
+
+ cnv_tsv_report:
+   chrom_arm_size:
+     checksum: 3b0242bea88285383dbb42aec1f252d0
+     path: GMS560/cnv/chromosome_arm_size.tsv
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/chromosome_arm_size.tsv
+     
  exon_skipping:
    design_bed:
      checksum: 7fe64299477aa4b6a5f5783cce9fa30f
@@ -79,7 +93,6 @@
      path: GMS560/fuseq_wes/false_positive_fusion_pairs.txt
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/fuseq_wes/false_positive_fusion_pairs.txt
-    
 
  fuseq_wes:
    params:

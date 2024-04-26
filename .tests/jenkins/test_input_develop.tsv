@@ -6,13 +6,13 @@ results/dna/VAL2022-2-5M_T/additional_files/biomarker/VAL2022-2-5M_T.purecn.scar
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.amplifications.tsv	f397f92f69100d1f20ca65ffac830dd0
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.deletions.tsv	f887194ae8134c8a1c8fd427ae533646
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.manta_tumorSV.vcf.gz	1c4f0a2b346d1355dc76fcd126222729
-results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.pathology.amp_all_del_all.cnv_report.tsv	831ba945efe70a4fe5df10d632a017ce
-results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.pathology.amp_all_del_validated.cnv_report.tsv	63fb792a3010418b15c5971d402886ac
-results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.pathology_purecn.amp_all_del_all.cnv_report.tsv	aebb2658c6c2112c29ffbd710e5a9d77
+results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.pathology.amp_all_del_all.cnv_report.tsv	2b09144044b2bdf63c440082be760b26
+results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.pathology.amp_all_del_validated.cnv_report.tsv	ceb3be1abd7951617928cd5c3572a8a1
+results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.pathology_purecn.amp_all_del_all.cnv_report.tsv	8a85c32ff5b4e0668376043e16dc0e77
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.pathology_purecn.svdb_query.vcf	c5ebcc72790e0c6f5186298bf5890348
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.pathology.svdb_query.vcf	c51a58f9332c9176b0f354a955fd25bc
-results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.purecn.amp_all_del_all.cnv_report.tsv	aebb2658c6c2112c29ffbd710e5a9d77
-results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.purecn.amp_all_del_validated.cnv_report.tsv	73e862d949f8de401c23170ca6db09d4
+results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.purecn.amp_all_del_all.cnv_report.tsv	8a85c32ff5b4e0668376043e16dc0e77
+results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.purecn.amp_all_del_validated.cnv_report.tsv	2438c93ab15eb0e2f6595ac5c006a1f2
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.purecn.svdb_query.vcf	49498b22ca7af9176b31e194ef5eb42f
 results/dna/VAL2022-2-5M_T/additional_files/qc/VAL2022-2-5M_T.alignment_summary_metrics.txt	fa88f8adc1d6146cf399c6d17a37d098
 results/dna/VAL2022-2-5M_T/additional_files/qc/VAL2022-2-5M_T.contamination.table	a4ee6cd2e1cfe029229f5b218ac318e9
@@ -28,7 +28,7 @@ results/dna/VAL2022-2-5M_T/additional_files/vcf/vardict_VAL2022-2-5M_T.vcf.gz	22
 results/dna/VAL2022-2-5M_T/biomarker/VAL2022-2-5M_T.msisensor_pro.score.tsv	e47f1fb00f0220a20335f972e1af8d39
 results/dna/VAL2022-2-5M_T/biomarker/VAL2022-2-5M_T.pathology_purecn.scarhrd_cnvkit_score.txt	55145eab2e60e588c66b233cf1479287
 results/dna/VAL2022-2-5M_T/biomarker/VAL2022-2-5M_T.TMB.txt	e20d98b80deb3ad74605c0439abda1f2
-results/dna/VAL2022-2-5M_T/cnv/VAL2022-2-5M_T.pathology_purecn.amp_all_del_validated.cnv_report.tsv	73e862d949f8de401c23170ca6db09d4
+results/dna/VAL2022-2-5M_T/cnv/VAL2022-2-5M_T.pathology_purecn.amp_all_del_validated.cnv_report.tsv	2438c93ab15eb0e2f6595ac5c006a1f2
 results/dna/VAL2022-2-5M_T/fusion/VAL2022-2-5M_T.fuseq_wes.report.csv	ada3432e93dd1ff64f9254d8c83c91c5
 results/dna/VAL2022-2-5M_T/qc/VAL2022-2-5M_T.coverage_and_mutations.tsv	62666e179f8e43450e4dd65a75928e34
 results/dna/VAL2022-2-5M_T/vcf/VAL2022-2-5M_T.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf	e9dc0afeeb5d2b738183ce465973b292

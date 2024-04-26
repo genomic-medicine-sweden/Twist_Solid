@@ -80,12 +80,26 @@ cnv_html_report:
         Additional small amplifications and deletions as well as 1p19q co-deletions called by Twist Solid
         in-house scripts. Can have overlaps with called regions from other callers.
       path: "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.cnv_loh_genes_all.cnv_additional_variants_only.tsv"
+    - name: Large chromosomal aberrations
+      description: >
+        Large chromosomal aberrations in the form of deletions, duplications and copy neutral loss of heterozygosity.
+        Also warnings of baseline skewness and detection of polyploidy in the sample.
+      path: "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.cnv_loh_genes_all.cnv_chromosome_arms.tsv"
+
 
 cnv_tsv_report:
   amp_cn_limit: 6.0
+  baseline_fraction_limit: 0.2
   del_1p19q_cn_limit: 1.4
   del_1p19q_chr_arm_fraction: 0.3
-
+  chr_arm_fraction: 0.3
+  del_chr_arm_cn_limit: 1.4
+  amp_chr_arm_cn_limit: 2.5
+  normal_baf_lower_limit: 0.4
+  normal_baf_upper_limit: 0.6
+  normal_cn_lower_limit: 1.7
+  normal_cn_upper_limit: 2.25
+  polyploidy_fraction_limit: 0.2
 
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"
@@ -199,6 +213,7 @@ mosdepth_bed:
 
 msisensor_pro:
   container: "docker://hydragenetics/msisensor_pro:1.1.a"
+  extra: "-c 50"
 
 multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
@@ -316,6 +331,7 @@ svdb_merge:
       cnv_caller:
         - cnvkit
         - gatk
+  overlap: 1 #Just merge the two vcf-files without merging regions
   extra: "--pass_only" #Just merge the two vcf-files without merging regions
 
 svdb_query:

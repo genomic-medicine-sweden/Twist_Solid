@@ -41,7 +41,6 @@ call_small_cnv_deletions:
 call_small_cnv_amplifications:
   regions_file: "DATA/cnv_amplification_genes.tsv"
 
-
 cnvkit_batch:
   normal_reference: "DATA/design.PoN.cnn"
   method: "hybrid"
@@ -52,6 +51,18 @@ cnvkit_batch_hrd:
 cnv_html_report:
   template_dir: "../../config/reports/cnv_report_template"
 
+cnv_tsv_report:
+  amp_cn_limit: 6.0
+  chrom_arm_size: "reference/chromosome_arm_size.tsv"
+  del_1p19q_cn_limit: 1.4
+  del_1p19q_chr_arm_fraction: 0.3
+  chr_arm_fraction: 0.5
+  del_chr_arm_cn_limit: 1.4
+  amp_chr_arm_cn_limit: 2.5
+  normal_baf_lower_limit: 0.4
+  normal_baf_upper_limit: 0.6
+  normal_cn_lower_limit: 1.7
+  normal_cn_upper_limit: 2.25
 
 exon_skipping:
   design_bed: "reference/Twist_RNA_Design5.annotated.bed"

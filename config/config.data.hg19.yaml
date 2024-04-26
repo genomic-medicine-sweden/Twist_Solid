@@ -30,7 +30,7 @@ arriba_draw_fusion:
   protein_domains: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3"
 
 annotate_cnv:
-  cnv_amp_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes.bed"
+  cnv_amp_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_240307.bed"
   cnv_loh_genes_validated: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_uppsala_genes.bed"
   cnv_loh_genes_all: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes.bed"
 
@@ -57,13 +57,16 @@ call_small_cnv_deletions:
   regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_deletion_genes.tsv"
 
 call_small_cnv_amplifications:
-  regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amplification_genes.tsv"
+  regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amplification_genes_240307.tsv"
 
 cnvkit_batch:
   normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_36.cnn"
 
 cnvkit_batch_hrd:
   normal_reference_hrd: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_27_HRD.cnn"
+
+cnv_tsv_report:
+  chrom_arm_size: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/chromosome_arm_size.tsv"
 
 exon_skipping:
   design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.bed"
@@ -114,7 +117,7 @@ manta_config_t:
 
 merge_cnv_json:
   annotations:
-    - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes.bed"
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_240307.bed"
     - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes.bed"
 
 mosdepth:
