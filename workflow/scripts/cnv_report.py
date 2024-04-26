@@ -120,7 +120,7 @@ def create_tsv_report(
                 # Estimate new baseline
                 if file1:
                     if (
-                        BAF and BAF > normal_baf_lower_limit and BAF > normal_baf_upper_limit and
+                        BAF and BAF > normal_baf_lower_limit and BAF < normal_baf_upper_limit and
                         size > 10000000
                     ):
                         if cn < 2:
