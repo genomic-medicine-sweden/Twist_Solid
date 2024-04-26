@@ -1,5 +1,45 @@
 # Changelog
 
+## [0.13.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.12.0...v0.13.0) (2024-04-26)
+
+
+### Features
+
+* added calculation of cnv in chrom arms ([667d53f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/667d53fe56eb15047ca326a91957bbfdb30065fd))
+* added chromosome arm support to rule ([ccbe735](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ccbe735010ffb680a5d5ae05a1d848453916ee8d))
+* added configuration of polyploidy and baseline limits ([8f91b42](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8f91b42a5509fec983c1c077d53c499c035e955a))
+* added more config variables ([9a92bf2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9a92bf222bfb160804748166d49b3d54c6b646ec))
+* added table to cnv_html_report ([e577cdd](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e577cdd192036e240570d33cbc2a0d9cac8f59d3))
+* added warnings for baseline and polyploidy ([9a25cdc](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9a25cdc0843f188fe1725231740db65d21181d0e))
+* decreased chr arm fraction ([b1ce417](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b1ce41711b33a9e076b7e23c73698d36f3244bb0))
+* do not merge regions that are not identical ([1d9a027](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1d9a027bc274a475bd054f5f180c5ada3fe8a1f1))
+* new amp genes for hg38 ([c6f7b5e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c6f7b5e2ef6aafd0d7dafcd50e1d6330cc8affc8))
+* two new amplification genes reported ([c8264b2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c8264b2f887da62bc7231b580702b935a49a4a91))
+* update ref files for hg38 ([0ad022c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0ad022c8f2513a5e0becbe967aff0c2d11c2a86f))
+* update test file for develop ([36bab94](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/36bab94d269fc31a756e2f211de78afe512173a0))
+* updated with new reference files ([5e057e7](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5e057e78889ce3e6d331704ca123e6fb660c85d1))
+
+
+### Bug Fixes
+
+* add "_" to regexp so that indels are reported correctly ([7549036](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/75490367490628b403907cf1e5126483a1435fa2))
+* add implied msi configuration from module to config ([a9dea4e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a9dea4efea6fe38490bbd3b656624735a8f07341))
+* bugfix ([e681fee](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e681fee009e69cd73b8e78c05e5aa9fc6cfddd27))
+* correct missing part of vep ref file path ([36b3b0a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/36b3b0a1eb61ec8416cd90601c08ae957a44e22d))
+* handle CNVs bridging the chromosome arms ([8a508ad](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8a508ad13188648eeb08f4d38d5870cf246aa8f8))
+* remove unused library that break requirements ([86afc7d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/86afc7da3413906a00c538cdad86372a18e28a51))
+* rm duplicate entries of cnv in report ([3a2cae4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3a2cae4c773f5f8d4ec5ec28f1bfc8f1fcb6c723))
+* spelling error ([46aef96](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/46aef96bf47f0f5d17b5c18b8994a49c1cd905c4))
+* update config, merge_cnv_json, to use latest amp gene bed file ([be98e22](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/be98e22671d1f31d684d4ea45294d7b89f0aa55f))
+* update hg38 ref files, point to correct release ([e8efb8c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e8efb8c2162cbb71df1c3ab01ed7c26e28e411a9))
+* variable baf bugfix ([d460172](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d46017212ef9a7cc077e090bb11d3c56c9dfb4d3))
+
+
+### Documentation
+
+* added config schemas for new params ([62c832d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/62c832d0979382d82233eb59421ab5ee6dbf7e14))
+* added schema ([b1c9bfe](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b1c9bfea96a960aa0e048753c27fa9858e5c625f))
+
 ## [0.12.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.11.0...v0.12.0) (2024-03-05)
 
 
