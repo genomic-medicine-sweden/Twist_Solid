@@ -4,6 +4,11 @@ filters:
     expression: "(exist[intron_variant, VEP:Consequence] and !exist[splice, VEP:Consequence] and VEP:SYMBOL != MET and VEP:SYMBOL != TERT and !exist[COSV[0-9]+, VEP:Existing_variation])"
     soft_filter_flag: "intron"
     soft_filter: "True"
+  noisy_gene:
+    description: "Hard filter variants in noisy genes"
+    expression: "VEP:SYMBOL = MUC6 or VEP:SYMBOL = CDC27"
+    soft_filter_flag: "noisy_gene"
+    soft_filter: "True"
   artifacts:
     description: "Hard filter variants found in more than 3 normal samples"
     expression: "((INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 10) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 10))"
