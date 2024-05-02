@@ -152,7 +152,7 @@ def read_blacklist(blacklist_file_name):
 
 
 def call_small_cnv_deletions(
-    cnv_file_name, regions_file, deletions, window_size, 
+    cnv_file_name, regions_file, deletions, window_size,
     region_max_size, min_nr_stdev_diff, min_log_odds_diff, blacklist_file_name,
 ):
     regions = read_regions_data(regions_file)
