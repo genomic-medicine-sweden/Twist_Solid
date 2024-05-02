@@ -48,6 +48,11 @@
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/cnv_amplification_genes_hg38_240307.tsv
 
  call_small_cnv_deletions:
+   blacklist:
+     checksum: 9f57eec94bee9b4edf4bba409c7b7b4c
+     path: GMS560/cnv/small_deletions_caller_blacklist_hg38.tsv
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.7.0/cnv/small_deletions_caller_blacklist_hg38.tsv 
    regions_file:
      checksum: 92510485ce32e9ef64697121aae4122c
      path: GMS560/cnv/cnv_deletion_genes_hg38.tsv
