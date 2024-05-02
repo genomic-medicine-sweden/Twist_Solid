@@ -11,10 +11,11 @@ rule call_small_cnv_deletions:
     output:
         deletions=temp("cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv"),
     params:
-        window_size=config.get("call_small_cnv_deletions", {}).get("window_size", 4),
-        region_max_size=config.get("call_small_cnv_deletions", {}).get("region_max_size", 30),
+        blacklist=config.get("call_small_cnv_deletions", {}).get("blacklist", ""),
         min_nr_stdev_diff=config.get("call_small_cnv_deletions", {}).get("min_nr_stdev_diff", 2.5),
         min_log_odds_diff=config.get("call_small_cnv_deletions", {}).get("min_log_odds_diff", 0.3),
+        region_max_size=config.get("call_small_cnv_deletions", {}).get("region_max_size", 30),
+        window_size=config.get("call_small_cnv_deletions", {}).get("window_size", 4),
     log:
         "cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv.log",
     benchmark:

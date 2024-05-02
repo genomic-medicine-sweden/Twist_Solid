@@ -62,8 +62,12 @@ def find_max_probe_diff(probe_data, window_size):
 
 def filter_deletions(
         max_probe_diff_index, min_probe_diff_index, probe_data, gene_probe_index, region, deletions, region_max_size, window_size,
-        min_log_odds_diff, min_nr_stdev_diff
+        min_log_odds_diff, min_nr_stdev_diff, blacklist_dict,
 ):
+    # Blacklist filter
+    key = f"{region[0]}_{region[3]}_{region[4]}"
+    if key in blacklist_dict:
+        return "Blacklist"
     # Filter amplifications
     if max_probe_diff_index >= min_probe_diff_index:
         return "Amplification"
@@ -136,10 +140,23 @@ def read_regions_data(regions_file):
     return regions
 
 
+def read_blacklist(blacklist_file_name):
+    blacklist = open(blacklist_file_name)
+    blacklist_dict = {}
+    next(blacklist)
+    for line in blacklist:
+        columns = line.strip().split("\t")
+        key = f"{columns[1]}_{columns[2]}_{columns[3]}"
+        blacklist_dict[key] = ""
+    return blacklist_dict
+
+
 def call_small_cnv_deletions(
-    cnv_file_name, regions_file, deletions, window_size, region_max_size, min_nr_stdev_diff, min_log_odds_diff,
+    cnv_file_name, regions_file, deletions, window_size, 
+    region_max_size, min_nr_stdev_diff, min_log_odds_diff, blacklist_file_name,
 ):
     regions = read_regions_data(regions_file)
+    blacklist_dict = read_blacklist(blacklist_file_name)
     sample_name = cnv_file_name.split("/")[1].split("_")[0]
     deletions.write("Gene(s)\tChromosome\tGene_start\tGene_end\tLog2_ratio_diff\tMedian_L2R_deletion\t")
     deletions.write("Median_L2R_surrounding\tNumber_of_data_points\tNumber_of_stdev\n")
@@ -152,7 +169,7 @@ def call_small_cnv_deletions(
         max_probe_diff_index, min_probe_diff_index = find_max_probe_diff(probe_data, window_size)
         filter = filter_deletions(
             max_probe_diff_index, min_probe_diff_index, probe_data, gene_probe_index, region, deletions, region_max_size,
-            window_size, min_log_odds_diff, min_nr_stdev_diff,
+            window_size, min_log_odds_diff, min_nr_stdev_diff, blacklist_dict
         )
     return filter
 
@@ -168,4 +185,5 @@ if __name__ == "__main__":
         snakemake.params.region_max_size,
         snakemake.params.min_nr_stdev_diff,
         snakemake.params.min_log_odds_diff,
+        snakemake.params.blacklist,
     )

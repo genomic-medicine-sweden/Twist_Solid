@@ -82,18 +82,21 @@ properties:
           Defines both the genomic position of the genes and their surrounding regions that should be analysed for this gene.
           The size of the analysis region is dependent on the density of the backbone but should at least 20 backbone SNPs.
           40 SNPs is used in Pipeline.
-      window_size:
-        type: integer
-        description: Number of data points included in the sliding window
-      region_max_size:
-        type: integer
-        description: Max number of data points of deletion to be reported
+      blacklist:
+        type: string
+        description: File with gene regions that should be filtered (Format is header + gene\tchr\tpos1\tpos2)
       min_nr_stdev_diff:
         type: number
         description: Min number of standard deviations difference between the deletion and surrounding data points in region
       min_log_odds_diff:
         type: number
         description: Min log2ratio difference between the deletion and the average of surrounding data points in region
+      region_max_size:
+        type: integer
+        description: Max number of data points of deletion to be reported
+      window_size:
+        type: integer
+        description: Number of data points included in the sliding window
 
   cnv_tsv_report:
     type: object
