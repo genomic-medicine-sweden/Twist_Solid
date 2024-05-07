@@ -261,6 +261,22 @@ files:
     types:
       - T
       - N
+  - name: GeneFuse report
+    input: fusions/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv
+    output: results/dna/{sample}_{type}/fusion/{sample}_{type}.gene_fuse_report.umi.tsv
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: GeneFuse fusions unfiltered
+    input: fusions/gene_fuse/{sample}_{type}_gene_fuse_fusions.txt
+    output: results/dna/{sample}_{type}/additional_files/fusion/{sample}_{type}.gene_fuse.unfiltered.results.txt
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
   - name: ID-SNP VCF RNA
     input: snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf
     output: results/rna/{sample}_{type}/id_snps/{sample}_{type}.id_snps.vcf

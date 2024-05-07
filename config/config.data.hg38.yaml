@@ -104,6 +104,10 @@ gatk_get_pileup_summaries:
   sites: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg38.vcf.gz"
   variants: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg38.vcf.gz"
 
+gene_fuse:
+  genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion_w_pool2.hg38.csv"
+  fasta: "/data/ref_genomes/GRCh38_p14/homo_sapiens.fasta"
+
 hotspot_annotation:
   chr_translation_file: "config/reports/hotspot_report.chr.translation.hg38"
   hotspots: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011_hg38.csv"

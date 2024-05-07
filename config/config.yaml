@@ -303,6 +303,9 @@ report_fusions:
   star_fusion_low_support: 2
   star_fusion_low_support_inframe: 6
 
+report_gene_fuse:
+  min_unique_reads: 6
+
 samtools_merge_bam:
   extra: "-c -p"
 
