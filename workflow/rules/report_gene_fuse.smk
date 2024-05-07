@@ -26,8 +26,6 @@ rule report_gene_fuse:
             "fusions/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv.benchmark.tsv",
             config.get("report_gene_fuse", {}).get("benchmark_repeats", 1),
         )
-    conda:
-        "../envs/report_gene_fuse.yaml"
     container:
         config.get("report_gene_fuse", {}).get("container", config["default_container"])
     message:
