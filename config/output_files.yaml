@@ -247,6 +247,20 @@ files:
     types:
       - T
       - N
+  - name: fuseq WES umi
+    input: fusions/filter_fuseq_wes/{sample}_{type}.fuseq_wes.report.umi.csv
+    output: results/dna/{sample}_{type}/fusion/{sample}_{type}.fuseq_wes.report.umi.csv
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: fuseq WES unfiltered
+    input: fusions/fuseq_wes/{sample}_{type}/FuSeq_WES_FusionFinal.txt
+    output: results/dna/{sample}_{type}/additional_files/fusion/{sample}_{type}.fuseq_wes.unfiltered.results.csv
+    types:
+      - T
+      - N
   - name: ID-SNP VCF RNA
     input: snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf
     output: results/rna/{sample}_{type}/id_snps/{sample}_{type}.id_snps.vcf

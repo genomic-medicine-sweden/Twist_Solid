@@ -142,6 +142,10 @@ filter_fuseq_wes:
   min_support: 50
   filter_on_fusiondb: True
 
+filter_fuseq_wes_umi:
+  min_support: 15
+  filter_on_fusiondb: True
+
 fuseq_wes:
   container: "docker://hydragenetics/fuseq_wes:1.0.1"
 

@@ -491,6 +491,18 @@ use rule fuseq_wes from fusions as fusions_fuseq_wes with:
     priority: 50
 
 
+use rule filter_report_fuseq_wes from fusions as fusions_filter_report_fuseq_wes_umi with:
+    output:
+        fusions=temp("fusions/filter_fuseq_wes/{sample}_{type}.fuseq_wes.report.umi.csv"),
+    params:
+        min_support=config.get("filter_fuseq_wes_umi", {}).get("min_support", ""),
+        gene_white_list=config.get("filter_fuseq_wes_umi", {}).get("gene_white_list", ""),
+        gene_fusion_black_list=config.get("filter_fuseq_wes_umi", {}).get("gene_fusion_black_list", ""),
+        transcript_black_list=config.get("filter_fuseq_wes_umi", {}).get("transcript_black_list", ""),
+        filter_on_fusiondb=config.get("filter_fuseq_wes_umi", {}).get("filter_on_fusiondb", ""),
+        gtf=config.get("filter_fuseq_wes_umi", {}).get("gtf", ""),
+
+
 use rule star_fusion from fusions as fusions_star_fusion with:
     output:
         bam=temp("fusions/star_fusion/{sample}_{type}/Aligned.out.bam"),
