@@ -208,6 +208,29 @@ Make a combined report of filtered fusion calls from all RNA fusion callers. App
 
 ---
 
+## report_gene_fuse
+Make a report of filtered fusion calls from the DNA fusion caller Gene Fuse. Applies configurable thresholds for supporting reads and flags noisy genes as well as filters artifact genes. See further [DNA fusions report info](dna_fusions.md).
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__report_gene_fuse__report_gene_fuse#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__report_gene_fuse__report_gene_fuse#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__report_gene_fuse#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__report_gene_fuse#
+
+---
+
 ## purecn_modify_vcf
 Increases the MQB (mean base quality) value by 5 as the qualities are so bad for our samples.
 
