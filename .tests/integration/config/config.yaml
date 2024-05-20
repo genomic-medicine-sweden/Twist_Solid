@@ -109,11 +109,10 @@ hotspot_annotation:
   hotspots: "DATA/Hotspots_combined.csv"
   chr_translation_file: "../../config/reports/hotspot_report.chr.translation.hg19"
 
-hotspot_info:
-  hotspot_mutations: "DATA/Hotspots_combined.csv"
-
 hotspot_report:
-  hotspot_mutations: "DATA/Hotspots_combined.csv"
+  hotspot_mutations: 
+    all: "DATA/Hotspots_combined.csv"
+    ENC: "DATA/Hotspots_combined.csv"
   report_config: "../../config/reports/config/reports/hotspot_report.yaml"
   chr_translation_file: "../../reports/config/reports/hotspot_report.chr.translation.hg19"
   levels:

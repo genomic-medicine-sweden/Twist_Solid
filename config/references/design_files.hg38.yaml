@@ -120,13 +120,6 @@
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/design/Hotspots_combined_regions_nodups.231011_hg38.csv
 
- hotspot_info:
-   hotspot_mutations:
-     checksum: 08c574ec13984188c8e4d2c80c14d2e3
-     path: GMS560/reports/Hotspots_combined_regions_nodups.231011_hg38.csv
-     type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/design/Hotspots_combined_regions_nodups.231011_hg38.csv
-
  hotspot_report:
    hotspot_mutations:
      checksum: 08c574ec13984188c8e4d2c80c14d2e3

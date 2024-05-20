@@ -137,9 +137,15 @@ files:
     types:
       - T
       - N
-  - name: Hotspot TSV
-    input: qc/hotspot_report/{sample}_{type}.output.tsv
+  - name: Coverage and mutations all
+    input: qc/hotspot_report/{sample}_{type}.all.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv
+    types:
+      - T
+      - N
+  - name: Coverage and mutations ENC
+    input: qc/hotspot_report/{sample}_{type}.ENC.output.tsv
+    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.ENC.tsv
     types:
       - T
       - N

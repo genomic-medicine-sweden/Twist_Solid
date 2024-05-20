@@ -339,8 +339,8 @@ properties:
     type: object
     properties:
       hotspot_mutations:
-        type: string
-        description: Text file with hotspot positions and annotations
+        type: object
+        description: List of files with hotspot positions and annotations. The names of the list items are found in the file names as {tag}.
       report_config:
         type: string
         description: file  defining which fields should be extracted from the annotation
@@ -625,7 +625,6 @@ required:
   - gatk_collect_allelic_counts
   - gatk_denoise_read_counts
   - hotspot_annotation
-  - hotspot_info
   - hotspot_report
   - msisensor_pro
   - multiqc
