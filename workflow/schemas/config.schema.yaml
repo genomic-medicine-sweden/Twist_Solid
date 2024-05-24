@@ -339,14 +339,14 @@ properties:
     type: object
     properties:
       hotspot_mutations:
-        type: object
+        type: string
         description: List of files with hotspot positions and annotations. The names of the list items are found in the file names as {tag}.
       report_config:
         type: string
         description: file  defining which fields should be extracted from the annotation
       chr_translation_file:
         type: string
-        description: file used to translate chr to NC id. The format is a tab seperate file with column chr and NC
+        description: file used to translate chr to NC id. The format is a tab separate file with column chr and NC
       levels:
         type: array
         description: |
