@@ -339,8 +339,15 @@ properties:
     type: object
     properties:
       hotspot_mutations:
-        type: string
+        type: object
         description: List of files with hotspot positions and annotations. The names of the list items are found in the file names as {tag}.
+        properties:
+          all:
+            type: string
+            description: Hotspot list for normal FFPE analysis
+          ENC:
+            type: string
+            description: Hotspot list for ENC FFPE analysis
       report_config:
         type: string
         description: file  defining which fields should be extracted from the annotation
