@@ -178,7 +178,7 @@ properties:
         properties:
           report:
             type: string
-            description: Excel frienly text report with hotspot position qc information
+            description: Excel friendly text report with hotspot position qc information
 
   house_keeping_gene_coverage:
     type: object
