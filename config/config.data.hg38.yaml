@@ -106,7 +106,7 @@ hotspot_report:
   chr_translation_file: "config/reports/hotspot_report.chr.translation.hg38"
   hotspot_mutations: 
     all: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011_hg38.csv"
-    ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots.csv"
+    ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots_hg38.csv"
 
 manta_config_t:
   extra: "--exome --callRegions {{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed.gz"
