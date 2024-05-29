@@ -61,7 +61,7 @@ call_small_cnv_amplifications:
   regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amplification_genes_hg38_240307.tsv"
 
 cnvkit_batch:
-  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_noUmea_27_hg38.cnn"
+  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_PoN_combined_hg38.cnn"
 
 cnvkit_batch_hrd:
   normal_reference_hrd: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_noUmea_27_hg38.cnn"
