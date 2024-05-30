@@ -27,7 +27,7 @@ from hydra_genetics.utils.software_versions import export_pipeline_version_as_fi
 from hydra_genetics.utils.software_versions import export_software_version_as_file
 from hydra_genetics.utils.software_versions import get_pipeline_version
 from hydra_genetics.utils.software_versions import touch_pipeline_version_file_name
-from hydra_genetics.utils.software_versions import touch_software_version_files
+from hydra_genetics.utils.software_versions import touch_software_version_file
 from hydra_genetics.utils.software_versions import use_container
 
 
