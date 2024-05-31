@@ -4,7 +4,7 @@ bam_rna/SeraSeq-NTRK-FFPE-2-5M_R.star_fusion.bam	7be7432fe3d040f81bbd240452f7463
 results/dna/VAL2022-2-5M_T/additional_files/biomarker/VAL2022-2-5M_T.pathology.scarhrd_cnvkit_score.txt	748d10cd1ae3ab6cb7849cfd0e9f39c0
 results/dna/VAL2022-2-5M_T/additional_files/biomarker/VAL2022-2-5M_T.purecn.scarhrd_cnvkit_score.txt	55145eab2e60e588c66b233cf1479287
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.amplifications.tsv	f397f92f69100d1f20ca65ffac830dd0
-results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.deletions.tsv	f887194ae8134c8a1c8fd427ae533646
+results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.deletions.tsv	e441b862e6d6d573d18fe40f1eaa7103
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.manta_tumorSV.vcf.gz	1c4f0a2b346d1355dc76fcd126222729
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.pathology.amp_all_del_all.cnv_report.tsv	2b09144044b2bdf63c440082be760b26
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.pathology.amp_all_del_validated.cnv_report.tsv	ceb3be1abd7951617928cd5c3572a8a1
