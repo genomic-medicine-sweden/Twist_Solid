@@ -160,9 +160,6 @@ properties:
         type: object
         description: list of inputs
         properties:
-          hotspots:
-            type: string
-            description: Text file with hotspot positions and annotations
           vcf:
             type: string
             description: Vcf file with filtered SNV and INDEL calls
@@ -181,7 +178,7 @@ properties:
         properties:
           report:
             type: string
-            description: Excel frienly text report with hotspot position qc information
+            description: Excel friendly text report with hotspot position qc information
 
   house_keeping_gene_coverage:
     type: object
