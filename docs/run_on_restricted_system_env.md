@@ -15,11 +15,8 @@ Fetch the pipeline and install requirements
 TAG_OR_BRANCH="vX.Y.X"
 
 # Clone selected version
-git clone --branch ${VERSION} https://github.com/genomic-medicine-sweden/Twist_Solid.git
+git clone --branch ${TAG_OR_BRANCH} https://github.com/genomic-medicine-sweden/Twist_Solid.git
 cd Twist_Solid
-# Python 3.8 or newer
-python3 -m venv venv && source venv/bin/activate
-pip install -r requirements.txt
 ```
 
 ## Environment
@@ -50,12 +47,12 @@ hydra-genetics prepare-environment create-singularity-files -c config/config.yam
 
 ```bash
 # NextSeq
- hydra-genetics --debug references download -o design_and_ref_files -v config/references/design_files.hg19.yaml -v config/references/nextseq.hg19.pon.yaml -v config/references/references.hg19.yaml
+hydra-genetics --debug references download -o design_and_ref_files -v config/references/design_files.hg19.yaml -v config/references/nextseq.hg19.pon.yaml -v config/references/references.hg19.yaml
 
- #NovaSeq, not all files are prepare for novaseq
- hydra-genetics references download -o design_and_ref_files -v config/references/design_files.hg19.yaml -v config/references/novaseq.hg19.pon.yaml -v config/references/references.hg19.yaml
+#NovaSeq, not all files are prepare for novaseq
+hydra-genetics references download -o design_and_ref_files -v config/references/design_files.hg19.yaml -v config/references/novaseq.hg19.pon.yaml -v config/references/references.hg19.yaml
 
- # Compress data
+# Compress data
 tar -czvf design_and_ref_files.tar.gz design_and_ref_files
 ```
 
@@ -66,7 +63,7 @@ tar -czvf design_and_ref_files.tar.gz design_and_ref_files
 The following file/folders have been created and need to be moved to your server:
 
 1. file: design_and_ref_files.tar.gz
-2. file Twist_Solid_{TAG_OR_BRANCH}.tar.gz
+2. file: Twist_Solid_{TAG_OR_BRANCH}.tar.gz
 3. folder: singularity_cache 
 
 ---
@@ -81,7 +78,7 @@ The following file/folders have been created and need to be moved to your server
 # Extract tar.
 TAG_OR_BRANCH="vX.Y.X"
 tar -xvf Twist_Solid_${TAG_OR_BRANCH}.tar.gz
-cd Twist_Solid_{TAG_OR_BRANCH}
+cd Twist_Solid_${TAG_OR_BRANCH}
 mkdir venv && tar xvf env.tar.gz -C venv/
 source venv/bin/activate
 
@@ -142,7 +139,7 @@ Copy a profile and modify it to match your system, ex```Twist_Solid_${TAG_OR_BRA
 ```yaml
 # Found at Twist_Solid_{TAG_OR_BRANCH}/snakemake-wrappers, use absolute_path with 'git+file:/'
 wrapper-prefix="PATH_TO_WRAPPERS"
-# ex: wrapper-prefix="git+file://proj/sens2022566/nobackup/patriksm/Twist_Solid_add-{TAG_OR_BRANCH}/snakemake-wrappers/"
+# ex: wrapper-prefix: "git+file://proj/sens2022566/nobackup/patriksm/Twist_Solid_add-{TAG_OR_BRANCH}/snakemake-wrappers/"
 
 # Update account info, change ADD_YOUR_ACCOUNT to your bianca project id
 drmaa: " -A ADD_YOUR_ACCOUNT -N 1-1 -t {resources.time} -n {resources.threads} --mem={resources.mem_mb} --mem-per-cpu={resources.mem_per_cpu} --mem-per-cpu={resources.mem_per_cpu} --partition={resources.partition} -J {rule} -e slurm_out/{rule}_%j.err -o slurm_out/{rule}_%j.out"
