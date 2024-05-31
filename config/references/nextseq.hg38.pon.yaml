@@ -30,10 +30,10 @@
 
  cnvkit_batch:
    normal_reference:
-     checksum: b9995ea0cfa1c259fe7229aee1fd2646
-     path: GMS560/PoN/cnvkit_nextseq_noUmea_27_hg38.cnn
+     checksum: 0dd2ecd2e4bd4bd364404740b0f7a16c
+     path: GMS560/PoN/cnvkit_PoN_combined_hg38.cnn
      type: file
-     url: https://figshare.com/ndownloader/files/44328734?private_link=53f1597211477d840a29
+     url: https://figshare.com/ndownloader/files/46640131?private_link=88202740beb6fcbac09d
 
  #cnvkit_batch_hrd:
  #  normal_reference_hrd:
