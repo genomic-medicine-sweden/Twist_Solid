@@ -17,6 +17,7 @@ results/dna/HD827_T/additional_files/cnv/HD827_T.pathology.svdb_query.vcf	2c73b0
 results/dna/HD827_T/additional_files/cnv/HD827_T.purecn.amp_all_del_all.cnv_report.tsv	01660be1832c394b02e87e47e11afd9a
 results/dna/HD827_T/additional_files/cnv/HD827_T.purecn.amp_all_del_validated.cnv_report.tsv	83f8461e2ac1537ed67f5fbb48cc6e09
 results/dna/HD827_T/additional_files/cnv/HD827_T.purecn.svdb_query.vcf	9e1269f0072aa92eeaf969432af18ad8
+results/dna/HD827_T/additional_files/fusion/HD827_T.fuseq_wes.unfiltered.results.csv  3350bfff935006e7375301954261e468
 results/dna/HD827_T/additional_files/qc/HD827_T.alignment_summary_metrics.txt	351f113346779003eae764ab6d16c5c4
 results/dna/HD827_T/additional_files/qc/HD827_T.contamination.table	3c9511e7efab4fefd32144ff2ad19d19
 results/dna/HD827_T/additional_files/qc/HD827_T.duplication_metrics.txt	9ac673f2e7d28e6d9601bc096b7764e4
@@ -49,6 +50,7 @@ results/dna/HD832_T/additional_files/cnv/HD832_T.pathology.svdb_query.vcf	ed9da0
 results/dna/HD832_T/additional_files/cnv/HD832_T.purecn.amp_all_del_all.cnv_report.tsv	eb1ad324eff1937f3e6db0c6cbb83aba
 results/dna/HD832_T/additional_files/cnv/HD832_T.purecn.amp_all_del_validated.cnv_report.tsv	4ba0962054a276e1cfdb4298ef815240
 results/dna/HD832_T/additional_files/cnv/HD832_T.purecn.svdb_query.vcf	c9e96e55f8d252282ee43004710d731f
+results/dna/HD832_T/additional_files/fusion/HD832_T.fuseq_wes.unfiltered.results.csv  23ac6dddb35fb8067fa79465fb6f6acf
 results/dna/HD832_T/additional_files/qc/HD832_T.alignment_summary_metrics.txt	8b2548b05cc43eaff20aeabb16aa1490
 results/dna/HD832_T/additional_files/qc/HD832_T.contamination.table	18bef22a4210099ec22b2444e6ac2482
 results/dna/HD832_T/additional_files/qc/HD832_T.duplication_metrics.txt	20cd0962dab4ca0011aec2100f4a572e
@@ -81,6 +83,7 @@ results/dna/NA12878_T/additional_files/cnv/NA12878_T.pathology.svdb_query.vcf	7d
 results/dna/NA12878_T/additional_files/cnv/NA12878_T.purecn.amp_all_del_all.cnv_report.tsv	c626b45394631f05c401350305511bf0
 results/dna/NA12878_T/additional_files/cnv/NA12878_T.purecn.amp_all_del_validated.cnv_report.tsv	76bdd87a4ed97e304a79e6ff2b3279d5
 results/dna/NA12878_T/additional_files/cnv/NA12878_T.purecn.svdb_query.vcf	8b6a8f92b09c532570e93a1d6f0e6b73
+results/dna/NA12878_T/additional_files/fusion/NA12878_T.fuseq_wes.unfiltered.results.csv  003e8f796c80c7e52322630800d36d41
 results/dna/NA12878_T/additional_files/qc/NA12878_T.alignment_summary_metrics.txt	3256b89a54ac29cf4f7ef0d6551a3be3
 results/dna/NA12878_T/additional_files/qc/NA12878_T.contamination.table	e2ab7189dcf7c8cfb1f0ac24ac8766dc
 results/dna/NA12878_T/additional_files/qc/NA12878_T.duplication_metrics.txt	355ba5b555b9d83a5820f054c323eef6
@@ -113,6 +116,7 @@ results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.pathology.svdb_query.vcf	eb
 results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.purecn.amp_all_del_all.cnv_report.tsv	21a1a191bbd182e974888af7fd35842b
 results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.purecn.amp_all_del_validated.cnv_report.tsv	badb0ef5f90cf55dc80fafeb9c415787
 results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.purecn.svdb_query.vcf	abde954047d0b215e596d6305a96ed62
+results/dna/VAL2022_T/additional_files/fusion/VAL2022_T.fuseq_wes.unfiltered.results.csv  a29ae481538efadb7403814d9d8f76e9
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.alignment_summary_metrics.txt	6c99476824c691ca10e75382ed9bb059
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.contamination.table	c1d8fc1cdb993dda50a430028277c37b
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.duplication_metrics.txt	31611542aafb4495560e062cac828f08

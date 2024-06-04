@@ -592,6 +592,19 @@ properties:
         type: integer
         description: lower limit of supporting reads to flag filter fusion that are inframe for StarFusion
 
+  report_gene_fuse:
+    description: report results from genefuse
+    type: object
+    properties:
+      filter_fusions:
+        type: string
+        description: file specifying fusions that should be filtered completely (value 0 in column 2) or have higher limit (value >0 in column 2)
+      min_unique_reads:
+        type: integer
+        description: lower limit of uniquely supporting reads to report fusion
+    required:
+      - min_unique_reads
+
   trimmer_software:
     description: trimmer software that should be used
     pattern: "^(fastp_pe|None)$"

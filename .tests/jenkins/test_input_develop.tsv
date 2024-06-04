@@ -14,6 +14,7 @@ results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.pathology.svdb_qu
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.purecn.amp_all_del_all.cnv_report.tsv	8a85c32ff5b4e0668376043e16dc0e77
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.purecn.amp_all_del_validated.cnv_report.tsv	2438c93ab15eb0e2f6595ac5c006a1f2
 results/dna/VAL2022-2-5M_T/additional_files/cnv/VAL2022-2-5M_T.purecn.svdb_query.vcf	49498b22ca7af9176b31e194ef5eb42f
+results/dna/VAL2022-2-5M_T/additional_files/fusion/VAL2022-2-5M_T.fuseq_wes.unfiltered.results.csv  8ecac127fc74039d5b9eb36e522ac4a5
 results/dna/VAL2022-2-5M_T/additional_files/qc/VAL2022-2-5M_T.alignment_summary_metrics.txt	fa88f8adc1d6146cf399c6d17a37d098
 results/dna/VAL2022-2-5M_T/additional_files/qc/VAL2022-2-5M_T.contamination.table	a4ee6cd2e1cfe029229f5b218ac318e9
 results/dna/VAL2022-2-5M_T/additional_files/qc/VAL2022-2-5M_T.duplication_metrics.txt	1c476addf89d82bf68aea08eba98aacf
