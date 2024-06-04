@@ -6,7 +6,7 @@ properties:
     type: string
     description: name or path to a default docker/singularity container
     pattern: >-
-        hydragenetics/common:1\.10\.2$
+        hydragenetics/common:3\.0\.0$|hydragenetics_common_3\.0\.0\.sif$|
 
   bcbio_variation_recall_ensemble:
     type: object
