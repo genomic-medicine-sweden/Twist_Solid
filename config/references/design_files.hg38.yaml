@@ -131,7 +131,7 @@
      checksum: db3d27fa28240e00977db554c131e2e4
      path: GMS560/reports/ENC_hotspots_240604_hg38.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.9.0/design/ENC_hotspots_240604_hg38.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.8.1/design/ENC_hotspots_240604_hg38.csv
 
  manta_config_t:
    extra:
