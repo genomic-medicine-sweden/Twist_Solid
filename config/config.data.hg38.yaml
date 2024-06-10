@@ -54,13 +54,14 @@ bwa_mem:
   sa: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.sa"
 
 call_small_cnv_deletions:
+  blacklist: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/small_deletions_caller_blacklist_hg38.tsv"
   regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_deletion_genes_hg38.tsv"
 
 call_small_cnv_amplifications:
   regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amplification_genes_hg38_240307.tsv"
 
 cnvkit_batch:
-  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_noUmea_27_hg38.cnn"
+  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_PoN_combined_hg38.cnn"
 
 cnvkit_batch_hrd:
   normal_reference_hrd: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_noUmea_27_hg38.cnn"
@@ -72,6 +73,12 @@ exon_skipping:
   design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.hg38.bed"
 
 filter_fuseq_wes:
+  gene_fusion_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/false_positive_fusion_pairs.txt"
+  gene_white_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_gene_white_list.txt"
+  transcript_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_transcript_black_list.txt"
+  gtf: "{{PROJECT_REF_DATA}}/ref_data/refGene/hg38.refGene.gtf"
+
+filter_fuseq_wes_umi:
   gene_fusion_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/false_positive_fusion_pairs.txt"
   gene_white_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_gene_white_list.txt"
   transcript_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_transcript_black_list.txt"
@@ -97,16 +104,19 @@ gatk_get_pileup_summaries:
   sites: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg38.vcf.gz"
   variants: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg38.vcf.gz"
 
+gene_fuse:
+  genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion_w_pool2.hg38.csv"
+  fasta: "/data/ref_genomes/GRCh38_p14/homo_sapiens.fasta"
+
 hotspot_annotation:
   chr_translation_file: "config/reports/hotspot_report.chr.translation.hg38"
   hotspots: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011_hg38.csv"
 
-hotspot_info:
-  hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011_hg38.csv"
-
 hotspot_report:
   chr_translation_file: "config/reports/hotspot_report.chr.translation.hg38"
-  hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011_hg38.csv"
+  hotspot_mutations: 
+    all: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011_hg38.csv"
+    ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots_240604_hg38.csv"
 
 manta_config_t:
   extra: "--exome --callRegions {{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed.gz"

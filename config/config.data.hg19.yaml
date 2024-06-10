@@ -54,13 +54,14 @@ bwa_mem:
   sa: "{{PROJECT_REF_DATA}}/ref_data/hg19/hg19.with.mt.fasta.sa"
 
 call_small_cnv_deletions:
+  blacklist: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/small_deletions_caller_blacklist.tsv"
   regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_deletion_genes.tsv"
 
 call_small_cnv_amplifications:
   regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amplification_genes_240307.tsv"
 
 cnvkit_batch:
-  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_36.cnn"
+  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_PoN_combined_hg19.cnn"
 
 cnvkit_batch_hrd:
   normal_reference_hrd: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_nextseq_27_HRD.cnn"
@@ -72,6 +73,12 @@ exon_skipping:
   design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.bed"
 
 filter_fuseq_wes:
+  gene_fusion_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/false_positive_fusion_pairs.txt"
+  gene_white_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_gene_white_list.txt"
+  transcript_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_transcript_black_list.txt"
+  gtf: "{{PROJECT_REF_DATA}}/ref_data/refGene/hg19.refGene.gtf"
+
+filter_fuseq_wes_umi:
   gene_fusion_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/false_positive_fusion_pairs.txt"
   gene_white_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_gene_white_list.txt"
   transcript_black_list: "{{PROJECT_DESIGN_DATA}}/GMS560/fuseq_wes/fuseq_wes_transcript_black_list.txt"
@@ -105,12 +112,11 @@ hotspot_annotation:
   chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
   hotspots: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
 
-hotspot_info:
-  hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
-
 hotspot_report:
   chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
-  hotspot_mutations: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
+  hotspot_mutations: 
+    all: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
+    ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots_240604.csv"
 
 manta_config_t:
   extra: "--exome --callRegions {{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz"

@@ -24,10 +24,10 @@ from hydra_genetics.utils.misc import export_config_as_file
 from hydra_genetics.utils.software_versions import add_version_files_to_multiqc
 from hydra_genetics.utils.software_versions import add_software_version_to_config
 from hydra_genetics.utils.software_versions import export_pipeline_version_as_file
-from hydra_genetics.utils.software_versions import export_software_version_as_files
+from hydra_genetics.utils.software_versions import export_software_version_as_file
 from hydra_genetics.utils.software_versions import get_pipeline_version
-from hydra_genetics.utils.software_versions import touch_pipeline_verion_file_name
-from hydra_genetics.utils.software_versions import touch_software_version_files
+from hydra_genetics.utils.software_versions import touch_pipeline_version_file_name
+from hydra_genetics.utils.software_versions import touch_software_version_file
 from hydra_genetics.utils.software_versions import use_container
 
 
@@ -76,9 +76,9 @@ validate(output_spec, schema="../schemas/output_files.schema.yaml")
 
 date_string = datetime.now().strftime("%Y%m%d")
 pipeline_version = get_pipeline_version(workflow, pipeline_name="Twist_Solid")
-version_files = touch_pipeline_verion_file_name(pipeline_version, date_string=date_string, directory="results/versions/software")
+version_files = touch_pipeline_version_file_name(pipeline_version, date_string=date_string, directory="results/versions/software")
 if use_container(workflow):
-    version_files += touch_software_version_files(config, date_string=date_string, directory="results/versions/software")
+    version_files.append(touch_software_version_file(config, date_string=date_string, directory="results/versions/software"))
 add_version_files_to_multiqc(config, version_files)
 
 
@@ -86,7 +86,7 @@ onstart:
     export_pipeline_version_as_file(pipeline_version, date_string=date_string, directory="results/versions/software")
     if use_container(workflow):
         update_config, software_info = add_software_version_to_config(config, workflow, False)
-        export_software_version_as_files(software_info, date_string=date_string, directory="results/versions/software")
+        export_software_version_as_file(software_info, date_string=date_string, directory="results/versions/software")
     export_config_as_file(update_config, date_string=date_string, directory="results/versions")
 
 

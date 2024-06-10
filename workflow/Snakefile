@@ -15,6 +15,7 @@ include: "rules/fix_vcf_ad_for_qci.smk"
 include: "rules/hotspot_report.smk"
 include: "rules/house_keeping_gene_coverage.smk"
 include: "rules/purecn_modify_vcf.smk"
+include: "rules/report_gene_fuse.smk"
 include: "rules/report_fusions.smk"
 
 
@@ -480,15 +481,19 @@ use rule * from fusions exclude all as fusions_*
 
 
 use rule fuseq_wes from fusions as fusions_fuseq_wes with:
-    input:
-        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
-        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_input(wildcards), ".bai"),
-        ref_json=config.get("fuseq_wes", {}).get("ref_json", ""),
-        gtfSqlite=config.get("fuseq_wes", {}).get("gtfSqlite", ""),
-        fusiondb=config.get("fuseq_wes", {}).get("fusiondb", ""),
-        paralogdb=config.get("fuseq_wes", {}).get("paralogdb", ""),
-        params=config.get("fuseq_wes", {}).get("params", ""),
     priority: 50
+
+
+use rule filter_report_fuseq_wes from fusions as fusions_filter_report_fuseq_wes_umi with:
+    output:
+        fusions=temp("fusions/filter_fuseq_wes/{sample}_{type}.fuseq_wes.report.umi.csv"),
+    params:
+        min_support=config.get("filter_fuseq_wes_umi", {}).get("min_support", ""),
+        gene_white_list=config.get("filter_fuseq_wes_umi", {}).get("gene_white_list", ""),
+        gene_fusion_black_list=config.get("filter_fuseq_wes_umi", {}).get("gene_fusion_black_list", ""),
+        transcript_black_list=config.get("filter_fuseq_wes_umi", {}).get("transcript_black_list", ""),
+        filter_on_fusiondb=config.get("filter_fuseq_wes_umi", {}).get("filter_on_fusiondb", ""),
+        gtf=config.get("filter_fuseq_wes_umi", {}).get("gtf", ""),
 
 
 use rule star_fusion from fusions as fusions_star_fusion with:

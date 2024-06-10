@@ -48,6 +48,11 @@
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/cnv_amplification_genes_240307.tsv
 
  call_small_cnv_deletions:
+   blacklist:
+     checksum: 019763e1b79682a56074a3f53a73d149
+     path: GMS560/cnv/small_deletions_caller_blacklist.tsv
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.7.0/cnv/small_deletions_caller_blacklist.tsv 
    regions_file:
      checksum: e044cf88e5e50e68a3a797be5720e6c0
      path: GMS560/cnv/cnv_deletion_genes.tsv
@@ -122,19 +127,18 @@
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/design/Hotspots_combined_regions_nodups.231011.csv
 
- hotspot_info:
-   hotspot_mutations:
-     checksum: 50564a9b99f86b123bb61f6e361eff10
-     path: GMS560/reports/Hotspots_combined_regions_nodups.231011.csv
-     type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/design/Hotspots_combined_regions_nodups.231011.csv
-
  hotspot_report:
    hotspot_mutations:
      checksum: 50564a9b99f86b123bb61f6e361eff10
      path: GMS560/reports/Hotspots_combined_regions_nodups.231011.csv
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/design/Hotspots_combined_regions_nodups.231011.csv
+     
+   hotspot_mutations_ENC:
+     checksum: 2c7c1707880dbf1790e8a472c1d1e311
+     path: GMS560/reports/ENC_hotspots_240604.csv
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.8.1/design/ENC_hotspots_240604.csv
 
  manta_config_t:
    extra:

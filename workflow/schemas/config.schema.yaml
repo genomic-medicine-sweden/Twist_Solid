@@ -82,18 +82,21 @@ properties:
           Defines both the genomic position of the genes and their surrounding regions that should be analysed for this gene.
           The size of the analysis region is dependent on the density of the backbone but should at least 20 backbone SNPs.
           40 SNPs is used in Pipeline.
-      window_size:
-        type: integer
-        description: Number of data points included in the sliding window
-      region_max_size:
-        type: integer
-        description: Max number of data points of deletion to be reported
+      blacklist:
+        type: string
+        description: File with gene regions that should be filtered (Format is header + gene\tchr\tpos1\tpos2)
       min_nr_stdev_diff:
         type: number
         description: Min number of standard deviations difference between the deletion and surrounding data points in region
       min_log_odds_diff:
         type: number
         description: Min log2ratio difference between the deletion and the average of surrounding data points in region
+      region_max_size:
+        type: integer
+        description: Max number of data points of deletion to be reported
+      window_size:
+        type: integer
+        description: Number of data points included in the sliding window
 
   cnv_tsv_report:
     type: object
@@ -336,14 +339,21 @@ properties:
     type: object
     properties:
       hotspot_mutations:
-        type: string
-        description: Text file with hotspot positions and annotations
+        type: object
+        description: List of files with hotspot positions and annotations. The names of the list items are found in the file names as {tag}.
+        properties:
+          all:
+            type: string
+            description: Hotspot list for normal FFPE analysis
+          ENC:
+            type: string
+            description: Hotspot list for ENC FFPE analysis
       report_config:
         type: string
         description: file  defining which fields should be extracted from the annotation
       chr_translation_file:
         type: string
-        description: file used to translate chr to NC id. The format is a tab seperate file with column chr and NC
+        description: file used to translate chr to NC id. The format is a tab separate file with column chr and NC
       levels:
         type: array
         description: |
@@ -582,6 +592,19 @@ properties:
         type: integer
         description: lower limit of supporting reads to flag filter fusion that are inframe for StarFusion
 
+  report_gene_fuse:
+    description: report results from genefuse
+    type: object
+    properties:
+      filter_fusions:
+        type: string
+        description: file specifying fusions that should be filtered completely (value 0 in column 2) or have higher limit (value >0 in column 2)
+      min_unique_reads:
+        type: integer
+        description: lower limit of uniquely supporting reads to report fusion
+    required:
+      - min_unique_reads
+
   trimmer_software:
     description: trimmer software that should be used
     pattern: "^(fastp_pe|None)$"
@@ -622,7 +645,6 @@ required:
   - gatk_collect_allelic_counts
   - gatk_denoise_read_counts
   - hotspot_annotation
-  - hotspot_info
   - hotspot_report
   - msisensor_pro
   - multiqc

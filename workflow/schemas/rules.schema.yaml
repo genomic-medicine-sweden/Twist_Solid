@@ -160,9 +160,6 @@ properties:
         type: object
         description: list of inputs
         properties:
-          hotspots:
-            type: string
-            description: Text file with hotspot positions and annotations
           vcf:
             type: string
             description: Vcf file with filtered SNV and INDEL calls
@@ -181,7 +178,7 @@ properties:
         properties:
           report:
             type: string
-            description: Excel frienly text report with hotspot position qc information
+            description: Excel friendly text report with hotspot position qc information
 
   house_keeping_gene_coverage:
     type: object
@@ -243,7 +240,26 @@ properties:
         properties:
           fusions:
             type: string
-            description: Excel frienly text report with filtered fusion calls from respective caller
+            description: Excel friendly text report with filtered fusion calls from respective caller
+
+  report_gene_fuse:
+    type: object
+    description: input and output parameters for report_gene_fuse
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          fusions:
+            type: string
+            description: Called fusions by GeneFuse
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          report:
+            type: string
+            description: Excel friendly text report with filtered fusion calls from GeneFuse
 
   purecn_modify_vcf:
     type: object

@@ -76,7 +76,6 @@ multiqc_cgs:
       format: "{:.1%}"
     PCT_USABLE_BASES_ON_TARGET:
       title: "Usable bases [%]"
-      format: "{:.0%}"
       description: "Bases aligned, on exon target, and dedup [%] from Picard"
       min: 0
       max: 0.2
@@ -149,8 +148,6 @@ multiqc_cgs:
 table_columns_placement:
   Picard:
     PF_READS_ALIGNED: 900
-    PCT_PF_READS_ALIGNED: 901
-    PERCENT_DUPLICATION: 902
     PCT_PF_READS_ALIGNED: 910
     PERCENT_DUPLICATION: 920
     PCT_SELECTED_BASES: 930
