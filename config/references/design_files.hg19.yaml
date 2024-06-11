@@ -152,6 +152,13 @@
      type: file        
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz.tbi
 
+ merge_cnv_json:
+   cytobands:
+     checksum: 64de0499795484f1b70410a4cdd3d06f
+     path: GMS560/cnv/cytoBand.hg19.txt
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.9.0/cnv/cytoBand.hg19.txt
+
  purecn:    
    intervals: 
      checksum: 0857e05962696cd3c2e5a4ea94d0fb2c
