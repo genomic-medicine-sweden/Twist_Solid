@@ -1,5 +1,50 @@
 # Changelog
 
+## [0.14.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.13.0...v0.14.0) (2024-06-11)
+
+
+### Features
+
+* add hotspot file for ENC ([2de88ed](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2de88ed957e93287d806fa31850ac55baf4ce5bf))
+* added blacklist filtering of small cnv deletions ([f6e77bc](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f6e77bce995bbdafb2ab022e008c2d98e1a2ab6c))
+* added ENC hotspot files for hg38 ([0e06818](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0e068186e8bad091ddbacd37f24511cf81f94d4d))
+* added separate filtering of fuseq wes for umi ([8b83894](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8b83894f01aca19ef1e679c4353b336164caa2d3))
+* new PoN on figshare ([41f3f0b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/41f3f0badc34b9200c43c640543776df9037a217))
+* new PoN on figshare ([f702d7c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f702d7cf3e580455456599fb810adac42427509f))
+* new PoN on figshare hg38 ([641e37d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/641e37dc71de4b83d5a1d3d3736dd41e74f99edf))
+* reinstated genefuse for umi only ([a5af752](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a5af752479485b6bafae0d3dbf91fd211fbd120f))
+* update common container to new hydra ([6f64d68](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6f64d684eebc222feb6d8de0d2ecf9188a01b9f8))
+* update hydra version ([651c38f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/651c38f2bc8ab83fc426220dd534e3e1a2799084))
+* use latestest version ([365d3d2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/365d3d29f292bf3c7e402c68f3fa17fc979acce9))
+* use new PoN ([e5bbd55](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e5bbd55f04d40cdaddd9474b234b0e0d2eddf1b1))
+* use new PoN hg38 ([1151f3b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1151f3bbf7b8b5043b2f3e72b2f68e4528a7edf3))
+
+
+### Bug Fixes
+
+* add missing singularity ([24eeac6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/24eeac695380da19ec21cf78558a6b58bbaed6d0))
+* added blacklist files to reference config ([3450166](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3450166a98467e10c4bd26e1cd12f2dd563f44f9))
+* config schema ([e727bd5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e727bd5579a5d8c325438d8a02a15aecb718543b))
+* config schema ([9470d56](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9470d56e06f324c653ad5b096a143477a3182bdc))
+* correct reference files ([4ff7a76](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4ff7a7605ba322dfd20850b3386dbb298a61899a))
+* correct URL ([ee7c8f6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ee7c8f6d2d3d2fc575bcd83df07d8f7d84a06a77))
+* corrected config ([20fb88e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/20fb88e55d34d9f7e11bd6202df087fdf17420d8))
+* corrected novaseq hrd PoN download link ([6ea893a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6ea893a407f26fe0ddbcddffa4936c055489f3af))
+* git version ([4efd11f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4efd11f3c1ed331244674ce034079ecd2d47ee77))
+* git version ([ef0891d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ef0891dda5f7f7c48137186895438f41c0683fb7))
+* rm conda ([210dfdc](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/210dfdcd40c82d9b41221770bc7992249a5b4d80))
+* update ENC hotspots ([fec13d5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/fec13d5326682753b8a5a5465d7b15a553f79b6d))
+* update ENC hotspots ([8334f7a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8334f7a2f1e35d91143228cf95e64c4c1dde5c26))
+* update ENC hotspots ([66dd017](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/66dd017e9b7348f1d80d116359ea62790a3c8bff))
+* update ENC hotspots ([1338508](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/13385087ceb9169e1fdd5cf60e35591aa4490dfc))
+* wrong release of design files ([cc246f7](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/cc246f74d16b38b1ef719a51c7dd1b53face46d6))
+
+
+### Documentation
+
+* added documentation ([87fbda9](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/87fbda9103cd378da03e1c092d700d3816b7d3ec))
+* do not activate python env ([8d28cdf](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8d28cdf09a512b016551820188a68fc405de58d5))
+
 ## [0.13.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.12.0...v0.13.0) (2024-04-26)
 
 
