@@ -150,6 +150,7 @@ merge_cnv_json:
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.vcf.gz
   germline_vcf: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz
+  cytobands: "DATA/centromeres.bed"
 
 purecn:  
   normaldb: "reference/purecn_dummy_normaldb.rds"
