@@ -6,7 +6,6 @@ from hydra_genetics.utils.io import utils
 log = logging.getLogger()
 
 
-
 def check_fp(chrom, start, end, gatk_cnr_dict, cn):
     FP_flag = ""
     cnv_length = end - start + 1
@@ -42,8 +41,6 @@ def check_fp(chrom, start, end, gatk_cnr_dict, cn):
             FP_flag = "FP?"
 
     return FP_flag
-
-    
 
 
 def create_tsv_report(
@@ -213,7 +210,7 @@ def create_tsv_report(
             fraction_19q_cnvkit = del_1p19q["19q_cnvkit"][0] / del_1p19q["19q"][2]
             if (fraction_1p_cnvkit > del_1p19q_chr_arm_fraction and fraction_19q_cnvkit > del_1p19q_chr_arm_fraction):
                 if nr_writes < 2:
-                    avg_cn = ((del_1p19q["1p_cnvkit"][1] + del_1p19q["19q_cnvkit"][1]) / 
+                    avg_cn = ((del_1p19q["1p_cnvkit"][1] + del_1p19q["19q_cnvkit"][1]) /
                               (del_1p19q["1p_cnvkit"][0] + del_1p19q["19q_cnvkit"][0]))
                     writer.write(f"\n{samples}\t1p19q\t1p19q\t")
                     writer.write(f"{fraction_1p_cnvkit*100:.0f}%,{fraction_19q_cnvkit*100:.0f}%")
@@ -224,7 +221,7 @@ def create_tsv_report(
             fraction_19q_gatkcnv = del_1p19q["19q_gatkcnv"][0] / del_1p19q["19q"][2]
             if (fraction_1p_gatkcnv > del_1p19q_chr_arm_fraction and fraction_19q_gatkcnv > del_1p19q_chr_arm_fraction):
                 if nr_writes < 2:
-                    avg_cn = ((del_1p19q["1p_gatkcnv"][1] + del_1p19q["19q_gatkcnv"][1]) / 
+                    avg_cn = ((del_1p19q["1p_gatkcnv"][1] + del_1p19q["19q_gatkcnv"][1]) /
                               (del_1p19q["1p_gatkcnv"][0] + del_1p19q["19q_gatkcnv"][0]))
                     writer.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA\t")
                     writer.write(f"\n{samples}\t1p19q\t1p19q\t")
