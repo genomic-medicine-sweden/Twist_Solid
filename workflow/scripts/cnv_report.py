@@ -1,12 +1,53 @@
 import logging
+import statistics
 from pysam import VariantFile
 from hydra_genetics.utils.io import utils
 
 log = logging.getLogger()
 
 
+
+def check_fp(chrom, start, end, gatk_cnr_dict, cn):
+    FP_flag = ""
+    cnv_length = end - start + 1
+    if cnv_length > 20000000:
+        return ""
+    gatk_data = gatk_cnr_dict[chrom]
+    i = 0
+    j = 0
+    cnv_region = {"surrounding_region": [], "region": []}
+    for region in gatk_data:
+        if region[1] < start:
+            i += 1
+            j += 1
+        elif region[0] > end:
+            break
+        else:
+            cnv_region["region"].append(region[2])
+            j += 1
+    i1 = max(0, i-11)
+    i2 = max(0, i-1)
+    cnv_region["surrounding_region"] = gatk_data[i1:i2] + gatk_data[j+1:j+11]
+
+    median_surrounding_region = statistics.median(cnv_region["surrounding_region"])
+    stdev_surrounding_region = statistics.stdev(cnv_region["surrounding_region"])
+    median_region = statistics.median(cnv_region["region"])
+    stdev_region = statistics.stdev(cnv_region["region"])
+
+    if cn < -0.4:
+        if median_region + stdev_region > median_surrounding_region - stdev_surrounding_region:
+            FP_flag = "FP?"
+    if cn > 0.4:
+        if median_region - stdev_region < median_surrounding_region + stdev_surrounding_region:
+            FP_flag = "FP?"
+
+    return FP_flag
+
+    
+
+
 def create_tsv_report(
-    input_vcfs, input_org_vcfs, input_del, input_amp, in_chrom_arm_size, amp_cn_limit,
+    input_vcfs, input_org_vcfs, input_del, input_amp, in_chrom_arm_size, in_gatk_cnr, amp_cn_limit,
     output_txt, out_additional_only, out_tsv_chrom_arms, del_1p19q_cn, del_1p19q_chr_arm_fraction,
     chr_arm_fraction, del_chr_arm_cn_limit, amp_chr_arm_cn_limit, normal_cn_lower_limit, normal_cn_upper_limit,
     normal_baf_lower_limit, normal_baf_upper_limit, baseline_fraction_limit, polyploidy_fraction_limit, TC
@@ -31,17 +72,34 @@ def create_tsv_report(
             chrom_arm_amp[chrom] = [0, 0]
             genome_size += p_size + q_size
 
+    gatk_cnr_dict = {}
+    with open(in_gatk_cnr) as gatk_cnr:
+        header = True
+        for line in gatk_cnr:
+            if header:
+                if line[:6] == "CONTIG":
+                    header = False
+                continue
+            columns = line.strip().split("\t")
+            chrom = columns[0]
+            start_pos = int(columns[1])
+            end_pos = int(columns[2])
+            log2ratio = float(columns[3])
+            if chrom not in gatk_cnr_dict:
+                gatk_cnr_dict[chrom] = []
+            gatk_cnr_dict[chrom].append([start_pos, end_pos, log2ratio])
+
     gene_all_dict = {}
     nr_writes = 0
     log.info(f"Opening output tsv file: {output_txt}")
     sample_name = ""
     with open(output_txt, "w") as writer:
-        writer.write("sample\tgene(s)\tchrom\tregion\tcaller\tfreq_in_db\tcopy_number")
+        writer.write("sample\tgene(s)\tchrom\tregion\tcaller\tfreq_in_db\tcopy_number\tFP_flag")
         out_additional_only.write("gene(s)\tchrom\tregion\tcaller\tfreq_in_db\tcopy_number")
         file1 = True
         for input_org_vcf in input_org_vcfs:
             del_1p19q = {
-                "1p_cnvkit": 0, "19q_cnvkit": 0, "1p_gatkcnv": 0, "19q_gatkcnv": 0,
+                "1p_cnvkit": [0, 0], "19q_cnvkit": [0, 0], "1p_gatkcnv": [0, 0], "19q_gatkcnv": [0, 0],
                 "1p": [0, 125000000, 125000000], "19q": [26500000, 59128983, 32628983],
             }
             log.info(f"Opening vcf file: {input_org_vcf}")
@@ -82,14 +140,18 @@ def create_tsv_report(
                 # 1p19q deletion
                 if cn < del_1p19q_cn and chr == "chr1" and start >= del_1p19q["1p"][0] and start <= del_1p19q["1p"][1]:
                     if caller == "cnvkit":
-                        del_1p19q["1p_cnvkit"] += p_size
+                        del_1p19q["1p_cnvkit"][0] += p_size
+                        del_1p19q["1p_cnvkit"][1] += p_size * cn
                     elif caller == "gatk":
-                        del_1p19q["1p_gatkcnv"] += p_size
+                        del_1p19q["1p_gatkcnv"][0] += p_size
+                        del_1p19q["1p_gatkcnv"][1] += p_size * cn
                 if cn < del_1p19q_cn and chr == "chr19" and start >= del_1p19q["19q"][0] and start <= del_1p19q["19q"][1]:
                     if caller == "cnvkit":
-                        del_1p19q["19q_cnvkit"] += q_size
+                        del_1p19q["19q_cnvkit"][0] += q_size
+                        del_1p19q["19q_cnvkit"][1] += q_size * cn
                     elif caller == "gatk":
-                        del_1p19q["19q_gatkcnv"] += q_size
+                        del_1p19q["19q_gatkcnv"][0] += q_size
+                        del_1p19q["19q_gatkcnv"][1] += q_size * cn
                 # Large chromosome CNV
                 if file1:
                     if caller == "cnvkit":
@@ -147,16 +209,27 @@ def create_tsv_report(
                                     break
                             if not duplicate:
                                 gene_all_dict[gene].append([chr, start, end, caller, cn, AF])
-            if (del_1p19q["1p_cnvkit"] / del_1p19q["1p"][2] > del_1p19q_chr_arm_fraction and
-                    del_1p19q["19q_cnvkit"] / del_1p19q["19q"][2] > del_1p19q_chr_arm_fraction):
+            fraction_1p_cnvkit = del_1p19q["1p_cnvkit"][0] / del_1p19q["1p"][2]
+            fraction_19q_cnvkit = del_1p19q["19q_cnvkit"][0] / del_1p19q["19q"][2]
+            if (fraction_1p_cnvkit > del_1p19q_chr_arm_fraction and fraction_19q_cnvkit > del_1p19q_chr_arm_fraction):
                 if nr_writes < 2:
-                    writer.write(f"\n{samples}\t1p19q\tNA\tNA\tcnvkit\tNA\tNA")
-                    out_additional_only.write(f"\n1p19q\tNA\tNA\tcnvkit\tNA\tNA")
+                    avg_cn = ((del_1p19q["1p_cnvkit"][1] + del_1p19q["19q_cnvkit"][1]) / 
+                              (del_1p19q["1p_cnvkit"][0] + del_1p19q["19q_cnvkit"][0]))
+                    writer.write(f"\n{samples}\t1p19q\t1p19q\t")
+                    writer.write(f"{fraction_1p_cnvkit*100:.0f}%,{fraction_19q_cnvkit*100:.0f}%")
+                    writer.write(f"\tcnvkit\tNA\t{avg_cn:.2f}\t")
+                    out_additional_only.write(f"\n1p19q\t1p19q\tNA\tcnvkit\tNA\tNA")
                     nr_writes += 1
-            if (del_1p19q["1p_gatkcnv"] / del_1p19q["1p"][2] > del_1p19q_chr_arm_fraction and
-                    del_1p19q["19q_gatkcnv"] / del_1p19q["19q"][2] > del_1p19q_chr_arm_fraction):
+            fraction_1p_gatkcnv = del_1p19q["1p_gatkcnv"][0] / del_1p19q["1p"][2]
+            fraction_19q_gatkcnv = del_1p19q["19q_gatkcnv"][0] / del_1p19q["19q"][2]
+            if (fraction_1p_gatkcnv > del_1p19q_chr_arm_fraction and fraction_19q_gatkcnv > del_1p19q_chr_arm_fraction):
                 if nr_writes < 2:
-                    writer.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
+                    avg_cn = ((del_1p19q["1p_gatkcnv"][1] + del_1p19q["19q_gatkcnv"][1]) / 
+                              (del_1p19q["1p_gatkcnv"][0] + del_1p19q["19q_gatkcnv"][0]))
+                    writer.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA\t")
+                    writer.write(f"\n{samples}\t1p19q\t1p19q\t")
+                    writer.write(f"{fraction_1p_gatkcnv*100:.0f}%,{fraction_19q_gatkcnv*100:.0f}%")
+                    writer.write(f"\tgatk_cnv\tNA\t{avg_cn:.2f}\t")
                     out_additional_only.write(f"\nt1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
                     nr_writes += 1
 
@@ -185,7 +258,10 @@ def create_tsv_report(
                 AF = utils.get_annotation_data_info(variant, "Twist_AF")
                 if AF is None:
                     AF = 0.0
-                writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}")
+                FP_flag = ""
+                if caller == "cnvkit":
+                    FP_flag = check_fp(chr, start, end, gatk_cnr_dict, cn)
+                writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}\t{FP_flag}")
                 counter += 1
                 for gene in genes.split(","):
                     if gene not in gene_variant_dict:
@@ -208,7 +284,7 @@ def create_tsv_report(
                                 (gene_variant_dict[gene][0][1] >= start and gene_variant_dict[gene][0][1] <= end) or
                                 (gene_variant_dict[gene][0][2] >= end and gene_variant_dict[gene][0][2] <= start)
                             ):
-                                writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{new_caller}\t{AF:.2f}\t{cn:.2f}")
+                                writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{new_caller}\t{AF:.2f}\t{cn:.2f}\t")
         log.info(f"Processed {counter} variants")
 
         deletions = open(input_del)
@@ -226,7 +302,7 @@ def create_tsv_report(
             ccn = cn
             if TC > 0.0:
                 ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
-            writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}")
+            writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}\t")
             out_additional_only.write(f"\n{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}")
         amplifications = open(input_amp)
         header_list = next(amplifications).split("\t")
@@ -244,7 +320,7 @@ def create_tsv_report(
             if TC > 0.0:
                 ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
             if ccn > amp_cn_limit:
-                writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}")
+                writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}\t")
                 out_additional_only.write(f"\n{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}")
 
     with open(out_tsv_chrom_arms, "w") as writer:
@@ -283,6 +359,7 @@ if __name__ == "__main__":
     in_del = snakemake.input.deletions
     in_amp = snakemake.input.amplifications
     in_chrom_arm_size = snakemake.input.chrom_arm_size
+    in_gatk_cnr = snakemake.input.gatk_cnr
     amp_cn_limit = snakemake.params.call_small_amplifications_cn_limit
     out_tsv = snakemake.output.tsv
     out_tsv_chrom_arms = snakemake.output.tsv_chrom_arms
@@ -305,6 +382,7 @@ if __name__ == "__main__":
             in_del,
             in_amp,
             in_chrom_arm_size,
+            in_gatk_cnr,
             amp_cn_limit,
             out_tsv,
             out_additional_only,
