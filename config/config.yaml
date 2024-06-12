@@ -73,7 +73,7 @@ cnvkit_scatter:
 
 cnv_html_report:
   show_table: true
-  show_cytobands: true
+  cytobands: true
   extra_tables:
     - name: Small CNVs and 1p19q
       description: >
@@ -210,8 +210,6 @@ merge_cnv_json:
   unfiltered_cnv_vcfs:
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.vcf.gz
-  
-  
 
 mosdepth:
   container: "docker://hydragenetics/mosdepth:0.3.2"
