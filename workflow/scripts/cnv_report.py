@@ -26,17 +26,31 @@ def check_fp(chrom, start, end, gatk_cnr_dict, cn):
             j += 1
     i1 = max(0, i-11)
     i2 = max(0, i-1)
-    cnv_region["surrounding_region"] = gatk_data[i1:i2] + gatk_data[j+1:j+11]
+    while i1 < i2:
+        cnv_region["surrounding_region"].append(gatk_data[i1][2])
+        i1 += 1
+    j1 = min(len(gatk_data), j+1)
+    j2 = min(len(gatk_data), j+11)
+    while j1 < j2:
+        cnv_region["surrounding_region"].append(gatk_data[j1][2])
+        j1 += 1
+    
 
     median_surrounding_region = statistics.median(cnv_region["surrounding_region"])
-    stdev_surrounding_region = statistics.stdev(cnv_region["surrounding_region"])
+    stdev_surrounding_region = 0.0
+    if len(cnv_region["surrounding_region"]):
+        stdev_surrounding_region = statistics.stdev(cnv_region["surrounding_region"])
     median_region = statistics.median(cnv_region["region"])
-    stdev_region = statistics.stdev(cnv_region["region"])
+    stdev_region = 0.0
+    if len(cnv_region["region"]) >= 3:
+        stdev_region = statistics.stdev(cnv_region["region"])
 
-    if cn < -0.4:
+    #print(chrom, start, end, cn, median_region, stdev_region, median_surrounding_region, stdev_surrounding_region)
+
+    if cn < 1.5 and median_region > 1.8 and median_region > 2.2:
         if median_region + stdev_region > median_surrounding_region - stdev_surrounding_region:
             FP_flag = "FP?"
-    if cn > 0.4:
+    if cn > 2.5 and median_region > 1.8 and median_region > 2.2:
         if median_region - stdev_region < median_surrounding_region + stdev_surrounding_region:
             FP_flag = "FP?"
 
@@ -255,15 +269,24 @@ def create_tsv_report(
                 AF = utils.get_annotation_data_info(variant, "Twist_AF")
                 if AF is None:
                     AF = 0.0
-                FP_flag = ""
-                if caller == "cnvkit":
-                    FP_flag = check_fp(chr, start, end, gatk_cnr_dict, cn)
-                writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}\t{FP_flag}")
-                counter += 1
+                both_callers = False
                 for gene in genes.split(","):
                     if gene not in gene_variant_dict:
                         gene_variant_dict[gene] = []
                     gene_variant_dict[gene].append([chr, start, end, caller, cn, AF])
+                    if gene in gene_all_dict:
+                        nr_callers = {"cnvkit": 0, "gatk" : 0}
+                        for cnv in gene_all_dict[gene]:
+                            if cnv[4] > 2.5 or cnv[4] < 1.5:
+                                nr_callers[cnv[3]] += 1
+                        if nr_callers["cnvkit"] > 0 and nr_callers["gatk"] > 0:
+                            both_callers = True
+                FP_flag = ""
+                if caller == "cnvkit" and not both_callers:
+                    FP_flag = check_fp(chr, start, end, gatk_cnr_dict, cn)
+                writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}\t{FP_flag}")
+                counter += 1
+                
             for gene in gene_variant_dict:
                 if len(gene_variant_dict[gene]) == 1:
                     org_caller = gene_variant_dict[gene][0][3]
