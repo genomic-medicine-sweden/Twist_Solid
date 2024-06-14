@@ -39,13 +39,13 @@ table_columns_visible:
   "Picard: InsertSizeMetrics":
     summed_median: False
     summed_mean: False
-  "Picard: DuplicationMetrics":
+  "Picard: Mark Duplicates":
     PERCENT_DUPLICATION: True
   "Samtools: stats":
     error_rate: False
     non-primary_alignments: False
-    reads_mapped: False
-    reads_mapped_percent: False
+    reads_mapped: True
+    reads_mapped_percent: True
     reads_properly_paired_percent: False
     reads_MQ0_percent: False
     raw_total_sequences: False
@@ -57,13 +57,13 @@ table_columns_visible:
     total_sequences: False
 
 multiqc_cgs:
-  "Picard: AlignmentSummaryMetrics":
-    PF_READS_ALIGNED:
+  "Samtools: stats":
+    reads_mapped:
       title: "M Aligned reads"
-      description: "Number of million reads in bam from Picard"
+      description: "Number of million reads in bam from Samtools stats"
       format: "{:.1f}"
       shared_key: "read_count"
-  "Picard: DuplicationMetrics":
+  "Picard: Mark Duplicates":
     PERCENT_DUPLICATION:
       title: "Duplicates [%]"
       description: "Duplicates [%] from Picard stats (MarkDuplicates)"
@@ -153,10 +153,10 @@ multiqc_cgs:
       format: "{:.1%}"
 
 table_columns_placement:
-  "Picard: AlignmentSummaryMetrics":
-    PF_READS_ALIGNED: 900
-    PCT_PF_READS_ALIGNED: 910
-  "Picard: DuplicationMetrics":
+  "Samtools: stats":
+    reads_mapped: 900
+    reads_mapped_percent: 910
+  "Picard: Mark Duplicates":
     PERCENT_DUPLICATION: 920
   "Picard: HsMetrics":
     PCT_SELECTED_BASES: 930
