@@ -28,10 +28,10 @@
 
  bcftools_filter_exclude_region:
    blacklist: 
-     checksum: 3911faef7fd360a7960841d2ba4b6054
-     path: GMS560/cnv/cnvkit_germline_blacklist_20221221_hg38.bed
+     checksum: 165084ed176f5b96e98ffc8a7d599f17
+     path: GMS560/cnv/cnvkit_germline_blacklist_20240613_hg38.bed
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/cnvkit_germline_blacklist_20221221_hg38.bed
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.10.0/cnv/cnvkit_germline_blacklist_20240613_hg38.bed
 
  bcftools_id_snps:
    snps_bed: 

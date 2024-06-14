@@ -41,7 +41,7 @@ bcftools_filter_include_region:
   exon: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.bed"
 
 bcftools_filter_exclude_region:
-  blacklist: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnvkit_germline_blacklist_20221221.bed"
+  blacklist: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnvkit_germline_blacklist_20240613.bed"
 
 bcftools_id_snps:
   snps_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/ID_SNPs.bed"
