@@ -8,10 +8,10 @@
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/cnv_amp_genes_hg38_240307.bed
 
    cnv_loh_genes_all: 
-     path: GMS560/cnv/cnv_loh_genes_hg38.bed
-     checksum: 219ec534eb7bf5e617a8d4d11a18ca24
+     path: GMS560/cnv/cnv_loh_genes_240618_hg38.bed
+     checksum: 3910d8e8cd43fb9bc6cc30366e3f7f2f
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/cnv_loh_genes_hg38.bed
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/cnv/cnv_loh_genes_240618_hg38.bed
  
    cnv_loh_genes_validated: 
      path: GMS560/cnv/cnv_loh_uppsala_genes_hg38.bed
@@ -53,11 +53,12 @@
      path: GMS560/cnv/small_deletions_caller_blacklist_hg38.tsv
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.7.0/cnv/small_deletions_caller_blacklist_hg38.tsv 
+
    regions_file:
-     checksum: 92510485ce32e9ef64697121aae4122c
-     path: GMS560/cnv/cnv_deletion_genes_hg38.tsv
+     checksum: fd225511fe31376c612b0893bcd8c502
+     path: GMS560/cnv/cnv_deletion_genes_240618_hg38.tsv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/cnv_deletion_genes_hg38.tsv 
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/cnv/cnv_deletion_genes_240618_hg38.tsv 
 
  cnvkit_build_normal_reference:
    mappability:
