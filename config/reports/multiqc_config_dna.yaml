@@ -37,7 +37,7 @@ table_columns_visible:
     FOLD_ENRICHMENT: False
     PCT_TARGET_BASES_30X: False
   "Picard: InsertSizeMetrics":
-    summed_median: False
+    summed_median: True
     summed_mean: False
   "Picard: Mark Duplicates":
     PERCENT_DUPLICATION: True
@@ -137,20 +137,13 @@ multiqc_cgs:
       scale: "RdYlGn-rev"
       format: "{:.1f}"
   "Picard: InsertSizeMetrics":
-    MEDIAN_INSERT_SIZE:
+    summed_median:
       title: "Median insert size"
       description: "Median insert size from Picard"
       min: 70
       max: 200
       scale: "RdYlGn"
       format: "{:.1f}"
-    STANDARD_DEVIATION:
-      title: "Insert size s.d."
-      description: "Insert size standard deviation from Picard"
-      min: 0
-      max: 150
-      scale: "RdYlGn-rev"
-      format: "{:.1%}"
 
 table_columns_placement:
   "Samtools: stats":
@@ -170,5 +163,4 @@ table_columns_placement:
     ZERO_CVG_TARGETS_PCT: 1020
     FOLD_80_BASE_PENALTY: 1030
   "Picard: InsertSizeMetrics":
-    MEDIAN_INSERT_SIZE: 980
-    STANDARD_DEVIATION: 990
+    summed_median: 980
