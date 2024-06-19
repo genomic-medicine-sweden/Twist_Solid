@@ -11,7 +11,7 @@
      path: GMS560/cnv/cnv_loh_genes_240618_hg38.bed
      checksum: 3910d8e8cd43fb9bc6cc30366e3f7f2f
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/cnv/cnv_loh_genes_240618_hg38.bed
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.10.1/cnv/cnv_loh_genes_240618_hg38.bed
  
    cnv_loh_genes_validated: 
      path: GMS560/cnv/cnv_loh_uppsala_genes_hg38.bed
@@ -58,7 +58,7 @@
      checksum: fd225511fe31376c612b0893bcd8c502
      path: GMS560/cnv/cnv_deletion_genes_240618_hg38.tsv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/cnv/cnv_deletion_genes_240618_hg38.tsv 
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.10.1/cnv/cnv_deletion_genes_240618_hg38.tsv 
 
  cnvkit_build_normal_reference:
    mappability:
