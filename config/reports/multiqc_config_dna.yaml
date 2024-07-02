@@ -31,8 +31,6 @@ sp:
     fn: "*.contamination.table"
 
 table_columns_visible:
-  "Picard: AlignmentSummaryMetrics":
-    PCT_PF_READS_ALIGNED: True
   "Picard: HsMetrics":
     FOLD_ENRICHMENT: False
     PCT_TARGET_BASES_30X: False
@@ -67,15 +65,15 @@ multiqc_cgs:
     PERCENT_DUPLICATION:
       title: "Duplicates [%]"
       description: "Duplicates [%] from Picard stats (MarkDuplicates)"
-      min: 0
-      max: 0.4
+      min: 0.2
+      max: 0.6
       scale: "RdYlGn-rev"
       format: "{:.1%}"
   "Picard: HsMetrics":
     PCT_SELECTED_BASES:
       title: "Bases on exon target [%]"
       description: "Bases on exon target [%] from Picard"
-      min: 0.5
+      min: 0.3
       max: 0.7
       scale: "RdYlGn"
       format: "{:.1%}"
@@ -87,9 +85,9 @@ multiqc_cgs:
       scale: "RdYlGn"
       format: "{:.1%}"
     PCT_TARGET_BASES_100X:
-      title: "Exon bases over 100X [%]"
-      description: "Exon bases over 100X [%] from Picard"
-      min: 0.5
+      title: "Exon target bases over 100X [%]"
+      description: "Exon target bases over 100X [%] from Picard"
+      min: 0.9
       max: 1.0
       scale: "RdYlGn"
       format: "{:.1%}"
@@ -101,25 +99,25 @@ multiqc_cgs:
       scale: "RdYlGn"
       format: "{:.1%}"
     MEAN_TARGET_COVERAGE:
-      title: "Mean target coverage"
-      description: "Mean target coverage from picard"
+      title: "Mean exon target coverage"
+      description: "Mean exon target coverage from picard"
       format: "{:.1f}"
     MEDIAN_TARGET_COVERAGE:
-      title: "Median target coverage"
-      description: "Median target coverage from picard"
+      title: "Median exon target coverage"
+      description: "Median exon target coverage from picard"
       format: "{:.1f}"
     AT_DROPOUT:
       title: "AT-dropout [%]"
       description: "AT-dropout [%] from Picard"
       min: 0
-      max: 1
+      max: 10
       scale: "RdYlGn-rev"
       format: "{:.3f}"
     GC_DROPOUT:
       title: "GC-dropout [%]"
       description: "GC-dropout [%] from Picard"
       min: 0
-      max: 1
+      max: 10
       scale: "RdYlGn-rev"
       format: "{:.3f}"
     ZERO_CVG_TARGETS_PCT:
@@ -132,8 +130,8 @@ multiqc_cgs:
     FOLD_80_BASE_PENALTY:
       title: "FOLD-80"
       description: "FOLD-80 penalty from picard"
-      min: 0
-      max: 10
+      min: 1
+      max: 3
       scale: "RdYlGn-rev"
       format: "{:.1f}"
   "Picard: InsertSizeMetrics":
