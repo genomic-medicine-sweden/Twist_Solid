@@ -223,7 +223,7 @@ msisensor_pro:
   extra: "-c 50"
 
 multiqc:
-  container: "docker://hydragenetics/multiqc:1.11"
+  container: "docker://hydragenetics/multiqc:1.21"
   reports:
     DNA:
       config: "config/reports/multiqc_config_dna.yaml"
@@ -239,7 +239,7 @@ multiqc:
         - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
         - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
     DNA_umi:
-      config: "config/multiqc_config_dna.yaml"
+      config: "config/reports/multiqc_config_dna.yaml"
       included_unit_types: ["N", "T"]
       deduplication: ["umi"]
       qc_files:

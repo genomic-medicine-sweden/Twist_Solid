@@ -19,7 +19,7 @@ custom_data:
   contamination_table:
     file_format: "tsv"
     section_name: "Contamination"
-    description: "This data comes from files acommpanied by a mutliqc_config_dna.yaml file for configuration"
+    description: "This data comes from files accompanied by a multiqc_config_dna.yaml file for configuration"
     plot_type: "generalstats"
     pconfig:
       - contamination:
@@ -31,18 +31,19 @@ sp:
     fn: "*.contamination.table"
 
 table_columns_visible:
-  Picard:
-    PCT_PF_READS_ALIGNED: True
+  "Picard: HsMetrics":
     FOLD_ENRICHMENT: False
     PCT_TARGET_BASES_30X: False
-    summed_median: False
+  "Picard: InsertSizeMetrics":
+    summed_median: True
     summed_mean: False
+  "Picard: Mark Duplicates":
     PERCENT_DUPLICATION: True
-  Samtools:
+  "Samtools: stats":
     error_rate: False
     non-primary_alignments: False
-    reads_mapped: False
-    reads_mapped_percent: False
+    reads_mapped: True
+    reads_mapped_percent: True
     reads_properly_paired_percent: False
     reads_MQ0_percent: False
     raw_total_sequences: False
@@ -54,23 +55,25 @@ table_columns_visible:
     total_sequences: False
 
 multiqc_cgs:
-  Picard:
-    PF_READS_ALIGNED:
+  "Samtools: stats":
+    reads_mapped:
       title: "M Aligned reads"
-      description: "Number of million reads in bam from Picard"
+      description: "Number of million reads in bam from Samtools stats"
       format: "{:.1f}"
       shared_key: "read_count"
+  "Picard: Mark Duplicates":
     PERCENT_DUPLICATION:
       title: "Duplicates [%]"
       description: "Duplicates [%] from Picard stats (MarkDuplicates)"
-      min: 0
-      max: 0.4
+      min: 0.2
+      max: 0.6
       scale: "RdYlGn-rev"
       format: "{:.1%}"
+  "Picard: HsMetrics":
     PCT_SELECTED_BASES:
       title: "Bases on exon target [%]"
       description: "Bases on exon target [%] from Picard"
-      min: 0.5
+      min: 0.3
       max: 0.7
       scale: "RdYlGn"
       format: "{:.1%}"
@@ -102,25 +105,12 @@ multiqc_cgs:
     MEDIAN_TARGET_COVERAGE:
       title: "Median exon target coverage"
       description: "Median exon target coverage from picard"
-    MEDIAN_INSERT_SIZE:
-      title: "Median insert size"
-      description: "Median insert size from Picard"
-      min: 70
-      max: 200
-      scale: "RdYlGn"
-      format: "{:.1f}"
-    STANDARD_DEVIATION:
-      title: "Insert size s.d."
-      description: "Insert size standard deviation from Picard"
-      min: 0
-      max: 150
-      scale: "RdYlGn-rev"
       format: "{:.1f}"
     AT_DROPOUT:
       title: "AT-dropout [%]"
       description: "AT-dropout [%] from Picard"
       min: 0
-      max: 5
+      max: 10
       scale: "RdYlGn-rev"
       format: "{:.3f}"
     GC_DROPOUT:
@@ -134,7 +124,7 @@ multiqc_cgs:
       title: "Target bases with zero coverage [%]"
       description: "Target bases with zero coverage [%] from Picard"
       min: 0
-      max: 0.05
+      max: 0.1
       scale: "RdYlGn-rev"
       format: "{:.2%}"
     FOLD_80_BASE_PENALTY:
@@ -144,21 +134,31 @@ multiqc_cgs:
       max: 3
       scale: "RdYlGn-rev"
       format: "{:.1f}"
+  "Picard: InsertSizeMetrics":
+    summed_median:
+      title: "Median insert size"
+      description: "Median insert size from Picard"
+      min: 70
+      max: 200
+      scale: "RdYlGn"
+      format: "{:.1f}"
 
 table_columns_placement:
-  Picard:
-    PF_READS_ALIGNED: 900
-    PCT_PF_READS_ALIGNED: 910
+  "Samtools: stats":
+    reads_mapped: 900
+    reads_mapped_percent: 910
+  "Picard: Mark Duplicates":
     PERCENT_DUPLICATION: 920
+  "Picard: HsMetrics":
     PCT_SELECTED_BASES: 930
     PCT_USABLE_BASES_ON_TARGET: 940
     PCT_TARGET_BASES_100X: 950
-    PCT_TARGET_BASES_500X: 960
-    MEAN_TARGET_COVERAGE: 970
-    MEDIAN_TARGET_COVERAGE: 980
-    MEDIAN_INSERT_SIZE: 990
-    STANDARD_DEVIATION: 1000
-    AT_DROPOUT: 1010
-    GC_DROPOUT: 1020
-    ZERO_CVG_TARGETS_PCT: 1030
-    FOLD_80_BASE_PENALTY: 1040
+    PCT_TARGET_BASES_500X: 955
+    MEAN_TARGET_COVERAGE: 960
+    MEDIAN_TARGET_COVERAGE: 970
+    AT_DROPOUT: 1000
+    GC_DROPOUT: 1010
+    ZERO_CVG_TARGETS_PCT: 1020
+    FOLD_80_BASE_PENALTY: 1030
+  "Picard: InsertSizeMetrics":
+    summed_median: 980
