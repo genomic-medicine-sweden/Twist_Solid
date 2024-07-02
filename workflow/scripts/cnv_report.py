@@ -282,6 +282,8 @@ def create_tsv_report(
                         if nr_callers["cnvkit"] > 0 and nr_callers["gatk"] > 0:
                             both_callers = True
                 FP_flag = ""
+                if caller == "cnvkit":
+                    print(both_callers, chr, start, end, gatk_cnr_dict, cn)
                 if caller == "cnvkit" and not both_callers:
                     FP_flag = check_fp(chr, start, end, gatk_cnr_dict, cn)
                 writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}\t{FP_flag}")
