@@ -45,12 +45,12 @@ def check_fp(chrom, start, end, gatk_cnr_dict, cn):
     if len(cnv_region["region"]) >= 3:
         stdev_region = statistics.stdev(cnv_region["region"])
 
-    #print(chrom, start, end, cn, median_region, stdev_region, median_surrounding_region, stdev_surrounding_region)
+    print(chrom, start, end, cn, median_region, stdev_region, median_surrounding_region, stdev_surrounding_region)
 
-    if cn < 1.5 and median_region > 1.8 and median_region > 2.2:
+    if cn < 1.5 and median_region > -0.2 and median_region < 0.2:
         if median_region + stdev_region > median_surrounding_region - stdev_surrounding_region:
             FP_flag = "FP?"
-    if cn > 2.5 and median_region > 1.8 and median_region > 2.2:
+    if cn > 2.5 and median_region > -0.2 and median_region < 0.2:
         if median_region - stdev_region < median_surrounding_region + stdev_surrounding_region:
             FP_flag = "FP?"
 
@@ -283,7 +283,7 @@ def create_tsv_report(
                             both_callers = True
                 FP_flag = ""
                 if caller == "cnvkit":
-                    print(both_callers, chr, start, end, gatk_cnr_dict, cn)
+                    print(both_callers, chr, start, end, cn)
                 if caller == "cnvkit" and not both_callers:
                     FP_flag = check_fp(chr, start, end, gatk_cnr_dict, cn)
                 writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}\t{FP_flag}")
