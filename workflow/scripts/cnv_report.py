@@ -34,7 +34,6 @@ def check_fp(chrom, start, end, gatk_cnr_dict, cn):
     while j1 < j2:
         cnv_region["surrounding_region"].append(gatk_data[j1][2])
         j1 += 1
-    
 
     median_surrounding_region = statistics.median(cnv_region["surrounding_region"])
     stdev_surrounding_region = 0.0
@@ -44,8 +43,6 @@ def check_fp(chrom, start, end, gatk_cnr_dict, cn):
     stdev_region = 0.0
     if len(cnv_region["region"]) >= 3:
         stdev_region = statistics.stdev(cnv_region["region"])
-
-    print(chrom, start, end, cn, median_region, stdev_region, median_surrounding_region, stdev_surrounding_region)
 
     if cn < 1.5 and median_region > -0.2 and median_region < 0.2:
         if median_region + stdev_region > median_surrounding_region - stdev_surrounding_region:
@@ -103,9 +100,8 @@ def create_tsv_report(
     gene_all_dict = {}
     nr_writes = 0
     log.info(f"Opening output tsv file: {output_txt}")
-    sample_name = ""
     with open(output_txt, "w") as writer:
-        writer.write("sample\tgene(s)\tchrom\tregion\tcaller\tfreq_in_db\tcopy_number\tFP_flag")
+        writer.write("gene(s)\tchrom\tregion\tcaller\tfreq_in_db\tcopy_number\tFP_flag")
         out_additional_only.write("gene(s)\tchrom\tregion\tcaller\tfreq_in_db\tcopy_number")
         file1 = True
         for input_org_vcf in input_org_vcfs:
@@ -118,9 +114,6 @@ def create_tsv_report(
             samples = list(variants.header.samples)
             if len(samples) > 1:
                 raise Exception(f"Unable to process vcf with more then one sample: {samples}")
-            else:
-                samples = samples[0]
-                sample_name = samples
             for variant in variants:
                 genes = utils.get_annotation_data_info(variant, "Genes")
                 log.debug(f"Processing variant: {variant}")
@@ -226,7 +219,7 @@ def create_tsv_report(
                 if nr_writes < 2:
                     avg_cn = ((del_1p19q["1p_cnvkit"][1] + del_1p19q["19q_cnvkit"][1]) /
                               (del_1p19q["1p_cnvkit"][0] + del_1p19q["19q_cnvkit"][0]))
-                    writer.write(f"\n{samples}\t1p19q\t1p19q\t")
+                    writer.write(f"\n1p19q\t1p19q\t")
                     writer.write(f"{fraction_1p_cnvkit*100:.0f}%,{fraction_19q_cnvkit*100:.0f}%")
                     writer.write(f"\tcnvkit\tNA\t{avg_cn:.2f}\t")
                     out_additional_only.write(f"\n1p19q\t1p19q\tNA\tcnvkit\tNA\tNA")
@@ -237,8 +230,7 @@ def create_tsv_report(
                 if nr_writes < 2:
                     avg_cn = ((del_1p19q["1p_gatkcnv"][1] + del_1p19q["19q_gatkcnv"][1]) /
                               (del_1p19q["1p_gatkcnv"][0] + del_1p19q["19q_gatkcnv"][0]))
-                    writer.write(f"\n{samples}\t1p19q\tNA\tNA\tgatk_cnv\tNA\tNA\t")
-                    writer.write(f"\n{samples}\t1p19q\t1p19q\t")
+                    writer.write(f"\n1p19q\t1p19q\t")
                     writer.write(f"{fraction_1p_gatkcnv*100:.0f}%,{fraction_19q_gatkcnv*100:.0f}%")
                     writer.write(f"\tgatk_cnv\tNA\t{avg_cn:.2f}\t")
                     out_additional_only.write(f"\nt1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
@@ -253,8 +245,6 @@ def create_tsv_report(
             samples = list(variants.header.samples)
             if len(samples) > 1:
                 raise Exception(f"Unable to process vcf with more then one sample: {samples}")
-            else:
-                samples = samples[0]
             counter = 0
             for variant in variants:
                 genes = utils.get_annotation_data_info(variant, "Genes")
@@ -275,20 +265,18 @@ def create_tsv_report(
                         gene_variant_dict[gene] = []
                     gene_variant_dict[gene].append([chr, start, end, caller, cn, AF])
                     if gene in gene_all_dict:
-                        nr_callers = {"cnvkit": 0, "gatk" : 0}
+                        nr_callers = {"cnvkit": 0, "gatk": 0}
                         for cnv in gene_all_dict[gene]:
                             if cnv[4] > 2.5 or cnv[4] < 1.5:
                                 nr_callers[cnv[3]] += 1
                         if nr_callers["cnvkit"] > 0 and nr_callers["gatk"] > 0:
                             both_callers = True
                 FP_flag = ""
-                if caller == "cnvkit":
-                    print(both_callers, chr, start, end, cn)
                 if caller == "cnvkit" and not both_callers:
                     FP_flag = check_fp(chr, start, end, gatk_cnr_dict, cn)
-                writer.write(f"\n{samples}\t{genes}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}\t{FP_flag}")
+                writer.write(f"\n{genes}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}\t{FP_flag}")
                 counter += 1
-                
+
             for gene in gene_variant_dict:
                 if len(gene_variant_dict[gene]) == 1:
                     org_caller = gene_variant_dict[gene][0][3]
@@ -306,7 +294,7 @@ def create_tsv_report(
                                 (gene_variant_dict[gene][0][1] >= start and gene_variant_dict[gene][0][1] <= end) or
                                 (gene_variant_dict[gene][0][2] >= end and gene_variant_dict[gene][0][2] <= start)
                             ):
-                                writer.write(f"\n{samples}\t{gene}\t{chr}\t{start}-{end}\t{new_caller}\t{AF:.2f}\t{cn:.2f}\t")
+                                writer.write(f"\n{gene}\t{chr}\t{start}-{end}\t{new_caller}\t{AF:.2f}\t{cn:.2f}\t")
         log.info(f"Processed {counter} variants")
 
         deletions = open(input_del)
@@ -324,7 +312,7 @@ def create_tsv_report(
             ccn = cn
             if TC > 0.0:
                 ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
-            writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}\t")
+            writer.write(f"\n{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}\t")
             out_additional_only.write(f"\n{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}")
         amplifications = open(input_amp)
         header_list = next(amplifications).split("\t")
@@ -342,7 +330,7 @@ def create_tsv_report(
             if TC > 0.0:
                 ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
             if ccn > amp_cn_limit:
-                writer.write(f"\n{sample_name}\t{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}\t")
+                writer.write(f"\n{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}\t")
                 out_additional_only.write(f"\n{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}")
 
     with open(out_tsv_chrom_arms, "w") as writer:
