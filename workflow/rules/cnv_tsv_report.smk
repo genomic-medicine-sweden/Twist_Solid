@@ -23,6 +23,10 @@ rule cnv_tsv_report:
         tsv=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_report.tsv"),
         tsv_additional_only=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_additional_variants_only.tsv"),
         tsv_chrom_arms=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_chromosome_arms.tsv"),
+        # vcfs=[
+        #     "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.annotate_fp.vcf",
+        #     "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.filter.cnv_hard_filter_loh.annotate_fp.vcf",
+        # ],
     params:
         amp_chr_arm_cn_limit=config.get("cnv_tsv_report", {}).get("amp_chr_arm_cn_limit", ""),
         baseline_fraction_limit=config.get("cnv_tsv_report", {}).get("baseline_fraction_limit", ""),

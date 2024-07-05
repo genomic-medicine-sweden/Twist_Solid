@@ -646,6 +646,17 @@ use rule cnv_html_report from reports as reports_cnv_html_report with:
         extra_tables=config.get("cnv_html_report", {}).get("extra_tables", []),
 
 
+use rule merge_cnv_json from reports as reports_merge_cnv_json with:
+    input:
+        json=reports.get_json_for_merge_cnv_json,
+        fai=config.get("reference", {}).get("fai", ""),
+        annotation_bed=config.get("merge_cnv_json", {}).get("annotations", []),
+        germline_vcf=config.get("merge_cnv_json", {}).get("germline_vcf", []),
+        filtered_cnv_vcfs=config.get("merge_cnv_json", {}).get("filtered_cnv_vcfs", []),
+        cnv_vcfs=config.get("merge_cnv_json", {}).get("unfiltered_cnv_vcfs", []),
+        cytobands=config.get("merge_cnv_json", {}).get("cytobands", []),
+
+
 module misc:
     snakefile:
         get_module_snakefile(config, "hydra-genetics/misc", path="workflow/Snakefile", tag="v0.2.0")
