@@ -383,7 +383,7 @@ if __name__ == "__main__":
     amp_cn_limit = snakemake.params.call_small_amplifications_cn_limit
     out_tsv = snakemake.output.tsv
     out_tsv_chrom_arms = snakemake.output.tsv_chrom_arms
-    out_vcf_filename = snakemake.output.vcf
+    out_vcf_filename = snakemake.output.vcf_del
     del_1p19q_cn = snakemake.params.del_1p19q_cn_limit
     del_1p19q_chr_arm_fraction = snakemake.params.del_1p19q_chr_arm_fraction
     chr_arm_fraction = snakemake.params.chr_arm_fraction
