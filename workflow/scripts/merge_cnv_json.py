@@ -157,7 +157,7 @@ def get_cnvs(vcf_filename, skip=None):
             variant.info.get("SVTYPE"),
             variant.info.get("CORR_CN"),
             variant.info.get("BAF"),
-            variant.info.get("FP"),
+            variant.info.get("FP_FLAG"),
         )
         cnvs[variant.chrom][caller].append(cnv)
     return cnvs
