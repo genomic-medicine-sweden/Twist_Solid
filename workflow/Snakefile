@@ -627,7 +627,7 @@ module reports:
         config
 
 
-use rule * from reports exclude all as reports_*
+use rule * from reports exclude all, merge_cnv_json as reports_*
 
 
 use rule cnv_html_report from reports as reports_cnv_html_report with:
@@ -650,7 +650,7 @@ use rule cnv_html_report from reports as reports_cnv_html_report with:
         extra_tables=config.get("cnv_html_report", {}).get("extra_tables", []),
 
 
-use rule merge_cnv_json from reports as reports_merge_cnv_json with:
+rule merge_cnv_json:
     input:
         json=reports.get_json_for_merge_cnv_json,
         fai=config.get("reference", {}).get("fai", ""),
@@ -659,6 +659,31 @@ use rule merge_cnv_json from reports as reports_merge_cnv_json with:
         filtered_cnv_vcfs=config.get("merge_cnv_json", {}).get("filtered_cnv_vcfs", []),
         cnv_vcfs=config.get("merge_cnv_json", {}).get("unfiltered_cnv_vcfs", []),
         cytobands=config.get("merge_cnv_json", {}).get("cytobands", []),
+    output:
+        json=temp("reports/cnv_html_report/{sample}_{type}.{tc_method}.merged.json"),
+    params:
+        skip_chromosomes=config.get("reference", {}).get("skip_chrs", []),
+        cytobands=config.get("cnv_html_report", {}).get("cytobands", False),
+    log:
+        "reports/cnv_html_report/{sample}_{type}.{tc_method}.merged.json.log",
+    benchmark:
+        repeat(
+            "reports/cnv_html_report/{sample}_{type}.{tc_method}.merged.json.benchmark.tsv",
+            config.get("merge_cnv_json", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("merge_cnv_json", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("merge_cnv_json", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("merge_cnv_json", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("merge_cnv_json", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("merge_cnv_json", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("merge_cnv_json", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("merge_cnv_json", {}).get("container", config["default_container"])
+    message:
+        "{rule}: Merge CNV JSON data for {wildcards.sample}_{wildcards.type}"
+    script:
+        "../scripts/merge_cnv_json.py"
 
 
 module misc:
@@ -672,3 +697,5 @@ use rule tabix from misc as misc_tabix
 
 
 use rule bgzip from misc as misc_bgzip
+
+

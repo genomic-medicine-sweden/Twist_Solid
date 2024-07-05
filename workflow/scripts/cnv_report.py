@@ -56,7 +56,7 @@ def check_fp(chrom, start, end, gatk_cnr_dict, cn):
 
 def create_tsv_report(
     input_vcfs, input_org_vcfs, input_del, input_amp, in_chrom_arm_size, in_gatk_cnr, amp_cn_limit,
-    output_txt, out_additional_only, out_tsv_chrom_arms, del_1p19q_cn, del_1p19q_chr_arm_fraction,
+    output_txt, out_additional_only, out_tsv_chrom_arms, out_vcfs, del_1p19q_cn, del_1p19q_chr_arm_fraction,
     chr_arm_fraction, del_chr_arm_cn_limit, amp_chr_arm_cn_limit, normal_cn_lower_limit, normal_cn_upper_limit,
     normal_baf_lower_limit, normal_baf_upper_limit, baseline_fraction_limit, polyploidy_fraction_limit, TC
 ):
@@ -238,15 +238,20 @@ def create_tsv_report(
 
             file1 = False
 
+        file_nr = 0
         for input_vcf in input_vcfs:
             gene_variant_dict = {}
             log.info(f"Opening vcf file: {input_vcf}")
             variants = VariantFile(input_vcf)
             samples = list(variants.header.samples)
+            if file_nr == 1:
+                header = variants.header
+                header.add_meta('INFO', items=[('ID', "FP_FLAG"), ('Number', "."), ('Type', 'String'), ('Description', 'CNV false positive flag')])
+                out_vcf = VariantFile(out_vcfs[file_nr], "w", header=header)
             if len(samples) > 1:
                 raise Exception(f"Unable to process vcf with more then one sample: {samples}")
             counter = 0
-            for variant in variants:
+            for variant in variants.fetch():
                 genes = utils.get_annotation_data_info(variant, "Genes")
                 log.debug(f"Processing variant: {variant}")
                 if isinstance(genes, tuple):
@@ -274,6 +279,9 @@ def create_tsv_report(
                 FP_flag = ""
                 if caller == "cnvkit" and not both_callers:
                     FP_flag = check_fp(chr, start, end, gatk_cnr_dict, cn)
+                if file_nr == 1:
+                    variant.info["FP_FLAG"] = FP_flag
+                    out_vcf.write(variant)
                 writer.write(f"\n{genes}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}\t{FP_flag}")
                 counter += 1
 
@@ -295,6 +303,8 @@ def create_tsv_report(
                                 (gene_variant_dict[gene][0][2] >= end and gene_variant_dict[gene][0][2] <= start)
                             ):
                                 writer.write(f"\n{gene}\t{chr}\t{start}-{end}\t{new_caller}\t{AF:.2f}\t{cn:.2f}\t")
+            
+            file_nr += 1
         log.info(f"Processed {counter} variants")
 
         deletions = open(input_del)
@@ -373,6 +383,7 @@ if __name__ == "__main__":
     amp_cn_limit = snakemake.params.call_small_amplifications_cn_limit
     out_tsv = snakemake.output.tsv
     out_tsv_chrom_arms = snakemake.output.tsv_chrom_arms
+    out_vcfs = snakemake.output.vcfs
     del_1p19q_cn = snakemake.params.del_1p19q_cn_limit
     del_1p19q_chr_arm_fraction = snakemake.params.del_1p19q_chr_arm_fraction
     chr_arm_fraction = snakemake.params.chr_arm_fraction
@@ -397,6 +408,7 @@ if __name__ == "__main__":
             out_tsv,
             out_additional_only,
             out_tsv_chrom_arms,
+            out_vcfs,
             del_1p19q_cn,
             del_1p19q_chr_arm_fraction,
             chr_arm_fraction,

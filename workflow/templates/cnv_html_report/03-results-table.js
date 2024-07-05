@@ -89,6 +89,7 @@ class ResultsTable extends EventTarget {
       // Strings
       case "caller":
       case "chromosome":
+      case "fp":
       default:
         return {
           class: "left",
@@ -109,6 +110,7 @@ class ResultsTable extends EventTarget {
       type: "Type",
       cn: "CN",
       baf: "BAF",
+      fp: "FP-flag"
     };
 
     if (columns[col]) {
