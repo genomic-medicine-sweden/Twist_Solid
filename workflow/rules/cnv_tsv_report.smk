@@ -66,7 +66,7 @@ rule cnv_add_fp_header:
     output:
         vcf="cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{post_fix}.fp_tag.vcf",
     log:
-        "ccnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{post_fix}.fp_tag.vcf.log",
+        "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{post_fix}.fp_tag.vcf.log",
     benchmark:
         repeat(
             "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{post_fix}.fp_tag.vcf.benchmark.tsv",
