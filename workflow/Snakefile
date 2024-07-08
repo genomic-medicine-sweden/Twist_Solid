@@ -660,7 +660,7 @@ rule merge_cnv_json:
         annotation_bed=config.get("merge_cnv_json", {}).get("annotations", []),
         germline_vcf=config.get("merge_cnv_json", {}).get("germline_vcf", []),
         filtered_cnv_vcfs=config.get("merge_cnv_json", {}).get("filtered_cnv_vcfs", []),
-        filtered_cnv_vcfs=config.get("merge_cnv_json", {}).get("filtered_cnv_vcfs_tbi", []),
+        filtered_cnv_vcfs_tbi=config.get("merge_cnv_json", {}).get("filtered_cnv_vcfs_tbi", []),
         cnv_vcfs=config.get("merge_cnv_json", {}).get("unfiltered_cnv_vcfs", []),
         cnv_vcfs_tbi=config.get("merge_cnv_json", {}).get("unfiltered_cnv_vcfs_tbi", []),
         cytobands=config.get("merge_cnv_json", {}).get("cytobands", []),

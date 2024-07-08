@@ -16,14 +16,14 @@ rule cnv_tsv_report:
         ],
         tc_file=get_tc_file,
         vcfs=[
-            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf",
-            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.filter.cnv_hard_filter_loh.vcf",
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.fp_tag.vcf",
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.filter.cnv_hard_filter_loh.fp_tag.vcf",
         ],
     output:
         tsv=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_report.tsv"),
         tsv_additional_only=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_additional_variants_only.tsv"),
         tsv_chrom_arms=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.{tag}.cnv_chromosome_arms.tsv"),
-        vcf_del="cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.filter.cnv_hard_filter_loh.annotate_fp.vcf",
+        vcf_del="cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.filter.cnv_hard_filter_loh.fp_tag.annotate_fp.vcf",
     params:
         amp_chr_arm_cn_limit=config.get("cnv_tsv_report", {}).get("amp_chr_arm_cn_limit", ""),
         baseline_fraction_limit=config.get("cnv_tsv_report", {}).get("baseline_fraction_limit", ""),
@@ -58,3 +58,30 @@ rule cnv_tsv_report:
         "{rule}: Convert cnv vcf to a tsv file: {output.tsv}"
     script:
         "../scripts/cnv_report.py"
+
+
+rule cnv_add_fp_header:
+    input:
+        vcf="cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{post_fix}.vcf",
+    output:
+        vcf="cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{post_fix}.fp_tag.vcf",
+    log:
+        "ccnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{post_fix}.fp_tag.vcf.log",
+    benchmark:
+        repeat(
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{post_fix}.fp_tag.vcf.benchmark.tsv",
+            config.get("cnv_add_fp_header", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("cnv_add_fp_header", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("cnv_add_fp_header", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("cnv_add_fp_header", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("cnv_add_fp_header", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnv_add_fp_header", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnv_add_fp_header", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("cnv_add_fp_header", {}).get("container", config["default_container"])
+    message:
+        "{rule}: Add FP_FLAG to cnv vcf header in {output.vcf}"
+    script:
+        "../scripts/cnv_add_fp_header.py"
