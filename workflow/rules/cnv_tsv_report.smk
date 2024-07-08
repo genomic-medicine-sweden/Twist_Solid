@@ -11,8 +11,8 @@ rule cnv_tsv_report:
         deletions="cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv",
         gatk_cnr="cnv_sv/gatk_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv",
         org_vcfs=[
-            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf",
-            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.vcf",
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.fp_tag.vcf",
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.fp_tag.vcf",
         ],
         tc_file=get_tc_file,
         vcfs=[
@@ -62,7 +62,8 @@ rule cnv_tsv_report:
 
 rule cnv_add_fp_header:
     input:
-        vcf="cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{post_fix}.vcf",
+        vcf="cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{post_fix}.vcf.gz",
+        vcf_tbi="cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{post_fix}.vcf.gz.tbi",
     output:
         vcf="cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{post_fix}.fp_tag.vcf",
     log:
