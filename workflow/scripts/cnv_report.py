@@ -250,7 +250,7 @@ def create_tsv_report(
             if len(samples) > 1:
                 raise Exception(f"Unable to process vcf with more then one sample: {samples}")
             counter = 0
-            for variant in variants.fetch():
+            for variant in variants:
                 genes = utils.get_annotation_data_info(variant, "Genes")
                 log.debug(f"Processing variant: {variant}")
                 if isinstance(genes, tuple):
@@ -303,6 +303,7 @@ def create_tsv_report(
                             ):
                                 writer.write(f"\n{gene}\t{chr}\t{start}-{end}\t{new_caller}\t{AF:.2f}\t{cn:.2f}\t")
             
+            out_vcf.close()
             file_nr += 1
         log.info(f"Processed {counter} variants")
 
