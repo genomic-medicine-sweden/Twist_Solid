@@ -246,7 +246,6 @@ def create_tsv_report(
             samples = list(variants.header.samples)
             if file_nr == 1:
                 header = variants.header
-                header.add_meta('INFO', items=[('ID', "FP_FLAG"), ('Number', "."), ('Type', 'String'), ('Description', 'CNV false positive flag')])
                 out_vcf = VariantFile(out_vcf_filename, "w", header=header)
             if len(samples) > 1:
                 raise Exception(f"Unable to process vcf with more then one sample: {samples}")
@@ -276,7 +275,7 @@ def create_tsv_report(
                                 nr_callers[cnv[3]] += 1
                         if nr_callers["cnvkit"] > 0 and nr_callers["gatk"] > 0:
                             both_callers = True
-                FP_flag = ""
+                FP_flag = "-"
                 if caller == "cnvkit" and not both_callers:
                     FP_flag = check_fp(chr, start, end, gatk_cnr_dict, cn)
                 if file_nr == 1:
