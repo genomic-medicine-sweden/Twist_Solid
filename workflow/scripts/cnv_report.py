@@ -7,10 +7,10 @@ log = logging.getLogger()
 
 
 def check_fp(chrom, start, end, gatk_cnr_dict, cn):
-    FP_flag = ""
+    FP_flag = "-"
     cnv_length = end - start + 1
     if cnv_length > 20000000:
-        return ""
+        return "-"
     gatk_data = gatk_cnr_dict[chrom]
     i = 0
     j = 0
@@ -303,7 +303,8 @@ def create_tsv_report(
                             ):
                                 writer.write(f"\n{gene}\t{chr}\t{start}-{end}\t{new_caller}\t{AF:.2f}\t{cn:.2f}\t")
             
-            out_vcf.close()
+            if file_nr == 1:
+                out_vcf.close()
             file_nr += 1
         log.info(f"Processed {counter} variants")
 
