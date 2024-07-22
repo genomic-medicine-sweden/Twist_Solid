@@ -46,10 +46,10 @@ def check_fp(chrom, start, end, gatk_cnr_dict, cn):
 
     if cn < 1.5 and median_region > -0.2 and median_region < 0.2:
         if median_region + stdev_region > median_surrounding_region - stdev_surrounding_region:
-            FP_flag = "FP?"
+            FP_flag = "FP"
     if cn > 2.5 and median_region > -0.2 and median_region < 0.2:
         if median_region - stdev_region < median_surrounding_region + stdev_surrounding_region:
-            FP_flag = "FP?"
+            FP_flag = "FP"
 
     return FP_flag
 
