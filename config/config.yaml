@@ -94,9 +94,9 @@ cnv_tsv_report:
   del_1p19q_chr_arm_fraction: 0.3
   chr_arm_fraction: 0.3
   del_chr_arm_cn_limit: 1.4
-  amp_chr_arm_cn_limit: 2.5
-  normal_baf_lower_limit: 0.4
-  normal_baf_upper_limit: 0.6
+  amp_chr_arm_cn_limit: 2.6
+  normal_baf_lower_limit: 0.3
+  normal_baf_upper_limit: 0.7
   normal_cn_lower_limit: 1.7
   normal_cn_upper_limit: 2.25
   polyploidy_fraction_limit: 0.2
