@@ -234,7 +234,11 @@ def merge_cnv_dicts(dicts, vaf, annotations, cytobands, chromosomes, filtered_cn
                             cnv_group.append(cnv2)
 
                             for cnv1 in f_cnvs[chrom][caller2]:
-                                if cnv2.start == cnv1.start and cnv2.length == cnv1.length and cnv2.copy_number == cnv1.copy_number:
+                                if (
+                                    cnv2.start == cnv1.start and
+                                    cnv2.length == cnv1.length and
+                                    cnv2.copy_number == cnv1.copy_number
+                                ):
                                     # If the overlapping CNV is part of the filtered
                                     # set, the whole group should pass the filter.
                                     pass_filter = True
