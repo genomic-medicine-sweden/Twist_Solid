@@ -148,6 +148,9 @@ def get_cnvs(vcf_filename, skip=None):
             continue
         if isinstance(genes, str):
             genes = [genes]
+        fp_flag = variant.info.get("FP_FLAG")
+        if fp_flag is None:
+            fp_flag = "-"
         cnv = CNV(
             caller,
             variant.chrom,
@@ -157,7 +160,7 @@ def get_cnvs(vcf_filename, skip=None):
             variant.info.get("SVTYPE"),
             variant.info.get("CORR_CN"),
             variant.info.get("BAF"),
-            variant.info.get("FP_FLAG"),
+            fp_flag,
         )
         cnvs[variant.chrom][caller].append(cnv)
     return cnvs
@@ -215,22 +218,26 @@ def merge_cnv_dicts(dicts, vaf, annotations, cytobands, chromosomes, filtered_cn
             for cnv1 in cnvdict[first_caller]:
                 pass_filter = False
 
-                if cnv1 in f_cnvs[chrom][first_caller]:
-                    # The CNV is part of the filtered set, so all overlapping
-                    # CNVs should pass the filter.
-                    pass_filter = True
+                for cnv2 in f_cnvs[chrom][first_caller]:
+                    if cnv1.start == cnv2.start and cnv1.length == cnv2.length and cnv1.copy_number == cnv2.copy_number:
+                        # The CNV is part of the filtered set, so all overlapping
+                        # CNVs should pass the filter.
+                        pass_filter = True
+                        cnv1.fp = cnv2.fp
 
                 cnv_group = [cnv1]
                 for caller2 in rest_callers:
                     for cnv2 in cnvdict[caller2]:
                         if cnv1.overlaps(cnv2):
                             # Add overlapping CNVs from other callers
+                            cnv2.fp = cnv1.fp
                             cnv_group.append(cnv2)
 
-                            if cnv2 in f_cnvs[chrom][caller2]:
-                                # If the overlapping CNV is part of the filtered
-                                # set, the whole group should pass the filter.
-                                pass_filter = True
+                            for cnv1 in f_cnvs[chrom][caller2]:
+                                if cnv2.start == cnv1.start and cnv2.length == cnv1.length and cnv2.copy_number == cnv1.copy_number:
+                                    # If the overlapping CNV is part of the filtered
+                                    # set, the whole group should pass the filter.
+                                    pass_filter = True
 
                 for c in cnv_group:
                     if c in added_cnvs:
