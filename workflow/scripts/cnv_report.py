@@ -221,7 +221,7 @@ def create_tsv_report(
                               (del_1p19q["1p_cnvkit"][0] + del_1p19q["19q_cnvkit"][0]))
                     writer.write(f"\n1p19q\t1p19q\t")
                     writer.write(f"{fraction_1p_cnvkit*100:.0f}%,{fraction_19q_cnvkit*100:.0f}%")
-                    writer.write(f"\tcnvkit\tNA\t{avg_cn:.2f}\t")
+                    writer.write(f"\tcnvkit\tNA\t{avg_cn:.2f}\t-")
                     out_additional_only.write(f"\n1p19q\t1p19q\tNA\tcnvkit\tNA\tNA")
                     nr_writes += 1
             fraction_1p_gatkcnv = del_1p19q["1p_gatkcnv"][0] / del_1p19q["1p"][2]
@@ -232,7 +232,7 @@ def create_tsv_report(
                               (del_1p19q["1p_gatkcnv"][0] + del_1p19q["19q_gatkcnv"][0]))
                     writer.write(f"\n1p19q\t1p19q\t")
                     writer.write(f"{fraction_1p_gatkcnv*100:.0f}%,{fraction_19q_gatkcnv*100:.0f}%")
-                    writer.write(f"\tgatk_cnv\tNA\t{avg_cn:.2f}\t")
+                    writer.write(f"\tgatk_cnv\tNA\t{avg_cn:.2f}\t-")
                     out_additional_only.write(f"\nt1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
                     nr_writes += 1
 
@@ -301,7 +301,7 @@ def create_tsv_report(
                                 (gene_variant_dict[gene][0][1] >= start and gene_variant_dict[gene][0][1] <= end) or
                                 (gene_variant_dict[gene][0][2] >= end and gene_variant_dict[gene][0][2] <= start)
                             ):
-                                writer.write(f"\n{gene}\t{chr}\t{start}-{end}\t{new_caller}\t{AF:.2f}\t{cn:.2f}\t-\t")
+                                writer.write(f"\n{gene}\t{chr}\t{start}-{end}\t{new_caller}\t{AF:.2f}\t{cn:.2f}\t-")
 
             if file_nr == 1:
                 out_vcf.close()
