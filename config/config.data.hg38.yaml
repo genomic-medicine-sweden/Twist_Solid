@@ -32,7 +32,7 @@ arriba_draw_fusion:
 annotate_cnv:
   cnv_amp_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_hg38_240307.bed"
   cnv_loh_genes_validated: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_uppsala_genes_hg38.bed"
-  cnv_loh_genes_all: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes_hg38.bed"
+  cnv_loh_genes_all: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes_240618_hg38.bed"
 
 bcftools_annotate:
   annotation_db: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg38.vcf.gz"
@@ -41,7 +41,7 @@ bcftools_filter_include_region:
   exon: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.bed"
 
 bcftools_filter_exclude_region:
-  blacklist: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnvkit_germline_blacklist_20221221_hg38.bed"
+  blacklist: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnvkit_germline_blacklist_20240613_hg38.bed"
 
 bcftools_id_snps:
   snps_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/ID_SNPs_hg38.bed"
@@ -55,7 +55,7 @@ bwa_mem:
 
 call_small_cnv_deletions:
   blacklist: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/small_deletions_caller_blacklist_hg38.tsv"
-  regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_deletion_genes_hg38.tsv"
+  regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_deletion_genes_240618_hg38.tsv"
 
 call_small_cnv_amplifications:
   regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amplification_genes_hg38_240307.tsv"
@@ -125,6 +125,7 @@ merge_cnv_json:
   annotations:
     - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_hg38.bed"
     - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes_hg38.bed"
+  cytobands: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cytoBand.hg38.txt"
 
 mosdepth:
   extra: "--no-per-base --fast-mode"

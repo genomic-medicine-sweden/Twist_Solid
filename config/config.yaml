@@ -73,7 +73,7 @@ cnvkit_scatter:
 
 cnv_html_report:
   show_table: true
-  show_cytobands: true
+  cytobands: true
   extra_tables:
     - name: Small CNVs and 1p19q
       description: >

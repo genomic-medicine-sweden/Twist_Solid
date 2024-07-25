@@ -649,11 +649,11 @@ use rule cnv_html_report from reports as reports_cnv_html_report with:
         tc_file=get_tc_file,
         extra_table_files=[t["path"] for t in config.get("cnv_html_report", {}).get("extra_tables", [])],
     params:
+        extra_tables=config.get("cnv_html_report", {}).get("extra_tables", []),
         include_table=config.get("cnv_html_report", {}).get("show_table", True),
-        include_cytobands=config.get("cnv_html_report", {}).get("show_cytobands", True),
+        include_cytobands=config.get("cnv_html_report", {}).get("cytobands", True),
         tc=get_tc,
         tc_method=lambda wildcards: wildcards.tc_method,
-        extra_tables=config.get("cnv_html_report", {}).get("extra_tables", []),
 
 
 rule merge_cnv_json:
