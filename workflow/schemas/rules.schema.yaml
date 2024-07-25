@@ -28,7 +28,7 @@ properties:
         properties:
           vcf:
             type: string
-            description: Vcf with pileup informations for all positions in input bed file
+            description: Vcf with pileup information for all positions in input bed file
 
   call_small_cnv_amplifications:
     type: object
@@ -50,7 +50,7 @@ properties:
         properties:
           amplifications:
             type: string
-            description: Text file with the called amplifictions
+            description: Text file with the called amplifications
 
   call_small_cnv_deletions:
     type: object

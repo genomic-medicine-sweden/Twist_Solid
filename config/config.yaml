@@ -86,7 +86,6 @@ cnv_html_report:
         Also warnings of baseline skewness and detection of polyploidy in the sample.
       path: "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.cnv_loh_genes_all.cnv_chromosome_arms.tsv"
 
-
 cnv_tsv_report:
   amp_cn_limit: 6.0
   baseline_fraction_limit: 0.2
@@ -100,6 +99,7 @@ cnv_tsv_report:
   normal_cn_lower_limit: 1.7
   normal_cn_upper_limit: 2.25
   polyploidy_fraction_limit: 0.2
+  max_cnv_fp_size: 15000000
 
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"

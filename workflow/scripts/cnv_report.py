@@ -6,10 +6,10 @@ from hydra_genetics.utils.io import utils
 log = logging.getLogger()
 
 
-def check_fp(chrom, start, end, gatk_cnr_dict, cn):
+def check_fp(chrom, start, end, gatk_cnr_dict, cn, max_cnv_fp_size):
     FP_flag = "-"
     cnv_length = end - start + 1
-    if cnv_length > 15000000:
+    if cnv_length > max_cnv_fp_size:
         return "-"
     gatk_data = gatk_cnr_dict[chrom]
     i = 0
@@ -58,7 +58,7 @@ def create_tsv_report(
     input_vcfs, input_org_vcfs, input_del, input_amp, in_chrom_arm_size, in_gatk_cnr, amp_cn_limit,
     output_txt, out_additional_only, out_tsv_chrom_arms, out_vcf_filename, del_1p19q_cn, del_1p19q_chr_arm_fraction,
     chr_arm_fraction, del_chr_arm_cn_limit, amp_chr_arm_cn_limit, normal_cn_lower_limit, normal_cn_upper_limit,
-    normal_baf_lower_limit, normal_baf_upper_limit, baseline_fraction_limit, polyploidy_fraction_limit, TC
+    normal_baf_lower_limit, normal_baf_upper_limit, baseline_fraction_limit, polyploidy_fraction_limit, TC, max_cnv_fp_size,
 ):
     chrom_arm_size = {}
     chrom_arm_del = {}
@@ -277,7 +277,7 @@ def create_tsv_report(
                             both_callers = True
                 FP_flag = "-"
                 if caller == "cnvkit" and not both_callers:
-                    FP_flag = check_fp(chr, start, end, gatk_cnr_dict, cn)
+                    FP_flag = check_fp(chr, start, end, gatk_cnr_dict, cn, max_cnv_fp_size)
                 if file_nr == 1:
                     variant.info["FP_FLAG"] = FP_flag
                     out_vcf.write(variant)
@@ -396,6 +396,7 @@ if __name__ == "__main__":
     normal_baf_upper_limit = snakemake.params.normal_baf_upper_limit
     baseline_fraction_limit = snakemake.params.baseline_fraction_limit
     polyploidy_fraction_limit = snakemake.params.polyploidy_fraction_limit
+    max_cnv_fp_size = snakemake.params.max_cnv_fp_size
     TC = float(snakemake.params.tc)
     with open(snakemake.output.tsv_additional_only, "w") as out_additional_only:
         create_tsv_report(
@@ -422,4 +423,5 @@ if __name__ == "__main__":
             baseline_fraction_limit,
             polyploidy_fraction_limit,
             TC,
+            max_cnv_fp_size,
         )
