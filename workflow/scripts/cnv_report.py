@@ -9,7 +9,7 @@ log = logging.getLogger()
 def check_fp(chrom, start, end, gatk_cnr_dict, cn):
     FP_flag = "-"
     cnv_length = end - start + 1
-    if cnv_length > 20000000:
+    if cnv_length > 15000000:
         return "-"
     gatk_data = gatk_cnr_dict[chrom]
     i = 0
