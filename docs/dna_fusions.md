@@ -6,7 +6,7 @@ See the [fusions hydra-genetics module](https://hydra-genetics-fusions.readthedo
 
 ## Pipeline output files:
 
-* `results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv`
+* `results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv` (with UMI option only)
 * `results/dna/fusion/{sample}_{type}.fuseq_wes.report.csv`
 
 ## Fusions calling using GeneFuse
@@ -82,7 +82,7 @@ DNA fusion calling is performed by **[FuSeq_WES](https://github.com/nghiavtr/FuS
 | time | "24:00:00" |
 
 ## FuSeq_WES Filtering and report
-The output from FuSeq_WES is filtered and then reported into a fusion report using the in-house script [filter_report_fuseq_wes.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/filter_report_fuseq_wes.py) ([rule and config](rules.md#report_fuseq_wes)). The following filter criteria is used:
+The output from FuSeq_WES is filtered and then reported into a fusion report using the in-house script [filter_report_fuseq_wes.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/filter_report_fuseq_wes.py) ([rule and config](softwares.md#report_fuseq_wes)). The following filter criteria is used:
 
 ### Configuration
 **Software settings**
@@ -91,6 +91,7 @@ The output from FuSeq_WES is filtered and then reported into a fusion report usi
 |-------------|-|-|
 | filter_on_fusiondb | True | Only keep fusions found in the fusion database |
 | gene_white_list | [`fuseq_wes_gene_white_list.txt`](references.md#fuseq_wes_white_list) | Only keep fusions with at least one gene in the gene white list |
+| gene_fusion_black_list | [`false_positive_fusion_pairs.txt`](references.md#gene_fusion_black_list) | Remove fusions pairs in fusion pair gene black list |
 | gtf | [`hg19.refGene.gtf`](references.md#filter_report_fuseq_wes) | Transcript annotation |
 | min_support | 30 | Minimal total number of supporting reads |
 | transcript_black_list | [`fuseq_wes_transcript_black_list.txt`](references.md#fuseq_wes_transcript_black_list) | Transcripts that should not be used in annotation |

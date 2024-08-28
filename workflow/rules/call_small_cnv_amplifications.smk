@@ -31,8 +31,6 @@ rule call_small_cnv_amplifications:
         time=config.get("call_small_cnv_amplifications", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("call_small_cnv_amplifications", {}).get("container", config["default_container"])
-    conda:
-        "../envs/call_small_cnv_deletions.yaml"
     message:
         "{rule}: call small amplifications in cnv data into {output.amplifications}"
     script:

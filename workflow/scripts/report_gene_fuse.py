@@ -1,4 +1,3 @@
-
 fusions = open(snakemake.input.fusions)
 filter_fusions = open(snakemake.params.filter_fusions)
 report = open(snakemake.output.report, "w")

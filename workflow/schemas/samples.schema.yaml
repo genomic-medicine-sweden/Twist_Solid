@@ -6,7 +6,10 @@ properties:
     description: sample id
   tumor_content:
     type: string
-    description: Tumor content
+    description: tumor content
+  deduplication:
+    type: string
+    description: optional, what type of deduplication should be used (umi = umi-deduplication, not specified or not umi = picard mark duplicate)
 required:
   - sample
   - tumor_content

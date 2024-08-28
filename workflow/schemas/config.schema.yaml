@@ -82,31 +82,65 @@ properties:
           Defines both the genomic position of the genes and their surrounding regions that should be analysed for this gene.
           The size of the analysis region is dependent on the density of the backbone but should at least 20 backbone SNPs.
           40 SNPs is used in Pipeline.
-      window_size:
-        type: integer
-        description: Number of data points included in the sliding window
-      region_max_size:
-        type: integer
-        description: Max number of data points of deletion to be reported
+      blacklist:
+        type: string
+        description: File with gene regions that should be filtered (Format is header + gene\tchr\tpos1\tpos2)
       min_nr_stdev_diff:
         type: number
         description: Min number of standard deviations difference between the deletion and surrounding data points in region
       min_log_odds_diff:
         type: number
         description: Min log2ratio difference between the deletion and the average of surrounding data points in region
+      region_max_size:
+        type: integer
+        description: Max number of data points of deletion to be reported
+      window_size:
+        type: integer
+        description: Number of data points included in the sliding window
 
   cnv_tsv_report:
     type: object
     properties:
+      amp_chr_arm_cn_limit:
+        type: number
+        description: Lower limit of copy number to be included in calculation of chr_arm_fraction for duplications
+      baseline_fraction_limit:
+        type: number
+        description: Lower limit of fraction with neutral copy segments and neutral BAF values. A warning of potentially incorrect baseline is reported otherwise.
       container:
         type: string
         description: name or path to docker/singularity container
+      call_small_amplifications_cn_limit:
+        type: number
+        description: Upper limit of copy number to be reported as a small amplification.
+      chr_arm_fraction:
+        type: number
+        description: Fraction of the chromosome arms that needs to be deleted
       del_1p19q_cn_limit:
         type: number
         description: Upper limit of copy number to be included in calculation of del_1p19q_chr_arm_fraction
       del_1p19q_chr_arm_fraction:
         type: number
         description: Fraction of the chromosome arms that needs to be deleted
+      del_chr_arm_cn_limit:
+        type: number
+        description: Upper limit of copy number to be included in calculation of chr_arm_fraction for deletions
+      normal_cn_lower_limit:
+        type: number
+        description: Lower limit of copy number to be counted as a normal segment
+      normal_cn_upper_limit:
+        type: number
+        description: Upper limit of copy number to be counted as a normal segment
+      normal_baf_lower_limit:
+        type: number
+        description: Lower limit of BAF in segment to be counted as a normal segment
+      normal_baf_upper_limit:
+        type: number
+        description: Upper limit of BAF in segment to be counted as a normal segment
+      polyploidy_fraction_limit:
+        type: number
+        description: Upper limit of fraction with aberrant BAF / copy number segment combination. A warning of potential polyploidy is reported otherwise.
+      
 
   cnvkit_batch:
     type: object
@@ -273,15 +307,6 @@ properties:
         type: string
         description: parameters that should be forwarded
 
-  gene_fuse:
-    type: object
-    properties:
-      genes:
-        type: string
-        description: path to gene files used by gene_fuse
-      required:
-        - genes
-
   house_keeping_gene_coverage:
     type: object
     properties:
@@ -314,14 +339,21 @@ properties:
     type: object
     properties:
       hotspot_mutations:
-        type: string
-        description: Text file with hotspot positions and annotations
+        type: object
+        description: List of files with hotspot positions and annotations. The names of the list items are found in the file names as {tag}.
+        properties:
+          all:
+            type: string
+            description: Hotspot list for normal FFPE analysis
+          ENC:
+            type: string
+            description: Hotspot list for ENC FFPE analysis
       report_config:
         type: string
         description: file  defining which fields should be extracted from the annotation
       chr_translation_file:
         type: string
-        description: file used to translate chr to NC id. The format is a tab seperate file with column chr and NC
+        description: file used to translate chr to NC id. The format is a tab separate file with column chr and NC
       levels:
         type: array
         description: |
@@ -584,8 +616,22 @@ properties:
       vep_cache:
         type: string
         description: path to vep cache directory
-      required:
-        - vep_cache
+    required:
+      - vep_cache
+
+  sample_mixup_check:
+    type: object
+    description: parameters for sample_mixup_check
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
 required:
   - samples
@@ -598,13 +644,10 @@ required:
   - filter_vcf
   - gatk_collect_allelic_counts
   - gatk_denoise_read_counts
-  - gene_fuse
   - hotspot_annotation
-  - hotspot_info
   - hotspot_report
   - msisensor_pro
   - multiqc
   - reference
-  - report_gene_fuse
   - trimmer_software
   - vep

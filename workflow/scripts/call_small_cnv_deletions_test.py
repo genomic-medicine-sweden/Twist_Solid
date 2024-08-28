@@ -39,12 +39,13 @@ class TestUnitUtils(unittest.TestCase):
 
         # True call
         cnv_data1 = ".tests/units/gatk_cnv/HD832.HES45_T.test1.tsv"
+        blacklist_file_name = ".tests/integration/DATA/small_deletions_caller_blacklist.tsv"
         regions_file = open(".tests/integration/DATA/cnv_deletion_genes.tsv")
         out_deletions = open(os.path.join(self.tempdir, "HD832.HES45_T.deletions.tsv"), "w")
 
         filter = call_small_cnv_deletions(
             cnv_data1, regions_file, out_deletions, self.window_size, self.region_max_size, self.min_nr_stdev_diff,
-            self.min_log_odds_diff,
+            self.min_log_odds_diff, blacklist_file_name,
         )
 
         out_deletions.close()
@@ -64,13 +65,14 @@ class TestUnitUtils(unittest.TestCase):
     def test_call_small_cnv_deletions_filter(self):
         from call_small_cnv_deletions import call_small_cnv_deletions
 
-        # Filter 1 (Amplifactions)
+        # Filter 1 (Amplifications)
         cnv_data = ".tests/units/gatk_cnv/HD832.HES45_T.filter1.tsv"
+        blacklist_file_name = ".tests/integration/DATA/small_deletions_caller_blacklist.tsv"
         regions_file = open(".tests/integration/DATA/cnv_deletion_genes.tsv")
         out_deletions = open(os.path.join(self.tempdir, "HD832.HES45_T.deletions.tsv"), "w")
         filter = call_small_cnv_deletions(
             cnv_data, regions_file, out_deletions, self.window_size, self.region_max_size, self.min_nr_stdev_diff,
-            self.min_log_odds_diff,
+            self.min_log_odds_diff, blacklist_file_name,
         )
         self._test_call_small_cnv_deletions_filter("Amplification", filter)
         out_deletions.close()
@@ -78,11 +80,12 @@ class TestUnitUtils(unittest.TestCase):
 
         # Filter 2 (Large deletions)
         cnv_data = ".tests/units/gatk_cnv/HD832.HES45_T.filter2.tsv"
+        blacklist_file_name = ".tests/integration/DATA/small_deletions_caller_blacklist.tsv"
         regions_file = open(".tests/integration/DATA/cnv_deletion_genes.tsv")
         out_deletions = open(os.path.join(self.tempdir, "HD832.HES45_T.deletions.tsv"), "w")
         filter = call_small_cnv_deletions(
             cnv_data, regions_file, out_deletions, self.window_size, self.region_max_size, self.min_nr_stdev_diff,
-            self.min_log_odds_diff,
+            self.min_log_odds_diff, blacklist_file_name,
         )
         self._test_call_small_cnv_deletions_filter("Too_large", filter)
         out_deletions.close()
@@ -90,11 +93,12 @@ class TestUnitUtils(unittest.TestCase):
 
         # Filter 4 (Filter deletions not in the actual gene of interest)
         cnv_data = ".tests/units/gatk_cnv/HD832.HES45_T.filter4.tsv"
+        blacklist_file_name = ".tests/integration/DATA/small_deletions_caller_blacklist.tsv"
         regions_file = open(".tests/integration/DATA/cnv_deletion_genes.tsv")
         out_deletions = open(os.path.join(self.tempdir, "HD832.HES45_T.deletions.tsv"), "w")
         filter = call_small_cnv_deletions(
             cnv_data, regions_file, out_deletions, self.window_size, self.region_max_size, self.min_nr_stdev_diff,
-            self.min_log_odds_diff,
+            self.min_log_odds_diff, blacklist_file_name,
         )
         self._test_call_small_cnv_deletions_filter("Not_in_gene", filter)
         out_deletions.close()
@@ -102,11 +106,12 @@ class TestUnitUtils(unittest.TestCase):
 
         # Filter 5 (Filter too short deletions)
         cnv_data = ".tests/units/gatk_cnv/HD832.HES45_T.filter5.tsv"
+        blacklist_file_name = ".tests/integration/DATA/small_deletions_caller_blacklist.tsv"
         regions_file = open(".tests/integration/DATA/cnv_deletion_genes.tsv")
         out_deletions = open(os.path.join(self.tempdir, "HD832.HES45_T.deletions.tsv"), "w")
         filter = call_small_cnv_deletions(
             cnv_data, regions_file, out_deletions, self.window_size, self.region_max_size, self.min_nr_stdev_diff,
-            self.min_log_odds_diff,
+            self.min_log_odds_diff, blacklist_file_name,
         )
         self._test_call_small_cnv_deletions_filter("Too_small", filter)
         out_deletions.close()
@@ -114,11 +119,12 @@ class TestUnitUtils(unittest.TestCase):
 
         # Filter 6 (Filter deletions with positive median)
         cnv_data = ".tests/units/gatk_cnv/HD832.HES45_T.filter6.tsv"
+        blacklist_file_name = ".tests/integration/DATA/small_deletions_caller_blacklist.tsv"
         regions_file = open(".tests/integration/DATA/cnv_deletion_genes.tsv")
         out_deletions = open(os.path.join(self.tempdir, "HD832.HES45_T.deletions.tsv"), "w")
         filter = call_small_cnv_deletions(
             cnv_data, regions_file, out_deletions, self.window_size, self.region_max_size, self.min_nr_stdev_diff,
-            self.min_log_odds_diff,
+            self.min_log_odds_diff, blacklist_file_name,
         )
         self._test_call_small_cnv_deletions_filter("Not_deletion", filter)
         out_deletions.close()
@@ -126,11 +132,12 @@ class TestUnitUtils(unittest.TestCase):
 
         # Filter 7 (Too low difference in log odds ratio)
         cnv_data = ".tests/units/gatk_cnv/HD832.HES45_T.filter7.tsv"
+        blacklist_file_name = ".tests/integration/DATA/small_deletions_caller_blacklist.tsv"
         regions_file = open(".tests/integration/DATA/cnv_deletion_genes.tsv")
         out_deletions = open(os.path.join(self.tempdir, "HD832.HES45_T.deletions.tsv"), "w")
         filter = call_small_cnv_deletions(
             cnv_data, regions_file, out_deletions, self.window_size, self.region_max_size, self.min_nr_stdev_diff,
-            self.min_log_odds_diff,
+            self.min_log_odds_diff, blacklist_file_name,
         )
         self._test_call_small_cnv_deletions_filter("Low_abs_diff", filter)
         out_deletions.close()
@@ -138,11 +145,12 @@ class TestUnitUtils(unittest.TestCase):
 
         # Filter 8 (Too few standard deviations in difference)
         cnv_data = ".tests/units/gatk_cnv/HD832.HES45_T.test1.tsv"
+        blacklist_file_name = ".tests/integration/DATA/small_deletions_caller_blacklist.tsv"
         regions_file = open(".tests/integration/DATA/cnv_deletion_genes.tsv")
         out_deletions = open(os.path.join(self.tempdir, "HD832.HES45_T.deletions.tsv"), "w")
         filter = call_small_cnv_deletions(
             cnv_data, regions_file, out_deletions, self.window_size, self.region_max_size, 100,
-            self.min_log_odds_diff,
+            self.min_log_odds_diff, blacklist_file_name,
         )
         self._test_call_small_cnv_deletions_filter("Low_nr_std_diff", filter)
         out_deletions.close()
@@ -150,12 +158,26 @@ class TestUnitUtils(unittest.TestCase):
 
         # Filter 9 (Filter deletions with too few data points outside to calculate median and standard deviations)
         cnv_data = ".tests/units/gatk_cnv/HD832.HES45_T.filter8.tsv"
+        blacklist_file_name = ".tests/integration/DATA/small_deletions_caller_blacklist.tsv"
         regions_file = open(".tests/integration/DATA/cnv_deletion_genes.tsv")
         out_deletions = open(os.path.join(self.tempdir, "HD832.HES45_T.deletions.tsv"), "w")
         filter = call_small_cnv_deletions(
             cnv_data, regions_file, out_deletions, self.window_size, self.region_max_size, self.min_nr_stdev_diff,
-            self.min_log_odds_diff,
+            self.min_log_odds_diff, blacklist_file_name,
         )
         self._test_call_small_cnv_deletions_filter("Too_few_outside", filter)
+        out_deletions.close()
+        regions_file.close()
+
+        # Filter 10 (Filter blacklisted deletions)
+        cnv_data = ".tests/units/gatk_cnv/HD832.HES45_T.filter10.tsv"
+        blacklist_file_name = ".tests/integration/DATA/small_deletions_caller_blacklist.tsv"
+        regions_file = open(".tests/integration/DATA/cnv_deletion_genes2.tsv")
+        out_deletions = open(os.path.join(self.tempdir, "HD832.HES45_T.deletions.tsv"), "w")
+        filter = call_small_cnv_deletions(
+            cnv_data, regions_file, out_deletions, self.window_size, self.region_max_size, self.min_nr_stdev_diff,
+            self.min_log_odds_diff, blacklist_file_name,
+        )
+        self._test_call_small_cnv_deletions_filter("Blacklist", filter)
         out_deletions.close()
         regions_file.close()

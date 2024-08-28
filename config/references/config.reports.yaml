@@ -1,0 +1,5 @@
+---
+
+ cnv_html_report:
+   template:
+     path: config/reports/cnv_report_template.html

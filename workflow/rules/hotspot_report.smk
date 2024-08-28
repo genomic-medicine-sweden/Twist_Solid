@@ -9,13 +9,15 @@ __license__ = "GPL-3"
 
 rule hotspot_report:
     input:
-        hotspots=config["hotspot_report"]["hotspot_mutations"],
-        vcf="annotation/add_multi_snv_in_codon/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf.gz",
-        vcf_index="annotation/add_multi_snv_in_codon/{sample}_{type}.background_annotation.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf.gz.tbi",
+        hotspots=lambda wildcards: config["hotspot_report"]["hotspot_mutations"][wildcards.tag],
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf.gz",
+        vcf_index="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated.vcf.gz.tbi",
+        vcf_file_wo_pick="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated_wo_pick.vcf.gz",
+        vcf_file_wo_pick_index="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted.vep_annotated_wo_pick.vcf.gz.tbi",
         gvcf="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz",
         gvcf_index="qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz.tbi",
     output:
-        report=temp("qc/hotspot_report/{sample}_{type}.output.tsv"),
+        report=temp("qc/hotspot_report/{sample}_{type}.{tag}.output.tsv"),
     params:
         levels=config.get("hotspot_report", {}).get("levels", []),
         sample_name=lambda wildcards: "%s_%s" % (wildcards.sample, wildcards.type),
@@ -23,10 +25,11 @@ rule hotspot_report:
         chr_translation_file=config.get("hotspot_report", {})["chr_translation_file"],
         extra=config.get("hotspot_report", {}).get("extra", ""),
     log:
-        "qc/hotspot_report/{sample}_{type}.output.tsv.log",
+        "qc/hotspot_report/{sample}_{type}.{tag}.output.tsv.log",
     benchmark:
         repeat(
-            "qc/hotspot_report/{sample}_{type}.output.benchmark.tsv", config.get("hotspot_report", {}).get("benchmark_repeats", 1)
+            "qc/hotspot_report/{sample}_{type}.{tag}.output.benchmark.tsv",
+            config.get("hotspot_report", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("hotspot_report", {}).get("threads", config["default_resources"]["threads"])
     resources:
@@ -37,9 +40,7 @@ rule hotspot_report:
         time=config.get("hotspot_report", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("hotspot_report", {}).get("container", config["default_container"])
-    conda:
-        "../envs/hotspot_report.yaml"
     message:
-        "{rule}: Do stuff on twist_dna_solid_uppsala/{rule}/{wildcards.sample}_{wildcards.type}.input"
+        "{rule}: Make a coverage and mutations report: {output.report}"
     script:
         "../scripts/hotspot_report.py"

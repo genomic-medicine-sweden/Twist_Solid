@@ -17,6 +17,12 @@ bwa_mem:
   threads: 10
   time: "8:00:00"
 
+bwa_mem_realign_consensus_reads:
+  mem_mb: 61440
+  mem_per_cpu: 6144
+  threads: 10
+  time: "8:00:00"
+
 fastp_pe:
   threads: 5
   mem_mb: 30720
@@ -27,6 +33,15 @@ fastp_pe_arriba:
   mem_mb: 30720
   mem_per_cpu: 6144
 
+fgbio_call_and_filter_consensus_reads:
+  threads: 3
+  mem_mb: 18432
+  mem_per_cpu: 6144
+  time: "8:00:00"
+
+fgbio_group_reads_by_umi:
+  time: "8:00:00"
+
 fuseq_wes:
   threads: 2
   mem_mb: 12288
@@ -36,12 +51,6 @@ fusioncatcher:
   threads: 10
   time: "16:00:00"
   mem_mb: 61440
-  mem_per_cpu: 6144
-
-vep:
-  threads: 5
-  time: "6:00:00"
-  mem_mb: 30720
   mem_per_cpu: 6144
 
 fastqc:
@@ -67,9 +76,6 @@ gene_fuse:
   mem_mb: 36864
   mem_per_cpu: 6144
 
-vardict:
-  time: "48:00:00"
-
 star:
   threads: 5
   time: "8:00:00"
@@ -78,6 +84,15 @@ star:
 
 star_fusion:
   threads: 5
-  time: "8:00:00"
+  time: "16:00:00"
+  mem_mb: 30720
+  mem_per_cpu: 6144
+
+vardict:
+  time: "48:00:00"
+
+vep:
+  threads: 5
+  time: "6:00:00"
   mem_mb: 30720
   mem_per_cpu: 6144

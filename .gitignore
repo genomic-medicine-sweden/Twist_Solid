@@ -12,4 +12,14 @@ venv
 
 docs/changelog.md
 docs/license.md
+docs/includes/config.yaml
+docs/includes/resources.yaml
+
 site/
+
+*.sif
+ref_dat
+
+*.gz
+*.sif
+ref_data

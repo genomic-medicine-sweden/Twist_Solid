@@ -1,0 +1,164 @@
+#decimalPoint_format: ','
+extra_fn_clean_exts: ##from this until end
+    - '.duplication_metrics'
+    - type: regex
+      pattern: '_fastq[12]'
+#extra_fn_clean_trim:   #if found in beginning or end
+#fn_ignore_dirs:
+#fn_ignore_files:
+
+custom_content:
+  order:
+    - qc-stats
+    - fastqc
+    - fastp
+    - samtools
+    - picard
+
+custom_data:
+  contamination_table:
+    file_format: "tsv"
+    section_name: "Contamination"
+    description: "This data comes from files acommpanied by a mutliqc_config_dna.yaml file for configuration"
+    plot_type: "generalstats"
+    pconfig:
+      - contamination:
+          min: 0
+          max: 0.1
+          scale: "RdYlGn-rev"
+sp:
+  contamination_table:
+    fn: "*.contamination.table"
+
+table_columns_visible:
+  Picard:
+    PCT_PF_READS_ALIGNED: True
+    FOLD_ENRICHMENT: False
+    PCT_TARGET_BASES_30X: False
+    summed_median: False
+    summed_mean: False
+    PERCENT_DUPLICATION: True
+  Samtools:
+    error_rate: False
+    non-primary_alignments: False
+    reads_mapped: False
+    reads_mapped_percent: False
+    reads_properly_paired_percent: False
+    reads_MQ0_percent: False
+    raw_total_sequences: False
+  FastQC:
+    percent_duplicates: False
+    percent_gc: False
+    avg_sequence_length: False
+    percent_fails: False
+    total_sequences: False
+
+multiqc_cgs:
+  Picard:
+    PF_READS_ALIGNED:
+      title: "M Aligned reads"
+      description: "Number of million reads in bam from Picard"
+      format: "{:.1f}"
+      shared_key: "read_count"
+    PERCENT_DUPLICATION:
+      title: "Duplicates [%]"
+      description: "Duplicates [%] from Picard stats (MarkDuplicates)"
+      min: 0
+      max: 0.4
+      scale: "RdYlGn-rev"
+      format: "{:.1%}"
+    PCT_SELECTED_BASES:
+      title: "Bases on exon target [%]"
+      description: "Bases on exon target [%] from Picard"
+      min: 0.5
+      max: 0.7
+      scale: "RdYlGn"
+      format: "{:.1%}"
+    PCT_USABLE_BASES_ON_TARGET:
+      title: "Usable bases [%]"
+      description: "Bases aligned, on exon target, and dedup [%] from Picard"
+      min: 0
+      max: 0.2
+      scale: "RdYlGn"
+      format: "{:.1%}"
+    PCT_TARGET_BASES_100X:
+      title: "Exon target bases over 100X [%]"
+      description: "Exon target bases over 100X [%] from Picard"
+      min: 0.9
+      max: 1.0
+      scale: "RdYlGn"
+      format: "{:.1%}"
+    PCT_TARGET_BASES_500X:
+      title: "Exon target bases over 500X [%]"
+      description: "Exon target bases over 500X [%] from Picard"
+      min: 0.0
+      max: 1.0
+      scale: "RdYlGn"
+      format: "{:.1%}"
+    MEAN_TARGET_COVERAGE:
+      title: "Mean exon target coverage"
+      description: "Mean exon target coverage from picard"
+      format: "{:.1f}"
+    MEDIAN_TARGET_COVERAGE:
+      title: "Median exon target coverage"
+      description: "Median exon target coverage from picard"
+    MEDIAN_INSERT_SIZE:
+      title: "Median insert size"
+      description: "Median insert size from Picard"
+      min: 70
+      max: 200
+      scale: "RdYlGn"
+      format: "{:.1f}"
+    STANDARD_DEVIATION:
+      title: "Insert size s.d."
+      description: "Insert size standard deviation from Picard"
+      min: 0
+      max: 150
+      scale: "RdYlGn-rev"
+      format: "{:.1f}"
+    AT_DROPOUT:
+      title: "AT-dropout [%]"
+      description: "AT-dropout [%] from Picard"
+      min: 0
+      max: 5
+      scale: "RdYlGn-rev"
+      format: "{:.3f}"
+    GC_DROPOUT:
+      title: "GC-dropout [%]"
+      description: "GC-dropout [%] from Picard"
+      min: 0
+      max: 10
+      scale: "RdYlGn-rev"
+      format: "{:.3f}"
+    ZERO_CVG_TARGETS_PCT:
+      title: "Target bases with zero coverage [%]"
+      description: "Target bases with zero coverage [%] from Picard"
+      min: 0
+      max: 0.05
+      scale: "RdYlGn-rev"
+      format: "{:.2%}"
+    FOLD_80_BASE_PENALTY:
+      title: "FOLD-80"
+      description: "FOLD-80 penalty from picard"
+      min: 1
+      max: 3
+      scale: "RdYlGn-rev"
+      format: "{:.1f}"
+
+table_columns_placement:
+  Picard:
+    PF_READS_ALIGNED: 900
+    PCT_PF_READS_ALIGNED: 910
+    PERCENT_DUPLICATION: 920
+    PCT_SELECTED_BASES: 930
+    PCT_USABLE_BASES_ON_TARGET: 940
+    PCT_TARGET_BASES_100X: 950
+    PCT_TARGET_BASES_500X: 960
+    MEAN_TARGET_COVERAGE: 970
+    MEDIAN_TARGET_COVERAGE: 980
+    MEDIAN_INSERT_SIZE: 990
+    STANDARD_DEVIATION: 1000
+    AT_DROPOUT: 1010
+    GC_DROPOUT: 1020
+    ZERO_CVG_TARGETS_PCT: 1030
+    FOLD_80_BASE_PENALTY: 1040

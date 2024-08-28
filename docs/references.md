@@ -1,5 +1,31 @@
 # References, panel of normals and design files
 
+## Easy setup
+
+### Download data
+Use hydra-genetics to setup reference files. Remember to update config/config.data.hg19.yaml and include it when running an analysis.
+```bash
+# make sure hydra-genetics is available
+# make sure that TMPDIR points to a location with a lot of storage, it
+# will be required to fetch reference data
+export TMPDIR=/PATH_TO_STORAGE
+# NextSeq
+ hydra-genetics --debug references download -o design_and_ref_files -v config/references/design_files.hg19.yaml -v config/references/nextseq.hg19.pon.yaml -v config/references/references.hg19.yaml
+
+ #NovaSeq, not all files are prepare for novaseq
+ hydra-genetics references download -o design_and_ref_files -v config/references/design_files.hg19.yaml -v config/references/novaseq.hg19.pon.yaml -v config/references/references.hg19.yaml
+
+```
+
+### Validate if data requires update
+
+To validate if all design and reference files are up to date the following command can be run, assuming that they are store at the same parent folder.
+```bash
+# This will make sure that all design and reference files exists and haven't changed
+# Warnings for possible file PATH/hydra-genetics and missing tbi files in config can be ignored
+hydra-genetics --debug references validate -c config/config.yaml -c config/config.data.hg19.yaml -v config/references/design_files.hg19.yaml -v config/references/nextseq.hg19.pon.yaml -v config/references/references.hg19.yaml  -p ${PATH_TO_design_and_ref_files} 
+```
+
 ## References overview
 The following reference files, panel of normals and design files are needed to run the Twist Solid Pipeline:
 
@@ -53,6 +79,7 @@ The following reference files, panel of normals and design files are needed to r
 |_ _| <div id="fuseq_wes_paralog_db">paralog database</div> | `ensmbl_paralogs_grch37.RData` |
 | <div id="filter_report_fuseq_wes">filter_report_fuseq_wes</div> | transcript annotation | `hg19.refGene.gtf` |
 | | <div id="fuseq_wes_white_list">gene white list</div> | `fuseq_wes_gene_white_list.txt` |
+| | <div id="gene_fusion_black_list">fusion gene pair black list</div> | `false_positive_fusion_pairs.txt` |
 |_ _| <div id="fuseq_wes_transcript_black_list">transcript black list</div> | `fuseq_wes_transcript_black_list.txt` |
 | <div id="hotspot_file">hotspot_annotation</div> | hotspots | `Hotspots_combined_regions_nodups.csv` |
 | <div id="hotspot_report">hotspot_report</div> | hotspot_mutations | `Hotspots_combined_regions_nodups.csv` |
@@ -214,7 +241,7 @@ The `units.tsv` file needs to be adapted depending which panel of normals are cr
 
 | Header | Data | Description |
 |-|-|-|
-| cnv_vcf | `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.svdb_query.vcf` | SVDB merged CNV vcf files created as output of the <br />Twist Solid pipeline from both normal and <br />tumor FFPE samples |
+| cnv_vcf | `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.svdb_query.vcf` | SVDB merged CNV vcf files created as output of the <br />Twist Solid pipeline from both normal and <br />tumor FFPE samples |
 
 **Software settings**
 
@@ -270,7 +297,7 @@ singularity docker://hydragenetics/purecn:2.2.0 Rscript $PURECN/IntervalFile.R -
 | intervals | Target interval file | File created by the command described above |
 
 ## Pipeline specific files
-These are design files and other pipeline specific only available to download from the Uppsala Owncloud solution.
+These are design files and other pipeline specific files only available to download from out [git](https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files) or the Uppsala Owncloud solution.
 
 | File type | File | Description |
 |-|-|-|
@@ -286,6 +313,7 @@ These are design files and other pipeline specific only available to download fr
 | | `filter_fusions_20221114.csv` | Filtering criteria for false positive prone fusion partners |
 | FuSeq_WES | `fuseq_params.txt` | Filtering parameters used by FuSeq_WES |
 | FuSeq_WES_report | `fuseq_wes_gene_white_list.txt` | Gene list for filtering of fusion |
+| | `false_positive_fusion_pairs.txt` | Gene list for filtering of fusion |
 |_ _| `fuseq_wes_transcript_black_list.txt` | Transcripts that should not be used in annotation |
 | CNVkit | `cnvkit_germline_blacklist_20221221.bed` | List of regions excluded from the germline vcf file |
 | GATK CNV | `gnomad_SNP_0.001_target.annotated.interval_list` | Bed file with CNV backbone SNPs which are selected from <br />GnomAD with over 0.1% global population frequency |
