@@ -58,6 +58,9 @@ fastqc:
   mem_mb: 12288
   mem_per_cpu: 6144
 
+jumble_run:
+  threads: 20
+
 manta_run_workflow_t:
   threads: 4
   time: "8:00:00"

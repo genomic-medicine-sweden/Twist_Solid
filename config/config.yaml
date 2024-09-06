@@ -189,6 +189,18 @@ gatk_mutect2_merge_stats:
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
 
+jumble_cnvkit_call:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
+jumble_run:
+  container: "docker://hydragenetics/jumble:240530"
+  normal_reference: ""
+
+jumble_vcf:
+  dup_limit: 2.5
+  het_del_limit: 1.5
+  hom_del_limit: 0.5
+
 hotspot_report:
   report_config: "config/reports/hotspot_report.yaml"
   levels:
