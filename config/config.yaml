@@ -95,8 +95,8 @@ cnv_tsv_report:
   chr_arm_fraction: 0.3
   del_chr_arm_cn_limit: 1.4
   amp_chr_arm_cn_limit: 2.5
-  normal_baf_lower_limit: 0.4
-  normal_baf_upper_limit: 0.6
+  normal_baf_lower_limit: 0.3
+  normal_baf_upper_limit: 0.7
   normal_cn_lower_limit: 1.7
   normal_cn_upper_limit: 2.25
   polyploidy_fraction_limit: 0.2
@@ -194,7 +194,7 @@ jumble_cnvkit_call:
 
 jumble_run:
   container: "docker://hydragenetics/jumble:240530"
-  normal_reference: ""
+  normal_reference: "/projects/wp1/nobackup/ngs/utveckling/analys/2024/jumble/jumble_PoN/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.230222.bed.reference.RDS"
 
 jumble_vcf:
   dup_limit: 2.5
@@ -342,17 +342,20 @@ svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
   tc_method:
     - name: pathology_purecn
-      cnv_caller:
+      priority:
         - cnvkit
         - gatk
+        - jumble
     - name: purecn
-      cnv_caller:
+      priority:
         - cnvkit
         - gatk
+        - jumble
     - name: pathology
-      cnv_caller:
+      priority:
         - cnvkit
         - gatk
+        - jumble
   overlap: 1 #Just merge the two vcf-files without merging regions
   extra: "--pass_only" #Just merge the two vcf-files without merging regions
 

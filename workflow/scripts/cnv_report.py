@@ -41,7 +41,7 @@ def create_tsv_report(
         file1 = True
         for input_org_vcf in input_org_vcfs:
             del_1p19q = {
-                "1p_cnvkit": 0, "19q_cnvkit": 0, "1p_gatkcnv": 0, "19q_gatkcnv": 0,
+                "1p_cnvkit": 0, "19q_cnvkit": 0, "1p_gatkcnv": 0, "19q_gatkcnv": 0, "1p_jumble": 0, "19q_jumble": 0,
                 "1p": [0, 125000000, 125000000], "19q": [26500000, 59128983, 32628983],
             }
             log.info(f"Opening vcf file: {input_org_vcf}")
@@ -85,11 +85,15 @@ def create_tsv_report(
                         del_1p19q["1p_cnvkit"] += p_size
                     elif caller == "gatk":
                         del_1p19q["1p_gatkcnv"] += p_size
+                    elif caller == "jumble":
+                        del_1p19q["1p_jumble"] += p_size
                 if cn < del_1p19q_cn and chr == "chr19" and start >= del_1p19q["19q"][0] and start <= del_1p19q["19q"][1]:
                     if caller == "cnvkit":
                         del_1p19q["19q_cnvkit"] += q_size
                     elif caller == "gatk":
                         del_1p19q["19q_gatkcnv"] += q_size
+                    elif caller == "jumble":
+                        del_1p19q["19q_jumble"] += q_size
                 # Large chromosome CNV
                 if file1:
                     if caller == "cnvkit":
