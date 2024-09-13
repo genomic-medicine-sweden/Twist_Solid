@@ -498,7 +498,8 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.6.0")
+        #get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.3.1")
+        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="447c57b")
     config:
         config
 
@@ -605,23 +606,6 @@ use rule gatk_to_vcf from cnv_sv as cnv_sv_gatk_to_vcf with:
         tc=get_tc,
 
 
-use rule jumble_run from cnv_sv as cnv_sv_jumble_run with:
-    input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
-
-
-use rule jumble_cnvkit_call from cnv_sv as cnv_sv_jumble_cnvkit_call with:
-    input:
-        segment="cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.cns",
-        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
-        tc_file=get_tc_file,
-    params:
-        extra=config.get("jumble_cnvkit_call", {}).get("extra", ""),
-        tc=get_tc,
-
-
 use rule purecn from cnv_sv as cnv_sv_purecn with:
     input:
         unpack(cnv_sv.get_purecn_inputs),
@@ -631,8 +615,7 @@ use rule purecn from cnv_sv as cnv_sv_purecn with:
 
 module reports:
     snakefile:
-        #get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.4.1")
-        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="3e79c25")
+        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.4.1")
     config:
         config
 

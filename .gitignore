@@ -1,6 +1,5 @@
 .snakemake
 .tests/integration/.snakemake
-.tests/integration/results/versions
 
 .vscode
 .idea
