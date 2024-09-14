@@ -49,14 +49,12 @@ for vcf_filename in vcf_rna_filenames:
 for rna_sample in rna_samples:
     for dna_sample in dna_samples:
         rna_samples[rna_sample][dna_sample] = 0
-        i = 0
         for key in vcf_dict_rna[rna_sample]:
             GT_rna = vcf_dict_rna[rna_sample][key]
             if key in vcf_dict_dna[dna_sample]:
                 GT_dna = vcf_dict_dna[dna_sample][key]
                 if GT_rna == GT_dna:
                     rna_samples[rna_sample][dna_sample] += 1
-                i += 1
 
 report.write("RNA_sample\tDNA_sample\tnr_matches\t%_match\tmatch\n")
 for rna_sample in rna_samples:
