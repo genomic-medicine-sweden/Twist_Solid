@@ -626,8 +626,7 @@ use rule purecn from cnv_sv as cnv_sv_purecn with:
 
 module reports:
     snakefile:
-        #get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.4.1")
-        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="065fc92")
+        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.5.0")
     config:
         config
 

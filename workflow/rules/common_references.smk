@@ -117,6 +117,10 @@ def get_bams(units: pandas.DataFrame, name: str) -> typing.List[str]:
     return get_files(units, name, "alignment/samtools_merge_bam/%s_%s.bam")
 
 
+def get_counts(units: pandas.DataFrame, name: str) -> typing.List[str]:
+    return get_files(units, name, "alignment/jumble_count/%s_%s.bam.counts.RDS")
+
+
 def get_hdf5(units: pandas.DataFrame, name: str) -> typing.List[str]:
     return get_files(units, name, "references/collect_read_counts/%s_%s.counts.hdf5")
 
