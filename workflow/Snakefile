@@ -34,6 +34,7 @@ ruleorder: snv_indels_bcftools_sort > snv_indels_bgzip
 ruleorder: snv_indels_gatk_mutect2_gvcf > alignment_samtools_sort
 ruleorder: snv_indels_bgzip > cnv_sv_bgzip
 ruleorder: snv_indels_tabix > cnv_sv_tabix
+ruleorder: annotation_add_mosdepth_coverage_to_gvcf > snv_indels_bgzip
 
 
 wildcard_constraints:
@@ -233,7 +234,8 @@ use rule gatk_mutect2_gvcf from snv_indels as snv_indels_gatk_mutect2_gvcf with:
 
 module annotation:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v1.0.1")
+        #get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.1.0")
+        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="171d978")
     config:
         config
 
@@ -490,8 +492,8 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        #get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.3.1")
-        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.6.0")
+        #get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.6.0")
+        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="8c1fa42")
     config:
         config
 
@@ -625,7 +627,7 @@ use rule purecn from cnv_sv as cnv_sv_purecn with:
 module reports:
     snakefile:
         #get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.4.1")
-        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="3e79c25")
+        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="065fc92")
     config:
         config
 

@@ -10,8 +10,8 @@ rule cnv_tsv_report:
         chrom_arm_size=config.get("cnv_tsv_report", {}).get("chrom_arm_size", ""),
         deletions="cnv_sv/call_small_cnv_deletions/{sample}_{type}.deletions.tsv",
         org_vcfs=[
-            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf",
-            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.vcf",
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz",
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.{tag}.vcf.gz",
         ],
         tc_file=get_tc_file,
         vcfs=[
