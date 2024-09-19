@@ -155,19 +155,6 @@ use rule cnvkit_build_normal_reference from references as references_cnvkit_buil
 # use bam files create by pipeline: alignment/samtools_merge_bam/{sample}_{type}.bam
 use rule jumble_reference from references as references_jumble_reference with:
     input:
-        bams=lambda wildcards: get_bams(units, "cnvkit_pon"),
-        target="references/cnvkit_create_targets/cnvkit_manifest.target.bed",
-        antitarget="references/cnvkit_create_anti_targets/cnvkit_manifest.antitarget.bed",
-        ref=config.get("reference", {}).get("fasta", ""),
-        mappability=config.get("reference", {}).get("mappability", ""),
-    output:
-        PoN=temp("references/cnvkit_build_normal_reference/cnvkit.PoN.cnn"),
-        tmp_bed=temp("cnvkit_manifest.target.target.bed"),
-        tmp_target_cov=temp(get_cnvkit_target(units, "cnvkit_pon")),
-        tmp_antitarget_cov=temp(get_cnvkit_antitarget(units, "cnvkit_pon")),
-
-
-    input:
         count_files=lambda wildcards: get_counts(units, "jumble_pon"),
         count_files=get_counts(samples, units),
     output:
