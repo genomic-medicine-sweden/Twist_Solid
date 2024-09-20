@@ -5,7 +5,7 @@ files:
     types:
       - N
   - name: jumble_pon
-    input: references/jumble_reference/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.230222.bed.reference.RDS
+    input: references/jumble_reference/design.bed.reference.RDS
     output: result/jumble.PoN.cnn
     types:
       - N
