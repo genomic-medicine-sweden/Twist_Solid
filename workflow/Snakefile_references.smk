@@ -72,8 +72,7 @@ module misc:
 
 module references:
     snakefile:
-        #github("hydra-genetics/references", path="workflow/Snakefile", tag="develop")
-        github("hydra-genetics/references", path="workflow/Snakefile", tag="b5f4563")
+        github("hydra-genetics/references", path="workflow/Snakefile", tag="e15a055")
     config:
         config
 
