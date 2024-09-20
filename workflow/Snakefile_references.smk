@@ -158,7 +158,9 @@ use rule jumble_reference from references as references_jumble_reference with:
     input:
         count_files=lambda wildcards: get_counts(units, "jumble_pon"),
     output:
-        PoN=temp("references/jumble_reference/%s.reference.RDS" % config.get("reference", {}).get("design_bed", "").split("/")[-1]),
+        PoN=temp(
+            "references/jumble_reference/%s.reference.RDS" % config.get("reference", {}).get("design_bed", "").split("/")[-1]
+        ),
 
 
 # Use bam files created by pipeline: alignment/samtools_merge_bam/{sample}_{type}.bam
