@@ -16,6 +16,7 @@ class TestGetCaller(unittest.TestCase):
         cnv = tempfile.mkdtemp() + "/tcnv.txt"
         out_additional_only = open(tempfile.mkdtemp() + "/out_additional_only.txt", "w")
         out_tsv_chrom_arms = tempfile.mkdtemp() + "/cnv_chromosome_arms.tsv"
+        out_vcf_filename = tempfile.mkdtemp() + "/out_vcf.vcf"
         create_tsv_report(
             [".tests/units/vcf/test.cnv1.vcf"],
             [".tests/units/vcf/test.cnv2.vcf"],
@@ -27,6 +28,7 @@ class TestGetCaller(unittest.TestCase):
             cnv,
             out_additional_only,
             out_tsv_chrom_arms,
+            out_vcf_filename,
             1.5,
             0.5,
             0.3,
@@ -39,6 +41,7 @@ class TestGetCaller(unittest.TestCase):
             0.2,
             0.2,
             0.5,
+            15000000,
         )
 
         @dataclass
@@ -53,23 +56,23 @@ class TestGetCaller(unittest.TestCase):
                 ),
                 TestCase(
                     name="variant 1",
-                    expected=("FGFR1", "chr8", "34370199-43930232", "cnvkit", "0.01", "8.59")
+                    expected=("FGFR1", "chr8", "34370199-43930232", "cnvkit", "0.01", "8.59", "-")
                 ),
                 TestCase(
                     name="variant 2",
-                    expected=("FGFR1,MYC", "chr8", "35008818-146144253", "gatk", "0.01", "7.01")
+                    expected=("FGFR1,MYC", "chr8", "35008818-146144253", "gatk", "0.01", "7.01", "-")
                 ),
                 TestCase(
                     name="variant 3",
-                    expected=("MYC", "chr8", "46689525-146144003", "cnvkit", "0.09", "5.06")
+                    expected=("MYC", "chr8", "46689525-146144003", "cnvkit", "0.09", "5.06", "-")
                 ),
                 TestCase(
                     name="small deletion",
-                    expected=("CDKN2A,CDKN2B", "chr9", "21968207-22008972", "small_deletion", "NA", "-0.28")
+                    expected=("CDKN2A,CDKN2B", "chr9", "21968207-22008972", "small_deletion", "NA", "-0.28", "-")
                 ),
                 TestCase(
                     name="small amplification",
-                    expected=("MYCN", "chr2", "16968207-17008972", "small_amplification", "NA", "7.29")
+                    expected=("MYCN", "chr2", "16968207-17008972", "small_amplification", "NA", "7.29", "-")
                 ),
         ]
 

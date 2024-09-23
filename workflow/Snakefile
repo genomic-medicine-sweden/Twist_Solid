@@ -619,15 +619,25 @@ module reports:
         config
 
 
-use rule * from reports exclude all as reports_*
+use rule * from reports exclude all, merge_cnv_json as reports_*
 
 
 use rule cnv_html_report from reports as reports_cnv_html_report with:
     input:
         json=workflow.get_rule("reports_cnv_html_report").input.json,
         html_template=workflow.get_rule("reports_cnv_html_report").input.html_template,
-        js_files=workflow.get_rule("reports_cnv_html_report").input.js_files,
-        css_files=workflow.get_rule("reports_cnv_html_report").input.css_files,
+        js_files=[
+            workflow.get_rule("reports_cnv_html_report").input.js_files[0],
+            workflow.get_rule("reports_cnv_html_report").input.js_files[1],
+            workflow.get_rule("reports_cnv_html_report").input.js_files[2],
+            workflow.source_path("templates/cnv_html_report/03-results-table.js"),
+            workflow.get_rule("reports_cnv_html_report").input.js_files[4],
+            workflow.get_rule("reports_cnv_html_report").input.js_files[5],
+        ],
+        css_files=[
+            workflow.get_rule("reports_cnv_html_report").input.css_files[0],
+            workflow.source_path("templates/cnv_html_report/style.css"),
+        ],
         tc_file=get_tc_file,
         extra_table_files=[t["path"] for t in config.get("cnv_html_report", {}).get("extra_tables", [])],
     params:
@@ -636,6 +646,44 @@ use rule cnv_html_report from reports as reports_cnv_html_report with:
         include_cytobands=config.get("cnv_html_report", {}).get("cytobands", True),
         tc=get_tc,
         tc_method=lambda wildcards: wildcards.tc_method,
+
+
+rule merge_cnv_json:
+    input:
+        json=reports.get_json_for_merge_cnv_json,
+        fai=config.get("reference", {}).get("fai", ""),
+        annotation_bed=config.get("merge_cnv_json", {}).get("annotations", []),
+        germline_vcf=config.get("merge_cnv_json", {}).get("germline_vcf", []),
+        filtered_cnv_vcfs=config.get("merge_cnv_json", {}).get("filtered_cnv_vcfs", []),
+        filtered_cnv_vcfs_tbi=config.get("merge_cnv_json", {}).get("filtered_cnv_vcfs_tbi", []),
+        cnv_vcfs=config.get("merge_cnv_json", {}).get("unfiltered_cnv_vcfs", []),
+        cnv_vcfs_tbi=config.get("merge_cnv_json", {}).get("unfiltered_cnv_vcfs_tbi", []),
+        cytobands=config.get("merge_cnv_json", {}).get("cytobands", []),
+    output:
+        json=temp("reports/cnv_html_report/{sample}_{type}.{tc_method}.merged.json"),
+    params:
+        skip_chromosomes=config.get("reference", {}).get("skip_chrs", []),
+        cytobands=config.get("cnv_html_report", {}).get("cytobands", False),
+    log:
+        "reports/cnv_html_report/{sample}_{type}.{tc_method}.merged.json.log",
+    benchmark:
+        repeat(
+            "reports/cnv_html_report/{sample}_{type}.{tc_method}.merged.json.benchmark.tsv",
+            config.get("merge_cnv_json", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("merge_cnv_json", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("merge_cnv_json", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("merge_cnv_json", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("merge_cnv_json", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("merge_cnv_json", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("merge_cnv_json", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("merge_cnv_json", {}).get("container", config["default_container"])
+    message:
+        "{rule}: Merge CNV JSON data for {wildcards.sample}_{wildcards.type}"
+    script:
+        "scripts/merge_cnv_json.py"
 
 
 module misc:
