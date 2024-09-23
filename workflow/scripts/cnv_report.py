@@ -11,7 +11,6 @@ def check_fp(chrom, start, end, gatk_cnr_dict, cn, max_cnv_fp_size):
     cnv_length = end - start + 1
     if cnv_length > max_cnv_fp_size:
         return "-"
-      
     gatk_data = gatk_cnr_dict[chrom]
     i = 0
     j = 0
