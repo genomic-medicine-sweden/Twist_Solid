@@ -42,6 +42,13 @@
       type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40882847
 
+ jumble_run:
+   normal_reference:
+     checksum: 3add115d1471c3055d7984e3baea0364
+     path: GMS560/PoN/jumble.combined.filtered.50.PoN.hg19.RDS
+     type: file
+     url: https://figshare.com/ndownloader/files/49365301?private_link=88202740beb6fcbac09d
+
  msisensor_pro:
    PoN:
      checksum: 23c9553c7043fff1a8428fcd3b231c60
