@@ -76,7 +76,7 @@ validate(output_spec, schema="../schemas/output_files.schema.yaml")
 
 ## get version information on pipeline, containers and software
 
-pipeline_name="Twist_Solid"
+pipeline_name = "Twist_Solid"
 pipeline_version = get_pipeline_version(workflow, pipeline_name=pipeline_name)
 version_files = touch_pipeline_version_file_name(
     pipeline_version, date_string=pipeline_name, directory="results/versions/software"
