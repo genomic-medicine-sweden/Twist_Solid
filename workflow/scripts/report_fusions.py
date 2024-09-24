@@ -36,11 +36,12 @@ if fp_fusions_filename != "":
             gene2 = columns[1]
             read_limit_SF = int(columns[2])
             read_limit_FC = int(columns[3])
+            af_limit = float(columns[4])
             if gene2 == "housekeeping":
-                housekeeping_genes[gene1] = [read_limit_SF, read_limit_FC]
+                housekeeping_genes[gene1] = [read_limit_SF, read_limit_FC, af_limit, 0]
             if gene1 not in artefact_gene_dict:
                 artefact_gene_dict[gene1] = {}
-            artefact_gene_dict[gene1][gene2] = [read_limit_SF, read_limit_FC]
+            artefact_gene_dict[gene1][gene2] = [read_limit_SF, read_limit_FC, af_limit, 0]
 
 # Only keep fusions with one gene that are in the design
 design_genes = {}
@@ -135,6 +136,20 @@ for line in input_arriba:
         fusion_dict[break_points] = {}
     fusion_dict[break_points]["Arriba"] = [gene1, gene2, exon1, exon2, confidence, "", predicted_effect, breakpoint1, breakpoint2,
                                            total_split_reads, discordant_mates, total_supporting_reads]
+    # dedup coverage for potential filtering in StarFusion and FusionCatcher
+    exon_coverage1 = 0
+    exon_coverage2 = 0
+    max_exon_coverage = 0
+    for exon in dedup_coverage_list:
+        if chrom1 == exon[0] and pos1 >= exon[1] and pos1 <= exon[2]:
+            exon_coverage1 = exon[3]
+        if chrom2 == exon[0] and pos2 >= exon[1] and pos2 <= exon[2]:
+            exon_coverage2 = exon[3]
+    max_exon_coverage = max(exon_coverage1, exon_coverage2)
+    if gene1 in artefact_gene_dict and gene2 in artefact_gene_dict[gene1]:
+        artefact_gene_dict[gene1][gene2][3] = max_exon_coverage
+    if gene2 in artefact_gene_dict and gene1 in artefact_gene_dict[gene2]:
+        artefact_gene_dict[gene2][gene1][3] = max_exon_coverage
 
 
 # Star-fusions
@@ -161,7 +176,7 @@ for line in input_starfusion:
         continue
     if int(Junction_read_count) <= star_fusion_low_support:
         continue
-    # Higher demand of read support for genes with frequent FP, house keeping genes
+    # Higher demand of read support for genes with frequent FP gene fusions and house keeping genes
     if (gene1 in artefact_gene_dict and gene2 in artefact_gene_dict[gene1]):
         if int(Junction_read_count) < artefact_gene_dict[gene1][gene2][0]:
             continue
@@ -173,6 +188,19 @@ for line in input_starfusion:
             continue
     if gene2 in housekeeping_genes:
         if int(Junction_read_count) < housekeeping_genes[gene2][0]:
+            continue
+    # Min AF for frequent FP gene fusions and housekeeping gene
+    if (gene1 in artefact_gene_dict and gene2 in artefact_gene_dict[gene1]):
+        if int(Junction_read_count) / artefact_gene_dict[gene1][gene2][3] < artefact_gene_dict[gene1][gene2][2]:
+            continue
+    if (gene2 in artefact_gene_dict and gene1 in artefact_gene_dict[gene2]):
+        if int(Junction_read_count) / artefact_gene_dict[gene2][gene1][3] < artefact_gene_dict[gene2][gene1][2]:
+            continue
+    if gene1 in housekeeping_genes:
+        if int(Junction_read_count) / housekeeping_genes[gene1][3] < housekeeping_genes[gene1][2]:
+            continue
+    if gene2 in housekeeping_genes:
+        if int(Junction_read_count) / housekeeping_genes[gene2][3] < housekeeping_genes[gene2][2]:
             continue
     breakpoint1 = lline[7][:-2]
     breakpoint2 = lline[9][:-2]
@@ -240,7 +268,7 @@ for line in input_fusioncatcher:
         continue
     if int(Spanning_reads_unique) <= fusioncatcher_low_support:
         continue
-    # Higher demand of read support for genes with frequent FP, house keeping genes, and pool2 genes without fusion to pool1 gene
+    # Higher demand of read support for genes with frequent FP gene fusions and house keeping genes
     if (gene1 in artefact_gene_dict and gene2 in artefact_gene_dict[gene1]):
         if int(Spanning_reads_unique) < artefact_gene_dict[gene1][gene2][1]:
             continue
@@ -252,6 +280,19 @@ for line in input_fusioncatcher:
             continue
     if gene2 in housekeeping_genes:
         if int(Spanning_reads_unique) < housekeeping_genes[gene2][1]:
+            continue
+    # Min AF for frequent FP gene fusions and housekeeping gene
+    if (gene1 in artefact_gene_dict and gene2 in artefact_gene_dict[gene1]):
+        if int(Spanning_reads_unique) / artefact_gene_dict[gene1][gene2][3] < artefact_gene_dict[gene1][gene2][2]:
+            continue
+    if (gene2 in artefact_gene_dict and gene1 in artefact_gene_dict[gene2]):
+        if int(Spanning_reads_unique) / artefact_gene_dict[gene2][gene1][3] < artefact_gene_dict[gene2][gene1][2]:
+            continue
+    if gene1 in housekeeping_genes:
+        if int(Spanning_reads_unique) / housekeeping_genes[gene1][3] < housekeeping_genes[gene1][2]:
+            continue
+    if gene2 in housekeeping_genes:
+        if int(Spanning_reads_unique) / housekeeping_genes[gene2][3] < housekeeping_genes[gene2][2]:
             continue
     # Flag fusions annotated that are fusions with very high probability
     fp_db = [

@@ -182,10 +182,10 @@
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/rna_fusion/Twist_RNA_fusionpartners.bed
 
    fp_fusions: 
-     checksum: eca1c1cf1f1e068cbdada20bdb75c392
-     path: GMS560/rna_fusion/filter_rna_fusions_20231024.txt
+     checksum: 3886104b8c9c0c73ec8edb40b8d1428d
+     path: GMS560/rna_fusion/filter_rna_fusions_20240923.txt
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/rna_fusion/filter_rna_fusions_20231024.txt
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/rna_fusion/filter_rna_fusions_20240923.txt
 
  references:
    design_bed:
