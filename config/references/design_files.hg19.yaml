@@ -136,10 +136,10 @@
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/design/Hotspots_combined_regions_nodups.231011.csv
      
    hotspot_mutations_ENC:
-     checksum: 2c7c1707880dbf1790e8a472c1d1e311
-     path: GMS560/reports/ENC_hotspots_240604.csv
+     checksum: 3de80edc5f06fdaee55f0a302e20315a
+     path: GMS560/reports/ENC_hotspots_240919.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.8.1/design/ENC_hotspots_240604.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/design/ENC_hotspots_240919.csv
 
  manta_config_t:
    extra:
