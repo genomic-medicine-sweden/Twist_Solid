@@ -200,7 +200,7 @@ for line in input_starfusion:
         if int(Junction_read_count) / housekeeping_genes[gene1][3] < housekeeping_genes[gene1][2]:
             continue
     if gene2 in housekeeping_genes:
-        if int(Junction_read_count) / housekeeping_genes[gene2][3] < housekeeping_genes[gene2][3]:
+        if int(Junction_read_count) / housekeeping_genes[gene2][3] < housekeeping_genes[gene2][2]:
             continue
     breakpoint1 = lline[7][:-2]
     breakpoint2 = lline[9][:-2]
