@@ -189,18 +189,18 @@ for line in input_starfusion:
     if gene2 in housekeeping_genes:
         if int(Junction_read_count) < housekeeping_genes[gene2][0]:
             continue
-    # Min AF (1%) for frequent FP gene fusions and housekeeping gene
+    # Min AF for frequent FP gene fusions and housekeeping gene
     if (gene1 in artefact_gene_dict and gene2 in artefact_gene_dict[gene1]):
-        if int(Junction_read_count) / artefact_gene_dict[gene1][gene2][3] < 0.01:
+        if int(Junction_read_count) / artefact_gene_dict[gene1][gene2][3] < artefact_gene_dict[gene1][gene2][2]:
             continue
     if (gene2 in artefact_gene_dict and gene1 in artefact_gene_dict[gene2]):
-        if int(Junction_read_count) / artefact_gene_dict[gene2][gene1][3] < 0.01:
+        if int(Junction_read_count) / artefact_gene_dict[gene2][gene1][3] < artefact_gene_dict[gene2][gene1][2]:
             continue
     if gene1 in housekeeping_genes:
-        if int(Junction_read_count) / housekeeping_genes[gene1][3] < 0.01:
+        if int(Junction_read_count) / housekeeping_genes[gene1][3] < housekeeping_genes[gene1][2]:
             continue
     if gene2 in housekeeping_genes:
-        if int(Junction_read_count) / housekeeping_genes[gene2][3] < 0.01:
+        if int(Junction_read_count) / housekeeping_genes[gene2][3] < housekeeping_genes[gene2][3]:
             continue
     breakpoint1 = lline[7][:-2]
     breakpoint2 = lline[9][:-2]
@@ -281,18 +281,18 @@ for line in input_fusioncatcher:
     if gene2 in housekeeping_genes:
         if int(Spanning_reads_unique) < housekeeping_genes[gene2][1]:
             continue
-    # Min AF (1%) for frequent FP gene fusions and housekeeping gene
+    # Min AF for frequent FP gene fusions and housekeeping gene
     if (gene1 in artefact_gene_dict and gene2 in artefact_gene_dict[gene1]):
-        if int(Spanning_reads_unique) / artefact_gene_dict[gene1][gene2][3] < 0.01:
+        if int(Spanning_reads_unique) / artefact_gene_dict[gene1][gene2][3] < artefact_gene_dict[gene1][gene2][2]:
             continue
     if (gene2 in artefact_gene_dict and gene1 in artefact_gene_dict[gene2]):
-        if int(Spanning_reads_unique) / artefact_gene_dict[gene2][gene1][3] < 0.01:
+        if int(Spanning_reads_unique) / artefact_gene_dict[gene2][gene1][3] < artefact_gene_dict[gene2][gene1][2]:
             continue
     if gene1 in housekeeping_genes:
-        if int(Spanning_reads_unique) / housekeeping_genes[gene1][3] < 0.01:
+        if int(Spanning_reads_unique) / housekeeping_genes[gene1][3] < housekeeping_genes[gene1][2]:
             continue
     if gene2 in housekeeping_genes:
-        if int(Spanning_reads_unique) / housekeeping_genes[gene2][3] < 0.01:
+        if int(Spanning_reads_unique) / housekeeping_genes[gene2][3] < housekeeping_genes[gene2][2]:
             continue
     # Flag fusions annotated that are fusions with very high probability
     fp_db = [

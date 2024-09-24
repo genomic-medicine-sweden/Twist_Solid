@@ -178,7 +178,7 @@
      checksum: 3886104b8c9c0c73ec8edb40b8d1428d
      path: GMS560/rna_fusion/filter_rna_fusions_20240923.txt
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/rna_fusion/filter_rna_fusions_20240923.txt
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/rna_fusion/filter_rna_fusions_20240923.txt
 
  references:
    design_bed:
