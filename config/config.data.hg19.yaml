@@ -116,7 +116,7 @@ hotspot_report:
   chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
   hotspot_mutations: 
     all: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
-    ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots_240604.csv"
+    ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots_240919.csv"
 
 jumble_run:
   normal_reference: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/jumble/jumble.combined.filtered.50.PoN.hg19.RDS"
@@ -146,7 +146,7 @@ purecn_coverage:
 
 report_fusions:
   annotation_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_fusionpartners.bed"
-  fp_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/rna_fusion/filter_rna_fusions_20231024.txt"
+  fp_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/rna_fusion/filter_rna_fusions_20240923.txt"
 
 report_gene_fuse:
   filter_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/gene_fuse/filter_fusions_20230214.csv"

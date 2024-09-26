@@ -14,7 +14,7 @@ rna_samples = {}
 def read_vcf(vcf_filename, vcf_dict, samples):
     vcf = open(vcf_filename)
     sample_type = os.path.split(vcf_filename)[1].split(".")[0]
-    vcf_dict[sample_type] = []
+    vcf_dict[sample_type] = {}
     samples[sample_type] = {}
     header = True
     for line in vcf:
@@ -37,7 +37,7 @@ def read_vcf(vcf_filename, vcf_dict, samples):
                 GT_index = i
             i += 1
         GT = DATA[GT_index]
-        vcf_dict[sample_type].append(GT)
+        vcf_dict[sample_type][key] = GT
     vcf.close()
 
 
@@ -49,12 +49,12 @@ for vcf_filename in vcf_rna_filenames:
 for rna_sample in rna_samples:
     for dna_sample in dna_samples:
         rna_samples[rna_sample][dna_sample] = 0
-        i = 0
-        for GT_rna in vcf_dict_rna[rna_sample]:
-            GT_dna = vcf_dict_dna[dna_sample][i]
-            if GT_rna == GT_dna:
-                rna_samples[rna_sample][dna_sample] += 1
-            i += 1
+        for key in vcf_dict_rna[rna_sample]:
+            GT_rna = vcf_dict_rna[rna_sample][key]
+            if key in vcf_dict_dna[dna_sample]:
+                GT_dna = vcf_dict_dna[dna_sample][key]
+                if GT_rna == GT_dna:
+                    rna_samples[rna_sample][dna_sample] += 1
 
 report.write("RNA_sample\tDNA_sample\tnr_matches\t%_match\tmatch\n")
 for rna_sample in rna_samples:
