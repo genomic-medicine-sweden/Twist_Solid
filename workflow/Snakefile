@@ -695,4 +695,3 @@ rule merge_cnv_json:
         "{rule}: Merge CNV JSON data for {wildcards.sample}_{wildcards.type}"
     script:
         "scripts/merge_cnv_json.py"
-
