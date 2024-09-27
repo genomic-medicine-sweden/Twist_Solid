@@ -59,7 +59,7 @@ fastqc:
   mem_per_cpu: 6144
 
 jumble_run:
-  threads: 20
+  threads: 10
 
 manta_run_workflow_t:
   threads: 4
