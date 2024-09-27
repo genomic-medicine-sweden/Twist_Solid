@@ -1,4 +1,5 @@
 import logging
+import statistics
 from pysam import VariantFile
 from hydra_genetics.utils.io import utils
 
