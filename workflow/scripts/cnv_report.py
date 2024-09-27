@@ -269,7 +269,7 @@ def create_tsv_report(
                         gene_variant_dict[gene] = []
                     gene_variant_dict[gene].append([chr, start, end, caller, cn, AF])
                     if gene in gene_all_dict:
-                        nr_callers = {"cnvkit": 0, "gatk": 0}
+                        nr_callers = {"cnvkit": 0, "gatk": 0, "jumble": 0}
                         for cnv in gene_all_dict[gene]:
                             if cnv[4] > 2.5 or cnv[4] < 1.5:
                                 nr_callers[cnv[3]] += 1

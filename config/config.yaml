@@ -189,6 +189,17 @@ gatk_mutect2_merge_stats:
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
 
+jumble_cnvkit_call:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
+jumble_run:
+  container: "docker://hydragenetics/jumble:240530"
+
+jumble_vcf:
+  dup_limit: 2.5
+  het_del_limit: 1.5
+  hom_del_limit: 0.5
+
 hotspot_report:
   report_config: "config/reports/hotspot_report.yaml"
   levels:
@@ -204,18 +215,15 @@ manta_run_workflow_t:
 
 merge_cnv_json:
   filtered_cnv_vcfs:
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.fp_tag.vcf.gz
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.filter.cnv_hard_filter_loh.fp_tag.annotate_fp.vcf.gz
-  filtered_cnv_vcfs_tbi:
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.fp_tag.vcf.gz.tbi
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.filter.cnv_hard_filter_loh.fp_tag.annotate_fp.vcf.gz.tbi
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.fp_tag.vcf
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.filter.cnv_hard_filter_loh.fp_tag.annotate_fp.vcf
+  germline_vcf: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz
   unfiltered_cnv_vcfs:
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.fp_tag.vcf.gz
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.fp_tag.vcf.gz
   unfiltered_cnv_vcfs_tbi:
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.fp_tag.vcf.gz.tbi
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.fp_tag.vcf.gz.tbi
-  germline_vcf: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz
 
 mosdepth:
   container: "docker://hydragenetics/mosdepth:0.3.2"
@@ -339,14 +347,20 @@ svdb_merge:
       cnv_caller:
         - cnvkit
         - gatk
+        - jumble
+      priority: "cnvkit,gatk,jumble"
     - name: purecn
       cnv_caller:
         - cnvkit
         - gatk
+        - jumble
+      priority: "cnvkit,gatk,jumble"
     - name: pathology
       cnv_caller:
         - cnvkit
         - gatk
+        - jumble
+      priority: "cnvkit,gatk,jumble"
   overlap: 1 #Just merge the two vcf-files without merging regions
   extra: "--pass_only" #Just merge the two vcf-files without merging regions
 

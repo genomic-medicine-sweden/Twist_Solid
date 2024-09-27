@@ -43,6 +43,13 @@
 #       type: file
 #       url: https://figshare.com/ndownloader/files/44328713?private_link=53f1597211477d840a29
 
+#  jumble_run:
+#    normal_reference:
+#      checksum: 3add115d1471c3055d7984e3baea0364
+#      path: GMS560/PoN/jumble.combined.filtered.50.PoN.hg19.RDS
+#      type: file
+#      url: https://figshare.com/ndownloader/files/49365301?private_link=88202740beb6fcbac09d
+
 #  msisensor_pro:
 #    PoN:
 #      checksum: 8b5ea989a5c617aaa1ab1f81ec525e8b

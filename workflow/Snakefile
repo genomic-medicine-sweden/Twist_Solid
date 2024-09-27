@@ -25,23 +25,16 @@ rule all:
 
 
 ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
-ruleorder: annotation_add_mosdepth_coverage_to_gvcf > misc_bgzip
-ruleorder: annotation_annotate_cnv > misc_bgzip
 ruleorder: annotation_annotate_cnv > snv_indels_bgzip
 ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
-ruleorder: filtering_bcftools_filter_include_region > misc_bgzip
-ruleorder: prealignment_fastp_pe > misc_bgzip
 ruleorder: qc_samtools_stats_rna > qc_samtools_stats
 ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_alignment_summary_metrics
 ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
 ruleorder: snv_indels_bcftools_sort > snv_indels_bgzip
-ruleorder: snv_indels_tabix > misc_tabix
-ruleorder: snv_indels_gatk_mutect2 > misc_tabix
 ruleorder: snv_indels_gatk_mutect2_gvcf > alignment_samtools_sort
-ruleorder: snv_indels_gatk_mutect2_gvcf > misc_tabix
-ruleorder: snv_indels_gatk_mutect2_gvcf > misc_bgzip
-ruleorder: snv_indels_bgzip > misc_bgzip
-ruleorder: snv_indels_bcftools_sort > misc_bgzip
+ruleorder: snv_indels_bgzip > cnv_sv_bgzip
+ruleorder: snv_indels_tabix > cnv_sv_tabix
+ruleorder: annotation_add_mosdepth_coverage_to_gvcf > snv_indels_bgzip
 
 
 wildcard_constraints:
@@ -241,7 +234,8 @@ use rule gatk_mutect2_gvcf from snv_indels as snv_indels_gatk_mutect2_gvcf with:
 
 module annotation:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v1.0.1")
+        #get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v0.1.0")
+        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="50726ba")
     config:
         config
 
@@ -498,7 +492,8 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.3.1")
+        #get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.6.0")
+        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="8c1fa42")
     config:
         config
 
@@ -518,14 +513,14 @@ use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        cnv_reference=config.get("cnvkit_batch_hrd", {}).get("normal_reference_hrd", ""),
+        reference=config.get("cnvkit_batch_hrd", {}).get("normal_reference_hrd", ""),
     output:
+        antitarget_coverage=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
+        bins=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.bintest.cns"),
         regions=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cnr"),
         segments=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cns"),
         segments_called=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.call.cns"),
-        bins=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.bintest.cns"),
         target_coverage=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.targetcoverage.cnn"),
-        antitarget_coverage=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
     log:
         "cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.log",
     benchmark:
@@ -543,7 +538,7 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call_hrd with:
     output:
         segment=temp("cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns"),
     params:
-        tc=get_tc,
+        purity=get_tc,
         extra=config.get("cnvkit_call_hrd", {}).get("extra", ""),
     log:
         "cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns.log",
@@ -558,7 +553,7 @@ use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch with:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        cnv_reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
+        reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
 
 
 use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:
@@ -568,7 +563,24 @@ use rule cnvkit_call from cnv_sv as cnv_sv_cnvkit_call with:
         tc_file=get_tc_file,
     params:
         extra=config.get("cnvkit_call", {}).get("extra", ""),
-        tc=get_tc,
+        purity=get_tc,
+
+
+use rule jumble_run from cnv_sv as cnv_sv_jumble_run with:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
+
+
+use rule jumble_cnvkit_call from cnv_sv as cnv_sv_jumble_cnvkit_call with:
+    input:
+        segment="cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.cns",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
+        tc_file=get_tc_file,
+    params:
+        extra=config.get("jumble_cnvkit_call", {}).get("extra", ""),
+        purity=get_tc,
 
 
 use rule cnvkit_scatter from cnv_sv as cnv_sv_cnvkit_scatter with:
@@ -614,7 +626,7 @@ use rule purecn from cnv_sv as cnv_sv_purecn with:
 
 module reports:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.4.1")
+        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.5.0")
     config:
         config
 
@@ -655,7 +667,6 @@ rule merge_cnv_json:
         annotation_bed=config.get("merge_cnv_json", {}).get("annotations", []),
         germline_vcf=config.get("merge_cnv_json", {}).get("germline_vcf", []),
         filtered_cnv_vcfs=config.get("merge_cnv_json", {}).get("filtered_cnv_vcfs", []),
-        filtered_cnv_vcfs_tbi=config.get("merge_cnv_json", {}).get("filtered_cnv_vcfs_tbi", []),
         cnv_vcfs=config.get("merge_cnv_json", {}).get("unfiltered_cnv_vcfs", []),
         cnv_vcfs_tbi=config.get("merge_cnv_json", {}).get("unfiltered_cnv_vcfs_tbi", []),
         cytobands=config.get("merge_cnv_json", {}).get("cytobands", []),
@@ -684,16 +695,3 @@ rule merge_cnv_json:
         "{rule}: Merge CNV JSON data for {wildcards.sample}_{wildcards.type}"
     script:
         "scripts/merge_cnv_json.py"
-
-
-module misc:
-    snakefile:
-        get_module_snakefile(config, "hydra-genetics/misc", path="workflow/Snakefile", tag="v0.2.0")
-    config:
-        config
-
-
-use rule tabix from misc as misc_tabix
-
-
-use rule bgzip from misc as misc_bgzip
