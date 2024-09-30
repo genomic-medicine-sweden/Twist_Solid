@@ -360,13 +360,13 @@ for break_points in fusion_dict:
     flag_coverage1 = False
     flag_coverage2 = False
     if len(breakpoint1.split(":")) == 2:
-        chrom1 = fusion_dict[break_points][caller][7].split(":")[0]
-        pos1 = int(fusion_dict[break_points][caller][7].split(":")[1])
+        chrom1 = breakpoint1.split(":")[0]
+        pos1 = breakpoint1.split(":")[1])
     else:
         flag_coverage1 = True
     if len(breakpoint2.split(":")) == 2:
-        chrom2 = fusion_dict[break_points][caller][8].split(":")[0]
-        pos2 = int(fusion_dict[break_points][caller][8].split(":")[1])
+        chrom2 = breakpoint2.split(":")[0]
+        pos2 = breakpoint2.split(":")[1])
     else:
         flag_coverage2 = True
     for exon in dedup_coverage_list:
