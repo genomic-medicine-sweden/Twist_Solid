@@ -118,14 +118,6 @@ multiqc_cgs:
       max: 10
       scale: "RdYlGn-rev"
       format: "{:.1f}"
-  "Picard: InsertSizeMetrics":
-    summed_median:
-      title: "Median insert size"
-      description: "Median insert size from Picard"
-      min: 70
-      max: 200
-      scale: "RdYlGn"
-      format: "{:.1f}"
 
 table_columns_placement:
   "Samtools: stats":
@@ -143,6 +135,4 @@ table_columns_placement:
     GC_DROPOUT: 1010
     ZERO_CVG_TARGETS_PCT: 1020
     FOLD_80_BASE_PENALTY: 1030
-  "Picard: InsertSizeMetrics":
-    summed_median: 980
     
