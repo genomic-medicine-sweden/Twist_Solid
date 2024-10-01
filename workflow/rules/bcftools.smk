@@ -41,6 +41,6 @@ rule bcftools_id_snps:
         "{input.bam} "
         "| bcftools call "
         "--skip-variants indels "
-        "-m -O v "
+        "-c -O v "
         "-o {output.vcf}) "
         "&> {log}"

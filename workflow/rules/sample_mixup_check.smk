@@ -22,6 +22,7 @@ rule sample_mixup_check:
         mixup_report="qc/sample_mixup_check/sample_mixup_check.tsv",
     params:
         extra=config.get("sample_mixup_check", {}).get("extra", ""),
+        match_cutoff=config.get("sample_mixup_check", {}).get("match_cutoff", "0.7"),
     log:
         "twist_solid/sample_mixup_check/sample_mixup_check.tsv.log",
     benchmark:
