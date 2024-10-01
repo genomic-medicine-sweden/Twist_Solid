@@ -4,7 +4,7 @@ import os
 vcf_dna_filenames = snakemake.input.id_snp_vcf_dna
 vcf_rna_filenames = snakemake.input.id_snp_vcf_rna
 report = open(snakemake.output.mixup_report, "w")
-match_cutoff = snakemake.params.match_cutoff
+match_cutoff = float(snakemake.params.match_cutoff)
 
 vcf_dict_dna = {}
 dna_samples = {}
