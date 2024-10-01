@@ -4,6 +4,7 @@ import os
 vcf_dna_filenames = snakemake.input.id_snp_vcf_dna
 vcf_rna_filenames = snakemake.input.id_snp_vcf_rna
 report = open(snakemake.output.mixup_report, "w")
+match_cutoff = snakemake.params.match_cutoff
 
 vcf_dict_dna = {}
 dna_samples = {}
@@ -66,7 +67,7 @@ for rna_sample in rna_samples:
             best_gt_match = rna_samples[rna_sample][dna_sample]
     p_match = round(best_gt_match * 100 / 42.0, 1)
     report.write(f"{rna_sample}\t{best_dna_sample}\t{best_gt_match}\t{p_match}%\t")
-    if p_match > 80:
+    if p_match > match_cutoff:
         report.write(f"yes\n")
     else:
         report.write(f"no\n")
