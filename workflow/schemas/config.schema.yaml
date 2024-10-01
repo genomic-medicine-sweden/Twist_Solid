@@ -635,6 +635,9 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+      match_cutoff:
+        type: number
+        description: minimum fraction of matching SNP calls for an RNA and DNA matched sample
 
 required:
   - samples
