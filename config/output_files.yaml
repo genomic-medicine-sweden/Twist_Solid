@@ -402,6 +402,24 @@ files:
     types:
       - T
       - N
+  - name: Jumble vcf pathology
+    input: cnv_sv/jumble_vcf/{sample}_{type}.pathology.vcf
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology.jumble.vcf
+    types:
+      - T
+      - N
+  - name: Jumble vcf purecn
+    input: cnv_sv/jumble_vcf/{sample}_{type}.purecn.vcf
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.purecn.jumble.vcf
+    types:
+      - T
+      - N
+  - name: Jumble vcf pathology_purecn
+    input: cnv_sv/jumble_vcf/{sample}_{type}.pathology_purecn.vcf
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology_purecn.jumble.vcf
+    types:
+      - T
+      - N
   - name: Manta VCF
     input: cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz
     output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.manta_tumorSV.vcf.gz

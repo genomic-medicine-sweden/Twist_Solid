@@ -4,6 +4,11 @@ files:
     output: result/cnvkit.PoN.cnn
     types:
       - N
+  - name: jumble_pon
+    input: references/jumble_reference/design.bed.reference.RDS
+    output: result/jumble.PoN.RDS
+    types:
+      - N
   - name: gatk_pon
     input: references/create_read_count_panel_of_normals/gatk_cnv_panel_of_normal.hdf5
     output: result/pon/gatk_cnv_panel_of_normal.hdf5

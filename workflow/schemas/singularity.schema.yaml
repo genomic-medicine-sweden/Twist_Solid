@@ -257,7 +257,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/multiqc:1\.11$|hydragenetics_multiqc_1\.11\.sif$
+            hydragenetics/multiqc:1\.21$|hydragenetics_multiqc_1\.21\.sif$
       required:
         - container
 

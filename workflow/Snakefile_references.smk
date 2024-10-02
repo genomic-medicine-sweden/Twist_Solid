@@ -72,7 +72,7 @@ module misc:
 
 module references:
     snakefile:
-        github("hydra-genetics/references", path="workflow/Snakefile", tag="develop")
+        github("hydra-genetics/references", path="workflow/Snakefile", tag="781a186")
     config:
         config
 
@@ -147,6 +147,26 @@ use rule cnvkit_build_normal_reference from references as references_cnvkit_buil
         tmp_bed=temp("cnvkit_manifest.target.target.bed"),
         tmp_target_cov=temp(get_cnvkit_target(units, "cnvkit_pon")),
         tmp_antitarget_cov=temp(get_cnvkit_antitarget(units, "cnvkit_pon")),
+
+
+####################################################
+#              jumble pon input override
+####################################################
+# use bam files create by pipeline: alignment/samtools_merge_bam/{sample}_{type}.bam
+use rule jumble_reference from references as references_jumble_reference with:
+    input:
+        count_files=lambda wildcards: get_counts(units, "jumble_pon"),
+    output:
+        PoN=temp(
+            "references/jumble_reference/%s.reference.RDS" % config.get("reference", {}).get("design_bed", "").split("/")[-1]
+        ),
+
+
+# Use bam files created by pipeline: alignment/samtools_merge_bam/{sample}_{type}.bam
+use rule jumble_count from references as references_jumble_count with:
+    input:
+        bam=lambda wildcards: "alignment/samtools_merge_bam/%s_%s.bam" % (wildcards.sample, wildcards.type),
+        bai=lambda wildcards: "alignment/samtools_merge_bam/%s_%s.bam.bai" % (wildcards.sample, wildcards.type),
 
 
 ####################################################

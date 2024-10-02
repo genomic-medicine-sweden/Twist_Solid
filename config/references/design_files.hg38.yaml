@@ -8,10 +8,10 @@
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/cnv_amp_genes_hg38_240307.bed
 
    cnv_loh_genes_all: 
-     path: GMS560/cnv/cnv_loh_genes_hg38.bed
-     checksum: 219ec534eb7bf5e617a8d4d11a18ca24
+     path: GMS560/cnv/cnv_loh_genes_240618_hg38.bed
+     checksum: 3910d8e8cd43fb9bc6cc30366e3f7f2f
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/cnv_loh_genes_hg38.bed
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.10.1/cnv/cnv_loh_genes_240618_hg38.bed
  
    cnv_loh_genes_validated: 
      path: GMS560/cnv/cnv_loh_uppsala_genes_hg38.bed
@@ -28,10 +28,10 @@
 
  bcftools_filter_exclude_region:
    blacklist: 
-     checksum: 3911faef7fd360a7960841d2ba4b6054
-     path: GMS560/cnv/cnvkit_germline_blacklist_20221221_hg38.bed
+     checksum: 165084ed176f5b96e98ffc8a7d599f17
+     path: GMS560/cnv/cnvkit_germline_blacklist_20240613_hg38.bed
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/cnvkit_germline_blacklist_20221221_hg38.bed
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.10.0/cnv/cnvkit_germline_blacklist_20240613_hg38.bed
 
  bcftools_id_snps:
    snps_bed: 
@@ -53,11 +53,12 @@
      path: GMS560/cnv/small_deletions_caller_blacklist_hg38.tsv
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.7.0/cnv/small_deletions_caller_blacklist_hg38.tsv 
+
    regions_file:
-     checksum: 92510485ce32e9ef64697121aae4122c
-     path: GMS560/cnv/cnv_deletion_genes_hg38.tsv
+     checksum: fd225511fe31376c612b0893bcd8c502
+     path: GMS560/cnv/cnv_deletion_genes_240618_hg38.tsv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/cnv_deletion_genes_hg38.tsv 
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.10.1/cnv/cnv_deletion_genes_240618_hg38.tsv 
 
  cnvkit_build_normal_reference:
    mappability:
@@ -128,10 +129,29 @@
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/design/Hotspots_combined_regions_nodups.231011_hg38.csv
 
    hotspot_mutations_ENC:
-     checksum: db3d27fa28240e00977db554c131e2e4
-     path: GMS560/reports/ENC_hotspots_240604_hg38.csv
+     checksum: 2750d14760e94683cea4e3613a478e07
+     path: GMS560/reports/ENC_hotspots_240919_hg38.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.8.1/design/ENC_hotspots_240604_hg38.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/design/ENC_hotspots_240919_hg38.csv
+
+#  jumble_reference:
+#    annotation_file1:
+#      checksum: 944896de8f6ab376459f8893598c780d
+#      path: GMS560/cnv/jumble_annotation/allexons.txt
+#      type: file
+#      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/cnv/jumble_annotation/allexons.txt
+
+#    annotation_file2:
+#      checksum: 5a986871cc991852d2135135db48711f
+#      path: GMS560/cnv/jumble_annotation/allgenes.txt
+#      type: file
+#      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/cnv/jumble_annotation/allgenes.txt
+
+#    annotation_file3:
+#      checksum: 5252c7462c8b0953a7832cc073415f0b
+#      path: GMS560/cnv/jumble_annotation/cancergenes.txt
+#      type: file
+#      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/cnv/jumble_annotation/cancergenes.txt
 
  manta_config_t:
    extra:
@@ -144,6 +164,13 @@
      path: GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed.gz.tbi
      type: file        
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed.gz.tbi
+
+ merge_cnv_json:
+   cytobands:
+     checksum: 1b87bbfe572064c2a40d79683ea7a6ad
+     path: GMS560/cnv/cytoBand.hg38.txt
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.9.0/cnv/cytoBand.hg38.txt
 
  purecn:    
    intervals: 
@@ -167,10 +194,10 @@
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/rna_fusion/Twist_RNA_fusionpartners.bed
 
    fp_fusions: 
-     checksum: eca1c1cf1f1e068cbdada20bdb75c392
-     path: GMS560/rna_fusion/filter_rna_fusions_20231024.txt
+     checksum: 3886104b8c9c0c73ec8edb40b8d1428d
+     path: GMS560/rna_fusion/filter_rna_fusions_20240923.txt
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/rna_fusion/filter_rna_fusions_20231024.txt
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/rna_fusion/filter_rna_fusions_20240923.txt
 
  references:
    design_bed:

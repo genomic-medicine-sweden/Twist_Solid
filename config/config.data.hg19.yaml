@@ -32,7 +32,7 @@ arriba_draw_fusion:
 annotate_cnv:
   cnv_amp_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_240307.bed"
   cnv_loh_genes_validated: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_uppsala_genes.bed"
-  cnv_loh_genes_all: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes.bed"
+  cnv_loh_genes_all: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes_240618.bed"
 
 bcftools_annotate:
   annotation_db: "{{PROJECT_REF_DATA}}/ref_data/GNOMAD/small_exac_common_3.hg19.vcf.gz"
@@ -41,7 +41,7 @@ bcftools_filter_include_region:
   exon: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.bed"
 
 bcftools_filter_exclude_region:
-  blacklist: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnvkit_germline_blacklist_20221221.bed"
+  blacklist: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnvkit_germline_blacklist_20240613.bed"
 
 bcftools_id_snps:
   snps_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/ID_SNPs.bed"
@@ -55,7 +55,7 @@ bwa_mem:
 
 call_small_cnv_deletions:
   blacklist: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/small_deletions_caller_blacklist.tsv"
-  regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_deletion_genes.tsv"
+  regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_deletion_genes_240618.tsv"
 
 call_small_cnv_amplifications:
   regions_file: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amplification_genes_240307.tsv"
@@ -116,7 +116,10 @@ hotspot_report:
   chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
   hotspot_mutations: 
     all: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
-    ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots_240604.csv"
+    ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots_240919.csv"
+
+jumble_run:
+  normal_reference: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/jumble/jumble.combined.filtered.50.PoN.hg19.RDS"
 
 manta_config_t:
   extra: "--exome --callRegions {{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz"
@@ -125,6 +128,7 @@ merge_cnv_json:
   annotations:
     - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_240307.bed"
     - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes.bed"
+  cytobands: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cytoBand.hg19.txt"
 
 mosdepth:
   extra: "--no-per-base --fast-mode"
@@ -142,7 +146,7 @@ purecn_coverage:
 
 report_fusions:
   annotation_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_fusionpartners.bed"
-  fp_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/rna_fusion/filter_rna_fusions_20231024.txt"
+  fp_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/rna_fusion/filter_rna_fusions_20240923.txt"
 
 report_gene_fuse:
   filter_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/gene_fuse/filter_fusions_20230214.csv"

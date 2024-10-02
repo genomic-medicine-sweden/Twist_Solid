@@ -57,8 +57,8 @@ Additional files saved mainly for troubleshooting and development are located un
 |  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz` | vcf | Manta variant calling |
 |  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.cnvkit.scatter.png` | image | CNVkit genome CNV plot |
 |  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.cnvkit.diagram.pdf` | image | CNVkit chromosome CNV plot |
-|  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.svdb_query.vcf` | vcf | Merged CNV vcf by SVDB from the two callers <br />using tumor content estimated by a pathologist |
-|  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.svdb_query.vcf` | vcf | Merged CNV vcf by SVDB from the two callers <br />using tumor content estimated by a PureCN |
+|  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.purecn.svdb_query.vcf` | vcf | Merged CNV vcf by SVDB from the two callers <br />using tumor content estimated by PureCN |
+|  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.pathology.svdb_query.vcf` | vcf | Merged CNV vcf by SVDB from the two callers <br />using tumor content estimated by a pathologist |
 |  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.deletions.tsv` | table | Table of called small CNVs deletions by in-house script |
 |  `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.amplifications.tsv` | table | Table of called small CNVs amplifications by in-house script |
 | **Fusions** | :~~: | ~~ |
