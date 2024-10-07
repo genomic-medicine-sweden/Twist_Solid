@@ -26,8 +26,8 @@ results/dna/HD827_T/additional_files/qc/HD827_T.insert_size_metrics.txt	33793f50
 results/dna/HD827_T/additional_files/qc/HD827_T.samtools-stats.txt	d7504098c923939a91a5d691b4edd8bd
 results/dna/HD827_T/additional_files/vcf/gatk_mutect2_HD827_T.vcf.gz	4433019e0139078499690f9e0da57551
 results/dna/HD827_T/additional_files/vcf/HD827_T.annotated.exon_only.filter.hard_filter.vcf	7b806765909d5f9473c73eb3e322ae90
-results/dna/HD827_T/additional_files/vcf/HD827_T.annotated.exon_only.filter.soft_filter.vcf	cb83b5ece98693077010db754bf2ca04
-results/dna/HD827_T/additional_files/vcf/HD827_T.annotated.vcf.gz	f796fb4a42e20d6ce3c249826170c0e1
+results/dna/HD827_T/additional_files/vcf/HD827_T.annotated.exon_only.filter.soft_filter.vcf	d8278e0243c7195d1fe022f3d918c1f3
+results/dna/HD827_T/additional_files/vcf/HD827_T.annotated.vcf.gz	e93ef7f3eeddde7fc92ef03f3c630f30
 results/dna/HD827_T/additional_files/vcf/vardict_HD827_T.vcf.gz	8654e74433b4550cd15e74838e2a9d12
 results/dna/HD827_T/biomarker/HD827_T.msisensor_pro.score.tsv	0f65c2525d900c36685c8a6e902e0f18
 results/dna/HD827_T/biomarker/HD827_T.pathology_purecn.scarhrd_cnvkit_score.txt	01d2c284e52f514668a1cd55dfc3e972
