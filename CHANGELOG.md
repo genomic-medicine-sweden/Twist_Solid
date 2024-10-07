@@ -1,5 +1,91 @@
 # Changelog
 
+## [0.15.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.14.0...v0.15.0) (2024-10-07)
+
+
+### Features
+
+* adapt multiqc dna to new mmultiqc version ([a46dfb7](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a46dfb796eada3bfb157212d00803eb9f0f26ad9))
+* add a rule which adds the FP_FLAG to vcf header ([246f76a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/246f76ad0bab8cdcef2e4563e221759c77314f53))
+* add fp-flag column to html report ([de38e72](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/de38e7292ef478b4a94082d35a78ed773746931c))
+* add support for changing html report main table ([954b90a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/954b90a1bcecc9fa06de644b3dfe51d746b4c2a1))
+* added cnv caller jumble ([13918e2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/13918e2af65de5223f1b72eb98bc7856fa07b1d9))
+* added jumble reference to pipeline ([4115c0c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4115c0c0743579c09a9e54b8c633ac9fd851f443))
+* added jumble to html report ([a40021d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a40021d030618885ddf565e8e0591b1766e2fe23))
+* added jumble to html report ([28a5403](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/28a540383e72d985c4392e411e28d20305c4edfd))
+* added matck_cutoff to config ([6405f2c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6405f2c25f26f8f6e51cf3d6ac3653faa2de3ee2))
+* added new jumble PoN to reference files and configs ([a986e9c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a986e9c40eb4a1b42dbfd922a2d302e19f4dc7cb))
+* AF rna fusion filter possibility ([d46e228](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d46e228b849a7f3f1dfd0546e24cab320c187ffd))
+* change calling model ([36dd6aa](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/36dd6aa8ad1600b95ac8d4813c25ac31bea89d4a))
+* change max size for FP to 15M baser ([0c10799](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0c10799916a02ff8ef8f98d8cdacbaf3780d8090))
+* flag FP cnvkit dels and amps based on gatkcnv data ([6ddbd02](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6ddbd02734c07d43276a6e18ff152e8d03a2ea52))
+* make max size of cnv configurable ([5fa5908](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5fa5908a324db22eee868b68c75914626f2a7439))
+* make sample_mixup_configurable ([a0fdd26](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a0fdd26d0539f16de65d4fb667d5653f641e3ade))
+* make sample-mixup configurable ([c6fbf03](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c6fbf03210bb01faae333f457b454bf2444c779a))
+* rm CDH1 from reporting of cnv deletions ([32cd1f5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/32cd1f5070ccc2c837952d5f1c0579b4ee7c2b09))
+* rm noisy MUC6 from cnv VAF plot ([a15663c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a15663cb60bc462d2d4416a815dc54499f587592))
+* stricter BAF and cn criterias for chr aberations ([9600785](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/96007858d634e32debb7c65ac2332ad3e6690d49))
+* update qc module to v0.5.0 to get correct samtools stats without bed file ([71a3c0c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/71a3c0c8bafc50188bfbf4829fa74dd6a27267dd))
+* updated ENC hotspot files ([3354710](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3354710008e7a9c31b081b70a539e6fe3ca17299))
+* updated multiqc for version info ([71e8c8b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/71e8c8b977b0a69a1cd24d6de5e79bc267d06a73))
+
+
+### Bug Fixes
+
+* add '-' to FP-flag where missing ([6e478f2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6e478f266c8163889fe03dea78568622f049357d))
+* add FP_FLAG in header of all cnv vcf files ([adeab23](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/adeab23e265dadd6505619904ccfbbcd66aa8697))
+* add missing python module ([8566c04](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8566c04bac21cd61b0ba37849a4c305712c590ad))
+* bu ([ff962a4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ff962a4c5ebe9415915368920ba5416d2f705e05))
+* bugfix ([efa90d3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/efa90d39ae4015a9516f348e5f63b168faf0b251))
+* bugfix of version crash when pipeline runs over several days ([2407c7e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2407c7e71ab8cf6f85e13cd6a81996ae3df3d6fa))
+* bugfixes and improvements ([aa84845](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/aa84845519c0464ac6cd037f71a3022993747bd0))
+* correct git version ([7bd5582](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7bd5582245a5dfc989abba88d9677c315dcde88b))
+* correct input to html report ([309667a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/309667a34a9c5405f1074bb230ffcf941d9e13d1))
+* correct output variable ([8b5c13f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8b5c13f1ecb4c3620cbb3a0e53f03ee5d53c0804))
+* correct reference version ([8adec28](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8adec281403e9d6c2d7378f789da9d9d7ef85d61))
+* correct style of table header ([0edd510](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0edd510b8e8efa22b8d035422d10a093bb25c404))
+* correct style of table header ([62cd31c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/62cd31ce4b7e83983d7a0e132deed35b6389fecf))
+* correct test output file name ([a811096](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a8110960703a446308f7ef0d384b70744ead37f5))
+* corrected cytoband config parameter ([94678e6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/94678e60f7ba217dbca8af61f3467ad9f3815203))
+* corrected git version ([e6c8da1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e6c8da111f2f754e1d2a88d5c4c0f4e859f4cfb3))
+* count files in correct folder ([0c700a9](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0c700a99cef1d3c1b5e33931236321be767771ff))
+* do not use ? in flag ([994de7b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/994de7b5433758a82f4d4eead7c245b1c59f23ab))
+* file list bugfix ([d8cffa4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d8cffa4abe6cb8bc3f08a626cb381068f53bde3c))
+* final fixes ([a75a249](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a75a2498a6432ed09ee634b0a0b86e2dbe9c1765))
+* flag all variants with - ([220324e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/220324ed775b192218f3f75e64e1eb8ee2e9ebc3))
+* fp-tag PR mismatch ([0f106d1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0f106d1b884dd0d03237a1c37b3f0df4351d6092))
+* FusionCatcher liftover fail crashes report ([99a9e34](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/99a9e3458f177d82bf3e2df7bb914f63bd16e9b7))
+* handle missing ID-SNPs ([a247ceb](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a247ceb1b71bb721f6a6d98a0a63b3d90ac31169))
+* ignore version files ([d3d0e42](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d3d0e425a15dd2a36fcae9e3c546b3db0e1471de))
+* index vcf in for pysam ([8735f9d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8735f9d7ccb024ea85ca3f799bc4e12d27066e78))
+* jumble pon override ([c261b88](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c261b886a79a209099c5f1d617a89f125566354f))
+* multiqc report adjustments ([e05c06c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e05c06c9b912fe278e3d1125713dd75147018649))
+* pysam bug ([1927d0a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1927d0a3f4ee528d8dac966b806c6996ddf0b574))
+* pysam error ([c4331f0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c4331f08f9669e1a1d532b6337702659fe4a6222))
+* ref files and configurable AF filter ([dbf208f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/dbf208f1fe15de818321444bd8a7ef7d8f3cb0cc))
+* remove duplicate input ([206715a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/206715a6d93cec7f1a2034cf967a32e32045f3ab))
+* rm insert size from rna multiqd ([bdeebd9](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/bdeebd91d825bb9321eecb10a1ca2026bf01acc7))
+* small changes ([984db35](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/984db35d29dc460cf85c258401c81f239000d86f))
+* solving the FP-flag bug ([2048307](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2048307866b2e89714b792c81d4134a7204352e0))
+* update annotation module ([04b5232](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/04b52326f2c78233b494f853ad20d7707047970e))
+* update cnv_html_report rule ([8abad6a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8abad6a0db60034e5169139e478cab78485ffe04))
+* update cnvkit rule in Snakemake to new cnv_sv module ([74a86ae](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/74a86ae080456ab46dc5ae2487d21543e6aa6c00))
+* Update config.yaml ([befb670](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/befb67058d888b0be62c3817f4fd0c8024efe7cd))
+* update hydra min version ([b924f43](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b924f43845598d80b36365150a19aec9f5ea2757))
+* Update output_reference_files.yaml ([b2e8c6e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b2e8c6e11a03f833779c033252356563037934f3))
+* Update resources.yaml ([62e766d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/62e766d993531f8c3bf72c8e252e4ef080538d23))
+* update rna multiqc report for new version of multiqc ([991f187](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/991f187e13dd9ef4485656add990998982cbfe4a))
+* Update workflow/scripts/sample_mixup_check.py ([c121a4b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c121a4beccaf29ef9fa5b11bffa9b404c9d57dca))
+* Update workflow/scripts/sample_mixup_check.py ([3ab78f3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3ab78f3d1e6389a294f0ec7ea23319752aa8d890))
+* use samtools stats instead ([535d53c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/535d53cf34dba432fdaaca2161e03fe7640ca742))
+* wrong fp thresholds ([c223d50](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c223d5014c9c94b6f797bdbaafcf786a4f088b6c))
+
+
+### Documentation
+
+* corrected purecn documentation ([8a4ed41](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8a4ed41a9a34c963ddcf5404d9a86ad3fc0eaf70))
+* sample_mixup ([9527682](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/952768223e4624b4340d6c90767385320ed3ac44))
+
 ## [0.14.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.13.0...v0.14.0) (2024-06-11)
 
 
