@@ -6,8 +6,8 @@ See the [fusions hydra-genetics module](https://hydra-genetics-fusions.readthedo
 
 ## Pipeline output files:
 
-* `results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv` (with UMI option only)
-* `results/dna/fusion/{sample}_{type}.fuseq_wes.report.csv`
+* `results/dna/{sample}_{type}/fusion/{sample}_{type}.gene_fuse_report.tsv` (with UMI option only)
+* `results/dna/{sample}_{type}/fusion/{sample}_{type}.fuseq_wes.report.csv`
 
 ## Fusions calling using GeneFuse
 DNA fusion calling is performed by **[GeneFuse](https://github.com/OpenGene/GeneFuse)** v0.6.1 on fastq-files. It uses a gene transcript target file to limit the number of targets to analyze.
@@ -49,7 +49,7 @@ The output from GeneFuse is filtered and then reported into a fusion report usin
 
 ### Result file
 
-* `results/dna/fusion/{sample}_{type}.gene_fuse_report.tsv`
+* `results/dna/{sample}_{type}/fusion/{sample}_{type}.gene_fuse_report.tsv`
 
 <br />
 
@@ -98,6 +98,6 @@ The output from FuSeq_WES is filtered and then reported into a fusion report usi
 
 ### Result file
 
-* `results/dna/fusion/{sample}_{type}.fuseq_wes_report.tsv`
+* `results/dna/{sample}_{type}/fusion/{sample}_{type}.fuseq_wes_report.tsv`
 
 <br />
