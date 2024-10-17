@@ -233,7 +233,7 @@ def create_tsv_report(
                     writer.write(f"\n1p19q\t1p19q\t")
                     writer.write(f"{fraction_1p_gatkcnv*100:.0f}%,{fraction_19q_gatkcnv*100:.0f}%")
                     writer.write(f"\tgatk_cnv\tNA\t{avg_cn:.2f}\t-")
-                    out_additional_only.write(f"\nt1p19q\tNA\tNA\tgatk_cnv\tNA\tNA")
+                    out_additional_only.write(f"\n1p19q\t1p19q\tNA\tgatk_cnv\tNA\tNA")
                     nr_writes += 1
 
             file1 = False

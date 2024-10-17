@@ -26,6 +26,6 @@ The RNA design includes a number of probes covering SNPs that can be used to che
 
 ## Result file
 
-* `results/rna/id_snps/{sample}_{type}.id_snps.vcf`
+* `results/rna/{sample}_{type}/id_snps/{sample}_{type}.id_snps.vcf`
 
 <br />

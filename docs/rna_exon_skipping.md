@@ -8,6 +8,6 @@ Exon skipping cannot be called by the fusion callers as they only search for fus
 
 ## Result file
 
-* `results/rna/fusion/{sample}_{type}.exon_skipping.tsv`
+* `results/rna/{sample}_{type}/fusion/{sample}_{type}.exon_skipping.tsv`
 
 <br />
