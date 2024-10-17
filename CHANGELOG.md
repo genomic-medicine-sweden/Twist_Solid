@@ -1,5 +1,18 @@
 # Changelog
 
+### [0.15.1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.15.0...v0.15.1) (2024-10-17)
+
+
+### Bug Fixes
+
+* correction of output text for 1p19q ([e98873b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e98873b37d2e9ea99dfdafb0f6937cb6762adf05))
+* update cnv_sv module ([9c1f42d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9c1f42d5a0c3d62c655f5ca761ef6d19a2014cbe))
+
+
+### Documentation
+
+* update documentaion ([215aa2a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/215aa2af21dae925e38f1ab495b3e279847361f3))
+
 ## [0.15.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.14.0...v0.15.0) (2024-10-07)
 
 
