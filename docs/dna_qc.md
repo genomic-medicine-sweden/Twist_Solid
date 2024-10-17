@@ -7,7 +7,7 @@ See the [qc hydra-genetics module](https://hydra-genetics-qc.readthedocs.io/en/l
 ## Pipeline output files:
 
 * `results/dna/qc/multiqc_DNA.html`
-* `results/dna/qc/{sample}_{type}.coverage_and_mutations.tsv`
+* `results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv`
 * `gvcf_dna/{sample}_{type}.mosdepth.g.vcf.gz`
 
 ## MultiQC
@@ -107,6 +107,6 @@ levels:
 
 ### Result file
 
-* `results/dna/qc/{sample}_{type}.coverage_and_mutations.tsv`
+* `results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv`
 
 <br />

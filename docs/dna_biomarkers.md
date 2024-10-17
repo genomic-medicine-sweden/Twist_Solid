@@ -6,10 +6,10 @@ See the [biomarkers hydra-genetics module](https://hydra-genetics-biomarker.read
 
 ## Pipeline output files:
 
-* `results/dna/tmb/{sample}_{type}.TMB.txt`
-* `results/dna/msi/{sample}_{type}.msisensor_pro.score.tsv`
-* `results/dna/hrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt`
-* `results/dna/hrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt`
+* `results/dna/{sample}_{type}/tmb/{sample}_{type}.TMB.txt`
+* `results/dna/{sample}_{type}/msi/{sample}_{type}.msisensor_pro.score.tsv`
+* `results/dna/{sample}_{type}/hrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt`
+* `results/dna/{sample}_{type}/hrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt`
 
 ## Tumor mutational burden (TMB)
 TMB is a measure of the frequency of somatic mutations and is usually measured as mutations per megabase. The size of design of the exons is approximately 1.55Mb. However, by validating the TMB for GMS560 against Foundation One and TSO500 TMB the effective design size is adjusted to 1.19Mb. This is based on the slope (0.84) of the correlation between TSO500 data and the number of variants in the TMB analysis. The TMB is calculated using the in-house script **[tmb.py](https://github.com/hydra-genetics/biomarker/blob/develop/workflow/scripts/tmb.py)** ([rule](https://github.com/hydra-genetics/biomarker/blob/develop/workflow/rules/tmb.smk)) which counts the number of nsSNVs and divide by the adjusted design size. Variants must fulfill the following criteria to be counted:
@@ -36,7 +36,7 @@ The result is the TMB calculated using nsSNVs. However, the variants passing all
 
 ### Result file
 
-* `results/dna/tmb/{sample}_{type}.TMB.txt`
+* `results/dna/{sample}_{type}/tmb/{sample}_{type}.TMB.txt`
 
 ## Microsatellite instability (MSI)
 To determine MSS or MSI status of the samples the percentage of sites that have microsatellite instability are calculated using **[MSIsensor-pro]([https://github.com/xjtu-omics/msisensor-pro])** v1.1.a. When more than 10% of the sites are instable the sample is determined to have MSI status. The program uses a panel of normal to determine the normal level of instability in the used sites.
@@ -48,7 +48,7 @@ To determine MSS or MSI status of the samples the percentage of sites that have 
 
 ### Result file
 
-* `results/dna/msi/{sample}_{type}.msisensor_pro.score.tsv`
+* `results/dna/{sample}_{type}/msi/{sample}_{type}.msisensor_pro.score.tsv`
 
 ## Homologous recombination deficiency (HRD) - in development
 **OBS! The Homologous recombination deficiency score is still under development**  
@@ -69,7 +69,7 @@ A homologous recombination deficiency score is calculated using **[scarHRD](http
 
 ### Result files
 
-* `results/dna/hrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt`
-* `results/dna/hrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt`
+* `results/dna/{sample}_{type}/hrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt`
+* `results/dna/{sample}_{type}/hrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt`
 
 <br />

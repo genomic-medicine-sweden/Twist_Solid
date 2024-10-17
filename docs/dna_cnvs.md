@@ -3,6 +3,7 @@ See the [cnv hydra-genetics module](https://hydra-genetics-snv-indels.readthedoc
 
 <br />
 ![purecn dag plot](images/cnv_purecn.png){: style="height:55%;width:55%"}
+<br />
 ![manta dag plot](images/cnv_manta.png){: style="height:30%;width:30%"}
 
 <br />
@@ -11,16 +12,32 @@ See the [cnv hydra-genetics module](https://hydra-genetics-snv-indels.readthedoc
 
 ## Pipeline output files:
 
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv.html`
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology.cnv_report.tsv`
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv.html`
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.purecn.cnv_report.tsv`
-* `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.deletions.tsv`
-* `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.amplifications.tsv`
-* `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz`
+### Main output
+
+* `results/dna/{sample}_{type}/cnv/{sample}_{type}.pathology_purecn.cnv.html`
+* `results/dna/{sample}_{type}/cnv/{sample}_{type}.pathology_purecn.amp_all_del_validated.cnv_report.tsv`
+* `results/dna/{sample}_{type}/cnv/{sample}_{type}.purecn_purity_ploidity.csv`
+
+### Additional output
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.amplifications.tsv`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.deletions.tsv`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.cnvkit.diagram.pdf`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.cnvkit.scatter.png`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.manta_tumorSV.vcf.gz`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology.amp_all_del_all.cnv_report.tsv`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology.amp_all_del_validated.cnv_report.tsv`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology.cnv.html`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology_purecn.amp_all_del_all.cnv_report.tsv`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology_purecn.svdb_query.vcf`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology.svdb_query.vcf`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.purecn.amp_all_del_all.cnv_report.tsv`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.purecn.amp_all_del_validated.cnv_report.tsv`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.purecn.cnv.html`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.purecn.svdb_query.vcf`
+
 
 ## CNV calling
-CNVs are called using both CNVkit and GATK CNV, followed by merging and annotation by SVDB and finally filtered and visualized into an html report. Additionally, smaller CNV deletions and amplifications are called in specific genes using an in-house script.
+CNVs are called using CNVkit, GATK CNV, and Jumble followed by merging and annotation by SVDB and finally filtered and visualized into an html report. Additionally, smaller CNV deletions and amplifications are called in specific genes using an in-house script.
 
 ### CNVkit
 CNV segmentation is performed by **[CNVkit](https://cnvkit.readthedocs.io/en/stable/)** v0.9.9 on BWA-mem aligned and merged bam-files. CNVkit uses a panel of normal (see [references](references.md) on how the PoN was created) and a germline filtered vcf file. To call the final CNVs the program uses the estimated tumor purity, which can be from pathologists estimates or from purecn estimates.  
@@ -49,8 +66,18 @@ The following steps are in included in the GATK CNV calling:
 | ModelSegments | Make raw segmentation | | |
 | CallCopyRatioSegments | Refine segmentation and call CNVs | | |
 
+### Jumble
+CNV segmentation is performed by **[Jumble](https://github.com/ClinSeq/jumble)** on BWA-mem aligned and merged bam-files. Jumble uses a panel of normal (see [references](references.md) on how the PoN was created) and a germline filtered vcf file. To call the final CNVs the CNVkit call script is used with the estimated tumor purity as input, which can be from pathologists estimates or from purecn estimates.  
+The following steps are in included in the Jumble CNV calling:
+
+| Rule | Info | Settings | Description |
+|-|-|-|-|
+| run | Makes segmentation | [RDS reference](references.md#jumble_ref) | Panel of normal which can include data from different sequencing machines |
+| call | Calls CNVs | [Germline vcf](dna_cnvs.md#germline-vcf) | Vcf with germline variants called in the sample |
+| | | Tumor purity | Estimated purity from samples.tsv or from other sources |
+
 ## CNV call file conversion to vcf
-The CNVs call files from CNVkit and GATK CNV are converted to vcf format using the in-house scripts [cnvkit_vcf.py](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/cnvkit_vcf.py) ([rule](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/rules/cnvkit.smk)) and [gatk_to_vcf.py](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/gatk_to_vcf.py) ([rule](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/rules/gatk.smk)). In both cases a vcf header is added followed by the following annotation for each field in the vcf file:
+The CNVs call files from CNVkit and Jumble are converted to vcf format using the in-house scripts [cnvkit_vcf.py](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/cnvkit_vcf.py) ([cnvkit_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/rules/cnvkit.smk), [jumble_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/rules/jumble.smk)) and GATK CNV by [gatk_to_vcf.py](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/gatk_to_vcf.py) ([gatk_to_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/rules/gatk.smk)). In all cases a vcf header is added followed by the following annotation for each field in the vcf file:
 
 | **Column**    | **Value / Description**          |
 |---------------|--------------------|
@@ -73,9 +100,9 @@ The CNVs call files from CNVkit and GATK CNV are converted to vcf format using t
 | END            | CNV end position                                                               |
 | SVLEN          | CNV length                                                                     |
 | LOG_ODDS_RATIO | CNV log odds copy ratio (0 = 2 copies)                                         |
-| CALLER         | cnvkit / gatk                                                                  |
+| CALLER         | cnvkit / gatk / jumble                                                                  |
 | CN             | Copy number (NA for CNVkit)                                                    |
-| CORR_CN        | Purity corrected copy number (calculated for GATK CNV and reported for CNVkit) |
+| CORR_CN        | Purity corrected copy number (calculated for GATK CNV and reported for CNVkit and Jumble) |
 | PROBES         | Number of probes within the cnv segment                                        |
 | BAF            | SNP minor allele frequency                                                     |
 
@@ -85,10 +112,10 @@ The CNVs call files from CNVkit and GATK CNV are converted to vcf format using t
 | **FORMAT / DATA tag** | **Value / Description**                                                                                                         |
 |------------|-------------------------------------------------------------------------------------------------------------------|
 | GT         | Genotype: 1/1 for homozygous deletion, 1/0 for heterozygous deletion and or duplication, and 0/0 for copy neutral |
-| CN         | Copy number (corrected for CNVkit and uncorrected for GATK CNV)                                                   |
+| CN         | Copy number (corrected for CNVkit and Jumble and uncorrected for GATK CNV)                                                   |
 | CCN        | Corrected copy number (GATK CNV only)                                                                             |
 | CNQ        | Number of probes in CNV                                                                                           |
-| DP         | Average coverage over region (cnvkit only)                                                                        |
+| DP         | Average coverage over region (CNVkit and Jumble only)                                                                        |
 | BAF        | SNP minor allele frequency                                                                                        |
 | BAFQ       | Number of SNPs for BAF (GATK CNV only)                                                                            |
 
@@ -113,6 +140,7 @@ SVDB --merge
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
+| overlap | 1 | Merge the two vcf files without actually merging overlapping regions |
 | extra | --pass_only | Merge the two vcf files without actually merging overlapping regions |
 
 <br />
@@ -174,7 +202,7 @@ CNVkit and GATK CNV sometimes miss small deletions where only a number of exons 
 
 ### Result file
 
-* `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.deletions.tsv`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.deletions.tsv`
 
 ## Small CNV amplifications
 CNVkit and GATK CNV sometimes miss small amplifications where only a number of exons are involved. A specialized small CNV caller in the form of the in-house script [call_small_cnv_amplifications.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/call_small_cnv_amplifications.py) ([rule and config](softwares.md#call_small_cnv_amplifications)) is therefore run on the genes mentioned in [CNV gene annotation](#cnv-gene-annotation). The caller uses the log-odds values calculated by GATK for each region, where a region approximately corresponds to one region in the design file, i.e. exon, intron (if present) or CNV-probe. For each gene region, the caller uses a sliding window to find the biggest increase and subsequent decrease in copy number in the region. It then determines if the increase in copy number is big enough and is significantly higher than the surrounding region. If a large part or the entire region is amplified it will not be called but will instead be called by the other tools.
@@ -192,7 +220,7 @@ CNVkit and GATK CNV sometimes miss small amplifications where only a number of e
 
 ### Result file
 
-* `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.amplifications.tsv`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.amplifications.tsv`
 
 ## CNV report (.tsv)
 A combined cnv report in tsv format is generated by the in-house script [cnv_report.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/cnv_report.py) ([rule and config](softwares.md#cnv_tsv_report)). The report extract cnv variants from the vcf files with filtered cnv calls as well as the small amplification and deletion files. The script also looks for 1p19q deletions and add that to the report.
@@ -208,46 +236,55 @@ A combined cnv report in tsv format is generated by the in-house script [cnv_rep
 
 ### Result files
 
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.cnv_report.tsv`
+* `results/dna/{sample}_{type}/cnv/{sample}_{type}.pathology_purecn.cnv_report.tsv`
 
 ## CNV visualization (.html)
 
-In addition to the tsv report, an html report is also generated which provides a visualization of the underlying data as well as CNV information.
+In addition to the tsv report, an html report is also generated which provides a visualization of the underlying data as well as CNV information. An extra table for small deletions, small amplifications and 1p19q deletions as well as a table for large copy number aberrations are also provided.
 
 ### Configuration
 
 **Software settings**
 
 ```yaml
-# config.yaml
+# config/config.yaml
 cnv_html_report:
-    show_table: true
-    template_dir: config/cnv_report_template
+  show_table: true
+  cytobands: true
+  extra_tables:
+    - name: Small CNVs and 1p19q
+      description: >
+        Additional small amplifications and deletions as well as 1p19q co-deletions called by Twist Solid
+        in-house scripts. Can have overlaps with called regions from other callers.
+      path: "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.cnv_loh_genes_all.cnv_additional_variants_only.tsv"
+    - name: Large chromosomal aberrations
+      description: >
+        Large chromosomal aberrations in the form of deletions, duplications and copy neutral loss of heterozygosity.
+        Also warnings of baseline skewness and detection of polyploidy in the sample.
+      path: "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.cnv_loh_genes_all.cnv_chromosome_arms.tsv" 
 
 merge_cnv_json:
-  annotations:
-    - /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_amp_genes.bed
-    - /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnv_loh_genes.bed
   filtered_cnv_vcfs:
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.vcf.gz
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.filter.cnv_hard_filter_loh.vcf.gz
-  unfiltered_cnv_vcfs:
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.vcf.gz
-    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.vcf.gz
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.fp_tag.vcf
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.filter.cnv_hard_filter_loh.fp_tag.annotate_fp.vcf
   germline_vcf: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz
+  unfiltered_cnv_vcfs:
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.fp_tag.vcf.gz
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.fp_tag.vcf.gz
+  unfiltered_cnv_vcfs_tbi:
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.fp_tag.vcf.gz.tbi
+    - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.fp_tag.vcf.gz.tbi
 ```
-
-The attribute `cnv_html_report.show_table` determines whether a table of CNV calls should be generated. It this is true, then the attributes `merge_cnv_json.filtered_cnv_vcfs` and `merge_cnv_json.unfiltered_cnv_vcfs` are required. The optional attribute `merge_cnv_json.annotations` is an array of bed-files with annotations that will be added to the chromosome plot of the report. Finally, `merge_cnv_json.germline_vcf` should be a VCF file with germline variants annotated with allele frequency that will be used to populate the VAF-plots in the report.
 
 For more information, see the [hydra-genetics/reports documentation](https://hydra-genetics-reports.readthedocs.io).
 
 ### Result files
 
-* `results/dna/cnv/{sample}_{type}/{sample}_{type}.pathology_purecn.cnv.html`
+* `results/dna/{sample}_{type}/cnv/{sample}_{type}.pathology_purecn.cnv.html`
 
 
 ## Germline vcf
-The germline vcf used by CNVkit and the CNV html report is based on the [VEP annotated vcf](dna_snv_indels.md#vep) file from the SNV and INDEL calling. Annotated vcfs are hard filtered first by removing black listed regions with noisy germline VAFs in normal samples and then filtered by a number of filtering criteria described below. See the [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/) for additional information.
+The germline vcf used by CNVkit, Jumble, and the CNV html report is based on the [VEP annotated vcf](dna_snv_indels.md#vep) file from the SNV and INDEL calling. Annotated vcfs are hard filtered first by removing black listed regions with noisy germline VAFs in normal samples and then filtered by a number of filtering criteria described below. See the [filtering hydra-genetics module](https://filtering.readthedocs.io/en/latest/) for additional information.
 
 ### Exclude exonic regions
 Use **[bcftools filter -T](https://samtools.github.io/bcftools/bcftools.html)** v1.15 to exclude variants overlapping blacklisted regions defined in a bed file.
@@ -323,6 +360,6 @@ PureCN uses a filtered (`config/config_hard_filter_purecn.yaml`) and germline an
 
 ### Result file
 
-* `results/dna/additional_files/cnv/{sample}_{type}/{sample}_{type}.manta_tumorSV.vcf.gz`
+* `results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.manta_tumorSV.vcf.gz`
 
 <br />

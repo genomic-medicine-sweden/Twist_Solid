@@ -16,6 +16,8 @@ digraph snakemake_dag {
 	48[label = "cnvkit_vcf", color = "0.17 0.6 0.85", style="rounded"];
 	49[label = "cnvkit_call", color = "0.23 0.6 0.85", style="rounded"];
 	50[label = "cnvkit_batch", color = "0.59 0.6 0.85", style="rounded"];
+	52[label = "jumble_run", color = "0.59 0.6 0.85", style="rounded"];
+	53[label = "jumble_cnvkit_vcf", color = "0.17 0.6 0.85", style="rounded"];
 	51[label = "bcftools_filter_exclude_region", color = "0.37 0.6 0.85", style="rounded"];
 	56[label = "gatk_to_vcf", color = "0.18 0.6 0.85", style="rounded"];
 	57[label = "gatk_model_segments", color = "0.63 0.6 0.85", style="rounded"];
@@ -25,6 +27,10 @@ digraph snakemake_dag {
 	90[label = "merge_json", color = "0.54 0.6 0.85", style="rounded"];
 	91[label = "cnv_json", color = "0.63 0.6 0.85", style="rounded"];
 	95[label = "cnvkit_scatter", color = "0.66 0.6 0.85", style="rounded"];
+	200 -> 52
+	52 -> 53
+	53 -> 46
+	202 -> 53
 	200 -> 42
 	41 -> 40
 	42 -> 41

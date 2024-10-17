@@ -5,7 +5,7 @@ See the [qc hydra-genetics module](https://hydra-genetics-qc.readthedocs.io/en/l
 ## Pipeline output files:
 
 * `results/rna/qc/multiqc_RNA.html`
-* `results/rna/qc/{sample}_{type}.house_keeping_gene_coverage.tsv`
+* `results/rna/{sample}_{type}/qc/{sample}_{type}.house_keeping_gene_coverage.tsv`
 
 ## MultiQC
 A MultiQC html report is generated using **[MultiQC](https://github.com/ewels/MultiQC)** v1.11. The report starts with a general statistics table showing the most important QC-values followed by additional QC data and diagrams. The qc data is generated using FastQC, mosdepth, samtools, and picard.
