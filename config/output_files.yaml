@@ -425,3 +425,15 @@ files:
     output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.manta_tumorSV.vcf.gz
     types:
       - T
+  - name: HLA optitype
+    input: biomarker/optitype/{sample}_{type}/{sample}_{type}_hla_type_result.tsv
+    output: results/dna/hla/{sample}_{type}_hla_type_result.tsv
+    types:
+      - T
+      - N
+  - name: HLA coverage optitype
+    input: biomarker/optitype/{sample}_{type}/{sample}_{type}_hla_type_coverage_plot.pdf
+    output: results/dna/hla/{sample}_{type}_hla_type_coverage_plot.pdf
+    types:
+      - T
+      - N
