@@ -6,7 +6,7 @@ files:
       - N
   - name: jumble_pon
     input: references/jumble_reference/{design}.reference.RDS
-    output: result/jumble.PoN.RDS
+    output: result/jumble.{design}.PoN.RDS
     types:
       - N
   - name: gatk_pon
