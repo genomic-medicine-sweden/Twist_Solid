@@ -54,12 +54,11 @@ def compile_output_list(wildcards):
     for filedef in output_spec["files"]:
         output_files += set(
             [
-                filedef["output"].format(sample=sample, type=unit_type, caller=caller, design=design)
+                filedef["output"].format(sample=sample, type=unit_type, caller=caller, design=config["reference"]["design_bed"].split("/")[-1])
                 for sample in get_samples(samples)
                 for unit_type in get_unit_types(units, sample)
                 if unit_type in set(filedef["types"]).intersection(types)
                 for caller in config["bcbio_variation_recall_ensemble"]["callers"]
-                for design in config["reference"]["design_bed"].split("/")[-1]
             ]
         )
     return list(set(output_files))
