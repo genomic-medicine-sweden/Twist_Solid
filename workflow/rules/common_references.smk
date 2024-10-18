@@ -59,7 +59,7 @@ def compile_output_list(wildcards):
                 for unit_type in get_unit_types(units, sample)
                 if unit_type in set(filedef["types"]).intersection(types)
                 for caller in config["bcbio_variation_recall_ensemble"]["callers"]
-                for design in config["reference"]["design_bed"]
+                for design in config["reference"]["design_bed"].split("/")[-1]
             ]
         )
     return list(set(output_files))
