@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.16.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.15.1...v0.16.0) (2024-10-24)
+
+
+### Features
+
+* make jumble reference name based on config ([64db79b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/64db79b22dd09eedb38a091b38b93e7b78d6fea6))
+
+
+### Bug Fixes
+
+* add design wildcard to output ([35e4514](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/35e4514931c62486f11f86287bb5e0afea06b8ec))
+* **cnvkit_batch:** fix input variable name to match wrapper ([996891d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/996891dcc486e4a578f6bc6f8777395bb175720c))
+* design name as input to rule all ([9c5d570](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9c5d57016e38db16fb08e27a389c5b53d394e317))
+* jumble output is dependent on design bed name ([a4fd564](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a4fd5647a0f197266a3a32a430e1e1a202bf4663))
+* only use file name and not path ([67c4be7](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/67c4be7805a34b21120cfbf4661d245071624daa))
+* **report_fusion:** fix div by zero ([68d253a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/68d253a359117ba7728d9c7217d6100fb621ad0a))
+* rm hardcoded jumble reference name ([39e9d8f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/39e9d8f1964f0153be1372614e78b57a933c57af))
+* rm multiple sample lines in MultiQC_RNA ([94f445f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/94f445ffb7e9e46dd916370a1fa5f0117bd1506c))
+* rm multiple sample lines in MultiQC_RNA ([0470ecb](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0470ecbf13dc09bc72a42b543cdda562048cd404))
+* rm multiple sample lines in MultiQC_RNA ([024ebcf](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/024ebcf8b6f6976a0ddc886cf53c19757be80275))
+* rm multiple sample lines in MultiQC_RNA ([76f2cc8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/76f2cc8dbe418adb069feae59e89f10ab5a2c588))
+* sample mixup in percentage ([733ac69](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/733ac6996c70175c8604e1ba55245b0bcc6b67fb))
+
 ### [0.15.1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.15.0...v0.15.1) (2024-10-17)
 
 
