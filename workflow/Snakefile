@@ -190,7 +190,7 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutec
 
 module snv_indels:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v0.3.0")
+        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v1.1.0")
     config:
         config
 
