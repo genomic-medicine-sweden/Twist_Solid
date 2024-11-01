@@ -245,6 +245,7 @@ use rule * from annotation exclude all as annotation_*
 use rule bgzip_vcf from annotation as annotation_bgzip_vcf with:
     wildcard_constraints:
         file="^qc/.+",
+        
 
 use rule tabix_vcf from annotation as annotation_tabix_vcf with:
     wildcard_constraints:
