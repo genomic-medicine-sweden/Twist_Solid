@@ -239,7 +239,16 @@ module annotation:
         config
 
 
-use rule * from annotation exclude all, bgzip_vcf, tabix_vcf as annotation_*
+use rule * from annotation exclude all as annotation_*
+
+
+use rule bgzip_vcf from annotation as annotation_bgzip_vcf with:
+    wildcard_constraints:
+        file="^qc/.+",
+
+use rule tabix_vcf from annotation as annotation_tabix_vcf with:
+    wildcard_constraints:
+        file="^qc/.+",
 
 
 use rule vep from annotation as annotation_vep_wo_pick with:
