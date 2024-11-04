@@ -70,6 +70,16 @@ module misc:
         config
 
 
+use rule tabix from misc as misc_tabix with:
+    wildcard_constraints:
+        file="^references/.+",
+
+
+use rule bgzip from misc as misc_bgzip with:
+    wildcard_constraints:
+        file="^references/.+",
+
+
 module references:
     snakefile:
         github("hydra-genetics/references", path="workflow/Snakefile", tag="781a186")
