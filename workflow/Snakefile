@@ -303,6 +303,11 @@ module filtering:
 use rule * from filtering exclude all as filtering_*
 
 
+use rule filter_vcf from filtering as filtering_filter_vcf with:
+    wildcard_constraints:
+        file="^cnv_sv/.+|^snv_indels/.+"
+
+
 module qc:
     snakefile:
         get_module_snakefile(config, "hydra-genetics/qc", path="workflow/Snakefile", tag="v0.5.0")
