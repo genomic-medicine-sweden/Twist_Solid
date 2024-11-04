@@ -305,7 +305,7 @@ use rule * from filtering exclude all as filtering_*
 
 use rule filter_vcf from filtering as filtering_filter_vcf with:
     wildcard_constraints:
-        file="^cnv_sv/.+|^snv_indels/.+"
+        file="^cnv_sv/.+|^snv_indels/.+",
 
 
 module qc:
