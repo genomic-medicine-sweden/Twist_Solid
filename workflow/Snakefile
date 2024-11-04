@@ -245,11 +245,16 @@ use rule * from annotation exclude all as annotation_*
 use rule bgzip_vcf from annotation as annotation_bgzip_vcf with:
     wildcard_constraints:
         file="^qc/.+",
-        
+
 
 use rule tabix_vcf from annotation as annotation_tabix_vcf with:
     wildcard_constraints:
         file="^qc/.+",
+
+
+use rule annotate_cnv from annotation as annotation_annotate_cnv with:
+    wildcard_constraints:
+        file="^cnv_sv/.+",
 
 
 use rule vep from annotation as annotation_vep_wo_pick with:
