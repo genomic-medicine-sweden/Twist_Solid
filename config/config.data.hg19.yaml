@@ -119,7 +119,7 @@ hotspot_report:
     ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots_240919.csv"
 
 jumble_run:
-  normal_reference: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/jumble/jumble.combined.filtered.50.PoN.hg19.RDS"
+  normal_reference: "{{PROJECT_DESIGN_DATA}}/GMS560/PoN/jumble.combined.filtered.50.PoN.hg19.RDS"
 
 manta_config_t:
   extra: "--exome --callRegions {{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz"
