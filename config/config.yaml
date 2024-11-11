@@ -213,6 +213,9 @@ manta_config_t:
 manta_run_workflow_t:
   container: "docker://hydragenetics/manta:1.6.0"
 
+merge_af_complex_variants:
+  merge_method: "sum"
+
 merge_cnv_json:
   filtered_cnv_vcfs:
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.fp_tag.vcf
