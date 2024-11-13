@@ -119,9 +119,9 @@ hotspot_report:
     ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots_240919.csv"
 
 juli_annotate:
-  cosmic: "{{PROJECT_REF_DATA}}/ref_data/juli/refGene_hg19.txt"
-  pfam: "{{PROJECT_REF_DATA}}/ref_data/juli/CosmicFusionExport_V76.tsv"
-  ref_genes: "{{PROJECT_REF_DATA}}/ref_data/juli/Pfam-A.full.human"
+  cosmic: "{{PROJECT_REF_DATA}}/ref_data/juli/CosmicFusionExport_V76.tsv"
+  pfam: "{{PROJECT_REF_DATA}}/ref_data/juli/Pfam-A.full.human"
+  ref_genes: "{{PROJECT_REF_DATA}}/ref_data/juli/refGene_hg19.txt"
   uniprot: "{{PROJECT_REF_DATA}}/ref_data/juli/HGNC_GeneName_UniProtID_160524.txt"
 
 juli_call:
