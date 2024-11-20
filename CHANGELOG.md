@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.17.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.16.0...v0.17.0) (2024-11-19)
+
+
+### Features
+
+* Handling complex variants in snv_indel ([73a003a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/73a003a6e8e55440cf847152d8126a7b14f92d9d))
+
+
+### Bug Fixes
+
+* **jumble:** Update config.data.hg19.yaml ([7b22ec5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7b22ec5414f4ab1075375973eb543b7322e26ede))
+* **jumble:** Update config.data.hg38.yaml ([6a8621d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6a8621d9a541201fce83e270dea05ae53b32fcd2))
+* **sample_mixup:** cut_off adjusted to percent ([927e102](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/927e1025f4322b2e2779c769250f8ec11d2b31ea))
+* **Snakefile_references:** Wildcard_constrains, ([5d48398](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5d483984ad192e06c95f29f868387e702b6b113c))
+* **Snakefile:** Added missing blank line. ([f727111](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f72711151acf1877a8bd670f894d66abffeaf46a))
+* **Snakefile:** Set wildcard_constraints cnv_sv ([8639f34](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8639f343ae0a43b06957373966f5068a4f9e0c89))
+* **Snakefile:** Wildcard_constraints filter_vcf ([2cca85f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2cca85ffb48c4cb1ff180600736079e213f5218c))
+* **Snakefile:** zip and index qc-files ([ba36799](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ba367990e2c746a32d38344883337a6f9045f610))
+* **test_input_develop.tsv:** Updated checksums ([4eadf6c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4eadf6c6888dc7935758a35c27c608b8f9f30fac))
+* **test_input_main.tsv:** Update checksums ([46ef91a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/46ef91a7bfb625feebe775eb9a217d61208a63de))
+
 ## [0.16.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.15.1...v0.16.0) (2024-10-24)
 
 
