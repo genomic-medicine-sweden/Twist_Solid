@@ -102,7 +102,7 @@ use rule * from references exclude all as references_*
 
 
 ####################################################
-#              svdb
+#              svdb override
 ####################################################
 # use vcf create by pipeline. ??????????Shoud we override svdb annotation??????????
 use rule svdb_build from references as references_svdb_build with:
@@ -111,7 +111,7 @@ use rule svdb_build from references as references_svdb_build with:
 
 
 ####################################################
-#              artifact_panel
+#              artifact_panel override
 ####################################################
 # use vcf created by pipeline
 use rule create_artifact_file from references as references_create_artifact_file with:
@@ -120,7 +120,16 @@ use rule create_artifact_file from references as references_create_artifact_file
 
 
 ####################################################
-#              gatk pon
+#              msi PoN override
+####################################################
+# Use bam files created by pipeline: alignment/samtools_merge_bam/{sample}_{type}.bam
+rule msisensor_pro_input_file:
+    input:
+        bams=lambda wildcards: get_bams(units, "msisensor_pro"),
+
+
+####################################################
+#              gatk pon override
 ####################################################
 # use hdf5 files created by reference pipeline references/collect_read_counts/%s_%s.counts.hdf5
 use rule create_read_count_panel_of_normals from references as references_create_read_count_panel_of_normals with:
@@ -180,7 +189,7 @@ use rule jumble_count from references as references_jumble_count with:
 
 
 ####################################################
-#              purecn normal input over
+#              purecn normal input override
 ####################################################
 # Use bam files created by pipeline: alignment/samtools_merge_bam/{sample}_{type}.bam
 use rule purecn_bam_list from references as references_purecn_bam_list with:
