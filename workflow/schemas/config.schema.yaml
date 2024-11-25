@@ -402,8 +402,6 @@ properties:
       PoN:
         type: string
         description: path to panel of normals
-    required:
-      - PoN
 
   multiqc:
     type: object
