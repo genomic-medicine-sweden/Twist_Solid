@@ -123,7 +123,7 @@ use rule create_artifact_file from references as references_create_artifact_file
 #              msi PoN override
 ####################################################
 # Use bam files created by pipeline: alignment/samtools_merge_bam/{sample}_{type}.bam
-rule msisensor_pro_input_file:
+use rule msisensor_pro_input_file from references as references_msisensor_pro_input_file with:
     input:
         bams=lambda wildcards: get_bams(units, "msisensor_pro"),
 
