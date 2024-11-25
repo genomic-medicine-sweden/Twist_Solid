@@ -125,7 +125,7 @@ use rule create_artifact_file from references as references_create_artifact_file
 # Use bam files created by pipeline: alignment/samtools_merge_bam/{sample}_{type}.bam
 use rule msisensor_pro_input_file from references as references_msisensor_pro_input_file with:
     input:
-        bams=lambda wildcards: get_bams(units, "msisensor_pro"),
+        bams=lambda wildcards: get_bams(units, "msisensor_pro_reference_list_baseline"),
 
 
 ####################################################
