@@ -189,6 +189,12 @@ gatk_mutect2_merge_stats:
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
 
+juli_annotate:
+  container: "docker://hydragenetics/juli:0.1.6.2"
+
+juli_call:
+  container: "docker://hydragenetics/juli:0.1.6.2"
+
 jumble_cnvkit_call:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 

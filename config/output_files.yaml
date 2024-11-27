@@ -283,6 +283,18 @@ files:
       - N
     deduplication:
       - umi
+  - name: JuLI fusions
+    input: fusions/juli_call/{sample}_{type}.annotated.filtered.txt
+    output: results/dna/{sample}_{type}/fusion/{sample}_{type}.juli.filtered.fusions.txt
+    types:
+      - T
+      - N
+  - name: JuLI unfiltered fusions
+    input: fusions/juli_call/{sample}_{type}.annotated.txt
+    output: results/dna/{sample}_{type}/additional_files/fusion/{sample}_{type}.juli.fusions.txt
+    types:
+      - T
+      - N
   - name: ID-SNP VCF RNA
     input: snv_indels/bcftools_id_snps/{sample}_{type}.id_snps.vcf
     output: results/rna/{sample}_{type}/id_snps/{sample}_{type}.id_snps.vcf
