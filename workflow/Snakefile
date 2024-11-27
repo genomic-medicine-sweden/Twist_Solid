@@ -419,7 +419,7 @@ use rule gatk_get_pileup_summaries from qc as qc_gatk_get_pileup_summaries with:
 
 module biomarker:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.4.1")
+        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.5.0")
     config:
         config
 
@@ -436,7 +436,7 @@ use rule msisensor_pro from biomarker as biomarker_msisensor_pro_umi with:
     input:
         bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
         bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai",
-        PoN=config.get("msisensor_pro", {}).get("PoN", ""),
+        PoN="biomarker/msisensor_pro_filter_sites/{sample}_{type}.Msisensor_pro_reference.filtered.list_baseline",
     output:
         msi_score=temp("biomarker/msisensor_pro/{sample}_{type}.umi"),
         msi_all=temp("biomarker/msisensor_pro/{sample}_{type}.umi_all"),

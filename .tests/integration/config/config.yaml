@@ -129,7 +129,7 @@ manta_run_workflow_t:
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"
 
-msisensor_pro:
+msisensor_pro_filter_sites:
   PoN: "DATA/msisensor_pro_reference_26_normal.list_baseline"
 
 multiqc:

@@ -133,7 +133,7 @@ merge_cnv_json:
 mosdepth:
   extra: "--no-per-base --fast-mode"
 
-msisensor_pro:
+msisensor_pro_filter_sites:
   PoN: "{{PROJECT_PON_DATA}}/GMS560/PoN/Msisensor_pro_reference_nextseq_noUmea_27_hg38.list_baseline"
 
 purecn:
