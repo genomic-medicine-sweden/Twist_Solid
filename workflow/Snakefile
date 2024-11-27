@@ -432,14 +432,6 @@ use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
         seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns",
 
 
-use rule msisensor_pro from biomarker as biomarker_msisensor_pro with:
-    output:
-        msi_score="biomarker/msisensor_pro/{sample}_{type}",
-        msi_all="biomarker/msisensor_pro/{sample}_{type}.all",
-        msi_dis="biomarker/msisensor_pro/{sample}_{type}.dis",
-        msi_unstable="biomarker/msisensor_pro/{sample}_{type}.unstable",
-
-
 use rule msisensor_pro from biomarker as biomarker_msisensor_pro_umi with:
     input:
         bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
