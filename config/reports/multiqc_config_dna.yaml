@@ -11,8 +11,10 @@ show_analysis_paths: True
 #decimalPoint_format: ','
 extra_fn_clean_exts: ##from this until end
     - '.duplication_metrics'
-    - type: regex
-      pattern: '_fastq[12]'
+    - '.HsMetrics'
+    - '.alignment_summary_metrics'
+    - type: regex_keep
+      pattern: '[0-9A-Z-]+'
 #extra_fn_clean_trim:   #if found in beginning or end
 #fn_ignore_dirs:
 #fn_ignore_files:
