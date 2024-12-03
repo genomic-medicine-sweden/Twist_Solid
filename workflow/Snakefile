@@ -441,8 +441,8 @@ use rule msisensor_pro_filter_sites from biomarker as biomarker_msisensor_pro_fi
 
 use rule msisensor_pro from biomarker as biomarker_msisensor_pro_unfiltered with:
     input:
-        bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.bam",
-        bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.bam.bai",
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         PoN="biomarker/msisensor_pro_filter_sites/{sample}_{type}.Msisensor_pro_reference.unfiltered.list_baseline",
     output:
         msi_score=temp("biomarker/msisensor_pro_unfiltered/{sample}_{type}"),
