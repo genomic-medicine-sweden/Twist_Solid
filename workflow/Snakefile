@@ -432,6 +432,25 @@ use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
         seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns",
 
 
+use rule msisensor_pro_filter_sites from biomarker as biomarker_msisensor_pro_filter_sites_unfiltered with:
+    output:
+        PoN=temp("biomarker/msisensor_pro_filter_sites/{sample}_{type}.Msisensor_pro_reference.unfiltered.list_baseline"),
+    params:
+        msi_sites_bed="",
+
+
+use rule msisensor_pro from biomarker as biomarker_msisensor_pro_unfiltered with:
+    input:
+        bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.bam",
+        bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.bam.bai",
+        PoN="biomarker/msisensor_pro_filter_sites/{sample}_{type}.Msisensor_pro_reference.unfiltered.list_baseline",
+    output:
+        msi_score=temp("biomarker/msisensor_pro_unfiltered/{sample}_{type}"),
+        msi_all=temp("biomarker/msisensor_pro_unfiltered/{sample}_{type}_all"),
+        msi_dis=temp("biomarker/msisensor_pro_unfiltered/{sample}_{type}_dis"),
+        msi_unstable=temp("biomarker/msisensor_pro_unfiltered/{sample}_{type}_unstable"),
+
+
 use rule msisensor_pro from biomarker as biomarker_msisensor_pro_umi with:
     input:
         bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
