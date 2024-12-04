@@ -318,6 +318,13 @@ module qc:
 use rule * from qc exclude all as qc_*
 
 
+use rule multiqc from qc as qc_multiqc with:
+    output:
+        html=temp("qc/multiqc/multiqc_{report}.html"),
+        data=temp(directory("qc/multiqc/multiqc_{report}_data")),
+        data_json=temp("qc/multiqc/multiqc_{report}_data/multiqc_data.json"),
+
+
 use rule mosdepth from qc as qc_mosdepth with:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
