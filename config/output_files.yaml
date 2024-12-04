@@ -433,8 +433,8 @@ files:
       - T
       - N
   - name: Germline vcf used in CNV analysis
-    input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.germline.vcf
+    input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.germline.vcf.gz
     types:
       - T
       - N
