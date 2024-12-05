@@ -456,6 +456,9 @@ use rule msisensor_pro from biomarker as biomarker_msisensor_pro_unfiltered with
         msi_all=temp("biomarker/msisensor_pro_unfiltered/{sample}_{type}_all"),
         msi_dis=temp("biomarker/msisensor_pro_unfiltered/{sample}_{type}_dis"),
         msi_unstable=temp("biomarker/msisensor_pro_unfiltered/{sample}_{type}_unstable"),
+    params:
+        extra=config.get("msisensor_pro", {}).get("extra", "-c 50 -b 2"),
+        out_prefix="biomarker/msisensor_pro_unfiltered/{sample}_{type}",
 
 
 use rule msisensor_pro from biomarker as biomarker_msisensor_pro_umi with:
