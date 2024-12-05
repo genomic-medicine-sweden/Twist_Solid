@@ -177,9 +177,15 @@ files:
     types:
       - T
       - N
-  - name: MSI Sensor Pro TSV
+  - name: MSI Sensor Pro filtered TSV
     input: biomarker/msisensor_pro/{sample}_{type}
-    output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.msisensor_pro.score.tsv
+    output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.msisensor_pro.filtered.score.tsv
+    types:
+      - T
+      - N
+  - name: MSI Sensor Pro unfiltered TSV
+    input: biomarker/msisensor_pro_unfiltered/{sample}_{type}
+    output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.msisensor_pro.unfiltered.score.tsv
     types:
       - T
       - N
@@ -435,6 +441,12 @@ files:
   - name: Jumble vcf pathology_purecn
     input: cnv_sv/jumble_vcf/{sample}_{type}.pathology_purecn.vcf
     output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology_purecn.jumble.vcf
+    types:
+      - T
+      - N
+  - name: Germline vcf used in CNV analysis
+    input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.germline.vcf.gz
     types:
       - T
       - N
