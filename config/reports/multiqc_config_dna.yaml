@@ -65,6 +65,7 @@ table_columns_visible:
     avg_sequence_length: False
     percent_fails: False
     total_sequences: False
+    median_sequence_length: False
 
 multiqc_cgs:
   "Samtools: stats":
