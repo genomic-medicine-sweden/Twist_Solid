@@ -6,6 +6,7 @@ units: "units.tsv"
 
 output: "config/output_files.yaml"
 default_container: "docker://hydragenetics/common:3.0.0"
+general_report: "config/reports/general_report.yaml"
 
 trimmer_software: "fastp_pe"
 
@@ -189,6 +190,16 @@ gatk_mutect2_merge_stats:
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
 
+general_html_report:
+  final_directory_depth: 4
+  multiqc_config: "config/reports/multiqc_config_dna.yaml"
+
+juli_annotate:
+  container: "docker://hydragenetics/juli:0.1.6.2"
+
+juli_call:
+  container: "docker://hydragenetics/juli:0.1.6.2"
+
 jumble_cnvkit_call:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
@@ -285,7 +296,7 @@ multiqc:
 
 optitype:
   #container: "docker://hydragenetics/optitype:1.3.5"
-  container: "docker://fred2/optitype"
+  container: "docker://fred2/optitype:release-v1.3.1"
   sample_type: "-d"
   enumeration: 4
 
