@@ -117,7 +117,7 @@
 
     ref_genes: 
       checksum: 225faf771242f46e49e0cb2cbaed4132
-      path: ref_data/juli/refGene_hg19.txt"
+      path: ref_data/juli/refGene_hg19.txt
       type: file
       url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/refs/tags/v0.13.0/juli/refGene_hg19.txt
 
