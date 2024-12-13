@@ -26,7 +26,8 @@ results/dna/VAL2022-2-5M_T/additional_files/vcf/VAL2022-2-5M_T.annotated.exon_on
 results/dna/VAL2022-2-5M_T/additional_files/vcf/VAL2022-2-5M_T.annotated.exon_only.filter.soft_filter.vcf	bbde2c4df3aaf4c65251685d91548f4d
 results/dna/VAL2022-2-5M_T/additional_files/vcf/VAL2022-2-5M_T.annotated.vcf.gz	6b514125458fc362f7a065a5740d74db
 results/dna/VAL2022-2-5M_T/additional_files/vcf/vardict_VAL2022-2-5M_T.vcf.gz	22c587c4f250d6d800a5f022324da458
-results/dna/VAL2022-2-5M_T/biomarker/VAL2022-2-5M_T.msisensor_pro.score.tsv	e47f1fb00f0220a20335f972e1af8d39
+results/dna/VAL2022-2-5M_T/biomarker/VAL2022-2-5M_T.msisensor_pro.unfiltered.score.tsv	e47f1fb00f0220a20335f972e1af8d39
+results/dna/VAL2022-2-5M_T/biomarker/VAL2022-2-5M_T.msisensor_pro.filtered.score.tsv  e47f1fb00f0220a20335f972e1af8d39
 results/dna/VAL2022-2-5M_T/biomarker/VAL2022-2-5M_T.pathology_purecn.scarhrd_cnvkit_score.txt	d4ad660ca5fcece75edede50490156d7
 results/dna/VAL2022-2-5M_T/biomarker/VAL2022-2-5M_T.TMB.txt	a2fa195be32925c1135188a6cc6215b8
 results/dna/VAL2022-2-5M_T/cnv/VAL2022-2-5M_T.pathology_purecn.amp_all_del_validated.cnv_report.tsv	43d39ccc1cd0363f1dfbd7c6b192aaf5
