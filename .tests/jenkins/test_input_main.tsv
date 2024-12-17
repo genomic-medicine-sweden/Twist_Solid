@@ -17,7 +17,7 @@ results/dna/HD827_T/additional_files/cnv/HD827_T.pathology.svdb_query.vcf	0c8762
 results/dna/HD827_T/additional_files/cnv/HD827_T.purecn.amp_all_del_all.cnv_report.tsv	2582f7a224014c502d3fdb03fea28652
 results/dna/HD827_T/additional_files/cnv/HD827_T.purecn.amp_all_del_validated.cnv_report.tsv	8b7113e136356624c2ccfefbe03a60a6
 results/dna/HD827_T/additional_files/cnv/HD827_T.purecn.svdb_query.vcf	c45512654fc45cfbd5a7fbd9b1f6407b
-results/dna/HD827_T/additional_files/fusion/HD827_T.fuseq_wes.unfiltered.results.csv  3350bfff935006e7375301954261e468
+results/dna/HD827_T/additional_files/fusion/HD827_T.fuseq_wes.unfiltered.results.csv	3350bfff935006e7375301954261e468
 results/dna/HD827_T/additional_files/qc/HD827_T.alignment_summary_metrics.txt	351f113346779003eae764ab6d16c5c4
 results/dna/HD827_T/additional_files/qc/HD827_T.contamination.table	3c9511e7efab4fefd32144ff2ad19d19
 results/dna/HD827_T/additional_files/qc/HD827_T.duplication_metrics.txt	9ac673f2e7d28e6d9601bc096b7764e4
@@ -51,7 +51,7 @@ results/dna/HD832_T/additional_files/cnv/HD832_T.pathology.svdb_query.vcf	daa8fd
 results/dna/HD832_T/additional_files/cnv/HD832_T.purecn.amp_all_del_all.cnv_report.tsv	62bc5d5fd3b70670ccaa1e04cf4ecfcd
 results/dna/HD832_T/additional_files/cnv/HD832_T.purecn.amp_all_del_validated.cnv_report.tsv	583a5e18f301cb1c76bb5a5bc3b0a06f
 results/dna/HD832_T/additional_files/cnv/HD832_T.purecn.svdb_query.vcf	259421c4f54f6263f1f6c91853a35494
-results/dna/HD832_T/additional_files/fusion/HD832_T.fuseq_wes.unfiltered.results.csv  23ac6dddb35fb8067fa79465fb6f6acf
+results/dna/HD832_T/additional_files/fusion/HD832_T.fuseq_wes.unfiltered.results.csv	23ac6dddb35fb8067fa79465fb6f6acf
 results/dna/HD832_T/additional_files/qc/HD832_T.alignment_summary_metrics.txt	8b2548b05cc43eaff20aeabb16aa1490
 results/dna/HD832_T/additional_files/qc/HD832_T.contamination.table	18bef22a4210099ec22b2444e6ac2482
 results/dna/HD832_T/additional_files/qc/HD832_T.duplication_metrics.txt	20cd0962dab4ca0011aec2100f4a572e
@@ -85,7 +85,7 @@ results/dna/NA12878_T/additional_files/cnv/NA12878_T.pathology.svdb_query.vcf	de
 results/dna/NA12878_T/additional_files/cnv/NA12878_T.purecn.amp_all_del_all.cnv_report.tsv	68f87eb7fc838a9269d8563ffa758b40
 results/dna/NA12878_T/additional_files/cnv/NA12878_T.purecn.amp_all_del_validated.cnv_report.tsv	ffd5742637196cf191ce8be441f26d09
 results/dna/NA12878_T/additional_files/cnv/NA12878_T.purecn.svdb_query.vcf	6f73017894cc4556b34b5ceecfd8cb63
-results/dna/NA12878_T/additional_files/fusion/NA12878_T.fuseq_wes.unfiltered.results.csv  003e8f796c80c7e52322630800d36d41
+results/dna/NA12878_T/additional_files/fusion/NA12878_T.fuseq_wes.unfiltered.results.csv	003e8f796c80c7e52322630800d36d41
 results/dna/NA12878_T/additional_files/qc/NA12878_T.alignment_summary_metrics.txt	3256b89a54ac29cf4f7ef0d6551a3be3
 results/dna/NA12878_T/additional_files/qc/NA12878_T.contamination.table	e2ab7189dcf7c8cfb1f0ac24ac8766dc
 results/dna/NA12878_T/additional_files/qc/NA12878_T.duplication_metrics.txt	355ba5b555b9d83a5820f054c323eef6
@@ -119,7 +119,7 @@ results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.pathology.svdb_query.vcf	24
 results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.purecn.amp_all_del_all.cnv_report.tsv	a1e1be805329887de74be9dc29d74080
 results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.purecn.amp_all_del_validated.cnv_report.tsv	103aa05a150a7b59de8b8ed9e1b63d5b
 results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.purecn.svdb_query.vcf	67ee070499d1ad82956e7da2942e4f8c
-results/dna/VAL2022_T/additional_files/fusion/VAL2022_T.fuseq_wes.unfiltered.results.csv  a29ae481538efadb7403814d9d8f76e9
+results/dna/VAL2022_T/additional_files/fusion/VAL2022_T.fuseq_wes.unfiltered.results.csv	a29ae481538efadb7403814d9d8f76e9
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.alignment_summary_metrics.txt	6c99476824c691ca10e75382ed9bb059
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.contamination.table	c1d8fc1cdb993dda50a430028277c37b
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.duplication_metrics.txt	31611542aafb4495560e062cac828f08
