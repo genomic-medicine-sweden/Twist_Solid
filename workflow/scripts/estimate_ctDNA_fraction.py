@@ -233,12 +233,12 @@ if __name__ == "__main__":
     input_vcf = snakemake.input.vcf
     output_ctDNA_fraction = snakemake.output.ctDNA_fraction
 
-    min_germline_af = snakemake.params.min_germline_af
-    max_somatic_af = snakemake.params.max_somatic_af
-    min_nr_SNPs_per_segment = snakemake.params.min_nr_SNPs_per_segment
-    min_segment_length = snakemake.params.min_segment_length
-    gnomAD_AF_limit = snakemake.params.gnomAD_AF_limit
-    vaf_baseline = snakemake.params.vaf_baseline
+    min_germline_af = float(snakemake.params.min_germline_af)
+    max_somatic_af = float(snakemake.params.max_somatic_af)
+    min_nr_SNPs_per_segment = int(snakemake.params.min_nr_SNPs_per_segment)
+    min_segment_length = int(snakemake.params.min_segment_length)
+    gnomAD_AF_limit = float(snakemake.params.gnomAD_AF_limit)
+    vaf_baseline = float(snakemake.params.vaf_baseline)
 
     # Read CNV segments
     segment_dict = read_segments(input_segments)
