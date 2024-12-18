@@ -1,5 +1,53 @@
 # Changelog
 
+## [0.18.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.17.0...v0.18.0) (2024-12-18)
+
+
+### Features
+
+* add general report ([ab3d9f4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ab3d9f4502872239a3e36e4047431dd42eb498fa))
+* add general report ([28f0cef](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/28f0ceff195366c649b03da0916dfc6321a4366a))
+* **msi:** Calculate both filtered and unfiltered MSI score ([e2f977a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e2f977a997ac8010550ebcdfdfffebc66ae6fa6b))
+* **msisensor_pro:** add filtering of msi sites ([d7e475e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d7e475e7db8b2081c53a65ca604aa2b27733b1e9))
+* save the germline vcf used in CNV analysis in results ([368536d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/368536d87629f9c83ef5468d97b092447099bd66))
+
+
+### Bug Fixes
+
+* add missing msisensor_pro override ([c0b0db4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c0b0db4f8d99438019533b678c6aa8875aa04768))
+* **cnv_report:** add missing cnv to report independent of number of callers ([2bc9c2d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2bc9c2d7b68cc91383c125ff1ae5031f47c1f774))
+* correct general report config ([5404b87](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5404b87c9025bc3a4aac3a88244284ebfe3e844a))
+* correct general report config ([661826d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/661826d58d79238f54ae9a3182dff191b957ba7a))
+* correct MSIsensorpro output ([cde79b6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/cde79b621c964724fe1ad19c4bbaefbfd57f1056))
+* correct reference path ([dc36faf](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/dc36faf69a097d0fec34c2d98b20f5af56939c7b))
+* **est_input_develop.tsv:** Space to tab ([1428094](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1428094325be2c79f79f39f36bcc8eabed3e4a19))
+* **juli:** update fusion module ([d1cb1a6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d1cb1a605f3aae0d8f6fe1d91d27bde72192d210))
+* **jumble:** NA-handling set to True for missing BAF values ([e2731c2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e2731c26291938a43f05f7a7de390bdbabf2f685))
+* missing config import ([9e818c6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9e818c6e21e85a22853c982877bd2b5928be4ba1))
+* modify multiqc to define used output file ([3b189e5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3b189e5ad386ed6033d4dfad7853905121b4caa9))
+* modify multiqc to define used output file ([ffc4286](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ffc428674a1ad035646daffcc490291a12ef0668))
+* msi PoN override name correction ([a89ba7f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a89ba7fd2736a6005f0dcf06ee158e90b86cac4d))
+* **msi:** correct infiles to msi rules ([8f4227f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8f4227ff97198c49f5a83af0673684477abe4261))
+* **msi:** correct unfiltered msi output folder ([cf97fc9](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/cf97fc93a5f201a25105387d7adf369ee2637a2d))
+* **msisensor_pro:** correct rule override ([e9ec9c2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e9ec9c2ebd5f3c420bc45fb6636351b10ebc0c0a))
+* **msi:** spelling error ([e5dac99](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e5dac991ef32de00d3e7dfc44da1bf332fcbb58e))
+* **MultiQC:** remove extra lines in MultiQC DNA report ([b9c5dc1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b9c5dc19aca7f4d5dc1319cb12dd7915f4cf7621))
+* **references.hg19.yaml:** JuLI ref-files ([8415cb7](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8415cb725713e6c42a2ac72b573e9aeecc2f85e1))
+* **references.hg19.yaml:** Removed citation mark ([0c60ab5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0c60ab5f3bdb71782279d9b40db36fb9ddf6afd6))
+* rm extra line by hiding medium read length ([42a4160](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/42a4160c123b76192889d70743f63022c5bb51da))
+* **test_input_develop.tsv:** Filtered/unfiltered msi ([360f8f8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/360f8f836b45796aea96ca72a13b7f1d83b79b2b))
+* **test_input_develop.tsv:** New checksum msi_filtered ([2567a84](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2567a84be56bf8d68ad74f36796bf2dc639b9c60))
+* **test_input_develop.tsv:** New sums for cnv-reports ([3e4068b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3e4068bc7cf8759ea2b6d61e6306cd3ae787ae17))
+* **test_input_develop.tsv:** Spaces to tab ([9da04d8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9da04d8f8fa68d456075211b642b5dc6e4f3fbb7))
+* **test_input_develop.tsv:** Update sums ([7293125](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/7293125e36a109c48eaacd3602c1d220e3258125))
+* **test_input_develop.tsv:** Updated checksum ([51a349a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/51a349ab0869a0768dfe20346f5b086724c171d2))
+* **test_input_main.tsv:** New checksums ([bda8469](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/bda8469107024568186bfff4fec05b24c8bd7ef4))
+* **test_input_main.tsv:** Spaces to tabs ([a37efd2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a37efd2254e731ab4297f8c6e85bae40abb77032))
+* **test_input_main.tsv:** Update checksums ([bbf1ed2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/bbf1ed2da7f839aea0d3e3cf91545226d21efc96))
+* Update Snakefile ([ee788a4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ee788a40613826d8f401917d58df46d0601e7693))
+* Update Snakefile_references.smk ([5b8315b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5b8315bb5c655d9fe1ee7f28bc59787031745637))
+* vcf file should be gzipped ([2b93e21](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2b93e2173d356bc134d4e660593386df5eb1aebf))
+
 ## [0.17.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.16.0...v0.17.0) (2024-11-19)
 
 
