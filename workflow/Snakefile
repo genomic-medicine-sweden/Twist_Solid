@@ -481,6 +481,13 @@ use rule tmb from biomarker as biomarker_tmb with:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.vcf.gz",
 
 
+use rule optitype from biomarker as biomarker_optitype with:
+    output:
+        coverage_plot=temp("biomarker/optitype/{sample}_{type}/{sample}_{type}_hla_type_coverage_plot.pdf"),
+        hla_type=temp("biomarker/optitype/{sample}_{type}/{sample}_{type}_hla_type_result.tsv"),
+        out_dir=directory("biomarker/optitype/{sample}_{type}/"),
+
+
 use rule tmb from biomarker as biomarker_tmb_umi with:
     input:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter_umi.vcf.gz",
