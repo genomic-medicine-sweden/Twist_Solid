@@ -7,6 +7,7 @@ __license__ = "GPL-3"
 rule estimate_ctdna_fraction:
     input:
         germline_vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
+        germline_vcf_tabix="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz.tbi",
         segments="cnv_sv/jumble_vcf/{sample}_{type}.pathology_purecn.vcf",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter_umi.codon_snvs.sorted.vep_annotated.qci.vcf",
     output:

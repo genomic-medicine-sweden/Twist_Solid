@@ -71,7 +71,7 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
         # Only keep SNVs
         if len(ref) > 1 or len(alt) > 1:
             continue
-        # Check if SNVs is in segment with clear CNA based on copy number
+        # Check if SNVs is in segment with clear CNA based on copy number and then skip the SNV
         CNA = False
         if chrom not in segment_dict:
             continue
@@ -80,15 +80,31 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
                 if seg[2] < 1.6 or seg[2] > 2.4:
                     CNA = True
                     break
-        # Skip low AF somatic SNVs and germline SNPs and SNVs in segments with CNA
-        AF = record.samples.items()[0][1]["AF"][0]
+        if CNA:
+            continue
+        # Skip low AF somatic SNVs and germline SNPs
         gnomAD_AF = record.info["CSQ"][0].split("|")[vep_fields["gnomAD_AF"]]
         if gnomAD_AF == "":
             gnomAD_AF = 0
         else:
             gnomAD_AF = float(gnomAD_AF)
-        if AF > max_somatic_af or gnomAD_AF > gnomAD_AF_limit or CNA:
+        if gnomAD_AF > gnomAD_AF_limit:
             continue
+        AF = record.samples.items()[0][1]["AF"][0]
+        # Skip low AF somatic SNVs
+        if AF > max_somatic_af:
+            continue
+        # Only keep variants in exons
+        consequence = record.info["CSQ"][0].split("|")[vep_fields["Consequence"]].split("&")
+        if not (
+                "missense_variant" in consequence or
+                "synonymous_variant" in consequence or
+                "stop_lost" in consequence or
+                "stop_gained" in consequence or
+                "stop_retained_variant" in consequence
+        ):
+            continue
+
         snv_list.append(AF)
 
     if len(snv_list) > 0:
@@ -97,7 +113,9 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
         return 0
 
 
-def baf_to_tc(abs_value_seg_median, CN, CN_list):
+def baf_to_tc(abs_value_seg_median, CN, CN_list, median_noise_level):
+    # Remove the medium noise level
+    abs_value_seg_median -= median_noise_level
     # Get highest and lowest difference to normal copy number for a segment
     min_CN_diff = 0.00001
     max_CN_diff = 0.00001
@@ -206,7 +224,7 @@ def calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min
                     abs_value_seg_median = statistics.median(abs_value_seg)
                     # If signal is found calculate TC based on the median separation in BAF around the BAF-baseline (~50%)
                     if test_if_signal_in_segment(seg, abs_value_seg_median, median_noise_level, vaf_baseline):
-                        tc_seg = baf_to_tc(abs_value_seg_median, segment[2], CN_signal_list)
+                        tc_seg = baf_to_tc(abs_value_seg_median, segment[2], CN_signal_list, median_noise_level)
                         tc_dict[tc_seg[1]].append(tc_seg[0])
                     i += 50
                     if short:
@@ -216,7 +234,7 @@ def calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min
         return max(tc_dict['Del'])
     elif len(tc_dict["CNLoH"]) > 0:
         return max(tc_dict['CNLoH'])
-    return -1
+    return 0
 
 
 def write_tc(output_tc, tc_cnv, tc_snv):

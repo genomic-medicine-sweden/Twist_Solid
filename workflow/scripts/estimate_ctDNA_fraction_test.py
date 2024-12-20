@@ -149,7 +149,7 @@ class TestUnitUtils(unittest.TestCase):
         from estimate_ctDNA_fraction import baf_to_tc
 
         # Test no aneuploidy based on copy number and no BAF signal
-        tc, CNA_type = baf_to_tc(0, 2.0, [1.9, 2.0, 2.1])
+        tc, CNA_type = baf_to_tc(0, 2.0, [1.9, 2.0, 2.1], 0)
 
         test_tc = 0.0
         test_CNA_type = "Del"
@@ -162,7 +162,7 @@ class TestUnitUtils(unittest.TestCase):
             raise e
 
         # Test no aneuploidy based on copy number but with small BAF signal
-        tc, CNA_type = baf_to_tc(0.02, 1.95, [1.9, 2.0, 2.1])
+        tc, CNA_type = baf_to_tc(0.02, 1.95, [1.9, 2.0, 2.1], 0)
 
         test_tc = 0.07692307692307693
         test_CNA_type = "Del"
@@ -175,7 +175,7 @@ class TestUnitUtils(unittest.TestCase):
             raise e
 
         # Test no aneuploidy in sample based on copy number but with strong BAF signal
-        tc, CNA_type = baf_to_tc(0.2, 1.9, [1.9, 2.0, 2.1])
+        tc, CNA_type = baf_to_tc(0.2, 1.9, [1.9, 2.0, 2.1], 0)
 
         test_tc = 0.5714285714285715
         test_CNA_type = "Del"
@@ -188,7 +188,7 @@ class TestUnitUtils(unittest.TestCase):
             raise e
 
         # Test aneuploidy in sample based on copy number with deletion in segment
-        tc, CNA_type = baf_to_tc(0.2, 0.9, [0.9, 2.0, 3.0])
+        tc, CNA_type = baf_to_tc(0.2, 0.9, [0.9, 2.0, 3.0], 0)
 
         test_tc = 0.5714285714285715
         test_CNA_type = "Del"
@@ -201,7 +201,7 @@ class TestUnitUtils(unittest.TestCase):
             raise e
 
         # Test aneuploidy in sample based on copy number with copy neutral LoH in segment
-        tc, CNA_type = baf_to_tc(0.2, 1.9, [1.0, 2.0, 3.0])
+        tc, CNA_type = baf_to_tc(0.2, 1.9, [1.0, 2.0, 3.0], 0)
 
         test_tc = 0.46136101499423304
         test_CNA_type = "CNLoH"
@@ -214,7 +214,7 @@ class TestUnitUtils(unittest.TestCase):
             raise e
 
         # Test aneuploidy in sample based on copy number with duplication in segment
-        tc, CNA_type = baf_to_tc(0.2, 2.9, [1.0, 2.0, 3.0])
+        tc, CNA_type = baf_to_tc(0.2, 2.9, [1.0, 2.0, 3.0], 0)
 
         test_tc = 0.7504690431519699
         test_CNA_type = "Dup"
@@ -232,7 +232,7 @@ class TestUnitUtils(unittest.TestCase):
         # No CNA signal found
         tc = calculate_cnv_tc(test_segment_dict3, self.min_nr_SNPs_per_segment, self.vaf_baseline, self.min_segment_length)
 
-        test_tc = -1
+        test_tc = 0
 
         try:
             self.assertEqual(test_tc, tc)
@@ -243,7 +243,7 @@ class TestUnitUtils(unittest.TestCase):
         # Found a deletion
         tc = calculate_cnv_tc(test_segment_dict4, self.min_nr_SNPs_per_segment, self.vaf_baseline, self.min_segment_length)
 
-        test_tc = 0.42121880653257465
+        test_tc = 0.36253480233650015
 
         try:
             self.assertEqual(test_tc, tc)
