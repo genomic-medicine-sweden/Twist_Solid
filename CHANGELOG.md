@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.18.1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.18.0...v0.18.1) (2024-12-20)
+
+
+### Bug Fixes
+
+* general report notemp issue ([96e9da6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/96e9da69def5b0d90194193a584b7309b01f5506))
+* **optitype:** notemp issue ([c362990](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c362990ed2e60d8ee9095438e970496900f434d7))
+
 ## [0.18.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.17.0...v0.18.0) (2024-12-18)
 
 
