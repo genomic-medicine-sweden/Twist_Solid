@@ -426,7 +426,7 @@ use rule gatk_get_pileup_summaries from qc as qc_gatk_get_pileup_summaries with:
 
 module biomarker:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.5.0")
+        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="6ed20dc")
     config:
         config
 
@@ -437,6 +437,11 @@ use rule * from biomarker exclude all as biomarker_*
 use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
     input:
         seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns",
+
+
+use rule cnvkit2scarhrd from biomarker as biomarker_jumble2scarhrd with:
+    input:
+        seg="cnv_sv/jumble_cnvkit_call/{sample}_{type}.{tc_method}.loh.cns",
 
 
 use rule msisensor_pro_filter_sites from biomarker as biomarker_msisensor_pro_filter_sites_unfiltered with:
