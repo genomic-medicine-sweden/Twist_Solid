@@ -230,7 +230,9 @@ class TestUnitUtils(unittest.TestCase):
         from estimate_ctDNA_fraction import calculate_cnv_tc
 
         # No CNA signal found
-        tc, seg_list = calculate_cnv_tc(test_segment_dict3, self.min_nr_SNPs_per_segment, self.vaf_baseline, self.min_segment_length)
+        tc, seg_list = calculate_cnv_tc(
+            test_segment_dict3, self.min_nr_SNPs_per_segment, self.vaf_baseline, self.min_segment_length
+        )
 
         test_tc = 0
 
@@ -241,7 +243,9 @@ class TestUnitUtils(unittest.TestCase):
             raise e
 
         # Found a deletion
-        tc, seg_list = calculate_cnv_tc(test_segment_dict4, self.min_nr_SNPs_per_segment, self.vaf_baseline, self.min_segment_length)
+        tc, seg_list = calculate_cnv_tc(
+            test_segment_dict4, self.min_nr_SNPs_per_segment, self.vaf_baseline, self.min_segment_length
+        )
 
         test_tc = 0.36253480233650015
 
