@@ -225,16 +225,24 @@ def calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min
                     # If signal is found calculate TC based on the median separation in BAF around the BAF-baseline (~50%)
                     if test_if_signal_in_segment(seg, abs_value_seg_median, median_noise_level, vaf_baseline):
                         tc_seg = baf_to_tc(abs_value_seg_median, segment[2], CN_signal_list, median_noise_level)
-                        tc_dict[tc_seg[1]].append(tc_seg[0])
+                        tc_dict[tc_seg[1]].append([tc_seg[0], segment, chrom])
                     i += 50
                     if short:
                         break
     # Report highest TC based on CNAs with deletions. If none are found report highest copy neutral LoH CNA.
-    if len(tc_dict["Del"]) > 0:
-        return max(tc_dict['Del'])
-    elif len(tc_dict["CNLoH"]) > 0:
-        return max(tc_dict['CNLoH'])
-    return 0
+    max_tc = 0
+    found_del = False
+    seg_list = []
+    for seg_info in tc_dict["Del"]:
+        seg_list.append([seg_info, "Deletion"])
+        if seg_info[0] > max_tc:
+            max_tc = seg_info[0]
+            found_del = True
+    for seg_info in tc_dict["CNLoH"]:
+        seg_list.append([seg_info, "CNLoH"])
+        if found_del and seg_info[0] > max_tc:
+            max_tc = seg_info[0]
+    return max_tc, seg_list
 
 
 def write_tc(output_tc, tc_cnv, tc_snv):
@@ -245,11 +253,19 @@ def write_tc(output_tc, tc_cnv, tc_snv):
     return f"{tc_cnv*100:.1f}%\t{tc_snv*100:.1f}%\n"
 
 
+def write_seg_list(output_file_name, seg_list):
+    output = open(output_file_name, "w")
+    output.write("ctDNA_fraction\tCNV_type\tchromosome\tstart_pos\tend_pos\n")
+    for seg in seg_list:
+        output.write(f"{seg[0][0]*100:.1f}%\t{seg[1]}\t{seg[0][2]}\t{seg[0][1][0]}\t{seg[0][1][1]}\n")
+
+
 if __name__ == "__main__":
     input_segments = snakemake.input.segments
     input_germline_vcf = snakemake.input.germline_vcf
     input_vcf = snakemake.input.vcf
     output_ctDNA_fraction = snakemake.output.ctDNA_fraction
+    output_ctDNA_info = snakemake.output.ctDNA_info
 
     min_germline_af = float(snakemake.params.min_germline_af)
     max_somatic_af = float(snakemake.params.max_somatic_af)
@@ -262,7 +278,9 @@ if __name__ == "__main__":
     segment_dict = read_segments(input_segments)
     # Read germline SNPs
     segment_dict_AF = read_germline_vcf(input_germline_vcf, segment_dict, min_germline_af)
-    tc_cnv = calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min_segment_length)
+    tc_cnv, seg_list = calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min_segment_length)
     # Read SNVs and report TC based on max VAF of somatic SNV.
     tc_snv = read_snv_vcf_and_find_max_af(input_vcf, segment_dict, max_somatic_af, gnomAD_AF_limit)
     write_tc(output_ctDNA_fraction, tc_cnv, tc_snv)
+    # Write additional info regarding which chromosomes have deletions
+    write_seg_list(output_ctDNA_info, seg_list)
