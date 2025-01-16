@@ -63,8 +63,8 @@ def find_max_probe_diff(probe_data, window_size):
 
 
 def filter_deletions(
-        max_probe_diff_index, min_probe_diff_index, probe_data, gene_probe_index, probe_positions, region, deletions, region_max_size, window_size,
-        min_log_odds_diff, min_nr_stdev_diff, blacklist_dict,
+        max_probe_diff_index, min_probe_diff_index, probe_data, gene_probe_index, probe_positions, region, deletions,
+        region_max_size, window_size, min_log_odds_diff, min_nr_stdev_diff, blacklist_dict,
 ):
     # Blacklist filter
     key = f"{region[0]}_{region[3]}_{region[4]}"
@@ -174,8 +174,8 @@ def call_small_cnv_deletions(
             log.info(f"Too few data points for region: {region}")
         max_probe_diff_index, min_probe_diff_index = find_max_probe_diff(probe_data, window_size)
         filter = filter_deletions(
-            max_probe_diff_index, min_probe_diff_index, probe_data, gene_probe_index, probe_positions, region, deletions, region_max_size,
-            window_size, min_log_odds_diff, min_nr_stdev_diff, blacklist_dict
+            max_probe_diff_index, min_probe_diff_index, probe_data, gene_probe_index, probe_positions, region,
+            deletions, region_max_size, window_size, min_log_odds_diff, min_nr_stdev_diff, blacklist_dict
         )
     return filter
 
