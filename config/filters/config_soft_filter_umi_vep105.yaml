@@ -10,7 +10,7 @@ filters:
     soft_filter_flag: "noisy_gene"
     soft_filter: "True"
   artifacts:
-    description: "Hard filter variants found in 3 or more normal samples. Rescued if high AF compared to background"
+    description: "Hard filter variants found in 3 or more normal samples. Rescued if high AF compared to background."
     expression: "((INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 10) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 10))"
     soft_filter_flag: "Artifact_gt_2"
     soft_filter: "True"
