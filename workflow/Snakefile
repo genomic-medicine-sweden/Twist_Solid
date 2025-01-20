@@ -45,7 +45,9 @@ use rule bcftools_id_snps as bcftools_id_snps_dna with:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        bed=config.get("bcftools_id_snps", {}).get("snps_bed", "missing bcftools_id_snps snps_bed file"),
+        bed=config.get("bcftools_id_snps", {}).get(
+            "snps_bed", "missing bcftools_id_snps snps_bed file"
+        ),
         ref=config.get("reference", {}).get("fasta", "missing reference fasta"),
     wildcard_constraints:
         type="[TN]",
@@ -53,7 +55,12 @@ use rule bcftools_id_snps as bcftools_id_snps_dna with:
 
 module prealignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/prealignment", path="workflow/Snakefile", tag="v1.0.0")
+        get_module_snakefile(
+            config,
+            "hydra-genetics/prealignment",
+            path="workflow/Snakefile",
+            tag="v1.0.0",
+        )
     config:
         config
 
@@ -84,11 +91,21 @@ use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
             config.get("fastp_pe_arriba", {}).get("benchmark_repeats", 1),
         )
     resources:
-        mem_mb=config.get("fastp_pe_arriba", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("fastp_pe_arriba", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("fastp_pe_arriba", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("fastp_pe_arriba", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("fastp_pe_arriba", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("fastp_pe_arriba", {}).get(
+            "mem_mb", config["default_resources"]["mem_mb"]
+        ),
+        mem_per_cpu=config.get("fastp_pe_arriba", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
+        partition=config.get("fastp_pe_arriba", {}).get(
+            "partition", config["default_resources"]["partition"]
+        ),
+        threads=config.get("fastp_pe_arriba", {}).get(
+            "threads", config["default_resources"]["threads"]
+        ),
+        time=config.get("fastp_pe_arriba", {}).get(
+            "time", config["default_resources"]["time"]
+        ),
     threads: config.get("fastp_pe_arriba", {}).get("threads", config["default_resources"]["threads"])
 
 
@@ -105,11 +122,21 @@ use rule merged from prealignment as prealignment_merged_arriba with:
             config.get("merged_arriba", {}).get("benchmark_repeats", 1),
         )
     resources:
-        mem_mb=config.get("merged_arriba", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("merged_arriba", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("merged_arriba", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("merged_arriba", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("merged_arriba", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("merged_arriba", {}).get(
+            "mem_mb", config["default_resources"]["mem_mb"]
+        ),
+        mem_per_cpu=config.get("merged_arriba", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
+        partition=config.get("merged_arriba", {}).get(
+            "partition", config["default_resources"]["partition"]
+        ),
+        threads=config.get("merged_arriba", {}).get(
+            "threads", config["default_resources"]["threads"]
+        ),
+        time=config.get("merged_arriba", {}).get(
+            "time", config["default_resources"]["time"]
+        ),
     threads: config.get("merged_arriba", {}).get("threads", config["default_resources"]["threads"])
     container:
         config.get("merged_arriba", {}).get("container", config["default_container"])
@@ -117,7 +144,9 @@ use rule merged from prealignment as prealignment_merged_arriba with:
 
 module alignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.5.0")
+        get_module_snakefile(
+            config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.5.0"
+        )
     config:
         config
 
@@ -139,7 +168,9 @@ use rule star from alignment as alignment_star with:
         extra=lambda wildcards: "%s %s"
         % (
             config.get("star", {}).get("extra", ""),
-            config.get("star", {}).get("read_group", generate_star_read_group(wildcards)),
+            config.get("star", {}).get(
+                "read_group", generate_star_read_group(wildcards)
+            ),
         ),
         idx="{input.idx}",
 
@@ -184,13 +215,17 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutec
     benchmark:
         repeat(
             "snv_indels/gatk_mutect2_merge/{sample}_{type}.bam_unsorted.benchmark.tsv",
-            config.get("alignment_samtools_merge_bam_mutect2", {}).get("benchmark_repeats", 1),
+            config.get("alignment_samtools_merge_bam_mutect2", {}).get(
+                "benchmark_repeats", 1
+            ),
         )
 
 
 module snv_indels:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v1.1.0")
+        get_module_snakefile(
+            config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v1.1.0"
+        )
     config:
         config
 
@@ -206,7 +241,8 @@ use rule bcftools_sort from snv_indels as snv_indels_bcftools_sort with:
 use rule vardict from snv_indels as snv_indels_vardict with:
     input:
         bam=lambda wildcards: get_deduplication_bam_chr_input(wildcards),
-        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_chr_input(wildcards), ".bai"),
+        bai=lambda wildcards: "%s%s"
+        % (get_deduplication_bam_chr_input(wildcards), ".bai"),
         reference=config["reference"]["fasta"],
         regions="snv_indels/bed_split/design_bedfile_{chr}.bed",
     params:
@@ -219,7 +255,8 @@ use rule vardict from snv_indels as snv_indels_vardict with:
 use rule gatk_mutect2 from snv_indels as snv_indels_gatk_mutect2 with:
     input:
         map=lambda wildcards: get_deduplication_bam_chr_input(wildcards),
-        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_chr_input(wildcards), ".bai"),
+        bai=lambda wildcards: "%s%s"
+        % (get_deduplication_bam_chr_input(wildcards), ".bai"),
         fasta=config.get("reference", {}).get("fasta", ""),
         bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
 
@@ -227,14 +264,17 @@ use rule gatk_mutect2 from snv_indels as snv_indels_gatk_mutect2 with:
 use rule gatk_mutect2_gvcf from snv_indels as snv_indels_gatk_mutect2_gvcf with:
     input:
         map=lambda wildcards: get_deduplication_bam_chr_input(wildcards),
-        bai=lambda wildcards: "%s%s" % (get_deduplication_bam_chr_input(wildcards), ".bai"),
+        bai=lambda wildcards: "%s%s"
+        % (get_deduplication_bam_chr_input(wildcards), ".bai"),
         fasta=config.get("reference", {}).get("fasta", ""),
         bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
 
 
 module annotation:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v1.1.0")
+        get_module_snakefile(
+            config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v1.1.0"
+        )
     config:
         config
 
@@ -266,7 +306,10 @@ use rule vep from annotation as annotation_vep_wo_pick with:
     log:
         "{file}.vep_annotated_wo_pick.vcf.log",
     benchmark:
-        repeat("{file}.vep_annotated_wo_pick.vcf.benchmark.tsv", config.get("vep_wo_pick", {}).get("benchmark_repeats", 1))
+        repeat(
+            "{file}.vep_annotated_wo_pick.vcf.benchmark.tsv",
+            config.get("vep_wo_pick", {}).get("benchmark_repeats", 1),
+        )
 
 
 use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purecn with:
@@ -282,7 +325,9 @@ use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purec
     params:
         annotation_db=lambda wildcards, input: input.annotation_db,
         output_type=config.get("bcftools_annotate_purecn", {}).get("output_type", "z"),
-        annotation_string=config.get("bcftools_annotate_purecn", {}).get("annotation_string", "-m DB"),
+        annotation_string=config.get("bcftools_annotate_purecn", {}).get(
+            "annotation_string", "-m DB"
+        ),
         extra=config.get("bcftools_annotate_purecn", {}).get("extra", ""),
     log:
         "snv_indels/gatk_mutect2/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.vcf.log",
@@ -295,7 +340,9 @@ use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purec
 
 module filtering:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag="v0.3.0")
+        get_module_snakefile(
+            config, "hydra-genetics/filtering", path="workflow/Snakefile", tag="v0.3.0"
+        )
     config:
         config
 
@@ -310,7 +357,9 @@ use rule filter_vcf from filtering as filtering_filter_vcf with:
 
 module qc:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/qc", path="workflow/Snakefile", tag="v0.5.0")
+        get_module_snakefile(
+            config, "hydra-genetics/qc", path="workflow/Snakefile", tag="v0.5.0"
+        )
     config:
         config
 
@@ -398,7 +447,9 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
     params:
         extra="%s %s"
         % (
-            config.get("picard_collect_alignment_summary_metrics", {}).get("extra", ""),
+            config.get("picard_collect_alignment_summary_metrics", {}).get(
+                "extra", ""
+            ),
             "VALIDATION_STRINGENCY=LENIENT",
         ),
     wildcard_constraints:
@@ -426,7 +477,9 @@ use rule gatk_get_pileup_summaries from qc as qc_gatk_get_pileup_summaries with:
 
 module biomarker:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.5.0")
+        get_module_snakefile(
+            config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.5.0"
+        )
     config:
         config
 
@@ -441,7 +494,9 @@ use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
 
 use rule msisensor_pro_filter_sites from biomarker as biomarker_msisensor_pro_filter_sites_unfiltered with:
     output:
-        PoN=temp("biomarker/msisensor_pro_filter_sites/{sample}_{type}.Msisensor_pro_reference.unfiltered.list_baseline"),
+        PoN=temp(
+            "biomarker/msisensor_pro_filter_sites/{sample}_{type}.Msisensor_pro_reference.unfiltered.list_baseline"
+        ),
     params:
         msi_sites_bed="",
 
@@ -483,8 +538,12 @@ use rule tmb from biomarker as biomarker_tmb with:
 
 use rule optitype from biomarker as biomarker_optitype with:
     output:
-        coverage_plot=temp("biomarker/optitype/{sample}_{type}/{sample}_{type}_hla_type_coverage_plot.pdf"),
-        hla_type=temp("biomarker/optitype/{sample}_{type}/{sample}_{type}_hla_type_result.tsv"),
+        coverage_plot=temp(
+            "biomarker/optitype/{sample}_{type}/{sample}_{type}_hla_type_coverage_plot.pdf"
+        ),
+        hla_type=temp(
+            "biomarker/optitype/{sample}_{type}/{sample}_{type}_hla_type_result.tsv"
+        ),
         out_dir=directory("biomarker/optitype/{sample}_{type}/"),
 
 
@@ -494,8 +553,12 @@ use rule tmb from biomarker as biomarker_tmb_umi with:
     output:
         tmb=temp("biomarker/tmb/{sample}_{type}.umi.TMB.txt"),
     params:
-        af_germline_lower_limit=config.get("tmb_umi", {}).get("af_germline_lower_limit", 0.47),
-        af_germline_upper_limit=config.get("tmb_umi", {}).get("af_germline_upper_limit", 0.53),
+        af_germline_lower_limit=config.get("tmb_umi", {}).get(
+            "af_germline_lower_limit", 0.47
+        ),
+        af_germline_upper_limit=config.get("tmb_umi", {}).get(
+            "af_germline_upper_limit", 0.53
+        ),
         af_lower_limit=config.get("tmb_umi", {}).get("af_lower_limit", 0.05),
         af_upper_limit=config.get("tmb_umi", {}).get("af_upper_limit", 0.95),
         artifacts=config.get("tmb_umi", {}).get("artifacts", ""),
@@ -504,7 +567,9 @@ use rule tmb from biomarker as biomarker_tmb_umi with:
         db1000g_limit=config.get("tmb_umi", {}).get("db1000g_limit", 0.0001),
         dp_limit=config.get("tmb_umi", {}).get("dp_limit", 200),
         filter_genes=config.get("tmb_umi", {}).get("filter_genes", ""),
-        filter_nr_observations=config.get("tmb_umi", {}).get("filter_nr_observations", 1),
+        filter_nr_observations=config.get("tmb_umi", {}).get(
+            "filter_nr_observations", 1
+        ),
         gnomad_limit=config.get("tmb_umi", {}).get("gnomad_limit", 0.0001),
         nr_avg_germline_snvs=config.get("tmb_umi", {}).get("nr_avg_germline_snvs", 2.0),
         nssnv_tmb_correction=config.get("tmb_umi", {}).get("nssnv_tmb_correction", 0.84),
@@ -513,7 +578,9 @@ use rule tmb from biomarker as biomarker_tmb_umi with:
 
 module fusions:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="v0.2.2")
+        get_module_snakefile(
+            config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="v0.2.2"
+        )
     config:
         config
 
@@ -527,27 +594,43 @@ use rule fuseq_wes from fusions as fusions_fuseq_wes with:
 
 use rule filter_report_fuseq_wes from fusions as fusions_filter_report_fuseq_wes_umi with:
     output:
-        fusions=temp("fusions/filter_fuseq_wes/{sample}_{type}.fuseq_wes.report.umi.csv"),
+        fusions=temp(
+            "fusions/filter_fuseq_wes/{sample}_{type}.fuseq_wes.report.umi.csv"
+        ),
     params:
         min_support=config.get("filter_fuseq_wes_umi", {}).get("min_support", ""),
-        gene_white_list=config.get("filter_fuseq_wes_umi", {}).get("gene_white_list", ""),
-        gene_fusion_black_list=config.get("filter_fuseq_wes_umi", {}).get("gene_fusion_black_list", ""),
-        transcript_black_list=config.get("filter_fuseq_wes_umi", {}).get("transcript_black_list", ""),
-        filter_on_fusiondb=config.get("filter_fuseq_wes_umi", {}).get("filter_on_fusiondb", ""),
+        gene_white_list=config.get("filter_fuseq_wes_umi", {}).get(
+            "gene_white_list", ""
+        ),
+        gene_fusion_black_list=config.get("filter_fuseq_wes_umi", {}).get(
+            "gene_fusion_black_list", ""
+        ),
+        transcript_black_list=config.get("filter_fuseq_wes_umi", {}).get(
+            "transcript_black_list", ""
+        ),
+        filter_on_fusiondb=config.get("filter_fuseq_wes_umi", {}).get(
+            "filter_on_fusiondb", ""
+        ),
         gtf=config.get("filter_fuseq_wes_umi", {}).get("gtf", ""),
 
 
 use rule star_fusion from fusions as fusions_star_fusion with:
     output:
         bam=temp("fusions/star_fusion/{sample}_{type}/Aligned.out.bam"),
-        fusions=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv"),
-        fusions_abridged=temp("fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.coding_effect.tsv"),
+        fusions=temp(
+            "fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv"
+        ),
+        fusions_abridged=temp(
+            "fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.abridged.coding_effect.tsv"
+        ),
         sj=temp("fusions/star_fusion/{sample}_{type}/SJ.out.tab"),
 
 
 module cnv_sv:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.7.1")
+        get_module_snakefile(
+            config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.7.1"
+        )
     config:
         config
 
@@ -569,12 +652,18 @@ use rule cnvkit_batch from cnv_sv as cnv_sv_cnvkit_batch_hrd with:
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         reference=config.get("cnvkit_batch_hrd", {}).get("normal_reference_hrd", ""),
     output:
-        antitarget_coverage=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
+        antitarget_coverage=temp(
+            "cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.antitargetcoverage.cnn"
+        ),
         bins=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.bintest.cns"),
         regions=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cnr"),
         segments=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.cns"),
-        segments_called=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.call.cns"),
-        target_coverage=temp("cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.targetcoverage.cnn"),
+        segments_called=temp(
+            "cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.call.cns"
+        ),
+        target_coverage=temp(
+            "cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.targetcoverage.cnn"
+        ),
     log:
         "cnv_sv/cnvkit_batch_hrd/{sample}/{sample}_{type}.log",
     benchmark:
@@ -683,14 +772,15 @@ use rule purecn from cnv_sv as cnv_sv_purecn with:
 
 use rule purecn_coverage from cnv_sv as cnv_sv_purecn_coverage with:
     output:
-        purecn=expand("cnv_sv/purecn_coverage/{{sample}}_{{type}}{ext}",
+        purecn=expand(
+            "cnv_sv/purecn_coverage/{{sample}}_{{type}}{ext}",
             ext=[
                 "_coverage.txt.gz",
                 "_coverage_loess.txt.gz",
                 "_coverage_loess.png",
                 "_coverage_loess_qc.txt",
-                ],
-                ),
+            ],
+        ),
 
 
 use rule purecn_copy_output from cnv_sv as cnv_sv_purecn_copy_output with:
@@ -705,7 +795,9 @@ use rule purecn_purity_file from cnv_sv as cnv_sv_purecn_purity_file with:
 
 module reports:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.6.0")
+        get_module_snakefile(
+            config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.6.0"
+        )
     config:
         config
 
@@ -730,7 +822,10 @@ use rule cnv_html_report from reports as reports_cnv_html_report with:
             workflow.source_path("templates/cnv_html_report/style.css"),
         ],
         tc_file=get_tc_file,
-        extra_table_files=[t["path"] for t in config.get("cnv_html_report", {}).get("extra_tables", [])],
+        extra_table_files=[
+            t["path"]
+            for t in config.get("cnv_html_report", {}).get("extra_tables", [])
+        ],
     params:
         extra_tables=config.get("cnv_html_report", {}).get("extra_tables", []),
         include_table=config.get("cnv_html_report", {}).get("show_table", True),
@@ -763,11 +858,21 @@ rule merge_cnv_json:
         )
     threads: config.get("merge_cnv_json", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("merge_cnv_json", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("merge_cnv_json", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("merge_cnv_json", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("merge_cnv_json", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("merge_cnv_json", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("merge_cnv_json", {}).get(
+            "mem_mb", config["default_resources"]["mem_mb"]
+        ),
+        mem_per_cpu=config.get("merge_cnv_json", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
+        partition=config.get("merge_cnv_json", {}).get(
+            "partition", config["default_resources"]["partition"]
+        ),
+        threads=config.get("merge_cnv_json", {}).get(
+            "threads", config["default_resources"]["threads"]
+        ),
+        time=config.get("merge_cnv_json", {}).get(
+            "time", config["default_resources"]["time"]
+        ),
     container:
         config.get("merge_cnv_json", {}).get("container", config["default_container"])
     message:
