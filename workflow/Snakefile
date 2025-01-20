@@ -53,7 +53,12 @@ use rule bcftools_id_snps as bcftools_id_snps_dna with:
 
 module prealignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/prealignment", path="workflow/Snakefile", tag="v1.0.0")
+        get_module_snakefile(
+            config,
+            "hydra-genetics/prealignment",
+            path="workflow/Snakefile",
+            tag="v1.0.0",
+        )
     config:
         config
 
@@ -266,7 +271,10 @@ use rule vep from annotation as annotation_vep_wo_pick with:
     log:
         "{file}.vep_annotated_wo_pick.vcf.log",
     benchmark:
-        repeat("{file}.vep_annotated_wo_pick.vcf.benchmark.tsv", config.get("vep_wo_pick", {}).get("benchmark_repeats", 1))
+        repeat(
+            "{file}.vep_annotated_wo_pick.vcf.benchmark.tsv",
+            config.get("vep_wo_pick", {}).get("benchmark_repeats", 1),
+        )
 
 
 use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purecn with:
@@ -321,7 +329,7 @@ use rule * from qc exclude all as qc_*
 use rule multiqc from qc as qc_multiqc with:
     output:
         html=temp("qc/multiqc/multiqc_{report}.html"),
-        data=temp(directory("qc/multiqc/multiqc_{report}_data")),
+        data=directory("qc/multiqc/multiqc_{report}_data"),
         data_json="qc/multiqc/multiqc_{report}_data/multiqc_data.json",
 
 
@@ -676,6 +684,32 @@ use rule purecn from cnv_sv as cnv_sv_purecn with:
         unpack(cnv_sv.get_purecn_inputs),
         vcf="cnv_sv/purecn_modify_vcf/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.mbq.vcf.gz",
         tbi="cnv_sv/purecn_modify_vcf/{sample}_{type}.normalized.sorted.vep_annotated.filter.snv_hard_filter_purecn.bcftools_annotated_purecn.mbq.vcf.gz.tbi",
+    output:
+        csv="cnv_sv/purecn/temp/{sample}_{type}/{sample}_{type}.csv",
+        outdir=directory("cnv_sv/purecn/temp/{sample}_{type}/"),
+
+
+use rule purecn_coverage from cnv_sv as cnv_sv_purecn_coverage with:
+    output:
+        purecn=expand(
+            "cnv_sv/purecn_coverage/{{sample}}_{{type}}{ext}",
+            ext=[
+                "_coverage.txt.gz",
+                "_coverage_loess.txt.gz",
+                "_coverage_loess.png",
+                "_coverage_loess_qc.txt",
+            ],
+        ),
+
+
+use rule purecn_copy_output from cnv_sv as cnv_sv_purecn_copy_output with:
+    output:
+        files="cnv_sv/purecn/{sample}_{type}{suffix}",
+
+
+use rule purecn_purity_file from cnv_sv as cnv_sv_purecn_purity_file with:
+    output:
+        purity="cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt",
 
 
 module reports:
