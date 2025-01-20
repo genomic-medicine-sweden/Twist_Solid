@@ -684,11 +684,11 @@ use rule purecn from cnv_sv as cnv_sv_purecn with:
 use rule purecn_coverage from cnv_sv as cnv_sv_purecn_coverage with:
     output:
         purecn=expand("cnv_sv/purecn_coverage/{{sample}}_{{type}}{ext}",
-                ext=[
-                    "_coverage.txt.gz",
-                    "_coverage_loess.txt.gz",
-                    "_coverage_loess.png",
-                    "_coverage_loess_qc.txt",
+            ext=[
+                "_coverage.txt.gz",
+                "_coverage_loess.txt.gz",
+                "_coverage_loess.png",
+                "_coverage_loess_qc.txt",
                 ],
             ),
 
