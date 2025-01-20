@@ -690,7 +690,7 @@ use rule purecn_coverage from cnv_sv as cnv_sv_purecn_coverage with:
                 "_coverage_loess.png",
                 "_coverage_loess_qc.txt",
                 ],
-            ),
+                ),
 
 
 use rule purecn_copy_output from cnv_sv as cnv_sv_purecn_copy_output with:
