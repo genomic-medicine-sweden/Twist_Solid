@@ -343,8 +343,6 @@ use rule mosdepth_bed from qc as qc_mosdepth_bed with:
 
 
 use rule samtools_stats from qc as qc_samtools_stats with:
-    input:
-        bam=lambda wildcards: get_deduplication_bam_input(wildcards),
     wildcard_constraints:
         type="T|N",
 

@@ -8,7 +8,7 @@ filters:
     expression: "VEP:SYMBOL = MUC6 or VEP:SYMBOL = CDC27"
     soft_filter: "False"
   artifacts:
-    description: "Hard filter variants found in more than 3 normal samples"
+    description: "Hard filter variants found in 3 or more normal samples. Rescued if high AF compared to background"
     expression: "((INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 10) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 10))"
     soft_filter: "False"
   germline:
@@ -17,11 +17,11 @@ filters:
     soft_filter: "False"
   af_snv:
     description: "Hard filter SNV variants with low vaf"
-    expression: "((FORMAT:AF:0 < 0.006 or FORMAT:AF:0 > 0.994) and exist[SNV, VEP:VARIANT_CLASS])"
+    expression: "((FORMAT:AF:0 < 0.006 or FORMAT:AF:0 > 0.994) and exist[SNV, VEP:VARIANT_CLASS] and !exist[1-hotspot, INFO:Hotspot])"
     soft_filter: "False"
   ad_snv:
     description: "Hard filter SNV variants with low ad"
-    expression: "((FORMAT:AD:1 < 15 or FORMAT:AD:0 < 15) and exist[SNV, VEP:VARIANT_CLASS])"
+    expression: "((FORMAT:AD:1 < 15 or FORMAT:AD:0 < 15) and exist[SNV, VEP:VARIANT_CLASS] and !exist[1-hotspot, INFO:Hotspot])"
     soft_filter: "False"
   af_insertion:
     description: "Hard filter Insertion variants with low vaf"
