@@ -1,5 +1,17 @@
 # Changelog
 
+### [0.18.2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.18.1...v0.18.2) (2025-01-20)
+
+
+### Bug Fixes
+
+* broken links ([34d15fe](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/34d15fe1f61c9cfa57759711ed8e1ec71a4563fb))
+* **Snakefile:** Fix linting ([97f4acf](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/97f4acf7e70a735c8dc08daa3bd96411c6a0934e))
+* **Snakefile:** Linting ([d36806e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d36806ee3fda2d85301e2aa3b819775570983654))
+* **Snakefile:** Linting again... ([a2ddc3c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a2ddc3c12465e62f1565dfc45156fff24e2c1987))
+* **Snakefile:** Linting... ([b7b3954](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b7b3954df8653dc88ecd983cb01c2f50e55d57c0))
+* **Snakefile:** No temporary files in purecn out ([a4f662c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a4f662cb203f8d2b3d3c48ef118cf2fcbbef6d97))
+
 ### [0.18.1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.18.0...v0.18.1) (2024-12-20)
 
 
