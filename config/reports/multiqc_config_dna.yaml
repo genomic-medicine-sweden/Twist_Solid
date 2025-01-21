@@ -13,6 +13,7 @@ extra_fn_clean_exts: ##from this until end
     - '.duplication_metrics'
     - '.HsMetrics'
     - '.alignment_summary_metrics'
+    - '.umi'
     - type: regex
       pattern: '_fastq[12]'
 #extra_fn_clean_trim:   #if found in beginning or end
