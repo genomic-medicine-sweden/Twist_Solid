@@ -1,11 +1,10 @@
 from collections import defaultdict
-from collections.abc import Generator
 from dataclasses import dataclass
 import json
 from pathlib import Path
 import pysam
 import sys
-from typing import Union
+from typing import Dict, Generator, List, Union
 
 
 @dataclass
@@ -18,7 +17,6 @@ class CNV:
     type: str
     copy_number: float
     baf: float
-    fp: str
 
     def end(self):
         return self.start + self.length - 1
@@ -37,20 +35,6 @@ class CNV:
 
     def __hash__(self):
         return hash(f"{self.caller}_{self.chromosome}:{self.start}-{self.end()}_{self.copy_number}")
-
-
-cytoband_config = snakemake.config.get("merge_cnv_json", {}).get("cytoband_config", {}).get("colors", {})
-cytoband_centromere = "acen"
-cytoband_colors = {
-    "gneg": cytoband_config.get("gneg", "#e3e3e3"),
-    "gpos25": cytoband_config.get("gpos25", "#555555"),
-    "gpos50": cytoband_config.get("gpos50", "#393939"),
-    "gpos75": cytoband_config.get("gpos75", "#8e8e8e"),
-    "gpos100": cytoband_config.get("gpos100", "#000000"),
-    "acen": cytoband_config.get("acen", "#963232"),
-    "gvar": cytoband_config.get("gvar", "#000000"),
-    "stalk": cytoband_config.get("stalk", "#7f7f7f"),
-}
 
 
 def parse_fai(filename, skip=None):
@@ -81,11 +65,7 @@ def annotation_parser():
     return parse_annotation_bed
 
 
-def cytoband_color(giemsa):
-    return cytoband_colors.get(giemsa, "#ff0000")
-
-
-def parse_cytobands(filename, skip=None):
+def parse_cytobands(filename, cytoband_colors, cytoband_centromere="acen", skip=None):
     cytobands = defaultdict(list)
     with open(filename) as f:
         for line in f:
@@ -99,7 +79,7 @@ def parse_cytobands(filename, skip=None):
                     "end": int(end),
                     "direction": "none",
                     "giemsa": giemsa,
-                    "color": cytoband_color(giemsa),
+                    "color": cytoband_colors.get(giemsa, "#ff0000"),
                 }
             )
 
@@ -122,23 +102,31 @@ def parse_cytobands(filename, skip=None):
 
 
 def get_vaf(vcf_filename: Union[str, bytes, Path], skip=None) -> Generator[tuple, None, None]:
+    if skip is None:
+        skip = []
     vcf = pysam.VariantFile(str(vcf_filename))
     for variant in vcf.fetch():
-        if variant.chrom in skip:
+        chrom = variant.chrom
+        if not chrom.startswith("chr"):
+            chrom = f"chr{chrom}"
+        if chrom in skip:
             continue
         vaf = variant.info.get("AF")
         if isinstance(vaf, float):
-            yield variant.chrom, variant.pos, vaf
+            yield chrom, variant.pos, vaf
         elif vaf is not None:
             for f in vaf:
-                yield variant.chrom, variant.pos, f
+                yield chrom, variant.pos, f
 
 
 def get_cnvs(vcf_filename, skip=None):
     cnvs = defaultdict(lambda: defaultdict(list))
     vcf = pysam.VariantFile(vcf_filename)
     for variant in vcf.fetch():
-        if skip is not None and variant.chrom in skip:
+        chrom = variant.chrom
+        if not chrom.startswith("chr"):
+            chrom = f"chr{chrom}"
+        if skip is not None and chrom in skip:
             continue
         caller = variant.info.get("CALLER")
         if caller is None:
@@ -153,16 +141,123 @@ def get_cnvs(vcf_filename, skip=None):
             fp_flag = "-"
         cnv = CNV(
             caller,
-            variant.chrom,
+            chrom,
             sorted(genes),
             variant.pos,
             variant.info.get("SVLEN"),
             variant.info.get("SVTYPE"),
             variant.info.get("CORR_CN"),
             variant.info.get("BAF"),
-            fp_flag,
         )
-        cnvs[variant.chrom][caller].append(cnv)
+        cnvs[chrom][caller].append(cnv)
+    return cnvs
+
+
+def filter_chr_cnvs(unfiltered_cnvs: Dict[str, List[CNV]], filtered_cnvs: Dict[str, List[CNV]]) -> Dict[str, List[Dict]]:
+    if len(unfiltered_cnvs) == 0:
+        return {}
+    callers = sorted(list(unfiltered_cnvs.keys()))
+    first_caller = callers[0]
+    rest_callers = callers[1:]
+
+    # Keep track of added CNVs (and filter status) on a chromosome to avoid duplicates
+    added_cnvs = {}
+
+    for cnv1 in unfiltered_cnvs[first_caller]:
+        pass_filter = False
+
+        if cnv1 in filtered_cnvs.get(first_caller, []):
+            # The CNV is part of the filtered set, so all overlapping
+            # CNVs should pass the filter.
+            pass_filter = True
+
+        cnv_group = [cnv1]
+        for caller2 in rest_callers:
+            for cnv2 in unfiltered_cnvs[caller2]:
+                if cnv1.overlaps(cnv2):
+                    # Add overlapping CNVs from other callers
+                    cnv_group.append(cnv2)
+
+                    if cnv2 in filtered_cnvs.get(caller2, []):
+                        # If the overlapping CNV is part of the filtered
+                        # set, the whole group should pass the filter.
+                        pass_filter = True
+
+        for c in cnv_group:
+            # Track CNV filter status.
+            # If a CNV that was previously set to not pass the filter,
+            # but later passes due to another comparison, then update
+            # the filter status.
+            if c not in added_cnvs or pass_filter:
+                added_cnvs[c] = pass_filter
+
+    cnvs = defaultdict(list)
+    for c, pass_filter in added_cnvs.items():
+        cnvs[c.caller].append(
+            dict(
+                genes=c.genes,
+                start=c.start,
+                length=c.length,
+                type=c.type,
+                cn=c.copy_number,
+                baf=c.baf,
+                passed_filter=pass_filter,
+            )
+        )
+    return cnvs
+
+
+def filter_chr_cnvs(unfiltered_cnvs: Dict[str, List[CNV]], filtered_cnvs: Dict[str, List[CNV]]) -> Dict[str, List[Dict]]:
+    if len(unfiltered_cnvs) == 0:
+        return {}
+    callers = sorted(list(unfiltered_cnvs.keys()))
+    first_caller = callers[0]
+    rest_callers = callers[1:]
+
+    # Keep track of added CNVs (and filter status) on a chromosome to avoid duplicates
+    added_cnvs = {}
+
+    for cnv1 in unfiltered_cnvs[first_caller]:
+        pass_filter = False
+
+        if cnv1 in filtered_cnvs.get(first_caller, []):
+            # The CNV is part of the filtered set, so all overlapping
+            # CNVs should pass the filter.
+            pass_filter = True
+
+        cnv_group = [cnv1]
+        for caller2 in rest_callers:
+            for cnv2 in unfiltered_cnvs[caller2]:
+                if cnv1.overlaps(cnv2):
+                    # Add overlapping CNVs from other callers
+                    cnv_group.append(cnv2)
+
+                    if cnv2 in filtered_cnvs.get(caller2, []):
+                        # If the overlapping CNV is part of the filtered
+                        # set, the whole group should pass the filter.
+                        pass_filter = True
+
+        for c in cnv_group:
+            # Track CNV filter status.
+            # If a CNV that was previously set to not pass the filter,
+            # but later passes due to another comparison, then update
+            # the filter status.
+            if c not in added_cnvs or pass_filter:
+                added_cnvs[c] = pass_filter
+
+    cnvs = defaultdict(list)
+    for c, pass_filter in added_cnvs.items():
+        cnvs[c.caller].append(
+            dict(
+                genes=c.genes,
+                start=c.start,
+                length=c.length,
+                type=c.type,
+                cn=c.copy_number,
+                baf=c.baf,
+                passed_filter=pass_filter,
+            )
+        )
     return cnvs
 
 
@@ -171,6 +266,7 @@ def merge_cnv_dicts(dicts, vaf, annotations, cytobands, chromosomes, filtered_cn
     caller_labels = dict(
         cnvkit="cnvkit",
         gatk="GATK",
+        jumble="jumble",
     )
     cnvs = {}
     for chrom, chrom_length in chromosomes:
@@ -205,60 +301,12 @@ def merge_cnv_dicts(dicts, vaf, annotations, cytobands, chromosomes, filtered_cn
                 )
             )
 
-    # Iterate over the unfiltered CNVs and pair them according to overlap.
+    # Iterate over the filtered and unfiltered CNVs and pair them according to overlap.
     for uf_cnvs, f_cnvs in zip(unfiltered_cnvs, filtered_cnvs):
-        for chrom, cnvdict in uf_cnvs.items():
-            callers = sorted(list(cnvdict.keys()))
-            first_caller = callers[0]
-            rest_callers = callers[1:]
-
-            # Keep track of added CNVs on a chromosome to avoid duplicates
-            added_cnvs = set()
-
-            for cnv1 in cnvdict[first_caller]:
-                pass_filter = False
-
-                for cnv2 in f_cnvs[chrom][first_caller]:
-                    if cnv1.start == cnv2.start and cnv1.length == cnv2.length and cnv1.copy_number == cnv2.copy_number:
-                        # The CNV is part of the filtered set, so all overlapping
-                        # CNVs should pass the filter.
-                        pass_filter = True
-                        cnv1.fp = cnv2.fp
-
-                cnv_group = [cnv1]
-                for caller2 in rest_callers:
-                    for cnv2 in cnvdict[caller2]:
-                        if cnv1.overlaps(cnv2):
-                            # Add overlapping CNVs from other callers
-                            cnv2.fp = cnv1.fp
-                            cnv_group.append(cnv2)
-
-                            for cnv1 in f_cnvs[chrom][caller2]:
-                                if (
-                                    cnv2.start == cnv1.start and
-                                    cnv2.length == cnv1.length and
-                                    cnv2.copy_number == cnv1.copy_number
-                                ):
-                                    # If the overlapping CNV is part of the filtered
-                                    # set, the whole group should pass the filter.
-                                    pass_filter = True
-
-                for c in cnv_group:
-                    if c in added_cnvs:
-                        continue
-                    cnvs[c.chromosome]["callers"][c.caller]["cnvs"].append(
-                        dict(
-                            genes=c.genes,
-                            start=c.start,
-                            length=c.length,
-                            type=c.type,
-                            cn=c.copy_number,
-                            baf=c.baf,
-                            fp=c.fp,
-                            passed_filter=pass_filter,
-                        )
-                    )
-                    added_cnvs.add(c)
+        for chrom in uf_cnvs.keys():
+            merged_cnvs = filter_chr_cnvs(uf_cnvs[chrom], f_cnvs[chrom])
+            for caller, m_cnvs in merged_cnvs.items():
+                cnvs[chrom]["callers"][caller]["cnvs"] = m_cnvs
 
     for d in dicts:
         for r in sorted(d["ratios"], key=lambda x: x["start"]):
@@ -306,6 +354,19 @@ def main():
     skip_chromosomes = snakemake.params["skip_chromosomes"]
     show_cytobands = snakemake.params["cytobands"]
 
+    cytoband_config = snakemake.config.get("merge_cnv_json", {}).get("cytoband_config", {}).get("colors", {})
+    cytoband_centromere = "acen"
+    cytoband_colors = {
+        "gneg": cytoband_config.get("gneg", "#e3e3e3"),
+        "gpos25": cytoband_config.get("gpos25", "#555555"),
+        "gpos50": cytoband_config.get("gpos50", "#393939"),
+        "gpos75": cytoband_config.get("gpos75", "#8e8e8e"),
+        "gpos100": cytoband_config.get("gpos100", "#000000"),
+        "acen": cytoband_config.get("acen", "#963232"),
+        "gvar": cytoband_config.get("gvar", "#000000"),
+        "stalk": cytoband_config.get("stalk", "#7f7f7f"),
+    }
+
     cnv_dicts = []
     for fname in json_files:
         with open(fname) as f:
@@ -322,7 +383,7 @@ def main():
 
     cytobands = []
     if cytoband_file and show_cytobands:
-        cytobands = parse_cytobands(cytoband_file, skip_chromosomes)
+        cytobands = parse_cytobands(cytoband_file, cytoband_colors, cytoband_centromere, skip_chromosomes)
 
     filtered_cnv_vcfs = []
     unfiltered_cnv_vcfs = []
