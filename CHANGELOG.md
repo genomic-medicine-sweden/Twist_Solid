@@ -1,5 +1,17 @@
 # Changelog
 
+### [0.18.3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.18.2...v0.18.3) (2025-02-13)
+
+
+### Bug Fixes
+
+* **hla:** Correct results folder structure for HLA calling files ([ad73f94](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ad73f94b6c3b25b2c1aa9d80a5b22a5bc43e9caa))
+* one row per sample in MultiQC report ([9feab74](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9feab7486cd97a42b7e39c00b95eebbcd963b4af))
+* rm fp from html report ([1265f46](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1265f46873857dbb4b238c5c927381c0f0af4e68))
+* update html-report to latest merge-cnv with table bugfix ([5e89b41](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5e89b41f0a243c966154690570a8a4128b786536))
+* update style to latest report version ([66bfad2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/66bfad217c7985021bab4dbd0bd62f8b9d3ffbb4))
+* update to latest report module ([9afee9c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9afee9cd070d4ac18b2a6a13e996ad3b19e01fdb))
+
 ### [0.18.2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.18.1...v0.18.2) (2025-01-20)
 
 
