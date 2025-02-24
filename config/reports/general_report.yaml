@@ -41,7 +41,12 @@ files:
     input: results/dna/{sample}_{type}/cnv/{sample}_{type}.pathology_purecn.cnv.html
     description: File link to CNV html report
     nav_header: CNV
-  - name: CNV tsv report
+  - name: CNV tsv report for validated genes only
+    type: file_table
+    input: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology_purecn.amp_all_del_all.cnv_report.tsv
+    description: CNV tsv report (Validated amplification and deletion genes)
+    nav_header: CNV
+  - name: CNV tsv report for all selected genes
     type: file_table
     input: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology_purecn.amp_all_del_all.cnv_report.tsv
     description: CNV tsv report (All amplification and deletion genes)
