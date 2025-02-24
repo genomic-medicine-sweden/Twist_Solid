@@ -62,7 +62,7 @@ juli_call:
   threads: 10
   mem_mb: 61440
   mem_per_cpu: 6144
-  time: "12:00:00"
+  time: "24:00:00"
 
 jumble_run:
   threads: 10
