@@ -47,4 +47,3 @@ results/rna/SeraSeq-NTRK-FFPE-2-5M_R/additional_files/fusion/SeraSeq-NTRK-FFPE-2
 results/rna/SeraSeq-NTRK-FFPE-2-5M_R/fusion/SeraSeq-NTRK-FFPE-2-5M_R.exon_skipping.tsv	70b9661bfcb1c30b17f2f175ef937b3b
 results/rna/SeraSeq-NTRK-FFPE-2-5M_R/fusion/SeraSeq-NTRK-FFPE-2-5M_R.fusion_report.tsv	5c2fa076c2a4a9ec57fc265fa2a72879
 results/rna/SeraSeq-NTRK-FFPE-2-5M_R/qc/SeraSeq-NTRK-FFPE-2-5M_R.house_keeping_gene_coverage.tsv	d263eca5ca14299df55119d9778a3d1b
-results/sample_mixup_check.tsv	aec387e14381a7892f4a9019e65b0d88
