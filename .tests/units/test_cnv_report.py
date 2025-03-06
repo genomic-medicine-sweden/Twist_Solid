@@ -55,6 +55,10 @@ class TestGetCaller(unittest.TestCase):
                     expected=("gene(s)", "chrom", "region", "caller", "freq_in_db", "copy_number", "FP_flag")
                 ),
                 TestCase(
+                    name="small deletion",
+                    expected=("CDKN2A,CDKN2B", "chr9", "21968207-22008972", "small_deletion", "NA", "-0.28", "-")
+                ),
+                TestCase(
                     name="variant 1",
                     expected=("FGFR1", "chr8", "34370199-43930232", "cnvkit", "0.01", "8.59", "-")
                 ),
@@ -65,10 +69,6 @@ class TestGetCaller(unittest.TestCase):
                 TestCase(
                     name="variant 3",
                     expected=("MYC", "chr8", "46689525-146144003", "cnvkit", "0.09", "5.06", "-")
-                ),
-                TestCase(
-                    name="small deletion",
-                    expected=("CDKN2A,CDKN2B", "chr9", "21968207-22008972", "small_deletion", "NA", "-0.28", "-")
                 ),
                 TestCase(
                     name="small amplification",

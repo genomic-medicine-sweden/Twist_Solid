@@ -102,6 +102,7 @@ def create_tsv_report(
     log.info(f"Opening output tsv file: {output_txt}")
     with open(output_txt, "w") as writer:
         writer.write("gene(s)\tchrom\tregion\tcaller\tfreq_in_db\tcopy_number\tFP_flag")
+        output_list = []
         out_additional_only.write("gene(s)\tchrom\tregion\tcaller\tfreq_in_db\tcopy_number")
         file1 = True
         for input_org_vcf in input_org_vcfs:
@@ -219,9 +220,10 @@ def create_tsv_report(
                 if nr_writes < 2:
                     avg_cn = ((del_1p19q["1p_cnvkit"][1] + del_1p19q["19q_cnvkit"][1]) /
                               (del_1p19q["1p_cnvkit"][0] + del_1p19q["19q_cnvkit"][0]))
-                    writer.write(f"\n1p19q\t1p19q\t")
-                    writer.write(f"{fraction_1p_cnvkit*100:.0f}%,{fraction_19q_cnvkit*100:.0f}%")
-                    writer.write(f"\tcnvkit\tNA\t{avg_cn:.2f}\t-")
+                    output_string = f"\n1p19q\t1p19q\t"
+                    output_string += f"{fraction_1p_cnvkit*100:.0f}%,{fraction_19q_cnvkit*100:.0f}%"
+                    output_string += f"\tcnvkit\tNA\t{avg_cn:.2f}\t-"
+                    writer.write(output_string)
                     out_additional_only.write(f"\n1p19q\t1p19q\tNA\tcnvkit\tNA\tNA")
                     nr_writes += 1
             fraction_1p_gatkcnv = del_1p19q["1p_gatkcnv"][0] / del_1p19q["1p"][2]
@@ -230,9 +232,10 @@ def create_tsv_report(
                 if nr_writes < 2:
                     avg_cn = ((del_1p19q["1p_gatkcnv"][1] + del_1p19q["19q_gatkcnv"][1]) /
                               (del_1p19q["1p_gatkcnv"][0] + del_1p19q["19q_gatkcnv"][0]))
-                    writer.write(f"\n1p19q\t1p19q\t")
-                    writer.write(f"{fraction_1p_gatkcnv*100:.0f}%,{fraction_19q_gatkcnv*100:.0f}%")
-                    writer.write(f"\tgatk_cnv\tNA\t{avg_cn:.2f}\t-")
+                    output_string = f"\n1p19q\t1p19q\t"
+                    output_string += f"{fraction_1p_gatkcnv*100:.0f}%,{fraction_19q_gatkcnv*100:.0f}%"
+                    output_string += f"\tgatk_cnv\tNA\t{avg_cn:.2f}\t-"
+                    writer.write(output_string)
                     out_additional_only.write(f"\n1p19q\t1p19q\tNA\tgatk_cnv\tNA\tNA")
                     nr_writes += 1
 
@@ -281,7 +284,7 @@ def create_tsv_report(
                 if file_nr == 1:
                     variant.info["FP_FLAG"] = FP_flag
                     out_vcf.write(variant)
-                writer.write(f"\n{genes}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}\t{FP_flag}")
+                output_list.append(f"\n{genes}\t{chr}\t{start}-{end}\t{caller}\t{AF:.2f}\t{cn:.2f}\t{FP_flag}")
                 counter += 1
 
             for gene in gene_variant_dict:
@@ -303,7 +306,8 @@ def create_tsv_report(
                                 (gene_variant_dict[gene][0][1] >= start and gene_variant_dict[gene][0][1] <= end) or
                                 (gene_variant_dict[gene][0][2] >= end and gene_variant_dict[gene][0][2] <= start)
                             ):
-                                writer.write(f"\n{gene}\t{chr}\t{start}-{end}\t{new_caller}\t{AF:.2f}\t{cn:.2f}\t-")
+                                output_string = f"\n{gene}\t{chr}\t{start}-{end}\t{new_caller}\t{AF:.2f}\t{cn:.2f}\t-"
+                                output_list.append(output_string)
 
             if file_nr == 1:
                 out_vcf.close()
@@ -325,7 +329,7 @@ def create_tsv_report(
             ccn = cn
             if TC > 0.0:
                 ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
-            writer.write(f"\n{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}\t-")
+            output_list.append(f"\n{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}\t-")
             out_additional_only.write(f"\n{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}")
         amplifications = open(input_amp)
         header_list = next(amplifications).split("\t")
@@ -343,8 +347,13 @@ def create_tsv_report(
             if TC > 0.0:
                 ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
             if ccn > amp_cn_limit:
-                writer.write(f"\n{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}\t-")
+                output_list.append(f"\n{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}\t-")
                 out_additional_only.write(f"\n{gene}\t{chr}\t{start}-{end}\t{caller}\t{AF}\t{ccn:.2f}")
+
+        # write cnv report sorted on string which will then be sorted on gene
+        output_list.sort()
+        for cnv in output_list:
+            writer.write(cnv)
 
     with open(out_tsv_chrom_arms, "w") as writer:
         writer.write("chrom\tarm\tcaller\ttype\tfraction")
