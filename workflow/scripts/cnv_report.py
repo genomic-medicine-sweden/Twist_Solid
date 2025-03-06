@@ -98,7 +98,8 @@ def create_tsv_report(
             gatk_cnr_dict[chrom].append([start_pos, end_pos, log2ratio])
 
     gene_all_dict = {}
-    nr_writes = 0
+    nr_writes_cnvkit = 0
+    nr_writes_gatkcnv = 0
     log.info(f"Opening output tsv file: {output_txt}")
     with open(output_txt, "w") as writer:
         writer.write("gene(s)\tchrom\tregion\tcaller\tfreq_in_db\tcopy_number\tFP_flag")
@@ -216,25 +217,25 @@ def create_tsv_report(
             fraction_1p_cnvkit = del_1p19q["1p_cnvkit"][0] / del_1p19q["1p"][2]
             fraction_19q_cnvkit = del_1p19q["19q_cnvkit"][0] / del_1p19q["19q"][2]
             if (fraction_1p_cnvkit > del_1p19q_chr_arm_fraction and fraction_19q_cnvkit > del_1p19q_chr_arm_fraction):
-                if nr_writes < 2:
+                if nr_writes_cnvkit == 0:
                     avg_cn = ((del_1p19q["1p_cnvkit"][1] + del_1p19q["19q_cnvkit"][1]) /
                               (del_1p19q["1p_cnvkit"][0] + del_1p19q["19q_cnvkit"][0]))
                     writer.write(f"\n1p19q\t1p19q\t")
                     writer.write(f"{fraction_1p_cnvkit*100:.0f}%,{fraction_19q_cnvkit*100:.0f}%")
                     writer.write(f"\tcnvkit\tNA\t{avg_cn:.2f}\t-")
                     out_additional_only.write(f"\n1p19q\t1p19q\tNA\tcnvkit\tNA\tNA")
-                    nr_writes += 1
+                    nr_writes_cnvkit += 1
             fraction_1p_gatkcnv = del_1p19q["1p_gatkcnv"][0] / del_1p19q["1p"][2]
             fraction_19q_gatkcnv = del_1p19q["19q_gatkcnv"][0] / del_1p19q["19q"][2]
             if (fraction_1p_gatkcnv > del_1p19q_chr_arm_fraction and fraction_19q_gatkcnv > del_1p19q_chr_arm_fraction):
-                if nr_writes < 2:
+                if nr_writes_gatkcnv == 0:
                     avg_cn = ((del_1p19q["1p_gatkcnv"][1] + del_1p19q["19q_gatkcnv"][1]) /
                               (del_1p19q["1p_gatkcnv"][0] + del_1p19q["19q_gatkcnv"][0]))
                     writer.write(f"\n1p19q\t1p19q\t")
                     writer.write(f"{fraction_1p_gatkcnv*100:.0f}%,{fraction_19q_gatkcnv*100:.0f}%")
                     writer.write(f"\tgatk_cnv\tNA\t{avg_cn:.2f}\t-")
                     out_additional_only.write(f"\n1p19q\t1p19q\tNA\tgatk_cnv\tNA\tNA")
-                    nr_writes += 1
+                    nr_writes_gatkcnv += 1
 
             file1 = False
 
