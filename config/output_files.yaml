@@ -173,7 +173,7 @@ files:
       - N
   - name: Results report DNA HTML
     input: reports/general_html_report/{sample}_{type}.general_report.html
-    output: results/dna/{sample}_{type}/general_report/{sample}_{type}.general_report.html
+    output: results/dna/{sample}_{type}/{sample}_{type}.general_report.html
     types:
       - T
       - N
