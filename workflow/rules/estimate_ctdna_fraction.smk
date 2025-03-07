@@ -12,7 +12,7 @@ rule estimate_ctdna_fraction:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter_umi.codon_snvs.sorted.vep_annotated.qci.vcf",
     output:
         ctDNA_fraction=temp("cnv_sv/estimate_ctdna_fraction/{sample}_{type}.ctDNA_fraction.tsv"),
-        ctDNA_info=temp("cnv_sv/estimate_ctdna_fraction/{sample}_{type}.ctDNA_info.tsv"),
+        ctDNA_fraction_info=temp("cnv_sv/estimate_ctdna_fraction/{sample}_{type}.ctDNA_fraction_info.tsv"),
     params:
         gnomAD_AF_limit=config.get("estimate_ctdna_fraction", {}).get("gnomAD_AF_limit", 0.00001),
         max_somatic_af=config.get("estimate_ctdna_fraction", {}).get("max_somatic_af", 0.4),

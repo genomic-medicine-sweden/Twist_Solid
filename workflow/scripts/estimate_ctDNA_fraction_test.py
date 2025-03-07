@@ -261,8 +261,8 @@ class TestUnitUtils(unittest.TestCase):
 
         filter_regions_dict = {}
         updated_segment_dict, germline_dict = read_germline_vcf(self.germline_vcf, test_segment_dict3, self.min_germline_af)
-        AF = read_snv_vcf_and_find_max_af(self.vcf, test_segment_dict3, self.max_somatic_af, self.gnomAD_AF_limit,
-                                          filter_regions_dict, germline_dict)
+        AF, snv_list = read_snv_vcf_and_find_max_af(self.vcf, test_segment_dict3, self.max_somatic_af, self.gnomAD_AF_limit,
+                                                    filter_regions_dict, germline_dict)
 
         test_AF = 0.09939999878406525
 
@@ -275,8 +275,8 @@ class TestUnitUtils(unittest.TestCase):
         # Variant filtered by CNA evidence in closest germline SNPs in germline_dict
         filter_regions_dict = {}
         germline_dict = {"chr4": [[106197000, 0.55], [106198000, 0.39]]}
-        AF = read_snv_vcf_and_find_max_af(self.vcf, test_segment_dict3, self.max_somatic_af, self.gnomAD_AF_limit,
-                                          filter_regions_dict, germline_dict)
+        AF, snv_list = read_snv_vcf_and_find_max_af(self.vcf, test_segment_dict3, self.max_somatic_af, self.gnomAD_AF_limit,
+                                                    filter_regions_dict, germline_dict)
 
         test_AF = 0
 
@@ -289,8 +289,8 @@ class TestUnitUtils(unittest.TestCase):
         # Variant filtered by problematic region in filter_regions_dict
         filter_regions_dict = {"chr4": [[106197000, 106198000]]}
         updated_segment_dict, germline_dict = read_germline_vcf(self.germline_vcf, test_segment_dict3, self.min_germline_af)
-        AF = read_snv_vcf_and_find_max_af(self.vcf, test_segment_dict3, self.max_somatic_af, self.gnomAD_AF_limit,
-                                          filter_regions_dict, germline_dict)
+        AF, snv_list = read_snv_vcf_and_find_max_af(self.vcf, test_segment_dict3, self.max_somatic_af, self.gnomAD_AF_limit,
+                                                    filter_regions_dict, germline_dict)
 
         test_AF = 0
 

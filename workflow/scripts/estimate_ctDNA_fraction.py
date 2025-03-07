@@ -53,6 +53,7 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
                                  filter_regions_dict, germline_dict):
     snv_vcf = pysam.VariantFile(input_snv_vcf)
     snv_list = []
+    snv_vcf_list = []
 
     # VEP annotation
     vep_fields = {}
@@ -139,11 +140,12 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
                 continue
 
         snv_list.append(AF)
+        snv_vcf_list.append(record)
 
     if len(snv_list) > 0:
-        return 2 * max(snv_list)
+        return 2 * max(snv_list), snv_vcf_list
     else:
-        return 0
+        return 0, []
 
 
 def baf_to_tc(abs_value_seg_median, CN, CN_list, median_noise_level):
@@ -286,11 +288,15 @@ def write_tc(output_tc, tc_cnv, tc_snv):
     return f"{tc_cnv*100:.1f}%\t{tc_snv*100:.1f}%\n"
 
 
-def write_seg_list(output_file_name, seg_list):
+def write_ctDNA_fraction_info(output_file_name, seg_list, snv_list):
     output = open(output_file_name, "w")
     output.write("ctDNA_fraction\tCNV_type\tchromosome\tstart_pos\tend_pos\n")
     for seg in seg_list:
         output.write(f"{seg[0][0]*100:.1f}%\t{seg[1]}\t{seg[0][2]}\t{seg[0][1][0]}\t{seg[0][1][1]}\n")
+    output.write("\nSNVs passing all filtering\n")
+    for variant in snv_list:
+        output.write(variant)
+    output.close()
 
 
 def read_bedfile(filter_regions_dict, in_bed_filename):
@@ -310,7 +316,7 @@ if __name__ == "__main__":
     input_germline_vcf = snakemake.input.germline_vcf
     input_vcf = snakemake.input.vcf
     output_ctDNA_fraction = snakemake.output.ctDNA_fraction
-    output_ctDNA_info = snakemake.output.ctDNA_info
+    output_ctDNA_fraction_info = snakemake.output.ctDNA_fraction_info
 
     gnomAD_AF_limit = float(snakemake.params.gnomAD_AF_limit)
     min_germline_af = float(snakemake.params.min_germline_af)
@@ -329,8 +335,8 @@ if __name__ == "__main__":
     filter_regions_dict = {}
     for bed_filename in problematic_regions_beds:
         filter_regions_dict = read_bedfile(filter_regions_dict, bed_filename)
-    tc_snv = read_snv_vcf_and_find_max_af(input_vcf, segment_dict, max_somatic_af, gnomAD_AF_limit,
-                                          filter_regions_dict, germline_dict)
+    tc_snv, snv_list = read_snv_vcf_and_find_max_af(input_vcf, segment_dict, max_somatic_af, gnomAD_AF_limit,
+                                                    filter_regions_dict, germline_dict)
     write_tc(output_ctDNA_fraction, tc_cnv, tc_snv)
     # Write additional info regarding which chromosomes have deletions
-    write_seg_list(output_ctDNA_info, seg_list)
+    write_ctDNA_fraction_info(output_ctDNA_fraction_info, seg_list, snv_list)
