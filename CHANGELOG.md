@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.19.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.18.3...v0.19.0) (2025-03-07)
+
+
+### Features
+
+* **test_input_develop.tsv:** Update list of files tested ([3eb25c0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3eb25c0fd8e4be12f2f472c19c71d6aad0eef185))
+* **test_input_main.tsv:** New files added ([75ee51d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/75ee51d300d4a7475e9765d9c0f81a4b82cbbdd8))
+
+
+### Bug Fixes
+
+* **test_input_develop.tsv:** Remove id_snps dev ([3f02bf8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3f02bf8a61e3a060a6f29648a6c6c342514a35e7))
+* **test_input_develop.tsv:** rm sample mix-up dev ([16a2405](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/16a240501e4ce851494b8533e4cbb479349b07e9))
+
 ### [0.18.3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.18.2...v0.18.3) (2025-02-13)
 
 
