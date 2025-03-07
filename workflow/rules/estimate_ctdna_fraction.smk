@@ -19,6 +19,7 @@ rule estimate_ctdna_fraction:
         min_germline_af=config.get("estimate_ctdna_fraction", {}).get("min_germline_af", 0.1),
         min_nr_SNPs_per_segment=config.get("estimate_ctdna_fraction", {}).get("min_nr_SNPs_per_segment", 35),
         min_segment_length=config.get("estimate_ctdna_fraction", {}).get("min_segment_length", 10000000),
+        problematic_regions_beds=config.get("estimate_ctdna_fraction", {}).get("problematic_regions_beds", []),
         vaf_baseline=config.get("estimate_ctdna_fraction", {}).get("vaf_baseline", 0.48),
     log:
         "twist_solid/estimate_ctdna_fraction/{sample}_{type}.ctDNA_tc.tsv.log",

@@ -29,6 +29,7 @@ def read_segments(input_segments):
 
 def read_germline_vcf(input_germline_vcf, segment_dict, min_germline_af):
     germline_vcf = pysam.VariantFile(input_germline_vcf)
+    germline_dict = {}
 
     for record in germline_vcf.fetch():
         chrom = record.chrom
@@ -42,10 +43,14 @@ def read_germline_vcf(input_germline_vcf, segment_dict, min_germline_af):
                 if pos >= segment[0] and pos <= segment[1]:
                     segment_dict[chrom][i][3].append(AF)
                 i += 1
-    return segment_dict
+        if chrom not in germline_dict:
+            germline_dict[chrom] = []
+        germline_dict[chrom].append([pos, AF])
+    return segment_dict, germline_dict
 
 
-def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gnomAD_AF_limit):
+def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gnomAD_AF_limit,
+                                 filter_regions_dict, germline_dict):
     snv_vcf = pysam.VariantFile(input_snv_vcf)
     snv_list = []
 
@@ -71,7 +76,7 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
         # Only keep SNVs
         if len(ref) > 1 or len(alt) > 1:
             continue
-        # Check if SNVs is in segment with clear CNA based on copy number and then skip the SNV
+        # Check if SNVs is in segment with clear CNA based on copy number and then skip the SNV (Filter germline SNPs)
         CNA = False
         if chrom not in segment_dict:
             continue
@@ -82,6 +87,21 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
                     break
         if CNA:
             continue
+        # Check if SNVs is in region with CNA based on closest germline SNPs (Filter germline SNPs)
+        germline_AF1 = 0.5
+        germline_AF2 = 0.5
+        if chrom in germline_dict:
+            for germline in germline_dict[chrom]:
+                germline_pos = germline[0]
+                germline_AF = germline[1]
+                if germline_pos < pos:
+                    germline_AF1 = germline_AF
+                else:
+                    germline_AF2 = germline_AF
+                    break
+        germline_diff = max(abs(germline_AF1 - 0.5), abs(germline_AF2 - 0.5))
+        if germline_diff > 0.1:
+            continue
         # Skip low AF somatic SNVs and germline SNPs
         gnomAD_AF = record.info["CSQ"][0].split("|")[vep_fields["gnomAD_AF"]]
         if gnomAD_AF == "":
@@ -91,8 +111,12 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
         if gnomAD_AF > gnomAD_AF_limit:
             continue
         AF = record.samples.items()[0][1]["AF"][0]
-        # Skip low AF somatic SNVs
+        # Skip really high AF somatic SNVs
         if AF > max_somatic_af:
+            continue
+        # Remove everything not annotated as SNV by Vardict
+        variant_type = record.info["TYPE"]
+        if variant_type != "SNV":
             continue
         # Only keep variants in exons
         consequence = record.info["CSQ"][0].split("|")[vep_fields["Consequence"]].split("&")
@@ -104,6 +128,15 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
                 "stop_retained_variant" in consequence
         ):
             continue
+        # skip variants in problematic regions
+        filter_region = False
+        if chrom in filter_regions_dict:
+            for region in filter_regions_dict[chrom]:
+                if pos >= region[0] and pos <= region[1]:
+                    filter_region = True
+                    break
+            if filter_region:
+                continue
 
         snv_list.append(AF)
 
@@ -260,6 +293,18 @@ def write_seg_list(output_file_name, seg_list):
         output.write(f"{seg[0][0]*100:.1f}%\t{seg[1]}\t{seg[0][2]}\t{seg[0][1][0]}\t{seg[0][1][1]}\n")
 
 
+def read_bedfile(filter_regions_dict, in_bed_filename):
+    in_bed = open(in_bed_filename)
+    for line in in_bed:
+        columns = line.strip().split("\t")
+        chrom = columns[0]
+        if chrom not in filter_regions_dict:
+            filter_regions_dict[chrom] = []
+        filter_regions_dict[chrom].append([int(columns[1]), int(columns[2])])
+    in_bed.close()
+    return filter_regions_dict
+
+
 if __name__ == "__main__":
     input_segments = snakemake.input.segments
     input_germline_vcf = snakemake.input.germline_vcf
@@ -267,20 +312,25 @@ if __name__ == "__main__":
     output_ctDNA_fraction = snakemake.output.ctDNA_fraction
     output_ctDNA_info = snakemake.output.ctDNA_info
 
+    gnomAD_AF_limit = float(snakemake.params.gnomAD_AF_limit)
     min_germline_af = float(snakemake.params.min_germline_af)
     max_somatic_af = float(snakemake.params.max_somatic_af)
     min_nr_SNPs_per_segment = int(snakemake.params.min_nr_SNPs_per_segment)
     min_segment_length = int(snakemake.params.min_segment_length)
-    gnomAD_AF_limit = float(snakemake.params.gnomAD_AF_limit)
+    problematic_regions_beds = snakemake.params.problematic_regions_beds
     vaf_baseline = float(snakemake.params.vaf_baseline)
 
     # Read CNV segments
     segment_dict = read_segments(input_segments)
-    # Read germline SNPs
-    segment_dict_AF = read_germline_vcf(input_germline_vcf, segment_dict, min_germline_af)
+    # Read germline SNPstest_AF = 0.09939999878406525
+    segment_dict_AF, germline_dict = read_germline_vcf(input_germline_vcf, segment_dict, min_germline_af)
     tc_cnv, seg_list = calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min_segment_length)
-    # Read SNVs and report TC based on max VAF of somatic SNV.
-    tc_snv = read_snv_vcf_and_find_max_af(input_vcf, segment_dict, max_somatic_af, gnomAD_AF_limit)
+    # Read SNV filters beds, read, SNVs and then report TC based on max VAF of somatic SNV.
+    filter_regions_dict = {}
+    for bed_filename in problematic_regions_beds:
+        filter_regions_dict = read_bedfile(filter_regions_dict, bed_filename)
+    tc_snv = read_snv_vcf_and_find_max_af(input_vcf, segment_dict, max_somatic_af, gnomAD_AF_limit,
+                                          filter_regions_dict, germline_dict)
     write_tc(output_ctDNA_fraction, tc_cnv, tc_snv)
     # Write additional info regarding which chromosomes have deletions
     write_seg_list(output_ctDNA_info, seg_list)

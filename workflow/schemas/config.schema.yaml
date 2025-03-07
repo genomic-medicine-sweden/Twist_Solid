@@ -662,6 +662,12 @@ properties:
       min_segment_length:
         type: integer
         description: minimal length of segments to be used for ctDNA estimation
+      problematic_regions_beds:
+        type: array
+        description: list of bedfiles
+        items:
+          type: string
+          description: BED file with chromosomal regions that should be used to filter out potential artifact variants
       vaf_baseline:
         type: number
         description: Sets the VAF-baseline. In theory BAF-baseline is 0.5 (50% for each SNP), however in practice this is slightly shifted downwards due to reference bias in alignment

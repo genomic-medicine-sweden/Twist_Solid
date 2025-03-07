@@ -102,6 +102,14 @@ cnv_tsv_report:
   polyploidy_fraction_limit: 0.2
   max_cnv_fp_size: 15000000
 
+estimate_ctdna_fraction:
+  gnomAD_AF_limit: 0.00001
+  max_somatic_af: 0.4
+  min_germline_af: 0.1
+  min_nr_SNPs_per_segment: 35
+  min_segment_length: 10000000
+  vaf_baseline: 0.48
+
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"
   # Default enabled trimming parameters for fastp. Specified for clarity.

@@ -116,7 +116,7 @@ class TestUnitUtils(unittest.TestCase):
     def test_read_germline_vcf(self):
         from estimate_ctDNA_fraction import read_germline_vcf
 
-        updated_segment_dict = read_germline_vcf(self.germline_vcf, test_segment_dict2, self.min_germline_af)
+        updated_segment_dict, germline_dict = read_germline_vcf(self.germline_vcf, test_segment_dict2, self.min_germline_af)
 
         self._test_read_germline_vcf(test_segment_dict3, updated_segment_dict)
 
@@ -257,10 +257,42 @@ class TestUnitUtils(unittest.TestCase):
 
     def test_read_snv_vcf_and_find_max_af(self):
         from estimate_ctDNA_fraction import read_snv_vcf_and_find_max_af
+        from estimate_ctDNA_fraction import read_germline_vcf
 
-        AF = read_snv_vcf_and_find_max_af(self.vcf, test_segment_dict3, self.max_somatic_af, self.gnomAD_AF_limit)
+        filter_regions_dict = {}
+        updated_segment_dict, germline_dict = read_germline_vcf(self.germline_vcf, test_segment_dict3, self.min_germline_af)
+        AF = read_snv_vcf_and_find_max_af(self.vcf, test_segment_dict3, self.max_somatic_af, self.gnomAD_AF_limit,
+                                          filter_regions_dict, germline_dict)
 
         test_AF = 0.09939999878406525
+
+        try:
+            self.assertEqual(test_AF, AF)
+        except AssertionError as e:
+            print(f"Failed reading vcf. {test_AF} {AF}")
+            raise e
+
+        # Variant filtered by CNA evidence in closest germline SNPs in germline_dict
+        filter_regions_dict = {}
+        germline_dict = {"chr4": [[106197000, 0.55], [106198000, 0.39]]}
+        AF = read_snv_vcf_and_find_max_af(self.vcf, test_segment_dict3, self.max_somatic_af, self.gnomAD_AF_limit,
+                                          filter_regions_dict, germline_dict)
+
+        test_AF = 0
+
+        try:
+            self.assertEqual(test_AF, AF)
+        except AssertionError as e:
+            print(f"Failed reading vcf. {test_AF} {AF}")
+            raise e
+
+        # Variant filtered by problematic region in filter_regions_dict
+        filter_regions_dict = {"chr4": [[106197000, 106198000]]}
+        updated_segment_dict, germline_dict = read_germline_vcf(self.germline_vcf, test_segment_dict3, self.min_germline_af)
+        AF = read_snv_vcf_and_find_max_af(self.vcf, test_segment_dict3, self.max_somatic_af, self.gnomAD_AF_limit,
+                                          filter_regions_dict, germline_dict)
+
+        test_AF = 0
 
         try:
             self.assertEqual(test_AF, AF)
