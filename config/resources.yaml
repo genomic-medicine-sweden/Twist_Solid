@@ -1,6 +1,6 @@
 default_resources:
   threads: 1
-  time: "4:00:00"
+  time: "6:00:00"
   mem_mb: 6144
   mem_per_cpu: 6144
   partition: "low"
@@ -15,13 +15,13 @@ bwa_mem:
   mem_mb: 61440
   mem_per_cpu: 6144
   threads: 10
-  time: "8:00:00"
+  time: "24:00:00"
 
 bwa_mem_realign_consensus_reads:
   mem_mb: 61440
   mem_per_cpu: 6144
   threads: 10
-  time: "8:00:00"
+  time: "24:00:00"
 
 fastp_pe:
   threads: 5
@@ -37,15 +37,15 @@ fgbio_call_and_filter_consensus_reads:
   threads: 3
   mem_mb: 18432
   mem_per_cpu: 6144
-  time: "8:00:00"
+  time: "24:00:00"
 
 fgbio_group_reads_by_umi:
-  time: "8:00:00"
+  time: "24:00:00"
 
 fuseq_wes:
   threads: 2
   mem_mb: 12288
-  time: "24:00:00"
+  time: "48:00:00"
 
 fusioncatcher:
   threads: 10
@@ -62,7 +62,7 @@ juli_call:
   threads: 10
   mem_mb: 61440
   mem_per_cpu: 6144
-  time: "12:00:00"
+  time: "48:00:00"
 
 jumble_run:
   threads: 10
