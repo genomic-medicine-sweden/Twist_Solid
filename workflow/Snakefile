@@ -469,21 +469,6 @@ use rule msisensor_pro from biomarker as biomarker_msisensor_pro_unfiltered with
         out_prefix="biomarker/msisensor_pro_unfiltered/{sample}_{type}",
 
 
-use rule msisensor_pro from biomarker as biomarker_msisensor_pro_umi with:
-    input:
-        bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
-        bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai",
-        PoN="biomarker/msisensor_pro_filter_sites/{sample}_{type}.Msisensor_pro_reference.filtered.list_baseline",
-    output:
-        msi_score=temp("biomarker/msisensor_pro/{sample}_{type}.umi"),
-        msi_all=temp("biomarker/msisensor_pro/{sample}_{type}.umi_all"),
-        msi_dis=temp("biomarker/msisensor_pro/{sample}_{type}.umi_dis"),
-        msi_unstable=temp("biomarker/msisensor_pro/{sample}_{type}.umi_unstable"),
-    params:
-        extra=config.get("msisensor_pro", {}).get("extra", "-c 50 -b 2"),
-        out_prefix="biomarker/msisensor_pro/{sample}_{type}.umi",
-
-
 use rule tmb from biomarker as biomarker_tmb with:
     input:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.vcf.gz",
