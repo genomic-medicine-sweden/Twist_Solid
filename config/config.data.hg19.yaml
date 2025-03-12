@@ -180,6 +180,7 @@ tmb:
 
 tmb_umi:
   filter_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/tmb/tmb_filter_genes.txt"
+  artifacts: "{{PROJECT_PON_DATA}}/GMS560/Artifact/artifact_panel_nextseq_36.tsv"
 
 vep:
   vep_cache:  "{{PROJECT_REF_DATA}}/ref_data/vep/105"
