@@ -412,7 +412,7 @@ tmb_umi:
   nr_avg_germline_snvs: 0.0
   nssnv_tmb_correction: 1.09
   filter_nr_observations: 3
-  variant_type_list: ["missense_variant", "stop_gained", "stop_lost", "synonymous_variant"]
+  variant_type_list: ["missense_variant", "stop_gained", "stop_lost", "synonymous_variant", "stop_retained_variant"]
 
 vardict:
   container: "docker://hydragenetics/vardict:1.8.3"
