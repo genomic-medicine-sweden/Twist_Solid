@@ -101,7 +101,8 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
                     germline_AF2 = germline_AF
                     break
         germline_diff = max(abs(germline_AF1 - 0.5), abs(germline_AF2 - 0.5))
-        if germline_diff > 0.1:
+        AF = record.samples.items()[0][1]["AF"][0]
+        if germline_diff > 0.1 and AF > 0.25:
             continue
         # Skip low AF somatic SNVs and germline SNPs
         gnomAD_AF = record.info["CSQ"][0].split("|")[vep_fields["gnomAD_AF"]]
@@ -111,7 +112,6 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
             gnomAD_AF = float(gnomAD_AF)
         if gnomAD_AF > gnomAD_AF_limit:
             continue
-        AF = record.samples.items()[0][1]["AF"][0]
         # Skip really high AF somatic SNVs
         if AF > max_somatic_af:
             continue
