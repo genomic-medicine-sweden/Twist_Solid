@@ -6,7 +6,7 @@ filters:
     soft_filter: "True"
   noisy_gene:
     description: "Hard filter variants in noisy genes"
-    expression: "VEP:SYMBOL = MUC6 or VEP:SYMBOL = CDC27"
+    expression: "VEP:SYMBOL = MUC6 or VEP:SYMBOL = CDC27 or VEP:SYMBOL = KMT2B or VEP:SYMBOL = KMT2C or VEP:SYMBOL = KMT2D or VEP:SYMBOL = HLA-A or VEP:SYMBOL = HLA-B or VEP:SYMBOL = HLA-C"
     soft_filter_flag: "noisy_gene"
     soft_filter: "True"
   artifacts:
