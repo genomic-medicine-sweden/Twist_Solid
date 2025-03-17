@@ -93,10 +93,10 @@
       type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40882841
     background_ctdna:
-      checksum: 279a67db1307d2d4ee3f423383ddd0b4
+      checksum: 0548ce3c202b779568011f35d4055ec6
       path: GMS560/Background/background_panel_cfDNA_nextseq2000_24.tsv
       type: file
-      url: https://figshare.scilifelab.se/ndownloader/files/52731464
+      url: https://figshare.scilifelab.se/ndownloader/files/53036480
     
     artifacts: 
       checksum: 73531299238e0a0884405a892e6789ac
@@ -104,7 +104,7 @@
       type: file
       url: https://figshare.scilifelab.se/ndownloader/files/40882835
     artifacts_ctdna: 
-      checksum: 9c5b2f7130f8d41717c92f71ab957f99
+      checksum: 9c7ca496a403c4cfc42adb64c97929b1
       path: GMS560/Artifact/artifact_panel_cfDNA_nextseq2000_24.tsv
       type: file
-      url: https://figshare.scilifelab.se/ndownloader/files/52731461
+      url: https://figshare.scilifelab.se/ndownloader/files/53036477
