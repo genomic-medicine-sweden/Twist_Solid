@@ -20,15 +20,15 @@ files:
     description: TMB (cut-off 10)
     input: results/dna/{sample}_{type}/biomarker/{sample}_{type}.TMB.txt
     nav_header: Biomarkers
-  - name: MSI unfiltered
-    type: file_table
-    description: MSI score (cut-off X%)
-    input: results/dna/{sample}_{type}/biomarker/{sample}_{type}.msisensor_pro.unfiltered.score.tsv
-    nav_header: Biomarkers
   - name: MSI filtered
     type: file_table
-    description: MSI score (cut-off X%). Filtering based on ~400 known msi-sites. 
+    description: MSI score (grey region 2-6%). Filtering based on ~400 known msi-sites. 
     input: results/dna/{sample}_{type}/biomarker/{sample}_{type}.msisensor_pro.filtered.score.tsv
+    nav_header: Biomarkers
+  - name: MSI unfiltered
+    type: file_table
+    description: MSI score (cut-off 10%)
+    input: results/dna/{sample}_{type}/biomarker/{sample}_{type}.msisensor_pro.unfiltered.score.tsv
     nav_header: Biomarkers
   
   - name: PureCN TC
@@ -41,7 +41,12 @@ files:
     input: results/dna/{sample}_{type}/cnv/{sample}_{type}.pathology_purecn.cnv.html
     description: File link to CNV html report
     nav_header: CNV
-  - name: CNV tsv report
+  - name: CNV tsv report for validated genes only
+    type: file_table
+    input: results/dna/{sample}_{type}/cnv/{sample}_{type}.pathology_purecn.amp_all_del_validated.cnv_report.tsv
+    description: CNV tsv report (Validated amplification and deletion genes)
+    nav_header: CNV
+  - name: CNV tsv report for all selected genes
     type: file_table
     input: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology_purecn.amp_all_del_all.cnv_report.tsv
     description: CNV tsv report (All amplification and deletion genes)
