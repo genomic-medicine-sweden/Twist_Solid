@@ -326,6 +326,9 @@ purecn:
 purecn_coverage:
   container: "docker://hydragenetics/purecn:2.2.0"
 
+purecn_purity_file:
+  min_purity: 0.01
+
 report_fusions:
   fusioncatcher_flag_low_support: 15
   fusioncatcher_low_support: 3
