@@ -321,8 +321,8 @@ def create_tsv_report(
             columns = {k: v for k, v in zip(header_list, deletion.strip().split("\t"))}
             gene = columns['Gene(s)']
             chr = columns['Chromosome']
-            start = columns['Gene_start']
-            end = columns['Gene_end']
+            start = columns['Deletion_start']
+            end = columns['Deletion_end']
             caller = "small_deletion"
             AF = "NA"
             log_odds_ratio = float(columns['Median_L2R_deletion'])
