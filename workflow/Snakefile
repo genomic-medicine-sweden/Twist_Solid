@@ -498,7 +498,6 @@ use rule tmb from biomarker as biomarker_tmb_umi with:
             "variant_type_list", ["missense_variant", "stop_gained", "stop_lost", "synonymous_variant", "stop_retained_variant"]
         ),
         vd_limit=config.get("tmb_umi", {}).get("vd_limit", 20),
-        
 
 
 module fusions:
