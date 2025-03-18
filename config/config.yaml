@@ -400,20 +400,22 @@ tmb:
   vd_limit: 10
   nr_avg_germline_snvs: 2.0
   nssnv_tmb_correction: 0.84
+  variant_type_list: ["missense_variant", "stop_gained", "stop_lost"]
 
 tmb_umi:
-  af_lower_limit: 0.01
-  af_upper_limit: 0.99
-  af_germline_lower_limit: 0.47
-  af_germline_upper_limit: 0.53
-  artifacts: ""
+  af_lower_limit: 0.003
+  af_upper_limit: 0.997
+  af_germline_lower_limit: 0.40
+  af_germline_upper_limit: 0.60
   background_panel: ""
   db1000g_limit: 0.0001
   dp_limit: 100
   gnomad_limit: 0.0001
-  vd_limit: 15
-  nr_avg_germline_snvs: 2.0
-  nssnv_tmb_correction: 0.84
+  vd_limit: 10
+  nr_avg_germline_snvs: 0.0
+  nssnv_tmb_correction: 1.09
+  filter_nr_observations: 3
+  variant_type_list: ["missense_variant", "stop_gained", "stop_lost", "synonymous_variant", "stop_retained_variant"]
 
 vardict:
   container: "docker://hydragenetics/vardict:1.8.3"
