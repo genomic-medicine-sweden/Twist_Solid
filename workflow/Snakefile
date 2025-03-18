@@ -494,7 +494,9 @@ use rule tmb from biomarker as biomarker_tmb_umi with:
         gnomad_limit=config.get("tmb_umi", {}).get("gnomad_limit", 0.0001),
         nr_avg_germline_snvs=config.get("tmb_umi", {}).get("nr_avg_germline_snvs", 2.0),
         nssnv_tmb_correction=config.get("tmb_umi", {}).get("nssnv_tmb_correction", 0.84),
-        variant_type_list=config.get("tmb", {}).get("variant_type_list", ["missense_variant", "stop_gained", "stop_lost", "synonymous_variant", "stop_retained_variant"]),
+        variant_type_list=config.get("tmb", {}).get(
+            "variant_type_list", ["missense_variant", "stop_gained", "stop_lost", "synonymous_variant", "stop_retained_variant"]
+        ),
         vd_limit=config.get("tmb_umi", {}).get("vd_limit", 20),
         
 
