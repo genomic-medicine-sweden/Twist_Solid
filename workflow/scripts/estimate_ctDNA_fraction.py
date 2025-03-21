@@ -239,7 +239,7 @@ def calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min
     for chrom in segment_dict_AF:
         for segment in segment_dict_AF[chrom]:
             if len(segment[3]) > min_nr_SNPs_per_segment:
-                # Check if CNV segment has VAF signal (without checking noise levels) and save in CN_signal_list for later reference. 
+                # Check if CNV segment has VAF signal (using 0 noise levels) and save in CN_signal_list for later reference.
                 # If not significant save all background VAF signals in noise_level.
                 if not test_if_signal_in_segment(segment[3], 1, 0, vaf_baseline):
                     for AF in segment[3]:
@@ -277,7 +277,7 @@ def calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min
                     i += 50
                     if short:
                         break
-    # Report highest TC based on CNAs with deletions. 
+    # Report highest TC based on CNAs with deletions.
     # If none are found report highest copy neutral LoH CNA.
     max_tc = 0
     found_del = False
