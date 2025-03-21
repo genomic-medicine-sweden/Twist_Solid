@@ -10,6 +10,7 @@ import numpy as np
 import scipy.stats as stats
 
 
+# Read cnv segmentation file
 def read_segments(input_segments):
     segments = pysam.VariantFile(input_segments)
 
@@ -27,6 +28,7 @@ def read_segments(input_segments):
     return segment_dict
 
 
+# Read Germline vcf file
 def read_germline_vcf(input_germline_vcf, segment_dict, min_germline_af):
     germline_vcf = pysam.VariantFile(input_germline_vcf)
     germline_dict = {}
@@ -49,19 +51,21 @@ def read_germline_vcf(input_germline_vcf, segment_dict, min_germline_af):
     return segment_dict, germline_dict
 
 
+# Find the somatic SNV with the highest AF
 def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gnomAD_AF_limit,
                                  filter_regions_dict, germline_dict):
     snv_vcf = pysam.VariantFile(input_snv_vcf)
     snv_list = []
     snv_vcf_list = []
 
-    # VEP annotation
+    # Create VEP annotation header dict
     vep_fields = {}
     for record in snv_vcf.header.records:
         if record.type == "INFO":
             if record['ID'] == "CSQ":
                 vep_fields = {v: c for c, v in enumerate(record['Description'].split("Format: ")[1].split('">')[0].split("|"))}
 
+    # Iterate over the VCF file
     for record in snv_vcf.fetch():
         chrom = record.chrom
         pos = record.pos
@@ -77,18 +81,23 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
         # Only keep SNVs
         if len(ref) > 1 or len(alt) > 1:
             continue
-        # Check if SNVs is in segment with clear CNA based on copy number and then skip the SNV (Filter germline SNPs)
+        # Check if SNVs is in segment with clear CNA based on copy number
+        # Skip the SNV if AF > 25% (Likely germline) or in amplification (due to over estimation of TC)
         CNA = False
         if chrom not in segment_dict:
             continue
         for seg in segment_dict[chrom]:
             if pos >= seg[0] and pos <= seg[1]:
-                if seg[2] < 1.6 or seg[2] > 2.4:
-                    CNA = True
+                if seg[2] < 1.6:
+                    CNA = "Del"
                     break
-        if CNA:
+                if seg[2] > 2.4:
+                    CNA = "Amp"
+                    break
+        if CNA and AF > 0.25 or CNA == "Amp":
             continue
         # Check if SNVs is in region with CNA based on closest germline SNPs (Filter germline SNPs)
+        # Skip the SNV if AF > 25% (Likely germline)
         germline_AF1 = 0.5
         germline_AF2 = 0.5
         if chrom in germline_dict:
@@ -104,7 +113,7 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
         AF = record.samples.items()[0][1]["AF"][0]
         if germline_diff > 0.1 and AF > 0.25:
             continue
-        # Skip low AF somatic SNVs and germline SNPs
+        # Skip SNVs if found in GnomAD (Likely Germline or not drivers)
         gnomAD_AF = record.info["CSQ"][0].split("|")[vep_fields["gnomAD_AF"]]
         if gnomAD_AF == "":
             gnomAD_AF = 0
@@ -119,7 +128,7 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
         variant_type = record.info["TYPE"]
         if variant_type != "SNV":
             continue
-        # Only keep variants in exons
+        # Only keep variants in exons (Likely drivers)
         consequence = record.info["CSQ"][0].split("|")[vep_fields["Consequence"]].split("&")
         if not (
                 "missense_variant" in consequence or
@@ -129,7 +138,7 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
                 "stop_retained_variant" in consequence
         ):
             continue
-        # skip variants in problematic regions
+        # Skip variants in problematic regions
         filter_region = False
         if chrom in filter_regions_dict:
             for region in filter_regions_dict[chrom]:
@@ -224,17 +233,20 @@ def test_if_signal_in_segment(segment, abs_value_seg_median, median_noise_level,
 
 def calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min_segment_length):
     # Calculate BAF noise levels for segments without CNA (noise_level)
-    # Save copy numbers for segment with CNA signal (CN_signal_list)
+    # Save copy numbers for segment with detected CNA signal (CN_signal_list)
     CN_signal_list = []
     noise_level = []
     for chrom in segment_dict_AF:
         for segment in segment_dict_AF[chrom]:
             if len(segment[3]) > min_nr_SNPs_per_segment:
+                # Check if CNV segment has VAF signal (without checking noise levels) and save in CN_signal_list for later reference. 
+                # If not significant save all background VAF signals in noise_level.
                 if not test_if_signal_in_segment(segment[3], 1, 0, vaf_baseline):
                     for AF in segment[3]:
                         noise_level.append(abs(AF-vaf_baseline))
                 else:
                     CN_signal_list.append(segment[2])
+    # Calculated the median noise level
     median_noise_level = statistics.median(noise_level)
 
     # Iterate through segments to find final CNAs
@@ -257,14 +269,16 @@ def calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min
                     for AF in seg:
                         abs_value_seg.append(abs(AF-vaf_baseline))
                     abs_value_seg_median = statistics.median(abs_value_seg)
-                    # If signal is found calculate TC based on the median separation in BAF around the BAF-baseline (~50%)
+                    # Check if signal is found and is higher than the background noise level
                     if test_if_signal_in_segment(seg, abs_value_seg_median, median_noise_level, vaf_baseline):
+                        # Calculate TC based on the median separation in BAF around the BAF-baseline (~50%)
                         tc_seg = baf_to_tc(abs_value_seg_median, segment[2], CN_signal_list, median_noise_level)
                         tc_dict[tc_seg[1]].append([tc_seg[0], segment, chrom])
                     i += 50
                     if short:
                         break
-    # Report highest TC based on CNAs with deletions. If none are found report highest copy neutral LoH CNA.
+    # Report highest TC based on CNAs with deletions. 
+    # If none are found report highest copy neutral LoH CNA.
     max_tc = 0
     found_del = False
     seg_list = []
@@ -280,6 +294,7 @@ def calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min
     return max_tc, seg_list
 
 
+# Write CNV and SNV based TC to file
 def write_tc(output_tc, tc_cnv, tc_snv):
     output = open(output_tc, "w")
     output.write("Percentage ctDNA based on CNV data\tPercentage ctDNA based on SNV data\n")
@@ -288,6 +303,7 @@ def write_tc(output_tc, tc_cnv, tc_snv):
     return f"{tc_cnv*100:.1f}%\t{tc_snv*100:.1f}%\n"
 
 
+# Writes additional info to file
 def write_ctDNA_fraction_info(output_file_name, seg_list, snv_list):
     output = open(output_file_name, "w")
     output.write("ctDNA_fraction\tCNV_type\tchromosome\tstart_pos\tend_pos\n")
@@ -299,6 +315,7 @@ def write_ctDNA_fraction_info(output_file_name, seg_list, snv_list):
     output.close()
 
 
+# Reads bedfiles used for filtering of SNVs
 def read_bedfile(filter_regions_dict, in_bed_filename):
     in_bed = open(in_bed_filename)
     for line in in_bed:
@@ -328,10 +345,11 @@ if __name__ == "__main__":
 
     # Read CNV segments
     segment_dict = read_segments(input_segments)
-    # Read germline SNPstest_AF = 0.09939999878406525
+    # Read germline SNPs
     segment_dict_AF, germline_dict = read_germline_vcf(input_germline_vcf, segment_dict, min_germline_af)
+    # Calculate TC based on BAF germline values
     tc_cnv, seg_list = calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min_segment_length)
-    # Read SNV filters beds, read, SNVs and then report TC based on max VAF of somatic SNV.
+    # Read SNV filter beds and SNVs from vcf and then report TC based on max VAF of somatic SNV.
     filter_regions_dict = {}
     for bed_filename in problematic_regions_beds:
         filter_regions_dict = read_bedfile(filter_regions_dict, bed_filename)
@@ -339,4 +357,5 @@ if __name__ == "__main__":
                                                     filter_regions_dict, germline_dict)
     write_tc(output_ctDNA_fraction, tc_cnv, tc_snv)
     # Write additional info regarding which chromosomes have deletions
+    # Write additional info regarding additional SNVs found
     write_ctDNA_fraction_info(output_ctDNA_fraction_info, seg_list, snv_list)
