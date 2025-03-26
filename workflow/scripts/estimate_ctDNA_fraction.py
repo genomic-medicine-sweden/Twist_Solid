@@ -15,9 +15,9 @@ def read_segments(input_segments):
     Read segments from CNV segmentation file and store in dict. Skips X and Y chromosome.
 
     param input_segments: File handle to CNV segments
-    return segment_dict: a dict (with chromosomes as keys) each with a list of segments. 
+    return segment_dict: a dict (with chromosomes as keys) each with a list of segments.
                 Each segment has: [start position, end position, copy number, [empty list where germline AFs will be stored]]
-    """ 
+    """
     segments = pysam.VariantFile(input_segments)
 
     segment_dict = {}
@@ -36,17 +36,17 @@ def read_segments(input_segments):
 
 def read_germline_vcf(input_germline_vcf, segment_dict, min_germline_af):
     """
-    Read germline SNPs from vcf file. Skips low (min_germline_af) and high AF (1 - min_germline_af) SNPs. 
+    Read germline SNPs from vcf file. Skips low (min_germline_af) and high AF (1 - min_germline_af) SNPs.
     Store SNPs in dict and also update the segment dict with germline AFs within each segment.
 
     param input_germline_vcf: File handle to vcf file
     param segment_dict: Dict created by the read_segments function
     param min_germline_af: Float with minimum AF to be counted as a germline.
-    return segment_dict: a dict (with chromosomes as keys) each with a list of segments. 
+    return segment_dict: a dict (with chromosomes as keys) each with a list of segments.
                 Each segment has: [start position, end position, copy number, [list of germline AFs]]
-    return germline_dict: a dict (with chromosomes as keys) each with a list of SNP-data. 
+    return germline_dict: a dict (with chromosomes as keys) each with a list of SNP-data.
                 The SNP-data contains: [position, AF]
-    """ 
+    """
     germline_vcf = pysam.VariantFile(input_germline_vcf)
     germline_dict = {}
 
@@ -75,7 +75,7 @@ def read_bedfile(filter_regions_dict, in_bed_filename):
     param filter_regions_dict: A dict (with chromosomes as keys) each with a [list of regions: [start position, end position]]
     param in_bed_filename: File name of the file
     return filter_regions_dict: Updated dict with additional regions
-    """ 
+    """
     in_bed = open(in_bed_filename)
     for line in in_bed:
         columns = line.strip().split("\t")
@@ -92,7 +92,7 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
     """
     Read a VCF file and find the somatic SNV with the highest AF. Return TC based on AF (TC = 2 * AF).
     Variant filters:
-        Only consider SNVs. 
+        Only consider SNVs.
         Keep only SNVs called by both Vardict and Mutect2.
         Check if SNV is in CNA and skip if AF > 25% or in Amplification (likely germline).
         Skip SNVs found in GnomAD (likely Germline).
@@ -107,7 +107,7 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
     param filter_regions_dict: Dict with problematic regions created by the read_bedfile function
     param germline_dict: Dict created by the read_germline_vcf function
     return tc_snv: 2 * AF of SNV with max AF. 0 if no somatic SNV found.
-    """ 
+    """
     snv_vcf = pysam.VariantFile(input_snv_vcf)
     snv_list = []
     snv_vcf_list = []
@@ -214,7 +214,7 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
 def baf_to_tc(abs_value_seg_median, CN, CN_list, median_noise_level):
     '''
     Translates the baf signal size of a region into a TC value.
-    The baf signal is reduced by the background noise level. 
+    The baf signal is reduced by the background noise level.
     Then, depending on the nature of the CNA, the baf signal is transformed into a TC value.
 
     param abs_value_seg_median: Float with the median absolute baf signal (signal = difference from 50% AF)
@@ -258,14 +258,14 @@ def test_if_signal_in_segment(segment, abs_value_seg_median, median_noise_level,
     param segment: [list of germline AF in segment]
     param abs_value_seg_median: Float with the median absolute baf signal (signal = difference from 50% AF)
     param median_noise_level: Float with the median baf noise level based on germline AF in copy neutral segments
-    param vaf_baseline: Float that describes where the baf baseline are. 
+    param vaf_baseline: Float that describes where the baf baseline are.
                         In theory it should be 0.5 but in practice it is usually slightly lower (0.48).
 
     return True (the segment has CNA) if all of these are true (otherwise False):
         * the signal is higher than the background noise
         * the minimum VAF is not the same as any maxima (only one peak)
         * the minimum VAF is between 0.4 and 0.6 (peaks should be centered around the VAF baseline)
-        * the maxima ratio (max1 / max2) is between 0.5 and 2 (there should be similar number of 
+        * the maxima ratio (max1 / max2) is between 0.5 and 2 (there should be similar number of
                                                                germline SNPs on both sides of the VAF baseline)
         * both the minimum maximum ratio (min / max1 and min / max2) is lower than 0.85
     '''
@@ -311,18 +311,18 @@ def calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min
     """
     First calculate BAF noise levels for segments without CNA (median_noise_level)
     Then calculate TC for all segments that have signal (based on function test_if_signal_in_segment)
-    Return the highest TC based segments with deletions and LoH. 
+    Return the highest TC based segments with deletions and LoH.
     Also return a list of segments with signal and their estimated TC (seg_list)
 
     param segment_dict_AF: Dict created by the read_segments function and updated by the read_germline_vcf function
     param min_nr_SNPs_per_segment: Number of germline SNPs in segment needed to do a reliable baf signal test
-    param vaf_baseline: Float that describes where the baf baseline are. 
+    param vaf_baseline: Float that describes where the baf baseline are.
                         In theory it should be 0.5 but in practice it is usually slightly lower (0.48).
     min_segment_length: Minimal length of the segment (in bases) (avoid small noisy segments)
     return max_tc: The maximum TC
     return seg_list: [[TC, [segment], chrom], CNA-type]
                      segment = [start position, end position, copy number, [list of germline AFs]]
-    """ 
+    """
     CN_signal_list = []
     noise_level = []
     for chrom in segment_dict_AF:
