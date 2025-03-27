@@ -143,7 +143,7 @@ wget https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/genes/hg19.refGene.
 singularity exec docker://hydragenetics/star:2.7.10a STAR --runThreadN 8 --runMode genomeGenerate --genomeDir star_index --genomeFastaFiles Human_genome.fasta
 ```
 
-### Fusioncather v102
+### FusionCatcher v102
 ```bash
 wget http://sourceforge.net/projects/fusioncatcher/files/data/human_v102.tar.gz.aa
 wget http://sourceforge.net/projects/fusioncatcher/files/data/human_v102.tar.gz.ab
