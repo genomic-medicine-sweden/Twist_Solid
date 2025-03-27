@@ -128,6 +128,13 @@ use rule msisensor_pro_input_file from references as references_msisensor_pro_in
         bams=lambda wildcards: get_bams(units, "msisensor_pro_reference_list_baseline"),
 
 
+use rule msisensor_pro_baseline from references as references_msisensor_pro_baseline with:
+    input:
+        bam_conf="references/msisensor_pro_input_file/configure.txt",
+        bams=lambda wildcards: get_bams(units, "msisensor_pro_reference_list_baseline"),
+        PoN_list="references/msisensor_pro_scan/Msisensor_pro_reference.list",
+
+
 ####################################################
 #              gatk pon override
 ####################################################
