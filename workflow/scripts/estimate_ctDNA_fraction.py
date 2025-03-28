@@ -148,6 +148,7 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
                 if seg[2] > 2.4:
                     CNA = "Amp"
                     break
+        AF = record.samples.items()[0][1]["AF"][0]
         if CNA and AF > 0.25 or CNA == "Amp":
             continue
         # Check if SNVs is in region with CNA based on closest germline SNPs (Filter germline SNPs)
@@ -164,7 +165,6 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
                     germline_AF2 = germline_AF
                     break
         germline_diff = max(abs(germline_AF1 - 0.5), abs(germline_AF2 - 0.5))
-        AF = record.samples.items()[0][1]["AF"][0]
         if germline_diff > 0.1 and AF > 0.25:
             continue
         # Skip SNVs if found in GnomAD (Likely Germline or not drivers)
