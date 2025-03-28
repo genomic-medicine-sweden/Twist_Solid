@@ -8,16 +8,16 @@ filters:
     expression: "VEP:SYMBOL = MUC6 or VEP:SYMBOL = CDC27 or VEP:SYMBOL = KMT2B or VEP:SYMBOL = KMT2C or VEP:SYMBOL = KMT2D or VEP:SYMBOL = HLA-A or VEP:SYMBOL = HLA-B or VEP:SYMBOL = HLA-C"
     soft_filter: "False"
   artifacts_SNVs:
-    description: "Hard filter SNVs found in 3 or more normal samples"
-    expression: "(exist[SNV, VEP:VARIANT_CLASS] and (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 10) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 10))"
+    description: "Hard filter SNVs found in 4 or more normal samples"
+    expression: "(exist[SNV, VEP:VARIANT_CLASS] and (INFO:Artifact:0 > 3 and INFO:ArtifactNrSD:0 < 10) or (INFO:Artifact:0 > 3 and INFO:ArtifactNrSD:1 < 10))"
     soft_filter: "False"
   artifacts_INDELs:
-    description: "Hard filter INDELs found in 3 or more normal samples"
-    expression: "(!exist[SNV, VEP:VARIANT_CLASS] and (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 15) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 15))"
+    description: "Hard filter INDELs found in 4 or more normal samples"
+    expression: "(!exist[SNV, VEP:VARIANT_CLASS] and (INFO:Artifact:0 > 3 and INFO:ArtifactNrSD:0 < 15) or (INFO:Artifact:0 > 3 and INFO:ArtifactNrSD:1 < 15))"
     soft_filter: "False"
   germline:
     description: "Hard filter germline"
-    expression: "(VEP:gnomAD_AF > 0.005)"
+    expression: "(VEP:gnomADe_AF > 0.005)"
     soft_filter: "False"
   af_snv:
     description: "Hard filter SNV variants with low vaf"
