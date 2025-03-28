@@ -459,3 +459,15 @@ files:
     types:
       - T
       - N
+  - name: ctDNA fraction
+    input: cnv_sv/estimate_ctdna_fraction/{sample}_{type}.ctDNA_fraction.tsv
+    output: results/dna/{sample}_{type}/cnv/{sample}_{type}.ctDNA_fraction.tsv
+    types:
+      - T
+      - N
+  - name: ctDNA fraction_info
+    input: cnv_sv/estimate_ctdna_fraction/{sample}_{type}.ctDNA_fraction_info.tsv
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.ctDNA_fraction_info.tsv
+    types:
+      - T
+      - N
