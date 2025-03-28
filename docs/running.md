@@ -56,7 +56,7 @@ Activate the virtual environment and install pipeline requirements specified in 
 cd ${WORKING_DIRECTORY}
 
 # Activate python environment
-source environment/bin/activate
+source virtual/environment/bin/activate
 
 # Install requirements
 pip install -r requirements.txt

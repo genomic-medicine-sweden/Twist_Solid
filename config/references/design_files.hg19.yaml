@@ -192,13 +192,11 @@
      path: GMS560/purecn/targets_twist-gms-st_hg19_25000_intervals.txt
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/cnv/targets_twist-gms-st_hg19_25000_intervals.txt
-
- purecn_coverage:
-   intervals:
-     checksum: 0857e05962696cd3c2e5a4ea94d0fb2c
-     path: GMS560/purecn/targets_twist-gms-st_hg19_25000_intervals.txt
+   intervals_ctdna: 
+     checksum: a19ef4a67f3d370daaac4890fae25097
+     path: GMS560/purecn/targets_twist-gms-st_hg19_25000_cfDNA_intervals.txt
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/cnv/targets_twist-gms-st_hg19_25000_intervals.txt
+     url: https://figshare.scilifelab.se/ndownloader/files/52731440
 
  report_fusions:
    annotation_bed:
@@ -231,6 +229,11 @@
      path: GMS560/design/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/design/pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list
+   design_intervals_gatk_cnv_ctdna:
+     checksum: b3dbb69ea4adeed19c01de0896295fa3
+     path: GMS560/design/gatk.preprocessed.cfDNA_nextseq2000_24.interval_list
+     type: file
+     url: https://figshare.scilifelab.se/ndownloader/files/52731446
   
    design_intervals_rna:
      checksum: 5e38c3495625d3f854859eddf1643ff7
@@ -251,3 +254,30 @@
       path: GMS560/tmb/tmb_filter_genes.txt
       type: file
       url: https://raw.githubusercontent.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/v0.2.1/tmb/tmb_filter_genes.txt
+
+ estimate_ctdna_fraction:
+   bed_file1:
+      checksum: 46ebd877c3eee497feaa2394a6d9576e
+      path: GMS560/annotation/ENCODE_problematic_regions.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/52836086
+   bed_file2:
+      checksum: 0e85c1e639e6ca0083fbe9348af645ce
+      path: GMS560/annotation/segmental_dup_regions.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/52836089
+   bed_file3:
+      checksum: c18f59ea5f30170a4cc6ad13a8251327
+      path: GMS560/annotation/self_aligned_regions.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/52836095
+   bed_file4:
+      checksum: 2dc84d77ab58b16fd429fea271cc2d75
+      path: GMS560/annotation/simple_repeat_regions.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/52836092
+   bed_file5:
+      checksum: d150be91d8cb15199a04cf99edfbf3f5
+      path: GMS560/annotation/windowmaskSdust_repetetive_regions.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/52836098

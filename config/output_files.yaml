@@ -173,7 +173,7 @@ files:
       - N
   - name: Results report DNA HTML
     input: reports/general_html_report/{sample}_{type}.general_report.html
-    output: results/dna/{sample}_{type}/general_report/{sample}_{type}.general_report.html
+    output: results/dna/{sample}_{type}/{sample}_{type}.general_report.html
     types:
       - T
       - N
@@ -189,14 +189,6 @@ files:
     types:
       - T
       - N
-  - name: MSI Sensor Pro TSV umi
-    input: biomarker/msisensor_pro/{sample}_{type}.umi
-    output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.umi.msisensor_pro.score.tsv
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
   - name: TMB
     input: biomarker/tmb/{sample}_{type}.TMB.txt
     output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.TMB.txt
@@ -464,6 +456,18 @@ files:
   - name: HLA coverage optitype
     input: biomarker/optitype/{sample}_{type}/{sample}_{type}_hla_type_coverage_plot.pdf
     output: results/dna/{sample}_{type}/hla/{sample}_{type}_hla_type_coverage_plot.pdf
+    types:
+      - T
+      - N
+  - name: ctDNA fraction
+    input: cnv_sv/estimate_ctdna_fraction/{sample}_{type}.ctDNA_fraction.tsv
+    output: results/dna/{sample}_{type}/cnv/{sample}_{type}.ctDNA_fraction.tsv
+    types:
+      - T
+      - N
+  - name: ctDNA fraction_info
+    input: cnv_sv/estimate_ctdna_fraction/{sample}_{type}.ctDNA_fraction_info.tsv
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.ctDNA_fraction_info.tsv
     types:
       - T
       - N
