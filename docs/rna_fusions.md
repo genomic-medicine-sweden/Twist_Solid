@@ -131,7 +131,7 @@ Arriba produces a pdf file containing a figure for every fusion called with a sc
 
 | **Options** | **Value** | **Description** |
 |-------------|-|-|
-| genome_path | [`human_v102/`](references.md#fusioncatcher) | (see [references](references.md#fusioncather-v102)) |
+| genome_path | [`human_v102/`](references.md#fusioncatcher) | (see [references](references.md#fusioncatcher-v102)) |
 
 <br />
 **Cluster resources**
@@ -160,10 +160,10 @@ Fusion candidates from the three fusions callers are collected and filtered with
 | | star_fusion_low_support | 2 | Filters inframe fusions with split read support <= 2 |
 | |  star_fusion_low_support_inframe | 6 | Filters non-inframe fusions with split read support <= 6 |
 | |  star_fusion_low_support_fp_genes | 20 | Filters fusions with split read support < 20 if in list of noisy fusions or housekeeping genes (see below) |
-| Fusioncatcher | fusioncather_flag_low_support | 15 | Flags low support when split reads < 15 |
-| | fusioncather_low_support | 3 | Filters inframe fusions with split read support <= 3 |
-| | fusioncather_low_support_inframe | 6 | Filters non-inframe fusions with split read support <= 6 |
-| | fusioncather_low_support_fp_genes | 20 | Filters fusions with split read support < 20 if in list of noisy fusions or housekeeping genes (see below) |
+| Fusioncatcher | fusioncatcher_flag_low_support | 15 | Flags low support when split reads < 15 |
+| | fusioncatcher_low_support | 3 | Filters inframe fusions with split read support <= 3 |
+| | fusioncatcher_low_support_inframe | 6 | Filters non-inframe fusions with split read support <= 6 |
+| | fusioncatcher_low_support_fp_genes | 20 | Filters fusions with split read support < 20 if in list of noisy fusions or housekeeping genes (see below) |
 
 In the validation samples the MAML2 gene was falsely called frequently together with a number of different fusion partner genes. These gene combinations as well as the housekeeping have more stringent filtering criteria. The genes affected are listed below:
 
