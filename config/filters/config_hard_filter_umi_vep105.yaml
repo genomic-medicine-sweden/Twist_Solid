@@ -9,11 +9,11 @@ filters:
     soft_filter: "False"
   artifacts_SNVs:
     description: "Hard filter SNVs found in 3 or more normal samples"
-    expression: "(exist[SNV, VEP:VARIANT_CLASS] and (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 10) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 10))"
+    expression: "(exist[SNV, VEP:VARIANT_CLASS] and (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 6) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 6))"
     soft_filter: "False"
   artifacts_INDELs:
     description: "Hard filter INDELs found in 3 or more normal samples"
-    expression: "(!exist[SNV, VEP:VARIANT_CLASS] and (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 15) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 15))"
+    expression: "(!exist[SNV, VEP:VARIANT_CLASS] and (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 6) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 6))"
     soft_filter: "False"
   germline:
     description: "Hard filter germline"
