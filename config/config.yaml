@@ -102,6 +102,14 @@ cnv_tsv_report:
   polyploidy_fraction_limit: 0.2
   max_cnv_fp_size: 15000000
 
+estimate_ctdna_fraction:
+  gnomAD_AF_limit: 0.00001
+  max_somatic_af: 0.4
+  min_germline_af: 0.1
+  min_nr_SNPs_per_segment: 35
+  min_segment_length: 10000000
+  vaf_baseline: 0.48
+
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"
   # Default enabled trimming parameters for fastp. Specified for clarity.
@@ -326,6 +334,9 @@ purecn:
 purecn_coverage:
   container: "docker://hydragenetics/purecn:2.2.0"
 
+purecn_purity_file:
+  min_purity: 0.01
+
 report_fusions:
   fusioncatcher_flag_low_support: 15
   fusioncatcher_low_support: 3
@@ -397,20 +408,22 @@ tmb:
   vd_limit: 10
   nr_avg_germline_snvs: 2.0
   nssnv_tmb_correction: 0.84
+  variant_type_list: ["missense_variant", "stop_gained", "stop_lost"]
 
 tmb_umi:
-  af_lower_limit: 0.01
-  af_upper_limit: 0.99
-  af_germline_lower_limit: 0.47
-  af_germline_upper_limit: 0.53
-  artifacts: ""
+  af_lower_limit: 0.003
+  af_upper_limit: 0.997
+  af_germline_lower_limit: 0.40
+  af_germline_upper_limit: 0.60
   background_panel: ""
   db1000g_limit: 0.0001
   dp_limit: 100
   gnomad_limit: 0.0001
-  vd_limit: 15
-  nr_avg_germline_snvs: 2.0
-  nssnv_tmb_correction: 0.84
+  vd_limit: 10
+  nr_avg_germline_snvs: 0.0
+  nssnv_tmb_correction: 1.09
+  filter_nr_observations: 3
+  variant_type_list: ["missense_variant", "stop_gained", "stop_lost", "synonymous_variant", "stop_retained_variant"]
 
 vardict:
   container: "docker://hydragenetics/vardict:1.8.3"

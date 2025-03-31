@@ -69,6 +69,14 @@ cnvkit_batch_hrd:
 cnv_tsv_report:
   chrom_arm_size: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/chromosome_arm_size.tsv"
 
+estimate_ctdna_fraction:
+  problematic_regions_beds:
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/annotation/ENCODE_problematic_regions.bed"
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/annotation/segmental_dup_regions.bed"
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/annotation/self_aligned_regions.bed"
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/annotation/simple_repeat_regions.bed"
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/annotation/windowmaskSdust_repetetive_regions.bed"
+
 exon_skipping:
   design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_Design5.annotated.bed"
 
@@ -179,7 +187,13 @@ tmb:
   filter_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/tmb/tmb_filter_genes.txt"
 
 tmb_umi:
+  artifacts: "{{PROJECT_PON_DATA}}/GMS560/Artifact/artifact_panel_nextseq_36.tsv"
   filter_genes: "{{PROJECT_DESIGN_DATA}}/GMS560/tmb/tmb_filter_genes.txt"
+  filter_regions:
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/annotation/ENCODE_problematic_regions.bed"
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/annotation/segmental_dup_regions.bed"
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/annotation/simple_repeat_regions.bed"
+    - "{{PROJECT_DESIGN_DATA}}/GMS560/annotation/windowmaskSdust_repetetive_regions.bed"
 
 vep:
   vep_cache:  "{{PROJECT_REF_DATA}}/ref_data/vep/105"
