@@ -9,11 +9,11 @@ filters:
     soft_filter: "False"
   artifacts_SNVs:
     description: "Hard filter SNVs found in 3 or more normal samples"
-    expression: "(exist[SNV, VEP:VARIANT_CLASS] and (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 6) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 6))"
+    expression: "(exist[SNV, VEP:VARIANT_CLASS] and ((INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 6) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 6)))"
     soft_filter: "False"
   artifacts_INDELs:
     description: "Hard filter INDELs found in 3 or more normal samples"
-    expression: "(!exist[SNV, VEP:VARIANT_CLASS] and (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 6) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 6))"
+    expression: "(!exist[SNV, VEP:VARIANT_CLASS] and ((INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 6) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 6)))"
     soft_filter: "False"
   background:
     description: "Hard filter variants with AF not over background noise"
@@ -25,11 +25,19 @@ filters:
     soft_filter: "False"
   af_snv:
     description: "Hard filter SNV variants with low vaf"
-    expression: "((FORMAT:AF:0 < 0.003 or FORMAT:AF:0 > 0.997) and exist[SNV, VEP:VARIANT_CLASS])"
+    expression: "((FORMAT:AF:0 < 0.003 or FORMAT:AF:0 > 0.997) and exist[SNV, VEP:VARIANT_CLASS] and !exist[1-hotspot, INFO:Hotspot])"
     soft_filter: "False"
   ad_snv:
     description: "Hard filter SNV variants with low ad"
-    expression: "((FORMAT:AD:1 < 10 or FORMAT:AD:0 < 10) and exist[SNV, VEP:VARIANT_CLASS])"
+    expression: "((FORMAT:AD:1 < 10 or FORMAT:AD:0 < 10) and exist[SNV, VEP:VARIANT_CLASS] and !exist[1-hotspot, INFO:Hotspot])"
+    soft_filter: "False"
+  af_snv_hotspot:
+    description: "Hard filter SNV variants with low vaf"
+    expression: "((FORMAT:AF:0 < 0.0025 or FORMAT:AF:0 > 0.9975) and exist[SNV, VEP:VARIANT_CLASS] and !exist[1-hotspot, INFO:Hotspot])"
+    soft_filter: "False"
+  ad_snv_hotspot:
+    description: "Hard filter SNV variants with low ad"
+    expression: "((FORMAT:AD:1 < 6 or FORMAT:AD:0 < 6) and exist[SNV, VEP:VARIANT_CLASS] and !exist[1-hotspot, INFO:Hotspot])"
     soft_filter: "False"
   af_insertion:
     description: "Hard filter Insertion variants with low vaf"
