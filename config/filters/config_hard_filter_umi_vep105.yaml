@@ -15,6 +15,10 @@ filters:
     description: "Hard filter INDELs found in 3 or more normal samples"
     expression: "(!exist[SNV, VEP:VARIANT_CLASS] and (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 6) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 6))"
     soft_filter: "False"
+  background:
+    description: "Hard filter variants with AF not over background noise"
+    expression: "INFO:PositionNrSD < 6"
+    soft_filter: "False"
   germline:
     description: "Hard filter germline"
     expression: "(VEP:gnomAD_AF > 0.005)"
