@@ -19,6 +19,11 @@ filters:
     expression: "(!exist[SNV, VEP:VARIANT_CLASS] and (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:0 < 6) or (INFO:Artifact:0 > 2 and INFO:ArtifactNrSD:1 < 6))"
     soft_filter_flag: "Artifact_gt_2_INDEL"
     soft_filter: "True"
+  background:
+    description: "Hard filter variants with AF not over background noise"
+    expression: "INFO:PositionNrSD < 6"
+    soft_filter_flag: "Background_lt_6SD"
+    soft_filter: "True"
   germline:
     description: "Hard filter germline"
     expression: "(VEP:gnomAD_AF > 0.005)"
