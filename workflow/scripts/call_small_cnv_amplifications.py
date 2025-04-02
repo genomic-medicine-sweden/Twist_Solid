@@ -146,8 +146,8 @@ def call_small_cnv_amplifications(
 ):
     regions = read_regions_data(regions_file)
     sample_name = cnv_file_name.split("/")[1].split("_")[0]
-    amplifications.write("Gene(s)\tChromosome\tGene_start\tGene_end\tLog2_ratio_diff\tMedian_L2R_amplification\t")
-    amplifications.write("Median_L2R_surrounding\tNumber_of_data_points\tNumber_of_stdev\n")
+    amplifications.write("Gene(s)\tChromosome\tAmplification_start\tAmplification_end\tLog2_ratio_diff\t")
+    amplifications.write("Median_L2R_amplification\tMedian_L2R_surrounding\tNumber_of_data_points\tNumber_of_stdev\n")
     for region in regions:
         probe_data, gene_probe_index, probe_positions = read_cnv_data(cnv_file_name, sample_name, region)
         # Warning about to small region
