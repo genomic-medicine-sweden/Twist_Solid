@@ -177,6 +177,16 @@ files:
     types:
       - T
       - N
+    deduplication:
+      - ""
+  - name: Results report umi DNA HTML
+    input: reports/general_html_report/{sample}_{type}.umi.general_report.html
+    output: results/dna/{sample}_{type}/{sample}_{type}.umi.general_report.html
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
   - name: MSI Sensor Pro filtered TSV
     input: biomarker/msisensor_pro/{sample}_{type}
     output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.msisensor_pro.filtered.score.tsv
@@ -257,20 +267,16 @@ files:
     types:
       - T
       - N
-  - name: fuseq WES umi
-    input: fusions/filter_fuseq_wes/{sample}_{type}.fuseq_wes.report.umi.csv
-    output: results/dna/{sample}_{type}/fusion/{sample}_{type}.fuseq_wes.report.umi.csv
-    types:
-      - T
-      - N
     deduplication:
-      - umi
+      - ""
   - name: fuseq WES unfiltered
     input: fusions/fuseq_wes/{sample}_{type}/FuSeq_WES_FusionFinal.txt
     output: results/dna/{sample}_{type}/additional_files/fusion/{sample}_{type}.fuseq_wes.unfiltered.results.csv
     types:
       - T
       - N
+    deduplication:
+      - ""
   - name: GeneFuse report
     input: fusions/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv
     output: results/dna/{sample}_{type}/fusion/{sample}_{type}.gene_fuse_report.umi.tsv

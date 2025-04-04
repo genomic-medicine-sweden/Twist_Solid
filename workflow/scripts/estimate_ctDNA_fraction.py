@@ -203,7 +203,7 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, segment_dict, max_somatic_af, gn
                 continue
 
         snv_list.append(AF)
-        snv_vcf_list.append(record)
+        snv_vcf_list.append([chrom, pos, ref, alt, record.info])
 
     if len(snv_list) > 0:
         return 2 * max(snv_list), snv_vcf_list
@@ -414,8 +414,11 @@ def write_ctDNA_fraction_info(output_file_name, seg_list, snv_list):
     for seg in seg_list:
         output.write(f"{seg[0][0]*100:.1f}%\t{seg[1]}\t{seg[0][2]}\t{seg[0][1][0]}\t{seg[0][1][1]}\n")
     output.write("\nSNVs passing all filtering\n")
-    for variant in snv_list:
-        output.write(variant)
+    for snv in snv_list:
+        output.write(f"{snv[0]}\t{snv[1]}\t{snv[2]}\t{snv[3]}\t")
+        for key in snv[4].keys():
+            output.write(f"{key}={snv[4][key]}|")
+        output.write("\n")
     output.close()
 
 
