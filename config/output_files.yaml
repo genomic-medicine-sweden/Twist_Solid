@@ -177,6 +177,16 @@ files:
     types:
       - T
       - N
+    deduplication:
+      - ""
+  - name: Results report umi DNA HTML
+    input: reports/general_html_report/{sample}_{type}.umi.general_report.html
+    output: results/dna/{sample}_{type}/{sample}_{type}.umi.general_report.html
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
   - name: MSI Sensor Pro filtered TSV
     input: biomarker/msisensor_pro/{sample}_{type}
     output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.msisensor_pro.filtered.score.tsv
