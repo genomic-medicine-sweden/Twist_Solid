@@ -701,7 +701,12 @@ module reports:
         config
 
 
-use rule * from reports exclude all, merge_cnv_json as reports_*
+use rule * from reports exclude all as reports_*
+
+
+use rule general_html_report from reports as reports_general_html_report_umi with:
+    output:
+        html="reports/general_html_report/{sample}_{type}.umi.general_report.html",
 
 
 use rule cnv_html_report from reports as reports_cnv_html_report with:
