@@ -696,7 +696,7 @@ use rule purecn_purity_file from cnv_sv as cnv_sv_purecn_purity_file with:
 
 module reports:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.9.0")
+        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.10.0")
     config:
         config
 
@@ -704,7 +704,24 @@ module reports:
 use rule * from reports exclude all as reports_*
 
 
+use rule general_json_report from reports as reports_general_json_report with:
+    params:
+        sample="{sample}_{type}",
+        pipeline_version=pipeline_version,
+        pipeline_name=pipeline_name,
+        tc=reports.get_tc_general_report,
+        units=units,
+        reference_genome=config.get("reference", {}).get("fasta", ""),
+
+
 use rule general_html_report from reports as reports_general_html_report_umi with:
+    params:
+        sample="{sample}_{type}",
+        pipeline_version=pipeline_version,
+        pipeline_name=pipeline_name,
+        tc=reports.get_tc_general_report,
+        units=units,
+        reference_genome=config.get("reference", {}).get("fasta", ""),
     output:
         html="reports/general_html_report/{sample}_{type}.umi.general_report.html",
 
