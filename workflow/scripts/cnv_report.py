@@ -338,8 +338,8 @@ def create_tsv_report(
             columns = {k: v for k, v in zip(header_list, amplification.strip().split("\t"))}
             gene = columns['Gene(s)']
             chr = columns['Chromosome']
-            start = columns['Gene_start']
-            end = columns['Gene_end']
+            start = columns['Amplification_start']
+            end = columns['Amplification_end']
             caller = "small_amplification"
             AF = "NA"
             log_odds_ratio = float(columns['Median_L2R_amplification'])
