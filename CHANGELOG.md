@@ -1,5 +1,79 @@
 # Changelog
 
+## [0.19.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.18.3...v0.19.0) (2025-04-09)
+
+
+### Features
+
+* added config for cfDNA analysis ([2f8c486](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2f8c48651ac04a702f84f7078ce4b6590459130a))
+* added profile for ctDNA ([9ea31cd](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9ea31cd1034d383cbec4f9a922c1916fc48471da))
+* added references for ctdna nextseq2000 ([f1f2605](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f1f26050eec7cc017a343b0ecdb23a4d8fc0942b))
+* added SNV information to extra output file ([e5d039c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e5d039c396c354068f7c3530a16c82704a71bdc2))
+* added tmb filtering files ([e882c6c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e882c6cbb4ac4ea4960b6fc207839c58e9315815))
+* general report adapted for ctdna workflow ([e226564](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e2265641b625d15fa82d0980afac6ecadf4173df))
+* improved SNV filtering for TC estimation ([9e65481](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9e654811bfb4021f41352e26a6c801f401746153))
+* new TMB config for umi ([3c7c2cd](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3c7c2cd6f80481d45f5204eccc6f0cfdeeb68928))
+* sort cnv tsv report on gene ([4052d00](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4052d00e755169129dbcb57e3dcd43192b1e8abb))
+* **test_input_develop.tsv:** Update list of files tested ([3eb25c0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3eb25c0fd8e4be12f2f472c19c71d6aad0eef185))
+* **test_input_main.tsv:** New files added ([75ee51d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/75ee51d300d4a7475e9765d9c0f81a4b82cbbdd8))
+* update reports module and add pipeline name ([75d8d86](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/75d8d86acbfbed10468b526a894c54c564815552))
+
+
+### Bug Fixes
+
+* adapt script to new header ([53566a2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/53566a287dfd88e9df2d5af87812afbf82ab446c))
+* adapt to new small amplification header ([6c8c54f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6c8c54fa9466086799810e5b31ed5611b7615e27))
+* add cnv validated table ([93b965e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/93b965edfb277980f8f67b3587685707f467f1e8))
+* add cnv validated table ([0654272](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0654272e18cb89470ba7e190cc85fbb8e1a9157a))
+* add minimium AF for germline filtering ([a2b57b0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a2b57b07d99c139482b95ba487ec8ae66b7eb823))
+* add missing msisensor_pro config ([30f203c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/30f203c2c7ef7684d559bbb08cfd1d466f9b1ab0))
+* add umi background filter ([6e02be5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6e02be5e3a1f7e2222a3f4e3dc96049d5dff8080))
+* add umi background filter ([10a4c96](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/10a4c96912c20d516bf4a7b1171ff03635ae94a4))
+* change MSI order ([bd8e195](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/bd8e195769aff959bab9094ceb9c18f2b7f8a9d1))
+* **ctDNA_estimation:** AF used w.o. assigning value ([a49f277](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a49f27708e7b143c4a418faec189a8e2083ea7c5))
+* decreased min reported pureCN TC from 20 to 1% ([e985ba5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e985ba529b25cfeba0f9f8dca109cc332729efe2))
+* **estimate_ctDNA_fraction.py:** bugfix in extra snv output info ([d602c51](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d602c51243fd0b6923d6b21090685a110427210f))
+* improved umi filtering ([2066507](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2066507c64f4719c2ffe77b581ba9b1b85a8b36f))
+* improved umi filtering ([933f2d6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/933f2d6e23036474d5cf95aa9df6064c1c5f27e6))
+* increase wall time for juli ([0dd57a5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0dd57a597ce1b85b1d278d8c8ebc65c7c53e8787))
+* increased wall time to be handle ctDNA ([488a149](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/488a149bd61b94fdceb4b5cac4155bbd04b5031a))
+* more lenient filter of SNVs in CNA and added code comments ([ac7f751](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ac7f75170966549ca885224253f977556b5b09fd))
+* msi is calculated without umi ([b30f9da](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b30f9da3e1f29f7369e563c635d776d6a565f0e4))
+* msi umi is calculated without umi ([1ba3e85](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1ba3e85b327ea3baf6fd4d9def0bb491d3c994df))
+* new artifact filter need lower SD artifact rescue in umi ([0866583](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/086658386250955f48b74646f717407385175854))
+* new artifact filter need lower SD artifact rescue in umi ([ff8ca29](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ff8ca29b2bb5950e8193ed5446786cc611c3f08c))
+* only run FuseqWES for FFPE-analys ([d931acf](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d931acf9629d6dde8e4a2bea3859f6f2b2f4d67b))
+* **output_files.yaml:** corrected file name for output ([061c73e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/061c73eba1f2218bbea4f41bbdccd734af1371aa))
+* remove folder for report ([2ebaf28](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2ebaf285d30ba8e87997be093dcea968f7542d3c))
+* remove potential duplicate and missed output of 1p19q ([96865b8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/96865b87592d929e21a7dd47fa418d56395edaaf))
+* rescue hotspots ([8145906](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8145906578df4dd45ee5d3223a376f037a43a8ed))
+* rescue hotspots ([96f03f7](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/96f03f7f93a8caba2c1aecd8684f36c22c0d9b5b))
+* rescue hotspots correction ([c545312](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c545312bf1f1401e43c01589c7054a4113164cd5))
+* samtools stats and picard duplication matrix should be calculation without umi ([262ec0a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/262ec0a819b2cf9656b0802661e5aa637697a730))
+* **Snakemake_references:** adapt to new report module ([353ce9b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/353ce9bd0eaf909bbe315cdbec7c61eb0cf1815e))
+* **test_input_develop.tsv:** Remove id_snps dev ([3f02bf8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/3f02bf8a61e3a060a6f29648a6c6c342514a35e7))
+* **test_input_develop.tsv:** rm sample mix-up dev ([16a2405](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/16a240501e4ce851494b8533e4cbb479349b07e9))
+* **tmb:** added stop_retained_variant as ok variant ([6216e18](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6216e18887bf24abf9234cfeb15d8005bd9cff9f))
+* **umi:** filter more genes ([d7c577c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d7c577cffa28d6e6c01d4ff0e1994253d7fc4ca9))
+* **umi:** filter more genes ([c8afe86](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c8afe868e4e32446187db80253ca069f9d858eea))
+* update amplification headers ([b2b2c6a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b2b2c6a8aac5e447b385648576fb1d01bf130742))
+* update artifact and background analysed umi ([440f9f4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/440f9f47959b8cbaabea971c2cea1dce9877c293))
+* update artifact reference file for ctDNA ([8b02f33](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8b02f33958fdfa918905c2612c81be522fdbbcc1))
+* update biomarker module ([5391ff5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5391ff558699df597fac1be0fc3010eeed8cddef))
+* update biomarker module ([c001c2e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c001c2ec59ab29aa4aeab4a435f5d625b4712674))
+* update biomarker module version ([36922e0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/36922e039c5852d4ee9b9e7c7ec4de3b9f6b4c95))
+* update ctDNA artifact filtering of INDELs ([8db00b6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8db00b604711f5faf2ad6b751966331bc77ed878))
+* update ctDNA artifact filtering of INDELs (soft_filter) ([ccd3cde](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ccd3cde45cf6fdb675e56df0f83b7d218b8e9717))
+* update reference module with new artifact reference ([8d7ebde](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8d7ebde49242024c20d7f7a2441856b94a5202cc))
+* update reports module to fix email import in general report ([984a583](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/984a58304519b8cf20900c5c432f1b55729237dd))
+* update tmb_umi rule to match biomarker module ([90fd755](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/90fd75581501396453d996ab33122cfd58b1c3f8))
+
+
+### Documentation
+
+* **estimate_ctDNA_fraction.py:** added doc strings to all functions ([f71bcf0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f71bcf0635c3d809ba9587e9cd0eb6c536d1b5e6))
+* fix link to msisensorpro ([6f480c8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/6f480c8a242440a4f1de560efe7fa496aa2a838a))
+
 ### [0.18.3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.18.2...v0.18.3) (2025-02-13)
 
 
