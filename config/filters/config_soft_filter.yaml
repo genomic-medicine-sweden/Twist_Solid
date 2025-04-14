@@ -21,7 +21,7 @@ filters:
     soft_filter: "True"
   germline:
     description: "Soft filter germline SNVs based on GnomAD exon"
-    expression: "(VEP:gnomADe_AF > 0.005)"
+    expression: "(VEP:gnomADe_AF > 0.005 or (INFO:Artifact:0 > 3 and INFO:ArtifactMedian:0 > 0.47 and INFO:ArtifactMedian:0 < 0.53) or (INFO:Artifact:1 > 3 and INFO:ArtifactMedian:1 > 0.47 and INFO:ArtifactMedian:1 < 0.53))"
     soft_filter_flag: "Germline"
     soft_filter: "True"
   ad:
