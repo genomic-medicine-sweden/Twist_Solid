@@ -196,7 +196,7 @@
      checksum: a19ef4a67f3d370daaac4890fae25097
      path: GMS560/purecn/targets_twist-gms-st_hg19_25000_cfDNA_intervals.txt
      type: file
-     url: https://figshare.scilifelab.se/ndownloader/files/52731440
+     url: https://figshare.scilifelab.se/ndownloader/files/52731440?private_link=88202740beb6fcbac09d
 
  report_fusions:
    annotation_bed:
