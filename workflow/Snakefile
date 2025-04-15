@@ -27,6 +27,7 @@ rule all:
 
 ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
 ruleorder: alignment_bwa_mem_merge > alignment_samtools_sort
+ruleorder: alignment_bwa_mem_merge_umi > alignment_samtools_sort_umi
 ruleorder: alignment_samtools_merge_bam > alignment_samtools_sort
 ruleorder: annotation_annotate_cnv > snv_indels_bgzip
 ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
