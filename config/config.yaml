@@ -398,8 +398,8 @@ tmb:
   dp_limit: 100
   gnomad_limit: 0.0001
   vd_limit: 10
-  nr_avg_germline_snvs: 2.0
-  nssnv_tmb_correction: 0.84
+  nr_avg_germline_snvs: -0.38
+  nssnv_tmb_correction: 0.68
   variant_type_list: ["missense_variant", "stop_gained", "stop_lost"]
 
 tmb_umi:
