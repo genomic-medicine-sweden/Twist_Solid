@@ -714,16 +714,6 @@ use rule general_json_report from reports as reports_general_json_report with:
         reference_genome=config.get("reference", {}).get("fasta", ""),
 
 
-use rule general_json_report from reports as reports_general_json_reporti_umi with:
-    params:
-        sample="{sample}_{type}",
-        pipeline_version=pipeline_version,
-        pipeline_name=pipeline_name,
-        tc=reports.get_tc_general_report,
-        units=units,
-        reference_genome=config.get("reference", {}).get("fasta", ""),
-
-
 use rule general_html_report from reports as reports_general_html_report_umi with:
     output:
         html="reports/general_html_report/{sample}_{type}.umi.general_report.html",
