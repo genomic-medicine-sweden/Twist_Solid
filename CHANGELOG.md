@@ -1,5 +1,15 @@
 # Changelog
 
+### [0.19.1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.19.0...v0.19.1) (2025-04-16)
+
+
+### Bug Fixes
+
+* bug in Snakefile for umi general report ([495435d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/495435d15e7b48b138f310b5249600334e37e1f3))
+* remove unneeded rule ([410962d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/410962d0789cccd8d0ce6788a7bf5598a167782d))
+* update additional figshare links ([e1883f8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e1883f8db6ea77e7adf866d6d93e27cf71d6a9b7))
+* update figshare links ([bc961f6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/bc961f6ef3c8fa2b67cd1ede8d9dd9b8244fc1aa))
+
 ## [0.19.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.18.3...v0.19.0) (2025-04-09)
 
 
