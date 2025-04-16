@@ -17,7 +17,7 @@
      checksum: 4fae05f2c27139ae11c6102c154cdb2c
      path: GMS560/PoN/purecn/mapping_bias_cfDNA_nextseq2000_24.rds
      type: file
-     url: https://figshare.scilifelab.se/ndownloader/files/52731443
+     url: https://figshare.scilifelab.se/ndownloader/files/52731443?private_link=88202740beb6fcbac09d
 
    normaldb:
      checksum: d77528e5bfeec40791235e52dcbed7ef
@@ -28,7 +28,7 @@
      checksum: 911805d988fb18f4777295a34e1502af
      path: GMS560/PoN/purecn/normalDB_cfDNA_nextseq2000_24.rds
      type: file
-     url: https://figshare.scilifelab.se/ndownloader/files/52731458
+     url: https://figshare.scilifelab.se/ndownloader/files/52731458?private_link=88202740beb6fcbac09d
 
 
  gatk_denoise_read_counts:
@@ -41,7 +41,7 @@
      checksum: 81193576df0b1edd5735d8413d54ea87
      path: GMS560/PoN/gatk_cnv_cfDNA_nextseq2000_24.hdf5
      type: file
-     url: https://figshare.scilifelab.se/ndownloader/files/52731449
+     url: https://figshare.scilifelab.se/ndownloader/files/52731449?private_link=88202740beb6fcbac09d
 
  cnvkit_batch:
    normal_reference:
@@ -53,7 +53,7 @@
      checksum: ebb8bfd2fba4f8de5e4c945e7e686f95
      path: GMS560/PoN/cnvkit_cfDNA_nextseq2000_24.cnn
      type: file
-     url: https://figshare.scilifelab.se/ndownloader/files/52731455
+     url: https://figshare.scilifelab.se/ndownloader/files/52731455?private_link=88202740beb6fcbac09d
 
  cnvkit_batch_hrd:
    normal_reference_hrd:
@@ -72,7 +72,7 @@
      checksum: 36e9bcef8f162cad3a34d09b884584a3
      path: GMS560/PoN/jumble_cfDNA_nextseq2000_24.RDS
      type: file
-     url: https://figshare.scilifelab.se/ndownloader/files/52731452
+     url: https://figshare.scilifelab.se/ndownloader/files/52731452?private_link=88202740beb6fcbac09d
 
  msisensor_pro_filter_sites:
    PoN:
@@ -84,7 +84,7 @@
      checksum: b27a884afd4dc6bd805a0e793288a462
      path: GMS560/PoN/Msisensor_pro_reference_cfDNA_nextseq2000_24.list_baseline
      type: file
-     url: https://figshare.scilifelab.se/ndownloader/files/52731437
+     url: https://figshare.scilifelab.se/ndownloader/files/52731437?private_link=88202740beb6fcbac09d
 
  reference:
     background:
@@ -96,7 +96,7 @@
       checksum: 0548ce3c202b779568011f35d4055ec6
       path: GMS560/Background/background_panel_cfDNA_nextseq2000_24.tsv
       type: file
-      url: https://figshare.scilifelab.se/ndownloader/files/53036480
+      url: https://figshare.scilifelab.se/ndownloader/files/53036480?private_link=88202740beb6fcbac09d
     
     artifacts: 
       checksum: 73531299238e0a0884405a892e6789ac
@@ -107,4 +107,4 @@
       checksum: d790c02d57315237e0b0297a9b56c3bb
       path: GMS560/Artifact/artifact_panel_cfDNA_nextseq2000_24.tsv
       type: file
-      url: https://figshare.scilifelab.se/ndownloader/files/53261744
+      url: https://figshare.scilifelab.se/ndownloader/files/53261744?private_link=88202740beb6fcbac09d
