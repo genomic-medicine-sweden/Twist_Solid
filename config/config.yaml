@@ -198,7 +198,7 @@ gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
 
 general_html_report:
-  final_directory_depth: 4
+  final_directory_depth: 3
   multiqc_config: "config/reports/multiqc_config_dna.yaml"
 
 juli_annotate:
