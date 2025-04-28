@@ -26,6 +26,9 @@ rule all:
 
 
 ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
+ruleorder: alignment_bwa_mem_merge > alignment_samtools_sort
+ruleorder: alignment_bwa_mem_merge_umi > alignment_samtools_sort_umi
+ruleorder: alignment_samtools_merge_bam > alignment_samtools_sort
 ruleorder: annotation_annotate_cnv > snv_indels_bgzip
 ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
 ruleorder: qc_samtools_stats_rna > qc_samtools_stats
@@ -128,12 +131,54 @@ module alignment:
         config
 
 
-use rule * from alignment exclude all as alignment_*
+use rule * from alignment exclude bwa_mem_merge, samtools_merge_bam, all as alignment_*
 
 
 use rule samtools_index from alignment as alignment_samtools_index with:
     output:
         bai="{file}.bam.bai",
+
+
+use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam with:
+    output:
+        bam=temp("alignment/samtools_merge_bam/{sample}_{type}.bam"),
+    params:
+        extra=config.get("samtools_merge_bam", {}).get("extra", ""),
+    log:
+        "alignment/samtools_merge_bam/{sample}_{type}.bam.log",
+    benchmark:
+        repeat(
+            "alignment/samtools_merge_bam/{sample}_{type}.bam.benchmark.tsv",
+            config.get("samtools_merge_bam", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule bwa_mem_merge from alignment as alignment_bwa_mem_merge with:
+    output:
+        bam=temp("alignment/bwa_mem/{sample}_{type}.bam"),
+    params:
+        config.get("bwa_mem_merge", {}).get("extra", ""),
+    log:
+        "alignment/bwa_mem/{sample}_{type}.bam.log",
+    benchmark:
+        repeat(
+            "alignment/bwa_mem/{sample}_{type}.bam.benchmark.tsv",
+            config.get("bwa_mem_merge", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule bwa_mem_merge from alignment as alignment_bwa_mem_merge_umi with:
+    output:
+        bam=temp("alignment/bwa_mem/{sample}_{type}.umi.bam"),
+    params:
+        config.get("bwa_mem_merge", {}).get("extra", "-n"),
+    log:
+        "alignment/bwa_mem/{sample}_{type}.umi.bam.log",
+    benchmark:
+        repeat(
+            "alignment/bwa_mem/{sample}_{type}.umi.bam.benchmark.tsv",
+            config.get("bwa_mem_merge", {}).get("benchmark_repeats", 1),
+        )
 
 
 use rule star from alignment as alignment_star with:
