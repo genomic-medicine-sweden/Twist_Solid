@@ -336,7 +336,10 @@ def calculate_cnv_tc(segment_dict_AF, min_nr_SNPs_per_segment, vaf_baseline, min
                 else:
                     CN_signal_list.append(segment[2])
     # Calculated the median noise level
-    median_noise_level = statistics.median(noise_level)
+    if len(noise_level) > 0:
+        median_noise_level = statistics.median(noise_level)
+    else:
+        median_noise_level = 0
 
     # Iterate through segments to find final CNAs
     tc_dict = {"Del": [], "Dup": [], "CNLoH": [], "Unknown": []}
