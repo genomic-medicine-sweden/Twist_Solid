@@ -1,5 +1,19 @@
 # Changelog
 
+### [0.19.1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.19.0...v0.19.1) (2025-04-29)
+
+
+### Bug Fixes
+
+* Add scipy which is needed by ctDNA_fraction_estimation ([cb35af6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/cb35af61eda412ae3f6b4a7af11eaa5450262522))
+* bug in Snakefile for umi general report ([495435d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/495435d15e7b48b138f310b5249600334e37e1f3))
+* **estimate_ctDNA_fraction.py:** median of empty list ([4084914](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/408491486dc8487983c163c219d159f623e39336))
+* general report moved one folder up ([0e838a8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/0e838a86670f4d0b7ef8cba217ef7353522a24ea))
+* remove unneeded rule ([410962d](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/410962d0789cccd8d0ce6788a7bf5598a167782d))
+* **requirements.txt:** Added requirement pyaml-env ([4f2c83b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/4f2c83bf54ad3e4a0df369e8caa51569bf371354))
+* update additional figshare links ([e1883f8](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e1883f8db6ea77e7adf866d6d93e27cf71d6a9b7))
+* update figshare links ([bc961f6](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/bc961f6ef3c8fa2b67cd1ede8d9dd9b8244fc1aa))
+
 ## [0.19.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.18.3...v0.19.0) (2025-04-09)
 
 
