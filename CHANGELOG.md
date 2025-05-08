@@ -1,5 +1,14 @@
 # Changelog
 
+### [0.19.2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.19.1...v0.19.2) (2025-05-08)
+
+
+### Bug Fixes
+
+* update cnv_sv module to fix jumble cpu overusage ([274c56a](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/274c56a13530ec94fc796b7a5538655e4b9e4dbe))
+* update reports module to fix cnv html report table bug ([b480dfe](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b480dfe237a1e0d403e28809ecbfa10c27bc44d4))
+* update reports module to fix cnv html report table bug ([123659e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/123659e4908ed93a02b8183fbdf5ee0b5bb9d9f1))
+
 ### [0.19.1](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.19.0...v0.19.1) (2025-04-29)
 
 
