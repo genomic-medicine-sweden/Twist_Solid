@@ -145,6 +145,7 @@ filter_vcf:
   cnv_hard_filter_amp: "config/filters/config_hard_filter_cnv_amp.yaml"
   cnv_hard_filter_loh: "config/filters/config_hard_filter_cnv_loh.yaml"
   germline: "config/filters/config_hard_filter_germline_vep105.yaml"
+  itd_hard_filter: "config/filters/config_hard_filter_scanitd.yaml"
 
 filter_fuseq_wes:
   min_support: 50
