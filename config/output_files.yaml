@@ -477,3 +477,9 @@ files:
     types:
       - T
       - N
+  - name: ITD
+    input: cnv_sv/scanITD/{sample}_{type}.vcf
+    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.ITD.vcf
+    types:
+      - T
+      - N
