@@ -51,6 +51,11 @@ files:
     input: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.pathology_purecn.amp_all_del_all.cnv_report.tsv
     description: CNV tsv report (All amplification and deletion genes)
     nav_header: CNV
+  - name: ITD
+    type: file_link
+    input: results/dna/{sample}_{type}/cnv/{sample}_{type}.ITD.hard_filtered.tsv
+    description: internal tandem duplications (ITD) called by scanITD
+    nav_header: CNV
 
   - name: FuseqWes
     type: file_table

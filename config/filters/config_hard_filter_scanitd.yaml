@@ -11,3 +11,8 @@ filters:
     description: "Demand at least 100 coverage"
     expression: "(INFO:DP < 100)"
     soft_filter: "False"
+  max_length:
+    description: "Max length of ITD of 2000 bp"
+    expression: "(INFO:SVLEN > 2000)"
+    soft_filter: "False"
+

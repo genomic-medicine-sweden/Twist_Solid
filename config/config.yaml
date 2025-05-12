@@ -362,8 +362,7 @@ scarhrd:
   seqz: FALSE
 
 scanitd:
-  container: "docker://hydragenetics/scanitd:0.9.1"
-  bed_file: "/projects/wp1/nobackup/ngs/utveckling/analys/2023/hydra_v0.10.0/UU_run6/scanITD_regions.bed"
+  container: "docker://hydragenetics/scanitd:0.9.2"
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"

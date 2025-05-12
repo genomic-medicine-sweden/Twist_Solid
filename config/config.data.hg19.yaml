@@ -172,6 +172,9 @@ report_fusions:
 report_gene_fuse:
   filter_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/gene_fuse/filter_fusions_20230214.csv"
 
+scanitd:
+  region_bed: "-t {{PROJECT_DESIGN_DATA}}/GMS560/cnv/scanITD_regions.bed"
+
 scarhrd:
   reference_name: "grch37"
 
