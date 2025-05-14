@@ -53,7 +53,7 @@ files:
     nav_header: CNV
   - name: ITD
     type: file_link
-    input: results/dna/{sample}_{type}/cnv/{sample}_{type}.ITD.hard_filtered.tsv
+    input: results/dna/{sample}_{type}/cnv/{sample}_{type}.ITD.hard_filter.tsv
     description: internal tandem duplications (ITD) called by scanITD
     nav_header: CNV
 
