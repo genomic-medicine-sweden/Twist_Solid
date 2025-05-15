@@ -151,6 +151,9 @@ report_fusions:
   annotation_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/Twist_RNA_fusionpartners_hg38.bed"
   fp_fusions: "{{PROJECT_DESIGN_DATA}}/GMS560/rna_fusion/filter_rna_fusions_20240923.txt"
 
+scanitd:
+  region_bed: "-t {{PROJECT_DESIGN_DATA}}/GMS560/cnv/scanITD_regions.hg38.bed"
+
 scarhrd:
   reference_name: "grch38"
 

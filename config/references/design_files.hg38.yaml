@@ -230,6 +230,13 @@
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/design/Twist_RNA_Design5.annotated.hg38.interval_list
 
+ scanitd:
+   region_bed:
+      checksum: 302e154bbbb4553d53f32a3843e8c012
+      path: GMS560/cnv/scanITD_regions.hg38.bed
+      type: file
+      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.16.0/cnv/scanITD_regions.hg38.bed
+
  tmb:
    filter_genes:
       checksum: c1a958320451fab1200ab769d963d4c6
