@@ -8,6 +8,7 @@ output: "config/output_files.yaml"
 default_container: "docker://hydragenetics/common:3.0.0"
 
 trimmer_software: "fastp_pe"
+subsample: "None"
 
 arriba:
   container: "docker://hydragenetics/arriba:2.3.0"
@@ -363,6 +364,11 @@ scarhrd:
 
 scanitd:
   container: "docker://hydragenetics/scanitd:0.9.2"
+
+seqtk_subsample:
+  container: "docker://hydragenetics/seqtk:1.4"
+  nr_reads: 100000000
+  nr_reads_rna: 100000000
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
