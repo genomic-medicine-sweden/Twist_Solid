@@ -100,7 +100,7 @@ use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
 
 use rule seqtk_subsample from prealignment as prealignment_seqtk_subsample_dna with:
     wildcard_constraints:
-        type="T|N"
+        type="T|N",
 
 
 use rule seqtk_subsample from prealignment as prealignment_seqtk_subsample_rna with:
@@ -111,7 +111,7 @@ use rule seqtk_subsample from prealignment as prealignment_seqtk_subsample_rna w
         ),
         seed=config.get("seqtk_subsample", {}).get("seed", "-s100"),
     wildcard_constraints:
-        type="R"
+        type="R",
 
 
 use rule seqtk_subsample from prealignment as prealignment_seqtk_subsample_arriba with:
@@ -163,6 +163,7 @@ use rule samtools_index from alignment as alignment_samtools_index with:
         bai="{file}.bam.bai",
     wildcard_constraints:
         file="^snv_indels/.+|^alignment/.+",
+
 
 use rule samtools_sort from alignment as alignment_samtools_sort with:
     wildcard_constraints:
