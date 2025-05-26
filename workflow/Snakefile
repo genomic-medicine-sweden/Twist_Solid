@@ -186,9 +186,9 @@ use rule star from alignment as alignment_star with:
 
 use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
     input:
-        "fusions/star_fusion/{path_file}.out.bam",
+        bam="fusions/star_fusion/{path_file}.out.bam",
     output:
-        temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
+        bam=temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
     log:
         "fusions/star_fusion/{path_file}.bam.sort.log",
     benchmark:
