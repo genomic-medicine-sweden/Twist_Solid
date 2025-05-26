@@ -106,7 +106,7 @@ use rule seqtk_subsample from prealignment as prealignment_seqtk_subsample_dna w
 use rule seqtk_subsample from prealignment as prealignment_seqtk_subsample_rna with:
     params:
         extra=config.get("seqtk_subsample", {}).get("extra", "-2"),
-        nr_reads_per_fastq=lambda wildcards: get_nr_reads_per_fastq(
+        nr_reads_per_fastq=lambda wildcards: prealignment.get_nr_reads_per_fastq(
             config.get("seqtk_subsample", {}).get("nr_reads_rna", 1000000000), units, wildcards
         ),
         seed=config.get("seqtk_subsample", {}).get("seed", "-s100"),
@@ -121,7 +121,7 @@ use rule seqtk_subsample from prealignment as prealignment_seqtk_subsample_arrib
         fastq=temp("prealignment/seqtk_subsample_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_{read}.ds.fastq.gz"),
     params:
         extra=config.get("seqtk_subsample", {}).get("extra", "-2"),
-        nr_reads_per_fastq=lambda wildcards: get_nr_reads_per_fastq(
+        nr_reads_per_fastq=lambda wildcards: prealignment.get_nr_reads_per_fastq(
             config.get("seqtk_subsample", {}).get("nr_reads_rna", 1000000000), units, wildcards
         ),
         seed=config.get("seqtk_subsample", {}).get("seed", "-s100"),
