@@ -162,12 +162,12 @@ use rule samtools_index from alignment as alignment_samtools_index with:
     output:
         bai="{file}.bam.bai",
     wildcard_constraints:
-        file="^snv_indels/.+|^alignment/.+",
+        file="^snv_indels/.+|^alignment/.+|^fusions/.+",
 
 
 use rule samtools_sort from alignment as alignment_samtools_sort with:
     wildcard_constraints:
-        file="^snv_indels/.+|^alignment/.+",
+        file="^snv_indels/.+|^alignment/.+|^fusions/.+",
 
 
 use rule star from alignment as alignment_star with:
