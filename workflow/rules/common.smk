@@ -104,12 +104,20 @@ wildcard_constraints:
     type="N|T|R",
 
 
-merged_input_arriba = lambda wildcards: expand(
-    "prealignment/fastp_pe_arriba/{{sample}}_{{type}}_{flowcell_lane_barcode}_{{read}}.fastq.gz",
-    flowcell_lane_barcode=[
-        "{}_{}_{}".format(unit.flowcell, unit.lane, unit.barcode) for unit in get_units(units, wildcards, wildcards.type)
-    ],
-)
+if config.get("subsample", None) == "seqtk":
+    merged_input_arriba = lambda wildcards: expand(
+        "prealignment/seqtk_subsample_arriba/{{sample}}_{{type}}_{flowcell_lane_barcode}_{{read}}.ds.fastq.gz",
+        flowcell_lane_barcode=[
+            "{}_{}_{}".format(unit.flowcell, unit.lane, unit.barcode) for unit in get_units(units, wildcards, wildcards.type)
+        ],
+    )
+else:
+    merged_input_arriba = lambda wildcards: expand(
+        "prealignment/fastp_pe_arriba/{{sample}}_{{type}}_{flowcell_lane_barcode}_{{read}}.fastq.gz",
+        flowcell_lane_barcode=[
+            "{}_{}_{}".format(unit.flowcell, unit.lane, unit.barcode) for unit in get_units(units, wildcards, wildcards.type)
+        ],
+    )
 
 
 def compile_output_list(wildcards):
