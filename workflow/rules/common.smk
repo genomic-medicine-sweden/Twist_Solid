@@ -113,7 +113,7 @@ if config.get("subsample", None) == "seqtk":
     )
 else:
     merged_input_arriba = lambda wildcards: expand(
-        "prealignment/fastp_pe_arriba/{{sample}}_{{type}}_{flowcell_lane_barcode}_{{read}}.ds.fastq.gz",
+        "prealignment/fastp_pe_arriba/{{sample}}_{{type}}_{flowcell_lane_barcode}_{{read}}.fastq.gz",
         flowcell_lane_barcode=[
             "{}_{}_{}".format(unit.flowcell, unit.lane, unit.barcode) for unit in get_units(units, wildcards, wildcards.type)
         ],
