@@ -12,6 +12,7 @@ reference:
   fasta_rna: "{{PROJECT_REF_DATA}}/ref_data/star-fusion/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
   dict: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.dict"
   fai: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.fasta.fai"
+  #fasta_2bit: "{{PROJECT_REF_DATA}}/ref_data/GRCh38_p14/homo_sapiens.2bit"
   design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed"
   design_intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.interval_list"
   design_intervals_gatk_cnv: "{{PROJECT_DESIGN_DATA}}/GMS560/design/gatk.design.hg38.preprocessed.interval_list"
