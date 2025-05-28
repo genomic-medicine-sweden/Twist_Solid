@@ -495,3 +495,19 @@ files:
     types:
       - T
       - N
+  - name: Fragmentation end-motifs
+    input: biomarker/finaletoolkit_end_motifs/{sample}_{type}.end-motifs.tsv
+    output: results/dna/{sample}_{type}/additional_files/biomarker/{sample}_{type}.end-motifs.tsv
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: Fragmentation mds
+    input: biomarker/finaletoolkit_mds/{sample}_{type}.mds.txt
+    output: results/dna/biomarker/{sample}_{type}.mds.txt
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
