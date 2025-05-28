@@ -170,6 +170,7 @@ reference:
   design_bed_rna: "reference/Twist_RNA_Design5.annotated.bed"
   design_intervals_rna: "reference/Twist_RNA_Design5.annotated.interval_list"
   fasta: "reference/WASH7P.fna"
+  fasta_2bit: "reference/WASH7P.2bit"
   fai: "reference/WASH7P.fna.fai"
   dict: "reference/WASH7P.dict"
   fasta_rna: "reference/WASH7P.fna"
