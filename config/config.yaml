@@ -5,9 +5,10 @@ units: "units.tsv"
 #hydra_local_path: "PATH_TO_REPO"
 
 output: "config/output_files.yaml"
-default_container: "docker://hydragenetics/common:3.0.0"
+default_container: "docker://hydragenetics/common:3.1.1.1"
 
 trimmer_software: "fastp_pe"
+subsample: "None"
 
 arriba:
   container: "docker://hydragenetics/arriba:2.3.0"
@@ -145,6 +146,7 @@ filter_vcf:
   cnv_hard_filter_amp: "config/filters/config_hard_filter_cnv_amp.yaml"
   cnv_hard_filter_loh: "config/filters/config_hard_filter_cnv_loh.yaml"
   germline: "config/filters/config_hard_filter_germline_vep105.yaml"
+  itd_hard_filter: "config/filters/config_hard_filter_scanitd.yaml"
 
 filter_fuseq_wes:
   min_support: 50
@@ -359,6 +361,14 @@ samtools_merge_bam_umi:
 scarhrd:
   container: "docker://hydragenetics/scarhrd:20200825"
   seqz: FALSE
+
+scanitd:
+  container: "docker://hydragenetics/scanitd:0.9.2"
+
+seqtk_subsample:
+  container: "docker://hydragenetics/seqtk:1.4"
+  nr_reads: 100000000
+  nr_reads_rna: 100000000
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"

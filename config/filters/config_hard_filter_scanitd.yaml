@@ -1,0 +1,18 @@
+filters:
+  observations:
+    description: "Demand at least 10 observations"
+    expression: "(INFO:AO < 10)"
+    soft_filter: "False"
+  af:
+    description: "Hard filter ITD with less than 1% frequency"
+    expression: "(INFO:AF < 0.01)"
+    soft_filter: "False"
+  dp:
+    description: "Demand at least 100 coverage"
+    expression: "(INFO:DP < 100)"
+    soft_filter: "False"
+  max_length:
+    description: "Max length of ITD of 2000 bp"
+    expression: "(INFO:SVLEN > 2000)"
+    soft_filter: "False"
+

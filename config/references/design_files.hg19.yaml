@@ -73,7 +73,34 @@
      path: GMS560/cnv/chromosome_arm_size.tsv
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/chromosome_arm_size.tsv
-     
+
+ estimate_ctdna_fraction:
+   bed_file1:
+      checksum: 46ebd877c3eee497feaa2394a6d9576e
+      path: GMS560/annotation/ENCODE_problematic_regions.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/52836086?private_link=88202740beb6fcbac09d
+   bed_file2:
+      checksum: 0e85c1e639e6ca0083fbe9348af645ce
+      path: GMS560/annotation/segmental_dup_regions.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/52836089?private_link=88202740beb6fcbac09d
+   bed_file3:
+      checksum: c18f59ea5f30170a4cc6ad13a8251327
+      path: GMS560/annotation/self_aligned_regions.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/52836095?private_link=88202740beb6fcbac09d
+   bed_file4:
+      checksum: 2dc84d77ab58b16fd429fea271cc2d75
+      path: GMS560/annotation/simple_repeat_regions.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/52836092?private_link=88202740beb6fcbac09d
+   bed_file5:
+      checksum: d150be91d8cb15199a04cf99edfbf3f5
+      path: GMS560/annotation/windowmaskSdust_repetetive_regions.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/52836098?private_link=88202740beb6fcbac09d
+
  exon_skipping:
    design_bed:
      checksum: 7fe64299477aa4b6a5f5783cce9fa30f
@@ -248,6 +275,13 @@
       type: file
       url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/gene_fuse/filter_fusions_20230214.csv
 
+ scanitd:
+   region_bed:
+      checksum: eb2d3bfdbb4a37e32fbb34a1730cb5d7
+      path: GMS560/cnv/scanITD_regions.bed
+      type: file
+      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.15.0/cnv/scanITD_regions.bed
+
  tmb:
    filter_genes:
       checksum: c1a958320451fab1200ab769d963d4c6
@@ -255,29 +289,3 @@
       type: file
       url: https://raw.githubusercontent.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/v0.2.1/tmb/tmb_filter_genes.txt
 
- estimate_ctdna_fraction:
-   bed_file1:
-      checksum: 46ebd877c3eee497feaa2394a6d9576e
-      path: GMS560/annotation/ENCODE_problematic_regions.bed
-      type: file
-      url: https://figshare.scilifelab.se/ndownloader/files/52836086?private_link=88202740beb6fcbac09d
-   bed_file2:
-      checksum: 0e85c1e639e6ca0083fbe9348af645ce
-      path: GMS560/annotation/segmental_dup_regions.bed
-      type: file
-      url: https://figshare.scilifelab.se/ndownloader/files/52836089?private_link=88202740beb6fcbac09d
-   bed_file3:
-      checksum: c18f59ea5f30170a4cc6ad13a8251327
-      path: GMS560/annotation/self_aligned_regions.bed
-      type: file
-      url: https://figshare.scilifelab.se/ndownloader/files/52836095?private_link=88202740beb6fcbac09d
-   bed_file4:
-      checksum: 2dc84d77ab58b16fd429fea271cc2d75
-      path: GMS560/annotation/simple_repeat_regions.bed
-      type: file
-      url: https://figshare.scilifelab.se/ndownloader/files/52836092?private_link=88202740beb6fcbac09d
-   bed_file5:
-      checksum: d150be91d8cb15199a04cf99edfbf3f5
-      path: GMS560/annotation/windowmaskSdust_repetetive_regions.bed
-      type: file
-      url: https://figshare.scilifelab.se/ndownloader/files/52836098?private_link=88202740beb6fcbac09d

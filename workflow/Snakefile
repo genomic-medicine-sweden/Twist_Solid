@@ -26,6 +26,9 @@ rule all:
 
 
 ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
+ruleorder: alignment_bwa_mem_merge > alignment_samtools_sort
+ruleorder: alignment_bwa_mem_merge_umi > alignment_samtools_sort_umi
+ruleorder: alignment_samtools_merge_bam > alignment_samtools_sort
 ruleorder: annotation_annotate_cnv > snv_indels_bgzip
 ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
 ruleorder: qc_samtools_stats_rna > qc_samtools_stats
@@ -58,13 +61,13 @@ module prealignment:
             config,
             "hydra-genetics/prealignment",
             path="workflow/Snakefile",
-            tag="v1.0.0",
+            tag="v1.3.0",
         )
     config:
         config
 
 
-use rule * from prealignment exclude all as prealignment_*
+use rule * from prealignment exclude all, seqtk_subsample as prealignment_*
 
 
 use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
@@ -98,6 +101,42 @@ use rule fastp_pe from prealignment as prealignment_fastp_pe_arriba with:
     threads: config.get("fastp_pe_arriba", {}).get("threads", config["default_resources"]["threads"])
 
 
+use rule seqtk_subsample from prealignment as prealignment_seqtk_subsample_dna with:
+    wildcard_constraints:
+        type="T|N",
+
+
+use rule seqtk_subsample from prealignment as prealignment_seqtk_subsample_rna with:
+    params:
+        extra=config.get("seqtk_subsample", {}).get("extra", "-2"),
+        nr_reads_per_fastq=lambda wildcards: prealignment.get_nr_reads_per_fastq(
+            config.get("seqtk_subsample", {}).get("nr_reads_rna", 1000000000), units, wildcards
+        ),
+        seed=config.get("seqtk_subsample", {}).get("seed", "-s100"),
+    wildcard_constraints:
+        type="R",
+
+
+use rule seqtk_subsample from prealignment as prealignment_seqtk_subsample_arriba with:
+    input:
+        fastq="prealignment/fastp_pe_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_{read}.fastq.gz",
+    output:
+        fastq=temp("prealignment/seqtk_subsample_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_{read}.ds.fastq.gz"),
+    params:
+        extra=config.get("seqtk_subsample", {}).get("extra", "-2"),
+        nr_reads_per_fastq=lambda wildcards: prealignment.get_nr_reads_per_fastq(
+            config.get("seqtk_subsample", {}).get("nr_reads_rna", 1000000000), units, wildcards
+        ),
+        seed=config.get("seqtk_subsample", {}).get("seed", "-s100"),
+    log:
+        "prealignment/seqtk_subsample_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_{read}.ds.fastq.log",
+    benchmark:
+        repeat(
+            "prealignment/seqtk_subsample_arriba/{sample}_{type}_{flowcell}_{lane}_{barcode}_{read}.ds.fastq.benchmark.tsv",
+            config.get("seqtk_subsample", {}).get("benchmark_repeats", 1),
+        )
+
+
 use rule merged from prealignment as prealignment_merged_arriba with:
     input:
         fastq=merged_input_arriba,
@@ -110,30 +149,70 @@ use rule merged from prealignment as prealignment_merged_arriba with:
             "prealignment/merged_arriba/{sample}_{type}_{read}.fastq.gz.benchmark.tsv",
             config.get("merged_arriba", {}).get("benchmark_repeats", 1),
         )
-    resources:
-        mem_mb=config.get("merged_arriba", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("merged_arriba", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("merged_arriba", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("merged_arriba", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("merged_arriba", {}).get("time", config["default_resources"]["time"]),
-    threads: config.get("merged_arriba", {}).get("threads", config["default_resources"]["threads"])
-    container:
-        config.get("merged_arriba", {}).get("container", config["default_container"])
 
 
 module alignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.5.0")
+        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.7.0")
     config:
         config
 
 
-use rule * from alignment exclude all as alignment_*
+use rule * from alignment exclude bwa_mem_merge, samtools_merge_bam, all as alignment_*
 
 
 use rule samtools_index from alignment as alignment_samtools_index with:
     output:
         bai="{file}.bam.bai",
+    wildcard_constraints:
+        file="^snv_indels/.+|^alignment/.+|^fusions/.+|^bam_rna/.+",
+
+
+use rule samtools_sort from alignment as alignment_samtools_sort with:
+    wildcard_constraints:
+        file="^snv_indels/.+|^alignment/.+|^fusions/.+",
+
+
+use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam with:
+    output:
+        bam=temp("alignment/samtools_merge_bam/{sample}_{type}.bam"),
+    params:
+        extra=config.get("samtools_merge_bam", {}).get("extra", ""),
+    log:
+        "alignment/samtools_merge_bam/{sample}_{type}.bam.log",
+    benchmark:
+        repeat(
+            "alignment/samtools_merge_bam/{sample}_{type}.bam.benchmark.tsv",
+            config.get("samtools_merge_bam", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule bwa_mem_merge from alignment as alignment_bwa_mem_merge with:
+    output:
+        bam=temp("alignment/bwa_mem/{sample}_{type}.bam"),
+    params:
+        config.get("bwa_mem_merge", {}).get("extra", ""),
+    log:
+        "alignment/bwa_mem/{sample}_{type}.bam.log",
+    benchmark:
+        repeat(
+            "alignment/bwa_mem/{sample}_{type}.bam.benchmark.tsv",
+            config.get("bwa_mem_merge", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule bwa_mem_merge from alignment as alignment_bwa_mem_merge_umi with:
+    output:
+        bam=temp("alignment/bwa_mem/{sample}_{type}.umi.bam"),
+    params:
+        config.get("bwa_mem_merge", {}).get("extra", "-n"),
+    log:
+        "alignment/bwa_mem/{sample}_{type}.umi.bam.log",
+    benchmark:
+        repeat(
+            "alignment/bwa_mem/{sample}_{type}.umi.bam.benchmark.tsv",
+            config.get("bwa_mem_merge", {}).get("benchmark_repeats", 1),
+        )
 
 
 use rule star from alignment as alignment_star with:
@@ -152,9 +231,9 @@ use rule star from alignment as alignment_star with:
 
 use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
     input:
-        "fusions/star_fusion/{path_file}.out.bam",
+        bam="fusions/star_fusion/{path_file}.out.bam",
     output:
-        temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
+        bam=temp("fusions/star_fusion/{path_file}.out.sorted.bam"),
     log:
         "fusions/star_fusion/{path_file}.bam.sort.log",
     benchmark:
@@ -182,14 +261,14 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutec
             ),
         ),
     output:
-        bam=temp("snv_indels/gatk_mutect2_merge/{sample}_{type}.bam_unsorted"),
+        bam=temp("snv_indels/gatk_mutect2_merge/{sample}_{type}_unsorted.bam"),
     params:
         extra=config.get("alignment_samtools_merge_bam_mutect2", {}).get("extra", ""),
     log:
-        "snv_indels/gatk_mutect2_merge/{sample}_{type}.bam_unsorted.log",
+        "snv_indels/gatk_mutect2_merge/{sample}_{type}_unsorted.bam.log",
     benchmark:
         repeat(
-            "snv_indels/gatk_mutect2_merge/{sample}_{type}.bam_unsorted.benchmark.tsv",
+            "snv_indels/gatk_mutect2_merge/{sample}_{type}_unsorted.bam.benchmark.tsv",
             config.get("alignment_samtools_merge_bam_mutect2", {}).get("benchmark_repeats", 1),
         )
 
@@ -537,7 +616,7 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.8.0")
+        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.9.0")
     config:
         config
 
