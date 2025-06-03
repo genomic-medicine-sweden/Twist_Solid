@@ -68,7 +68,6 @@ cnv_tsv_report:
 exon_skipping:
   design_bed: "reference/Twist_RNA_Design5.annotated.bed"
 
-
 filter_fuseq_wes:
   gene_white_list: "reference/fuseq_wes_gene_white_list.txt"
   gtf: "reference/hg19.refGene.gtf"
