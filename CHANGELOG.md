@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.20.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.19.2...v0.20.0) (2025-06-03)
+
+
+### Features
+
+* added seqtk subsampling option ([5cc764f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/5cc764f4ed264d403f83c258070b9fd74c943060))
+* new common container ([57fdef2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/57fdef24e5215173873b893b435002664578e1f2))
+
+
+### Bug Fixes
+
+* arriba input dependent on subsampling option ([d490d2e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d490d2e1068ddf5778402a997275811f4f2efd78))
+* input output names for files ([f0fec7b](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/f0fec7bd6ea807d8f1652531ac3bb511b19a8bae))
+* rm ds in fastq name ([e6e65c4](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/e6e65c4fd44f2ebc3b4994609df9836f4382e38b))
+* samtools index in bam_rna folder ([af77d28](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/af77d2837d018d6efca9e37b9ecca98996c9258b))
+* samtools index in fusions ([1c296d5](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/1c296d54ac9f0221d24d112c250d1ac7f6c51282))
+* **scanitd:** correct link in general report ([9406554](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/94065544239f318e4800dc01062a375075bc8d03))
+* **scanitd:** link in general report ([9b1476f](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/9b1476f9cb744dfda309804f45b869f6b7718975))
+* update alignment module to 0.7.0 ([32e000e](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/32e000ed5b7eb3ac367c00b8158afcc8977142a6))
+* update docker and configs ([669148c](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/669148c648a2aeacbf7436b147170fdd862a717c))
+* update prealigment module ([8f42ec0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/8f42ec0aabd7e367ad04321ac41b0cb027bdd088))
+* use function from prealigment module ([637efe3](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/637efe323b95d2a299ad2518d9e7c3c21fb570d6))
+
 ### [0.19.2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.19.1...v0.19.2) (2025-05-08)
 
 
