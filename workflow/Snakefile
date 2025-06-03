@@ -506,7 +506,7 @@ use rule gatk_get_pileup_summaries from qc as qc_gatk_get_pileup_summaries with:
 
 module biomarker:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="5c74c31")
+        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="f483f8f")
     config:
         config
 
