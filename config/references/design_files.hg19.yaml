@@ -172,7 +172,7 @@
      checksum: 9c0422a57ee17642cf07a3574966bdad
      path: GMS560/reports/URO_hotspots.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.16.0/design/URO_hotspots.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.17.0/design/URO_hotspots.csv
 
  jumble_reference:
    annotation_file1:
