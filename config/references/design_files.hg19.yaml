@@ -167,6 +167,12 @@
      path: GMS560/reports/ENC_hotspots_240919.csv
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/design/ENC_hotspots_240919.csv
+  
+   hotspot_mutations_URO:
+     checksum: 9c0422a57ee17642cf07a3574966bdad
+     path: GMS560/reports/URO_hotspots.csv
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.17.0/design/URO_hotspots.csv
 
  jumble_reference:
    annotation_file1:
