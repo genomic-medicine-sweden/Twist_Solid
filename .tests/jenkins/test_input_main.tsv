@@ -178,4 +178,4 @@ results/rna/SeraSeq-NTRK-FFPE_R/fusion/SeraSeq-NTRK-FFPE_R.exon_skipping.tsv	70b
 results/rna/SeraSeq-NTRK-FFPE_R/fusion/SeraSeq-NTRK-FFPE_R.fusion_report.tsv	28509d2020d0838a565974c5e04b68bc
 results/rna/SeraSeq-NTRK-FFPE_R/id_snps/SeraSeq-NTRK-FFPE_R.id_snps.vcf	056d8596642c521d5edbd5b35754687a
 results/rna/SeraSeq-NTRK-FFPE_R/qc/SeraSeq-NTRK-FFPE_R.house_keeping_gene_coverage.tsv	12a7ce0eb1b25f53824e00693f5cab8d
-results/sample_mixup_check.tsv	06fbde16256964138ea54ec9634e8c34
+results/sample_mixup_check.tsv	6fb1f3be08c250c209b4b1a9a20e80b5
