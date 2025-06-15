@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.21.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.20.0...v0.21.0) (2025-06-15)
+
+
+### Features
+
+* added uro coverage and mutations file ([0330167](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/03301674ed46c7cda980e5a0d69caf7c00891bfc))
+* added uro results to general report ([98fe8f2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/98fe8f21cc3b82eb61abff741b56d3adad67238b))
+
+
+### Bug Fixes
+
+* corrected uro file ([ba23ec2](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/ba23ec23b96f5e87260f3ac134aa4c41ed03fc43))
+* corrected version of pipelein files ([d4d28cb](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/d4d28cb1e7966cbacb383fac531f50cef615507e))
+* uro file with header ([a7b6f23](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/a7b6f2371646181aa96495118520f222ad63bea5))
+* URO in config schema ([c579d48](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/c579d48cbfd389a7a129fff96c89b3df35f6393b))
+
 ## [0.20.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.19.2...v0.20.0) (2025-06-03)
 
 
