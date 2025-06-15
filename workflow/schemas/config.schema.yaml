@@ -351,6 +351,9 @@ properties:
           ENC:
             type: string
             description: Hotspot list for ENC FFPE analysis
+          URO:
+            type: string
+            description: Hotspot list for URO FFPE analysis
       report_config:
         type: string
         description: file  defining which fields should be extracted from the annotation
