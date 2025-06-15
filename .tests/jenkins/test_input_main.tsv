@@ -176,6 +176,6 @@ results/rna/SeraSeq-NTRK-FFPE_R/additional_files/fusion/SeraSeq-NTRK-FFPE_R.arri
 results/rna/SeraSeq-NTRK-FFPE_R/additional_files/fusion/SeraSeq-NTRK-FFPE_R.fusioncatcher.fusion_predictions.txt	b26a2b8b9570aa256a8e57d24838addf
 results/rna/SeraSeq-NTRK-FFPE_R/fusion/SeraSeq-NTRK-FFPE_R.exon_skipping.tsv	70b9661bfcb1c30b17f2f175ef937b3b
 results/rna/SeraSeq-NTRK-FFPE_R/fusion/SeraSeq-NTRK-FFPE_R.fusion_report.tsv	28509d2020d0838a565974c5e04b68bc
-results/rna/SeraSeq-NTRK-FFPE_R/id_snps/SeraSeq-NTRK-FFPE_R.id_snps.vcf	77d9dc10d43f743291d9900a6d0a9047
+results/rna/SeraSeq-NTRK-FFPE_R/id_snps/SeraSeq-NTRK-FFPE_R.id_snps.vcf	056d8596642c521d5edbd5b35754687a
 results/rna/SeraSeq-NTRK-FFPE_R/qc/SeraSeq-NTRK-FFPE_R.house_keeping_gene_coverage.tsv	12a7ce0eb1b25f53824e00693f5cab8d
 results/sample_mixup_check.tsv	06fbde16256964138ea54ec9634e8c34
