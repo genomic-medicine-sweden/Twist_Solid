@@ -149,7 +149,7 @@ results/dna/VAL2022_T/additional_files/cnv/VAL2022_T.purecn.svdb_query.vcf	XXX
 results/dna/VAL2022_T/additional_files/fusion/VAL2022_T.fuseq_wes.unfiltered.results.csv	7b3815ff8daf54c3416e5d6e0db0a06b
 results/dna/VAL2022_T/additional_files/fusion/VAL2022_T.juli.fusions.txt	ea403d991dccd71d29befb91b1fc9e12
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.alignment_summary_metrics.txt	1cbdae2353c9d7638c05a670719571da
-results/dna/VAL2022_T/additional_files/qc/VAL2022_T.contamination.table	c1d8fc1cdb993dda50a430028277c37
+results/dna/VAL2022_T/additional_files/qc/VAL2022_T.contamination.table	c1d8fc1cdb993dda50a430028277c37b
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.duplication_metrics.txt	2e6c3e5f855d1cb7c8f54b99c057755d
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.HsMetrics.txt	29389cb658b7c0de52ce17bf984b7653
 results/dna/VAL2022_T/additional_files/qc/VAL2022_T.insert_size_metrics.txt	7099061cd734389477a353ae11273410
