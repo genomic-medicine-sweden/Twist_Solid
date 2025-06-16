@@ -127,6 +127,12 @@
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/fuseq_wes/false_positive_fusion_pairs.txt
 
+ fragmentomics_fragment_length_patient_score:
+     checksum: 4f00f792f7c38afad58a90f74af559cb
+     path: GMS560/design/vessies_reference_set.txt
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.18.0/design/vessies_reference_set.txt
+
  fuseq_wes:
    params:
      checksum: d2e6d449027c49e24f026261082fa5bb

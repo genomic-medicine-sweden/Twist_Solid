@@ -165,6 +165,9 @@ finaletoolkit_frag_length_bins:
 finaletoolkit_mds:
   container: "docker://hydragenetics/finaletoolkit:0.10.7"
 
+fragmentomics_fragment_length_patient_score:
+  container: "docker://hydragenetics/fragmentomics:0.1.0"
+
 fuseq_wes:
   container: "docker://hydragenetics/fuseq_wes:1.0.1"
 

@@ -505,7 +505,7 @@ files:
       - umi
   - name: Fragmentomics mds
     input: biomarker/finaletoolkit_mds/{sample}_{type}.mds.txt
-    output: results/dna/biomarker/{sample}_{type}.mds.txt
+    output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.mds.txt
     types:
       - T
       - N
@@ -513,7 +513,15 @@ files:
       - umi
   - name: Fragmentomics fragment length bins 
     input: biomarker/finaletoolkit_frag_length_bins/{sample}_{type}_frag-length-bins.tsv
-    output: results/dna/biomarker/{sample}_{type}_frag-length-bins.tsv
+    output: results/dna/{sample}_{type}/additional_files/biomarker/{sample}_{type}_frag-length-bins.tsv
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: Fragmentomics fragment length score
+    input: biomarker/fragmentomics_fragment_length_patient_score/{sample}_{type}.fragment_length_patient_score.txt
+    output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.fragment_length_score.txt
     types:
       - T
       - N

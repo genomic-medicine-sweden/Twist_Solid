@@ -67,6 +67,17 @@ files:
     input: results/dna/{sample}_{type}/fusion/{sample}_{type}.juli.filtered.fusions.txt
     description: JuLI report
     nav_header: Fusions
+
+  - name: MDS
+    type: file_table
+    input: results/dna/{sample}_{type}/biomarker/{sample}_{type}.mds.txt
+    description: Motif diversity score (MDS)
+    nav_header: Fragmentomics
+  - name: Fragment length score
+    type: file_table
+    input: results/dna/{sample}_{type}/biomarker/{sample}_{type}.fragment_length_score.txt
+    description: Fragment length score
+    nav_header: Fragmentomics
     
   - name: MultiQC
     type: multiqc
