@@ -88,6 +88,9 @@ filter_vcf:
   cnv_hard_filter_loh: "../../config/config_hard_filter_cnv_loh.yaml"
   germline: "../../config/config_hard_filter_germline.yaml"
 
+fragmentomics_fragment_length_patient_score:
+  reference_set: "references/vessies_reference_set.txt"
+
 fusioncatcher:
   genome_path: "reference/human_v102/"
 
