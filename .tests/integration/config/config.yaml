@@ -89,7 +89,7 @@ filter_vcf:
   germline: "../../config/config_hard_filter_germline.yaml"
 
 fragmentomics_fragment_length_patient_score:
-  reference_set: "references/vessies_reference_set.txt"
+  reference_set: "reference/vessies_reference_set.txt"
 
 fusioncatcher:
   genome_path: "reference/human_v102/"
