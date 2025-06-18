@@ -203,14 +203,14 @@ use rule bwa_mem_merge from alignment as alignment_bwa_mem_merge with:
 
 use rule bwa_mem_merge from alignment as alignment_bwa_mem_merge_umi with:
     output:
-        bam=temp("alignment/bwa_mem/{sample}_{type}.umi.bam"),
+        bam=temp("alignment/bwa_mem/{sample}_{type}_unsorted.bam"),
     params:
-        config.get("bwa_mem_merge", {}).get("extra", "-n"),
+        config.get("bwa_mem_merge", {}).get("extra", ""),
     log:
-        "alignment/bwa_mem/{sample}_{type}.umi.bam.log",
+        "alignment/bwa_mem/{sample}_{type}_unsorted.umi.bam.log",
     benchmark:
         repeat(
-            "alignment/bwa_mem/{sample}_{type}.umi.bam.benchmark.tsv",
+            "alignment/bwa_mem/{sample}_{type}_unsorted.umi.bam.benchmark.tsv",
             config.get("bwa_mem_merge", {}).get("benchmark_repeats", 1),
         )
 
