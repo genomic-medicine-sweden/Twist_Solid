@@ -571,16 +571,16 @@ properties:
       annotation_bed:
         type: string
         description: extra bed file for annotation of fusion partner gene exons not in design
-      fusioncather_flag_low_support:
+      fusioncatcher_flag_low_support:
         type: integer
         description: lower limit of supporting reads to flag for low support for FusionCatcher
-      fusioncather_low_support:
+      fusioncatcher_low_support:
         type: integer
         description: lower limit of supporting reads to filter fusion for FusionCatcher
-      fusioncather_low_support_fp_genes:
+      fusioncatcher_low_support_fp_genes:
         type: integer
         description: lower limit of supporting reads to filter fusion in common fp genes for FusionCatcher
-      fusioncather_low_support_inframe:
+      fusioncatcher_low_support_inframe:
         type: integer
         description: lower limit of supporting reads to filter fusion that are inframe for FusionCatcher
       star_fusion_flag_low_support:
