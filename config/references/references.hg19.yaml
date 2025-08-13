@@ -12,19 +12,6 @@
         protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3: b5bc63c70c9eb08c71528ee8b0186901
       url: https://figshare.scilifelab.se/ndownloader/files/42116952
 
-  arriba_draw_fusion:
-    cytobands: 
-      checksum: 9333eaa96c56fa22624ab432b8391b2b
-      path: ref_data/arriba_v2.3.0/cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv
-      type: file
-      url: https://figshare.scilifelab.se/ndownloader/files/40928348
-   
-    protein_domains: 
-      checksum: b5bc63c70c9eb08c71528ee8b0186901
-      path: ref_data/arriba_v2.3.0/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3
-      type: file
-      url: https://figshare.scilifelab.se/ndownloader/files/40928354
-
   bcftools_annotate:
     annotation_db:
       checksum: 1eb85e09195f0092e389510b40765f5e

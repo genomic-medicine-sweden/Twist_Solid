@@ -12,19 +12,6 @@
         protein_domains_hg38_GRCh38_v2.3.0.gff3: 43c387a784ebeed71b4147076cebf978
       url: https://figshare.com/ndownloader/files/44328410?private_link=7084cf61820c148a23d2
 
-  arriba_draw_fusion:
-    cytobands: 
-      checksum: 7bd504feefb33fcfc9be0517439a423c
-      path: ref_data/arriba_v2.3.0/cytobands_hg38_GRCh38_v2.3.0.tsv
-      type: file
-      #url: https://figshare.scilifelab.se/ndownloader/files/40928348
-   
-    protein_domains: 
-      checksum: 43c387a784ebeed71b4147076cebf978
-      path: ref_data/arriba_v2.3.0/protein_domains_hg38_GRCh38_v2.3.0.gff3
-      type: file
-      #url: https://figshare.scilifelab.se/ndownloader/files/40928354
-
   bcftools_annotate:
     annotation_db:
       checksum: aa2468cb145e390a655976f73dd069ad
@@ -34,35 +21,35 @@
 
   bwa:
    amb:
-     checksum: 04c08086272e0a86043cc51148ece9ef
-     link: ref_data/GRCh38_p14/homo_sapiens.amb
-     path: ref_data/GRCh38_p14/homo_sapiens.fasta.amb
+     checksum: e2d3a12aaf14e5ddbf1ff28fa087ff57
+     link: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.amb
+     path: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.amb
      type: file
-     url: https://figshare.com/ndownloader/files/44326166?private_link=7084cf61820c148a23d2
+     url: https://figshare.com/ndownloader/files/57131705?private_link=88202740beb6fcbac09d
    ann:
-     checksum: 07b88ee3a7631805de435e4f5b0354c1
-     link: ref_data/GRCh38_p14/homo_sapiens.ann
-     path: ref_data/GRCh38_p14/homo_sapiens.fasta.ann
+     checksum: c4c68bd4db1f970323a03581070cd62e
+     link: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.ann
+     path: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.ann
      type: file
-     url: https://figshare.com/ndownloader/files/44326163?private_link=7084cf61820c148a23d2
+     url: https://figshare.com/ndownloader/files/57131708?private_link=88202740beb6fcbac09d
    bwt:
-     checksum: d2c37eb4a95b93065cc47959a456e59e
-     link: ref_data/GRCh38_p14/homo_sapiens.bwt
-     path: ref_data/GRCh38_p14/homo_sapiens.fasta.bwt
+     checksum: fb5bde6d82f70c2f9d04f4e254903b0f
+     link: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.bwt
+     path: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.bwt
      type: file
-     url: https://figshare.com/ndownloader/files/44326175?private_link=7084cf61820c148a23d2
+     url: https://figshare.com/ndownloader/files/57131753?private_link=88202740beb6fcbac09d
    pac:
-     checksum: 7150c22df742fa77e6810aa7a55fc99a
-     link: ref_data/GRCh38_p14/homo_sapiens.pac
-     path: ref_data/GRCh38_p14/homo_sapiens.fasta.pac
+     checksum: a497161593f93d61315b1824472f87a1
+     link: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.pac
+     path: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.pac
      type: file
-     url: https://figshare.com/ndownloader/files/44326169?private_link=7084cf61820c148a23d2
+     url: https://figshare.com/ndownloader/files/57131726?private_link=88202740beb6fcbac09d
    sa:
-     checksum: 3548426aa7ecaef1e724f7ea52a80a1d
-     link: ref_data/GRCh38_p14/homo_sapiens.sa
-     path: ref_data/GRCh38_p14/homo_sapiens.fasta.sa
+     checksum: e00de7c502d66c5ec45192663cfc0063
+     link: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.sa
+     path: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.sa
      type: file
-     url: https://figshare.com/ndownloader/files/44326172?private_link=7084cf61820c148a23d2
+     url: https://figshare.com/ndownloader/files/57131735?private_link=88202740beb6fcbac09d
 
   filter_fuseq_wes:
     gtf:
@@ -77,10 +64,10 @@
       compressed_checksum: 32824ce070546f51888077ab1999061d
       path: ref_data/fuseq_wes
       content_checksum:
+        ensmbl_paralogs_grch38.RData: 746f32f17502d3fdb21e8681960bd5ff
         Mitelman_fusiondb.RData: e4fbf81b5b02b9fe201161d324405822
         UCSC_hg38_wes_contigSize3000_bigLen130000_r100.json: 51e501095ddf5dbf276d4d322580430f
         UCSC_hg38_wes_contigSize3000_bigLen130000_r100.sqlite: 42412eaf583c2c6e6f5f2cd0fb11d435
-        ensmbl_paralogs_grch38.RData: 746f32f17502d3fdb21e8681960bd5ff
       url: https://figshare.com/ndownloader/files/44328401?private_link=7084cf61820c148a23d2
 
   gatk_get_pileup_summaries:
@@ -101,27 +88,59 @@
       path: ref_data/GNOMAD/small_exac_common_3.hg38.vcf.gz.tbi
       type: file
       url: https://figshare.com/ndownloader/files/44326154?private_link=7084cf61820c148a23d2
-         
+
+  juli_annotate:
+    cosmic:
+      checksum: b61743a8cd0d0c3513492c717fcfa51a
+      path: ref_data/juli/CosmicFusionExport_V76.tsv
+      type: file
+      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/refs/tags/v0.13.0/juli/CosmicFusionExport_V76.tsv
+
+    pfam:
+      checksum: 81cf37cce3d34adb8e0d5df1edebaaeb
+      path: ref_data/juli/Pfam-A.full.human
+      type: file
+      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/refs/tags/v0.13.0/juli/Pfam-A.full.human
+
+    ref_genes: 
+      checksum: 8b92c5a4efbc8102a6498c61d2bfc63b
+      path: ref_data/juli/refGene_hg38.txt
+      type: file
+      url: https://figshare.com/ndownloader/files/57131687?private_link=88202740beb6fcbac09d
+
+    uniprot:
+      checksum: 930a8899a7b3451adb7f553340febef6
+      path: ref_data/juli/HGNC_GeneName_UniProtID_160524.txt
+      type: file
+      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/refs/tags/v0.13.0/juli/HGNC_GeneName_UniProtID_160524.txt
+
+  juli_call:
+    gap_file:
+      checksum: 423ee99655153d705ebb834462dd39c6
+      path: ref_data/juli/gap_hg38.txt
+      type: file
+      url: https://figshare.com/ndownloader/files/57131684?private_link=88202740beb6fcbac09d
+
   references:
     fasta:
-      checksum: e900e9248ef9d1ea1b03e56b185cc5d7
-      path: ref_data/GRCh38_p14/homo_sapiens.fasta
+      checksum: 99be410b684e3fdb04ba67d98adba249
+      path: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta
       type: file
-      url: https://figshare.com/ndownloader/files/44326178?private_link=7084cf61820c148a23d2
+      url: https://figshare.com/ndownloader/files/57131684?private_link=88202740beb6fcbac09d
       
     fai:
-      checksum: 7b0d658ae292f8ee17b371d387dbdc0d
-      link: ref_data/GRCh38_p14/homo_sapiens.fai
-      path: ref_data/GRCh38_p14/homo_sapiens.fasta.fai
+      checksum: a5bf6abc1f5efecc0a510f3120d08a3b
+      link: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fai
+      path: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.fai
       type: file
-      url: https://figshare.com/ndownloader/files/44326157?private_link=7084cf61820c148a23d2
+      url: https://figshare.com/ndownloader/files/57131684?private_link=88202740beb6fcbac09d
     
-    dict:
-      checksum: cabb2e8bbbf8ad3ab1f7f5177da20044
-      link: ref_data/GRCh38_p14/homo_sapiens.dict
-      path: ref_data/GRCh38_p14/homo_sapiens.fasta.dict
+    dict: 
+      checksum: bcaea04ea0b28dc2f3a5baa8530818f4
+      link: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.dict
+      path: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.dict
       type: file
-      url: https://figshare.com/ndownloader/files/44326160?private_link=7084cf61820c148a23d2
+      url: https://figshare.com/ndownloader/files/57131684?private_link=88202740beb6fcbac09d
 
   fusioncatcher:
     genome_path:
@@ -308,27 +327,27 @@
     
   star:
     genome_index:
-      compressed_checksum: 405a52a30d0e89a865d86180f5580271
+      compressed_checksum: ac4562fc3afcd99695bf8d217b279d41
       path: ref_data/star
       type: folder
       content_checksum:
-        STAR_v2.7.10a_hg38/sjdbList.out.tab: 2a38b3d61ab66a89b6865321f68aab99
-        STAR_v2.7.10a_hg38/chrLength.txt: deb274f1d9d3b7b862142463a1cbb33f
-        STAR_v2.7.10a_hg38/sjdbList.fromGTF.out.tab: d98a02ee526f7b12f5a72169510576fd
-        STAR_v2.7.10a_hg38/SAindex: 99136e5b28f5530aace0922924f6ce0f
-        STAR_v2.7.10a_hg38/Genome: 7d05742d2c4b0628882cd27cb6618e14
-        STAR_v2.7.10a_hg38/Log.out: 38485d68b3b2fd9f4fd610e5f8c5fe25
-        STAR_v2.7.10a_hg38/sjdbInfo.txt: f5a5c12d9bceb483ab7bf3837d6e8191
-        STAR_v2.7.10a_hg38/chrNameLength.txt: 75afe0a7c5316fe36c565fd9c77e8b27
-        STAR_v2.7.10a_hg38/chrName.txt: 0dcde172be736accb508c2f36f497372
-        STAR_v2.7.10a_hg38/chrStart.txt: 7f5fcbabcc769b79cacde6ac44d34d0d
-        STAR_v2.7.10a_hg38/genomeParameters.txt: 1fb2f9e0db62b2b17a5a1d2adfbcc7bb
-        STAR_v2.7.10a_hg38/SA: 0a8fb746a1515618e6fac4b19c0f2d28
-        STAR_v2.7.10a_hg38/transcriptInfo.tab: 20d851b5664d4a19df760269fd9d7a92
-        STAR_v2.7.10a_hg38/exonGeTrInfo.tab: 33d8c0b9d19743f4345bb80772ecf373
-        STAR_v2.7.10a_hg38/geneInfo.tab: a74a8ff27e3f614d074d0b89f5ec0040
-        STAR_v2.7.10a_hg38/exonInfo.tab: 11eaa89f17f57cabfa6c4bbf16e1834f
-      url: https://figshare.com/ndownloader/files/44448707?private_link=7084cf61820c148a23d2
+        v2.7.10a_GRCh38-GIABv3/sjdbList.out.tab: cdb80435469fc028f46eb09fd024523f
+        v2.7.10a_GRCh38-GIABv3/chrLength.txt: 1a26082d6a6d90117cfa47608fa2eb6b
+        v2.7.10a_GRCh38-GIABv3/sjdbList.fromGTF.out.tab: 2620e1d8deae15db66c50dd0a77b2fdb
+        v2.7.10a_GRCh38-GIABv3/SAindex: afc04ca4ecb8f7e86cff9d2a7d4ff286
+        v2.7.10a_GRCh38-GIABv3/Genome: 3c93e50c803c31cda4cdf4013447b8e7
+        v2.7.10a_GRCh38-GIABv3/Log.out: 83dd1011899f812c5ee72e959739cce2
+        v2.7.10a_GRCh38-GIABv3/sjdbInfo.txt: 5cb0d048ad4ce7d23341f21fb036cf70
+        v2.7.10a_GRCh38-GIABv3/chrNameLength.txt: 754a7861173b61c326c1c4d48f284a35
+        v2.7.10a_GRCh38-GIABv3/chrName.txt: 6b60c92c16aae65dc62ee8f0f653d982
+        v2.7.10a_GRCh38-GIABv3/chrStart.txt: 4ce456b0e71ea2a97fbdcfc994f4dd11
+        v2.7.10a_GRCh38-GIABv3/genomeParameters.txt: e3459fd5705a529d3a1a4e11160a5fba
+        v2.7.10a_GRCh38-GIABv3/SA: 852fd861c7b9e0109bec4e1cf9f4caab
+        v2.7.10a_GRCh38-GIABv3/transcriptInfo.tab: a5cfa86c901ab908220cf40a609ece4c
+        v2.7.10a_GRCh38-GIABv3/exonGeTrInfo.tab: 1803e0e8850aacb544eff784d54e00d8
+        v2.7.10a_GRCh38-GIABv3/geneInfo.tab: 891e1dcfb1eb1c074e2e10d157ba0bf7
+        v2.7.10a_GRCh38-GIABv3/exonInfo.tab: d115d2e7b49cdb7dee540292b64a865a
+      url: https://figshare.com/ndownloader/files/57156446?private_link=88202740beb6fcbac09d
 
     gtf:
       checksum: 9a477533e8e6c47a854a01ccd04b1580

@@ -74,6 +74,33 @@
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/chromosome_arm_size.tsv
 
+ estimate_ctdna_fraction:
+   bed_file1:
+      checksum: a64179f1c5dae70022eabd6cbcc72bee
+      path: GMS560/annotation/ENCODE_problematic_regions_hg38.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/57131660?private_link=88202740beb6fcbac09d
+   bed_file2:
+      checksum: 9e4df395fc7fa14ce7d4c125ca3b335c
+      path: GMS560/annotation/segmental_dup_regions_hg38.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/57131657?private_link=88202740beb6fcbac09d
+   bed_file3:
+      checksum: c2bb5114181dd5151e8ab714a6dad166
+      path: GMS560/annotation/self_aligned_regions_hg38.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/57131675?private_link=88202740beb6fcbac09d
+   bed_file4:
+      checksum: aa74d935c7766828fb1a56bf56137f26
+      path: GMS560/annotation/simple_repeat_regions_hg38.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/57131663?private_link=88202740beb6fcbac09d
+   bed_file5:
+      checksum: 94245ab3da5279ba9150e007f405f38e
+      path: GMS560/annotation/windowmaskSdust_repetetive_regions_hg38.bed
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/57131672?private_link=88202740beb6fcbac09d
+
  exon_skipping:
    design_bed:
      checksum: 75299f3690fd91d8e42e7db3743896b2
@@ -114,6 +141,13 @@
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/gnomad_SNP_0.001_target.annotated.hg38.interval_list
 
+ gene_fuse:
+   genes: 
+     checksum: 4bcfaa149f5bff0b1b46722d1017333f
+     path: GMS560/gene_fuse/GMS560_fusion_w_pool2.hg38.221117.csv
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.18.0/gene_fuse/GMS560_fusion_w_pool2.hg38.221117.csv
+
  hotspot_annotation:
    hotspots:
      checksum: 08c574ec13984188c8e4d2c80c14d2e3
@@ -133,6 +167,12 @@
      path: GMS560/reports/ENC_hotspots_240919_hg38.csv
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.11.0/design/ENC_hotspots_240919_hg38.csv
+
+   hotspot_mutations_URO:
+     checksum: 8ad509000e26979ff9a5851c9a650884
+     path: GMS560/reports/URO_hotspots_hg38.csv
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.18.0/design/URO_hotspots_hg38.csv
 
 #  jumble_reference:
 #    annotation_file1:
@@ -172,16 +212,21 @@
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.9.0/cnv/cytoBand.hg38.txt
 
+ msisensor_pro_filter_sites:
+   msi_sites_bed:
+     checksum: df803abd12b187d7413a7ed6ee773db2
+     path: GMS560/design/SelectedMSIloci2019Sorted_hg38.bed
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.18.0/design/SelectedMSIloci2019Sorted_hg38.bed
+
  purecn:    
    intervals: 
      checksum: 868c8991360482315f820ae822108965
      path: GMS560/purecn/targets_twist-gms-st_hg38_25000_intervals.txt
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/targets_twist-gms-st_hg38_25000_intervals.txt
-
- purecn_coverage:
-   intervals:
-     checksum: 868c8991360482315f820ae822108965
+   intervals_ctdna: 
+     checksum: a19ef4a67f3d370daaac4890fae25097
      path: GMS560/purecn/targets_twist-gms-st_hg38_25000_intervals.txt
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/cnv/targets_twist-gms-st_hg38_25000_intervals.txt
@@ -217,6 +262,11 @@
      path: GMS560/design/gatk.design.hg38.preprocessed.interval_list
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.5.0/design/gatk.design.hg38.preprocessed.interval_list
+  # design_intervals_gatk_cnv_ctdna:
+  #    checksum: b3dbb69ea4adeed19c01de0896295fa3
+  #    path: GMS560/design/gatk.preprocessed.cfDNA_nextseq2000_24.interval_list
+  #    type: file
+  #    url: https://figshare.scilifelab.se/ndownloader/files/52731446?private_link=88202740beb6fcbac09d
   
    design_bed_rna:
      checksum: ad95a96bfb3416ce6d2aadf6e3df207c
