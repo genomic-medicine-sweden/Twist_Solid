@@ -8,10 +8,10 @@ general_report: "config/reports/general_report.yaml"
 reference:
   background: "{{PROJECT_PON_DATA}}/GMS560/Background/background_panel_nextseq_noUmea_27_dp500_af015_hg38.tsv"
   artifacts: "{{PROJECT_PON_DATA}}/GMS560/Artifact/artifact_panel_nextseq_noUmea_27_hg38.tsv"
-  fasta: "{{PROJECT_REF_DATA}}/ref_data/GGRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta"
+  fasta: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta"
   fasta_rna: "{{PROJECT_REF_DATA}}/ref_data/star-fusion/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
-  dict: "{{PROJECT_REF_DATA}}/ref_data/GGRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.dict"
-  fai: "{{PROJECT_REF_DATA}}/ref_data/GGRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.fai"
+  dict: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.dict"
+  fai: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.fai"
   design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed"
   design_intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.230222.interval_list"
   design_intervals_gatk_cnv: "{{PROJECT_DESIGN_DATA}}/GMS560/design/gatk.design.hg38.preprocessed.interval_list"
@@ -21,7 +21,7 @@ reference:
     - "chrM"
 
 arriba:
-  assembly: "{{PROJECT_REF_DATA}}/ref_data/GGRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta"
+  assembly: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta"
   blacklist: "{{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/blacklist_hg38_GRCh38_v2.3.0.tsv.gz"
   gtf: "{{PROJECT_REF_DATA}}/ref_data/refGene/hg38.refGene.gtf"
   extra: "-p {{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/protein_domains_hg38_GRCh38_v2.3.0.gff3 -k {{PROJECT_REF_DATA}}/ref_data/arriba_v2.3.0/known_fusions_hg38_GRCh38_v2.3.0.tsv.gz"
@@ -116,7 +116,7 @@ gatk_get_pileup_summaries:
 
 gene_fuse:
   genes: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/gene_fuse/GMS560_fusion_w_pool2.hg38.221117.csv"
-  fasta: "/data/ref_genomes/GGRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta"
+  fasta: "/data/ref_genomes/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta"
 
 hotspot_annotation:
   chr_translation_file: "config/reports/hotspot_report.chr.translation.hg38"
