@@ -25,6 +25,7 @@ bcbio_variation_recall_ensemble:
   callers:
     - vardict
     - gatk_mutect2
+    - deepsomatic
 
 bcftools_annotate:
   output_type: "z"
@@ -101,6 +102,11 @@ cnv_tsv_report:
   normal_cn_upper_limit: 2.25
   polyploidy_fraction_limit: 0.2
   max_cnv_fp_size: 15000000
+
+deepsomatic_t_only:
+  container: "docker://google/deepsomatic:1.9.0"
+  model: "FFPE_WES"
+  pon: "--use_default_pon_filtering=false"
 
 estimate_ctdna_fraction:
   gnomAD_AF_limit: 0.00001
