@@ -275,7 +275,8 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutec
 
 module snv_indels:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v1.1.0")
+        #get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v1.1.0")
+        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="005d7b4")
     config:
         config
 
@@ -286,6 +287,20 @@ use rule * from snv_indels exclude all as snv_indels_*
 use rule bcftools_sort from snv_indels as snv_indels_bcftools_sort with:
     input:
         vcf="{file}.vcf.gz",
+
+
+use rule deepsomatic_t_only from snv_indels as snv_indels_deepsomatic_t_only with:
+    output:
+        tmpdir=temp(directory("snv_indels/deepsomatic_t_only/{sample}_{type}.unfiltered.tmp")),
+        vcf=temp("snv_indels/deepsomatic_t_only/{sample}_{type}.unfiltered.vcf.gz"),
+
+
+use rule bcftools_view from snv_indels as snv_indels_bcftools_filter with:
+    input:
+        vcf = snv_indels/deepsomatic_t_only/{sample}_{type}.unfiltered.vcf.gz
+        tbi = snv_indels/deepsomatic_t_only/{sample}_{type}.unfiltered.vcf.gz.tbi
+    output:
+        vcf = snv_indels/deepsomatic_t_only/{sample}_{type}.merged.vcf.gz
 
 
 use rule vardict from snv_indels as snv_indels_vardict with:

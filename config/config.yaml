@@ -25,11 +25,14 @@ bcbio_variation_recall_ensemble:
   callers:
     - vardict
     - gatk_mutect2
-    - deepsomatic
+    - deepsomatic_t_only
 
 bcftools_annotate:
   output_type: "z"
   annotation_string: "-m DB"
+
+bcftools_view:
+  extra: '-e FILTER="RefCall"'
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
