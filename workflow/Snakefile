@@ -297,10 +297,17 @@ use rule deepsomatic_t_only from snv_indels as snv_indels_deepsomatic_t_only wit
 
 use rule bcftools_view from snv_indels as snv_indels_bcftools_filter with:
     input:
-        vcf = snv_indels/deepsomatic_t_only/{sample}_{type}.unfiltered.vcf.gz
-        tbi = snv_indels/deepsomatic_t_only/{sample}_{type}.unfiltered.vcf.gz.tbi
+        vcf = "snv_indels/deepsomatic_t_only/{sample}_{type}.unfiltered.vcf.gz",
+        tbi = "snv_indels/deepsomatic_t_only/{sample}_{type}.unfiltered.vcf.gz.tbi",
     output:
-        vcf = snv_indels/deepsomatic_t_only/{sample}_{type}.merged.vcf.gz
+        vcf = temp("snv_indels/deepsomatic_t_only/{sample}_{type}.merged.vcf.gz"),
+    log:
+        "snv_indels/deepsomatic_t_only/{sample}_{type}.merged.vcf.gz.log",
+    benchmark:
+        repeat(
+            "snv_indels/deepsomatic_t_only/{sample}_{type}.merged.vcf.gz.benchmark.tsv",
+            config.get("bcftools_view", {}).get("benchmark_repeats", 1),
+        )
 
 
 use rule vardict from snv_indels as snv_indels_vardict with:
