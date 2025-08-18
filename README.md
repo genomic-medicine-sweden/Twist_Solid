@@ -3,7 +3,7 @@
 </p>
 
 # Twist_Solid
-Snakemake Pipeline for Solid tumours
+Pipeline for Solid tumours
 
 
 ## Code style validation
