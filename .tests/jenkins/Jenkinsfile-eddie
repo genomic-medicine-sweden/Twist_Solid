@@ -2,6 +2,14 @@ def isPullRequest = false
 
 pipeline {
   agent any
+
+  environment {
+    SLURM_RESUME = "/etc/slurm/resume_openstack.sh"
+    SLURM_SUSPEND = "/etc/slurm/suspend_openstack.sh"
+    JOB_SCRIPT   = "run_job.sh"    // your Slurm job submission script
+    NFS_MOUNT    = "/beefs-storage"
+    }
+
   stages {
     stage('first stage') {
       steps {
@@ -10,6 +18,12 @@ pipeline {
         }
         sh 'printenv'
       }
+    }
+    stage('resume cloud nodes') {
+      steps {
+          echo "Bringing up cloud nodes..."
+          sh "bash ${SLURM_RESUME}"
+          }
     }
     stage('dry-run') {
       steps {
