@@ -4,8 +4,8 @@ pipeline {
   agent any
 
   environment {
-    SLURM_RESUME = "/slurm/resume_openstack.sh"
-    SLURM_SUSPEND = "/slurm/suspend_openstack.sh"
+    SLURM_RESUME = "/etc/slurm/resume_openstack.sh"
+    SLURM_SUSPEND = "/etc/slurm/suspend_openstack.sh"
     JOB_SCRIPT   = "run_job.sh"    // your Slurm job submission script
     NFS_MOUNT    = "/beefs-storage"
     }
