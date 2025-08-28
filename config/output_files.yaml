@@ -149,12 +149,64 @@ files:
     types:
       - T
       - N
+    analysis:
+      - "ENC"
   - name: Coverage and mutations URO
     input: qc/hotspot_report/{sample}_{type}.URO.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.URO.tsv
     types:
       - T
       - N
+    analysis:
+      - "URO"
+  - name: Coverage and mutations BRC
+    input: qc/hotspot_report/{sample}_{type}.BRC.output.tsv
+    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.BRC.tsv
+    types:
+      - T
+      - N
+    analysis:
+      - "BRC"
+  - name: Coverage and mutations CRC
+    input: qc/hotspot_report/{sample}_{type}.CRC.output.tsv
+    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
+    types:
+      - T
+      - N
+    analysis:
+      - "CRC"
+  - name: Coverage and mutations GIS
+    input: qc/hotspot_report/{sample}_{type}.GIS.output.tsv
+    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.GIS.tsv
+    types:
+      - T
+      - N
+    analysis:
+      - "GIS"
+  - name: Coverage and mutations LUN
+    input: qc/hotspot_report/{sample}_{type}.LUN.output.tsv
+    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.LUN.tsv
+    types:
+      - T
+      - N
+    analysis:
+      - "LUN"
+  - name: Coverage and mutations MEL
+    input: qc/hotspot_report/{sample}_{type}.MEL.output.tsv
+    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MEL.tsv
+    types:
+      - T
+      - N
+    analysis:
+      - "MEL"
+  - name: Coverage and mutations MTC
+    input: qc/hotspot_report/{sample}_{type}.MTC.output.tsv
+    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MTC.tsv
+    types:
+      - T
+      - N
+    analysis:
+      - "MTC"
   - name: Contamination table
     input: qc/gatk_calculate_contamination/{sample}_{type}.contamination.table
     output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.contamination.table
