@@ -155,6 +155,12 @@ files:
     types:
       - T
       - N
+  - name: Coverage and mutations CRC
+    input: qc/hotspot_report/{sample}_{type}.CRC.output.tsv
+    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
+    types:
+      - T
+      - N
   - name: Contamination table
     input: qc/gatk_calculate_contamination/{sample}_{type}.contamination.table
     output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.contamination.table
