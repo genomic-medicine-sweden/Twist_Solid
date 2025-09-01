@@ -394,6 +394,12 @@ use rule * from filtering exclude all as filtering_*
 use rule filter_vcf from filtering as filtering_filter_vcf with:
     wildcard_constraints:
         file="^cnv_sv/.+|^snv_indels/.+",
+        tag="[a-zA-Z0-9-_]+",
+
+
+use rule bcftools_filter_include_region from filtering as filtering_bcftools_filter_include_region with:
+    wildcard_constraints:
+        tag="[a-zA-Z0-9-_]+",
 
 
 module qc:
