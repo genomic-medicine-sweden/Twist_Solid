@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.22.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.21.0...v0.22.0) (2025-09-02)
+
+
+### Features
+
+* add CRC coverage_and_mutations ([2195f89](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/2195f895f18de3762ece1add3b2ec0a537c2118a))
+* Added missing files for new GRCh38 genome ([17cfaff](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/17cfaffc32b9c3ccf60ec540c4c493c644c4945c))
+
+
+### Bug Fixes
+
+* sort umi bam files by QNAME ([76f3159](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/76f31598b04803346e528aedc72a063ab69813f2))
+* spelling error ([b5b04cf](https://www.github.com/genomic-medicine-sweden/Twist_Solid/commit/b5b04cf23901c145cd0de259e69de87f0b4c977f))
+
 ## [0.21.0](https://www.github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.20.0...v0.21.0) (2025-06-15)
 
 
