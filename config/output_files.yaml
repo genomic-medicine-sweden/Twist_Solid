@@ -150,8 +150,7 @@ files:
       - T
       - N
     analysis:
-      - ""
-      - "GMS560"
+      - "ENC"
   - name: Coverage and mutations URO
     input: qc/hotspot_report/{sample}_{type}.URO.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.URO.tsv
@@ -159,8 +158,7 @@ files:
       - T
       - N
     analysis:
-      - ""
-      - "GMS560"
+      - "URO"
   - name: Coverage and mutations BRC
     input: qc/hotspot_report/{sample}_{type}.BRC.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.BRC.tsv
@@ -168,7 +166,7 @@ files:
       - T
       - N
     analysis:
-      - "GMSBRC"
+      - "BRC"
   - name: Coverage and mutations CRC
     input: qc/hotspot_report/{sample}_{type}.CRC.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
@@ -176,7 +174,7 @@ files:
       - T
       - N
     analysis:
-      - "GMSCRC"
+      - "CRC"
   - name: Coverage and mutations GIS
     input: qc/hotspot_report/{sample}_{type}.GIS.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.GIS.tsv
@@ -184,7 +182,7 @@ files:
       - T
       - N
     analysis:
-      - "GMSGIS"
+      - "GIS"
   - name: Coverage and mutations LUN
     input: qc/hotspot_report/{sample}_{type}.LUN.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.LUN.tsv
@@ -192,7 +190,7 @@ files:
       - T
       - N
     analysis:
-      - "GMSLUN"
+      - "LUN"
   - name: Coverage and mutations MEL
     input: qc/hotspot_report/{sample}_{type}.MEL.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MEL.tsv
@@ -200,7 +198,7 @@ files:
       - T
       - N
     analysis:
-      - "GMSMEL"
+      - "MEL"
   - name: Coverage and mutations MTC
     input: qc/hotspot_report/{sample}_{type}.MTC.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MTC.tsv
@@ -208,7 +206,7 @@ files:
       - T
       - N
     analysis:
-      - "GMSMTC"
+      - "MTC"
   - name: Contamination table
     input: qc/gatk_calculate_contamination/{sample}_{type}.contamination.table
     output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.contamination.table
@@ -251,12 +249,14 @@ files:
     deduplication:
       - ""
     analysis:
-      - "GMSBRC"
-      - "GMSCRC"
-      - "GMSGIS"
-      - "GMSLUN"
-      - "GMSMEL"
-      - "GMSMTC"
+      - "BRC"
+      - "CRC"
+      - "GIS"
+      - "LUN"
+      - "MEL"
+      - "MTC"
+      - "ENC"
+      - "URO"
   - name: Results report umi DNA HTML
     input: reports/general_html_report/{sample}_{type}.umi.general_report.html
     output: results/dna/{sample}_{type}/{sample}_{type}.umi.general_report.html
