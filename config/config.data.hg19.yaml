@@ -128,7 +128,7 @@ hotspot_report:
     all: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.231011.csv"
     ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots_240919.csv"
     URO: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/URO_hotspots.csv"
-    CRC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Colon_20250220.csv"
+    CRC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Colon_20250905.csv"
 
 juli_annotate:
   cosmic: "{{PROJECT_REF_DATA}}/ref_data/juli/CosmicFusionExport_V76.tsv"
