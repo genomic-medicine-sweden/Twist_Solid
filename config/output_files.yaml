@@ -149,64 +149,64 @@ files:
     types:
       - T
       - N
-    analysis:
-      - "ENC"
+    analyskod:
+      - "GMSENC"
   - name: Coverage and mutations URO
     input: qc/hotspot_report/{sample}_{type}.URO.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.URO.tsv
     types:
       - T
       - N
-    analysis:
-      - "URO"
+    analyskod:
+      - "GMSURO"
   - name: Coverage and mutations BRC
     input: qc/hotspot_report/{sample}_{type}.BRC.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.BRC.tsv
     types:
       - T
       - N
-    analysis:
-      - "BRC"
+    analyskod:
+      - "GMSBRC"
   - name: Coverage and mutations CRC
     input: qc/hotspot_report/{sample}_{type}.CRC.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
     types:
       - T
       - N
-    analysis:
-      - "CRC"
+    analyskod:
+      - "GMSCRC"
   - name: Coverage and mutations GIS
     input: qc/hotspot_report/{sample}_{type}.GIS.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.GIS.tsv
     types:
       - T
       - N
-    analysis:
-      - "GIS"
+    analyskod:
+      - "GMSGIS"
   - name: Coverage and mutations LUN
     input: qc/hotspot_report/{sample}_{type}.LUN.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.LUN.tsv
     types:
       - T
       - N
-    analysis:
-      - "LUN"
+    analyskod:
+      - "GMSLUN"
   - name: Coverage and mutations MEL
     input: qc/hotspot_report/{sample}_{type}.MEL.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MEL.tsv
     types:
       - T
       - N
-    analysis:
-      - "MEL"
+    analyskod:
+      - "GMSMEL"
   - name: Coverage and mutations MTC
     input: qc/hotspot_report/{sample}_{type}.MTC.output.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MTC.tsv
     types:
       - T
       - N
-    analysis:
-      - "MTC"
+    analyskod:
+      - "GMSMTC"
   - name: Contamination table
     input: qc/gatk_calculate_contamination/{sample}_{type}.contamination.table
     output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.contamination.table
@@ -237,26 +237,26 @@ files:
       - N
     deduplication:
       - ""
-    analysis:
+    analyskod:
       - ""
       - "GMS560"
   - name: Results report small panel DNA HTML
-    input: reports/general_html_report/{sample}_{type}.small_panel.general_report.html
-    output: results/dna/{sample}_{type}/{sample}_{type}.small_panel.general_report.html
+    input: reports/general_html_report/{sample}_{type}.prio.general_report.html
+    output: results/dna/{sample}_{type}/{sample}_{type}.prio.general_report.html
     types:
       - T
       - N
     deduplication:
       - ""
-    analysis:
-      - "BRC"
-      - "CRC"
-      - "GIS"
-      - "LUN"
-      - "MEL"
-      - "MTC"
-      - "ENC"
-      - "URO"
+    analyskod:
+      - "GMSBRC"
+      - "GMSCRC"
+      - "GMSGIS"
+      - "GMSLUN"
+      - "GMSMEL"
+      - "GMSMTC"
+      - "GMSENC"
+      - "GMSURO"
   - name: Results report umi DNA HTML
     input: reports/general_html_report/{sample}_{type}.umi.general_report.html
     output: results/dna/{sample}_{type}/{sample}_{type}.umi.general_report.html
@@ -347,7 +347,7 @@ files:
       - N
     deduplication:
       - ""
-    analysis:
+    analyskod:
       - ""
       - "GMS560"
   - name: fuseq WES unfiltered
@@ -358,7 +358,7 @@ files:
       - N
     deduplication:
       - ""
-    analysis:
+    analyskod:
       - ""
       - "GMS560"
   - name: GeneFuse report

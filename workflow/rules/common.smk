@@ -130,7 +130,7 @@ def compile_output_list(wildcards):
                 filedef["output"].format(sample=sample, type=unit_type, caller=caller)
                 for sample in samples.index
                 if "deduplication" not in filedef or samples.loc[sample].get("deduplication", "") in filedef["deduplication"]
-                if "analysis" not in filedef or samples.loc[sample].get("analysis", "") in filedef["analysis"]
+                if "analyskod" not in filedef or samples.loc[sample].get("analyskod", "") in filedef["analyskod"]
                 for unit_type in get_unit_types(units, sample)
                 if unit_type in set(filedef["types"]).intersection(types)
                 for caller in config["bcbio_variation_recall_ensemble"]["callers"]
