@@ -58,7 +58,7 @@ files:
     nav_header: CNV
   - name: ITD
     type: file_link
-    input: results/dna/{sample}_{type}/cnv/{sample}_{type}.ITD.hard_filtered.tsv
+    input: results/dna/{sample}_{type}/cnv/{sample}_{type}.ITD.hard_filter.tsv
     description: internal tandem duplications (ITD) called by scanITD
     nav_header: CNV
 
@@ -70,12 +70,12 @@ files:
 
   - name: MDS
     type: file_table
-    input: results/dna/{sample}_{type}/biomarker/{sample}_{type}.mds.txt
+    input: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.mds.txt
     description: Motif diversity score (MDS)
     nav_header: Fragmentomics
   - name: Fragment length score
     type: file_table
-    input: results/dna/{sample}_{type}/biomarker/{sample}_{type}.fragment_length_score.txt
+    input: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.fragment_length_score.txt
     description: Fragment length score
     nav_header: Fragmentomics
     
