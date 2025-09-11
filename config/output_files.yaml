@@ -528,8 +528,8 @@ files:
     deduplication:
       - umi
   - name: Fragmentomics fragment length bins 
-    input: biomarker/finaletoolkit_frag_length_bins/{sample}_{type}_frag-length-bins.tsv
-    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}_frag-length-bins.tsv
+    input: biomarker/finaletoolkit_frag_length_bins/{sample}_{type}.frag-length-bins.tsv
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.frag-length-bins.tsv
     types:
       - T
       - N
