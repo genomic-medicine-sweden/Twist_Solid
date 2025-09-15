@@ -501,3 +501,51 @@ files:
     types:
       - T
       - N
+  - name: Fragmentomics end-motifs
+    input: biomarker/finaletoolkit_end_motifs/{sample}_{type}.end-motifs.tsv
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.end-motifs.tsv
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: Fragmentomics mds
+    input: biomarker/finaletoolkit_mds/{sample}_{type}.mds.txt
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.mds.txt
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: Fragmentomics interval-end-motifs
+    input: biomarker/finaletoolkit_interval_end_motifs/{sample}_{type}.interval-end-motifs.tsv
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.interval-end-motifs.tsv
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: Fragmentomics interval-mds
+    input: biomarker/finaletoolkit_interval_mds/{sample}_{type}.interval-mds.txt
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.interval-mds.txt
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: Fragmentomics fragment length bins 
+    input: biomarker/finaletoolkit_frag_length_bins/{sample}_{type}.frag-length-bins.tsv
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.frag-length-bins.tsv
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: Fragmentomics fragment length score
+    input: biomarker/fragmentomics_fragment_length_patient_score/{sample}_{type}.fragment_length_patient_score.txt
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.fragment_length_score.txt
+    types:
+      - T
+      - N
+    deduplication:
+      - umi

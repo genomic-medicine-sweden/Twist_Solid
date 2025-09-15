@@ -142,6 +142,12 @@
       type: file
       url: https://figshare.scilifelab.se/ndownloader/files/42061359
 
+    2bit:
+      checksum: e770665c5085271205b4603ddf615314
+      path: ref_data/hg19/hg19.with.mt.2bit
+      type: file
+      url: https://figshare.scilifelab.se/ndownloader/files/54893057?private_link=88202740beb6fcbac09d
+
   fusioncatcher:
     genome_path:
       compressed_checksum: 5006482f5b6b78c99e80330d2d69a239
