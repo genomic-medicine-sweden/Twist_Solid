@@ -156,6 +156,24 @@ filter_fuseq_wes_umi:
   min_support: 15
   filter_on_fusiondb: True
 
+finaletoolkit_end_motifs:
+  container: "docker://hydragenetics/finaletoolkit:0.10.7"
+
+finaletoolkit_frag_length_bins:
+  container: "docker://hydragenetics/finaletoolkit:0.10.7"
+
+finaletoolkit_interval_end_motifs:
+  container: "docker://hydragenetics/finaletoolkit:0.10.7"
+
+finaletoolkit_interval_mds:
+  container: "docker://hydragenetics/finaletoolkit:0.10.7"
+
+finaletoolkit_mds:
+  container: "docker://hydragenetics/finaletoolkit:0.10.7"
+
+fragmentomics_fragment_length_patient_score:
+  container: "docker://hydragenetics/fragmentomics:0.1.0"
+
 fuseq_wes:
   container: "docker://hydragenetics/fuseq_wes:1.0.1"
 
