@@ -1,6 +1,6 @@
-jobs: 6
+jobs: 32
 keep-going: True
-restart-times: 3
+restart-times: 2
 rerun-incomplete: True
 use-singularity: True
 singularity-args: "-e --cleanenv -B /home/jenkins -B /beegfs-storage -B /beegfs-storage/temp:/tmp -B $HOME "
