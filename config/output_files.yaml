@@ -138,25 +138,25 @@ files:
       - T
       - N
   - name: Coverage and mutations all
-    input: qc/hotspot_report/{sample}_{type}.all.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.all.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv
     types:
       - T
       - N
   - name: Coverage and mutations ENC
-    input: qc/hotspot_report/{sample}_{type}.ENC.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.ENC.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.ENC.tsv
     types:
       - T
       - N
   - name: Coverage and mutations URO
-    input: qc/hotspot_report/{sample}_{type}.URO.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.URO.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.URO.tsv
     types:
       - T
       - N
   - name: Coverage and mutations CRC
-    input: qc/hotspot_report/{sample}_{type}.CRC.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.CRC.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
     types:
       - T

@@ -45,3 +45,30 @@ rule hotspot_report:
         "{rule}: Make a coverage and mutations report: {output.report}"
     script:
         "../scripts/hotspot_report.py"
+
+
+rule hotspot_report_aa_translate:
+    input:
+        report="qc/hotspot_report/{sample}_{type}.{tag}.output.tsv",
+    output:
+        report=temp("qc/hotspot_report/{sample}_{type}.{tag}.aa_translated.tsv"),
+    log:
+        "twist_solid/hotspot_report_aa_translate/{sample}_{type}.{tag}.aa_translated.tsv.log",
+    benchmark:
+        repeat(
+            "twist_solid/hotspot_report_aa_translate/{sample}_{type}.{tag}.aa_translated.tsv.benchmark.tsv",
+            config.get("hotspot_report_aa_translate", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("hotspot_report_aa_translate", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("hotspot_report_aa_translate", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("hotspot_report_aa_translate", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("hotspot_report_aa_translate", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("hotspot_report_aa_translate", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("hotspot_report_aa_translate", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("hotspot_report_aa_translate", {}).get("container", config["default_container"])
+    message:
+        "{rule}: Translate aa three letter codes into one letter code in {input.report}"
+    script:
+        "../scripts/aa_translate.py"
