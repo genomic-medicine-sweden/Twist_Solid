@@ -114,5 +114,5 @@ if __name__ == "__main__":
 
     translate_file(
         open(snakemake.input.report),
-        open(snakemake.output.regions_file, "w"),
+        open(snakemake.output.report, "w"),
     )
