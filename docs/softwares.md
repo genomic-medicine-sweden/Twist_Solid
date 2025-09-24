@@ -185,7 +185,7 @@ A excel friendly text file containing information of all hotspot postions as wel
 
 
 ## hotspot_report_aa_translate
-Take the output from hotspot report and translate the amino acid three letter code into one letter code using an in-house script.
+Take the output from hotspot report (coverage_and mutations) and translate the amino acid three letter code into one letter code using an in-house script.
 
 ### :snake: Rule
 
