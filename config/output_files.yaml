@@ -150,6 +150,7 @@ files:
       - T
       - N
     analyskod:
+      - ""
       - "GMSENC"
   - name: Coverage and mutations URO
     input: qc/hotspot_report/{sample}_{type}.URO.aa_translated.tsv
