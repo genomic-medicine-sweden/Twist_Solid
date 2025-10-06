@@ -151,6 +151,7 @@ files:
       - N
     analyskod:
       - ""
+      - "GMS560"
       - "GMSENC"
   - name: Coverage and mutations URO
     input: qc/hotspot_report/{sample}_{type}.URO.aa_translated.tsv
@@ -159,6 +160,8 @@ files:
       - T
       - N
     analyskod:
+      - ""
+      - "GMS560"
       - "GMSURO"
   - name: Coverage and mutations BRC
     input: qc/hotspot_report/{sample}_{type}.BRC.aa_translated.tsv
@@ -175,6 +178,8 @@ files:
       - T
       - N
     analyskod:
+      - ""
+      - "GMS560"
       - "GMSCRC"
   - name: Coverage and mutations GIS
     input: qc/hotspot_report/{sample}_{type}.GIS.aa_translated.tsv
