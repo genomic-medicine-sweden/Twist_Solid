@@ -9,11 +9,20 @@ files:
     input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv
     description: File link to coverage and mutations
     nav_header: Small variants
-  - name: Coverage and mutations for cancer type that is specified in analyskod
+  - name: Coverage and mutations ENC
     type: file_link
-    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.prio.tsv
-    description: File link to coverage and mutations for cancer type that is specified in analyskod
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.ENC.tsv
+    description: File link to coverage and mutations for ENC
     nav_header: Small variants
+  - name: Coverage and mutations URO
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.URO.tsv
+    description: File link to coverage and mutations for URO
+    nav_header: Small variants
+  - name: Coverage and mutations CRC
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
+    description: File link to coverage and mutations for CRC
 
   - name: TMB
     type: plain_text
