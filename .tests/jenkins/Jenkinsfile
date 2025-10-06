@@ -37,6 +37,7 @@ pipeline {
                 sed 's,PROJECT_DESIGN_DATA:.*,PROJECT_DESIGN_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
                 sed 's,PROJECT_PON_DATA:.*,PROJECT_PON_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
                 sed 's,PROJECT_REF_DATA:.*,PROJECT_REF_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+                module load slurm-drmaa
                 snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile -w 60 -n
              '''
          }
@@ -65,6 +66,7 @@ pipeline {
                 sed 's,PROJECT_DESIGN_DATA:.*,PROJECT_DESIGN_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
                 sed 's,PROJECT_PON_DATA:.*,PROJECT_PON_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
                 sed 's,PROJECT_REF_DATA:.*,PROJECT_REF_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+                module load slurm-drmaa
                 snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile -w 60 --notemp --keep-incomplete --rerun-incomplete
                 git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
                 nextflow run validation_workflow/validate_result.nf
@@ -95,6 +97,7 @@ pipeline {
               sed 's,PROJECT_DESIGN_DATA:.*,PROJECT_DESIGN_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
               sed 's,PROJECT_PON_DATA:.*,PROJECT_PON_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
               sed 's,PROJECT_REF_DATA:.*,PROJECT_REF_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
+              module load slurm-drmaa
               snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile -w 60 --notemp --keep-incomplete --rerun-incomplete
               git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
               nextflow run validation_workflow/validate_result.nf

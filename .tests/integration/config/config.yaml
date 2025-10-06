@@ -68,7 +68,6 @@ cnv_tsv_report:
 exon_skipping:
   design_bed: "reference/Twist_RNA_Design5.annotated.bed"
 
-
 filter_fuseq_wes:
   gene_white_list: "reference/fuseq_wes_gene_white_list.txt"
   gtf: "reference/hg19.refGene.gtf"
@@ -88,6 +87,9 @@ filter_vcf:
   cnv_hard_filter_amp: "../../config/config_hard_filter_cnv_amp.yaml"
   cnv_hard_filter_loh: "../../config/config_hard_filter_cnv_loh.yaml"
   germline: "../../config/config_hard_filter_germline.yaml"
+
+fragmentomics_fragment_length_patient_score:
+  reference_set: "reference/vessies_reference_set.txt"
 
 fusioncatcher:
   genome_path: "reference/human_v102/"
@@ -176,6 +178,7 @@ reference:
   design_bed_rna: "reference/Twist_RNA_Design5.annotated.bed"
   design_intervals_rna: "reference/Twist_RNA_Design5.annotated.interval_list"
   fasta: "reference/WASH7P.fna"
+  fasta_2bit: "reference/WASH7P.2bit"
   fai: "reference/WASH7P.fna.fai"
   dict: "reference/WASH7P.dict"
   fasta_rna: "reference/WASH7P.fna"

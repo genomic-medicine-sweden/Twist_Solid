@@ -48,7 +48,7 @@ files:
     nav_header: CNV
   - name: ITD
     type: file_link
-    input: results/dna/{sample}_{type}/cnv/{sample}_{type}.ITD.hard_filtered.tsv
+    input: results/dna/{sample}_{type}/cnv/{sample}_{type}.ITD.hard_filter.vcf
     description: internal tandem duplications (ITD) called by scanITD
     nav_header: CNV
 
@@ -57,6 +57,17 @@ files:
     input: results/dna/{sample}_{type}/fusion/{sample}_{type}.juli.filtered.fusions.txt
     description: JuLI report
     nav_header: Fusions
+
+  - name: MDS
+    type: file_table
+    input: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.mds.txt
+    description: Motif diversity score (MDS)
+    nav_header: Fragmentomics
+  - name: Fragment length score
+    type: file_table
+    input: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.fragment_length_score.txt
+    description: Fragment length score
+    nav_header: Fragmentomics
     
   - name: MultiQC
     type: multiqc

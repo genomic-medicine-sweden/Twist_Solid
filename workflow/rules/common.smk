@@ -139,6 +139,14 @@ def compile_output_list(wildcards):
     return list(set(output_files))
 
 
+def get_hotspot_report_vcf_input(wildcards):
+    sample = get_sample(samples, wildcards)
+    if sample.get("deduplication", "") == "umi":
+        return "snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter_umi.codon_snvs.sorted"
+    else:
+        return "snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted"
+
+
 def get_deduplication_bam_input(wildcards):
     sample = get_sample(samples, wildcards)
     if sample.get("deduplication", "") == "umi":

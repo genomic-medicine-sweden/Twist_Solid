@@ -9,6 +9,11 @@ files:
     input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv
     description: File link to coverage and mutations
     nav_header: Small variants
+  - name: Coverage and mutations for cancer type that is specified in analyskod
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.prio.tsv
+    description: File link to coverage and mutations for cancer type that is specified in analyskod
+    nav_header: Small variants
 
   - name: TMB
     type: plain_text

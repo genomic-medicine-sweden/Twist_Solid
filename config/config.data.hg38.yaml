@@ -10,6 +10,7 @@ reference:
   artifacts: "{{PROJECT_PON_DATA}}/GMS560/Artifact/artifact_panel_nextseq_noUmea_27_hg38.tsv"
   fasta: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta"
   fasta_rna: "{{PROJECT_REF_DATA}}/ref_data/star-fusion/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
+  #fasta_2bit: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.2bit"
   dict: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.dict"
   fai: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.fai"
   design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed"
@@ -131,12 +132,12 @@ hotspot_report:
 juli_annotate:
   cosmic: "{{PROJECT_REF_DATA}}/ref_data/juli/CosmicFusionExport_V76.tsv"
   pfam: "{{PROJECT_REF_DATA}}/ref_data/juli/Pfam-A.full.human"
-  ref_genes: "{{PROJECT_REF_DATA}}/ref_data/juli/refGene_hg19.txt"
+  ref_genes: "{{PROJECT_REF_DATA}}/ref_data/juli/refGene_hg38.txt"
   uniprot: "{{PROJECT_REF_DATA}}/ref_data/juli/HGNC_GeneName_UniProtID_160524.txt"
 
 juli_call:
-  gap_file: "{{PROJECT_REF_DATA}}/ref_data/juli/gap_hg19.txt"
-  ref_genes: "{{PROJECT_REF_DATA}}/ref_data/juli/refGene_hg19.txt"
+  gap_file: "{{PROJECT_REF_DATA}}/ref_data/juli/gap_hg38.txt"
+  ref_genes: "{{PROJECT_REF_DATA}}/ref_data/juli/refGene_hg38.txt"
 
 # jumble_run:
 #   normal_reference: "{{PROJECT_DESIGN_DATA}}/GMS560/PoN/jumble.combined.filtered.50.PoN.hg19.RDS"

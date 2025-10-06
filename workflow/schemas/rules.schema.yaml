@@ -208,6 +208,25 @@ properties:
             type: string
             description: Excel friendly text report with hotspot position qc information
 
+  hotspot_report_aa_translate:
+    type: object
+    description: input and output parameters for hotspot_report_aa_translate
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          report:
+            type: string
+            description: coverage and mutations file from hotspot report
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          report:
+            type: string
+            description: coverage and mutations file from hotspot report with aa change in one letter code
+
   house_keeping_gene_coverage:
     type: object
     description: input and output parameters for house_keeping_gene_coverage
@@ -329,3 +348,4 @@ properties:
           mixup_report:
             type: string
             description: text report where the most similar RNA and DNA sample pairs in one analysis are reported together with the percent similarity
+

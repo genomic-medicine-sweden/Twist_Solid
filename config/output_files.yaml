@@ -138,13 +138,13 @@ files:
       - T
       - N
   - name: Coverage and mutations all
-    input: qc/hotspot_report/{sample}_{type}.all.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.all.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv
     types:
       - T
       - N
   - name: Coverage and mutations ENC
-    input: qc/hotspot_report/{sample}_{type}.ENC.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.ENC.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.ENC.tsv
     types:
       - T
@@ -152,7 +152,7 @@ files:
     analyskod:
       - "GMSENC"
   - name: Coverage and mutations URO
-    input: qc/hotspot_report/{sample}_{type}.URO.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.URO.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.URO.tsv
     types:
       - T
@@ -160,7 +160,7 @@ files:
     analyskod:
       - "GMSURO"
   - name: Coverage and mutations BRC
-    input: qc/hotspot_report/{sample}_{type}.BRC.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.BRC.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.BRC.tsv
     types:
       - T
@@ -168,7 +168,7 @@ files:
     analyskod:
       - "GMSBRC"
   - name: Coverage and mutations CRC
-    input: qc/hotspot_report/{sample}_{type}.CRC.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.CRC.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
     types:
       - T
@@ -176,7 +176,7 @@ files:
     analyskod:
       - "GMSCRC"
   - name: Coverage and mutations GIS
-    input: qc/hotspot_report/{sample}_{type}.GIS.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.GIS.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.GIS.tsv
     types:
       - T
@@ -184,7 +184,7 @@ files:
     analyskod:
       - "GMSGIS"
   - name: Coverage and mutations LUN
-    input: qc/hotspot_report/{sample}_{type}.LUN.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.LUN.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.LUN.tsv
     types:
       - T
@@ -192,7 +192,7 @@ files:
     analyskod:
       - "GMSLUN"
   - name: Coverage and mutations MEL
-    input: qc/hotspot_report/{sample}_{type}.MEL.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.MEL.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MEL.tsv
     types:
       - T
@@ -200,7 +200,7 @@ files:
     analyskod:
       - "GMSMEL"
   - name: Coverage and mutations MTC
-    input: qc/hotspot_report/{sample}_{type}.MTC.output.tsv
+    input: qc/hotspot_report/{sample}_{type}.MTC.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MTC.tsv
     types:
       - T
@@ -573,3 +573,51 @@ files:
     types:
       - T
       - N
+  - name: Fragmentomics end-motifs
+    input: biomarker/finaletoolkit_end_motifs/{sample}_{type}.end-motifs.tsv
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.end-motifs.tsv
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: Fragmentomics mds
+    input: biomarker/finaletoolkit_mds/{sample}_{type}.mds.txt
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.mds.txt
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: Fragmentomics interval-end-motifs
+    input: biomarker/finaletoolkit_interval_end_motifs/{sample}_{type}.interval-end-motifs.tsv
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.interval-end-motifs.tsv
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: Fragmentomics interval-mds
+    input: biomarker/finaletoolkit_interval_mds/{sample}_{type}.interval-mds.txt
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.interval-mds.txt
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: Fragmentomics fragment length bins 
+    input: biomarker/finaletoolkit_frag_length_bins/{sample}_{type}.frag-length-bins.tsv
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.frag-length-bins.tsv
+    types:
+      - T
+      - N
+    deduplication:
+      - umi
+  - name: Fragmentomics fragment length score
+    input: biomarker/fragmentomics_fragment_length_patient_score/{sample}_{type}.fragment_length_patient_score.txt
+    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.fragment_length_score.txt
+    types:
+      - T
+      - N
+    deduplication:
+      - umi

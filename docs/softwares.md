@@ -183,6 +183,29 @@ A excel friendly text file containing information of all hotspot postions as wel
 
 #RESOURCESSCHEMA__hotspot_report#
 
+
+## hotspot_report_aa_translate
+Take the output from hotspot report (coverage_and mutations) and translate the amino acid three letter code into one letter code using an in-house script.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__hotspot_report__hotspot_report_aa_translate#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__hotspot_report__hotspot_report_aa_translate#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__hotspot_report_aa_translate#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__hotspot_report_aa_translate#
+
+
 ---
 
 ## house_keeping_gene_coverage
@@ -297,4 +320,5 @@ Compare ID-SNPs in the RNA samples to the DNA samples in the same analysis and r
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__sample_mixup_check#
+
 
