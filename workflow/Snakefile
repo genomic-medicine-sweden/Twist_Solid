@@ -804,9 +804,9 @@ use rule general_html_report from reports as reports_general_html_report_umi wit
         html="reports/general_html_report/{sample}_{type}.umi.general_report.html",
 
 
-use rule general_html_report from reports as reports_general_html_report_haloplex with:
+use rule general_html_report from reports as reports_general_html_report_prio with:
     output:
-        html="reports/general_html_report/{sample}_{type}.haloplex.general_report.html",
+        html="reports/general_html_report/{sample}_{type}.prio.general_report.html",
 
 
 use rule cnv_html_report from reports as reports_cnv_html_report with:
