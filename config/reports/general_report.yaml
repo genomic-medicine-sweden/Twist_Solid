@@ -23,6 +23,7 @@ files:
     type: file_link
     input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
     description: File link to coverage and mutations for CRC
+    nav_header: Small variants
 
   - name: TMB
     type: plain_text
