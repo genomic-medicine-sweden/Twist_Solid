@@ -9,6 +9,11 @@ files:
     input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv
     description: File link to coverage and mutations
     nav_header: Small variants
+  - name: Coverage and mutations based on analysis type (analyskod)
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.{analyskod}.tsv
+    description: File link to coverage and mutations based on analysis
+    nav_header: Small variants
 
   - name: TMB
     type: plain_text
@@ -57,17 +62,6 @@ files:
     input: results/dna/{sample}_{type}/fusion/{sample}_{type}.juli.filtered.fusions.txt
     description: JuLI report
     nav_header: Fusions
-
-  - name: MDS
-    type: file_table
-    input: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.mds.txt
-    description: Motif diversity score (MDS)
-    nav_header: Fragmentomics
-  - name: Fragment length score
-    type: file_table
-    input: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.fragment_length_score.txt
-    description: Fragment length score
-    nav_header: Fragmentomics
     
   - name: MultiQC
     type: multiqc
