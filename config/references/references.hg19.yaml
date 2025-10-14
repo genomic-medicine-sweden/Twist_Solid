@@ -411,7 +411,7 @@
   vep:
     vep_cache:
       compressed_checksum: 6eb952ad8c1003b7e1a9b011771fae9e
-      path: ref_data/vep/105/homo_sapiens_refseq
+      path: ref_data/vep/105
       type: folder
       content_checksum:
         homo_sapiens_refseq/105_GRCh37/HG1463_PATCH/114000001-115000000_reg.gz: c01d9c84f552841842da29450cbe3e9f

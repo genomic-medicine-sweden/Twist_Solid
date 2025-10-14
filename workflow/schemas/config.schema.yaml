@@ -395,6 +395,17 @@ properties:
       - chr_translation_file
       - levels
 
+  hotspot_report_aa_translate:
+    type: object
+    description: parameters for hotspot_report_aa_translate
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
   hydra_local_path:
     type: string
     description: path to a folder that contains hydra-genetics modules. Setting this variable will make the pipeline use local git repos instead of the once located on github.
@@ -674,6 +685,7 @@ properties:
       vaf_baseline:
         type: number
         description: Sets the VAF-baseline. In theory BAF-baseline is 0.5 (50% for each SNP), however in practice this is slightly shifted downwards due to reference bias in alignment
+
 
 required:
   - samples
