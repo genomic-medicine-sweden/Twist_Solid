@@ -154,19 +154,12 @@
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/gene_fuse/GMS560_fusion_w_pool2.hg19.221117.csv
 
- hotspot_annotation:
-   hotspots:
-     checksum: 50564a9b99f86b123bb61f6e361eff10
-     path: GMS560/reports/Hotspots_combined_regions_nodups.231011.csv
-     type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/design/Hotspots_combined_regions_nodups.231011.csv
-
  hotspot_report:
    hotspot_mutations:
-     checksum: 50564a9b99f86b123bb61f6e361eff10
-     path: GMS560/reports/Hotspots_combined_regions_nodups.231011.csv
+     checksum: e017acbe8505f31288e61365891567f6
+     path: GMS560/reports/Hotspots_combined_regions_nodups.251017.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.4.0/design/Hotspots_combined_regions_nodups.231011.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.22.0/design/Hotspots_combined_regions_nodups.251017.csv
    hotspot_mutations_ENC:
      checksum: 3de80edc5f06fdaee55f0a302e20315a
      path: GMS560/reports/ENC_hotspots_240919.csv
@@ -191,10 +184,10 @@
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.21.0/design/Mutations_Colon_20250905.csv
 
    hotspot_mutations_GIS:
-     checksum: 49256b3e57c2563ac63ae8b9db6e9dbb
-     path: GMS560/reports/Mutations_Gist_20250220.csv
+     checksum: dfc12d4fa4eee82154ed6c06813a0bd2
+     path: GMS560/reports/Mutations_Gist_20251017.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.19.0/design/Mutations_Gist_20250220.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.22.1/design/Mutations_Gist_20251017.csv
 
    hotspot_mutations_LUN:
      checksum: ce17cc332f72111b228b64eeaee82621
@@ -203,16 +196,16 @@
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.21.1/design/Mutations_Lung_20251014.csv
 
    hotspot_mutations_MEL:
-     checksum: ba8c8a3a418b832ee4f5ffae1e36b672
-     path: GMS560/reports/Mutations_Melanom_20250220.csv
+     checksum: 3d690045ba3ac8b3a57e9fb7cbca81f1
+     path: GMS560/reports/Mutations_Melanom_20251017.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.19.0/design/Mutations_Melanom_20250220.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.22.0/design/Mutations_Melanom_20251017.csv
 
    hotspot_mutations_MTC:
-     checksum: 09145e1f1358fcd2c0bf6ef6419ee1c7
-     path: GMS560/reports/Mutations_MTC_250220.csv
+     checksum: cbc163ffb78e3dec97f8d8a208505c2a
+     path: GMS560/reports/Mutations_MTC_251017.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.19.0/design/Mutations_MTC_250220.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.22.0/design/Mutations_MTC_251017.csv
 
  jumble_reference:
    annotation_file1:
