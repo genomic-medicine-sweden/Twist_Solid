@@ -184,10 +184,10 @@
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.21.0/design/Mutations_Colon_20250905.csv
 
    hotspot_mutations_GIS:
-     checksum: 49256b3e57c2563ac63ae8b9db6e9dbb
+     checksum: dfc12d4fa4eee82154ed6c06813a0bd2
      path: GMS560/reports/Mutations_Gist_20251017.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.22.0/design/Mutations_Gist_20251017.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.22.1/design/Mutations_Gist_20251017.csv
 
    hotspot_mutations_LUN:
      checksum: ce17cc332f72111b228b64eeaee82621
