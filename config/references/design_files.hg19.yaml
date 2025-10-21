@@ -258,6 +258,11 @@
      path: GMS560/purecn/targets_twist-gms-st_hg19_25000_intervals.txt
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.1.1/cnv/targets_twist-gms-st_hg19_25000_intervals.txt
+   intervals_miarka: 
+     checksum: a19ef4a67f3d370daaac4890fae25097
+     path: GMS560/purecn/targets_twist-gms-st_hg19_25000_xleap_intervals.txt
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.22.2/cnv/targets_twist-gms-st_hg19_25000_xleap_intervals.txt
    intervals_ctdna: 
      checksum: a19ef4a67f3d370daaac4890fae25097
      path: GMS560/purecn/targets_twist-gms-st_hg19_25000_cfDNA_intervals.txt
