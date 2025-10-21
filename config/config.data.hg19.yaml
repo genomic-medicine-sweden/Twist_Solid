@@ -129,7 +129,6 @@ hotspot_report:
     all: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.251017.csv"
     ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots_240919.csv"
     URO: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/URO_hotspots.csv"
-    BRC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Breast_20191112.csv"
     CRC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Colon_20250905.csv"
     BRC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Breast_20191112.csv"
     GIS: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Gist_20250220.csv"
