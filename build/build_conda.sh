@@ -58,21 +58,23 @@ git clone --branch ${CONFIG_VERSION} ${CONFIG_GITHUB_REPO} ${PIPELINE_NAME}_${TA
 # # Pack all cloned repositories
 tar -zcvf ${PIPELINE_NAME}_${TAG_OR_BRANCH}.tar.gz ${PIPELINE_NAME}_${TAG_OR_BRANCH}
 
-# # Download containers and update container path
-conda activate ./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env
-hydra-genetics prepare-environment create-singularity-files -c config/config.yaml -o apptainer_cache
-cp config/config.yaml config/config.yaml.copy
-hydra-genetics prepare-environment container-path-update -c config/config.yaml.copy -n config/config.yaml -p ${PATH_TO_apptainer_cache}
+# # Download containers and update container path if path to apptainer cache is not empty.
+if [ -n $PATH_TO_apptainer_cache ];
+then
+    hydra-genetics prepare-environment create-singularity-files -c config/config.yaml -o apptainer_cache
+    cp config/config.yaml config/config.yaml.copy
+    hydra-genetics prepare-environment container-path-update -c config/config.yaml.copy -n config/config.yaml -p ${PATH_TO_apptainer_cache}
+fi
 
 # Download references if given on command line
 if [ -n "$@" ];
 then
-for reference_config in "$@"
-do
-    hydra-genetics --debug references download -o design_and_ref_files -v $reference_config
-done
-# Compress data
-tar -czvf design_and_ref_files.tar.gz design_and_ref_files
+    for reference_config in "$@"
+    do
+        hydra-genetics --debug references download -o design_and_ref_files -v $reference_config
+    done
+    # Compress data
+    tar -czvf design_and_ref_files.tar.gz design_and_ref_files
 fi
 
 
