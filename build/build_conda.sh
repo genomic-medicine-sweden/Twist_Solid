@@ -64,11 +64,16 @@ hydra-genetics prepare-environment create-singularity-files -c config/config.yam
 cp config/config.yaml config/config.yaml.copy
 hydra-genetics prepare-environment container-path-update -c config/config.yaml.copy -n config/config.yaml -p ${PATH_TO_apptainer_cache}
 
-# Download references
+# Download references if given on command line
+if [ -n "$@" ];
+then
 for reference_config in "$@"
 do
     hydra-genetics --debug references download -o design_and_ref_files -v $reference_config
 done
+# Compress data
+tar -czvf design_and_ref_files.tar.gz design_and_ref_files
+fi
 
 
 conda deactivate
@@ -82,6 +87,3 @@ if [ -d ${PIPELINE_NAME}_${TAG_OR_BRANCH} ];
 then
     rm -fr ${PIPELINE_NAME}_${TAG_OR_BRANCH}
 fi
-
-# Compress data
-tar -czvf design_and_ref_files.tar.gz design_and_ref_files
