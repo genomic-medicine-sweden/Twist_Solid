@@ -357,7 +357,7 @@
       
   star-fusion:
     genome_path:
-      compressed_checksum: b68e04113c934eee1c9a168298f92ea7
+      compressed_checksum: abedad76f9c51bce5e99208d78283fa0
       path: ref_data/star-fusion
       type: folder
       content_checksum:
@@ -424,7 +424,11 @@
         GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_annot.cdna.fa.idx: 0626ee7eca3ee5e0a59456e17d47b82e
         GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa: 49bdb80d21a64dcb16acfc941843356e
         GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_annot.cdsplus.fa: e9b1b36df54d06ae19f724b9452a6a72
-      url: https://figshare.com/ndownloader/files/44326208?private_link=7084cf61820c148a23d2
+        GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/refGene.bed: 78444d337f83ef0197ed36c30f32d39e
+        GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/refGene.sort.bed.gz: 32ad30d9e8eec5aacdbb4adc106a8e41
+        GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/refGene.sort.bed.gz.tbi: 08fd484f4b7bad3931e9e387771b2204
+        GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/cancer_splicing_lib/cancer_splicing.idx: 9bb687037e2a8c90f7df9a73d9095bdd
+      url: https://figshare.scilifelab.se/ndownloader/files/XXX?private_link=88202740beb6fcbac09d
       
   vep:
     vep_cache:

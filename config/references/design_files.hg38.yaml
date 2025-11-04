@@ -74,6 +74,13 @@
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.6.0/cnv/chromosome_arm_size.tsv
 
+ ctat_splicing_filter:
+   filtering-file:
+     checksum: 9effc6913b16056753ba54a36b26ebcc
+     path: GMS560/rna_fusion/filter_ctat_splicing.tsv
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.23.0/rna_fusion/filter_ctat_splicing.tsv
+
  estimate_ctdna_fraction:
    bed_file1:
       checksum: a64179f1c5dae70022eabd6cbcc72bee
