@@ -61,7 +61,7 @@ module prealignment:
             config,
             "hydra-genetics/prealignment",
             path="workflow/Snakefile",
-            tag="v1.3.0",
+            tag=config["modules"]["prealignment"],
         )
     config:
         config
@@ -153,7 +153,12 @@ use rule merged from prealignment as prealignment_merged_arriba with:
 
 module alignment:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/alignment", path="workflow/Snakefile", tag="v0.7.0")
+        get_module_snakefile(
+            config,
+            "hydra-genetics/alignment",
+            path="workflow/Snakefile",
+            tag=config["modules"]["alignment"],
+        )
     config:
         config
 
@@ -275,7 +280,12 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutec
 
 module snv_indels:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag="v1.1.0")
+        get_module_snakefile(
+            config,
+            "hydra-genetics/snv_indels",
+            path="workflow/Snakefile",
+            tag=config["modules"]["snv_indels"],
+        )
     config:
         config
 
@@ -319,7 +329,12 @@ use rule gatk_mutect2_gvcf from snv_indels as snv_indels_gatk_mutect2_gvcf with:
 
 module annotation:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/annotation", path="workflow/Snakefile", tag="v1.1.0")
+        get_module_snakefile(
+            config,
+            "hydra-genetics/annotation",
+            path="workflow/Snakefile",
+            tag=config["modules"]["annotation"],
+        )
     config:
         config
 
@@ -383,7 +398,12 @@ use rule bcftools_annotate from annotation as annotation_bcftools_annotate_purec
 
 module filtering:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag="v0.3.0")
+        get_module_snakefile(
+            config,
+            "hydra-genetics/filtering",
+            path="workflow/Snakefile",
+            tag=config["modules"]["filtering"],
+        )
     config:
         config
 
@@ -404,7 +424,12 @@ use rule bcftools_filter_include_region from filtering as filtering_bcftools_fil
 
 module qc:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/qc", path="workflow/Snakefile", tag="v0.5.0")
+        get_module_snakefile(
+            config,
+            "hydra-genetics/qc",
+            path="workflow/Snakefile",
+            tag=config["modules"]["qc"],
+        )
     config:
         config
 
@@ -512,7 +537,12 @@ use rule gatk_get_pileup_summaries from qc as qc_gatk_get_pileup_summaries with:
 
 module biomarker:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/biomarker", path="workflow/Snakefile", tag="v0.7.0")
+        get_module_snakefile(
+            config,
+            "hydra-genetics/biomarker",
+            path="workflow/Snakefile",
+            tag=config["modules"]["biomarker"],
+        )
     config:
         config
 
@@ -588,7 +618,12 @@ use rule tmb from biomarker as biomarker_tmb_umi with:
 
 module fusions:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/fusions", path="workflow/Snakefile", tag="v0.2.2")
+        get_module_snakefile(
+            config,
+            "hydra-genetics/fusions",
+            path="workflow/Snakefile",
+            tag=config["modules"]["fusions"],
+        )
     config:
         config
 
@@ -622,7 +657,12 @@ use rule star_fusion from fusions as fusions_star_fusion with:
 
 module cnv_sv:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/cnv_sv", path="workflow/Snakefile", tag="v0.9.0")
+        get_module_snakefile(
+            config,
+            "hydra-genetics/cnv_sv",
+            path="workflow/Snakefile",
+            tag=config["modules"]["cnv_sv"],
+        )
     config:
         config
 
@@ -781,7 +821,12 @@ use rule purecn_purity_file from cnv_sv as cnv_sv_purecn_purity_file with:
 
 module reports:
     snakefile:
-        get_module_snakefile(config, "hydra-genetics/reports", path="workflow/Snakefile", tag="v0.10.1")
+        get_module_snakefile(
+            config,
+            "hydra-genetics/reports",
+            path="workflow/Snakefile",
+            tag=config["modules"]["reports"],
+        )
     config:
         config
 

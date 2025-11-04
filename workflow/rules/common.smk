@@ -129,7 +129,6 @@ def compile_output_list(wildcards):
             [
                 filedef["output"].format(sample=sample, type=unit_type, caller=caller)
                 for sample in samples.index
-                if "deduplication" not in filedef or samples.loc[sample].get("deduplication", "") in filedef["deduplication"]
                 if "analyskod" not in filedef or samples.loc[sample].get("analyskod", "") in filedef["analyskod"]
                 for unit_type in get_unit_types(units, sample)
                 if unit_type in set(filedef["types"]).intersection(types)
@@ -140,40 +139,35 @@ def compile_output_list(wildcards):
 
 
 def get_hotspot_report_vcf_input(wildcards):
-    sample = get_sample(samples, wildcards)
-    if sample.get("deduplication", "") == "umi":
+    if config["deduplication"] == "umi":
         return "snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter_umi.codon_snvs.sorted"
     else:
         return "snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted"
 
 
 def get_deduplication_bam_input(wildcards):
-    sample = get_sample(samples, wildcards)
-    if sample.get("deduplication", "") == "umi":
+    if config["deduplication"] == "umi":
         return "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"
     else:
         return "alignment/samtools_merge_bam/{sample}_{type}.bam"
 
 
 def get_deduplication_bam_input_manta(wildcards):
-    sample = get_sample(samples, wildcards)
-    if sample.get("deduplication", "") == "umi":
+    if config["deduplication"] == "umi":
         return "alignment/bwa_mem_realign_consensus_reads/{sample}_T.umi.bam"
     else:
         return "alignment/samtools_merge_bam/{sample}_T.bam"
 
 
 def get_deduplication_bam_chr_input(wildcards):
-    sample = get_sample(samples, wildcards)
-    if sample.get("deduplication", "") == "umi":
+    if config["deduplication"] == "umi":
         return "alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam"
     else:
         return "alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam"
 
 
 def get_vardict_min_af(wildcards):
-    sample = get_sample(samples, wildcards)
-    if sample.get("deduplication", "") == "umi":
+    if config["deduplication"] == "umi":
         return config.get("vardict", {}).get("allele_frequency_threshold_umi", "0.001")
     else:
         return config.get("vardict", {}).get("allele_frequency_threshold", "0.01")
