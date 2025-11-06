@@ -59,7 +59,7 @@ git clone --branch ${CONFIG_VERSION} ${CONFIG_GITHUB_REPO} ${PIPELINE_NAME}_${TA
 tar -zcvf ${PIPELINE_NAME}_${TAG_OR_BRANCH}.tar.gz ${PIPELINE_NAME}_${TAG_OR_BRANCH}
 
 # # Download containers and update container path if path to apptainer cache is not empty.
-if [ $APPT_CACHE_STATUS == "build" ];
+if [ ${APPT_CACHE_STATUS} == "build" ];
 then
     hydra-genetics prepare-environment create-singularity-files -c config/config.yaml -o apptainer_cache
     cp config/config.yaml config/config.yaml.copy
@@ -67,7 +67,7 @@ then
 fi
 
 # If apptainer already available remote and no new build is needed (specified by user). Only update path to cache in config.
-if [ $APPT_CACHE_STATUS == "update" ];
+if [ ${APPT_CACHE_STATUS} == "update" ];
 then
     cp config/config.yaml config/config.yaml.copy
     hydra-genetics prepare-environment container-path-update -c config/config.yaml.copy -n config/config.yaml -p ${PATH_TO_apptainer_cache}
