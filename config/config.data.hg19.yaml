@@ -3,7 +3,9 @@ PROJECT_DESIGN_DATA: ""
 PROJECT_PON_DATA: ""
 PROJECT_REF_DATA: ""
 
+deduplication: "markduplicates"
 general_report: "config/reports/general_report.yaml"
+output: "config/output_files_FFPE.yaml"
 
 reference:
   background: "{{PROJECT_PON_DATA}}/GMS560/Background/background_panel_nextseq_noUmea_27_dp500_af015.tsv"

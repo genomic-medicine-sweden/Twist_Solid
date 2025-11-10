@@ -3,41 +3,43 @@ Here is a brief overview of the entire pipeline. For details see subsections and
 
 ## DNA
 1. **Input files**: fastq
-2. **Trimming** using fastp
-3. **Alignment** using BWA-mem
-4. **Mark duplicates** using Picard
-5. **SNV and INDEL**  
-  5.1 Calling using Mutect2 and Vardict  
-  5.2 Annotation using VEP and hydra-genetics  
-  5.3 Filtering using bcftools and hydra-genetics  
-6. **CNV**  
-  6.1 Calling using CNVkit and GATK CNV  
-  6.2 Merging using SVDB  
-  6.3 Annotation using SVDB and hydra-genetics  
-  6.4 Filtering using hydra-genetics  
-  6.5 CNV html report using hydra-genetics
-7. **Fusion** calling using GeneFuse and FuSeq_WES
-8. **Biomarkers**  
-  8.1 TMB using hydra-genetics  
-  8.2 MSI score using MSIsensor-Pro  
-  8.3 HRD using CNVkit and ScarHRD  
-9. **QC**  
-  9.1 QC measures from Samtools, Picard, FastQC, GATK  
-  9.2 MultiQC hmtl report  
-  9.3 Hotspot coverage report  
+2. **Downsample**: seqtk
+3. **Trimming** using fastp
+4. **Alignment** using BWA-mem
+5. **Mark duplicates** using Picard
+6. **SNV and INDEL**  
+  6.1 Calling using Mutect2 and Vardict  
+  6.2 Annotation using VEP and hydra-genetics annotation module
+  6.3 Filtering using bcftools and hydra-genetics filtering module
+7. **CNV**  
+  7.1 Calling using CNVkit, GATK CNV and Jumble
+  7.2 Merging using SVDB
+  7.3 Annotation using SVDB and hydra-genetics  
+  7.4 Filtering using hydra-genetics  
+  7.5 CNV html report using hydra-genetics filtering module
+8. **Fusion** calling using GeneFuse and FuSeq_WES
+9. **Biomarkers**  
+  9.1 TMB using hydra-genetics biomarker module
+  9.2 MSI score using MSIsensor-Pro  
+  9.3 HRD using CNVkit and ScarHRD  
+10. **QC**  
+  10.1 QC measures from Samtools, Picard, FastQC, GATK  
+  10.2 MultiQC hmtl report  
+  10.3 Hotspot coverage report  
 
 ## RNA
 1. **Input files**: fastq
-2. **Alignment** using Star
-3. **Fusions**  
-  3.1 Fusion calling using Arriba, StarFusion, FusionCatcher  
-  3.2 Filtering and report using in-house script  
-  3.3 Fusion images using Arriba  
-4. **Exon skipping** using in-house script
-5. **ID-SNP** calling using bcftools
-6. **QC**  
-  6.1 QC measures from Samtools, Picard, FastQC, Mosdepth  
-  6.2 MultiQC hmtl report  
-  6.3 House keeping gene coverage  
+2. **Downsample**: seqtk
+3. **Alignment** using Star
+4. **Fusions**  
+  4.1 Fusion calling using Arriba, StarFusion, FusionCatcher  
+  4.2 Filtering and report using in-house script  
+  4.3 Fusion images using Arriba  
+5. **Exon skipping** using in-house script and ctat-splicing
+6. **ID-SNP** calling using bcftools
+7. **QC**  
+  7.1 QC measures from Samtools, Picard, FastQC, Mosdepth  
+  7.2 MultiQC hmtl report  
+  7.3 House keeping gene coverage  
 
   <br />
