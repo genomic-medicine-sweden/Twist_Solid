@@ -428,7 +428,7 @@
         GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/refGene.sort.bed.gz: 32ad30d9e8eec5aacdbb4adc106a8e41
         GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/refGene.sort.bed.gz.tbi: 08fd484f4b7bad3931e9e387771b2204
         GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/cancer_splicing_lib/cancer_splicing.idx: 9bb687037e2a8c90f7df9a73d9095bdd
-      url: https://figshare.scilifelab.se/ndownloader/files/XXX?private_link=88202740beb6fcbac09d
+      url: https://figshare.scilifelab.se/ndownloader/files/59377328?private_link=88202740beb6fcbac09d
       
   vep:
     vep_cache:
