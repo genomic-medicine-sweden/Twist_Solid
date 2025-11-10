@@ -10,7 +10,6 @@ cd ${PIPELINE_NAME}
 # Create and activate conda envrionmnet in the current directory, then install pipeline requirements
 mamba create --prefix ./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env python=${PYTHON_VERSION} -y
 conda activate ./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env
-#conda install -c conda-forge pip -y 
 
 if [ -d ${PIPELINE_NAME}_${TAG_OR_BRANCH} ];
 then
@@ -21,7 +20,7 @@ mkdir ${PIPELINE_NAME}_${TAG_OR_BRANCH}
 # clone the required version of the pipeline
 git clone --branch ${TAG_OR_BRANCH} ${PIPELINE_GITHUB_REPO} ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}
 # install the requirements for the pipeline
-./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env/bin/pip3 install -r ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/requirements.txt 
+./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env/bin/pip3 install -I -r ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/requirements.txt 
 # pack the environment with the requriements installed
 conda pack --prefix ./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env -o ${PIPELINE_NAME}_${TAG_OR_BRANCH}/env.tar.gz
 
@@ -50,28 +49,47 @@ git clone https://github.com/hydra-genetics/references.git ${PIPELINE_NAME}_${TA
 
 ## Download the config files from the config repo
 git clone --branch ${CONFIG_VERSION} ${CONFIG_GITHUB_REPO} ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}
-## copy resources.yaml files to the pipline config directory
-#cp poirot_config/config/*.yaml ./${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/
-#cp -r poirot_config/references ./${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/
-#cp -r poirot_config/profiles/* ./${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/profiles/
 
-# # Pack all cloned repositories
-tar -zcvf ${PIPELINE_NAME}_${TAG_OR_BRANCH}.tar.gz ${PIPELINE_NAME}_${TAG_OR_BRANCH}
+# Set pipeline version in config paths
+export TAG_OR_BRANCH=${TAG_OR_BRANCH}
+envsubst < ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/profiles/Miarka/production/config.yaml \
+	> ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/profiles/Miarka/production/config.yaml.tmp \
+	&& mv ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/profiles/Miarka/production/config.yaml.tmp \
+	${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/profiles/Miarka/production/config.yaml
 
-# # Download containers and update container path if path to apptainer cache is not empty.
+envsubst < ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/profiles/Miarka/production_ctDNA/config.yaml \
+	> ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/profiles/Miarka/production_ctDNA/config.yaml.tmp \
+	&& mv ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/profiles/Miarka/production_ctDNA/config.yaml.tmp \
+	${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/profiles/Miarka/production_ctDNA/config.yaml
+
+envsubst < ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/profiles/Miarka/production_prio/config.yaml \
+	> ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/profiles/Miarka/production_prio/config.yaml.tmp \
+	&& mv ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/profiles/Miarka/production_prio/config.yaml.tmp \
+	${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/profiles/Miarka/production_prio/config.yaml
+
+envsubst < ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/config/Miarka/config_production_pipeline_miarka.yaml \
+	> ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/config/Miarka/config_production_pipeline_miarka.yaml.tmp \
+	&& mv ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/config/Miarka/config_production_pipeline_miarka.yaml.tmp \
+	${PIPELINE_NAME}_${TAG_OR_BRANCH}/${CONFIG_NAME}_${CONFIG_VERSION}/config/Miarka/config_production_pipeline_miarka.yaml
+
+# # Download containers and update container path.
 if [ ${APPT_CACHE_STATUS} == "build" ];
 then
-    hydra-genetics prepare-environment create-singularity-files -c config/config.yaml -o apptainer_cache
-    cp config/config.yaml config/config.yaml.copy
-    hydra-genetics prepare-environment container-path-update -c config/config.yaml.copy -n config/config.yaml -p ${PATH_TO_apptainer_cache}
+    hydra-genetics prepare-environment create-singularity-files -c ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml -o apptainer_cache
+    cp ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml.copy
+    hydra-genetics prepare-environment container-path-update -c ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml.copy -n ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml -p ${PATH_TO_apptainer_cache}
 fi
 
 # If apptainer already available remote and no new build is needed (specified by user). Only update path to cache in config.
 if [ ${APPT_CACHE_STATUS} == "update" ];
 then
-    cp config/config.yaml config/config.yaml.copy
-    hydra-genetics prepare-environment container-path-update -c config/config.yaml.copy -n config/config.yaml -p ${PATH_TO_apptainer_cache}
+    cp ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml.copy
+    hydra-genetics prepare-environment container-path-update -c ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml.copy -n ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml -p ${PATH_TO_apptainer_cache}
 fi
+
+
+# # Pack all cloned repositories
+tar -zcvf ${PIPELINE_NAME}_${TAG_OR_BRANCH}.tar.gz ${PIPELINE_NAME}_${TAG_OR_BRANCH}
 
 # Download references if given on command line
 if [ "$#" != 0 ];
