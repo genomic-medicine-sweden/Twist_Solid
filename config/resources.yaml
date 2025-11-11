@@ -85,6 +85,12 @@ gene_fuse:
   mem_mb: 36864
   mem_per_cpu: 6144
 
+optitype:
+  threads: 6
+  time: "4:00:00"
+  mem_mb: 36864
+  mem_per_cpu: 6144
+
 star:
   threads: 5
   time: "8:00:00"
