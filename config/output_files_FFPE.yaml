@@ -483,12 +483,6 @@ files:
     types:
       - T
       - N
-  - name: ITD
-    input: cnv_sv/scanitd/{sample}_{type}.vcf
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.ITD.vcf
-    types:
-      - T
-      - N
   - name: ITD filtered
     input: cnv_sv/scanitd/{sample}_{type}.filter.itd_hard_filter.vcf
     output: results/dna/{sample}_{type}/cnv/{sample}_{type}.ITD.hard_filter.vcf
