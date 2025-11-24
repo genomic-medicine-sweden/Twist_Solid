@@ -283,6 +283,21 @@ files:
     output: results/rna/{sample}_{type}/fusion/{sample}_{type}.exon_skipping.tsv
     types:
       - R
+  - name: CTAT-splicing unfiltered TSV
+    input: fusions/ctat_splicing_call/{sample}_{type}.cancer.introns
+    output: results/rna/{sample}_{type}/additional_files/fusion/{sample}_{type}.ctat.exon_skipping.unfiltered.tsv
+    types:
+      - R
+  - name: CTAT-splicing filtered TSV
+    input: fusions/ctat_splicing_filter/{sample}_{type}.cancer.introns.filtered.tsv
+    output: results/rna/{sample}_{type}/fusion/{sample}_{type}.ctat.exon_skipping.filtered.tsv
+    types:
+      - R
+  - name: CTAT-splicing html
+    input: fusions/ctat_splicing_call/{sample}_{type}.ctat-splicing.igv.html
+    output: results/rna/{sample}_{type}/fusion/{sample}_{type}.ctat.exon_skipping.igv.html
+    types:
+      - R
   - name: STAR Fusion prediction TSV
     input: fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv
     output: results/rna/{sample}_{type}/additional_files/fusion/{sample}_{type}.star-fusion.fusion_predictions.tsv
