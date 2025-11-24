@@ -189,11 +189,17 @@ def get_tc(wildcards):
             with open(tc_file) as f:
                 tc = f.read().strip()
         if tc == "" or float(tc) < 0.35:
-            return get_sample(samples, wildcards)["tumor_content"]
+            tc = float(get_sample(samples, wildcards)["tumor_content"])
+            if tc > 1:
+                tc = round(tc / 100, 2)
+            return str(tc)
         else:
             return tc
     elif tc_method == "pathology":
-        return get_sample(samples, wildcards)["tumor_content"]
+        tc = float(get_sample(samples, wildcards)["tumor_content"])
+        if tc > 1:
+            tc = round(tc / 100, 2)
+        return str(tc)
     else:
         tc_file = f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
         if not os.path.exists(tc_file):
