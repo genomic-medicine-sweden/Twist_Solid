@@ -16,7 +16,7 @@ modules:
   reports: "v0.10.1"
   snv_indels: "v1.1.0"
 
-output: "config/output_files.yaml"
+output: "config/output_files_FFPE.yaml"
 default_container: "docker://hydragenetics/common:3.1.1.1"
 
 trimmer_software: "fastp_pe"
