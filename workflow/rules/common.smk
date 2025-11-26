@@ -74,7 +74,13 @@ with open(config["output"]) as output:
 
 validate(output_spec, schema="../schemas/output_files.schema.yaml")
 
-## get version information on pipeline, containers and software
+### Load general report yaml file
+general_report_files_path = config["general_report"]
+with open(general_report_files_path) as f:
+    general_report = yaml.safe_load(f)
+
+
+### get version information on pipeline, containers and software
 
 pipeline_name = "Twist_Solid"
 pipeline_version = get_pipeline_version(workflow, pipeline_name=pipeline_name)
@@ -221,6 +227,38 @@ def get_tc_file(wildcards):
         return "samples.tsv"
     else:
         return f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+
+
+def resolve_dynamic_analyskod_path(wildcards, file_def):
+    """
+    Calculates and returns the fully resolved path for the 'analyskod' file.
+    """
+    analyskod = get_sample(samples, wildcards)["analyskod"][3:]
+    full_path = file_def["input"].format(sample=wildcards.sample, type=wildcards.type, analyskod_placeholder=analyskod)
+    return full_path
+
+
+def get_all_report_inputs(wildcards):
+    """
+    Iterates through the general_report file list and resolves paths.
+    """
+    # 1. Get the list of file definitions from your config (assuming general_report is loaded)
+    file_definitions = general_report["files"]
+    resolved_paths = []
+
+    for filedef in file_definitions:
+        # Check if this is the dynamic file definition
+        if filedef.get("name") == "Coverage and mutations based on analysis type (analyskod)":
+            # 2. Use the dynamic resolver function for the complex entry
+            path = resolve_dynamic_analyskod_path(wildcards, filedef)
+        else:
+            # 3. Use the standard Snakemake wildcard substitution for static entries
+            # Snakemake's 'input' function will automatically substitute {wildcard} here
+            path = filedef["input"].format(**wildcards)
+
+        resolved_paths.append(path)
+
+    return resolved_paths
 
 
 def generate_star_read_group(wildcards):

@@ -835,6 +835,9 @@ use rule * from reports exclude all as reports_*
 
 
 use rule general_json_report from reports as reports_general_json_report with:
+    input:
+        files=get_all_report_inputs,
+        output_files=config.get("general_report", {}),
     params:
         sample="{sample}_{type}",
         pipeline_version=pipeline_version,
