@@ -11,22 +11,6 @@ files:
     types:
       - T
       - N
-  - name: BAM umi
-    input: alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam
-    output: bam_dna/{sample}_{type}.umi.bam
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
-  - name: BAM umi index
-    input: alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai
-    output: bam_dna/{sample}_{type}.umi.bam.bai
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
   - name: Mutect2 INDEL BAM
     input: snv_indels/gatk_mutect2_merge/{sample}_{type}.bam
     output: bam_dna/mutect2_indel_bam/{sample}_{type}.bam
@@ -67,14 +51,6 @@ files:
     types:
       - T
       - N
-  - name: Exon-only soft-filtered VCF UMI
-    input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_soft_filter_umi.vcf
-    output: results/dna/{sample}_{type}/additional_files/vcf/{sample}_{type}.annotated.exon_only.filter.soft_filter.umi.vcf
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
   - name: Exon-only hard-filtered VCF
     input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.vcf
     output: results/dna/{sample}_{type}/additional_files/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.vcf
@@ -93,14 +69,6 @@ files:
     types:
       - T
       - N
-  - name: QCI umi VCF
-    input: snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter_umi.codon_snvs.sorted.vep_annotated.qci.vcf 
-    output: results/dna/{sample}_{type}/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.umi.qci.vcf
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
   - name: Caller VCF
     input: snv_indels/{caller}/{sample}_{type}.merged.vcf.gz
     output: results/dna/{sample}_{type}/additional_files/vcf/{caller}_{sample}_{type}.vcf.gz
@@ -241,8 +209,6 @@ files:
     types:
       - T
       - N
-    deduplication:
-      - ""
     analyskod:
       - ""
       - "GMS560"
@@ -252,8 +218,6 @@ files:
     types:
       - T
       - N
-    deduplication:
-      - ""
     analyskod:
       - "GMSBRC"
       - "GMSCRC"
@@ -263,14 +227,6 @@ files:
       - "GMSMTC"
       - "GMSENC"
       - "GMSURO"
-  - name: Results report umi DNA HTML
-    input: reports/general_html_report/{sample}_{type}.umi.general_report.html
-    output: results/dna/{sample}_{type}/{sample}_{type}.umi.general_report.html
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
   - name: MSI Sensor Pro filtered TSV
     input: biomarker/msisensor_pro/{sample}_{type}
     output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.msisensor_pro.filtered.score.tsv
@@ -289,14 +245,6 @@ files:
     types:
       - T
       - N
-  - name: TMB umi
-    input: biomarker/tmb/{sample}_{type}.umi.TMB.txt
-    output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.umi.TMB.txt
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
   - name: HRD score - PureCN
     input: biomarker/scarhrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt
     output: results/dna/{sample}_{type}/additional_files/biomarker/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt
@@ -335,6 +283,21 @@ files:
     output: results/rna/{sample}_{type}/fusion/{sample}_{type}.exon_skipping.tsv
     types:
       - R
+  - name: CTAT-splicing unfiltered TSV
+    input: fusions/ctat_splicing_call/{sample}_{type}.cancer.introns
+    output: results/rna/{sample}_{type}/additional_files/fusion/{sample}_{type}.ctat.exon_skipping.unfiltered.tsv
+    types:
+      - R
+  - name: CTAT-splicing filtered TSV
+    input: fusions/ctat_splicing_filter/{sample}_{type}.cancer.introns.filtered.tsv
+    output: results/rna/{sample}_{type}/fusion/{sample}_{type}.ctat.exon_skipping.filtered.tsv
+    types:
+      - R
+  - name: CTAT-splicing html
+    input: fusions/ctat_splicing_call/{sample}_{type}.ctat-splicing.igv.html
+    output: results/rna/{sample}_{type}/fusion/{sample}_{type}.ctat.exon_skipping.igv.html
+    types:
+      - R
   - name: STAR Fusion prediction TSV
     input: fusions/star_fusion/{sample}_{type}/star-fusion.fusion_predictions.tsv
     output: results/rna/{sample}_{type}/additional_files/fusion/{sample}_{type}.star-fusion.fusion_predictions.tsv
@@ -351,8 +314,6 @@ files:
     types:
       - T
       - N
-    deduplication:
-      - ""
     analyskod:
       - ""
       - "GMS560"
@@ -362,27 +323,9 @@ files:
     types:
       - T
       - N
-    deduplication:
-      - ""
     analyskod:
       - ""
       - "GMS560"
-  - name: GeneFuse report
-    input: fusions/report_gene_fuse/{sample}_{type}.gene_fuse_report.tsv
-    output: results/dna/{sample}_{type}/fusion/{sample}_{type}.gene_fuse_report.umi.tsv
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
-  - name: GeneFuse fusions unfiltered
-    input: fusions/gene_fuse/{sample}_{type}_gene_fuse_fusions.txt
-    output: results/dna/{sample}_{type}/additional_files/fusion/{sample}_{type}.gene_fuse.unfiltered.results.txt
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
   - name: JuLI fusions
     input: fusions/juli_call/{sample}_{type}.annotated.filtered.txt
     output: results/dna/{sample}_{type}/fusion/{sample}_{type}.juli.filtered.fusions.txt
@@ -543,18 +486,6 @@ files:
     output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.manta_tumorSV.vcf.gz
     types:
       - T
-  - name: HLA optitype
-    input: biomarker/optitype/{sample}_{type}/{sample}_{type}_hla_type_result.tsv
-    output: results/dna/{sample}_{type}/hla/{sample}_{type}_hla_type_result.tsv
-    types:
-      - T
-      - N
-  - name: HLA coverage optitype
-    input: biomarker/optitype/{sample}_{type}/{sample}_{type}_hla_type_coverage_plot.pdf
-    output: results/dna/{sample}_{type}/hla/{sample}_{type}_hla_type_coverage_plot.pdf
-    types:
-      - T
-      - N
   - name: ctDNA fraction
     input: cnv_sv/estimate_ctdna_fraction/{sample}_{type}.ctDNA_fraction.tsv
     output: results/dna/{sample}_{type}/cnv/{sample}_{type}.ctDNA_fraction.tsv
@@ -567,63 +498,9 @@ files:
     types:
       - T
       - N
-  - name: ITD
-    input: cnv_sv/scanitd/{sample}_{type}.vcf
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.ITD.vcf
-    types:
-      - T
-      - N
   - name: ITD filtered
     input: cnv_sv/scanitd/{sample}_{type}.filter.itd_hard_filter.vcf
     output: results/dna/{sample}_{type}/cnv/{sample}_{type}.ITD.hard_filter.vcf
     types:
       - T
       - N
-  - name: Fragmentomics end-motifs
-    input: biomarker/finaletoolkit_end_motifs/{sample}_{type}.end-motifs.tsv
-    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.end-motifs.tsv
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
-  - name: Fragmentomics mds
-    input: biomarker/finaletoolkit_mds/{sample}_{type}.mds.txt
-    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.mds.txt
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
-  - name: Fragmentomics interval-end-motifs
-    input: biomarker/finaletoolkit_interval_end_motifs/{sample}_{type}.interval-end-motifs.tsv
-    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.interval-end-motifs.tsv
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
-  - name: Fragmentomics interval-mds
-    input: biomarker/finaletoolkit_interval_mds/{sample}_{type}.interval-mds.txt
-    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.interval-mds.txt
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
-  - name: Fragmentomics fragment length bins 
-    input: biomarker/finaletoolkit_frag_length_bins/{sample}_{type}.frag-length-bins.tsv
-    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.frag-length-bins.tsv
-    types:
-      - T
-      - N
-    deduplication:
-      - umi
-  - name: Fragmentomics fragment length score
-    input: biomarker/fragmentomics_fragment_length_patient_score/{sample}_{type}.fragment_length_patient_score.txt
-    output: results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.fragment_length_score.txt
-    types:
-      - T
-      - N
-    deduplication:
-      - umi

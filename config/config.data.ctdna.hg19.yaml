@@ -3,7 +3,9 @@ PROJECT_DESIGN_DATA: ""
 PROJECT_PON_DATA: ""
 PROJECT_REF_DATA: ""
 
+deduplication: "umi"
 general_report: "config/reports/general_report.umi.yaml"
+output: "config/output_files_ctDNA.yaml"
 
 reference:
   background: "{{PROJECT_PON_DATA}}/GMS560/Background/background_panel_cfDNA_nextseq2000_24.tsv"

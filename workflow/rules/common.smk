@@ -74,7 +74,13 @@ with open(config["output"]) as output:
 
 validate(output_spec, schema="../schemas/output_files.schema.yaml")
 
-## get version information on pipeline, containers and software
+### Load general report yaml file
+general_report_files_path = config["general_report"]
+with open(general_report_files_path) as f:
+    general_report = yaml.safe_load(f)
+
+
+### get version information on pipeline, containers and software
 
 pipeline_name = "Twist_Solid"
 pipeline_version = get_pipeline_version(workflow, pipeline_name=pipeline_name)
@@ -129,7 +135,6 @@ def compile_output_list(wildcards):
             [
                 filedef["output"].format(sample=sample, type=unit_type, caller=caller)
                 for sample in samples.index
-                if "deduplication" not in filedef or samples.loc[sample].get("deduplication", "") in filedef["deduplication"]
                 if "analyskod" not in filedef or samples.loc[sample].get("analyskod", "") in filedef["analyskod"]
                 for unit_type in get_unit_types(units, sample)
                 if unit_type in set(filedef["types"]).intersection(types)
@@ -140,40 +145,35 @@ def compile_output_list(wildcards):
 
 
 def get_hotspot_report_vcf_input(wildcards):
-    sample = get_sample(samples, wildcards)
-    if sample.get("deduplication", "") == "umi":
+    if config["deduplication"] == "umi":
         return "snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter_umi.codon_snvs.sorted"
     else:
         return "snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted"
 
 
 def get_deduplication_bam_input(wildcards):
-    sample = get_sample(samples, wildcards)
-    if sample.get("deduplication", "") == "umi":
+    if config["deduplication"] == "umi":
         return "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"
     else:
         return "alignment/samtools_merge_bam/{sample}_{type}.bam"
 
 
 def get_deduplication_bam_input_manta(wildcards):
-    sample = get_sample(samples, wildcards)
-    if sample.get("deduplication", "") == "umi":
+    if config["deduplication"] == "umi":
         return "alignment/bwa_mem_realign_consensus_reads/{sample}_T.umi.bam"
     else:
         return "alignment/samtools_merge_bam/{sample}_T.bam"
 
 
 def get_deduplication_bam_chr_input(wildcards):
-    sample = get_sample(samples, wildcards)
-    if sample.get("deduplication", "") == "umi":
+    if config["deduplication"] == "umi":
         return "alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam"
     else:
         return "alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam"
 
 
 def get_vardict_min_af(wildcards):
-    sample = get_sample(samples, wildcards)
-    if sample.get("deduplication", "") == "umi":
+    if config["deduplication"] == "umi":
         return config.get("vardict", {}).get("allele_frequency_threshold_umi", "0.001")
     else:
         return config.get("vardict", {}).get("allele_frequency_threshold", "0.01")
@@ -195,11 +195,17 @@ def get_tc(wildcards):
             with open(tc_file) as f:
                 tc = f.read().strip()
         if tc == "" or float(tc) < 0.35:
-            return get_sample(samples, wildcards)["tumor_content"]
+            tc = float(get_sample(samples, wildcards)["tumor_content"])
+            if tc > 1:
+                tc = round(tc / 100, 2)
+            return str(tc)
         else:
             return tc
     elif tc_method == "pathology":
-        return get_sample(samples, wildcards)["tumor_content"]
+        tc = float(get_sample(samples, wildcards)["tumor_content"])
+        if tc > 1:
+            tc = round(tc / 100, 2)
+        return str(tc)
     else:
         tc_file = f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
         if not os.path.exists(tc_file):
@@ -221,6 +227,38 @@ def get_tc_file(wildcards):
         return "samples.tsv"
     else:
         return f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+
+
+def resolve_dynamic_analyskod_path(wildcards, file_def):
+    """
+    Calculates and returns the fully resolved path for the 'analyskod' file.
+    """
+    analyskod = get_sample(samples, wildcards)["analyskod"][3:]
+    full_path = file_def["input"].format(sample=wildcards.sample, type=wildcards.type, analyskod_placeholder=analyskod)
+    return full_path
+
+
+def get_all_report_inputs(wildcards):
+    """
+    Iterates through the general_report file list and resolves paths.
+    """
+    # 1. Get the list of file definitions from your config (assuming general_report is loaded)
+    file_definitions = general_report["files"]
+    resolved_paths = []
+
+    for filedef in file_definitions:
+        # Check if this is the dynamic file definition
+        if filedef.get("name") == "Coverage and mutations based on analysis type (analyskod)":
+            # 2. Use the dynamic resolver function for the complex entry
+            path = resolve_dynamic_analyskod_path(wildcards, filedef)
+        else:
+            # 3. Use the standard Snakemake wildcard substitution for static entries
+            # Snakemake's 'input' function will automatically substitute {wildcard} here
+            path = filedef["input"].format(**wildcards)
+
+        resolved_paths.append(path)
+
+    return resolved_paths
 
 
 def generate_star_read_group(wildcards):

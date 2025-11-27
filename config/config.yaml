@@ -4,7 +4,19 @@ units: "units.tsv"
 
 #hydra_local_path: "PATH_TO_REPO"
 
-output: "config/output_files.yaml"
+modules:
+  alignment: "v0.7.0"
+  annotation: "v1.1.0"
+  biomarker: "v0.7.0"
+  cnv_sv: "v0.9.0"
+  filtering: "v0.3.0"
+  fusions: "v0.3.0"
+  prealignment: "v1.3.0"
+  qc: "v0.5.0"
+  reports: "v0.10.1"
+  snv_indels: "v1.1.0"
+
+output: "config/output_files_FFPE.yaml"
 default_container: "docker://hydragenetics/common:3.1.1.1"
 
 trimmer_software: "fastp_pe"
@@ -101,6 +113,9 @@ cnv_tsv_report:
   normal_cn_upper_limit: 2.25
   polyploidy_fraction_limit: 0.2
   max_cnv_fp_size: 15000000
+
+ctat_splicing_call:
+  container: "docker://hydragenetics/ctat-splicing:0.0.3"
 
 estimate_ctdna_fraction:
   gnomAD_AF_limit: 0.00001

@@ -3,7 +3,9 @@ PROJECT_DESIGN_DATA: ""
 PROJECT_PON_DATA: ""
 PROJECT_REF_DATA: ""
 
+deduplication: "markduplicates"
 general_report: "config/reports/general_report.yaml"
+output: "config/output_files_FFPE.yaml"
 
 reference:
   background: "{{PROJECT_PON_DATA}}/GMS560/Background/background_panel_nextseq_noUmea_27_dp500_af015_hg38.tsv"
@@ -71,6 +73,12 @@ cnvkit_batch_hrd:
 
 cnv_tsv_report:
   chrom_arm_size: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/chromosome_arm_size.tsv"
+
+ctat_splicing_call:
+  ctat_genome_lib_path: "{{PROJECT_REF_DATA}}/ref_data/star-fusion/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir"
+
+ctat_splicing_filter:
+  filtering_file: "{{PROJECT_DESIGN_DATA}}/GMS560/rna_fusion/filter_ctat_splicing.tsv"
 
 estimate_ctdna_fraction:
   problematic_regions_beds:
