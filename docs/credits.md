@@ -4,10 +4,12 @@
 - Jonas Almlöf
 - Patrik Smeds
 - Niklas Mälher
+- Chelsea Ramsin
 
 ## Contributors
-
 - Erik Demitz
+- Fanny Berglund
+- Monika Brandt
 
 ## Testers
 - Hanna Söderström

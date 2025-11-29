@@ -75,6 +75,8 @@ singularity-args: "-e --cleanenv -B /projects -B /data -B /beegfs
 drmaa: " -A wp1 -N 1-1 -t {resources.time} -n {resources.threads} --mem={resources.mem_mb} --mem-per-cpu={resources.mem_per_cpu} --mem-per-cpu={resources.mem_per_cpu} --partition={resources.partition} -J {rule} -e slurm_out/{rule}_%j.err -o slurm_out/{rule}_%j.out"
 drmaa-log-dir: "slurm_out"
 default-resources: [threads=1, time="04:00:00", partition="low", mem_mb="3074", mem_per_cpu="3074"]
+singularity-prefix: "/path/to/singularity_cache/"
+wrapper-prefix: "https://github.com/hydra-genetics/snakemake-wrappers/raw/"
 ```
 
 ## samples.tsv and units.tsv

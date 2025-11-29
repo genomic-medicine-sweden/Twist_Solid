@@ -13,7 +13,7 @@
 
 - [python](https://www.python.org/), version 3.9 or newer
 - [pip3](https://pypi.org/project/pip/)
-- [virtuelenv](https://docs.python.org/3/library/venv.html)
+- [virtualenv](https://docs.python.org/3/library/venv.html)
 - [singularity](https://docs.sylabs.io/guides/3.5/user-guide/introduction.html)
 
 **Nice to have**
@@ -89,13 +89,15 @@ The pipeline uses sample input files (`samples.tsv` and `units.tsv`) with inform
 hydra-genetics create-input-files -d path/to/fastq-files/
 ```
 
+**Note**: Sample names cannot include "_" (underscore)!
+
 ## Run command
 Using the activated python virtual environment created above, this is a basic command for running the pipeline:
 ```bash
 snakemake --profile profiles/NAME_OF_PROFILE -s workflow/Snakefile
 ```  
 <br />
-The are many additional [snakemake running options](https://snakemake.readthedocs.io/en/stable/executing/cli.html#) some of which is listed below. However, options that are always used should be put in the [profile](https://hydra-genetics.readthedocs.io/en/latest/run_pipeline/profile/).
+There are many additional [snakemake running options](https://snakemake.readthedocs.io/en/stable/executing/cli.html#) some of which is listed below. However, options that are always used should be put in the [profile](https://hydra-genetics.readthedocs.io/en/latest/run_pipeline/profile/).
 
 * --notemp - Saves all intermediate files. Good for development and testing different options.
 * --until <rule> - Runs only rules dependent on the specified rule.

@@ -34,10 +34,21 @@ Requires:
 # - snakemake-wrappers
 # - hydra-genetics modules
 # - conda env
+# - config files
 TAG_OR_BRANCH="vX.Y.X" bash build/build_conda.sh
 ```
 
-## Download  Containers
+The script `build/build_conda.sh` performs the following steps:
+1. Clones the pipeline repository.
+2. Creates a conda environment and installs requirements.
+3. Packs the conda environment.
+4. Clones `snakemake-wrappers` and `hydra-genetics` modules.
+5. Downloads configuration files.
+6. Updates configuration paths using `envsubst`.
+7. Downloads containers (optional).
+8. Packs everything into a tarball `Twist_Solid_{TAG_OR_BRANCH}.tar.gz`.
+
+## Download containers
 ```bash
 # NOTE: singularity command need to be available for this step
 hydra-genetics prepare-environment create-singularity-files -c config/config.yaml -o singularity_cache 
@@ -112,9 +123,11 @@ Point to uploaded reference files
 ```yaml
 # config/config.data.hg19.yaml
 # Update the following lines:
-PROJECT_DESIGN_DATA: "{EXTRACT_PATH}/design_and_ref_files"
-PROJECT_PON_DATA: "{EXTRACT_PATH}/design_and_ref_files"
-PROJECT_REF_DATA: "{EXTRACT_PATH}/design_and_ref_files"
+# Adjust config so that all reference files have the {{REFERENCE_DATA}} variable
+REFERENCE_DATA: "{EXTRACT_PATH}/design_and_ref_files"
+PROJECT_DESIGN_DATA: "{{REFERENCE_DATA}}"
+PROJECT_PON_DATA: "{{REFERENCE_DATA}}"
+PROJECT_REF_DATA: "{{REFERENCE_DATA}}"
 ```
 
 ### Config.yaml files
@@ -132,6 +145,8 @@ Add path to local singularities
 cp config/config.yaml config/config.yaml.copy
 hydra-genetics prepare-environment container-path-update -c config/config.yaml.copy -n config/config.yaml -p ${PATH_TO_singularity_cache}
 ```
+
+The path to the apptainer cache can also be given once at the top of the config, much like the REFERENCE_DATA variable.
 
 ### Profile
 
