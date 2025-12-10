@@ -56,12 +56,6 @@ files:
     input: results/dna/{sample}_{type}/cnv/{sample}_{type}.ITD.hard_filter.vcf
     description: internal tandem duplications (ITD) called by scanITD
     nav_header: CNV
-
-  - name: JuLI
-    type: file_table
-    input: results/dna/{sample}_{type}/fusion/{sample}_{type}.juli.filtered.fusions.txt
-    description: JuLI report
-    nav_header: Fusions
     
   - name: MultiQC
     type: multiqc
