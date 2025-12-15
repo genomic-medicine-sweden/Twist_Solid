@@ -33,6 +33,11 @@ files:
     output: bam_rna/{sample}_{type}.star_fusion.bam
     types:
       - R
+  - name: Mutect2 RNA VCF
+    input: snv_indels/gatk_mutect2/{sample}_{type}.normalized.vep_annotated.filter.rna_snv_hard_filter.vcf.gz
+    output: results/rna/{sample}_{type}/vcf/{sample}_{type}.mutect2.hard_filtered.vcf.gz
+    types:
+      - R
   - name: Mosdepth GVCF
     input: qc/add_mosdepth_coverage_to_gvcf/{sample}_{type}.mosdepth.g.vcf.gz
     output: gvcf_dna/{sample}_{type}.mosdepth.g.vcf.gz

@@ -14,7 +14,8 @@ modules:
   prealignment: "v1.3.0"
   qc: "v0.5.0"
   reports: "v0.10.1"
-  snv_indels: "v1.1.0"
+  #snv_indels: "v1.1.0"
+  snv_indels: "bf06347"
 
 output: "config/output_files_FFPE.yaml"
 default_container: "docker://hydragenetics/common:3.1.1.1"
@@ -162,6 +163,7 @@ filter_vcf:
   cnv_hard_filter_loh: "config/filters/config_hard_filter_cnv_loh.yaml"
   germline: "config/filters/config_hard_filter_germline_vep105.yaml"
   itd_hard_filter: "config/filters/config_hard_filter_scanitd.yaml"
+  rna_snv_hard_filter: "config/filters/config_hard_filter_rna_snv.yaml"
 
 filter_fuseq_wes:
   min_support: 50

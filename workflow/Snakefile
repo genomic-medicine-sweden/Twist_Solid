@@ -36,6 +36,7 @@ ruleorder: qc_picard_collect_alignment_summary_metrics_rna > qc_picard_collect_a
 ruleorder: qc_picard_collect_hs_metrics_rna > qc_picard_collect_hs_metrics
 ruleorder: snv_indels_bcftools_sort > snv_indels_bgzip
 ruleorder: snv_indels_gatk_mutect2_gvcf > alignment_samtools_sort
+ruleorder: snv_indels_gatk_mutect2_rna > snv_indels_tabix
 ruleorder: snv_indels_bgzip > cnv_sv_bgzip
 ruleorder: snv_indels_tabix > cnv_sv_tabix
 ruleorder: annotation_add_mosdepth_coverage_to_gvcf > snv_indels_bgzip
@@ -317,6 +318,46 @@ use rule gatk_mutect2 from snv_indels as snv_indels_gatk_mutect2 with:
         bai=lambda wildcards: "%s%s" % (get_deduplication_bam_chr_input(wildcards), ".bai"),
         fasta=config.get("reference", {}).get("fasta", ""),
         bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
+    wildcard_constraints:
+        type="T|N",
+
+
+use rule bed_split from snv_indels as snv_indels_bed_split_rna with:
+    input:
+        bed=config.get("reference", {}).get("design_bed_rna", ""),
+    output:
+        bed=temp("snv_indels/bed_split_rna/design_bedfile_{chr}.bed"),
+
+
+use rule gatk_split_n_cigar_reads from snv_indels as snv_indels_gatk_split_n_cigar_reads_rna with:
+    input:
+        bam="alignment/star/{sample}_{type}.bam",
+        bai="alignment/star/{sample}_{type}.bam.bai",
+        ref=config.get("reference", {}).get("fasta", ""),
+    output:
+        bam=temp("snv_indels/gatk_split_n_cigar_reads_rna/{sample}_{type}.bam"),
+    wildcard_constraints:
+        type="R",
+
+
+use rule samtools_extract_reads from alignment as alignment_samtools_extract_reads_rna_split with:
+    input:
+        bam="snv_indels/gatk_split_n_cigar_reads_rna/{sample}_{type}.bam",
+        bai="snv_indels/gatk_split_n_cigar_reads_rna/{sample}_{type}.bam.bai",
+    output:
+        bam=temp("alignment/star_split/{sample}_{type}_{chr}.bam"),
+    wildcard_constraints:
+        type="R",
+
+
+use rule gatk_mutect2 from snv_indels as snv_indels_gatk_mutect2_rna with:
+    input:
+        map="alignment/star_split/{sample}_{type}_{chr}.bam",
+        bai="alignment/star_split/{sample}_{type}_{chr}.bam.bai",
+        fasta=config.get("reference", {}).get("fasta", ""),
+        bed="snv_indels/bed_split_rna/design_bedfile_{chr}.bed",
+    wildcard_constraints:
+        type="R",
 
 
 use rule gatk_mutect2_gvcf from snv_indels as snv_indels_gatk_mutect2_gvcf with:
