@@ -109,4 +109,11 @@ levels:
 
 * `results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv`
 
+## Sample mixup check
+The sample mixup check compares the ID-SNPs in the DNA sample to the RNA sample in the same analysis and reports sample similarities to be able to discern sample mixups. The check is performed by the in-house script [sample_mixup_check.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/sample_mixup_check.py) ([rule and config](softwares.md#sample_mixup_check)).
+
+### Result file
+
+* `results/sample_mixup_check.tsv`
+
 <br />

@@ -19,4 +19,14 @@ digraph snakemake_dag {
 	5 -> 4
 	3 -> 7
 	8 -> 5
+	
+	// ctDNA specific
+	20[label = "fgbio_copy_umi", color = "0.70 0.6 0.85", style="rounded"];
+	21[label = "fgbio_group_reads", color = "0.75 0.6 0.85", style="rounded"];
+	22[label = "fgbio_call_consensus", color = "0.80 0.6 0.85", style="rounded"];
+	
+	5 -> 20
+	20 -> 21
+	21 -> 22
+	22 -> 3
 }            

@@ -8,9 +8,19 @@ See the [alignment hydra-genetics module](https://hydra-genetics-alignment.readt
 
 * `bam_dna/{sample}_{type}.bam`
 * `bam_dna/{sample}_{type}.bam.bai`
+* `bam_dna/{sample}_{type}.umi.bam` (ctDNA only)
+* `bam_dna/{sample}_{type}.umi.bam.bai` (ctDNA only)
 
-## Alignment with BWA-mem
+## Alignment (FFPE)
 Alignment of fastq files into bam files is performed by **[bwa-mem](https://github.com/lh3/bwa)** v0.7.17 using the non-merged trimmed fastq files. This make it possible to speed up alignent by utlizing parallization and also make it possible to analyze qc for lanes separately. Bamfile are then directly sorted by **[samtools sort](http://www.htslib.org/doc/samtools-sort.html)** v1.15.
+
+## Alignment (ctDNA)
+Alignment of ctDNA samples is performed using **[bwa-mem](https://github.com/lh3/bwa)** v0.7.17. To handle UMI (Unique Molecular Identifier) tags, the reads are processed to consensus reads to correct for PCR and sequencing errors. This is done using **[fgbio](http://fulcrumgenomics.github.io/fgbio/)**.
+
+The UMI processing involves the following steps:
+1.  **Copy UMI**: Copies the UMI at the end of the BAM’s read name to the RX tag using `fgbio CopyUmiFromReadName`.
+2.  **Group Reads**: Group and sort reads based on UMI using `fgbio GroupReadsByUmi`.
+3.  **Call Consensus**: Call and filter consensus reads based on UMIs using `fgbio CallDuplexConsensusReads` followed by `fgbio FilterConsensusReads`.
 
 ### Read groups
 Bam file read groups are set according to sequencing information in the `units.tsv` file.

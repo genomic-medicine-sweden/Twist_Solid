@@ -100,4 +100,15 @@ The output from FuSeq_WES is filtered and then reported into a fusion report usi
 
 * `results/dna/{sample}_{type}/fusion/{sample}_{type}.fuseq_wes_report.tsv`
 
+
+## Fusions calling using JuLI
+Fusion calling for ctDNA is performed by **[JuLI](https://github.com/sgilab/JuLI)**. The process involves:
+1.  **Calling**: Call fusions in DNA data.
+2.  **Annotation**: Annotate fusions called by JuLI.
+3.  **Filtering**: Filter fusions using the in-house script `filter_juli.py`.
+
+### Result file
+
+* `results/dna/{sample}_{type}/fusion/{sample}_{type}.juli.filtered.fusions.txt`
+
 <br />
