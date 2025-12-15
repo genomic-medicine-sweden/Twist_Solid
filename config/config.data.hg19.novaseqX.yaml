@@ -1,0 +1,25 @@
+
+reference:
+  background: "{{PROJECT_PON_DATA}}/GMS560/Background/background_panel_novaseqX_24_updated.tsv"
+  artifacts: "{{PROJECT_PON_DATA}}/GMS560/Artifact/artifact_panel_novaseqX_24_updated.tsv"
+  design_intervals_gatk_cnv: "{{PROJECT_DESIGN_DATA}}/GMS560/design/gatk.preprocessed.novaseqX_24_updated.interval_list"
+
+cnvkit_batch:
+  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/cnvkit_novaseqX_24_updated.cnn"
+
+gatk_denoise_read_counts:
+  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/gatk_cnv_novaseqX_24_updated.hdf5"
+
+jumble_run:
+  normal_reference: "{{PROJECT_PON_DATA}}/GMS560/PoN/jumble_novaseqX_24_updated.RDS"
+
+msisensor_pro_filter_sites:
+  PoN: "{{PROJECT_PON_DATA}}/GMS560/PoN/Msisensor_pro_reference_novaseqX_24_updated.list_baseline"
+
+purecn:
+  extra: "--model betabin --mapping-bias-file {{PROJECT_PON_DATA}}/GMS560/purecn/mapping_bias_novaseqX_24_updated.rds"
+  normaldb: "{{PROJECT_PON_DATA}}/GMS560/purecn/normalDB_novaseqX_24_updated.rds"
+  intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/purecn/targets_twist-gms-st_hg19_25000_novaseqX_24_updated_intervals.txt"
+
+purecn_coverage:
+  intervals: "{{PROJECT_DESIGN_DATA}}/GMS560/purecn/targets_twist-gms-st_hg19_25000_novaseqX_24_updated_intervals.txt"
