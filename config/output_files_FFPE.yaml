@@ -138,6 +138,8 @@ files:
       - T
       - N
     analyskod:
+      - ""
+      - "GMS560"
       - "GMSBRC"
   - name: Coverage and mutations CRC
     input: qc/hotspot_report/{sample}_{type}.CRC.aa_translated.tsv
@@ -156,6 +158,8 @@ files:
       - T
       - N
     analyskod:
+      - ""
+      - "GMS560"
       - "GMSGIS"
   - name: Coverage and mutations LUN
     input: qc/hotspot_report/{sample}_{type}.LUN.aa_translated.tsv
@@ -164,6 +168,8 @@ files:
       - T
       - N
     analyskod:
+      - ""
+      - "GMS560"
       - "GMSLUN"
   - name: Coverage and mutations MEL
     input: qc/hotspot_report/{sample}_{type}.MEL.aa_translated.tsv
@@ -172,6 +178,8 @@ files:
       - T
       - N
     analyskod:
+      - ""
+      - "GMS560"
       - "GMSMEL"
   - name: Coverage and mutations MTC
     input: qc/hotspot_report/{sample}_{type}.MTC.aa_translated.tsv
@@ -180,6 +188,8 @@ files:
       - T
       - N
     analyskod:
+      - ""
+      - "GMS560"
       - "GMSMTC"
   - name: Contamination table
     input: qc/gatk_calculate_contamination/{sample}_{type}.contamination.table

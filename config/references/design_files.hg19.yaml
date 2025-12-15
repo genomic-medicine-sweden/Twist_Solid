@@ -306,6 +306,16 @@
      path: GMS560/purecn/targets_twist-gms-st_hg19_25000_cfDNA_intervals.txt
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/52731440?private_link=88202740beb6fcbac09d
+   intervals_novaseqX: 
+     checksum: a19ef4a67f3d370daaac4890fae25097
+     path: GMS560/purecn/targets_twist-gms-st_hg19_25000_novaseqX_24_updated_intervals.txt 
+     type: file
+     url: https://figshare.scilifelab.se/ndownloader/files/52731440?private_link=88202740beb6fcbac09d
+   intervals_novaseqX_cfDNA: 
+     checksum: a19ef4a67f3d370daaac4890fae25097
+     path: GMS560/purecn/targets_twist-gms-st_hg19_25000_cfDNA_novaseqX_intervals.txt 
+     type: file
+     url: https://figshare.scilifelab.se/ndownloader/files/52731440?private_link=88202740beb6fcbac09d
 
  report_fusions:
    annotation_bed:
@@ -343,6 +353,16 @@
      path: GMS560/design/gatk.preprocessed.cfDNA_nextseq2000_24.interval_list
      type: file
      url: https://figshare.scilifelab.se/ndownloader/files/52731446?private_link=88202740beb6fcbac09d
+   design_intervals_gatk_cnv_novaseqX:
+     checksum: b3dbb69ea4adeed19c01de0896295fa3
+     path: GMS560/design/gatk.preprocessed.novaseqX_24_updated.interval_list
+     type: file
+     url: https://figshare.com/ndownloader/files/60375116?private_link=88202740beb6fcbac09d
+   design_intervals_gatk_cnv_novaseqX_cfDNA:
+     checksum: b3dbb69ea4adeed19c01de0896295fa3
+     path: GMS560/design/gatk.preprocessed.cfDNA_novaseqX_24.interval_list
+     type: file
+     url: https://figshare.com/ndownloader/files/60375119?private_link=88202740beb6fcbac09d
   
    design_intervals_rna:
      checksum: 5e38c3495625d3f854859eddf1643ff7
