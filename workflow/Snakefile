@@ -335,15 +335,15 @@ use rule gatk_split_n_cigar_reads from snv_indels as snv_indels_gatk_split_n_cig
         bai="alignment/star/{sample}_{type}.bam.bai",
         ref=config.get("reference", {}).get("fasta", ""),
     output:
-        bam=temp("snv_indels/gatk_split_n_cigar_reads_rna/{sample}_{type}.bam"),
+        bam=temp("snv_indels/gatk_split_n_cigar_reads/{sample}_{type}.bam"),
     wildcard_constraints:
         type="R",
 
 
 use rule samtools_extract_reads from alignment as alignment_samtools_extract_reads_rna_split with:
     input:
-        bam="snv_indels/gatk_split_n_cigar_reads_rna/{sample}_{type}.bam",
-        bai="snv_indels/gatk_split_n_cigar_reads_rna/{sample}_{type}.bam.bai",
+        bam="snv_indels/gatk_split_n_cigar_reads/{sample}_{type}.bam",
+        bai="snv_indels/gatk_split_n_cigar_reads/{sample}_{type}.bam.bai",
     output:
         bam=temp("alignment/star_split/{sample}_{type}_{chr}.bam"),
     wildcard_constraints:
