@@ -22,7 +22,7 @@ files:
     nav_header: Biomarkers
   - name: MSI filtered
     type: file_table
-    description: MSI score (grey region 2-6%). Filtering based on ~400 known msi-sites. 
+    description: MSI score (grey zone 2.5-6%). Filtering based on ~400 known msi-sites. 
     input: results/dna/{sample}_{type}/biomarker/{sample}_{type}.msisensor_pro.filtered.score.tsv
     nav_header: Biomarkers
   - name: MSI unfiltered
