@@ -231,6 +231,9 @@ gatk_mutect2_gvcf:
 gatk_mutect2_merge_stats:
   container: "docker://hydragenetics/gatk4:4.1.9.0"
 
+gatk_split_n_cigar_reads:
+  container: "docker://hydragenetics/gatk4:4.1.9.0"
+
 gene_fuse:
   container: "docker://hydragenetics/genefuse:0.6.1"
 
