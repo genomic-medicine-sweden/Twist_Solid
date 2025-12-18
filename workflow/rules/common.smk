@@ -271,6 +271,24 @@ def generate_star_read_group(wildcards):
     )
 
 
+def get_gatk_mutect2_rna_extra(wildcards: snakemake.io.Wildcards, name: str):
+    extra = "{} {}".format(
+        config.get(name, {}).get("extra", ""),
+        "--intervals snv_indels/bed_split/design_rna_bedfile_{}.bed".format(
+            wildcards.chr,
+        ),
+    )
+    extra = "{} {}".format(
+        extra,
+        "--f1r2-tar-gz snv_indels/gatk_mutect2/{}_{}_{}.unfiltered.f1r2.tar.gz".format(
+            wildcards.sample,
+            wildcards.type,
+            wildcards.chr,
+        ),
+    )
+    return extra
+
+
 def generate_copy_code(workflow, output_spec):
     code = ""
     for filedef in output_spec["files"]:

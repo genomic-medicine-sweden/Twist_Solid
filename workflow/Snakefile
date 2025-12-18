@@ -40,6 +40,7 @@ ruleorder: snv_indels_gatk_mutect2_rna > snv_indels_tabix
 ruleorder: snv_indels_bgzip > cnv_sv_bgzip
 ruleorder: snv_indels_tabix > cnv_sv_tabix
 ruleorder: annotation_add_mosdepth_coverage_to_gvcf > snv_indels_bgzip
+ruleorder: snv_indels_gatk_split_n_cigar_reads_rna > snv_indels_gatk_split_n_cigar_reads
 
 
 wildcard_constraints:
@@ -337,7 +338,7 @@ use rule gatk_split_n_cigar_reads from snv_indels as snv_indels_gatk_split_n_cig
     input:
         bam="alignment/star/{sample}_{type}.bam",
         bai="alignment/star/{sample}_{type}.bam.bai",
-        ref=config.get("reference", {}).get("fasta_rna", ""),
+        ref=config.get("reference", {}).get("fasta", ""),
     output:
         bam=temp("snv_indels/gatk_split_n_cigar_reads/{sample}_{type}.bam"),
     wildcard_constraints:
@@ -358,8 +359,10 @@ use rule gatk_mutect2 from snv_indels as snv_indels_gatk_mutect2_rna with:
     input:
         map="alignment/star_split/{sample}_{type}_{chr}.bam",
         bai="alignment/star_split/{sample}_{type}_{chr}.bam.bai",
-        fasta=config.get("reference", {}).get("fasta_rna", ""),
+        fasta=config.get("reference", {}).get("fasta", ""),
         bed="snv_indels/bed_split/design_rna_bedfile_{chr}.bed",
+    params:
+        extra=lambda wildcards: get_gatk_mutect2_rna_extra(wildcards, "gatk_mutect2"),
     wildcard_constraints:
         type="R",
 
