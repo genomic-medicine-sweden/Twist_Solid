@@ -262,7 +262,7 @@ def get_all_report_inputs(wildcards):
 
 
 def generate_star_read_group(wildcards):
-    return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}\\tLB:{}' -v 1 ".format(
+    return "--outSAMattrRGline ID:{} SM:{} PL:{} PU:{} LB:{}".format(
         "{}_{}".format(wildcards.sample, wildcards.type),
         "{}_{}".format(wildcards.sample, wildcards.type),
         "Illumina",
