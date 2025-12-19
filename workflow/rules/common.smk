@@ -262,13 +262,8 @@ def get_all_report_inputs(wildcards):
 
 
 def generate_star_read_group(wildcards):
-    return "--outSAMattrRGline ID:{} SM:{} PL:{} PU:{} LB:{}".format(
-        "{}_{}".format(wildcards.sample, wildcards.type),
-        "{}_{}".format(wildcards.sample, wildcards.type),
-        "Illumina",
-        "{}_{}".format(wildcards.sample, wildcards.type),
-        "{}_{}".format(wildcards.sample, wildcards.type),
-    )
+    tag = "{}_{}".format(wildcards.sample, wildcards.type)
+    return '--outSAMattrRGline "ID:{0} SM:{0} PL:Illumina PU:{0} LB:{0}"'.format(tag)
 
 
 def get_gatk_mutect2_rna_extra(wildcards: snakemake.io.Wildcards, name: str):
