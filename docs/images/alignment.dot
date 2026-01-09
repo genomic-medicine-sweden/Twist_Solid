@@ -52,8 +52,12 @@ digraph snakemake_dag {
         re -> o2
     }
 
-    4 -> f1
-    4 -> f1f
+    // FFPE edges
+    4 -> f1 [label="run_ffpe_overlapping_consensus=true"]
+    4 -> f1f [label="run_ffpe_overlapping_consensus=true"]
+    4 -> 3 [label="run_ffpe_overlapping_consensus=false"]
+
+    // UMI edges
     4 -> f2
     4 -> f2f
 
