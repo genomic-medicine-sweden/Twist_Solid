@@ -314,7 +314,6 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
         )
 
 
-
 use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_final with:
     input:
         bams=[

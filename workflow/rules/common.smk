@@ -156,7 +156,9 @@ def get_deduplication_bam_input(wildcards):
     if wildcards.type == "R":
         return "alignment/star/{sample}_{type}.bam".format(sample=wildcards.sample, type=wildcards.type)
     if config["deduplication"] == "umi":
-        return "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam".format(sample=wildcards.sample, type=wildcards.type)
+        return "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam".format(
+            sample=wildcards.sample, type=wildcards.type
+        )
     elif config.get("run_ffpe_overlapping_consensus", True):
         return "alignment/samtools_merge_bam_final/{sample}_{type}.bam".format(sample=wildcards.sample, type=wildcards.type)
     else:
@@ -308,7 +310,7 @@ def generate_copy_code(workflow, output_spec):
 
         code += f'@workflow.rule(name="{rule_name}")\n'
         if input_file.startswith("{") and input_file.endswith("}"):
-            code += f'@workflow.input({input_file[1:-1]})\n'
+            code += f"@workflow.input({input_file[1:-1]})\n"
         else:
             code += f'@workflow.input("{input_file}")\n'
         code += f'@workflow.output("{output_file}")\n'
