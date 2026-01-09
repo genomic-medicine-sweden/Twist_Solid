@@ -1,24 +1,24 @@
 files:
   - name: BAM
-    input: alignment/samtools_merge_bam/{sample}_{type}.bam
+    input: alignment/samtools_merge_bam_final/{sample}_{type}.bam
     output: bam_dna/{sample}_{type}.bam
     types:
       - T
       - N
   - name: BAM index
-    input: alignment/samtools_merge_bam/{sample}_{type}.bam.bai
+    input: alignment/samtools_merge_bam_final/{sample}_{type}.bam.bai
     output: bam_dna/{sample}_{type}.bam.bai
     types:
       - T
       - N
   - name: BAM umi
-    input: alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam
+    input: alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam
     output: bam_dna/{sample}_{type}.umi.bam
     types:
       - T
       - N
   - name: BAM umi index
-    input: alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai
+    input: alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam.bai
     output: bam_dna/{sample}_{type}.umi.bam.bai
     types:
       - T

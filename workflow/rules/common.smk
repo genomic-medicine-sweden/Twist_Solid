@@ -153,16 +153,16 @@ def get_hotspot_report_vcf_input(wildcards):
 
 def get_deduplication_bam_input(wildcards):
     if config["deduplication"] == "umi":
-        return "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"
+        return "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam"
     else:
-        return "alignment/samtools_merge_bam/{sample}_{type}.bam"
+        return "alignment/samtools_merge_bam_final/{sample}_{type}.bam"
 
 
 def get_deduplication_bam_input_manta(wildcards):
     if config["deduplication"] == "umi":
-        return "alignment/bwa_mem_realign_consensus_reads/{sample}_T.umi.bam"
+        return "alignment/fgbio_call_overlapping_consensus_bases/{sample}_T.umi.bam"
     else:
-        return "alignment/samtools_merge_bam/{sample}_T.bam"
+        return "alignment/samtools_merge_bam_final/{sample}_T.bam"
 
 
 def get_deduplication_bam_chr_input(wildcards):
