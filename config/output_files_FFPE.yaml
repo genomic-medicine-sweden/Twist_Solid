@@ -1,12 +1,12 @@
 files:
   - name: BAM
-    input: alignment/samtools_merge_bam/{sample}_{type}.bam
+    input: alignment/samtools_merge_bam_final/{sample}_{type}.bam
     output: bam_dna/{sample}_{type}.bam
     types:
       - T
       - N
   - name: BAM index
-    input: alignment/samtools_merge_bam/{sample}_{type}.bam.bai
+    input: alignment/samtools_merge_bam_final/{sample}_{type}.bam.bai
     output: bam_dna/{sample}_{type}.bam.bai
     types:
       - T
