@@ -74,6 +74,7 @@ with open(config["output"]) as output:
 
 validate(output_spec, schema="../schemas/output_files.schema.yaml")
 
+
 ### Load general report yaml file
 general_report_files_path = config["general_report"]
 with open(general_report_files_path) as f:
@@ -152,24 +153,40 @@ def get_hotspot_report_vcf_input(wildcards):
 
 
 def get_deduplication_bam_input(wildcards):
+    if wildcards.type == "R":
+        return "alignment/star/{sample}_{type}.bam".format(sample=wildcards.sample, type=wildcards.type)
     if config["deduplication"] == "umi":
-        return "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam"
+        return "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam".format(sample=wildcards.sample, type=wildcards.type)
+    elif config.get("run_ffpe_overlapping_consensus", True):
+        return "alignment/samtools_merge_bam_final/{sample}_{type}.bam".format(sample=wildcards.sample, type=wildcards.type)
     else:
-        return "alignment/samtools_merge_bam_final/{sample}_{type}.bam"
+        return "alignment/bwa_mem/{sample}_{type}.bam".format(sample=wildcards.sample, type=wildcards.type)
+
+
+def get_deduplication_bam_input_bai(wildcards):
+    return get_deduplication_bam_input(wildcards) + ".bai"
 
 
 def get_deduplication_bam_input_manta(wildcards):
     if config["deduplication"] == "umi":
         return "alignment/fgbio_call_overlapping_consensus_bases/{sample}_T.umi.bam"
-    else:
+    elif config.get("run_ffpe_overlapping_consensus", True):
         return "alignment/samtools_merge_bam_final/{sample}_T.bam"
+    else:
+        return "alignment/bwa_mem/{sample}_T.bam"
 
 
 def get_deduplication_bam_chr_input(wildcards):
     if config["deduplication"] == "umi":
         return "alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam"
-    else:
+    elif config.get("run_ffpe_overlapping_consensus", True):
         return "alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam"
+    else:
+        return "alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"
+
+
+def get_deduplication_bam_chr_input_bai(wildcards):
+    return get_deduplication_bam_chr_input(wildcards) + ".bai"
 
 
 def get_vardict_min_af(wildcards):
@@ -290,7 +307,10 @@ def generate_copy_code(workflow, output_spec):
         copy_container = config.get("_copy", {}).get("container", config["default_container"])
 
         code += f'@workflow.rule(name="{rule_name}")\n'
-        code += f'@workflow.input("{input_file}")\n'
+        if input_file.startswith("{") and input_file.endswith("}"):
+            code += f'@workflow.input({input_file[1:-1]})\n'
+        else:
+            code += f'@workflow.input("{input_file}")\n'
         code += f'@workflow.output("{output_file}")\n'
         code += f'@workflow.log("logs/{rule_name}_{result_file}.log")\n'
         code += f'@workflow.container("{copy_container}")\n'

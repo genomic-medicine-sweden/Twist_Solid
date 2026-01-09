@@ -22,6 +22,7 @@ default_container: "docker://hydragenetics/common:3.1.1.1"
 
 trimmer_software: "fastp_pe"
 subsample: "None"
+run_ffpe_overlapping_consensus: false
 
 arriba:
   container: "docker://hydragenetics/arriba:2.3.0"
