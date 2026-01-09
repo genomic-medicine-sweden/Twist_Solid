@@ -148,6 +148,11 @@ fgbio_call_and_filter_consensus_reads:
   min_input_base_quality_call: 20
   min_input_base_quality_filter: 30
 
+fgbio_call_overlapping_consensus_bases:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+  agrement_strategy: "Consensus"
+  disagrement_strategy: "Consensus"
+
 fgbio_copy_umi_from_read_name:
   container: "docker://hydragenetics/fgbio:2.1.0"
 
