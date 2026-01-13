@@ -836,10 +836,18 @@ use rule * from cnv_sv exclude all as cnv_sv_*
 
 
 use rule manta_config_t from cnv_sv as cnv_sv_manta_config_t with:
+     input:
+        bam=get_deduplication_bam_input_manta,
+        bai=get_deduplication_bam_input_manta_bai,
+        ref=config["reference"]["fasta"],
     priority: 40
 
 
 use rule manta_run_workflow_t from cnv_sv as cnv_sv_manta_run_workflow_t with:
+     input:
+        bam_t=get_deduplication_bam_input_manta,
+        bai_t=get_deduplication_bam_input_manta_bai,
+        ref=config["reference"]["fasta"],
     priority: 40
 
 
