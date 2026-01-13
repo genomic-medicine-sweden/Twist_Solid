@@ -38,6 +38,8 @@ digraph snakemake_dag {
 
         f2[label = "filter (umi)", color = "0.1 0.6 0.85", style="rounded"];
         f2f[label = "filter (umi fusions)", color = "0.1 0.6 0.85", style="rounded"];
+        f2fu[label = "filter (fgbio fusions)", color = "0.1 0.6 0.85", style="rounded"];
+        s0[label = "sort (bwa_mem)", color = "0.53 0.6 0.85", style="rounded"];
         20[label = "copy_umi", color = "0.70 0.6 0.85", style="rounded"];
         21[label = "group_reads", color = "0.75 0.6 0.85", style="rounded"];
         22[label = "call_consensus", color = "0.80 0.6 0.85", style="rounded"];
@@ -45,7 +47,10 @@ digraph snakemake_dag {
         re[label = "realign", color = "0.43 0.6 0.85", style="rounded"];
         s2[label = "sort (ctDNA)", color = "0.53 0.6 0.85", style="rounded"];
         o2[label = "overlapping_bases (umi)", color = "0.80 0.6 0.85", style="rounded"];
+        m3[label = "merge_umi2", color = "0.64 0.6 0.85", style="rounded"];
         
+        s0 -> f2
+        s0 -> f2f
         f2 -> 20
         20 -> 21
         21 -> 22
@@ -54,6 +59,9 @@ digraph snakemake_dag {
         m2 -> re
         re -> s2
         s2 -> o2
+        s2 -> f2fu
+        o2 -> m3
+        f2fu -> m3
     }
 
     // FFPE edges
@@ -62,15 +70,14 @@ digraph snakemake_dag {
     4 -> 3 [label="fgbio=false"]
 
     // UMI edges
-    4 -> f2
-    4 -> f2f
+    4 -> s0
 
     // Shared processing (Sort/Index)
     3[label = "sort", color = "0.53 0.6 0.85", style="rounded"];
     7[label = "index", color = "0.60 0.6 0.85", style="rounded"];
-
+    
     m1 -> 3
-    o2 -> 3
+    m3 -> 3
     3 -> 7
     
     // Final extraction and deduplication (placed to the right)
