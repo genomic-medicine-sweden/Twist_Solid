@@ -178,6 +178,10 @@ def get_deduplication_bam_input_manta(wildcards):
         return "alignment/bwa_mem/{sample}_T.bam"
 
 
+def get_deduplication_bam_input_manta_bai(wildcards):
+    return get_deduplication_bam_input_manta(wildcards) + ".bai"
+
+
 def get_deduplication_bam_chr_input(wildcards):
     if config["deduplication"] == "umi":
         return "alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam"
