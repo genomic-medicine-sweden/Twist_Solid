@@ -396,6 +396,9 @@ sample_mixup_check:
 samtools_filter_reads:
   extra: "-f 2"
 
+samtools_filter_reads_fgbio_umi_fusions:
+  extra: "-F 0x800"
+
 samtools_filter_reads_fusions:
   extra: "-G 2"
 
