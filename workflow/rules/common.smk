@@ -154,15 +154,13 @@ def get_hotspot_report_vcf_input(wildcards):
 
 def get_deduplication_bam_input(wildcards):
     if wildcards.type == "R":
-        return "alignment/star/{sample}_{type}.bam".format(sample=wildcards.sample, type=wildcards.type)
+        return "alignment/star/{sample}_{type}.bam"
     if config["deduplication"] == "umi":
-        return "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam".format(
-            sample=wildcards.sample, type=wildcards.type
-        )
+        return "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam"
     elif config.get("run_ffpe_overlapping_consensus", True):
-        return "alignment/samtools_merge_bam_final/{sample}_{type}.bam".format(sample=wildcards.sample, type=wildcards.type)
+        return "alignment/samtools_merge_bam_final/{sample}_{type}.bam"
     else:
-        return "alignment/bwa_mem/{sample}_{type}.bam".format(sample=wildcards.sample, type=wildcards.type)
+        return "alignment/bwa_mem/{sample}_{type}.bam"
 
 
 def get_deduplication_bam_input_bai(wildcards):

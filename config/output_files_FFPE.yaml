@@ -497,11 +497,6 @@ files:
     types:
       - T
       - N
-  - name: Manta VCF
-    input: cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.manta_tumorSV.vcf.gz
-    types:
-      - T
   - name: ctDNA fraction
     input: cnv_sv/estimate_ctdna_fraction/{sample}_{type}.ctDNA_fraction.tsv
     output: results/dna/{sample}_{type}/cnv/{sample}_{type}.ctDNA_fraction.tsv

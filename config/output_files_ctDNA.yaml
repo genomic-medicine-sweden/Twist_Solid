@@ -381,11 +381,6 @@ files:
     types:
       - T
       - N
-  - name: Manta VCF
-    input: cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz
-    output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.manta_tumorSV.vcf.gz
-    types:
-      - T
   - name: HLA optitype
     input: biomarker/optitype/{sample}_{type}/{sample}_{type}_hla_type_result.tsv
     output: results/dna/{sample}_{type}/hla/{sample}_{type}_hla_type_result.tsv
