@@ -396,11 +396,14 @@ sample_mixup_check:
 samtools_filter_reads:
   extra: "-f 2"
 
-samtools_filter_reads_fgbio_umi_fusions:
-  extra: "-F 0x800"
-
 samtools_filter_reads_fusions:
   extra: "-G 2"
+
+samtools_filter_reads_umi:
+  extra: "-f 0x800"
+
+samtools_filter_reads_umi_fusions:
+  extra: "-F 0x800"
 
 samtools_merge_bam:
   extra: "-c -p"

@@ -290,6 +290,8 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
         bam="alignment/bwa_mem/{sample}_{type}.umi.bam",
     output:
         bam=temp("alignment/samtools_filter_reads/{sample}_{type}.umi.bam"),
+    params:
+        extra=config.get("samtools_filter_reads_umi", {}).get("extra", ""),
     log:
         "alignment/samtools_filter_reads/{sample}_{type}.umi.bam.log",
     benchmark:
@@ -305,7 +307,7 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
     output:
         bam=temp("alignment/samtools_filter_reads/{sample}_{type}.umi.fusions.bam"),
     params:
-        extra=config.get("samtools_filter_reads_fusions", {}).get("extra", ""),
+        extra=config.get("samtools_filter_reads_umi_fusions", {}).get("extra", ""),
     log:
         "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions.bam.log",
     benchmark:
