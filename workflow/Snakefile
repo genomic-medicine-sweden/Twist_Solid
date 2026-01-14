@@ -188,6 +188,8 @@ use rule samtools_sort_umi from alignment as alignment_samtools_sort_ffpe_fgbio 
         bam="alignment/samtools_filter_reads/{sample}_{type}_unsorted.bam",
     output:
         bam=temp("alignment/samtools_filter_reads/{sample}_{type}.bam"),
+    params:
+        extra=config.get("samtools_sort_ffpe_fgbio", {}).get("extra", ""),
 
 
 use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam with:
@@ -256,7 +258,6 @@ use rule fgbio_copy_umi_from_read_name from alignment as alignment_fgbio_copy_um
 use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads with:
     input:
         bam="alignment/bwa_mem/{sample}_{type}.bam",
-        bai="alignment/bwa_mem/{sample}_{type}.bam.bai",
     output:
         bam=temp("alignment/samtools_filter_reads/{sample}_{type}_unsorted.bam"),
     log:
@@ -271,7 +272,6 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
 use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads_fusions with:
     input:
         bam="alignment/bwa_mem/{sample}_{type}.bam",
-        bai="alignment/bwa_mem/{sample}_{type}.bam.bai",
     output:
         bam=temp("alignment/samtools_filter_reads/{sample}_{type}.fusions.bam"),
     params:
@@ -288,7 +288,6 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
 use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads_umi with:
     input:
         bam="alignment/bwa_mem/{sample}_{type}.umi.bam",
-        bai="alignment/bwa_mem/{sample}_{type}.umi.bam.bai",
     output:
         bam=temp("alignment/samtools_filter_reads/{sample}_{type}.umi.bam"),
     log:
@@ -303,7 +302,6 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
 use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads_umi_fusions with:
     input:
         bam="alignment/bwa_mem/{sample}_{type}.umi.bam",
-        bai="alignment/bwa_mem/{sample}_{type}.umi.bam.bai",
     output:
         bam=temp("alignment/samtools_filter_reads/{sample}_{type}.umi.fusions.bam"),
     params:
