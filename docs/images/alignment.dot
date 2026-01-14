@@ -70,7 +70,8 @@ digraph snakemake_dag {
     4 -> 3 [label="fgbio=false"]
 
     // UMI edges
-    4 -> s0
+    4 -> f2
+    4 -> f2f
 
     // Shared processing (Sort/Index)
     3[label = "sort", color = "0.53 0.6 0.85", style="rounded"];
