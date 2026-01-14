@@ -25,8 +25,9 @@ digraph snakemake_dag {
         o1[label = "overlapping_bases", color = "0.80 0.6 0.85", style="rounded"];
         m1[label = "merge_final", color = "0.64 0.6 0.85", style="rounded"];
         
-        f1 -> s1
-        s1 -> o1
+        s1 -> f1
+        s1 -> f1f
+        f1 -> o1
         o1 -> m1
         f1f -> m1
     }
@@ -38,7 +39,6 @@ digraph snakemake_dag {
 
         f2[label = "filter (umi)", color = "0.1 0.6 0.85", style="rounded"];
         f2f[label = "filter (umi fusions)", color = "0.1 0.6 0.85", style="rounded"];
-        f2fu[label = "filter (fgbio fusions)", color = "0.1 0.6 0.85", style="rounded"];
         s0[label = "sort (bwa_mem)", color = "0.53 0.6 0.85", style="rounded"];
         20[label = "copy_umi", color = "0.70 0.6 0.85", style="rounded"];
         21[label = "group_reads", color = "0.75 0.6 0.85", style="rounded"];
@@ -46,8 +46,6 @@ digraph snakemake_dag {
         m2[label = "merge_umi", color = "0.64 0.6 0.85", style="rounded"];
         re[label = "realign", color = "0.43 0.6 0.85", style="rounded"];
         s2[label = "sort (ctDNA)", color = "0.53 0.6 0.85", style="rounded"];
-        o2[label = "overlapping_bases (umi)", color = "0.80 0.6 0.85", style="rounded"];
-        m3[label = "merge_umi2", color = "0.64 0.6 0.85", style="rounded"];
         
         s0 -> f2
         s0 -> f2f
@@ -58,27 +56,21 @@ digraph snakemake_dag {
         f2f -> m2
         m2 -> re
         re -> s2
-        s2 -> o2
-        s2 -> f2fu
-        o2 -> m3
-        f2fu -> m3
+        s2 -> 7
     }
 
     // FFPE edges
-    4 -> f1 [label="fgbio=true"]
-    4 -> f1f [label="fgbio=true"]
+    4 -> s1 [label="fgbio=true"]
     4 -> 3 [label="fgbio=false"]
 
     // UMI edges
-    4 -> f2
-    4 -> f2f
+    4 -> s0
 
     // Shared processing (Sort/Index)
     3[label = "sort", color = "0.53 0.6 0.85", style="rounded"];
     7[label = "index", color = "0.60 0.6 0.85", style="rounded"];
     
     m1 -> 3
-    m3 -> 3
     3 -> 7
     
     // Final extraction and deduplication (placed to the right)

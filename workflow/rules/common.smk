@@ -156,7 +156,7 @@ def get_deduplication_bam_input(wildcards):
     if wildcards.type == "R":
         return "alignment/star/{sample}_{type}.bam"
     if config["deduplication"] == "umi":
-        return "alignment/samtools_merge_bam_umi2/{sample}_{type}.umi.bam"
+        return "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"
     elif config.get("run_ffpe_overlapping_consensus", True):
         return "alignment/samtools_merge_bam_final/{sample}_{type}.bam"
     else:
@@ -169,7 +169,7 @@ def get_deduplication_bam_input_bai(wildcards):
 
 def get_deduplication_bam_input_manta(wildcards):
     if config["deduplication"] == "umi":
-        return "alignment/samtools_merge_bam_umi2/{sample}_T.umi.bam"
+        return "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"
     elif config.get("run_ffpe_overlapping_consensus", True):
         return "alignment/samtools_merge_bam_final/{sample}_T.bam"
     else:
@@ -182,9 +182,9 @@ def get_deduplication_bam_input_manta_bai(wildcards):
 
 def get_deduplication_bam_chr_input(wildcards):
     if config["deduplication"] == "umi":
-        return "alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam"
+        return "alignment/samtools_extract_reads/{sample}_{type}_{chr}.umi.bam"
     elif config.get("run_ffpe_overlapping_consensus", True):
-        return "alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam"
+        return "alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"
     else:
         return "alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"
 
