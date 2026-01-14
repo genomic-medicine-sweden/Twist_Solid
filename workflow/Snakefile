@@ -285,23 +285,6 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
         )
 
 
-use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads_fgbio_umi_fusions with:
-    input:
-        bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
-        bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai",
-    output:
-        bam=temp("alignment/samtools_filter_reads/{sample}_{type}.fgbio_umi.fusions.bam"),
-    params:
-        extra=config.get("samtools_filter_reads_fgbio_umi_fusions", {}).get("extra", ""),
-    log:
-        "alignment/samtools_filter_reads/{sample}_{type}.fgbio_umi.fusions.bam.log",
-    benchmark:
-        repeat(
-            "alignment/samtools_filter_reads/{sample}_{type}.umi.bam.benchmark.tsv",
-            config.get("samtools_filter_reads", {}).get("benchmark_repeats", 1),
-        )
-
-
 use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads_umi with:
     input:
         bam="alignment/bwa_mem/{sample}_{type}.umi.bam",
@@ -368,23 +351,6 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_umi w
         )
 
 
-use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_umi2 with:
-    input:
-        bams=[
-            "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam",
-            "alignment/samtools_filter_reads/{sample}_{type}.fgbio_umi.fusions.bam",
-        ],
-    output:
-        bam=temp("alignment/samtools_merge_bam_umi2/{sample}_{type}.umi_unsorted.bam"),
-    log:
-        "alignment/samtools_merge_bam_umi2/{sample}_{type}.umi_unsorted.bam.log",
-    benchmark:
-        repeat(
-            "alignment/samtools_merge_bam_umi2/{sample}_{type}.umi_unsorted.bam.benchmark.tsv",
-            config.get("samtools_merge_bam", {}).get("benchmark_repeats", 1),
-        )
-
-
 use rule bwa_mem_realign_consensus_reads from alignment as alignment_bwa_mem_realign_consensus_reads with:
     input:
         bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam",
@@ -436,8 +402,10 @@ use rule samtools_extract_reads from alignment as alignment_samtools_extract_rea
 
 use rule samtools_extract_reads_umi from alignment as alignment_samtools_extract_reads_umi with:
     input:
-        bam="alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam",
-        bai="alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam.bai",
+        bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
+        bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai",
+    output:
+        bam=temp("alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam"),
     wildcard_constraints:
         type="T|N",
 
