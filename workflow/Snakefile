@@ -44,8 +44,6 @@ ruleorder: snv_indels_bgzip > cnv_sv_bgzip
 ruleorder: snv_indels_tabix > cnv_sv_tabix
 
 
-
-
 wildcard_constraints:
     file="^(?!bam_dna|results|gvcf_dna).*",
     sample="[^/]+",
@@ -385,7 +383,6 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_umi2 
             "alignment/samtools_merge_bam_umi2/{sample}_{type}.umi_unsorted.bam.benchmark.tsv",
             config.get("samtools_merge_bam", {}).get("benchmark_repeats", 1),
         )
-
 
 
 use rule bwa_mem_realign_consensus_reads from alignment as alignment_bwa_mem_realign_consensus_reads with:
