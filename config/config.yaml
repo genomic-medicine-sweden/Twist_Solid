@@ -398,10 +398,10 @@ sample_mixup_check:
   match_cutoff: 0.7
 
 samtools_filter_reads:
-  extra: "-f 2"
+  extra: "-G 2"
 
 samtools_filter_reads_fusions:
-  extra: "-G 2"
+  extra: "-f 2"
 
 samtools_filter_reads_umi:
   extra: "-F 0x900"
