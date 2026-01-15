@@ -248,11 +248,6 @@ use rule fgbio_call_overlapping_consensus_bases from alignment as alignment_fgbi
         )
 
 
-use rule fgbio_copy_umi_from_read_name from alignment as alignment_fgbio_copy_umi_from_read_name with:
-    input:
-        bam="alignment/samtools_filter_reads/{sample}_{type}.umi.bam",
-
-
 use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads with:
     input:
         bam="alignment/bwa_mem/{sample}_{type}.bam",
