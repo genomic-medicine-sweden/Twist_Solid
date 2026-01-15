@@ -299,18 +299,34 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
         )
 
 
-use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads_umi_fusions with:
+use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads_umi_fusions1 with:
     input:
         bam="alignment/bwa_mem/{sample}_{type}.umi.bam",
     output:
-        bam=temp("alignment/samtools_filter_reads/{sample}_{type}.umi.fusions.bam"),
+        bam=temp("alignment/samtools_filter_reads/{sample}_{type}.umi.fusions1.bam"),
     params:
-        extra=config.get("samtools_filter_reads_umi_fusions", {}).get("extra", ""),
+        extra=config.get("samtools_filter_reads_umi_fusions1", {}).get("extra", ""),
     log:
-        "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions.bam.log",
+        "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions1.bam.log",
     benchmark:
         repeat(
-            "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions.bam.benchmark.tsv",
+            "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions1.bam.benchmark.tsv",
+            config.get("samtools_filter_reads", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads_umi_fusions2 with:
+    input:
+        bam="alignment/bwa_mem/{sample}_{type}.umi.bam",
+    output:
+        bam=temp("alignment/samtools_filter_reads/{sample}_{type}.umi.fusions2.bam"),
+    params:
+        extra=config.get("samtools_filter_reads_umi_fusions2", {}).get("extra", ""),
+    log:
+        "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions2.bam.log",
+    benchmark:
+        repeat(
+            "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions2.bam.benchmark.tsv",
             config.get("samtools_filter_reads", {}).get("benchmark_repeats", 1),
         )
 
@@ -336,7 +352,8 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_umi w
     input:
         bams=[
             "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_bam",
-            "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions.bam",
+            "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions1.bam",
+            "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions2.bam",
         ],
     output:
         bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam"),
@@ -712,15 +729,6 @@ use rule * from biomarker exclude all as biomarker_*
 use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
     input:
         seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns",
-
-use rule fgbio_collect_duplex_seq_metrics from qc as qc_fgbio_collect_duplex_seq_metrics with:
-    log:
-        "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.log",
-    benchmark:
-        repeat(
-            "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.benchmark.tsv",
-            config.get("fgbio_collect_duplex_seq_metrics", {}).get("benchmark_repeats", 1),
-        )
 
 
 use rule msisensor_pro_filter_sites from biomarker as biomarker_msisensor_pro_filter_sites_unfiltered with:
