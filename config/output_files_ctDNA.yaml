@@ -95,6 +95,24 @@ files:
     types:
       - T
       - N
+  - name: FGBIO Duplex family sizes
+    input: alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.family_sizes.txt
+    output: qc/fgbio_collect_duplex_seq_metrics/{sample}_{type}.family_sizes.txt
+    types:
+      - T
+      - N
+  - name: FGBIO Duplex yield metrics
+    input: alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.duplex_yield_metrics.txt
+    output: qc/fgbio_collect_duplex_seq_metrics/{sample}_{type}.duplex_yield_metrics.txt
+    types:
+      - T
+      - N
+  - name: FGBIO Duplex QC plots
+    input: alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.duplex_qc.pdf
+    output: qc/fgbio_collect_duplex_seq_metrics/{sample}_{type}.duplex_qc.pdf
+    types:
+      - T
+      - N
   - name: Coverage and mutations all
     input: qc/hotspot_report/{sample}_{type}.all.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv
