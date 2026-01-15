@@ -13,7 +13,8 @@ modules:
   filtering: "v0.3.0"
   fusions: "v0.3.0"
   prealignment: "v1.3.0"
-  qc: "v0.5.0"
+  #qc: "v0.5.0"
+  qc: "7634a50"
   reports: "v0.10.1"
   snv_indels: "v1.1.0"
 
@@ -400,10 +401,10 @@ samtools_filter_reads_fusions:
   extra: "-G 2"
 
 samtools_filter_reads_umi:
-  extra: "-f 0x800"
+  extra: "-f 0x900"
 
 samtools_filter_reads_umi_fusions:
-  extra: "-F 0x800"
+  extra: "-F 0x900"
 
 samtools_merge_bam:
   extra: "-c -p"

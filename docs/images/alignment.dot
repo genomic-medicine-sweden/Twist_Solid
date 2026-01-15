@@ -24,12 +24,20 @@ digraph snakemake_dag {
         s1[label = "sort (FFPE)", color = "0.53 0.6 0.85", style="rounded"];
         o1[label = "overlapping_bases", color = "0.80 0.6 0.85", style="rounded"];
         m1[label = "merge_final", color = "0.64 0.6 0.85", style="rounded"];
+        s1f[label = "sort (coord)", color = "0.53 0.6 0.85", style="rounded"];
+        i1[label = "index", color = "0.60 0.6 0.85", style="rounded"];
+        ex1[label = "extract", color = "0.37 0.6 0.85", style="rounded"];
+        d1[label = "mark_duplicates (FFPE)", color = "0.27 0.6 0.85", style="rounded"];
         
         s1 -> f1
         s1 -> f1f
         f1 -> o1
         o1 -> m1
         f1f -> m1
+        m1 -> s1f
+        s1f -> i1
+        i1 -> ex1
+        ex1 -> d1
     }
 
     subgraph cluster_umi {
@@ -44,8 +52,11 @@ digraph snakemake_dag {
         21[label = "group_reads", color = "0.75 0.6 0.85", style="rounded"];
         22[label = "call_consensus", color = "0.80 0.6 0.85", style="rounded"];
         m2[label = "merge_umi", color = "0.64 0.6 0.85", style="rounded"];
+        s_umi_unm[label = "sort (unmapped UMI)", color = "0.53 0.6 0.85", style="rounded"];
         re[label = "realign", color = "0.43 0.6 0.85", style="rounded"];
         s2[label = "sort (ctDNA)", color = "0.53 0.6 0.85", style="rounded"];
+        i2[label = "index (UMI)", color = "0.60 0.6 0.85", style="rounded"];
+        ex2[label = "extract (UMI)", color = "0.37 0.6 0.85", style="rounded"];
         
         s0 -> f2
         s0 -> f2f
@@ -54,35 +65,21 @@ digraph snakemake_dag {
         21 -> 22
         22 -> m2
         f2f -> m2
-        m2 -> re
+        m2 -> s_umi_unm
+        s_umi_unm -> re
         re -> s2
-        s2 -> 7
+        s2 -> i2
+        i2 -> ex2
     }
 
     // FFPE edges
     4 -> s1 [label="fgbio=true"]
-    4 -> 3 [label="fgbio=false"]
+    4 -> s1f [label="fgbio=false"]
 
     // UMI edges
     4 -> s0
 
-    // Shared processing (Sort/Index)
-    3[label = "sort", color = "0.53 0.6 0.85", style="rounded"];
-    7[label = "index", color = "0.60 0.6 0.85", style="rounded"];
-    
-    m1 -> 3
-    3 -> 7
-    
-    // Final extraction and deduplication (placed to the right)
-    ex1[label = "extract", color = "0.37 0.6 0.85", style="rounded"];
-    ex2[label = "extract (UMI)", color = "0.37 0.6 0.85", style="rounded"];
-    1[label = "mark_duplicates (FFPE)", color = "0.27 0.6 0.85", style="rounded"];
-
-    7 -> ex1
-    7 -> ex2
-    ex1 -> 1
-
     // Force extraction (umi) and Picard to the far right
-    { rank = same; 1; ex2; }
+    { rank = same; d1; ex2; }
 }
             

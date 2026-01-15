@@ -351,9 +351,18 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_umi w
         )
 
 
-use rule bwa_mem_realign_consensus_reads from alignment as alignment_bwa_mem_realign_consensus_reads with:
+use rule samtools_sort_umi from alignment as alignment_samtools_sort_umi_unmapped with:
     input:
         bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam",
+    output:
+        bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam.sorted"),
+    params:
+        extra="-n",
+
+
+use rule bwa_mem_realign_consensus_reads from alignment as alignment_bwa_mem_realign_consensus_reads with:
+    input:
+        bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam.sorted",
 
 
 use rule star from alignment as alignment_star with:
@@ -707,6 +716,15 @@ use rule * from biomarker exclude all as biomarker_*
 use rule cnvkit2scarhrd from biomarker as biomarker_cnvkit2scarhrd with:
     input:
         seg="cnv_sv/cnvkit_call_hrd/{sample}_{type}.{tc_method}.loh.cns",
+
+use rule fgbio_collect_duplex_seq_metrics from qc as qc_fgbio_collect_duplex_seq_metrics with:
+    log:
+        "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.log",
+    benchmark:
+        repeat(
+            "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.benchmark.tsv",
+            config.get("fgbio_collect_duplex_seq_metrics", {}).get("benchmark_repeats", 1),
+        )
 
 
 use rule msisensor_pro_filter_sites from biomarker as biomarker_msisensor_pro_filter_sites_unfiltered with:
