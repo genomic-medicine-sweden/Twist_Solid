@@ -188,8 +188,6 @@ use rule samtools_sort_umi from alignment as alignment_samtools_sort_ffpe_fgbio 
         bam="alignment/samtools_filter_reads/{sample}_{type}_unsorted.bam",
     output:
         bam=temp("alignment/samtools_filter_reads/{sample}_{type}.bam"),
-    params:
-        extra=config.get("samtools_sort_ffpe_fgbio", {}).get("extra", ""),
 
 
 use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam with:
@@ -356,8 +354,6 @@ use rule samtools_sort_umi from alignment as alignment_samtools_sort_umi_unmappe
         bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam",
     output:
         bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam.sorted"),
-    params:
-        extra="-n",
 
 
 use rule bwa_mem_realign_consensus_reads from alignment as alignment_bwa_mem_realign_consensus_reads with:

@@ -412,9 +412,6 @@ samtools_merge_bam:
 samtools_merge_bam_umi:
   extra: "-c -p"
 
-samtools_sort_ffpe_fgbio:
-  extra: "-n"
-
 scarhrd:
   container: "docker://hydragenetics/scarhrd:20200825"
   seqz: FALSE
