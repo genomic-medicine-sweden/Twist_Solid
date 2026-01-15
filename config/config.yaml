@@ -154,6 +154,9 @@ fgbio_call_overlapping_consensus_bases:
   agrement_strategy: "Consensus"
   disagrement_strategy: "Consensus"
 
+fgbio_collect_duplex_seq_metrics:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+
 fgbio_copy_umi_from_read_name:
   container: "docker://hydragenetics/fgbio:2.1.0"
 
