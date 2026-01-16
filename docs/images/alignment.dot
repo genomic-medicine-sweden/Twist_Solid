@@ -45,8 +45,8 @@ digraph snakemake_dag {
         color = lightblue;
         style = dashed;
 
-        f2[label = "filter (umi)", color = "0.1 0.6 0.85", style="rounded"];
-        f2f[label = "filter (umi fusions)", color = "0.1 0.6 0.85", style="rounded"];
+        f2f1[label = "filter (umi fusions 1)", color = "0.1 0.6 0.85", style="rounded"];
+        f2f2[label = "filter (umi fusions 2)", color = "0.1 0.6 0.85", style="rounded"];
         s0[label = "sort (bwa_mem)", color = "0.53 0.6 0.85", style="rounded"];
         20[label = "copy_umi", color = "0.70 0.6 0.85", style="rounded"];
         21[label = "group_reads", color = "0.75 0.6 0.85", style="rounded"];
@@ -58,13 +58,14 @@ digraph snakemake_dag {
         i2[label = "index (UMI)", color = "0.60 0.6 0.85", style="rounded"];
         ex2[label = "extract (UMI)", color = "0.37 0.6 0.85", style="rounded"];
         
-        s0 -> f2
-        s0 -> f2f
-        f2 -> 20
+        s0 -> f2f1
+        s0 -> f2f2
+        s0 -> 20
         20 -> 21
         21 -> 22
         22 -> m2
-        f2f -> m2
+        f2f1 -> m2
+        f2f2 -> m2
         m2 -> s_umi_unm
         s_umi_unm -> re
         re -> s2
