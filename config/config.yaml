@@ -6,7 +6,7 @@ units: "units.tsv"
 
 modules:
   #alignment: "v0.7.0"
-  alignment: "af7d96d"
+  alignment: "c8df331"
   annotation: "v1.1.0"
   biomarker: "v0.7.0"
   cnv_sv: "v0.9.0"
@@ -14,7 +14,7 @@ modules:
   fusions: "v0.3.0"
   prealignment: "v1.3.0"
   #qc: "v0.5.0"
-  qc: "7634a50"
+  qc: "0f1c268"
   reports: "v0.10.1"
   snv_indels: "v1.1.0"
 
@@ -321,7 +321,7 @@ multiqc:
         - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
         - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
     DNA_umi:
-      config: "config/reports/multiqc_config_dna.yaml"
+      config: "config/reports/multiqc_config_dna_umi.yaml"
       included_unit_types: ["N", "T"]
       deduplication: ["umi"]
       qc_files:
@@ -334,6 +334,10 @@ multiqc:
         - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
         - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
         - "alignment/fgbio_group_reads_by_umi/{sample}_{type}.umi.histo.tsv"
+        - "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.family_sizes.txt"
+        - "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.duplex_family_sizes.txt"
+        - "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.duplex_yield_metrics.txt"
+        - "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.umi_counts.txt"
     RNA:
       config: "config/reports/multiqc_config_rna.yaml"
       included_unit_types: ["R"]
