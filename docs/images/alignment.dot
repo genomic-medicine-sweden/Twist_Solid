@@ -22,21 +22,18 @@ digraph snakemake_dag {
         f1[label = "filter_reads", color = "0.1 0.6 0.85", style="rounded"];
         f1f[label = "filter (fusions)", color = "0.1 0.6 0.85", style="rounded"];
         s1[label = "sort (FFPE)", color = "0.53 0.6 0.85", style="rounded"];
-        o1[label = "overlapping_bases", color = "0.80 0.6 0.85", style="rounded"];
-        s1f[label = "sort (coord)", color = "0.53 0.6 0.85", style="rounded"];
         i1[label = "index", color = "0.60 0.6 0.85", style="rounded"];
         ex1[label = "extract", color = "0.37 0.6 0.85", style="rounded"];
+        o1[label = "overlapping_bases", color = "0.80 0.6 0.85", style="rounded"];
         d1[label = "mark_duplicates (FFPE)", color = "0.27 0.6 0.85", style="rounded"];
         d1f[label = "mark_duplicates (fusions)", color = "0.27 0.6 0.85", style="rounded"];
         m1[label = "merge (all)", color = "0.64 0.6 0.85", style="rounded"];
         
-        s1 -> f1
-        s1 -> f1f
-        f1 -> o1
-        o1 -> s1f
-        s1f -> i1
+        f1 -> s1
+        s1 -> i1
         i1 -> ex1
-        ex1 -> d1
+        ex1 -> o1
+        o1 -> d1
         f1f -> d1f
         d1 -> m1
         d1f -> m1
@@ -93,7 +90,8 @@ digraph snakemake_dag {
     }
 
     // FFPE edges
-    4 -> s1 [label="fgbio=true"]
+    4 -> f1 [label="fgbio=true"]
+    4 -> f1f [style="dotted"]
     
     // Standard edges
     4 -> s_std [label="fgbio=false"]
