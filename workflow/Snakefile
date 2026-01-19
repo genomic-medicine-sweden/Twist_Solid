@@ -220,9 +220,9 @@ use rule bwa_mem_merge from alignment as alignment_bwa_mem_merge with:
 
 use rule bwa_mem_merge from alignment as alignment_bwa_mem_merge_umi with:
     output:
-        bam=temp("alignment/bwa_mem/{sample}_{type}_unsorted.bam"),
+        bam=temp("alignment/bwa_mem/{sample}_{type}.umi_unsorted.bam"),
     params:
-        config.get("bwa_mem_merge", {}).get("extra", ""),
+        extra=config.get("bwa_mem_merge", {}).get("extra", ""),
     log:
         "alignment/bwa_mem/{sample}_{type}_unsorted.umi.bam.log",
     benchmark:
@@ -343,34 +343,92 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_final
         )
 
 
-use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_umi with:
-    input:
-        bams=[
-            "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_bam",
-            "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions1.bam",
-            "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions2.bam",
-        ],
+use rule fgbio_call_and_filter_consensus_reads from alignment as alignment_fgbio_call_and_filter_consensus_reads with:
     output:
-        bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped.bam"),
+        bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_unsorted.bam"),
     log:
-        "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped.bam.log",
+        "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam.log",
     benchmark:
         repeat(
-            "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped.bam.benchmark.tsv",
+            "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam.benchmark.tsv",
+            config.get("fgbio_call_and_filter_consensus_reads", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule bwa_mem_realign_consensus_reads from alignment as alignment_bwa_mem_realign_consensus_reads_unmapped with:
+    input:
+        bam="alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam",
+    output:
+        bam=temp("alignment/bwa_mem_realign_consensus_reads_unmapped/{sample}_{type}.umi_unsorted.bam"),
+    log:
+        "alignment/bwa_mem_realign_consensus_reads_unmapped/{sample}_{type}.umi.bam.log",
+    benchmark:
+        repeat(
+            "alignment/bwa_mem_realign_consensus_reads_unmapped/{sample}_{type}.umi.bam.benchmark.tsv",
+            config.get("bwa_mem_realign_consensus_reads", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule picard_mark_duplicates from alignment as alignment_picard_mark_duplicates_umi_fusions1 with:
+    input:
+        bams="alignment/samtools_filter_reads/{sample}_{type}.umi.fusions1.bam",
+    output:
+        bam=temp("alignment/picard_mark_duplicates_umi_fusions1/{sample}_{type}.umi.bam"),
+        metrics=temp("alignment/picard_mark_duplicates_umi_fusions1/{sample}_{type}.umi.metrics.txt"),
+    log:
+        "alignment/picard_mark_duplicates_umi_fusions1/{sample}_{type}.umi.bam.log",
+    benchmark:
+        repeat(
+            "alignment/picard_mark_duplicates_umi_fusions1/{sample}_{type}.umi.bam.benchmark.tsv",
+            config.get("picard_mark_duplicates", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule picard_mark_duplicates from alignment as alignment_picard_mark_duplicates_umi_fusions2 with:
+    input:
+        bams="alignment/samtools_filter_reads/{sample}_{type}.umi.fusions2.bam",
+    output:
+        bam=temp("alignment/picard_mark_duplicates_umi_fusions2/{sample}_{type}.umi.bam"),
+        metrics=temp("alignment/picard_mark_duplicates_umi_fusions2/{sample}_{type}.umi.metrics.txt"),
+    log:
+        "alignment/picard_mark_duplicates_umi_fusions2/{sample}_{type}.umi.bam.log",
+    benchmark:
+        repeat(
+            "alignment/picard_mark_duplicates_umi_fusions2/{sample}_{type}.umi.bam.benchmark.tsv",
+            config.get("picard_mark_duplicates", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_umi with:
+    input:
+        bam=[
+            "alignment/bwa_mem_realign_consensus_reads_unmapped/{sample}_{type}.umi_unsorted.bam",
+            "alignment/picard_mark_duplicates_umi_fusions1/{sample}_{type}.umi.bam",
+            "alignment/picard_mark_duplicates_umi_fusions2/{sample}_{type}.umi.bam",
+        ],
+    output:
+        bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi.merged_unsorted.bam"),
+    log:
+        "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.merged_unsorted.bam.log",
+    benchmark:
+        repeat(
+            "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.merged_unsorted.bam.benchmark.tsv",
             config.get("samtools_merge_bam", {}).get("benchmark_repeats", 1),
         )
 
 
-use rule samtools_sort_umi from alignment as alignment_samtools_sort_umi_unmapped with:
+use rule samtools_sort from alignment as alignment_samtools_sort_umi with:
     input:
-        bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped.bam",
+        bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.merged_unsorted.bam",
     output:
-        bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped.sorted.bam"),
-
-
-use rule bwa_mem_realign_consensus_reads from alignment as alignment_bwa_mem_realign_consensus_reads with:
-    input:
-        bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped.sorted.bam",
+        bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"),
+    log:
+        "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.sort.log",
+    benchmark:
+        repeat(
+            "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.sort.benchmark.tsv",
+            config.get("samtools_sort", {}).get("benchmark_repeats", 1),
+        )
 
 
 use rule star from alignment as alignment_star with:
