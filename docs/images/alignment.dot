@@ -51,9 +51,10 @@ digraph snakemake_dag {
         20[label = "copy_umi", color = "0.70 0.6 0.85", style="rounded"];
         21[label = "group_reads", color = "0.75 0.6 0.85", style="rounded"];
         22[label = "call_consensus", color = "0.80 0.6 0.85", style="rounded"];
+        re_unm[label = "realign (unmapped)", color = "0.43 0.6 0.85", style="rounded"];
+        d_f1[label = "mark_duplicates (fusions 1)", color = "0.27 0.6 0.85", style="rounded"];
+        d_f2[label = "mark_duplicates (fusions 2)", color = "0.27 0.6 0.85", style="rounded"];
         m2[label = "merge_umi", color = "0.64 0.6 0.85", style="rounded"];
-        s_umi_unm[label = "sort (unmapped UMI)", color = "0.53 0.6 0.85", style="rounded"];
-        re[label = "realign", color = "0.43 0.6 0.85", style="rounded"];
         s2[label = "sort (ctDNA)", color = "0.53 0.6 0.85", style="rounded"];
         i2[label = "index (UMI)", color = "0.60 0.6 0.85", style="rounded"];
         ex2[label = "extract (UMI)", color = "0.37 0.6 0.85", style="rounded"];
@@ -63,12 +64,13 @@ digraph snakemake_dag {
         s0 -> 20
         20 -> 21
         21 -> 22
-        22 -> m2
-        f2f1 -> m2
-        f2f2 -> m2
-        m2 -> s_umi_unm
-        s_umi_unm -> re
-        re -> s2
+        22 -> re_unm
+        f2f1 -> d_f1
+        f2f2 -> d_f2
+        d_f1 -> m2
+        d_f2 -> m2
+        re_unm -> m2
+        m2 -> s2
         s2 -> i2
         i2 -> ex2
     }
