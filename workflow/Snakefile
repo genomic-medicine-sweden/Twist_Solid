@@ -198,6 +198,8 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam with:
         extra=config.get("samtools_merge_bam", {}).get("extra", ""),
     log:
         "alignment/samtools_merge_bam/{sample}_{type}.bam.log",
+    wildcard_constraints:
+        type="T|N",
     benchmark:
         repeat(
             "alignment/samtools_merge_bam/{sample}_{type}.bam.benchmark.tsv",
@@ -235,16 +237,18 @@ use rule bwa_mem_merge from alignment as alignment_bwa_mem_merge_umi with:
 
 use rule fgbio_call_overlapping_consensus_bases from alignment as alignment_fgbio_call_overlapping_consensus_bases_ffpe with:
     input:
-        bam="alignment/samtools_filter_reads/{sample}_{type}.bam",
+        bam="alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam",
         ref=config.get("reference", {}).get("fasta", ""),
     output:
-        bam=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam"),
-        metrics=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.metrics.txt"),
+        bam=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}_{chr}.bam"),
+        metrics=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}_{chr}.metrics.txt"),
     log:
-        "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam.log",
+        "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}_{chr}.bam.log",
+    wildcard_constraints:
+        type="T|N",
     benchmark:
         repeat(
-            "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam.benchmark.tsv",
+            "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}_{chr}.bam.benchmark.tsv",
             config.get("fgbio_call_overlapping_consensus_bases", {}).get("benchmark_repeats", 1),
         )
 
@@ -256,6 +260,8 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
         bam=temp("alignment/samtools_filter_reads/{sample}_{type}_unsorted.bam"),
     log:
         "alignment/samtools_filter_reads/{sample}_{type}_unsorted.bam.log",
+    wildcard_constraints:
+        type="T|N",
     benchmark:
         repeat(
             "alignment/samtools_filter_reads/{sample}_{type}_unsorted.bam.benchmark.tsv",
@@ -272,6 +278,8 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
         extra=config.get("samtools_filter_reads_fusions", {}).get("extra", ""),
     log:
         "alignment/samtools_filter_reads/{sample}_{type}.fusions.bam.log",
+    wildcard_constraints:
+        type="T|N",
     benchmark:
         repeat(
             "alignment/samtools_filter_reads/{sample}_{type}.fusions.bam.benchmark.tsv",
@@ -327,6 +335,25 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
         )
 
 
+use rule picard_mark_duplicates from alignment as alignment_picard_mark_duplicates with:
+    input:
+        bams=lambda wildcards: "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}_{chr}.bam"
+        if config.get("run_ffpe_overlapping_consensus", True)
+        else "alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam",
+    output:
+        bam=temp("alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam"),
+        metrics=temp("alignment/picard_mark_duplicates/{sample}_{type}_{chr}.metrics.txt"),
+    log:
+        "alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam.log",
+    wildcard_constraints:
+        type="T|N",
+    benchmark:
+        repeat(
+            "alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam.benchmark.tsv",
+            config.get("picard_mark_duplicates", {}).get("benchmark_repeats", 1),
+        )
+
+
 use rule picard_mark_duplicates from alignment as alignment_picard_mark_duplicates_ffpe_fusions with:
     input:
         bams="alignment/samtools_filter_reads/{sample}_{type}.fusions.bam",
@@ -335,6 +362,8 @@ use rule picard_mark_duplicates from alignment as alignment_picard_mark_duplicat
         metrics=temp("alignment/picard_mark_duplicates_ffpe_fusions/{sample}_{type}.metrics.txt"),
     log:
         "alignment/picard_mark_duplicates_ffpe_fusions/{sample}_{type}.bam.log",
+    wildcard_constraints:
+        type="T|N",
     benchmark:
         repeat(
             "alignment/picard_mark_duplicates_ffpe_fusions/{sample}_{type}.bam.benchmark.tsv",
@@ -356,6 +385,8 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_all_f
         bam="alignment/samtools_merge_bam_all_final/{sample}_{type}.bam",
     log:
         "alignment/samtools_merge_bam_all_final/{sample}_{type}.bam.log",
+    wildcard_constraints:
+        type="T|N",
     benchmark:
         repeat(
             "alignment/samtools_merge_bam_all_final/{sample}_{type}.bam.benchmark.tsv",
@@ -489,10 +520,10 @@ use rule samtools_extract_reads from alignment as alignment_samtools_extract_rea
 
 use rule samtools_extract_reads from alignment as alignment_samtools_extract_reads with:
     input:
-        bam=lambda wildcards: "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam"
+        bam=lambda wildcards: "alignment/samtools_filter_reads/{sample}_{type}.bam"
         if config.get("run_ffpe_overlapping_consensus", True)
         else get_deduplication_bam_input(wildcards),
-        bai=lambda wildcards: "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam.bai"
+        bai=lambda wildcards: "alignment/samtools_filter_reads/{sample}_{type}.bam.bai"
         if config.get("run_ffpe_overlapping_consensus", True)
         else get_deduplication_bam_input_bai(wildcards),
     wildcard_constraints:
@@ -719,6 +750,8 @@ use rule samtools_stats from qc as qc_samtools_stats with:
 
 
 use rule samtools_stats from qc as qc_samtools_stats_rna with:
+    input:
+        bam=get_deduplication_bam_input,
     wildcard_constraints:
         type="R",
 
@@ -773,6 +806,12 @@ use rule picard_collect_alignment_summary_metrics from qc as qc_picard_collect_a
         ),
     wildcard_constraints:
         type="R",
+
+
+use rule picard_collect_duplication_metrics from qc as qc_picard_collect_duplication_metrics with:
+    input:
+        bam=get_deduplication_bam_input,
+        bai=get_deduplication_bam_input_bai,
 
 
 use rule picard_collect_insert_size_metrics from qc as qc_picard_collect_insert_size_metrics with:

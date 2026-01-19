@@ -181,12 +181,14 @@ def get_deduplication_bam_input_manta_bai(wildcards):
 
 
 def get_deduplication_bam_chr_input(wildcards):
+    if wildcards.type == "R":
+        return "alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"
     if config["deduplication"] == "umi":
         return "alignment/samtools_extract_reads/{sample}_{type}_{chr}.umi.bam"
     elif config.get("run_ffpe_overlapping_consensus", True):
-        return "alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"
+        return "alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam"
     else:
-        return "alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"
+        return "alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam"
 
 
 def get_deduplication_bam_chr_input_bai(wildcards):
