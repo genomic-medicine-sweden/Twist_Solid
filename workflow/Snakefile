@@ -351,26 +351,26 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_umi w
             "alignment/samtools_filter_reads/{sample}_{type}.umi.fusions2.bam",
         ],
     output:
-        bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam"),
+        bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped.bam"),
     log:
-        "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam.log",
+        "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped.bam.log",
     benchmark:
         repeat(
-            "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam.benchmark.tsv",
+            "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped.bam.benchmark.tsv",
             config.get("samtools_merge_bam", {}).get("benchmark_repeats", 1),
         )
 
 
 use rule samtools_sort_umi from alignment as alignment_samtools_sort_umi_unmapped with:
     input:
-        bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam",
+        bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped.bam",
     output:
-        bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam.sorted"),
+        bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped.sorted.bam"),
 
 
 use rule bwa_mem_realign_consensus_reads from alignment as alignment_bwa_mem_realign_consensus_reads with:
     input:
-        bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped_bam.sorted",
+        bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.unmapped.sorted.bam",
 
 
 use rule star from alignment as alignment_star with:
