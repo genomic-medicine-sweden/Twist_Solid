@@ -33,6 +33,7 @@ ruleorder: alignment_fgbio_call_overlapping_consensus_bases_ffpe > alignment_sam
 ruleorder: alignment_fgbio_call_overlapping_consensus_bases_ffpe > alignment_samtools_index
 ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
 ruleorder: alignment_samtools_sort_ffpe_fgbio > alignment_samtools_sort
+ruleorder: alignment_samtools_sort_umi > alignment_samtools_sort
 ruleorder: alignment_samtools_merge_bam > alignment_samtools_sort
 ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
 ruleorder: qc_samtools_stats_rna > qc_samtools_stats
@@ -326,19 +327,38 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
         )
 
 
-use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_final with:
+use rule picard_mark_duplicates from alignment as alignment_picard_mark_duplicates_ffpe_fusions with:
     input:
-        bams=[
-            "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam",
-            "alignment/samtools_filter_reads/{sample}_{type}.fusions.bam",
-        ],
+        bams="alignment/samtools_filter_reads/{sample}_{type}.fusions.bam",
     output:
-        bam=temp("alignment/samtools_merge_bam_final/{sample}_{type}_unsorted.bam"),
+        bam=temp("alignment/picard_mark_duplicates_ffpe_fusions/{sample}_{type}.bam"),
+        metrics=temp("alignment/picard_mark_duplicates_ffpe_fusions/{sample}_{type}.metrics.txt"),
     log:
-        "alignment/samtools_merge_bam_final/{sample}_{type}_unsorted.bam.log",
+        "alignment/picard_mark_duplicates_ffpe_fusions/{sample}_{type}.bam.log",
     benchmark:
         repeat(
-            "alignment/samtools_merge_bam_final/{sample}_{type}_unsorted.bam.benchmark.tsv",
+            "alignment/picard_mark_duplicates_ffpe_fusions/{sample}_{type}.bam.benchmark.tsv",
+            config.get("picard_mark_duplicates", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_all_final with:
+    input:
+        bam=lambda wildcards: expand(
+            "alignment/picard_mark_duplicates/{{sample}}_{{type}}_{chr}.bam",
+            chr=extract_chr(
+                "%s.fai" % (config.get("reference", {}).get("fasta", "")),
+                filter_out=config.get("reference", {}).get("skip_chrs", []),
+            ),
+        )
+        + ["alignment/picard_mark_duplicates_ffpe_fusions/{sample}_{type}.bam"],
+    output:
+        bam="alignment/samtools_merge_bam_all_final/{sample}_{type}.bam",
+    log:
+        "alignment/samtools_merge_bam_all_final/{sample}_{type}.bam.log",
+    benchmark:
+        repeat(
+            "alignment/samtools_merge_bam_all_final/{sample}_{type}.bam.benchmark.tsv",
             config.get("samtools_merge_bam", {}).get("benchmark_repeats", 1),
         )
 
@@ -469,8 +489,12 @@ use rule samtools_extract_reads from alignment as alignment_samtools_extract_rea
 
 use rule samtools_extract_reads from alignment as alignment_samtools_extract_reads with:
     input:
-        bam=get_deduplication_bam_input,
-        bai=get_deduplication_bam_input_bai,
+        bam=lambda wildcards: "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam"
+        if config.get("run_ffpe_overlapping_consensus", True)
+        else get_deduplication_bam_input(wildcards),
+        bai=lambda wildcards: "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam.bai"
+        if config.get("run_ffpe_overlapping_consensus", True)
+        else get_deduplication_bam_input_bai(wildcards),
     wildcard_constraints:
         type="T|N",
 

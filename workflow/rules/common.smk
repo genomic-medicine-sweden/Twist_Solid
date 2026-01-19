@@ -158,7 +158,7 @@ def get_deduplication_bam_input(wildcards):
     if config["deduplication"] == "umi":
         return "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"
     elif config.get("run_ffpe_overlapping_consensus", True):
-        return "alignment/samtools_merge_bam_final/{sample}_{type}.bam"
+        return "alignment/samtools_merge_bam_all_final/{sample}_{type}.bam"
     else:
         return "alignment/bwa_mem/{sample}_{type}.bam"
 
@@ -171,7 +171,7 @@ def get_deduplication_bam_input_manta(wildcards):
     if config["deduplication"] == "umi":
         return "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"
     elif config.get("run_ffpe_overlapping_consensus", True):
-        return "alignment/samtools_merge_bam_final/{sample}_T.bam"
+        return "alignment/samtools_merge_bam_all_final/{sample}_T.bam"
     else:
         return "alignment/bwa_mem/{sample}_T.bam"
 
