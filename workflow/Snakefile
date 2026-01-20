@@ -279,7 +279,7 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
     input:
         bam="alignment/bwa_mem/{sample}_{type}.bam",
     output:
-        bam=temp("alignment/samtools_filter_reads/{sample}_{type}.fusions.bam"),
+        bam=temp("alignment/samtools_filter_reads/{sample}_{type}.fusions_unsorted.bam"),
     params:
         extra=config.get("samtools_filter_reads_fusions", {}).get("extra", ""),
     log:
@@ -313,7 +313,7 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
     input:
         bam="alignment/bwa_mem/{sample}_{type}.umi.bam",
     output:
-        bam=temp("alignment/samtools_filter_reads/{sample}_{type}.umi.fusions1.bam"),
+        bam=temp("alignment/samtools_filter_reads/{sample}_{type}.umi.fusions1_unsorted.bam"),
     params:
         extra=config.get("samtools_filter_reads_umi_fusions1", {}).get("extra", ""),
     log:
@@ -329,7 +329,7 @@ use rule samtools_filter_reads from alignment as alignment_samtools_filter_reads
     input:
         bam="alignment/bwa_mem/{sample}_{type}.umi.bam",
     output:
-        bam=temp("alignment/samtools_filter_reads/{sample}_{type}.umi.fusions2.bam"),
+        bam=temp("alignment/samtools_filter_reads/{sample}_{type}.umi.fusions2_unsorted.bam"),
     params:
         extra=config.get("samtools_filter_reads_umi_fusions2", {}).get("extra", ""),
     log:

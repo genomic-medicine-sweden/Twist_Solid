@@ -22,6 +22,7 @@ digraph snakemake_dag {
         f1[label = "filter_reads", color = "0.1 0.6 0.85", style="rounded"];
         f1f[label = "filter (fusions)", color = "0.1 0.6 0.85", style="rounded,dashed"];
         s1[label = "sort (FFPE)", color = "0.53 0.6 0.85", style="rounded"];
+        s1f[label = "sort (fusions)", color = "0.53 0.6 0.85", style="rounded,dashed"];
         i1[label = "index", color = "0.60 0.6 0.85", style="rounded"];
         ex1[label = "extract", color = "0.37 0.6 0.85", style="rounded"];
         o1[label = "overlapping_bases", color = "0.80 0.6 0.85", style="rounded"];
@@ -34,7 +35,8 @@ digraph snakemake_dag {
         i1 -> ex1
         ex1 -> o1
         o1 -> d1
-        f1f -> d1f [style="dashed"]
+        f1f -> s1f [style="dashed"]
+        s1f -> d1f [style="dashed"]
         d1 -> m1
         d1f -> m1 [style="dashed"]
     }
@@ -51,6 +53,8 @@ digraph snakemake_dag {
         21[label = "group_reads", color = "0.75 0.6 0.85", style="rounded"];
         22[label = "call_consensus", color = "0.80 0.6 0.85", style="rounded"];
         re_unm[label = "realign (unmapped)", color = "0.43 0.6 0.85", style="rounded"];
+        s_f1[label = "sort (fusions 1)", color = "0.53 0.6 0.85", style="rounded,dashed"];
+        s_f2[label = "sort (fusions 2)", color = "0.53 0.6 0.85", style="rounded,dashed"];
         d_f1[label = "mark_duplicates (fusions 1)", color = "0.27 0.6 0.85", style="rounded,dashed"];
         d_f2[label = "mark_duplicates (fusions 2)", color = "0.27 0.6 0.85", style="rounded,dashed"];
         m2[label = "merge_umi", color = "0.64 0.6 0.85", style="rounded"];
@@ -64,8 +68,10 @@ digraph snakemake_dag {
         20 -> 21
         21 -> 22
         22 -> re_unm
-        f2f1 -> d_f1 [style="dashed"]
-        f2f2 -> d_f2 [style="dashed"]
+        f2f1 -> s_f1 [style="dashed"]
+        f2f2 -> s_f2 [style="dashed"]
+        s_f1 -> d_f1 [style="dashed"]
+        s_f2 -> d_f2 [style="dashed"]
         d_f1 -> m2 [style="dashed"]
         d_f2 -> m2 [style="dashed"]
         re_unm -> m2
