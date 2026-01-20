@@ -20,13 +20,13 @@ digraph snakemake_dag {
         style = dashed;
 
         f1[label = "filter_reads", color = "0.1 0.6 0.85", style="rounded"];
-        f1f[label = "filter (fusions)", color = "0.1 0.6 0.85", style="rounded"];
+        f1f[label = "filter (fusions)", color = "0.1 0.6 0.85", style="rounded,dashed"];
         s1[label = "sort (FFPE)", color = "0.53 0.6 0.85", style="rounded"];
         i1[label = "index", color = "0.60 0.6 0.85", style="rounded"];
         ex1[label = "extract", color = "0.37 0.6 0.85", style="rounded"];
         o1[label = "overlapping_bases", color = "0.80 0.6 0.85", style="rounded"];
         d1[label = "mark_duplicates (FFPE)", color = "0.27 0.6 0.85", style="rounded"];
-        d1f[label = "mark_duplicates (fusions)", color = "0.27 0.6 0.85", style="rounded"];
+        d1f[label = "mark_duplicates (fusions)", color = "0.27 0.6 0.85", style="rounded,dashed"];
         m1[label = "merge (all)", color = "0.64 0.6 0.85", style="rounded"];
         
         f1 -> s1
@@ -34,9 +34,9 @@ digraph snakemake_dag {
         i1 -> ex1
         ex1 -> o1
         o1 -> d1
-        f1f -> d1f
+        f1f -> d1f [style="dashed"]
         d1 -> m1
-        d1f -> m1
+        d1f -> m1 [style="dashed"]
     }
 
     subgraph cluster_umi {
@@ -44,30 +44,30 @@ digraph snakemake_dag {
         color = lightblue;
         style = dashed;
 
-        f2f1[label = "filter (umi fusions 1)", color = "0.1 0.6 0.85", style="rounded"];
-        f2f2[label = "filter (umi fusions 2)", color = "0.1 0.6 0.85", style="rounded"];
+        f2f1[label = "filter (umi fusions 1)", color = "0.1 0.6 0.85", style="rounded,dashed"];
+        f2f2[label = "filter (umi fusions 2)", color = "0.1 0.6 0.85", style="rounded,dashed"];
         s0[label = "sort (bwa_mem)", color = "0.53 0.6 0.85", style="rounded"];
         20[label = "copy_umi", color = "0.70 0.6 0.85", style="rounded"];
         21[label = "group_reads", color = "0.75 0.6 0.85", style="rounded"];
         22[label = "call_consensus", color = "0.80 0.6 0.85", style="rounded"];
         re_unm[label = "realign (unmapped)", color = "0.43 0.6 0.85", style="rounded"];
-        d_f1[label = "mark_duplicates (fusions 1)", color = "0.27 0.6 0.85", style="rounded"];
-        d_f2[label = "mark_duplicates (fusions 2)", color = "0.27 0.6 0.85", style="rounded"];
+        d_f1[label = "mark_duplicates (fusions 1)", color = "0.27 0.6 0.85", style="rounded,dashed"];
+        d_f2[label = "mark_duplicates (fusions 2)", color = "0.27 0.6 0.85", style="rounded,dashed"];
         m2[label = "merge_umi", color = "0.64 0.6 0.85", style="rounded"];
         s2[label = "sort (ctDNA)", color = "0.53 0.6 0.85", style="rounded"];
         i2[label = "index (UMI)", color = "0.60 0.6 0.85", style="rounded"];
         ex2[label = "extract (UMI)", color = "0.37 0.6 0.85", style="rounded"];
         
-        s0 -> f2f1
-        s0 -> f2f2
+        s0 -> f2f1 [style="dashed"]
+        s0 -> f2f2 [style="dashed"]
         s0 -> 20
         20 -> 21
         21 -> 22
         22 -> re_unm
-        f2f1 -> d_f1
-        f2f2 -> d_f2
-        d_f1 -> m2
-        d_f2 -> m2
+        f2f1 -> d_f1 [style="dashed"]
+        f2f2 -> d_f2 [style="dashed"]
+        d_f1 -> m2 [style="dashed"]
+        d_f2 -> m2 [style="dashed"]
         re_unm -> m2
         m2 -> s2
         s2 -> i2
@@ -91,7 +91,7 @@ digraph snakemake_dag {
 
     // FFPE edges
     4 -> f1 [label="fgbio=true"]
-    4 -> f1f [style="dotted"]
+    4 -> f1f [style="dashed"]
     
     // Standard edges
     4 -> s_std [label="fgbio=false"]

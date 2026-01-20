@@ -34,6 +34,7 @@ ruleorder: alignment_fgbio_call_overlapping_consensus_bases_ffpe > alignment_sam
 ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
 ruleorder: alignment_samtools_sort_ffpe_fgbio > alignment_samtools_sort
 ruleorder: alignment_samtools_sort_umi > alignment_samtools_sort
+ruleorder: alignment_samtools_sort_umi_query > alignment_samtools_sort
 ruleorder: alignment_samtools_merge_bam > alignment_samtools_sort
 ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
 ruleorder: qc_samtools_stats_rna > qc_samtools_stats
@@ -233,6 +234,11 @@ use rule bwa_mem_merge from alignment as alignment_bwa_mem_merge_umi with:
             "alignment/bwa_mem/{sample}_{type}_unsorted.umi.bam.benchmark.tsv",
             config.get("bwa_mem_merge", {}).get("benchmark_repeats", 1),
         )
+
+
+use rule samtools_sort_umi from alignment as alignment_samtools_sort_umi_query with:
+    input:
+        bam="alignment/bwa_mem/{sample}_{type}.umi_unsorted.bam",
 
 
 use rule fgbio_call_overlapping_consensus_bases from alignment as alignment_fgbio_call_overlapping_consensus_bases_ffpe with:
