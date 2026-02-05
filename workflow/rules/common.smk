@@ -152,19 +152,25 @@ def get_hotspot_report_vcf_input(wildcards):
         return "snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted"
 
 
-def get_deduplication_bam_input(wildcards):
+def get_final_alignment_bam(wildcards):
     if wildcards.type == "R":
-        return "alignment/star/{sample}_{type}.bam"
-    if config["deduplication"] == "umi":
-        return "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"
-    elif config.get("run_ffpe_overlapping_consensus", True):
-        return "alignment/samtools_merge_bam_all_final/{sample}_{type}.bam"
-    else:
-        return "alignment/bwa_mem/{sample}_{type}.bam"
+        return f"alignment/star/{wildcards.sample}_{wildcards.type}.bam"
+    
+    # If using UMIs, this is the gold standard
+    if config.get("deduplication") == "umi":
+        return f"alignment/bwa_mem_realign_consensus_reads/{wildcards.sample}_{wildcards.type}.umi.bam"
+    
+    # If not UMIs, but FFPE processing is on
+    if config.get("run_ffpe_overlapping_consensus", True):
+        return f"alignment/samtools_filter_reads/{wildcards.sample}_{wildcards.type}.bam"
+    
+    # Standard BWA
+    return f"alignment/bwa_mem/{wildcards.sample}_{wildcards.type}.bam"
 
 
-def get_deduplication_bam_input_bai(wildcards):
-    return get_deduplication_bam_input(wildcards) + ".bai"
+# Repeat for the BAI index
+def get_final_alignment_bai(wildcards):
+    return get_final_alignment_bam(wildcards) + ".bai"
 
 
 def get_deduplication_bam_input_manta(wildcards):

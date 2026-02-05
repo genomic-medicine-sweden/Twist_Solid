@@ -516,34 +516,14 @@ use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
         )
 
 
-use rule samtools_extract_reads from alignment as alignment_samtools_extract_reads_rna with:
-    input:
-        bam="alignment/star/{sample}_{type}.bam",
-        bai="alignment/star/{sample}_{type}.bam.bai",
-    wildcard_constraints:
-        type="R",
-
-
 use rule samtools_extract_reads from alignment as alignment_samtools_extract_reads with:
     input:
-        bam=lambda wildcards: "alignment/samtools_filter_reads/{sample}_{type}.bam"
-        if config.get("run_ffpe_overlapping_consensus", True)
-        else get_deduplication_bam_input(wildcards),
-        bai=lambda wildcards: "alignment/samtools_filter_reads/{sample}_{type}.bam.bai"
-        if config.get("run_ffpe_overlapping_consensus", True)
-        else get_deduplication_bam_input_bai(wildcards),
-    wildcard_constraints:
-        type="T|N",
-
-
-use rule samtools_extract_reads_umi from alignment as alignment_samtools_extract_reads_umi with:
-    input:
-        bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
-        bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai",
+        bam=get_final_alignment_bam,
+        bai=get_final_alignment_bai,
     output:
-        bam=temp("alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam"),
+        bam=temp("alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam")
     wildcard_constraints:
-        type="T|N",
+        type="T|N|R"
 
 
 use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutect2 with:
