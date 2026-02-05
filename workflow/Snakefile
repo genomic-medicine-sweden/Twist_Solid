@@ -31,7 +31,6 @@ ruleorder: alignment_bwa_mem_merge > alignment_samtools_sort
 ruleorder: alignment_bwa_mem_merge_umi > alignment_samtools_sort_umi
 ruleorder: alignment_fgbio_call_overlapping_consensus_bases_ffpe > alignment_samtools_sort
 ruleorder: alignment_fgbio_call_overlapping_consensus_bases_ffpe > alignment_samtools_index
-ruleorder: alignment_samtools_extract_reads_rna > alignment_samtools_extract_reads
 ruleorder: alignment_samtools_sort_ffpe_fgbio > alignment_samtools_sort
 ruleorder: alignment_samtools_sort_umi > alignment_samtools_sort
 ruleorder: alignment_samtools_sort_umi_query > alignment_samtools_sort
