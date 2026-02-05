@@ -152,7 +152,7 @@ def get_hotspot_report_vcf_input(wildcards):
         return "snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.artifact_annotated.hotspot_annotated.background_annotated.include.exon.filter.snv_hard_filter.codon_snvs.sorted"
 
 
-def get_final_alignment_bam(wildcards):
+def get_deduplication_bam_input(wildcards):
     if wildcards.type == "R":
         return f"alignment/star/{wildcards.sample}_{wildcards.type}.bam"
     
@@ -169,8 +169,8 @@ def get_final_alignment_bam(wildcards):
 
 
 # Repeat for the BAI index
-def get_final_alignment_bai(wildcards):
-    return get_final_alignment_bam(wildcards) + ".bai"
+def get_deduplication_bam_input_bai(wildcards):
+    return get_deduplication_bam_input(wildcards) + ".bai"
 
 
 def get_deduplication_bam_input_manta(wildcards):
