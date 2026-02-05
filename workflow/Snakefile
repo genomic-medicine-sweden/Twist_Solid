@@ -518,8 +518,8 @@ use rule samtools_sort from alignment as alignment_samtools_sort_rna with:
 
 use rule samtools_extract_reads from alignment as alignment_samtools_extract_reads with:
     input:
-        bam=get_final_alignment_bam,
-        bai=get_final_alignment_bai,
+        bam=get_deduplication_bam_input,
+        bai=get_deduplication_bam_input_bai,
     output:
         bam=temp("alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam")
     wildcard_constraints:
