@@ -29,11 +29,12 @@ ruleorder: annotation_add_mosdepth_coverage_to_gvcf > snv_indels_bgzip
 ruleorder: annotation_annotate_cnv > snv_indels_bgzip
 ruleorder: alignment_bwa_mem_merge > alignment_samtools_sort
 ruleorder: alignment_bwa_mem_merge_umi > alignment_samtools_sort_umi
+ruleorder: alignment_fgbio_call_and_filter_consensus_reads > alignment_samtools_sort
 ruleorder: alignment_fgbio_call_overlapping_consensus_bases_ffpe > alignment_samtools_sort
 ruleorder: alignment_fgbio_call_overlapping_consensus_bases_ffpe > alignment_samtools_index
 ruleorder: alignment_samtools_sort_ffpe_fgbio > alignment_samtools_sort
+ruleorder: alignment_samtools_sort_umi_only_query > alignment_samtools_sort
 ruleorder: alignment_samtools_sort_umi > alignment_samtools_sort
-ruleorder: alignment_samtools_sort_umi_query > alignment_samtools_sort
 ruleorder: alignment_samtools_merge_bam > alignment_samtools_sort
 ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
 ruleorder: qc_samtools_stats_rna > qc_samtools_stats
@@ -235,9 +236,18 @@ use rule bwa_mem_merge from alignment as alignment_bwa_mem_merge_umi with:
         )
 
 
-use rule samtools_sort_umi from alignment as alignment_samtools_sort_umi_query with:
+use rule samtools_sort_umi from alignment as alignment_samtools_sort_umi_only_query with:
     input:
         bam="alignment/bwa_mem/{sample}_{type}.umi_unsorted.bam",
+    output:
+        bam=temp("alignment/bwa_mem/{sample}_{type}.umi.query_sorted.bam"),
+    params:
+        extra="-n",
+
+
+use rule fgbio_copy_umi_from_read_name from alignment as alignment_fgbio_copy_umi_from_read_name with:
+    input:
+        bam="alignment/bwa_mem/{sample}_{type}.umi.query_sorted.bam",
 
 
 use rule fgbio_call_overlapping_consensus_bases from alignment as alignment_fgbio_call_overlapping_consensus_bases_ffpe with:
@@ -401,7 +411,7 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_all_f
 
 use rule fgbio_call_and_filter_consensus_reads from alignment as alignment_fgbio_call_and_filter_consensus_reads with:
     output:
-        bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam"),
+        bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_bam"),
     log:
         "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam.log",
     benchmark:
@@ -413,7 +423,7 @@ use rule fgbio_call_and_filter_consensus_reads from alignment as alignment_fgbio
 
 use rule bwa_mem_realign_consensus_reads from alignment as alignment_bwa_mem_realign_consensus_reads_unmapped with:
     input:
-        bam="alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam",
+        bam="alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_bam",
     output:
         bam=temp("alignment/bwa_mem_realign_consensus_reads_unmapped/{sample}_{type}.umi_unsorted.bam"),
     log:
@@ -520,9 +530,9 @@ use rule samtools_extract_reads from alignment as alignment_samtools_extract_rea
         bam=get_deduplication_bam_input,
         bai=get_deduplication_bam_input_bai,
     output:
-        bam=temp("alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam")
+        bam=temp("alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"),
     wildcard_constraints:
-        type="T|N|R"
+        type="T|N|R",
 
 
 use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutect2 with:
