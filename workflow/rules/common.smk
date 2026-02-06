@@ -155,15 +155,15 @@ def get_hotspot_report_vcf_input(wildcards):
 def get_deduplication_bam_input(wildcards):
     if wildcards.type == "R":
         return f"alignment/star/{wildcards.sample}_{wildcards.type}.bam"
-    
+
     # If using UMIs, this is the gold standard
     if config.get("deduplication") == "umi":
         return f"alignment/bwa_mem_realign_consensus_reads/{wildcards.sample}_{wildcards.type}.umi.bam"
-    
+
     # If not UMIs, but FFPE processing is on
     if config.get("run_ffpe_overlapping_consensus", True):
         return f"alignment/samtools_filter_reads/{wildcards.sample}_{wildcards.type}.bam"
-    
+
     # Standard BWA
     return f"alignment/bwa_mem/{wildcards.sample}_{wildcards.type}.bam"
 
