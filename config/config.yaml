@@ -5,14 +5,16 @@ units: "units.tsv"
 #hydra_local_path: "PATH_TO_REPO"
 
 modules:
-  alignment: "v0.7.0"
+  #alignment: "v0.7.0"
+  alignment: "db70572"
   annotation: "v1.1.0"
   biomarker: "v0.7.0"
   cnv_sv: "v0.9.0"
   filtering: "v0.3.0"
   fusions: "v0.3.0"
   prealignment: "v1.3.0"
-  qc: "v0.5.0"
+  #qc: "v0.5.0"
+  qc: "0f1c268"
   reports: "v0.10.1"
   snv_indels: "v1.1.0"
 
@@ -21,6 +23,7 @@ default_container: "docker://hydragenetics/common:3.1.1.1"
 
 trimmer_software: "fastp_pe"
 subsample: "None"
+run_ffpe_overlapping_consensus: false
 
 arriba:
   container: "docker://hydragenetics/arriba:2.3.0"
@@ -44,6 +47,7 @@ bcftools_annotate:
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
+  extra: "-Y"
 
 bwa_mem_merge:
   extra: "-c -p"
@@ -139,11 +143,19 @@ fastqc:
 
 fgbio_call_and_filter_consensus_reads:
   container: "docker://hydragenetics/fgbio:2.1.0"
-  max_base_error_rate: "0.2"
+  max_base_error_rate: "0.1"
   min_reads_call: "1 0 0"
   min_reads_filter: "1 0 0"
   min_input_base_quality_call: 20
   min_input_base_quality_filter: 30
+
+fgbio_call_overlapping_consensus_bases:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+  agrement_strategy: "Consensus"
+  disagrement_strategy: "Consensus"
+
+fgbio_collect_duplex_seq_metrics:
+  container: "docker://hydragenetics/fgbio:2.1.0"
 
 fgbio_copy_umi_from_read_name:
   container: "docker://hydragenetics/fgbio:2.1.0"
@@ -309,7 +321,7 @@ multiqc:
         - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
         - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
     DNA_umi:
-      config: "config/reports/multiqc_config_dna.yaml"
+      config: "config/reports/multiqc_config_dna_umi.yaml"
       included_unit_types: ["N", "T"]
       deduplication: ["umi"]
       qc_files:
@@ -322,6 +334,10 @@ multiqc:
         - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
         - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
         - "alignment/fgbio_group_reads_by_umi/{sample}_{type}.umi.histo.tsv"
+        - "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.family_sizes.txt"
+        - "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.duplex_family_sizes.txt"
+        - "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.duplex_yield_metrics.txt"
+        - "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.umi_counts.txt"
     RNA:
       config: "config/reports/multiqc_config_rna.yaml"
       included_unit_types: ["R"]
@@ -384,6 +400,18 @@ report_gene_fuse:
 
 sample_mixup_check:
   match_cutoff: 0.7
+
+samtools_filter_reads:
+  extra: "-f 2"
+
+samtools_filter_reads_fusions:
+  extra: "-G 2"
+
+samtools_filter_reads_umi_fusions1:
+  extra: "-f 0x100"
+
+samtools_filter_reads_umi_fusions2:
+  extra: "-f 0x800"
 
 samtools_merge_bam:
   extra: "-c -p"
