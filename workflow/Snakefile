@@ -169,7 +169,7 @@ module alignment:
         config
 
 
-use rule * from alignment exclude bwa_mem_merge, samtools_merge_bam, all as alignment_*
+use rule * from alignment exclude bwa_mem_merge, samtools_merge_bam, bwa_mem_realign_consensus_reads, all as alignment_*
 
 
 use rule samtools_index from alignment as alignment_samtools_index with:
@@ -401,7 +401,7 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_all_f
 
 use rule fgbio_call_and_filter_consensus_reads from alignment as alignment_fgbio_call_and_filter_consensus_reads with:
     output:
-        bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_unsorted.bam"),
+        bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam"),
     log:
         "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam.log",
     benchmark:
