@@ -1,7 +1,7 @@
 files:
   - name: Small variants
     type: file_link
-    input: results/dna/{sample}_{type}/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf
+    input: results/dna/{sample}_{type}/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.umi.qci.vcf
     description: File link to vcf with SNVs and INDELs
     nav_header: Small variants
   - name: Coverage and mutations
