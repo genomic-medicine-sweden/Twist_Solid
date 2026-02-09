@@ -13,7 +13,7 @@ modules:
   fusions: "v0.3.0"
   prealignment: "v1.3.0"
   qc: "v0.5.0"
-  reports: "v0.10.1"
+  reports: "v0.11.0"
   snv_indels: "v1.1.0"
 
 output: "config/output_files_FFPE.yaml"

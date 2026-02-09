@@ -165,6 +165,7 @@ merge_cnv_json:
     - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_240307.bed"
     - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes.bed"
   cytobands: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cytoBand.hg19.txt"
+  ref_genes: "{{PROJECT_REF_DATA}}/ref_data/juli/refGene_hg19.txt"
 
 mosdepth:
   extra: "--no-per-base --fast-mode"
