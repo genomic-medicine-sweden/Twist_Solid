@@ -9,7 +9,7 @@ import pandas as pd
 import re
 from datetime import datetime
 from snakemake.utils import validate
-from snakemake.utils import min_version
+# from snakemake.utils import min_version
 import yaml
 
 from hydra_genetics.utils.misc import get_module_snakefile
@@ -33,7 +33,7 @@ from hydra_genetics.utils.software_versions import use_container
 
 hydra_min_version("3.3.2")
 
-min_version("7.13.0")
+# min_version("7.13.0")
 
 ### Set and validate config file
 
