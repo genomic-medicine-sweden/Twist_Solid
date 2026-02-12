@@ -15,7 +15,7 @@ pipeline {
       steps {
         sshagent(['jenkins-ssh-agent']) {
           sh '''#!/bin/bash
-                virtualenv venv -p python3.9
+                virtualenv venv -p python3.8
                 source venv/bin/activate
                 pip3 install -r requirements.txt
 
