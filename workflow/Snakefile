@@ -28,13 +28,12 @@ rule all:
 ruleorder: annotation_add_mosdepth_coverage_to_gvcf > snv_indels_bgzip
 ruleorder: annotation_annotate_cnv > snv_indels_bgzip
 ruleorder: alignment_bwa_mem_merge > alignment_samtools_sort
-ruleorder: alignment_bwa_mem_merge_umi > alignment_samtools_sort_umi
+ruleorder: alignment_bwa_mem_merge_umi > alignment_samtools_sort
 ruleorder: alignment_fgbio_call_and_filter_consensus_reads > alignment_samtools_sort
 ruleorder: alignment_fgbio_call_overlapping_consensus_bases_ffpe > alignment_samtools_sort
 ruleorder: alignment_fgbio_call_overlapping_consensus_bases_ffpe > alignment_samtools_index
 ruleorder: alignment_samtools_sort_ffpe_fgbio > alignment_samtools_sort
 ruleorder: alignment_samtools_sort_umi_only_query > alignment_samtools_sort
-ruleorder: alignment_samtools_sort_umi > alignment_samtools_sort
 ruleorder: alignment_samtools_merge_bam > alignment_samtools_sort
 ruleorder: filtering_bcftools_filter_include_region > snv_indels_bgzip
 ruleorder: qc_samtools_stats_rna > qc_samtools_stats
@@ -473,27 +472,13 @@ use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_umi w
             "alignment/picard_mark_duplicates_umi_fusions2/{sample}_{type}.umi.bam",
         ],
     output:
-        bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi.merged_unsorted.bam"),
+        bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi_unsorted.bam"),
     log:
         "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.merged_unsorted.bam.log",
     benchmark:
         repeat(
             "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.merged_unsorted.bam.benchmark.tsv",
             config.get("samtools_merge_bam", {}).get("benchmark_repeats", 1),
-        )
-
-
-use rule samtools_sort from alignment as alignment_samtools_sort_umi with:
-    input:
-        bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.merged_unsorted.bam",
-    output:
-        bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"),
-    log:
-        "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.sort.log",
-    benchmark:
-        repeat(
-            "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.sort.benchmark.tsv",
-            config.get("samtools_sort", {}).get("benchmark_repeats", 1),
         )
 
 
@@ -533,6 +518,21 @@ use rule samtools_extract_reads from alignment as alignment_samtools_extract_rea
         bam=temp("alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"),
     wildcard_constraints:
         type="T|N|R",
+
+
+use rule samtools_extract_reads_umi from alignment as alignment_samtools_extract_reads_umi with:
+    input:
+        bam="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam",
+        bai="alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam.bai",
+    output:
+        bam=temp("alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam"),
+
+
+use rule samtools_extract_reads_non_chr_umi from alignment as alignment_samtools_extract_reads_non_chr_umi with:
+    input:
+        bam=get_deduplication_bam_input,
+        bai=get_deduplication_bam_input_bai,
+
 
 
 use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutect2 with:
@@ -740,6 +740,8 @@ use rule mosdepth_bed from qc as qc_mosdepth_bed with:
 
 
 use rule samtools_stats from qc as qc_samtools_stats with:
+    input:
+        bam=get_deduplication_bam_input,
     wildcard_constraints:
         type="T|N",
 
@@ -901,6 +903,34 @@ use rule tmb from biomarker as biomarker_tmb_umi with:
             "variant_type_list", ["missense_variant", "stop_gained", "stop_lost", "synonymous_variant", "stop_retained_variant"]
         ),
         vd_limit=config.get("tmb_umi", {}).get("vd_limit", 20),
+
+
+use rule finaletoolkit_end_motifs from biomarker as biomarker_finaletoolkit_end_motifs with:
+    input:
+        bam=get_deduplication_bam_input,
+        bai=get_deduplication_bam_input_bai,
+        reference=config.get("reference", {}).get("fasta_2bit", ""),
+
+
+use rule finaletoolkit_interval_end_motifs from biomarker as biomarker_finaletoolkit_interval_end_motifs with:
+    input:
+        bam=get_deduplication_bam_input,
+        bai=get_deduplication_bam_input_bai,
+        design_bed=config.get("reference", {}).get("design_bed", ""),
+        reference=config.get("reference", {}).get("fasta_2bit", ""),
+
+
+use rule finaletoolkit_frag_length_bins from biomarker as biomarker_finaletoolkit_frag_length_bins with:
+    input:
+        bam=get_deduplication_bam_input,
+        bai=get_deduplication_bam_input_bai,
+
+
+use rule fragmentomics_fragment_length_patient_score from biomarker as biomarker_fragmentomics_fragment_length_patient_score with:
+    input:
+        bam=get_deduplication_bam_input,
+        bai=get_deduplication_bam_input_bai,
+        reference_set=config.get("fragmentomics_fragment_length_patient_score", {}).get("reference_set", ""),
 
 
 module fusions:
@@ -1110,6 +1140,9 @@ use rule purecn from cnv_sv as cnv_sv_purecn with:
 
 
 use rule purecn_coverage from cnv_sv as cnv_sv_purecn_coverage with:
+    input:
+        bam=get_deduplication_bam_input,
+        bai=get_deduplication_bam_input_bai,
     output:
         purecn=expand(
             "cnv_sv/purecn_coverage/{{sample}}_{{type}}{ext}",
@@ -1120,6 +1153,13 @@ use rule purecn_coverage from cnv_sv as cnv_sv_purecn_coverage with:
                 "_coverage_loess_qc.txt",
             ],
         ),
+
+
+use rule scanitd from cnv_sv as cnv_sv_scanitd with:
+    input:
+        bam=get_deduplication_bam_input,
+        bai=get_deduplication_bam_input_bai,
+        ref=config.get("reference", {}).get("fasta", ""),
 
 
 use rule purecn_copy_output from cnv_sv as cnv_sv_purecn_copy_output with:
