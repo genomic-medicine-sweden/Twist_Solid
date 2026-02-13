@@ -158,7 +158,7 @@ def get_deduplication_bam_input(wildcards):
 
     # If using UMIs, this is the gold standard
     if config.get("deduplication") == "umi":
-        return f"alignment/samtools_merge_bam_umi/{wildcards.sample}_{wildcards.type}.umi.bam"
+        return f"alignment/samtools_merge_bam_umi/{wildcards.sample}_{wildcards.type}.bam"
 
     # If not UMIs, but FFPE processing is on
     if config.get("run_ffpe_overlapping_consensus", True):
@@ -175,7 +175,7 @@ def get_deduplication_bam_input_bai(wildcards):
 
 def get_deduplication_bam_input_manta(wildcards):
     if config["deduplication"] == "umi":
-        return "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam"
+        return "alignment/samtools_merge_bam_umi/{sample}_{type}.bam"
     elif config.get("run_ffpe_overlapping_consensus", True):
         return "alignment/samtools_merge_bam_all_final/{sample}_T.bam"
     else:

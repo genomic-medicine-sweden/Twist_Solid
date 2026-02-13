@@ -12,13 +12,13 @@ files:
       - T
       - N
   - name: BAM umi
-    input: alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam
+    input: alignment/samtools_merge_bam_umi/{sample}_{type}.bam
     output: bam_dna/{sample}_{type}.umi.bam
     types:
       - T
       - N
   - name: BAM umi index
-    input: alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam.bai
+    input: alignment/samtools_merge_bam_umi/{sample}_{type}.bam.bai
     output: bam_dna/{sample}_{type}.umi.bam.bai
     types:
       - T
