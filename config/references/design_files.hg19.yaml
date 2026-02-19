@@ -213,6 +213,16 @@
      path: GMS560/reports/Mutations_MTC_20260202.csv
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.24.0/design/Mutations_MTC_20260202.csv
+   hotspot_mutations_VAS:
+     checksum: ae5d70799710ca5bd07390b69e0bedc6
+     path: GMS560/reports/Mutations_VAS_20260217.csv
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.25.0/design/Mutations_VAS_20260217.csv
+   hotspot_mutations_PIK:
+     checksum: 08f1f75f6e88075e4eb0c0d5b26e8417
+     path: GMS560/reports/Mutations_PIK_20260217.csv
+     type: file
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.25.0/design/Mutations_PIK_20260217.csv
 
  jumble_reference:
    annotation_file1:
