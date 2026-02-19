@@ -171,6 +171,22 @@ files:
       - N
     analyskod:
       - "GMSMTC"
+  - name: Coverage and mutations VAS
+    input: qc/hotspot_report/{sample}_{type}.VAS.aa_translated.tsv
+    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.VAS.tsv
+    types:
+      - T
+      - N
+    analyskod:
+      - "GMSVAS"
+  - name: Coverage and mutations PIK
+    input: qc/hotspot_report/{sample}_{type}.PIK.aa_translated.tsv
+    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.PIK.tsv
+    types:
+      - T
+      - N
+    analyskod:
+      - "GMSPIK"
   - name: Contamination table
     input: qc/gatk_calculate_contamination/{sample}_{type}.contamination.table
     output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.contamination.table
