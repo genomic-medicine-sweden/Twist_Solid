@@ -15,12 +15,23 @@ pipeline {
       steps {
         sshagent(['jenkins-ssh-agent']) {
           sh '''#!/bin/bash
+                # 1. Clear any old environment and create fresh
+                rm -rf venv
                 python3.9 -m venv venv
                 source venv/bin/activate
+                
+                # 2. Force-install the "Big Three" into the venv
                 python -m pip install --upgrade pip setuptools wheel
                 python -m pip install -r requirements.txt
-                python -c "import pkg_resources; print('pkg_resources version:', pkg_resources.get_distribution('setuptools').version)"
 
+                # 3. DEBUG: Write environment state to log
+                echo "--- DEBUG INFO ---"
+                which python
+                python --version
+                python -c "import pkg_resources; print('SUCCESS: pkg_resources version is', pkg_resources.get_distribution('setuptools').version)"
+                echo "PYTHONPATH is: $PYTHONPATH"
+                echo "------------------"
+                
                 hydra-genetics --debug references download -o /beegfs-storage/design_and_ref_files -v config/references/design_files.hg19.yaml
                 hydra-genetics --debug references download -o /beegfs-storage/design_and_ref_files -v config/references/nextseq.hg19.pon.yaml
                 hydra-genetics --debug references download -o /beegfs-storage/design_and_ref_files -v config/references/novaseq.hg19.pon.yaml
@@ -40,7 +51,7 @@ pipeline {
                 sed 's,PROJECT_PON_DATA:.*,PROJECT_PON_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
                 sed 's,PROJECT_REF_DATA:.*,PROJECT_REF_DATA: "/beegfs-storage/design_and_ref_files",' -i config/config.data.hg19.yaml
                 module load slurm-drmaa
-                snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile -w 60 -n
+                python -m snakemake -s ../workflow/Snakefile --profile ../.tests/jenkins/profile -w 60 -n
              '''
          }
        }
