@@ -17,7 +17,7 @@ pipeline {
           sh '''#!/bin/bash
                 virtualenv venv -p python3.9
                 source venv/bin/activate
-                pip3 install -r -I requirements.txt
+                pip3 install -I -r requirements.txt
 
                 hydra-genetics --debug references download -o /beegfs-storage/design_and_ref_files -v config/references/design_files.hg19.yaml
                 hydra-genetics --debug references download -o /beegfs-storage/design_and_ref_files -v config/references/nextseq.hg19.pon.yaml
@@ -54,7 +54,7 @@ pipeline {
           sh '''#!/bin/bash
                 virtualenv venv -p python3.9
                 source venv/bin/activate
-                pip3 install -r -I requirements.txt
+                pip3 install -I -r requirements.txt
                 mkdir -p develop/slurm_out
                 cp -r config develop/
                 cp .tests/jenkins/units_develop.tsv develop/units.tsv
@@ -85,7 +85,7 @@ pipeline {
           sh '''#!/bin/bash
               virtualenv venv -p python3.9
               source venv/bin/activate
-              pip3 install -r -I requirements.txt
+              pip3 install -I -r requirements.txt
               mkdir -p main/slurm_out
               cp -r config main/
               cp .tests/jenkins/units_main.tsv main/units.tsv
