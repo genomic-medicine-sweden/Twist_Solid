@@ -72,4 +72,15 @@ A homologous recombination deficiency score is calculated using **[scarHRD](http
 * `results/dna/{sample}_{type}/hrd/{sample}_{type}.purecn.scarhrd_cnvkit_score.txt`
 * `results/dna/{sample}_{type}/hrd/{sample}_{type}.pathology.scarhrd_cnvkit_score.txt`
 
-<br />
+
+## Fragmentomics
+Fragmentomics analysis is performed using **[FinaleToolkit](https://github.com/epigen/FinaleToolkit)**. It calculates various metrics related to cell-free DNA fragmentation patterns, which can be used as biomarkers.
+
+### Result files
+
+* `results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.end-motifs.tsv`
+* `results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.mds.txt`
+* `results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.interval-end-motifs.tsv`
+* `results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.interval-mds.txt`
+* `results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.frag-length-bins.tsv`
+* `results/dna/{sample}_{type}/fragmentomics/{sample}_{type}.fragment_length_score.txt`

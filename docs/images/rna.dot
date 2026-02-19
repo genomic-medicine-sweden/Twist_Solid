@@ -1,0 +1,38 @@
+digraph snakemake_dag {
+    rankdir=LR;
+    graph[bgcolor=white, margin=0];
+    node[shape=box, style=rounded, fontname=sans, fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+
+    0[label = "FASTQ", color = "0.0 0.0 0.0", style="dotted"];
+    1[label = "seqtk_sample", color = "0.60 0.6 0.85", style="dashed"];
+    2[label = "STAR Alignment", color = "0.43 0.6 0.85", style="rounded"];
+    
+    // Fusions
+    3[label = "Arriba", color = "0.24 0.6 0.85", style="rounded"];
+    4[label = "StarFusion", color = "0.24 0.6 0.85", style="rounded"];
+    5[label = "FusionCatcher", color = "0.24 0.6 0.85", style="rounded"];
+    6[label = "Fusion Report", color = "0.08 0.6 0.85", style="rounded"];
+    
+    // Other analysis
+    7[label = "Exon Skipping", color = "0.52 0.6 0.85", style="rounded"];
+    8[label = "ID-SNP (bcftools)", color = "0.37 0.6 0.85", style="rounded"];
+    9[label = "CTAT-Splicing", color = "0.52 0.6 0.85", style="rounded"];
+    
+    // Edges
+    0 -> 1 [style="dashed"];
+    1 -> 2 [style="dashed"];
+    0 -> 2 [label="optional bypass"];
+    
+    2 -> 3
+    2 -> 4
+    0 -> 5
+    
+    3 -> 6
+    4 -> 6
+    5 -> 6
+    
+    2 -> 7
+    2 -> 8
+    2 -> 9
+}

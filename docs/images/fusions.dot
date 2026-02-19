@@ -3,9 +3,15 @@ digraph snakemake_dag {
     graph[bgcolor=white, margin=0];
     node[shape=box, style=rounded, fontname=sans,                 fontsize=10, penwidth=2];
     edge[penwidth=2, color=grey];
-	0[label = "FASTQ", color = "0.0 0.0 0.0", style="dotted"];
-	1[label = "gene_fuse", color = "0.24 0.6 0.85", style="rounded"];
-	2[label = "gene_fuse_report", color = "0.08 0.6 0.85", style="rounded"];
+	0[label = "BAM", color = "0.0 0.0 0.0", style="dotted"];
+	
+	// FuseqWES
+	1[label = "fuseq_wes", color = "0.24 0.6 0.85", style="rounded"];
+	2[label = "fuseq_wes_report", color = "0.08 0.6 0.85", style="rounded"];
 	0 -> 1
 	1 -> 2
+	
+	// JuLI
+	3[label = "JuLI", color = "0.35 0.6 0.85", style="rounded"];
+	0 -> 3
 }            

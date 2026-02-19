@@ -1,13 +1,23 @@
 files:
   - name: Small variants
     type: file_link
-    input: results/dna/{sample}_{type}/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.qci.vcf
+    input: results/dna/{sample}_{type}/vcf/{sample}_{type}.annotated.exon_only.filter.hard_filter.codon_snv.umi.qci.vcf
     description: File link to vcf with SNVs and INDELs
     nav_header: Small variants
   - name: Coverage and mutations
     type: file_link
     input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv
     description: File link to coverage and mutations
+    nav_header: Small variants
+  - name: Coverage and mutations VAS
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.VAS.tsv
+    description: File link to coverage and mutations for VAS
+    nav_header: Small variants
+  - name: Coverage and mutations PIK
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.PIK.tsv
+    description: File link to coverage and mutations for PIK
     nav_header: Small variants
 
   - name: TMB
@@ -17,7 +27,7 @@ files:
     nav_header: Biomarkers
   - name: MSI filtered
     type: file_table
-    description: MSI score (grey region 2-6%). Filtering based on ~400 known msi-sites. 
+    description: MSI score (grey zone 2.5-6%). Filtering based on ~400 known msi-sites. 
     input: results/dna/{sample}_{type}/biomarker/{sample}_{type}.msisensor_pro.filtered.score.tsv
     nav_header: Biomarkers
   - name: MSI unfiltered

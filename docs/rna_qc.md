@@ -94,3 +94,40 @@ House keeping gene coverage is reported by the in-house script [house_keeping_ge
 ### Result file
 
 * `results/rna/qc/{sample}_{type}.house_keeping_gene_coverage.tsv`
+
+## ID-SNP calling
+The RNA design includes a number of probes covering SNPs that can be used to check if check that the RNA-sample is the same as the DNA-sample and thereby avoid sample swaps. The ID SNPs are called using **[bcftools mpileup](https://samtools.github.io/bcftools/bcftools.html#mpileup)** and **[bcftools call](https://samtools.github.io/bcftools/bcftools.html#call)**v1.15 resulting in a vcf file.
+
+### Configuration
+**References**
+
+* ID SNP bed file: [`ID_SNPs.bed`](references.md#bcftools_id_snps)
+* [RNA fasta](references.md#star_fusion) reference genome from Star-Fusion: `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa` - (see [references](references.md#star-fusion))
+
+<br />
+**Software settings for bcftools mpileup (hard coded)**
+
+| **Option** | **Description** |
+|-------------|-|
+| -O u | Output uncompressed BCF file (piped to bcftools call) |
+| -d 1000000 | max read depth to consider |
+
+<br />
+**Software settings for bcftools call (hard coded)**
+
+| **Option** | **Description** |
+|-------------|-|
+| --skip-variants indels | only look at SNPs |
+| -m | multiallelic caller |
+| -O v | Output uncompressed vcf file (piped to bcftools call) |
+
+### Result file
+
+* `results/rna/{sample}_{type}/id_snps/{sample}_{type}.id_snps.vcf`
+
+## Sample mixup check
+The sample mixup check compares the ID-SNPs in the RNA sample to the DNA sample in the same analysis and reports sample similarities to be able to discern sample mixups. The check is performed by the in-house script [sample_mixup_check.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/sample_mixup_check.py) ([rule and config](softwares.md#sample_mixup_check)).
+
+### Result file
+
+* `results/sample_mixup_check.tsv`

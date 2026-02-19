@@ -37,11 +37,11 @@ The following reference files, panel of normals and design files are needed to r
 | | fasta_rna | `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa` |
 | | dict | `hg19.with.mt.dict` |
 | | fai | `hg19.with.mt.fai` |
-| | <div id="design_bed">design_bed</div> | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.210608.bed` |
+| | <div id="design_bed">design_bed</div> | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.230222.bed` |
 | | design_intervals | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.interval_list` |
 | | <div id="ref_gatk_intervals">design_intervals_gatk_cnv</div> | `pool1_pool2_nochr_3c.sort.merged.padded20.cnv400.hg19.210311.met.annotated.bed.preprocessed.interval_list` |
 | | <div id="design_bed_rna">design_bed_rna</div> | `Twist_RNA_Design5.annotated.bed` |
-|_ _| design_intervals_rna | `Twist_RNA_Design5.annotated.interval_list` |
+|_ _| design_intervals_rna | `Twist_RNA_Design5.annotated.20230630.interval_list` |
 | <div id="arriba_reference">arriba</div> | assembly | `hg19.with.mt.fasta` |
 | | <div id="arriba_blacklist">blacklist</div> | `arriba/arriba_v2.3.0/database/blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz` |
 | | <div id="arriba_gtf">gtf</div> | `hg19.refGene.gtf` |
@@ -50,7 +50,7 @@ The following reference files, panel of normals and design files are needed to r
 | <div id="arriba_draw_fusion_cytobands">arriba_draw_fusion</div> | cytobands | `arriba/arriba_v2.3.0/database/cytobands_hg19_hs37d5_GRCh37_v2.3.0.tsv` |
 | | <div id="arriba_draw_fusion_gtf">gtf</div> | `hg19.refGene.gtf` |
 |_ _| <div id="arriba_draw_fusion_protein_domains">protein_domains</div> | `arriba/arriba_v2.3.0/database/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3` |
-| <div id="cnv_amp_genes">annotate_cnv</div> | cnv_amp_genes | `cnv_amp_genes.bed` |
+| <div id="cnv_amp_genes">annotate_cnv</div> | cnv_amp_genes | `cnv_amp_genes_240307.bed` |
 |_ _| <div id="cnv_loh_genes">cnv_loh_genes</div> | `cnv_loh_genes.bed` |
 | bcftools_annotate | annotation_db | `small_exac_common_3.hg19.vcf.gz` |
 | <div id="bcftools_filter">bcftools_filter_include_region</div> | exon | `pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.MUC6_31_rm.exon_only.reannotated.210608.bed` |
@@ -61,8 +61,8 @@ The following reference files, panel of normals and design files are needed to r
 | | bwt | `hg19.with.mt.bwt` |
 | | pac | `hg19.with.mt.pac` |
 |_ _| sa | `hg19.with.mt.sa` |
-| <div id="call_small_cnv_deletions">call_small_cnv_deletions</div> | regions_file | `cnv_deletion_genes.tsv` |
-| <div id="call_small_cnv_amplifications">call_small_cnv_amplifications</div> | regions_file | `cnv_amplification_genes.tsv` |
+| <div id="call_small_cnv_deletions">call_small_cnv_deletions</div> | regions_file | `cnv_deletion_genes_240618.tsv` |
+| <div id="call_small_cnv_amplifications">call_small_cnv_amplifications</div> | regions_file | `cnv_amplification_genes_240307.tsv` |
 | <div id="cnvkit_ref">cnvkit_batch</div> | normal_reference | `cnvkit_nextseq_36.cnn` |
 | <div id="normal_reference_hrd">cnvkit_batch_hrd</div> | normal_reference_hrd | `cnvkit_nextseq_27_HRD.cnn` |
 | <div id="exon_skipping">exon_skipping</div> | design_bed | `Twist_RNA_Design5.annotated.bed` |
@@ -91,7 +91,7 @@ The following reference files, panel of normals and design files are needed to r
 |_ _| <div id="purecn_estimation_intervals">intervals</div> | `targets_twist-gms-st_hg19_25000_intervals.txt` |
 | <div id="purecn_coverage_intervals">purecn_coverage</div> | intervals | `targets_twist-gms-st_hg19_25000_intervals.txt` |
 | <div id="report_fusions">report_fusions</div> | annotation_bed | `Twist_RNA_fusionpartners.bed` |
-| <div id="genefuse_filter_fusions">report_gene_fuse</div> | filter_fusions | `filter_fusions_20221114.csv` |
+| <div id="genefuse_filter_fusions">report_gene_fuse</div> | filter_fusions | `filter_fusions_20230214.csv` |
 | <div id="star_genome_index">star</div> | genome_index | `v2.7.10a_hg19/` |
 |_ _| <div id="star_genome_extra">extra</div> | `hg19.refGene.gtf` |
 | <div id="star_fusion">star_fusion</div> | genome_path | `GRCh37_gencode_v19_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/` |

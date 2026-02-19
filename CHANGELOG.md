@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/genomic-medicine-sweden/Twist_Solid/compare/v1.0.0...v1.0.1) (2025-12-03)
+
+
+### Bug Fixes
+
+* rm JuLI from prio analysis ([188bbf6](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/188bbf61b5f574c6d6413b154b1daed4ae0c61e5))
+* rm JuLI from prio analysis ([50cab1c](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/50cab1cb4bb2b77c5956dfa7522890ddb2f076cf))
+
 ## [1.0.0](https://github.com/genomic-medicine-sweden/Twist_Solid/compare/v0.24.0...v1.0.0) (2025-11-28)
 
 

@@ -1,0 +1,20 @@
+digraph snakemake_dag {
+    rankdir=LR;
+    graph[bgcolor=white, margin=0];
+    node[shape=box, style=rounded, fontname=sans, fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+
+    0[label = "BAM (Star)", color = "0.0 0.0 0.0", style="dotted"];
+    1[label = "Arriba", color = "0.24 0.6 0.85", style="rounded"];
+    2[label = "StarFusion", color = "0.24 0.6 0.85", style="rounded"];
+    3[label = "FusionCatcher", color = "0.24 0.6 0.85", style="rounded"];
+    4[label = "Fusion Report", color = "0.08 0.6 0.85", style="rounded"];
+    
+    0 -> 1
+    0 -> 2
+    0 -> 3
+    
+    1 -> 4
+    2 -> 4
+    3 -> 4
+}

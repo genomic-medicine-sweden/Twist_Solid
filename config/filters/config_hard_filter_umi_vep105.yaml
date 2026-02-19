@@ -77,7 +77,7 @@ filters:
     soft_filter: "False"
   sbf:
     description: "Hard filter variants with skewed distribution between strands"
-    expression: "INFO:SBF < 0.01"
+    expression: "INFO:SBF < 0.01 and INFO:ODDRATIO > 1.5"
     soft_filter: "False"
   pmean:
     description: "Hard filter variants found only in start of reads"

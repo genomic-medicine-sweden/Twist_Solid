@@ -173,8 +173,8 @@ Use **[bcftools filter -R](https://samtools.github.io/bcftools/bcftools.html)** 
 
 * [Bed file](references.md#bcftools_filter) with exonic regions including 20 bp padding
 
-### Hard filter vcf
-The exonic vcf files are filtered using the **hydra-genetics filtering** functionality included in v0.15.0. The filters are specified in the config file `config_hard_filter_uppsala.yaml` and consists of the following filters:
+### Hard filter vcf (FFPE)
+The exonic vcf files for FFPE samples are filtered using the **hydra-genetics filtering** functionality. The filters are specified in the config file `config_hard_filter_uppsala_vep105.yaml` and consists of the following filters:
 
 #### Configuration
 
@@ -182,12 +182,46 @@ The exonic vcf files are filtered using the **hydra-genetics filtering** functio
 
 | **Filter** | **Description** |
 |-------------|-|
-| intron | Filter intronic variants with the following exceptions; splice variant, in genes MET or TERT, or in the COSMIC database |
-| low vaf | Filter variants with variant allele frequency below 1% |
-| artifacts | Filter variants found in more than 3 normal samples except if the allele frequency is more than 5 standard deviations above the median allele frequency found in the normals |
-| background | Filter SNV variants where the positions background median noise plus 4 standard deviations is higher than the variant allele frequency except for variants in hotspots |
-| germline | Filter germline variants when the GnomAD global population allele frequency is above 0.5% |
-| variant observations | Filter variants with fewer than 20 supporting reads except for variants in hotsports and in the TERT gene which only need 10 and 4 supporting reads respectively |
+| intron | Hard filter intronic variants |
+| vaf | Hard filter variants with low vaf (AF lower than 0.01) |
+| artifacts | Hard filter variants found in more than 3 normal samples |
+| background | Hard filter position with where backgound distribution overlaps variant (lower than 4 SD from median) |
+| germline | Hard filter germline (gnomAD_AF > 0.005) |
+| ad | Hard filter variants with few observations (AD lower than 20) |
+| ad_hotspot | Hard filter hotspot variants with few observations (AD lower than 10) |
+| ad_TERT | Hard filter TERT variants with few observations (AD lower than 4) |
+
+### Hard filter vcf (ctDNA)
+The exonic vcf files for ctDNA samples are filtered using the **hydra-genetics filtering** functionality. The filters are specified in the config file `config_hard_filter_umi_vep105.yaml` and consists of the following filters:
+
+#### Configuration
+
+**Software settings**
+
+| **Filter** | **Description** | **Criteria** |
+|-------------|-|-|
+| intron | Hard filter intronic variants | Not splice, not MET/TERT, not COSMIC |
+| noisy_gene | Hard filter variants in noisy genes | MUC6, CDC27, KMT2B, KMT2C, KMT2D, HLA-A, HLA-B, HLA-C |
+| artifacts_SNVs | Hard filter SNVs found in 3 or more normal samples | Artifact > 2 and ArtifactNrSD < 6 |
+| artifacts_INDELs | Hard filter INDELs found in 3 or more normal samples | Artifact > 2 and ArtifactNrSD < 6 |
+| background | Hard filter variants with AF not over background noise | PositionNrSD < 6 |
+| germline | Hard filter germline | gnomAD_AF > 0.005 |
+| af_snv | Hard filter SNV variants with low vaf | AF < 0.003 or AF > 0.997 |
+| ad_snv | Hard filter SNV variants with low ad | AD < 10 |
+| af_snv_hotspot | Hard filter SNV variants with low vaf (hotspot) | AF < 0.0025 or AF > 0.9975 |
+| ad_snv_hotspot | Hard filter SNV variants with low ad (hotspot) | AD < 6 |
+| af_insertion | Hard filter Insertion variants with low vaf | AF < 0.005 or AF > 0.995 |
+| ad_insertion | Hard filter Insertion variants with low ad | AD < 10 |
+| af_deletion | Hard filter Deletion variants with low vaf | AF < 0.005 or AF > 0.995 |
+| ad_deletion | Hard filter Deletion variants with low ad | AD < 10 |
+| af_complex | Hard filter complex variants with low vaf | AF < 0.009 or AF > 0.991 |
+| ad_complex | Hard filter complex variants with low ad | AD < 20 |
+| af_substitution | Hard filter substitution variants with low vaf | AF < 0.006 or AF > 0.994 |
+| ad_substitution | Hard filter substitution variants with low ad | AD < 15 |
+| ald | Hard filter variants with skewed distribution between strands | ALD < 3 |
+| sbf | Hard filter variants with skewed distribution between strands | SBF < 0.01 |
+| pmean | Hard filter variants found only in start of reads | PMEAN < 15.0 |
+| callers | Hard filter variants only called by mutect2 | CALLERS = gatk_mutect2 |
 
 ## Combine SNVs in the same codon
 Two or more variants affecting the same codon can have different clinical implications when considered individually compared to in combination. This is because the combined variant could end up coding for a different amino acid then the when only looking at the variant individually. Variants within the same codon are therefore combined and added to the vcf file using the in-house script [add_multi_snv_in_codon.py](https://github.com/hydra-genetics/annotation/blob/develop/workflow/scripts/add_multi_snv_in_codon.py) ([rule](https://github.com/hydra-genetics/annotation/blob/develop/workflow/rules/add_multi_snv_in_codon.smk)). Codon information is based on the VEP annotation. Annotation information is taken from the variant with the highest allele frequency. After adding the combined variants the vcf is sorted and annotated again.

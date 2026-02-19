@@ -96,7 +96,7 @@ filters:
     soft_filter: "True"
   sbf:
     description: "Hard filter variants with skewed distribution between strands"
-    expression: "INFO:SBF < 0.01"
+    expression: "INFO:SBF < 0.01 and INFO:ODDRATIO > 1.5"
     soft_filter_flag: "sbf_strand_bias"
     soft_filter: "True"
   pmean:

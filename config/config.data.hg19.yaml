@@ -129,20 +129,22 @@ gene_fuse:
 
 hotspot_annotation:
   chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
-  hotspots: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.251017.csv"
+  hotspots: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.20260202.csv"
 
 hotspot_report:
   chr_translation_file: "config/reports/hotspot_report.chr.translation.hg19"
   hotspot_mutations: 
-    all: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.251017.csv"
-    ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/ENC_hotspots_240919.csv"
-    URO: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/URO_hotspots.csv"
-    CRC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Colon_20250905.csv"
-    BRC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Breast_20191112.csv"
-    GIS: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Gist_20250220.csv"
-    LUN: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Lung_20250220.csv"
-    MEL: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Melanom_20250220.csv"
-    MTC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_MTC_250220.csv"
+    all: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Hotspots_combined_regions_nodups.20260202.csv"
+    ENC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_ENC_20260202.csv"
+    URO: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_URO_20260202.csv"
+    CRC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Colon_20260202.csv"
+    BRC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Breast_20260202.csv"
+    GIS: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Gist_20260202.csv"
+    LUN: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Lung_20260202.csv"
+    MEL: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Melanom_20260202.csv"
+    MTC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_MTC_20260202.csv"
+    VAS: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_VAS_20260217.csv"
+    PIK: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_PIK_20260217.csv"
 
 juli_annotate:
   cosmic: "{{PROJECT_REF_DATA}}/ref_data/juli/CosmicFusionExport_V76.tsv"
@@ -165,6 +167,7 @@ merge_cnv_json:
     - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_240307.bed"
     - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes.bed"
   cytobands: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cytoBand.hg19.txt"
+  ref_genes: "{{PROJECT_REF_DATA}}/ref_data/juli/refGene_hg19.txt"
 
 mosdepth:
   extra: "--no-per-base --fast-mode"
