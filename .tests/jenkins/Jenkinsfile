@@ -21,8 +21,7 @@ pipeline {
                 source venv/bin/activate
                 
                 # 2. Force-install the "Big Three" into the venv
-                python -m pip install --upgrade pip
-                python -m pip install --force-reinstall setuptools
+                python -m pip install "setuptools<70"
                 python -m pip install -r requirements.txt
 
                 # 3. DEBUG: Write environment state to log
