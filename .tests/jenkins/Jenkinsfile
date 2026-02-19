@@ -21,7 +21,8 @@ pipeline {
                 source venv/bin/activate
                 
                 # 2. Force-install the "Big Three" into the venv
-                python -m pip install --upgrade pip setuptools wheel
+                python -m pip install --upgrade pip
+                python -m pip install --force-reinstall setuptools
                 python -m pip install -r requirements.txt
 
                 # 3. DEBUG: Write environment state to log
@@ -30,6 +31,7 @@ pipeline {
                 python --version
                 python -c "import pkg_resources; print('SUCCESS: pkg_resources version is', pkg_resources.get_distribution('setuptools').version)"
                 echo "PYTHONPATH is: $PYTHONPATH"
+                python -c "import sys; print('\\n'.join(sys.path))"
                 echo "------------------"
                 
                 hydra-genetics --debug references download -o /beegfs-storage/design_and_ref_files -v config/references/design_files.hg19.yaml
