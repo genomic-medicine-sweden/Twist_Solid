@@ -15,9 +15,10 @@ pipeline {
       steps {
         sshagent(['jenkins-ssh-agent']) {
           sh '''#!/bin/bash
-                virtualenv venv -p python3.9
+                python3.9 -m venv venv
                 source venv/bin/activate
-                pip3 install -r requirements.txt
+                python -m pip install --upgrade pip setuptools wheel
+                python -m pip install -r requirements.txt
 
                 hydra-genetics --debug references download -o /beegfs-storage/design_and_ref_files -v config/references/design_files.hg19.yaml
                 hydra-genetics --debug references download -o /beegfs-storage/design_and_ref_files -v config/references/nextseq.hg19.pon.yaml
