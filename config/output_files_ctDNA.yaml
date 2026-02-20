@@ -125,6 +125,8 @@ files:
       - "GMSLUN"
       - "GMSMEL"
       - "GMSMTC"
+      - "GMSVAS"
+      - "GMSPIK"
   - name: Coverage and mutations URO
     input: qc/hotspot_report/{sample}_{type}.URO.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.URO.tsv
@@ -149,6 +151,8 @@ files:
       - "GMSLUN"
       - "GMSMEL"
       - "GMSMTC"
+      - "GMSVAS"
+      - "GMSPIK"
   - name: Coverage and mutations BRC
     input: qc/hotspot_report/{sample}_{type}.BRC.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.BRC.tsv
@@ -173,6 +177,8 @@ files:
       - "GMSLUN"
       - "GMSMEL"
       - "GMSMTC"
+      - "GMSVAS"
+      - "GMSPIK"
   - name: Coverage and mutations CRC
     input: qc/hotspot_report/{sample}_{type}.CRC.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
@@ -197,6 +203,8 @@ files:
       - "GMSLUN"
       - "GMSMEL"
       - "GMSMTC"
+      - "GMSVAS"
+      - "GMSPIK"
   - name: Coverage and mutations GIS
     input: qc/hotspot_report/{sample}_{type}.GIS.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.GIS.tsv
@@ -221,6 +229,8 @@ files:
       - "GMSLUN"
       - "GMSMEL"
       - "GMSMTC"
+      - "GMSVAS"
+      - "GMSPIK"
   - name: Coverage and mutations LUN
     input: qc/hotspot_report/{sample}_{type}.LUN.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.LUN.tsv
@@ -245,6 +255,8 @@ files:
       - "GMSGIS"
       - "GMSMEL"
       - "GMSMTC"
+      - "GMSVAS"
+      - "GMSPIK"
   - name: Coverage and mutations MEL
     input: qc/hotspot_report/{sample}_{type}.MEL.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MEL.tsv
@@ -269,6 +281,8 @@ files:
       - "GMSGIS"
       - "GMSLUN"
       - "GMSMTC"
+      - "GMSVAS"
+      - "GMSPIK"
   - name: Coverage and mutations MTC
     input: qc/hotspot_report/{sample}_{type}.MTC.aa_translated.tsv
     output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MTC.tsv
@@ -293,6 +307,60 @@ files:
       - "GMSGIS"
       - "GMSLUN"
       - "GMSMEL"
+      - "GMSVAS"
+      - "GMSPIK"
+  - name: Coverage and mutations VAS
+    input: qc/hotspot_report/{sample}_{type}.VAS.aa_translated.tsv
+    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.VAS.tsv
+    types:
+      - T
+      - N
+    analyskod:
+      - "GMSVAS"
+  - name: Coverage and mutations VAS additional
+    input: qc/hotspot_report/{sample}_{type}.VAS.aa_translated.tsv
+    output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.coverage_and_mutations.VAS.tsv
+    types:
+      - T
+      - N
+    analyskod:
+      - ""
+      - "GMS560"
+      - "GMSENC"
+      - "GMSURO"
+      - "GMSBRC"
+      - "GMSCRC"
+      - "GMSGIS"
+      - "GMSLUN"
+      - "GMSMEL"
+      - "GMSMTC"
+      - "GMSPIK"
+  - name: Coverage and mutations PIK
+    input: qc/hotspot_report/{sample}_{type}.PIK.aa_translated.tsv
+    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.PIK.tsv
+    types:
+      - T
+      - N
+    analyskod:
+      - "GMSPIK"
+  - name: Coverage and mutations PIK additional
+    input: qc/hotspot_report/{sample}_{type}.PIK.aa_translated.tsv
+    output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.coverage_and_mutations.PIK.tsv
+    types:
+      - T
+      - N
+    analyskod:
+      - ""
+      - "GMS560"
+      - "GMSENC"
+      - "GMSURO"
+      - "GMSBRC"
+      - "GMSCRC"
+      - "GMSGIS"
+      - "GMSLUN"
+      - "GMSMEL"
+      - "GMSMTC"
+      - "GMSVAS"
   - name: Contamination table
     input: qc/gatk_calculate_contamination/{sample}_{type}.contamination.table
     output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.contamination.table
