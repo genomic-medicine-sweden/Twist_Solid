@@ -3,7 +3,11 @@ digraph snakemake_dag {
     graph[bgcolor=white, margin=0];
     node[shape=box, style=rounded, fontname=sans,                 fontsize=10, penwidth=2];
     edge[penwidth=2, color=grey];
-    	0[label = "fastq", color = "0.0 0.0 0.0", style="dotted"];
+	0[label = "fastq", color = "0.0 0.0 0.0", style="dotted"];
 	1[label = "prealignment_fastp_pe", color = "0.52 0.6 0.85", style="rounded"];
-	0 -> 1
+	2[label = "seqtk_sample", color = "0.60 0.6 0.85", style="dashed"];
+	
+	0 -> 2 [style="dashed"];
+	2 -> 1 [style="dashed"];
+	0 -> 1 [label="optional bypass"];
 }            

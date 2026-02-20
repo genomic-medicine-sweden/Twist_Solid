@@ -31,13 +31,30 @@ columns:
     field: 'EXON'
     order: 6
   AA_change:
-    from: 'vep'
-    field: 'HGVSp'
-    extract_regex: ':p.([A-Za-z0-9_]+)'
+    from: 'select'
+    items: "[0]"
+    else: "[1]"
+    elements:
+      vep:
+        from: 'vep'
+        field: 'HGVSp'
+        extract_regex: ':p.([A-Za-z0-9_]+)'
+      hotspot:
+        from: 'hotspot'
+        field: 'AA_MUTATION_SYNTAX'
     order: 7
   CDS_change:
-    from: 'vep'
-    field: 'HGVSc'
+    from: 'select'
+    items: '[:-1]'
+    else: '[-1]'
+    divider: ';'
+    elements:
+      vep:
+        from: 'vep'
+        field: 'HGVSc'
+      hotspot:
+        from: 'hotspot'
+        field: 'CDS_MUTATION_SYNTAX'
     order: 8
   Accession_number:
     from: 'vep'

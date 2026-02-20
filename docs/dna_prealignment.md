@@ -7,6 +7,9 @@ See the [prealignment hydra-genetics module](https://hydra-genetics-prealignment
 ## Pipeline output files:
 Only temporary intermediate files are created.
 
+## Downsampling
+Downsampling of fastq files is performed using **[seqtk](https://github.com/lh3/seqtk)** to normalize coverage across samples if needed.
+
 ## Trimming
 Trimming of fastq files is performed by **[fastp](https://github.com/OpenGene/fastp)** v0.20.1.  
 

@@ -9,20 +9,55 @@ files:
     input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv
     description: File link to coverage and mutations
     nav_header: Small variants
+  - name: Coverage and mutations BRC
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.BRC.tsv
+    description: File link to coverage and mutations for BRC
+    nav_header: Small variants
+  - name: Coverage and mutations CRC
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
+    description: File link to coverage and mutations for CRC
+    nav_header: Small variants
   - name: Coverage and mutations ENC
     type: file_link
     input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.ENC.tsv
     description: File link to coverage and mutations for ENC
+    nav_header: Small variants
+  - name: Coverage and mutations GIS
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.GIS.tsv
+    description: File link to coverage and mutations for GIS
+    nav_header: Small variants
+  - name: Coverage and mutations LUN
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.LUN.tsv
+    description: File link to coverage and mutations for LUN
+    nav_header: Small variants
+  - name: Coverage and mutations MEL
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MEL.tsv
+    description: File link to coverage and mutations for MEL
+    nav_header: Small variants
+  - name: Coverage and mutations MTC
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MTC.tsv
+    description: File link to coverage and mutations for MTC
     nav_header: Small variants
   - name: Coverage and mutations URO
     type: file_link
     input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.URO.tsv
     description: File link to coverage and mutations for URO
     nav_header: Small variants
-  - name: Coverage and mutations CRC
+  - name: Coverage and mutations VAS
     type: file_link
-    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
-    description: File link to coverage and mutations for CRC
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.VAS.tsv
+    description: File link to coverage and mutations for VAS
+    nav_header: Small variants
+  - name: Coverage and mutations PIK
+    type: file_link
+    input: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.PIK.tsv
+    description: File link to coverage and mutations for PIK
     nav_header: Small variants
 
   - name: TMB
@@ -32,7 +67,7 @@ files:
     nav_header: Biomarkers
   - name: MSI filtered
     type: file_table
-    description: MSI score (grey region 2-6%). Filtering based on ~400 known msi-sites. 
+    description: MSI score (grey zone 2.5-6%). Filtering based on ~400 known msi-sites. 
     input: results/dna/{sample}_{type}/biomarker/{sample}_{type}.msisensor_pro.filtered.score.tsv
     nav_header: Biomarkers
   - name: MSI unfiltered

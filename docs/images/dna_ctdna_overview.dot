@@ -1,0 +1,35 @@
+digraph snakemake_dag {
+    rankdir=LR;
+    graph[bgcolor=white, margin=0];
+    node[shape=box, style=rounded, fontname=sans, fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+
+    0[label = "FASTQ", color = "0.0 0.0 0.0", style="dotted"];
+    1[label = "Downsample (seqtk)", color = "0.60 0.6 0.85", style="rounded"];
+    2[label = "Trimming (fastp)", color = "0.52 0.6 0.85", style="rounded"];
+    3[label = "Alignment (BWA + UMI)", color = "0.43 0.6 0.85", style="rounded"];
+    
+    // Analysis
+    4[label = "SNV/INDEL (Mutect2/Vardict)", color = "0.19 0.6 0.85", style="rounded"];
+    5[label = "CNV (CNVkit/GATK/Jumble)", color = "0.12 0.6 0.85", style="rounded"];
+    6[label = "Fusions (JuLI)", color = "0.24 0.6 0.85", style="rounded"];
+    7[label = "Biomarkers (TMB/MSI)", color = "0.37 0.6 0.85", style="rounded"];
+    8[label = "Fragmentomics", color = "0.37 0.6 0.85", style="rounded"];
+    
+    // QC
+    9[label = "QC (MultiQC/etc)", color = "0.08 0.6 0.85", style="rounded"];
+
+    0 -> 1
+    1 -> 2
+    2 -> 3
+    
+    3 -> 4
+    3 -> 5
+    3 -> 6
+    3 -> 7
+    3 -> 8
+    
+    3 -> 9
+    4 -> 9
+    5 -> 9
+}

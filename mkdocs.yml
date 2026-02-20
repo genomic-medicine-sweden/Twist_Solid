@@ -21,7 +21,6 @@ nav:
   - RNA Pipeline:
     - Fusions: rna_fusions.md
     - Exon skipping: rna_exon_skipping.md
-    - ID-SNPs: rna_id_snps.md
     - QC: rna_qc.md
   - Pipeline specific rules:
     - Rule list: softwares.md
