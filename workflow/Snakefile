@@ -535,7 +535,6 @@ use rule samtools_extract_reads_non_chr_umi from alignment as alignment_samtools
         bai=get_deduplication_bam_input_bai,
 
 
-
 use rule samtools_merge_bam from alignment as alignment_samtools_merge_bam_mutect2 with:
     input:
         bams=expand(
