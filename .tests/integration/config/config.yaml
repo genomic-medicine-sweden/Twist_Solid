@@ -124,8 +124,8 @@ hotspot_report:
     LUN: "DATA/Hotspots_combined.csv"
     MEL: "DATA/Hotspots_combined.csv"
     MTC: "DATA/Hotspots_combined.csv"
-    PIK: "DATA/Hotspots_combined.csv"
     VAS: "DATA/Hotspots_combined.csv"
+    PIK: "DATA/Hotspots_combined.csv"
   report_config: "../../config/reports/config/reports/hotspot_report.yaml"
   chr_translation_file: "../../reports/config/reports/hotspot_report.chr.translation.hg19"
   levels:
