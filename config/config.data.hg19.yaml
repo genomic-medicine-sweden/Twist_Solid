@@ -143,6 +143,8 @@ hotspot_report:
     LUN: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Lung_20260202.csv"
     MEL: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Melanom_20260202.csv"
     MTC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_MTC_20260202.csv"
+    VAS: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_VAS_20260217.csv"
+    PIK: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_PIK_20260217.csv"
 
 juli_annotate:
   cosmic: "{{PROJECT_REF_DATA}}/ref_data/juli/CosmicFusionExport_V76.tsv"
@@ -165,6 +167,7 @@ merge_cnv_json:
     - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_amp_genes_240307.bed"
     - "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cnv_loh_genes.bed"
   cytobands: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/cytoBand.hg19.txt"
+  ref_genes: "{{PROJECT_REF_DATA}}/ref_data/juli/refGene_hg19.txt"
 
 mosdepth:
   extra: "--no-per-base --fast-mode"
