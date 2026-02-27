@@ -1,5 +1,57 @@
 # Changelog
 
+## [1.1.0](https://github.com/genomic-medicine-sweden/Twist_Solid/compare/v1.0.1...v1.1.0) (2026-02-26)
+
+
+### Features
+
+* add hg38 cov_and_mut files ([e96ae39](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/e96ae39d2fdb97669dfc8c351e7bf7ad3b93a270))
+* add the two new cov_and_mut files ([b40f323](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/b40f32301b418ac4b5a96e0fc787158ca43a5875))
+* added config files and PoN files for ctDNA and NovaseqX ([06702a8](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/06702a8cacf8d0375075c9297cf1df28465bf898))
+* added config files and PoN files for ctDNA and NovaseqX ([4246d93](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/4246d93f6bd8bbb41f1b86b4e5204c05cd871530))
+* added two new cov_and_mut files (PIK, VAS) ([abf2234](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/abf2234402c38a54de03b9a21a5d00781c8f892a))
+* added two new cov_and_mut files (PIK, VAS) ([00d3e86](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/00d3e86dea9bd2ce6cf1af0eb0644477ccdf3ca6))
+* continued add new cov_and_mut files ([d660699](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/d66069906f8d8ff10399244322e264fa91862af2))
+* **hotspot_report.yaml:** add AA and CDS info till cov_and_mut file … ([6768136](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/6768136e900156b74da53c6458ce33f23ac41f6e))
+* **hotspot_report.yaml:** add AA and CDS info till cov_and_mut file for low coverage positions ([8c51b7d](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/8c51b7d5e8423d2b49a7217afc0fc031b9d6b40a))
+* New cov mut ([7cd2877](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/7cd2877c000de7a00cb4ddbb9a031257e3451f86))
+* save cover_and_mut in diff folder based on analyskod ([9c609b3](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/9c609b327011feacd0a498d93c808db087249265))
+* save cover_and_mut in diff folder based on analyskod ([fd8c969](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/fd8c969d1fd2a90def99a4681dfdaaa7dfd3e561))
+* started add new cov_and_mut files ([d1f3ec3](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/d1f3ec37ca069c2277c0211762ed329090b48df1))
+* strandbias filter more suitable for high coverage ([3fbf0dc](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/3fbf0dcf33450e501baf6a071a8cefa54568f977))
+* strandbias filter more suitable for high coverage ([65bb46d](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/65bb46d6e96038b7880f2f2186939357c56296cd))
+* strandbias filter more suitable for high coverage ([0695d7f](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/0695d7f1eaae7c870e879a38e0179287ae37ec79))
+* use the new cnv report ([cde5dba](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/cde5dbae1bc1900c7e94d21542012645dbedb109))
+* use the new cnv report ([e25898f](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/e25898f7119cf1ee65cecd51b48f9a89fb662570))
+
+
+### Bug Fixes
+
+* config name ([37d770f](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/37d770f33be7903d42e66261cd4596ebc2605620))
+* **config.yaml:** new fusion module to handle ctat_splicing empty files ([7e5593f](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/7e5593fce4e8dd34577ce79f3507188f02d13096))
+* **config.yaml:** new fusion module to handle ctat_splicing empty files ([f8111c3](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/f8111c3aa3940df902f479c4fd5c8756666dc56d))
+* corrected MSI grey zone ([7c14419](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/7c144192c0e209d0d56c203a6fdf08611387a1de))
+* corrected MSI grey zone ([f26fcd5](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/f26fcd5282c07c72e7c5f1dbe14d156217f7c592))
+* **general_report.umi.yaml:** missing umi prefix on vcf ([6eceba8](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/6eceba8b736fea303e13c0c83cc286bfc8a31076))
+* **general_report.umi.yaml:** missing umi prefix on vcf ([069bd68](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/069bd68a3dfbb86d0aefbceea25c955cd3286809))
+* msi grey zone ([828647d](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/828647d64a1f90ccc721e47463b98de63c6170cb))
+* msi grey zone ([3605456](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/36054563bee0fb13a20a542404aac2bd536cc3d5))
+* **requirements.txt:** setuptools ([ebdd606](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/ebdd6065e625d43703a613155733b05ba03496e0))
+* **requirements.txt:** setuptools ([0bec6c8](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/0bec6c8888533c9cd04da63176baa6c81c565805))
+* **requirements.txt:** setuptools version max v70.0.0 ([9f4b511](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/9f4b511f50082e6a70e5f7fe745b6b3d3d76c582))
+* **requirements.txt:** setuptools version max v70.0.0 ([329eb02](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/329eb02d35f75d0b09d85df0138bb1c30706686e))
+* **requirements.txt:** update hydra version for correct figshare down… ([c0c335b](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/c0c335b5e2b60c7942cdeee8c36e8e07de960d4b))
+* **requirements.txt:** update hydra version for correct figshare download ([a511f41](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/a511f41547ffac3c18068ab3a2e1abb1be7b3942))
+* rm Juli from general_report.prio.yaml ([e781f1e](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/e781f1e9fbcde22ce4779e6d59d567a9e8c67d5e))
+* rm Juli from general_report.prio.yaml ([426a351](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/426a351f97a01ae5335e460f8a8c2b9a5060a8ad))
+* use updated cov_and_mut files ([363ec01](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/363ec01c2012973eadea25f9bd0d0e48016e3441))
+* use updated cov_and_mut files ([5c0ff60](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/5c0ff601c9e9e0568bb6c66c1a77434dc9489fcf))
+
+
+### Documentation
+
+* AI-assisted update of the pipeline documentation ([bc8720f](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/bc8720ff1925ddb2578c90c288190fb95c6e48a5))
+
 ## [1.0.1](https://github.com/genomic-medicine-sweden/Twist_Solid/compare/v1.0.0...v1.0.1) (2025-12-03)
 
 
