@@ -169,15 +169,15 @@
 
  hotspot_report:
    hotspot_mutations:
-     checksum: dad4685acd05c601c4bc742ba39675c0
-     path: GMS560/reports/Hotspots_combined_regions_nodups.20260223.csv
+     checksum: 7c75e8fb9d5930ecb22cab20db00b387
+     path: GMS560/reports/Hotspots_combined_regions_nodups.20260302.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.26.0/design/Hotspots_combined_regions_nodups.20260223.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.26.1/design/Hotspots_combined_regions_nodups.20260302.csv
    hotspot_mutations_ENC:
-     checksum: 697e9bd40eadfab662a70ead554a4f2f
-     path: GMS560/reports/Mutations_ENC_20260223.csv
+     checksum: 05da69a9555b91472b8a51f5ff8afdad
+     path: GMS560/reports/Mutations_ENC_20260302.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.26.0/design/Mutations_ENC_20260223.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.26.1/design/Mutations_ENC_20260302.csv
    hotspot_mutations_URO:
      checksum: a431ad444b1b682b377860d051a2dfc0
      path: GMS560/reports/Mutations_URO_20260223.csv
