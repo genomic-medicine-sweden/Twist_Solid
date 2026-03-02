@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.1](https://github.com/genomic-medicine-sweden/Twist_Solid/compare/v1.1.0...v1.1.1) (2026-03-02)
+
+
+### Bug Fixes
+
+* **config.data.hg19.yaml:** correct cov and mutations files ([0b73c95](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/0b73c952058611f27f1632ce73fb67b27a7c9218))
+* new cov and mut hg38 and TP53 fix ([7c019b9](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/7c019b9923835cf25332258cddbf993351d42dea))
+* new cov and mut hg38 and TP53 fix ([e7450f9](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/e7450f904470dce7e80dbc8742a3d84952989c76))
+* **test_input_develop.tsv:** fixed cov and mut files ([eb55e1e](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/eb55e1eb3fc75674b05ea2ac18a926c3c3e934f7))
+* **test_input_develop.tsv:** fixed cov and mut files ([186b926](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/186b92650d029dab02535c4fbdfd46e15427d8ac))
+* test_input_main.tsv ([300d94a](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/300d94a845a49472b6e12f6bd9dfc3d07ea6365c))
+
 ## [1.1.0](https://github.com/genomic-medicine-sweden/Twist_Solid/compare/v1.0.1...v1.1.0) (2026-02-26)
 
 
