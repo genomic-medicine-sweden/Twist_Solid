@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2](https://github.com/genomic-medicine-sweden/Twist_Solid/compare/v1.1.1...v1.1.2) (2026-03-03)
+
+
+### Bug Fixes
+
+* corrected report and results for analyskod GMS560 ([4f41ee4](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/4f41ee48b4f96839dce4bc88b5537adbf8fb267b))
+* corrected report and results for analyskod GMS560 ([9649eb0](https://github.com/genomic-medicine-sweden/Twist_Solid/commit/9649eb0e8cc8318c61b29890a92375adf8f31171))
+
 ## [1.1.1](https://github.com/genomic-medicine-sweden/Twist_Solid/compare/v1.1.0...v1.1.1) (2026-03-02)
 
 
