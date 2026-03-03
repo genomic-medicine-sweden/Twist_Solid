@@ -50,9 +50,6 @@ sp:
     fn: "*.family_sizes.txt"
 
 table_columns_visible:
-  "fgbio":
-    duplex_yield: True
-    duplex_yield_by_family_size: False
   "Picard: HsMetrics":
     FOLD_ENRICHMENT: False
     PCT_TARGET_BASES_30X: False
@@ -78,14 +75,6 @@ table_columns_visible:
     median_sequence_length: False
 
 multiqc_cgs:
-  "fgbio":
-    duplex_yield:
-      title: "Duplex Yield"
-      description: "Fraction of original molecules that resulted in a duplex consensus"
-      format: "{:.4f}"
-    duplex_family_size_median:
-      title: "Median Family Size"
-      format: "{:.1f}"
   "Samtools: stats":
     reads_mapped:
       title: "M Aligned reads"
@@ -175,9 +164,6 @@ multiqc_cgs:
       format: "{:.1f}"
 
 table_columns_placement:
-  "fgbio":
-    duplex_yield: 850
-    duplex_family_size_median: 860
   "Samtools: stats":
     reads_mapped: 900
     reads_mapped_percent: 910

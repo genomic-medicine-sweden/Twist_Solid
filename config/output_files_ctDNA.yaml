@@ -391,6 +391,12 @@ files:
     types:
       - T
       - N
+  - name: MultiQC DNA UMI HTML
+    input: qc/multiqc/multiqc_DNA_umi.html
+    output: results/dna/qc/multiqc_DNA_umi.html
+    types:
+      - T
+      - N
   - name: Results report umi DNA HTML
     input: reports/general_html_report/{sample}_{type}.umi.general_report.html
     output: results/dna/{sample}_{type}/{sample}_{type}.umi.general_report.html
