@@ -50,16 +50,14 @@ custom_data:
           title: "Duplex Yield"
           description: "Fraction of original molecules that resulted in a duplex consensus"
           min: 0
-          max: 0.5
+          max: 100
           scale: "RdYlGn"
-          modify: 100
           suffix: "%"
           format: "{:.2f}"
       - ds_duplexes:
           title: "Duplex Molecules"
-          modify: 0.000001
           suffix: "M"
-          format: "{:.2f}"
+          format: "{:.1f}"
       - percent_duplication:
           title: "Duplication"
           description: "Duplication rate calculated from read pairs and consensus families"
