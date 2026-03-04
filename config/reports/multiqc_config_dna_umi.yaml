@@ -61,10 +61,12 @@ sp:
   contamination_table:
     fn: "*.contamination.table"
   duplex_yield_metrics:
-    fn: "*.duplex_yield_metrics.txt"
+    fn: "*.duplex_yield_summary.txt"
 
 table_columns_visible:
-  "duplex_yield_metrics":
+  contamination_table:
+    contamination: True
+  duplex_yield_metrics:
     ds_fraction_duplexes: True
     ds_duplexes: True
   "Picard: HsMetrics":
@@ -90,14 +92,6 @@ table_columns_visible:
     median_sequence_length: False
 
 multiqc_cgs:
-  "duplex_yield_metrics":
-    ds_fraction_duplexes:
-      title: "Duplex Yield"
-      description: "Fraction of original molecules that resulted in a duplex consensus"
-      format: "{:.4f}"
-    ds_duplexes:
-      title: "Duplex Molecules"
-      format: "{:,.0f}"
   "Samtools: stats":
     reads_mapped:
       title: "M Aligned reads"
@@ -179,9 +173,9 @@ multiqc_cgs:
       format: "{:.1f}"
 
 table_columns_placement:
-  "duplex_yield_metrics":
-    ds_fraction_duplexes: 850
-    ds_duplexes: 860
+  contamination_table: 845
+  ds_fraction_duplexes: 850
+  ds_duplexes: 860
   "Samtools: stats":
     reads_mapped: 900
     reads_mapped_percent: 910

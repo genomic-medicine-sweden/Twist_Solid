@@ -331,10 +331,10 @@ multiqc:
         - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
         - "qc/gatk_calculate_contamination/{sample}_{type}.contamination.table"
         - "alignment/fgbio_group_reads_by_umi/{sample}_{type}.umi.histo.tsv"
-        - "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.family_sizes.txt"
-        - "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.duplex_family_sizes.txt"
-        - "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.duplex_yield_metrics.txt"
-        - "alignment/fgbio_collect_duplex_seq_metrics/{sample}_{type}.umi_counts.txt"
+        - "qc/fgbio_collect_duplex_seq_metrics/{sample}_{type}.family_sizes.txt"
+        - "qc/fgbio_collect_duplex_seq_metrics/{sample}_{type}.duplex_family_sizes.txt"
+        - "qc/fgbio_collect_duplex_seq_metrics/{sample}_{type}.duplex_yield_summary.txt"
+        - "qc/fgbio_collect_duplex_seq_metrics/{sample}_{type}.umi_counts.txt"
     RNA:
       config: "config/reports/multiqc_config_rna.yaml"
       included_unit_types: ["R"]
