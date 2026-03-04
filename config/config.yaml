@@ -405,10 +405,10 @@ seqtk_subsample:
   nr_reads_rna: 100000000
 
 somalier_ungrouped_extract:
-  container: "docker://hydragenetics/somalier:1.2.0"
+  container: "docker://brentp/somalier:v0.2.18"
 
 somalier_ungrouped_relate:
-  container: "docker://hydragenetics/somalier:1.2.0"
+  container: "docker://brentp/somalier:v0.2.18"
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
