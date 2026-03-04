@@ -558,6 +558,24 @@ files:
     types:
       - T
       - N
+  - name: Somalier ungrouped relate samples
+    input: qc/somalier_ungrouped/somalier_relate.samples.tsv
+    output: results/qc/somalier/somalier_relate.samples.tsv
+    types:
+      - T
+      - R
+  - name: Somalier ungrouped relate pairs
+    input: qc/somalier_ungrouped/somalier_relate.pairs.tsv
+    output: results/qc/somalier/somalier_relate.pairs.tsv
+    types:
+      - T
+      - R
+  - name: Somalier ungrouped relate html
+    input: qc/somalier_ungrouped/somalier_relate.html
+    output: results/qc/somalier/somalier_relate.html
+    types:
+      - T
+      - R
   - name: CNVkit scatter PNG
     input: cnv_sv/cnvkit_scatter/{sample}_{type}.png
     output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.cnvkit.scatter.png

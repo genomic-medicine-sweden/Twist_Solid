@@ -12,7 +12,8 @@ modules:
   filtering: "v0.3.0"
   fusions: "v0.3.1"
   prealignment: "v1.3.0"
-  qc: "v0.5.0"
+  # qc: "v0.5.0"
+  qc: "99c5767"
   reports: "v0.11.0"
   snv_indels: "v1.1.0"
 
@@ -402,6 +403,12 @@ seqtk_subsample:
   container: "docker://hydragenetics/seqtk:1.4"
   nr_reads: 100000000
   nr_reads_rna: 100000000
+
+somalier_ungrouped_extract:
+  container: "docker://hydragenetics/somalier:1.2.0"
+
+somalier_ungrouped_relate:
+  container: "docker://hydragenetics/somalier:1.2.0"
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
