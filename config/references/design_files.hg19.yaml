@@ -204,10 +204,10 @@
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.26.0/design/Mutations_Lung_20260223.csv
    hotspot_mutations_MEL:
-     checksum: ea8cc34a90104d8fdfa60c5aff586d60
-     path: GMS560/reports/Mutations_Melanom_20260304.csv
+     checksum: 98342a7bd624130d84947c45413b0152
+     path: GMS560/reports/Mutations_Melanom_20260305.csv
      type: file
-     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.26.2/design/Mutations_Melanom_20260304.csv
+     url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.26.3/design/Mutations_Melanom_20260305.csv
    hotspot_mutations_MTC:
      checksum: 29ad5a2ecfe819f19d0ae49a627c32b5
      path: GMS560/reports/Mutations_MTC_20260223.csv
