@@ -6,10 +6,11 @@ import os
 import sys
 from somalier_best_match import main
 
+
 class TestSomalierBestMatch(unittest.TestCase):
     def setUp(self):
         self.temp_dir = tempfile.TemporaryDirectory()
-        
+
     def tearDown(self):
         self.temp_dir.cleanup()
 
@@ -25,43 +26,51 @@ class TestSomalierBestMatch(unittest.TestCase):
             'ibs2': [200, 190, 195, 10],
             'n': [200, 200, 200, 200]
         }
-        # P1_T (DNA) has:
-        # P2_T (DNA) with 0.99 -> IGNORED (same type)
-        # P1_R (RNA) with 0.95 -> BEST MATCH
-        
-        # P1_R (RNA) has:
-        # P1_T (DNA) with 0.95 -> BEST MATCH
-        # P2_R (RNA) with 0.1 -> IGNORED
-        
+
         input_df = pd.DataFrame(input_data)
         input_path = os.path.join(self.temp_dir.name, "input.tsv")
         input_df.to_csv(input_path, sep='\t', index=False)
-        
+
         output_path = os.path.join(self.temp_dir.name, "output.tsv")
-        
-        main(input_path, output_path)
-        
+
+        # Test with default cutoff (0.7)
+        main(input_path, output_path, 0.7)
+
         output_df = pd.read_csv(output_path, sep='\t')
-        
-        # P1_T should match P1_R (0.95)
-        self.assertEqual(output_df[output_df['Sample'] == 'P1_T']['Best_Match'].values[0], 'P1_R')
-        self.assertEqual(output_df[output_df['Sample'] == 'P1_T']['Relatedness'].values[0], 0.95)
-        
+
+        # Only RNA samples should be in the 'Sample' column
+        samples = output_df['Sample'].unique()
+        for sample in samples:
+            self.assertTrue(sample.endswith('_R'))
+
         # P1_R should match P1_T (0.95)
-        self.assertEqual(output_df[output_df['Sample'] == 'P1_R']['Best_Match'].values[0], 'P1_T')
-        
-        # P2_T should match P2_R (0.94)
-        self.assertEqual(output_df[output_df['Sample'] == 'P2_T']['Best_Match'].values[0], 'P2_R')
+        p1_r_match = output_df[output_df['Sample'] == 'P1_R']
+        self.assertEqual(p1_r_match['Best_Match'].values[0], 'P1_T')
+        self.assertEqual(p1_r_match['Relatedness'].values[0], 0.95)
+        self.assertEqual(p1_r_match['Match'].values[0], 'yes')
+        self.assertEqual(p1_r_match['Variants_compared'].values[0], 200)
+
+        # Test with a higher cutoff that would make it 'no'
+        main(input_path, output_path, 0.96)
+        output_df_high = pd.read_csv(output_path, sep='\t')
+        p1_r_match_high = output_df_high[output_df_high['Sample'] == 'P1_R']
+        self.assertEqual(p1_r_match_high['Match'].values[0], 'no')
 
     def test_empty_input(self):
         input_path = os.path.join(self.temp_dir.name, "empty.tsv")
-        pd.DataFrame(columns=['#sample_a', 'sample_b', 'relatedness', 'ibs0', 'ibs2', 'n']).to_csv(input_path, sep='\t', index=False)
-        
+        pd.DataFrame(
+            columns=['#sample_a', 'sample_b', 'relatedness', 'ibs0', 'ibs2', 'n']
+        ).to_csv(input_path, sep='\t', index=False)
+
         output_path = os.path.join(self.temp_dir.name, "output_empty.tsv")
-        main(input_path, output_path)
-        
+        main(input_path, output_path, 0.7)
+
         output_df = pd.read_csv(output_path, sep='\t')
         self.assertTrue(output_df.empty)
+        # Check header of empty output
+        self.assertIn('Variants_compared', output_df.columns)
+        self.assertIn('Match', output_df.columns)
+
 
 if __name__ == '__main__':
     unittest.main()

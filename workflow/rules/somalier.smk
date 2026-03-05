@@ -1,18 +1,18 @@
 
 rule somalier_best_match_report:
     input:
-        pairs="qc/somalier_ungrouped/somalier_relate.pairs.tsv"
+        pairs="qc/somalier_ungrouped/somalier_relate.pairs.tsv",
     output:
-        report=temp("qc/somalier_ungrouped/somalier_best_match.tsv")
+        report=temp("qc/somalier_ungrouped/somalier_best_match.tsv"),
     params:
         extra=config.get("somalier_best_match_report", {}).get("extra", ""),
-        match_cutoff=config.get("somalier_best_match_report", {}).get("match_cutoff", 0.7)
+        match_cutoff=config.get("somalier_best_match_report", {}).get("match_cutoff", 0.7),
     log:
-        "qc/somalier_ungrouped/somalier_best_match.tsv.log"
+        "qc/somalier_ungrouped/somalier_best_match.tsv.log",
     benchmark:
         repeat(
             "qc/somalier_ungrouped/somalier_best_match.tsv.benchmark.tsv",
-            config.get("somalier_best_match_report", {}).get("benchmark_repeats", 1)
+            config.get("somalier_best_match_report", {}).get("benchmark_repeats", 1),
         )
     container:
         config.get("somalier_best_match_report", {}).get("container", config["default_container"])
