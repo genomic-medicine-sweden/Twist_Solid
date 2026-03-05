@@ -198,7 +198,7 @@ scarhrd:
   reference_name: "grch37"
 
 somalier_ungrouped_extract:
-  sites: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.230222.bed"
+  sites: "{{PROJECT_DESIGN_DATA}}/GMS560/design/sites.hg19.vcf.gz"
 
 star:
   genome_index: "{{PROJECT_REF_DATA}}/ref_data/star/v2.7.10a_hg19/"
