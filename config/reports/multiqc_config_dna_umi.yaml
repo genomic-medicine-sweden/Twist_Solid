@@ -187,7 +187,7 @@ table_columns_placement:
   "Samtools: stats":
     reads_mapped: 900
     reads_mapped_percent: 910
-  duplex_yield_metrics:
+  "Custom content: duplex_yield_metrics":
     ds_fraction_duplexes: 915
     ds_duplexes: 916
     percent_duplication: 917
@@ -200,5 +200,5 @@ table_columns_placement:
     MEDIAN_TARGET_COVERAGE: 970
   "Picard: InsertSizeMetrics":
     summed_median: 980
-  contamination_table:
+  "Custom content: contamination_table":
     contamination: 1000
