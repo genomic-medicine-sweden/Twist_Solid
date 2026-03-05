@@ -1,0 +1,28 @@
+
+rule somalier_best_match_report:
+    input:
+        pairs="qc/somalier_ungrouped/somalier_relate.pairs.tsv"
+    output:
+        report="qc/somalier_ungrouped/somalier_best_match.tsv"
+    params:
+        extra=config.get("somalier_best_match_report", {}).get("extra", "")
+    log:
+        "qc/somalier_ungrouped/somalier_best_match.tsv.log"
+    benchmark:
+        repeat(
+            "qc/somalier_ungrouped/somalier_best_match.tsv.benchmark.tsv",
+            config.get("somalier_best_match_report", {}).get("benchmark_repeats", 1)
+        )
+    container:
+        config.get("somalier_best_match_report", {}).get("container", config["default_container"])
+    threads: config.get("somalier_best_match_report", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("somalier_best_match_report", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("somalier_best_match_report", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("somalier_best_match_report", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("somalier_best_match_report", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("somalier_best_match_report", {}).get("time", config["default_resources"]["time"]),
+    message:
+        "{rule}: generating best match report from somalier pairs"
+    shell:
+        "python workflow/scripts/somalier_best_match.py {input.pairs} {output.report} > {log} 2>&1"

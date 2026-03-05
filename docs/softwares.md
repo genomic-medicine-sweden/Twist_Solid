@@ -321,4 +321,27 @@ Compare ID-SNPs in the RNA samples to the DNA samples in the same analysis and r
 
 #RESOURCESSCHEMA__sample_mixup_check#
 
+---
+
+## somalier_best_match_report
+Takes the somalier relate pairs output and finds the best match for each sample (DNA and RNA). The script handles the bidirectional nature of the pairs file to ensure every sample is reported with its top relatedness match.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__somalier__somalier_best_match_report#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__somalier__somalier_best_match_report#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__somalier_best_match_report#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__somalier_best_match_report#
+
 

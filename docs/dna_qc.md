@@ -116,4 +116,11 @@ The sample mixup check compares the ID-SNPs in the DNA sample to the RNA sample 
 
 * `results/sample_mixup_check.tsv`
 
+## Somalier relatedness check
+The somalier relatedness check uses **[Somalier](https://github.com/brentp/somalier)** to estimate relatedness between all samples (DNA and RNA) in the analysis. This is used to verify that samples from the same individual cluster together. The results are summarized in a best match report produced by the in-house script [somalier_best_match.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/somalier_best_match.py) ([rule and config](softwares.md#somalier_best_match_report)).
+
+### Result file
+
+* `results/qc/somalier/somalier_best_match.tsv`
+
 <br />
