@@ -2,6 +2,7 @@
 import sys
 import pandas as pd
 import os
+import argparse
 
 def get_sample_type(sample_name):
     """
@@ -15,7 +16,7 @@ def get_sample_type(sample_name):
         return 'RNA'
     return 'Unknown'
 
-def main(input_file, output_file):
+def main(input_file, output_file, match_cutoff):
     if not os.path.exists(input_file):
         print(f"Error: Input file {input_file} not found.")
         sys.exit(1)
@@ -29,7 +30,7 @@ def main(input_file, output_file):
     if df.empty:
         print(f"Warning: Input file {input_file} is empty.")
         # Create empty output with headers
-        pd.DataFrame(columns=['Sample', 'Best_Match', 'Relatedness', 'ibs0', 'ibs2', 'n']).to_csv(output_file, sep='\t', index=False)
+        pd.DataFrame(columns=['Sample', 'Best_Match', 'Relatedness', 'ibs0', 'Variants_compared', 'Match']).to_csv(output_file, sep='\t', index=False)
         return
 
     # Column names might have leading #
@@ -50,6 +51,10 @@ def main(input_file, output_file):
     for sample in samples:
         sample_type = get_sample_type(sample)
         
+        # Only include RNA samples in the primary 'Sample' column
+        if sample_type != 'RNA':
+            continue
+
         # Matches involving this sample
         matches = df[(df['sample_a'] == sample) | (df['sample_b'] == sample)].copy()
         
@@ -68,8 +73,6 @@ def main(input_file, output_file):
         elif sample_type == 'RNA':
             filtered_matches = matches[matches['other_sample'].apply(lambda s: get_sample_type(s) == 'DNA')]
         else:
-            # If type is unknown, we don't apply the cross-match filter to allow some fallback?
-            # Or should we exclude it? The user specifically asked for DNA/RNA matches.
             filtered_matches = pd.DataFrame() 
         
         if filtered_matches.empty:
@@ -78,13 +81,16 @@ def main(input_file, output_file):
         # Sort by relatedness descending to find the best match
         best_match_row = filtered_matches.sort_values(by='relatedness', ascending=False).iloc[0]
         
+        relatedness = best_match_row['relatedness']
+        match_status = "yes" if relatedness >= match_cutoff else "no"
+
         results.append({
             'Sample': sample,
             'Best_Match': best_match_row['other_sample'],
-            'Relatedness': best_match_row['relatedness'],
+            'Relatedness': relatedness,
             'ibs0': best_match_row['ibs0'],
-            'ibs2': best_match_row['ibs2'],
-            'n': best_match_row['n']
+            'Variants_compared': best_match_row['n'],
+            'Match': match_status,
         })
         
     res_df = pd.DataFrame(results)
@@ -94,7 +100,17 @@ def main(input_file, output_file):
     res_df.to_csv(output_file, sep='\t', index=False)
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: python somalier_best_match.py <input_tsv> <output_tsv>")
-        sys.exit(1)
-    main(sys.argv[1], sys.argv[2])
+    if "snakemake" in globals():
+        main(
+            snakemake.input.pairs,
+            snakemake.output.report,
+            float(snakemake.params.match_cutoff)
+        )
+    else:
+        parser = argparse.ArgumentParser(description="Find best cross-type matches from Somalier pairs.")
+        parser.add_argument("input", help="Input Somalier pairs TSV file")
+        parser.add_argument("output", help="Output best match TSV file")
+        parser.add_argument("--match-cutoff", type=float, default=0.7, help="Relatedness cutoff for match (default: 0.7)")
+        
+        args = parser.parse_args()
+        main(args.input, args.output, args.match_cutoff)

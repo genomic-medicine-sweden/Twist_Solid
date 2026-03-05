@@ -3,9 +3,10 @@ rule somalier_best_match_report:
     input:
         pairs="qc/somalier_ungrouped/somalier_relate.pairs.tsv"
     output:
-        report="qc/somalier_ungrouped/somalier_best_match.tsv"
+        report=temp("qc/somalier_ungrouped/somalier_best_match.tsv")
     params:
-        extra=config.get("somalier_best_match_report", {}).get("extra", "")
+        extra=config.get("somalier_best_match_report", {}).get("extra", ""),
+        match_cutoff=config.get("somalier_best_match_report", {}).get("match_cutoff", 0.7)
     log:
         "qc/somalier_ungrouped/somalier_best_match.tsv.log"
     benchmark:
@@ -24,5 +25,5 @@ rule somalier_best_match_report:
         time=config.get("somalier_best_match_report", {}).get("time", config["default_resources"]["time"]),
     message:
         "{rule}: generating best match report from somalier pairs"
-    shell:
-        "python workflow/scripts/somalier_best_match.py {input.pairs} {output.report} > {log} 2>&1"
+    script:
+        "../scripts/somalier_best_match.py"

@@ -410,6 +410,9 @@ somalier_ungrouped_extract:
 somalier_ungrouped_relate:
   container: "docker://brentp/somalier:v0.2.18"
 
+somalier_best_match_report:
+  match_cutoff: 0.7
+
 star:
   container: "docker://hydragenetics/star:2.7.10a"
 
