@@ -566,7 +566,7 @@ files:
       - R
   - name: Somalier best match report
     input: qc/somalier_ungrouped/somalier_best_match.tsv
-    output: results/qc/somalier/sample_mixup_check_somalier.tsv
+    output: results/qc/sample_mixup_check_somalier.tsv
     types:
       - T
       - R
