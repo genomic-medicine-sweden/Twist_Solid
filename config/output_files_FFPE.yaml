@@ -558,15 +558,9 @@ files:
     types:
       - T
       - N
-  - name: Somalier ungrouped relate pairs
-    input: qc/somalier_ungrouped/somalier_relate.pairs.tsv
-    output: results/additional_files/qc/somalier/somalier_relate.pairs.tsv
-    types:
-      - T
-      - R
   - name: Somalier best match report
     input: qc/somalier_ungrouped/somalier_best_match.tsv
-    output: results/qc/sample_mixup_check_somalier.tsv
+    output: results/sample_mixup_check_somalier.tsv
     types:
       - T
       - R
