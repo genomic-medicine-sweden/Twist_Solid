@@ -325,6 +325,13 @@
       type: file
       url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.16.0/cnv/scanITD_regions.hg38.bed
 
+ somalier:
+   sites:
+      checksum: 1418584cc118ac7d063ec35889bebd2a
+      path: GMS560/design/sites.hg38.vcf.gz
+      type: file
+      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.27.0/design/ssites.hg38.nochr.vcf.gz
+
  tmb:
    filter_genes:
       checksum: c1a958320451fab1200ab769d963d4c6

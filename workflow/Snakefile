@@ -18,6 +18,7 @@ include: "rules/purecn_modify_vcf.smk"
 include: "rules/report_gene_fuse.smk"
 include: "rules/report_fusions.smk"
 include: "rules/sample_mixup_check.smk"
+include: "rules/somalier.smk"
 
 
 rule all:

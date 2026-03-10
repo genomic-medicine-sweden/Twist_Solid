@@ -558,6 +558,12 @@ files:
     types:
       - T
       - N
+  - name: Somalier best match report
+    input: qc/somalier_ungrouped/somalier_best_match.tsv
+    output: results/sample_mixup_check_somalier.tsv
+    types:
+      - T
+      - R
   - name: CNVkit scatter PNG
     input: cnv_sv/cnvkit_scatter/{sample}_{type}.png
     output: results/dna/{sample}_{type}/additional_files/cnv/{sample}_{type}.cnvkit.scatter.png
