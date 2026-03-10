@@ -723,6 +723,15 @@ use rule multiqc from qc as qc_multiqc with:
         data_json="qc/multiqc/multiqc_{report}_data/multiqc_data.json",
 
 
+use rule somalier_ungrouped_extract from qc as qc_somalier_ungrouped_extract with:
+    input:
+        bam=get_deduplication_bam_input,
+        bai=get_deduplication_bam_input_bai,
+        sites=config.get("somalier_ungrouped_extract", {}).get("sites", ""),
+        fasta=config.get("reference", {}).get("fasta", ""),
+        fai=config.get("reference", {}).get("fasta", "") + ".fai",
+
+
 use rule mosdepth from qc as qc_mosdepth with:
     input:
         bam=get_deduplication_bam_input,
