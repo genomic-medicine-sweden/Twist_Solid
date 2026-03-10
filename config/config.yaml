@@ -404,10 +404,10 @@ seqtk_subsample:
   nr_reads_rna: 100000000
 
 somalier_ungrouped_extract:
-  container: "docker://hydragenetics/somalier:v0.2.18"
+  container: "docker://hydragenetics/somalier:0.2.18"
 
 somalier_ungrouped_relate:
-  container: "docker://hydragenetics/somalier:v0.2.18"
+  container: "docker://hydragenetics/somalier:0.2.18"
 
 somalier_best_match_report:
   match_cutoff: 0.7
