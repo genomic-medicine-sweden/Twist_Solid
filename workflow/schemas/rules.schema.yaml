@@ -349,3 +349,21 @@ properties:
             type: string
             description: text report where the most similar RNA and DNA sample pairs in one analysis are reported together with the percent similarity
 
+  somalier_best_match_report:
+    type: object
+    description: input and output parameters for somalier_best_match_report
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          pairs:
+            type: string
+            description: Somalier relate pairs file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          report:
+            type: string
+            description: Somalier best match report
