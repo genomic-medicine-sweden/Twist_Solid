@@ -720,7 +720,7 @@ files:
       - T
       - N
   - name: Jumble Predicted GIS Score
-    input: cnv_sv/jumble_gis_score/{sample}_{type}.{tc_method}.predicted_gis.txt
+    input: cnv_sv/jumble_gis_score/{sample}_{type}.pathology_purecn.predicted_gis.txt
     output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.pathology_purecn.predicted_gis.txt
     types:
       - T

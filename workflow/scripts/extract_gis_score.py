@@ -2,6 +2,7 @@ import pandas as pd
 import sys
 import os
 
+
 def main(snakemake):
     gis_csv = snakemake.input.gis_csv
     tc = snakemake.params.tc
@@ -52,6 +53,7 @@ def main(snakemake):
     with open(output, "w") as f:
         f.write("TC,predicted_gis\n")
         f.write(f"{tc_val},{predicted_gis}\n")
+
 
 if __name__ == "__main__":
     main(snakemake)
