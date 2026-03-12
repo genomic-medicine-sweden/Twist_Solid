@@ -89,6 +89,12 @@ files:
     types:
       - T
       - N
+  - name: Somalier DNA-DNA best match
+    input: qc/somalier_ungrouped/somalier_dna_dna_match.tsv
+    output: results/qc/somalier_dna_dna_match.tsv
+    types:
+      - T
+      - N
   - name: Samtools stats
     input: qc/samtools_stats/{sample}_{type}.samtools-stats.txt
     output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.samtools-stats.txt
