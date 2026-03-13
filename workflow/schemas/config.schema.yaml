@@ -632,16 +632,7 @@ properties:
         description: name or path to docker/singularity container
       match_cutoff:
         type: number
-        description: relatedness cutoff for match (default 0.7)
-      threads:
-        type: integer
-        description: number of threads to be available
-      mem_mb:
-        type: integer
-        description: memory in MB
-      time:
-        type: string
-        description: max execution time
+        description: relatedness cutoff for match (default 0.85)
 
   trimmer_software:
     description: trimmer software that should be used
