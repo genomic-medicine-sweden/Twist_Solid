@@ -193,6 +193,10 @@ report_fusions:
 report_gene_fuse:
   filter_fusions: "reference/filter_fusions.csv"
 
+somalier_ungrouped_extract:
+  container: "docker://hydragenetics/somalier:v0.2.18"
+  sites: "DATA/design.noexon1.bed"
+
 star:
   container: "docker://hydragenetics/star:2.7.10a"
   genome_index: "reference_star_fusion/star_idx/"

@@ -6,14 +6,14 @@ units: "units.tsv"
 
 modules:
   alignment: "v0.7.0"
-  annotation: "v1.1.0"
+  annotation: "v1.3.1"
   biomarker: "v0.8.0"
-  cnv_sv: "v0.9.0"
+  cnv_sv: "v3.0.0"
   filtering: "v0.3.0"
   fusions: "v0.3.1"
   prealignment: "v1.3.0"
-  qc: "v0.5.0"
-  reports: "v0.11.0"
+  qc: "v0.7.0"
+  reports: "v1.0.3"
   snv_indels: "v1.1.0"
 
 output: "config/output_files_FFPE.yaml"
@@ -64,25 +64,25 @@ call_small_cnv_amplifications:
   min_log_odds_diff: 0.4
 
 cnvkit_batch:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
   extra: "--drop-low-coverage"
   method: "hybrid"
 
 cnvkit_batch_hrd:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
   method: "hybrid"
 
 cnvkit_call:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 cnvkit_diagram:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 cnvkit_export_seg:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 cnvkit_scatter:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 cnv_html_report:
   show_table: true
@@ -252,7 +252,7 @@ jumble_cnvkit_call:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
 jumble_run:
-  container: "docker://hydragenetics/jumble:240530"
+  container: "docker://hydragenetics/jumble:260310"
 
 jumble_vcf:
   dup_limit: 2.5
@@ -408,6 +408,15 @@ seqtk_subsample:
   container: "docker://hydragenetics/seqtk:1.4"
   nr_reads: 100000000
   nr_reads_rna: 100000000
+
+somalier_ungrouped_extract:
+  container: "docker://hydragenetics/somalier:0.2.18"
+
+somalier_ungrouped_relate:
+  container: "docker://hydragenetics/somalier:0.2.18"
+
+somalier_best_match_report:
+  match_cutoff: 0.7
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
