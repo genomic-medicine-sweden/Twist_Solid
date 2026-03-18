@@ -142,6 +142,13 @@
       type: file
       url: https://figshare.com/ndownloader/files/57131684?private_link=88202740beb6fcbac09d
 
+    2bit:
+      checksum: 91b4f188e3a3d60a0cb1a04fa219e8dd
+      path: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.2bit
+      path: ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.2bit
+      type: file
+      url: https://figshare.com/ndownloader/files/57131723?private_link=88202740beb6fcbac09d
+
   fusioncatcher:
     genome_path:
       compressed_checksum: 5006482f5b6b78c99e80330d2d69a239

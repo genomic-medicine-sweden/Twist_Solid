@@ -128,6 +128,9 @@ The RNA design includes a number of probes covering SNPs that can be used to che
 ## Sample mixup check
 The sample mixup check compares the ID-SNPs in the RNA sample to the DNA sample in the same analysis and reports sample similarities to be able to discern sample mixups. The check is performed by the in-house script [sample_mixup_check.py](https://github.com/genomic-medicine-sweden/Twist_Solid/blob/develop/workflow/scripts/sample_mixup_check.py) ([rule and config](softwares.md#sample_mixup_check)).
 
+## Somalier Best Match Report
+The pipeline includes a Somalier-based relatedness check that identifies the best genetic match for each sample. Specifically, it reports the best matching RNA sample for each DNA sample, and vice versa. This is used to verify sample identity and detect potential mixups. The report is delivered to `results/qc/sample_mixup_check_somalier.tsv`.
+
 ### Result file
 
 * `results/sample_mixup_check.tsv`
