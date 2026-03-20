@@ -620,6 +620,20 @@ properties:
     required:
       - min_unique_reads
 
+
+  somalier_dna_dna_report:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      match_cutoff:
+        type: number
+        description: relatedness cutoff for match (default 0.85)
+
   trimmer_software:
     description: trimmer software that should be used
     pattern: "^(fastp_pe|None)$"

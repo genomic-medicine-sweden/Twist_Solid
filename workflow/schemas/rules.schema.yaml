@@ -367,3 +367,22 @@ properties:
           report:
             type: string
             description: Somalier best match report
+
+  somalier_dna_dna_report:
+    type: object
+    description: input and output parameters for somalier_dna_dna_report
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          pairs:
+            type: string
+            description: Somalier relate pairs file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          report:
+            type: string
+            description: Somalier DNA-DNA best match report

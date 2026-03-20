@@ -1,5 +1,50 @@
 # Changelog
 
+## [1.2.0](https://github.com/genomic-medicine-sweden/GMS_Solid/compare/v1.1.2...v1.2.0) (2026-03-19)
+
+
+### Features
+
+* added fragle ctDNA fraction estimation ([7d94be6](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/7d94be6eb514cdea44de1cf58f9fac257df67a48))
+* added Fragle for ctDNA fraction estimation ([02c2260](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/02c226055373e3026c59af3f1a3e4136598c6ed6))
+* added matching cutoff ([d4feb93](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/d4feb937d5c9c5a7a9349ccca182ac2a4fb88e39))
+* added reporting script for Somalier mixup test ([c3a505b](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/c3a505bc25b6199440b6bec0697e9095995619f4))
+* Added Somalier dna-dna match report ([6cd9fcd](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/6cd9fcd610c3a87e291fb01ed6b56c8109315b70))
+* Added Somalier dna-dna match report ([6a02429](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/6a024293bbfc3378892f34bdc94a1ac12415e160))
+* added somalier output ([2d23a4d](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/2d23a4d20eb0e353272bded6d429bc41def319dc))
+* new version of biomarker for fragle ([7c5d680](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/7c5d680f6f96e8e7f795a6a22dc7f973c476db87))
+* Somalier for mixup tests ([d78f384](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/d78f384c0aed513afad4e9d49ee18b8a54c27b48))
+* update qc module with somalier ([d496071](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/d496071b39c3befa77c4df785f0001e881322815))
+
+
+### Bug Fixes
+
+* adapt to new versions of report and cnv_sv ([233bfd4](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/233bfd471f8812d78dd1b067970a3585749634cf))
+* adapt to new versions of report and cnv_sv ([b62745a](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/b62745a2dc99896320e9d1bc83a5a336ed85912f))
+* added missing fasta 2bit for hg38 ([b100259](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/b100259e33af6db88c51d3ba99d56ae05d529fc3))
+* added missing fasta 2bit for hg38 ([7c87710](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/7c87710033ff98bbb5de21eb934fcc4dcc4c8fea))
+* added somalier site files ([6788c63](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/6788c635e286bd2d8351ad03d21eff137996f1a7))
+* adjusted match_cutoff to dna dna comparison ([6fcd803](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/6fcd803b0f94b425a75869473b449a857aa0e530))
+* **config.yaml:** somalier docker ([bb8ed53](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/bb8ed53d10090da72922e120d88353b07725efd7))
+* **config.yaml:** somalier docker ([278a3fc](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/278a3fcb068abe2a7951af9276330b210e5cfa9e))
+* correct docker for Somalier ([30ed679](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/30ed6797b4a35ab1b3d587efa6e68090c58d477f))
+* new annotation module to fix MNV bug ([3b3a079](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/3b3a079acec6ce8c1c91b9562754a174201f4957))
+* new annotation module to fix MNV bug ([0e17e4f](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/0e17e4f30604d125914e3a1ee375f45bfd7e3e12))
+* result files ([e9f51f3](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/e9f51f397ce5b33747ecd1f77972c7889afcf5f1))
+* somalier container version ([d7707ac](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/d7707ac73472b9d513e91449829dc1041284e1ce))
+* Update design_files.hg19.yaml ([dc92daa](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/dc92daaaad16a298c5f8670ac80c59600c2d88b0))
+* Update design_files.hg38.yaml ([ea2f3b8](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/ea2f3b8fbe9a13fe6936eed0faaeb859d05d551f))
+* update report module to fix data point rendering issue ([3fccc50](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/3fccc506f061e975296ea99d0047f38a14fe3873))
+* update to new jumble container ([7cff118](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/7cff118bd8c560105a2b6f3560d9f547e08e8e50))
+* updated cov and mut files for KIT and PDGFRA ([bc4b2e4](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/bc4b2e4272ea242c2307dc75e1d0d1599ed69c66))
+* updated cov and mut files for KIT and PDGFRA ([cef4101](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/cef41012bea369ac45317584004523987993aba4))
+
+
+### Documentation
+
+* added missing schema definitions ([755054b](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/755054b943e76f42facec9670713fcabb9234975))
+* update documentation ([30718e1](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/30718e1b26125aaa6aed1b210f398ec2648a62c6))
+
 ## [1.1.2](https://github.com/genomic-medicine-sweden/Twist_Solid/compare/v1.1.1...v1.1.2) (2026-03-03)
 
 

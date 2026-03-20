@@ -1096,7 +1096,7 @@ use rule jumble_run from cnv_sv as cnv_sv_jumble_run with:
 
 use rule jumble_cnvkit_call from cnv_sv as cnv_sv_jumble_cnvkit_call with:
     input:
-        segment="cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.cns",
+        segment="cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.filter.germline.exclude.blacklist.vcf.gz",
         tc_file=get_tc_file,
     params:

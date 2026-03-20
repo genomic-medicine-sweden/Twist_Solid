@@ -558,6 +558,12 @@ files:
     types:
       - T
       - N
+  - name: Somalier DNA-DNA best match
+    input: qc/somalier_ungrouped/somalier_dna_dna_match.tsv
+    output: results/qc/somalier_dna_dna_match.tsv
+    types:
+      - T
+      - N
   - name: Somalier best match report
     input: qc/somalier_ungrouped/somalier_best_match.tsv
     output: results/sample_mixup_check_somalier.tsv
