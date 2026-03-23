@@ -503,4 +503,4 @@ vt_normalize:
   container: "docker://hydragenetics/vt:2015.11.10"
 
 whatshap_phase:
-  container: "docker://hydragenetics/whatshap:1.7"
+  container: "docker://hydragenetics/whatshap:2.8"
