@@ -822,8 +822,12 @@ use rule purecn_purity_file from cnv_sv as cnv_sv_purecn_purity_file with:
 
 module reports:
     snakefile:
-        "../../hydra-genetics/reports/workflow/Snakefile"
-
+        get_module_snakefile(
+            config,
+            "hydra-genetics/reports",
+            path="workflow/Snakefile",
+            tag=config["modules"]["reports"],
+        )
     config:
         config
 
@@ -893,4 +897,3 @@ use rule merge_cnv_json from reports as reports_merge_cnv_json with:
         cytobands=config.get("merge_cnv_json", {}).get("cytobands", []),
         ref_genes=config.get("merge_cnv_json", {}).get("ref_genes", []),
         cancer_genes=config.get("merge_cnv_json", {}).get("cancer_genes", []),
-
