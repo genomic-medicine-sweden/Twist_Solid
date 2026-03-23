@@ -411,6 +411,7 @@ seqtk_subsample:
 
 somalier_ungrouped_extract:
   container: "docker://hydragenetics/somalier:0.2.18"
+  env: SOMALIER_SAMPLE_NAME={sample}_{type}
 
 somalier_ungrouped_relate:
   container: "docker://hydragenetics/somalier:0.2.18"
