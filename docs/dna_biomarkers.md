@@ -62,7 +62,7 @@ A homologous recombination deficiency score is calculated using **[scarHRD](http
 
 #### Result files
 
-* `results/dna/{sample}_{type}/biomarker/{sample}_{type}.predicted_gis.txt`
+* `results/dna/{sample}_{type}/biomarker/{sample}_{type}.{method}.predicted_gis.txt`
 * `results/dna/{sample}_{type}/additional_files/biomarker/{sample}_{type}.jumble_gis.csv`
 * `results/dna/{sample}_{type}/additional_files/biomarker/{sample}_{type}.gis.png`
 

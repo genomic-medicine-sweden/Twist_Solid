@@ -212,11 +212,11 @@ Extract the predicted Genomic Instability Score (GIS) from Jumble's output for t
 
 ### :snake: Rule
 
-#SNAKEMAKE_RULE_SOURCE__jumble_gis_score__jumble_gis_score#
+#SNAKEMAKE_RULE_SOURCE__jumble_gis__jumble_gis_score#
 
 #### :left_right_arrow: input / output files
 
-#SNAKEMAKE_RULE_TABLE__jumble_gis_score__jumble_gis_score#
+#SNAKEMAKE_RULE_TABLE__jumble_gis__jumble_gis_score#
 
 ### :wrench: Configuration
 
