@@ -89,6 +89,12 @@ files:
     types:
       - T
       - N
+  - name: Somalier DNA-DNA best match
+    input: qc/somalier_ungrouped/somalier_dna_dna_match.tsv
+    output: results/qc/somalier_dna_dna_match.tsv
+    types:
+      - T
+      - N
   - name: Samtools stats
     input: qc/samtools_stats/{sample}_{type}.samtools-stats.txt
     output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.samtools-stats.txt
@@ -663,6 +669,12 @@ files:
   - name: Jumble Predicted GIS Score
     input: cnv_sv/jumble_gis_score/{sample}_{type}.pathology_purecn.predicted_gis.txt
     output: results/dna/{sample}_{type}/biomarker/{sample}_{type}.pathology_purecn.predicted_gis.txt
+    types:
+      - T
+      - N
+  - name: Fragle ctDNA fraction
+    input: biomarker/fragle/{sample}_{type}/Fragle.csv
+    output: results/dna/{sample}_{type}/cnv/{sample}_{type}.ctDNA_fraction.fragle.csv
     types:
       - T
       - N

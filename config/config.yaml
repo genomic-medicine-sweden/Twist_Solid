@@ -6,14 +6,14 @@ units: "units.tsv"
 
 modules:
   alignment: "v0.7.0"
-  annotation: "v1.1.0"
-  biomarker: "v0.7.0"
+  annotation: "v1.3.1"
+  biomarker: "v0.8.0"
   cnv_sv: "v3.0.0"
   filtering: "v0.3.0"
   fusions: "v0.3.1"
   prealignment: "v1.3.0"
-  qc: "v0.5.0"
-  reports: "v1.0.0"
+  qc: "v0.7.0"
+  reports: "v1.0.3"
   snv_indels: "v1.1.0"
 
 output: "config/output_files_FFPE.yaml"
@@ -64,25 +64,25 @@ call_small_cnv_amplifications:
   min_log_odds_diff: 0.4
 
 cnvkit_batch:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
   extra: "--drop-low-coverage"
   method: "hybrid"
 
 cnvkit_batch_hrd:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
   method: "hybrid"
 
 cnvkit_call:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 cnvkit_diagram:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 cnvkit_export_seg:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 cnvkit_scatter:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 cnv_html_report:
   show_table: true
@@ -185,6 +185,12 @@ finaletoolkit_interval_mds:
 
 finaletoolkit_mds:
   container: "docker://hydragenetics/finaletoolkit:0.10.7"
+
+fragle:
+  container: "docker://hydragenetics/fragle:20260306"
+  genome_build: "hg19"
+  mode: "T"
+
 
 fragmentomics_fragment_length_patient_score:
   container: "docker://hydragenetics/fragmentomics:0.1.0"
@@ -402,6 +408,16 @@ seqtk_subsample:
   container: "docker://hydragenetics/seqtk:1.4"
   nr_reads: 100000000
   nr_reads_rna: 100000000
+
+somalier_ungrouped_extract:
+  container: "docker://hydragenetics/somalier:0.2.18"
+  env: SOMALIER_SAMPLE_NAME={sample}_{type}
+
+somalier_ungrouped_relate:
+  container: "docker://hydragenetics/somalier:0.2.18"
+
+somalier_best_match_report:
+  match_cutoff: 0.7
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"

@@ -12,7 +12,7 @@ reference:
   artifacts: "{{PROJECT_PON_DATA}}/GMS560/Artifact/artifact_panel_nextseq_noUmea_27_hg38.tsv"
   fasta: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta"
   fasta_rna: "{{PROJECT_REF_DATA}}/ref_data/star-fusion/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir/ref_genome.fa"
-  #fasta_2bit: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.2bit"
+  fasta_2bit: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.2bit"
   dict: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.dict"
   fai: "{{PROJECT_REF_DATA}}/ref_data/GRCh38-GIABv3/GRCh38_GIABv3_no_alt_analysis_set_maskedGRC_decoys_MAP2K3_KMT2C_KCNJ18.fasta.fai"
   design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed"
@@ -113,6 +113,9 @@ fuseq_wes:
 fusioncatcher:
   genome_path: "{{PROJECT_REF_DATA}}/ref_data/fusioncatcher/human_v102/"
 
+fragle:
+  design_bed: "{{PROJECT_DESIGN_DATA}}/GMS560/design/pool1_pool2.sort.merged.padded20.cnv200.hg38.split_fusion_genes.reannotated.230222.bed"
+
 gatk_collect_allelic_counts:
   SNP_interval: "{{PROJECT_DESIGN_DATA}}/GMS560/cnv/gnomad_SNP_0.001_target.annotated.hg38.interval_list"
 
@@ -192,6 +195,9 @@ scanitd:
 
 scarhrd:
   reference_name: "grch38"
+
+somalier_ungrouped_extract:
+  sites: "{{PROJECT_DESIGN_DATA}}/GMS560/design/sites.hg38.nochr.vcf.gz"
 
 star:
   genome_index: "{{PROJECT_REF_DATA}}/ref_data/star/STAR_v2.7.10a_v2.7.10a_GRCh38-GIABv3/"

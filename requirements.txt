@@ -11,3 +11,4 @@ pulp<2.8
 smart_open<7.0.0
 scipy
 pyaml-env==1.2.2
+snakemake-wrapper-utils>=0.8.0,<0.9

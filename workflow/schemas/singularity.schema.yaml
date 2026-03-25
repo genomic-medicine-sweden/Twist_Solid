@@ -37,7 +37,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/cnvkit:0\.9\.9$|hydragenetics__cnvkit_0\.9\.9\.sif$
+            hydragenetics/cnvkit:0\.9\.11$|hydragenetics__cnvkit_0\.9\.11\.sif$
     required:
       - container
 
@@ -48,7 +48,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/cnvkit:0\.9\.9$|hydragenetics__cnvkit_0\.9\.9\.sif$
+            hydragenetics/cnvkit:0\.9\.11$|hydragenetics__cnvkit_0\.9\.11\.sif$
     required:
       - container
 
@@ -59,7 +59,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/cnvkit:0\.9\.9$|hydragenetics__cnvkit_0\.9\.9\.sif$
+            hydragenetics/cnvkit:0\.9\.11$|hydragenetics__cnvkit_0\.9\.11\.sif$
     required:
       - container
 
@@ -70,7 +70,7 @@ properties:
         type: string
         description: name or path to a default docker/singularity container
         pattern: >-
-            hydragenetics/cnvkit:0\.9\.9$|hydragenetics__cnvkit_0\.9\.9\.sif$
+            hydragenetics/cnvkit:0\.9\.11$|hydragenetics__cnvkit_0\.9\.11\.sif$
     required:
       - container
 

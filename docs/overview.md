@@ -3,6 +3,7 @@ Here is a brief overview of the entire pipeline. For details see subsections and
 
 ## DNA (FFPE)
 ![dag plot](images/dna_ffpe_overview.png){: style="height:50%;width:50%"}
+
 1. **Input files**: fastq
 2. **Downsample**: seqtk
 3. **Trimming** using fastp
@@ -31,6 +32,7 @@ Here is a brief overview of the entire pipeline. For details see subsections and
 
 ## DNA (ctDNA)
 ![dag plot](images/dna_ctdna_overview.png){: style="height:50%;width:50%"}
+
 1. **Input files**: fastq
 2. **Downsample**: seqtk
 3. **Trimming** using fastp
@@ -58,6 +60,7 @@ Here is a brief overview of the entire pipeline. For details see subsections and
 
 ## RNA
 ![dag plot](images/rna.png){: style="height:50%;width:50%"}
+
 1. **Input files**: fastq
 2. **Downsample**: seqtk
 3. **Alignment** using Star
