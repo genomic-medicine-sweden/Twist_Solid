@@ -107,13 +107,13 @@ files:
       - N
   - name: Coverage and mutations all
     input: qc/hotspot_report/{sample}_{type}.all.aa_translated.tsv
-    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.tsv
+    output: results/dna/{sample}_{type}/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.tsv
     types:
       - T
       - N
   - name: Coverage and mutations ENC
     input: qc/hotspot_report/{sample}_{type}.ENC.aa_translated.tsv
-    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.ENC.tsv
+    output: results/dna/{sample}_{type}/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.ENC.tsv
     types:
       - T
       - N
@@ -121,7 +121,7 @@ files:
       - "GMSENC"
   - name: Coverage and mutations ENC additional
     input: qc/hotspot_report/{sample}_{type}.ENC.aa_translated.tsv
-    output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.coverage_and_mutations.ENC.tsv
+    output: results/dna/{sample}_{type}/additional_files/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.ENC.tsv
     types:
       - T
       - N
@@ -139,7 +139,7 @@ files:
       - "GMSPIK"
   - name: Coverage and mutations URO
     input: qc/hotspot_report/{sample}_{type}.URO.aa_translated.tsv
-    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.URO.tsv
+    output: results/dna/{sample}_{type}/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.URO.tsv
     types:
       - T
       - N
@@ -147,7 +147,7 @@ files:
       - "GMSURO"
   - name: Coverage and mutations URO additional
     input: qc/hotspot_report/{sample}_{type}.URO.aa_translated.tsv
-    output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.coverage_and_mutations.URO.tsv
+    output: results/dna/{sample}_{type}/additional_files/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.URO.tsv
     types:
       - T
       - N
@@ -165,7 +165,7 @@ files:
       - "GMSPIK"
   - name: Coverage and mutations BRC
     input: qc/hotspot_report/{sample}_{type}.BRC.aa_translated.tsv
-    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.BRC.tsv
+    output: results/dna/{sample}_{type}/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.BRC.tsv
     types:
       - T
       - N
@@ -174,7 +174,7 @@ files:
       - "GMSBRC"
   - name: Coverage and mutations BRC additional
     input: qc/hotspot_report/{sample}_{type}.BRC.aa_translated.tsv
-    output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.coverage_and_mutations.BRC.tsv
+    output: results/dna/{sample}_{type}/additional_files/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.BRC.tsv
     types:
       - T
       - N
@@ -192,7 +192,7 @@ files:
       - "GMSPIK"
   - name: Coverage and mutations CRC
     input: qc/hotspot_report/{sample}_{type}.CRC.aa_translated.tsv
-    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
+    output: results/dna/{sample}_{type}/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.CRC.tsv
     types:
       - T
       - N
@@ -200,7 +200,7 @@ files:
       - "GMSCRC"
   - name: Coverage and mutations CRC additional
     input: qc/hotspot_report/{sample}_{type}.CRC.aa_translated.tsv
-    output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.coverage_and_mutations.CRC.tsv
+    output: results/dna/{sample}_{type}/additional_files/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.CRC.tsv
     types:
       - T
       - N
@@ -218,7 +218,7 @@ files:
       - "GMSPIK"
   - name: Coverage and mutations GIS
     input: qc/hotspot_report/{sample}_{type}.GIS.aa_translated.tsv
-    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.GIS.tsv
+    output: results/dna/{sample}_{type}/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.GIS.tsv
     types:
       - T
       - N
@@ -227,7 +227,7 @@ files:
       - "GMSGIS"
   - name: Coverage and mutations GIS additional
     input: qc/hotspot_report/{sample}_{type}.GIS.aa_translated.tsv
-    output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.coverage_and_mutations.GIS.tsv
+    output: results/dna/{sample}_{type}/additional_files/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.GIS.tsv
     types:
       - T
       - N
@@ -245,7 +245,7 @@ files:
       - "GMSPIK"
   - name: Coverage and mutations LUN
     input: qc/hotspot_report/{sample}_{type}.LUN.aa_translated.tsv
-    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.LUN.tsv
+    output: results/dna/{sample}_{type}/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.LUN.tsv
     types:
       - T
       - N
@@ -254,7 +254,7 @@ files:
       - "GMSLUN"
   - name: Coverage and mutations LUN additional
     input: qc/hotspot_report/{sample}_{type}.LUN.aa_translated.tsv
-    output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.coverage_and_mutations.LUN.tsv
+    output: results/dna/{sample}_{type}/additional_files/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.LUN.tsv
     types:
       - T
       - N
@@ -272,7 +272,7 @@ files:
       - "GMSPIK"
   - name: Coverage and mutations MEL
     input: qc/hotspot_report/{sample}_{type}.MEL.aa_translated.tsv
-    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MEL.tsv
+    output: results/dna/{sample}_{type}/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.MEL.tsv
     types:
       - T
       - N
@@ -281,7 +281,7 @@ files:
       - "GMSMEL"
   - name: Coverage and mutations MEL additional
     input: qc/hotspot_report/{sample}_{type}.MEL.aa_translated.tsv
-    output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.coverage_and_mutations.MEL.tsv
+    output: results/dna/{sample}_{type}/additional_files/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.MEL.tsv
     types:
       - T
       - N
@@ -299,7 +299,7 @@ files:
       - "GMSPIK"
   - name: Coverage and mutations MTC
     input: qc/hotspot_report/{sample}_{type}.MTC.aa_translated.tsv
-    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.MTC.tsv
+    output: results/dna/{sample}_{type}/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.MTC.tsv
     types:
       - T
       - N
@@ -308,7 +308,7 @@ files:
       - "GMSMTC"
   - name: Coverage and mutations MTC additional
     input: qc/hotspot_report/{sample}_{type}.MTC.aa_translated.tsv
-    output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.coverage_and_mutations.MTC.tsv
+    output: results/dna/{sample}_{type}/additional_files/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.MTC.tsv
     types:
       - T
       - N
@@ -326,7 +326,7 @@ files:
       - "GMSPIK"
   - name: Coverage and mutations VAS
     input: qc/hotspot_report/{sample}_{type}.VAS.aa_translated.tsv
-    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.VAS.tsv
+    output: results/dna/{sample}_{type}/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.VAS.tsv
     types:
       - T
       - N
@@ -334,7 +334,7 @@ files:
       - "GMSVAS"
   - name: Coverage and mutations VAS additional
     input: qc/hotspot_report/{sample}_{type}.VAS.aa_translated.tsv
-    output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.coverage_and_mutations.VAS.tsv
+    output: results/dna/{sample}_{type}/additional_files/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.VAS.tsv
     types:
       - T
       - N
@@ -352,7 +352,7 @@ files:
       - "GMSPIK"
   - name: Coverage and mutations PIK
     input: qc/hotspot_report/{sample}_{type}.PIK.aa_translated.tsv
-    output: results/dna/{sample}_{type}/qc/{sample}_{type}.coverage_and_mutations.PIK.tsv
+    output: results/dna/{sample}_{type}/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.PIK.tsv
     types:
       - T
       - N
@@ -360,7 +360,7 @@ files:
       - "GMSPIK"
   - name: Coverage and mutations PIK additional
     input: qc/hotspot_report/{sample}_{type}.PIK.aa_translated.tsv
-    output: results/dna/{sample}_{type}/additional_files/qc/{sample}_{type}.coverage_and_mutations.PIK.tsv
+    output: results/dna/{sample}_{type}/additional_files/coverage_and_mutations/{sample}_{type}.coverage_and_mutations.PIK.tsv
     types:
       - T
       - N
