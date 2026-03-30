@@ -455,7 +455,6 @@ required:
   - gatk_mutect2
   - gatk_mutect2_gvcf
   - gatk_model_segments
-  - jumble_gis_score
   - manta_config_t
   - manta_run_workflow_t
   - mosdepth_bed
