@@ -14,7 +14,7 @@ modules:
   prealignment: "v1.3.0"
   qc: "v0.7.0"
   #reports: "v1.0.3"
-  reports: "a6d2fdc"
+  reports: "7b31c3a"
   snv_indels: "v1.1.0"
 
 output: "config/output_files_FFPE.yaml"
