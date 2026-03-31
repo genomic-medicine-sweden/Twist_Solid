@@ -105,73 +105,54 @@ def read_snv_vcf_and_find_max_af(input_snv_vcf, filter_dict):
         vep_dict = dict(zip(vep_fields.keys(), vep.split("|")))
 
         filtered = False
-        filter_reasons = []
         for filter in filter_dict:
             if filter in record.info:
                 if filter == "Artifact":
                     a1 = int(record.info[filter][0])
                     a2 = int(record.info[filter][1])
                     if a1 > filter_dict[filter][1] or a2 > filter_dict[filter][1] or a1 == -1 or a2 == -1:
-                        filter_dict[filter][2] += 1
                         filtered = True
-                        filter_reasons.append(filter)
                 elif filter == "AF":
                     if record.info[filter][0] > filter_dict[filter][1]:
-                        filter_dict[filter][2] += 1
                         filtered = True
-                        filter_reasons.append(filter)
                 elif filter_dict[filter][0] == "min":
                     if record.info[filter] < filter_dict[filter][1]:
-                        filter_dict[filter][2] += 1
                         filtered = True
-                        filter_reasons.append(filter)
                 elif filter_dict[filter][0] == "max":
                     if record.info[filter] > filter_dict[filter][1]:
-                        filter_dict[filter][2] += 1
                         filtered = True
-                        filter_reasons.append(filter)
                 elif filter_dict[filter][0] == "present":
                     if filter_dict[filter][1] not in record.info[filter]:
-                        filter_dict[filter][2] += 1
                         filtered = True
-                        filter_reasons.append(filter)
             elif filter in vep_dict:
                 if vep_dict[filter] == "":
                     continue
                 if filter_dict[filter][0] == "min":
                     if float(vep_dict[filter]) < filter_dict[filter][1]:
-                        filter_dict[filter][2] += 1
                         filtered = True
-                        filter_reasons.append(filter)
                 elif filter_dict[filter][0] == "max":
                     if float(vep_dict[filter]) > filter_dict[filter][1]:
-                        filter_dict[filter][2] += 1
                         filtered = True
-                        filter_reasons.append(filter)
                 elif filter_dict[filter][0] == "exact":
                     if vep_dict[filter] in filter_dict[filter][1]:
-                            filter_dict[filter][2] += 1
-                            filtered = True
-                            filter_reasons.append(filter)
+                        filtered = True
             elif filter == "Other":
                 if not (vep_dict["IMPACT"] == "HIGH" or
                         vep_dict["Existing_variation"].count("COSV") > 1 or
                         vep_dict["CLIN_SIG"].find("drug_response") != -1 or
                         vep_dict["CLIN_SIG"].find("pathogenic") != -1 or
-                        ("Hotspot" in record.info and (record.info["Hotspot"] == "3-check" or
-                            record.info["Hotspot"] == "1-hotspot"))
+                        ("Hotspot" in record.info and (
+                            record.info["Hotspot"] == "3-check" or
+                            record.info["Hotspot"] == "1-hotspot"
+                        ))
                         ):
-                    filter_dict[filter][2] += 1
                     filtered = True
-                    filter_reasons.append(filter)
             elif filter == "CHIP_genes":
                 if vep_dict["SYMBOL"] in filter_dict[filter][1]:
-                    filter_dict[filter][2] += 1
                     filtered = True
-                    filter_reasons.append(filter)
 
         if not filtered:
-            best_variant.append([record.info["AF"][0], [record.chrom, record.pos, record.ref, record.alts[0]]])
+            best_variant.append([record.info["AF"][0], str(record)])
 
     if not best_variant:
         return 0, []
@@ -386,9 +367,9 @@ def write_ctDNA_fraction_info(output_file_name, seg_list, snv_list):
     for seg in seg_list:
         output.write(f"{seg[0][0]*100:.1f}%\t{seg[1]}\t{seg[0][2]}\t{seg[0][1][0]}\t{seg[0][1][1]}\n")
     output.write("\nSNVs passing all filtering\n")
-    output.write("ctDNA_percentage\tchromosome\tposition\tref\talt\n")
+    output.write("ctDNA_percentage\tVCF_record\n")
     for snv in snv_list:
-        output.write(f"{snv[0]*2*100:.1f}%\t{snv[1][0]}\t{snv[1][1]}\t{snv[1][2]}\t{snv[1][3]}\n")
+        output.write(f"{snv[0]*2*100:.1f}%\t{snv[1]}")
     output.close()
 
 
@@ -404,25 +385,29 @@ if __name__ == "__main__":
     min_segment_length = int(snakemake.params.min_segment_length)
     vaf_baseline = float(snakemake.params.vaf_baseline)
 
+    callers = snakemake.params.callers
+    if isinstance(callers, list):
+        callers = callers[0]
+
     # Building filter_dict from snakemake.params
     filter_dict = {
-        "PositionNrSD": ["min", snakemake.params.min_position_nr_sd, 0],
-        "PanelMedian": ["max", snakemake.params.max_panel_median, 0],
-        "Artifact": ["max", snakemake.params.artifact_limit, 0],
-        "CALLERS": ["present", snakemake.params.callers[0] if isinstance(snakemake.params.callers, list) else snakemake.params.callers, 0],
-        "MQ": ["min", snakemake.params.min_mq, 0],
-        "MSI": ["max", snakemake.params.max_msi, 0],
-        "NM": ["max", snakemake.params.max_nm, 0],
-        "ODDRATIO": ["max", snakemake.params.max_odd_ratio, 0],
-        "PMEAN": ["min", snakemake.params.min_pmean, 0],
-        "QUAL": ["min", snakemake.params.min_qual, 0],
-        "SBF": ["min", snakemake.params.min_sbf, 0],
-        "SN": ["min", snakemake.params.min_sn, 0],
-        "AF": ["max", snakemake.params.max_af, 0],
-        "MAX_AF": ["max", snakemake.params.max_gnomad_af, 0],
-        "Consequence": ["exact", snakemake.params.excluded_consequences, 0],
-        "CHIP_genes": ["", snakemake.params.chip_genes, 0],
-        "Other": ["", [], 0]
+        "PositionNrSD": ["min", snakemake.params.min_position_nr_sd],
+        "PanelMedian": ["max", snakemake.params.max_panel_median],
+        "Artifact": ["max", snakemake.params.artifact_limit],
+        "CALLERS": ["present", callers],
+        "MQ": ["min", snakemake.params.min_mq],
+        "MSI": ["max", snakemake.params.max_msi],
+        "NM": ["max", snakemake.params.max_nm],
+        "ODDRATIO": ["max", snakemake.params.max_odd_ratio],
+        "PMEAN": ["min", snakemake.params.min_pmean],
+        "QUAL": ["min", snakemake.params.min_qual],
+        "SBF": ["min", snakemake.params.min_sbf],
+        "SN": ["min", snakemake.params.min_sn],
+        "AF": ["max", snakemake.params.max_af],
+        "MAX_AF": ["max", snakemake.params.max_gnomad_af],
+        "Consequence": ["exact", snakemake.params.excluded_consequences],
+        "CHIP_genes": ["", snakemake.params.chip_genes],
+        "Other": ["", []]
     }
 
     # Read CNV segments

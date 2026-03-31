@@ -17,7 +17,10 @@ rule estimate_ctdna_fraction:
         artifact_limit=config.get("estimate_ctdna_fraction", {}).get("artifact_limit", 0),
         callers=config.get("estimate_ctdna_fraction", {}).get("callers", ["vardict"]),
         chip_genes=config.get("estimate_ctdna_fraction", {}).get("chip_genes", ["DNMT3A", "TET2", "ASXL1"]),
-        excluded_consequences=config.get("estimate_ctdna_fraction", {}).get("excluded_consequences", ["synonymous_variant", "5_prime_UTR_variant", "3_prime_UTR_variant", "non_coding_transcript_exon_variant"]),
+        excluded_consequences=config.get("estimate_ctdna_fraction", {}).get(
+            "excluded_consequences",
+            ["synonymous_variant", "5_prime_UTR_variant", "3_prime_UTR_variant", "non_coding_transcript_exon_variant"],
+        ),
         max_af=config.get("estimate_ctdna_fraction", {}).get("max_af", 0.4),
         max_gnomad_af=config.get("estimate_ctdna_fraction", {}).get("max_gnomad_af", 0.0002),
         max_msi=config.get("estimate_ctdna_fraction", {}).get("max_msi", 4),
