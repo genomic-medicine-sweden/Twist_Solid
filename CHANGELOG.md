@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1](https://github.com/genomic-medicine-sweden/GMS_Solid/compare/v1.2.0...v1.2.1) (2026-03-23)
+
+
+### Bug Fixes
+
+* add sample name env to handle missing RG group in RNA bam files ([80ebae9](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/80ebae9358c2d00948cbc6d8b5de2b139fabbc08))
+* add sample name env to handle missing RG group in RNA bam files ([cba17d5](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/cba17d5c7448e58862bfd90e87b9f4cbeb7d79b2))
+
 ## [1.2.0](https://github.com/genomic-medicine-sweden/GMS_Solid/compare/v1.1.2...v1.2.0) (2026-03-19)
 
 

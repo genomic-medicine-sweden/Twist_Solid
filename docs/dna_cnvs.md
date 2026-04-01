@@ -75,7 +75,7 @@ The following steps are in included in the Jumble CNV calling:
 | run | Makes segmentation | [RDS reference](references.md#jumble_ref) | Panel of normal which can include data from different sequencing machines |
 | call | Calls CNVs | [Germline vcf](dna_cnvs.md#germline-vcf) | Vcf with germline variants called in the sample |
 | | | Tumor purity | Estimated purity from samples.tsv or from other sources |
-
+| jumble_gis_score | Extracts predicted GIS score | | Predicted Genomic Instability Score (GIS) for the sample's current tumor content (TC) |
 ## CNV call file conversion to vcf
 The CNVs call files from CNVkit and Jumble are converted to vcf format using the in-house scripts [cnvkit_vcf.py](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/cnvkit_vcf.py) ([cnvkit_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/rules/cnvkit.smk), [jumble_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/rules/jumble.smk)) and GATK CNV by [gatk_to_vcf.py](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/gatk_to_vcf.py) ([gatk_to_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/rules/gatk.smk)). In all cases a vcf header is added followed by the following annotation for each field in the vcf file:
 
@@ -264,6 +264,7 @@ cnv_html_report:
       path: "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.cnv_loh_genes_all.cnv_chromosome_arms.tsv" 
 
 merge_cnv_json:
+  cancer_genes: "config/reports/cancer_genes.csv"
   filtered_cnv_vcfs:
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_amp_genes.filter.cnv_hard_filter_amp.fp_tag.vcf
     - cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.annotate_cnv.cnv_loh_genes_all.filter.cnv_hard_filter_loh.fp_tag.annotate_fp.vcf
