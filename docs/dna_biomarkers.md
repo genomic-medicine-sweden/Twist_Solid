@@ -112,3 +112,32 @@ ctDNA fraction estimation is performed using **[Fragle](https://github.com/skand
 ### Result files
 
 * `results/dna/{sample}_{type}/cnv/{sample}_{type}.ctDNA_fraction.fragle.csv`
+
+## ctDNA Fraction Estimation (SNV and BAF based)
+This method estimates the ctDNA fraction by combining two independent signals:
+1. **BAF (B-Allele Frequency)**: Analyzing the distribution of germline SNPs in regions with Copy Number Alterations (CNAs), specifically deletions and CN-LOH.
+2. **SNV (Somatic Nucleotide Variants)**: Identifying high-confidence somatic driver mutations and using their allele frequency (TC = 2 * AF).
+
+The results for both methods are reported side-by-side in the final output.
+
+### Configuration
+**Software settings**
+
+The SNV filtering is highly configurable to ensure only high-quality somatic variants are used for estimation:
+
+| **Group** | **Options** | **Default** | **Description** |
+|-----------|-------------|-------------|-----------------|
+| **CNV** | min_germline_af | 0.1 | Min AF for germline SNPs |
+| | min_nr_SNPs_per_segment | 35 | Min SNPs for density calculation |
+| | min_segment_length | 10000000 | Min segment length (bp) |
+| | vaf_baseline | 0.48 | Reference bias correction |
+| **SNV** | max_af | 0.4 | Filter out likely germline (high AF) |
+| | max_gnomad_af | 0.0002 | Max population frequency |
+| | min_mq | 40 | Min Mapping Quality |
+| | min_qual | 40 | Min Variant Quality |
+| | callers | ["vardict"] | Required callers |
+
+### Result files
+
+* `results/dna/{sample}_{type}/cnv/{sample}_{type}.ctDNA_fraction.tsv`
+* `results/dna/{sample}_{type}/cnv/{sample}_{type}.ctDNA_fraction_info.tsv`
