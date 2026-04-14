@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.4.0](https://github.com/genomic-medicine-sweden/GMS_Solid/compare/v1.3.0...v1.4.0) (2026-04-14)
+
+
+### Features
+
+* rm Fragle that did not work ([b47d0b8](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/b47d0b8a03e4fa6a6ef9123c527c9b77b10129dc))
+
+
+### Bug Fixes
+
+* Cnv report filtering ([f65576b](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/f65576b6f41b2566a17ef55fd0c6a61afe307ef7))
+* filter out Jumble copy neutral ([1b0cece](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/1b0cecefebb773951a84b421542664d4328c23ea))
+* filter out Jumble copy neutral ([5994081](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/5994081d6fbc3c73094c31367ec961122ad77796))
+* update reports to v1.1.1 to fix plot missing bug in cnv-report ([2ba1bd5](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/2ba1bd5978e5885bad803a684eb218341a6516b6))
+* update reports to v1.1.1 to fix plot missing bug in cnv-report ([8cc66a8](https://github.com/genomic-medicine-sweden/GMS_Solid/commit/8cc66a8cb67675260ffb6b02fe3b3ba96c1496b2))
+
 ## [1.3.0](https://github.com/genomic-medicine-sweden/GMS_Solid/compare/v1.2.1...v1.3.0) (2026-04-02)
 
 
