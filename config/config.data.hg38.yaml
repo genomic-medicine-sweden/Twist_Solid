@@ -143,6 +143,7 @@ hotspot_report:
     LUN: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Lung_20260202_hg38.csv"
     MEL: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_Melanom_20260202_hg38.csv"
     MTC: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_MTC_20260202_hg38.csv"
+    TYR: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_MTC_20260202_hg38.csv"
     VAS: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_VAS_20260217_hg38.csv"
     PIK: "{{PROJECT_DESIGN_DATA}}/GMS560/reports/Mutations_PIK_20260217_hg38.csv"
 

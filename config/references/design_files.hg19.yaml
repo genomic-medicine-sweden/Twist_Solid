@@ -208,7 +208,7 @@
      path: GMS560/reports/Mutations_Melanom_20260305.csv
      type: file
      url: https://github.com/genomic-medicine-sweden/Twist_Solid_pipeline_files/raw/v0.26.3/design/Mutations_Melanom_20260305.csv
-   hotspot_mutations_MTC:
+   hotspot_mutations_MTC_or_TYR:
      checksum: 29ad5a2ecfe819f19d0ae49a627c32b5
      path: GMS560/reports/Mutations_MTC_20260223.csv
      type: file
