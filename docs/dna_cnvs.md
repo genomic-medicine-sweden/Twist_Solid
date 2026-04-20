@@ -260,7 +260,7 @@ In addition to the tsv report, an interactive HTML report is generated which pro
 | Genome-wide plot | Overview of copy number across all chromosomes |
 | Linear chromosome view | Alternative linear view with caller selection for each chromosome |
 | Gene search | Search box to quickly navigate to a gene of interest in the plot |
-| Manual TC adjustment | Slider to override the estimated tumor cell content and recalculate copy number lines in real time |
+| Manual TC adjustment | Slider to override the estimated tumor cell content and recalculate copy number lines in real time; requires **Simulate purity** to be enabled first |
 | CNV results table | Filtered and unfiltered CNV calls from all callers, togglable per caller |
 | Extra tables | Additional TSV-based tables (e.g. small CNVs, 1p19q, chromosomal arm events) |
 | Gene color toggle | Toggle to apply per-gene role colors to annotated genes in the chromosome plot |
