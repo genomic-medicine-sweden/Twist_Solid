@@ -134,7 +134,6 @@ files:
       - "GMSGIS"
       - "GMSLUN"
       - "GMSMEL"
-      - "GMSMTC"
       - "GMSTYR"
       - "GMSVAS"
       - "GMSPIK"
@@ -161,7 +160,6 @@ files:
       - "GMSGIS"
       - "GMSLUN"
       - "GMSMEL"
-      - "GMSMTC"
       - "GMSTYR"
       - "GMSVAS"
       - "GMSPIK"
@@ -189,7 +187,6 @@ files:
       - "GMSGIS"
       - "GMSLUN"
       - "GMSMEL"
-      - "GMSMTC"
       - "GMSTYR"
       - "GMSVAS"
       - "GMSPIK"
@@ -216,7 +213,6 @@ files:
       - "GMSGIS"
       - "GMSLUN"
       - "GMSMEL"
-      - "GMSMTC"
       - "GMSTYR"
       - "GMSVAS"
       - "GMSPIK"
@@ -244,7 +240,6 @@ files:
       - "GMSCRC"
       - "GMSLUN"
       - "GMSMEL"
-      - "GMSMTC"
       - "GMSTYR"
       - "GMSVAS"
       - "GMSPIK"
@@ -272,7 +267,6 @@ files:
       - "GMSCRC"
       - "GMSGIS"
       - "GMSMEL"
-      - "GMSMTC"
       - "GMSTYR"
       - "GMSVAS"
       - "GMSPIK"
@@ -300,7 +294,6 @@ files:
       - "GMSCRC"
       - "GMSGIS"
       - "GMSLUN"
-      - "GMSMTC"
       - "GMSTYR"
       - "GMSVAS"
       - "GMSPIK"
@@ -312,7 +305,6 @@ files:
       - N
     analyskod:
       - ""
-      - "GMSMTC"
       - "GMSTYR"
   - name: Coverage and mutations TYR additional
     input: qc/hotspot_report/{sample}_{type}.TYR.aa_translated.tsv
@@ -356,7 +348,6 @@ files:
       - "GMSGIS"
       - "GMSLUN"
       - "GMSMEL"
-      - "GMSMTC"
       - "GMSTYR"
       - "GMSPIK"
   - name: Coverage and mutations PIK
@@ -383,7 +374,6 @@ files:
       - "GMSGIS"
       - "GMSLUN"
       - "GMSMEL"
-      - "GMSMTC"
       - "GMSTYR"
       - "GMSVAS"
   - name: Contamination table
@@ -429,7 +419,6 @@ files:
       - "GMSGIS"
       - "GMSLUN"
       - "GMSMEL"
-      - "GMSMTC"
       - "GMSTYR"
       - "GMSENC"
       - "GMSURO"
