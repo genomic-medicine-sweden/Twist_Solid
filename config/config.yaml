@@ -247,7 +247,7 @@ jumble_cnvkit_call:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
 jumble_run:
-  container: "docker://hydragenetics/jumble:260310"
+  container: "docker://hydragenetics/jumble:0.5.0"
 
 jumble_vcf:
   dup_limit: 2.5
@@ -402,8 +402,8 @@ scanitd:
 
 seqtk_subsample:
   container: "docker://hydragenetics/seqtk:1.4"
-  nr_reads: 100000000
-  nr_reads_rna: 100000000
+  nr_reads: 150000000
+  nr_reads_rna: 30000000
 
 somalier_ungrouped_extract:
   container: "docker://hydragenetics/somalier:0.2.18"
