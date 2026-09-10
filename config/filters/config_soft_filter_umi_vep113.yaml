@@ -19,6 +19,16 @@ filters:
     expression: "(!exist[SNV, VEP:VARIANT_CLASS] and ((INFO:Artifact:0 > 2 and (INFO:ArtifactNrSD:0 < 6 or INFO:MSI > 3)) or (INFO:Artifact:1 > 2 and (INFO:ArtifactNrSD:1 < 6 or INFO:MSI > 3))))"
     soft_filter_flag: "Artifact_gt_2_INDEL"
     soft_filter: "True"
+  artifacts_complex:
+    description: "Soft filter complex (clumped multi-base) variants found in 3 or more normal samples, without the NrSD/MSI rescue used for other variant types"
+    expression: "(INFO:TYPE = Complex and (INFO:Artifact:0 > 2 or INFO:Artifact:1 > 2))"
+    soft_filter_flag: "Artifact_gt_2_Complex"
+    soft_filter: "True"
+  germline_by_panel:
+    description: "Soft filter variants whose panel-of-normal AF clusters near a heterozygous/homozygous fraction, indicating germline recurrence rather than technical noise"
+    expression: "((INFO:Artifact:0 > 2 and INFO:ArtifactMedian:0 > 0.3) or (INFO:Artifact:1 > 2 and INFO:ArtifactMedian:1 > 0.3))"
+    soft_filter_flag: "Germline_by_panel"
+    soft_filter: "True"
   background:
     description: "Soft filter variants with AF not over background noise"
     expression: "INFO:PositionNrSD < 6"
